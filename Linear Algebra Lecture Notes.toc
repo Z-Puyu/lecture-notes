@@ -1,0 +1,15 @@
+\contentsline {chapter}{\numberline {1}Vector Spaces}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Vector Spaces}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Vector Subspaces}{4}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Orthogonality}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Dot Product}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Orthogonal and Orthonormal Bases}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Orthogonality in \textit {n}-Dimensional Spaces}{9}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Projection}{11}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Projections in \textit {n}-Dimensional Spaces}{11}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Gram-Schmidt Process}{12}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Least Squares Solutions}{14}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}Orthogonal Matrices}{20}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Linear Transformations}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Linear Transformations in \textit {n}-Dimensional Spaces}{23}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Change of Bases}{26}{section.3.2}%
