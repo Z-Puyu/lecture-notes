@@ -1,0 +1,21 @@
+\contentsline {chapter}{\numberline {1}Spaces of Higher Dimensions}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Curves in \textit {n}-Dimensional Spaces}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Curves}{2}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Lines}{2}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Tangent Vectors}{4}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}Arc Length}{5}{subsection.1.1.4}%
+\contentsline {section}{\numberline {1.2}Surfaces in \textit {n}-Dimensional Spaces}{7}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Surfaces as Graphs of Functions}{7}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Surfaces as Level Sets of Functions}{7}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Planes}{8}{subsection.1.2.3}%
+\contentsline {chapter}{\numberline {2}Multivariable Functions}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Limits of Multivariable Functions}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Continuity of Multivariable Functions}{11}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Differentiability of Multivariable Functions}{12}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Partial Derivatives}{12}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Differentiability}{13}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Gradient Vectors}{16}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Implicit Differentiation in \textit {n}-Variables}{18}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Optimisation Problems in Multivariable Calculus}{20}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Extrema of Multivariable Functions}{20}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Lagrange Multiplier}{22}{subsection.2.4.2}%

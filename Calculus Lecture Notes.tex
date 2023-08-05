@@ -1,0 +1,694 @@
+\documentclass[math]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+\begin{document}
+\fancyhead[L]{
+    Calculus
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Spaces of Higher Dimensions}
+To extend calculus to higher dimensions, we first introduce some preliminary knowledge about the various constructs and their behaviours in higher-dimensional spaces. Specifically, we consider the {\color{red} \textbf{Euclidean $n$-spaces}}, or simply denoted by $\R^n$. Recall that $\R^n$ is just the set of all {\color{red} \textbf{ordered}} $n$-tuple of real numbers, which represents the coordinates of a point in $\R^n$.
+\section{Curves in \textit{n}-Dimensional Spaces}
+\subsection{Curves}
+Intuitively, we view a curve as the locus of a moving point. However, from the perspective of functions, we can see a curve as a set of points (equivalently, a set of vectors) in $\R^n$ with every point (vector) being the image of some real number. Therefore, we can view a curve as the {\color{red} \textbf{image}} of some interval $D \subseteq \R$ under some mapping $R \colon D \to \R^n$. For $t \in D$, we can write
+\begin{equation*}
+    R(t) = \left[\begin{array}{c}
+            f_1(t) \\
+            f_2(t) \\
+            \vdots \\
+            f_n(t)
+        \end{array}\right]
+\end{equation*}
+as the position vector of a point in the curve parametrised by $R(t)$, where $f_1, f_2, \cdots, f_n$ are real-evaluated functions, known as the {\color{red} \textbf{component functions}}.
+\begin{notebox}
+    \begin{remark}
+        Note that the parametrisation for a curve is {\color{red} \textbf{not unique}}.
+    \end{remark}
+\end{notebox}
+Observe that in the above example, if $f_1, f_2, \cdots, f_n$ are all {\color{red} \textbf{linear}} functions, i.e., $f_i(x) = ax + b$ for some real constants $a$ and $b$ for $i = 1, 2, \cdots, n$, then the curve becomes a straight line.
+\subsection{Lines}
+In an axiomatic formulation, a line is said to be such that any two distinct points in a space uniquely determines a line. Therefore, we can say that a line itself is an undefined structure which fulfills a set of axioms. However, to make things simple and concrete, we can define several ways that describe a line.
+
+Note that every point in $\R^n$ can be uniquely equated to a vector known as its {\color{red} \textbf{position vector}}. Therefore, every line can be uniquely determined by two {\color{red} \textbf{distinct vectors}} in $\R^n$.
+\begin{dfnbox}{Line}{line}
+    Let $\symbfit{a}$, $\symbfit{b}$ be two distinct vectors in $\R^n$. The line $L$ determined by $\symbfit{a}$ and $\symbfit{b}$ is defined to be the set
+    \begin{displaymath}
+        L = \left\{ \, \symbfit{v} \,\colon \symbfit{v} = \symbfit{a} + k \symbfit{u},\, k \in \R,\, \symbfit{u} = \symbfit{a - b} \, \right\}.
+    \end{displaymath}
+\end{dfnbox}
+In other words, a line is uniquely determined by a {\color{red} \textbf{point}} and a {\color{red} \textbf{direction}}. Fix a point with position vector $\symbfit{a}$ and a direction vector $\symbfit{u}$ for a line $L$, we can thus parametrise the position vector (or the coordinates) of an arbitary point in $L$ as
+\begin{equation*}
+    \symbfit{r} = R(t) = \symbfit{a} + t \symbfit{u}
+\end{equation*}
+We can also define the relations between lines in $\R^n$. Note that in plane geometry, two lines are either intersecting or parallel. However, in $\R^n$ where $n > 2$, non-parallel lines may not intersect.
+\begin{thmbox}{Parallel lines}{parln}
+    Two lines are parallel if and only if their direction vectors are parallel, i.e., if $L_1$ and $L_2$ are parametrised by $R_1(t) = \symbfit{a} + t \symbfit{u}_1$ and $R_2(s) = \symbfit{b} + s \symbfit{u}_2$ respectively, then $L_1 \parallel L_2$ if and only if $\symbfit{u}_1 = k \symbfit{u}_2$ for some $k \in \R$.
+\end{thmbox}
+\begin{thmbox}{Intersecting lines}{intsectln}
+    Let $L_1$ and $L_2$ be lines parametrised by $R_1(t) = \symbfit{a} + t \symbfit{u}_1$ and $R_2(s) = \symbfit{b} + s \symbfit{u}_2$ respectively. Then $L_1$ and $L_2$ intersect, i.e., $L_1 \cap L_2 \neq \varnothing$, if and only if the linear system
+    \begin{displaymath}
+        R_1(t) - R_2(s) = \symbf{0}
+    \end{displaymath}
+    has solutions.
+\end{thmbox}
+Two intersecting lines may not necessarily have a unique intersection. Specifically, if two lines have more than one intersection, they are known to be {\color{red} \textbf{coincident}}, i.e., they completely overlap on one another.
+
+If two lines are neither parallel nor intersecting, they are called to be {\color{red} \textbf{skew}} lines.
+\begin{notebox}
+    \begin{remark}
+        Multiple lines with the same intersection are known to be {\color{red} \textbf{concurrent}}.
+    \end{remark}
+\end{notebox}
+\subsection{Tangent Vectors}
+Suppose we are given a curve $C$ parametrised by
+\begin{equation*}
+    R(t) = \left[\begin{array}{c}
+            f_1(t) \\
+            f_2(t) \\
+            \vdots \\
+            f_n(t)
+        \end{array}\right],
+\end{equation*}
+and we are interested in the {\color{red} \textbf{rate of change}} of the coordinates of the points in $C$ with respect to $t$. Naturally, we would fix position vectors $\symbfit{r}_1$, $\symbfit{r}_2 \in C$, and consider the vector
+\begin{equation*}
+    \frac{\symbfit{r}_2 - \symbfit{r}_1}{\symrm{\Delta} t} = \frac{R(t_2) - R(t_1)}{\symrm{\Delta} t} = \left[\begin{array}{c}
+            \frac{f_1(t_2) - f_1(t_1)}{\symrm{\Delta} t} \\
+            \frac{f_2(t_2) - f_2(t_1)}{\symrm{\Delta} t} \\
+            \vdots                                       \\
+            \frac{f_n(t_2) - f_n(t_1)}{\symrm{\Delta} t}
+        \end{array}\right]
+\end{equation*}
+for some change of $t$, $\symrm{\Delta} t$. We can write the above more concisely as
+\begin{equation*}
+    \frac{\symbfit{r}_2 - \symbfit{r}_1}{\symrm{\Delta} t} = \frac{R(t + \symrm{\Delta} t) - R(t)}{\symrm{\Delta} t} = \left[\begin{array}{c}
+            \frac{f_1(t + \symrm{\Delta} t) - f_1(t)}{\symrm{\Delta} t} \\
+            \frac{f_2(t + \symrm{\Delta} t) - f_2(t)}{\symrm{\Delta} t} \\
+            \vdots                                                      \\
+            \frac{f_n(t + \symrm{\Delta} t) - f_n(t)}{\symrm{\Delta} t}
+        \end{array}\right].
+\end{equation*}
+Note that $\lim_{\symbfit{r}_2 \to \symbfit{r}_1}\frac{\symbfit{r}_2 - \symbfit{r}_1}{\symrm{\Delta} t}$ is exactly the vector for the rate of change of coordinates in $C$, so we have the following definition:
+\begin{dfnbox}{Tangent vector}{tanvec}
+    Let $C$ be a curve in $\R^n$ parametrised by
+    \begin{equation*}
+        R(t) = \left[\begin{array}{c}
+                f_1(t) \\
+                f_2(t) \\
+                \vdots \\
+                f_n(t)
+            \end{array}\right],
+    \end{equation*}
+    then the {\color{red} \textbf{tangent vector}} of $C$ at $t$ is defined to be the vector
+    \begin{equation*}
+        \lim_{\symrm{\Delta} t \to 0} \left[\begin{array}{c}
+                \frac{f_1(t + \symrm{\Delta} t) - f_1(t)}{\symrm{\Delta} t} \\
+                \frac{f_2(t + \symrm{\Delta} t) - f_2(t)}{\symrm{\Delta} t} \\
+                \vdots                                                      \\
+                \frac{f_n(t + \symrm{\Delta} t) - f_n(t)}{\symrm{\Delta} t}
+            \end{array}\right] = \left[\begin{array}{c}
+                f'_1(t) \\
+                f'_2(t) \\
+                \vdots  \\
+                f'_n(t)
+            \end{array}\right],
+    \end{equation*}
+    denoted by $R'(t)$.
+\end{dfnbox}
+We can then define the notion of a tangent line:
+\begin{dfnbox}{Tangent line}{tanln}
+    The {\color{red} \textbf{tangent line}} to a curve parametrised by $R(t)$ at $t_0$ is the line passing through the point $R(t_0)$ in the direction of the tangent vector to $C$ at $t_0$, i.e., it is the Line
+    \begin{displaymath}
+        R(t_0) + kR'(t_0) \quad k \in \R.
+    \end{displaymath}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        There are two things to take note based on the above definitions:
+        \begin{enumerate}
+            \item The equation of the tangent line is {\color{red} \textbf{independent}} of the parametrisation of $C$, but the tangent vector is {\color{red} \textbf{dependent}} on the parametrisation which determines its magnitude.
+            \item A line is the tangent line to itself.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+From the above, we can easily see that $R'(t)$ exists if and only if each of the $f_1, f_2, \cdots, f_n$ are differentiable. With that, we introduce a simple method to determine the continuity and differentiability of a curve given its parametrisation:
+\begin{thmbox}{Continuity and differentiability of a curve}{condiftanvec}
+    A curve $C$ is {\color{red} \textbf{continuous}} (and respectively, {\color{red} \textbf{differentiable}}) if its parametrisation is {\color{red} \textbf{continuous}} (and respectively, {\color{red} \textbf{differentiable}}).
+\end{thmbox}
+\subsection{Arc Length}
+Recall that if curve in $\R^2$ is parametrised by
+\begin{displaymath}
+    \begin{cases}
+        x = f(t) \\
+        y = g(t)
+    \end{cases}
+\end{displaymath}
+which is integrable, then the arc length from $t = a$ to $t = b$ is
+\begin{displaymath}
+    \int_a^b \!\sqrt{\left(\frac{\symrm{d}x}{\symrm{d}t}\right)^2 + \left(\frac{\symrm{d}y}{\symrm{d}t}\right)^2} \,\symrm{d}t.
+\end{displaymath}
+Analogously, we derive the formula for arc length in $\R^n$ as follows:
+\begin{thmbox}{Arc length}{arclen}
+    Let $C$ be a curve in $\R^n$ parametrised by
+    \begin{equation*}
+        R(t) = \left[\begin{array}{c}
+                f_1(t) \\
+                f_2(t) \\
+                \vdots \\
+                f_n(t)
+            \end{array}\right],
+    \end{equation*}
+    then the {\color{red} \textbf{arc length}} of $C$ between $R(a)$ and $R(b)$ is given by
+    \begin{displaymath}
+        \int_a^b \!\sqrt{\sum_{i = 1}^{n}f'_i(t)^2} \,\symrm{d}t.
+    \end{displaymath}
+    \tcblower
+    \begin{proof}
+        Let $n$ be a positive integer, and $\symrm{\Delta}t \coloneq \frac{b - a}{n}$. Let $t_j = a + j\symrm{\Delta}t$, then
+        \begin{displaymath}
+            a = t_0 < t_1 < t_2 < \cdots < t_n = b.
+        \end{displaymath}
+        Let $s_j$ be the distance between $R(t_{j - 1})$ and $R(t)$, then
+        \begin{equation*}
+            s_j = \sqrt{\sum_{i = 1}^n \left(f_i(t_j) - f_i(t_{j - 1})\right)^2} = \sqrt{\sum_{i = 1}^n \left(f'_i(t_j)\symrm{\Delta}t\right)^2}.
+        \end{equation*}
+        Therefore, the arc length between $R(a)$ and $R(b)$ is given by
+        \begin{align*}
+            \lim_{\symrm{\Delta}t \to 0} \sum_{j = 0}^{n}s_j & = \lim_{\symrm{\Delta}t \to 0} \sum_{j = 0}^{n}\sqrt{\sum_{i = 1}^n \left(f'_i(t_j)\symrm{\Delta}t\right)^2} \\
+                                                             & = \lim_{\symrm{\Delta}t \to 0} \sum_{j = 0}^{n}\sqrt{\sum_{i = 1}^n \left(f'_i(t_j)\right)^2}\symrm{\Delta}t \\
+                                                             & = \int_a^b \!\sqrt{\sum_{i = 1}^{n}f'_i(t)^2} \,\symrm{d}t.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+\section{Surfaces in \textit{n}-Dimensional Spaces}
+Intuitively, we view the notion of a {\color{red} \textbf{surface}} as a structure ``swept'' out by one or more curves. We introduce two ways to describe a surface.
+\subsection{Surfaces as Graphs of Functions}
+Just like how we can describe a curve using a mapping, a surface can also be viewed as the graph of a certain mapping (i.e., the set of all vectors in the image of a domain under a mapping).
+\begin{dfnbox}{Graph of functions}{graph}
+    Let $f \colon D \to \R^n$ be a mapping where $D\subseteq \R^m$, the set
+    \begin{displaymath}
+        \left\{ \, f(x) \,\colon x \in D \, \right\}
+    \end{displaymath}
+    is the surface known as the {\color{red} \textbf{graph}} of $f$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $g \colon \R \to \R^n$ and $h \colon \R^m \to \{\symbfit{v}\}$ both fulfill the above definition, which means that {\color{red} \textbf{curves}} and {\color{red} \textbf{points}} are also technically ``surfaces''. They are known as {\color{red} \textbf{degenerate}} surfaces.
+    \end{remark}
+\end{notebox}
+In particular, let $f(x_1, x_2, \cdots, x_{n - 1})$ be a function in $n - 1$ variables, then the surface which is the graph of $f$ is given by the set
+\begin{displaymath}
+    \left\{ \, \left(x_1, x_2, \cdots, x_{n - 1}, f\left(x_1, x_2, \cdots, x_{n - 1}\right)\right) \,\colon x_1, x_2, \cdots, x_{n - 1} \in D \, \right\}.
+\end{displaymath}
+\subsection{Surfaces as Level Sets of Functions}
+We introduce the concept of level sets of functions:
+\begin{dfnbox}{Level set}{lvlset}
+    Let $f\left(x_1, x_2, \cdots, x_{n - 1}\right)$ be a function in $n$ variables, then the {\color{red} \textbf{$k$-level set}} of $f$ is defined as the set
+    \begin{displaymath}
+        \left\{ \, \left(x_1, x_2, \cdots, x_n\right) \in \R^n \,\colon f\left(x_1, x_2, \cdots, x_n\right) = k \, \right\}.
+    \end{displaymath}
+\end{dfnbox}
+We can view the $k$-level set as the ``projection'' of the graph of $f$ at $f(x_1, x_2, \cdots, x_n) = k$ from $\R^{n + 1}$ to $\R^n$ . As such, a surface in $\R^n$ can be described as a level set for some function whose graph is in $\R^{n + 1}$.
+\subsection{Planes}
+In coordinate plane geometry, we conventionally define a plane to be a Euclidean plane, i.e., a $2$-dimensional Euclidean space. We can now abstract the notion of plane as follows:
+\begin{dfnbox}{Plane}{plane}
+    A plane is a space (or flat surface) of dimension $2$.
+\end{dfnbox}
+It is easy to see that a plane is a special case for a $2$-dimensional surface. Note that for any plane, we can always find a vector which is orthogonal to the plane, so we can describe a plane using this orthogonal vector.
+\begin{thmbox}{Equation of planes}{eqnplane}
+    Let $P$ be a plane with a basis, and let $\symbfit{n} \perp P$. If $\symbfit{p} \in P$, then for any $\symbfit{r} \in P$, we have
+    \begin{equation*}
+        \symbfit{r} \cdot \symbfit{n} = \symbfit{p} \cdot \symbfit{n},
+    \end{equation*}
+    where $\symbfit{n}$ is known as the {\color{red} \textbf{normal vector}} to $P$.
+\end{thmbox}
+With the notion of the normal vector, we are able to describe several relations between planes.
+\begin{thmbox}{Parallel planes}{parplane}
+    Two planes are parallel if and only if their normal vectors are parallel.
+\end{thmbox}
+\begin{thmbox}{Orthogonal planes}{orthoplane}
+    Two planes are orthogonal if and only if their normal vectors are orthogonal.
+\end{thmbox}
+\begin{thmbox}{Angle between planes}{angbetplanes}
+    Let $P_1$, $P_2$ be two planes with normal vectors $\symbfit{n}_1$ and $\symbfit{n}_2$ respectively, and let $\theta$ be the angle between $P_1$ and $P_2$, then
+    \begin{equation*}
+        \cos{\theta} = \frac{\left|\symbfit{n}_1 \cdot \symbfit{n}_2\right|}{\left\lVert \symbfit{n}_1 \right\rVert \left\lVert \symbfit{n}_2 \right\rVert}.
+    \end{equation*}
+\end{thmbox}
+\chapter{Multivariable Functions}
+\section{Limits of Multivariable Functions}
+Recall that for a $1$-variable function $f(x)$ over $\R$, we view the limit of $f(x)$ at $x = a$ to be the value which $f(x)$ approaches as $x$ gets arbitrarily close to $a$. We can generalise limits for $n$-variable functions.
+
+Note that the domain of an $n$-variable function $f$ is some set $D \subseteq \R^n$. Let $\symbfit{x} = \left(x_1, x_2, \cdots, x_n\right)$ and $\symbfit{y} = \left(y_1, y_2, \cdots, y_n\right)$ be vectors in $\R^n$, we define the ``closeness'' between $\symbfit{x}$ and $\symbfit{y}$ by considering their distance
+\begin{equation*}
+    d(\symbfit{x}, \symbfit{y}) = \sqrt{\sum_{i = 1}^n \left(x_i - y_i\right)^2}.
+\end{equation*}
+Therefore, we can write the following definition:
+\begin{dfnbox}{Limit of $n$-variable functions}{nvarlim}
+    Let $f$ be an $n$-variable function whose domain $D \subseteq \R^n$ contains some neighbourhood of $\symbfit{a} = \left(a_1, a_2, \cdots, a_n\right)$. For $\symbfit{x} = \left(x_1, x_2, \cdots, x_n\right)$ We say that
+    \begin{equation*}
+        \lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x}) = L
+    \end{equation*}
+    if for all $\epsilon > 0$, there is some $\delta > 0$ such that $\left|f(\symbfit{x}) - L\right| < \epsilon$ whenever $d(\symbfit{x}, \symbfit{a}) < \delta$.
+\end{dfnbox}
+Note that for $1$-variable functions, we can easily determine the existence of their limits at some value, and thus compute the limits, by checking the equality of their left- and right-limits. However, in $\R^n$, a vector $\symbfit{x}$ may approach $\symbfit{a}$ in {\color{red} \textbf{infinitely many}} distinct paths, so we have to check that for all mappings $p$, $q \colon \R \to \R^n$ with $p(0) = q(0) = \symbfit{a}$, $\lim_{t \to 0}f(p(t))$ and $\lim_{t \to 0}f(q(t))$ exist and are equal in order to prove the existence of $\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})$.
+
+Notice that the above reasoning provides a convenient way to {\color{red} \textbf{disprove}} the existence of $\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})$.
+\begin{thmbox}{Disprove the existence of limits $n$-variable functions}{disprovenvarlim}
+    Let $f$ be an $n$-variable function whose domain $D \subseteq \R^n$ contains some neighbourhood of $\symbfit{a} = \left(a_1, a_2, \cdots, a_n\right)$. Then $\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})$ {\color{red} \textbf{does not exist}} if and only if there are mappings $p$, $q \colon \R \to \R^n$ with $p(0) = q(0) = \symbfit{a}$ such that $\lim_{t \to 0}f(p(t)) \neq \lim_{t \to 0}f(q(t))$
+\end{thmbox}
+Note that we can perform basic arithmetic operations on limits for $1$-variable functions. Similarly, we can prove the following theorem for multivariable functions:
+\begin{thmbox}{Limit laws for multivariable functions}{limlawnvarf}
+    Let $f$ and $g$ both be functions in $n$ variables. If $\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})$ and $\lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x})$ both exist, then
+    \begin{enumerate}
+        \item $\lim_{\symbfit{x} \to \symbfit{a}} \left(f(\symbfit{x}) + g(\symbfit{x})\right) = \lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x}) + \lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x})$;
+        \item $\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})g(\symbfit{x}) = \left(\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})\right)\left(\lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x})\right)$;
+        \item $\lim_{\symbfit{x} \to \symbfit{a}} \frac{f(\symbfit{x})}{g(\symbfit{x})} = \frac{\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})}{\lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x})}$, provided that $\lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x}) \neq 0$.
+    \end{enumerate}
+    \tcblower
+    % Move the below proof to 1-variable calculus
+    \begin{proof}
+        Let $\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x}) = L_f$ and $\lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x}) = L_g$.
+
+        For all $\epsilon > 0$, there are $\delta_f$, $\delta_g > 0$ such that $\left|f(\symbfit{x}) - L_f\right| <  \frac{\epsilon}{2}$ whenever $d(\symbfit{x}, \symbfit{a}) < \delta_f$ and $\left|g(\symbfit{x}) - L_g\right| < \frac{\epsilon}{2}$ whenever $d(\symbfit{x}, \symbfit{a}) < \delta_g$
+
+        For all $\epsilon > 0$, take $\delta = \min \left\{\delta_f, \delta_g\right\}$. Whenever $d(\symbfit{x}, \symbfit{a}) < \delta$, we have:
+        \begin{align*}
+            \left|f(\symbfit{x}) + g(\symbfit{x}) - \left(L_f + L_g\right)\right| & = \left|f(\symbfit{x}) - L_f + g(\symbfit{x}) - L_g\right|                 \\
+                                                                                  & \leq \left|f(\symbfit{x}) - L_f\right| + \left|g(\symbfit{x}) - L_g\right| \\
+                                                                                  & < \frac{\epsilon}{2} + \frac{\epsilon}{2}                                  \\
+                                                                                  & = \epsilon.
+        \end{align*}
+        Therefore, $\lim_{\symbfit{x} \to \symbfit{a}} \left(f(\symbfit{x}) + g(\symbfit{x})\right) = \lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x}) + \lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x})$.
+
+        For all $\epsilon > 0$, there are also $\delta'_f$, $\delta'_g > 0$ such that $\left|f(\symbfit{x}) - L_f\right| <  \sqrt{\epsilon}$ whenever $d(\symbfit{x}, \symbfit{a}) < \delta'_f$ and $\left|g(\symbfit{x}) - L_g\right| < \sqrt{\epsilon}$ whenever $d(\symbfit{x}, \symbfit{a}) < \delta'_g$.
+
+        For all $\epsilon > 0$, take $\delta' = \min \left\{\delta'_f, \delta'_g\right\}$. Whenever $d(\symbfit{x}, \symbfit{a}) < \delta'$, we have:
+        \begin{equation*}
+            \left|\left(f(\symbfit{x}) - L_f\right)\left(g(\symbfit{x}) - L_g\right) - 0\right| = \left|f(\symbfit{x}) - L_f\right|\left|g(\symbfit{x}) - L_g\right| < \sqrt{\epsilon} \cdot \sqrt{\epsilon} = \epsilon.
+        \end{equation*}
+        Therefore, $\lim_{\symbfit{x} \to \symbfit{a}}\left(f(\symbfit{x}) - L_f\right)\left(g(\symbfit{x}) - L_g\right) = 0$. Note that
+        \begin{equation*}
+            f(\symbfit{x})g(\symbfit{x}) = \left(f(\symbfit{x}) - L_f\right)\left(g(\symbfit{x}) - L_g\right) + L_gf(\symbfit{x}) + L_fg(\symbfit{x}) - L_fL_g,
+        \end{equation*}
+        so we have:
+        \begin{align*}
+            \lim_{\symbfit{x} \to \symbfit{a}}f(\symbfit{x})g(\symbfit{x}) & = \lim_{\symbfit{x} \to \symbfit{a}} \left(\left(f(\symbfit{x}) - L_f\right)\left(g(\symbfit{x}) - L_g\right) + L_gf(\symbfit{x}) + L_fg(\symbfit{x}) - L_fL_g\right)                                                       \\
+                                                                           & = \lim_{\symbfit{x} \to \symbfit{a}}\left(f(\symbfit{x}) - L_f\right)\left(g(\symbfit{x}) - L_g\right) + L_g\lim_{\symbfit{x} \to \symbfit{a}}f(\symbfit{x}) + L_f\lim_{\symbfit{x} \to \symbfit{a}}g(\symbfit{x}) + L_fL_g \\
+                                                                           & = 0 + L_gL_f + L_fL_g - L_fL_g                                                                                                                                                                                              \\
+                                                                           & = L_fL_g                                                                                                                                                                                                                    \\
+                                                                           & = \lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})g(\symbfit{x}) = \left(\lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x})\right)\left(\lim_{\symbfit{x} \to \symbfit{a}} g(\symbfit{x})\right).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+Finally, we can extend the squeeze theorem to $n$-variable functions:
+\begin{thmbox}{Squeeze theorem in $n$ variables}{nvarsqueeze}
+    Let $f$, $g$, $h$ be functions in $n$ variables. If $g(\symbfit{x}) \leq f(\symbfit{x}) \leq h(\symbfit{x})$ whenever $d(\symbfit{x}, \symbfit{a}) < c$ for some real constant $c$, and $\lim_{\symbfit{x} \to \symbfit{a}}g(\symbfit{x}) = \lim_{\symbfit{x} \to \symbfit{a}}h(\symbfit{x}) = L$, then $\lim_{\symbfit{x} \to \symbfit{a}}f(\symbfit{x}) = L$.
+\end{thmbox}
+\section{Continuity of Multivariable Functions}
+We define continuity for multivariable functions similarly to the case of $1$-variable functions.
+\begin{dfnbox}{Continuity of $n$-variable functions}{nvarfcon}
+    A function $f \colon \R^n \to \R$ is {\color{red} \textbf{continuous}} at $\symbfit{a}$ if
+    \begin{equation*}
+        \lim_{\symbfit{x} \to \symbfit{a}} f(\symbfit{x}) = f(\symbfit{a}).
+    \end{equation*}
+    If $f$ is not continuous at $\symbfit{a}$, we say that $\symbfit{a}$ is a {\color{red} \textbf{discontinuity}} of $f$.
+
+    In particular, $f$ is said to be {\color{red} \textbf{continuous on}} $D \subseteq \R^n$ if it is continuous at every point in $D$.
+\end{dfnbox}
+Just like $1$-variable functions, continuity is preserved under simple arithmetic operations for multivariable functions.
+\begin{thmbox}{Continuous $n$-variable functions under arithmetic operations}{}
+    If $f$ and $g$ are functions in $n$ variables which are continous at $\symbfit{a}$, then $f \pm g$ and $f \cdot g$ are both continuous at $\symbfit{a}$. In particular, if $g(\symbfit{a}) \neq 0$, then $\frac{f(\symbfit{x})}{g(\symbfit{x})}$ is continuous at $\symbfit{a}$ as well.
+\end{thmbox}
+Continuity for $n$-variable functions is also preserved under function composition similarly to $1$-variable functions.
+\begin{thmbox}{Continuity of $n$-variable functions under composition}{}
+    If $f$ is an $n$-variable function which is continous at $\symbfit{a}$, and $g$ is a $1$-variable function which is continuous at $f(\symbfit{a})$, then the function
+    \begin{displaymath}
+        h(\symbfit{x}) = (g \circ f)(\symbfit{x}) = g(f(\symbfit{x}))
+    \end{displaymath}
+    is continuous at $\symbfit{a}$.
+\end{thmbox}
+As a consequence of the above theorems, the following functions are continuous over their entire domains:
+\begin{itemize}
+    \item Multivariable polynomials;
+    \item Multivariable trigonometric functions;
+    \item Multivariable exponential functions;
+    \item Multivariable rational functions.
+\end{itemize}
+\section{Differentiability of Multivariable Functions}
+A natural next step from continuity is differentiability for $n$-variable functions, which is a bit more complicated than $1$-variable functions, as we can differentiate with respect to each of the variables for a function with more than one single independent variable.
+\subsection{Partial Derivatives}
+The notion of {\color{red} \textbf{partial derivatives}} can be interpreted as follows: suppose we have a function $f$ in $n$ variables $x_1, x_2, \cdots, x_n$, we wish to find the rate of change of $f$ with respect to some $x_i$ only while keeping the other $n - 1$ variables constant.
+
+Formally, we have the following definition:
+\begin{dfnbox}{Partial derivative}{pard}
+    Suppose $f$ is an $n$-variable function, we define the {\color{red} \textbf{partial derivative}} of $f$ {\color{red} \textbf{with respect to $x_i$}} as the function
+    \begin{equation*}
+        f_{x_i}(\symbfit{x}) = \frac{\partial f}{\partial x_i} \coloneq \lim_{\symrm{\Delta}x_i \to 0}\frac{f\left(x_1, x_2, \cdots, x_{i - 1}, x_i + \symrm{\Delta}x_i, x_{i + 1}, \cdots, x_n\right) - f \left(x_1, x_2, \cdots, x_n\right)}{\symrm{\Delta}x_i}.
+    \end{equation*}
+\end{dfnbox}
+In other words, suppose we define a function $g(x_i) = f(x_1, x_2, \cdots, x_i, \cdots, x_n)$, then the partial derivative of $f$ with respect to $x_i$ is just the derivative of $g$ with respect to $x_i$, i.e., $f_{x_i}(\symbfit{x}) = g'(x_i)$.
+
+Note that if $f$ is an $n$-variable function, then the partial derivatives of $f$ are also $n$-variable functions, which we can still differentiate with respect to each of the $n$-variables. Performing partial differentiation of $f$ yields the {\color{red} \textbf{$n$-th order partial derivatives}} of $f$.
+
+Conventionally, we denote an $n$-th order partial derivative of $f$ by writing in the subscript of $f$ the variables we differentiate it with respect to {\color{red} \textbf{in the same order}} of these differentiation. For example, $f_{xy}$ means the second order partial derivative of $f$ obtained by differentiating $f$ first with respect to $x$ and then with respect to $y$.
+
+We have the following theorem for $n$-th order derivatives:
+\begin{thmbox}{Clairaut's theorem}{clairaut}
+    Let $f$ be an $n$-variable function defined on $D$ and let $\symbfit{a} \in D$. If the functions $f_{xy}$ and $f_{yx}$ are continuous on $D$, then
+    \begin{equation*}
+        f_{xy}(\symbfit{a}) = f_{yx}(\symbfit{a}).
+    \end{equation*}
+\end{thmbox}
+\subsection{Differentiability}
+To define differentiability of $n$-variable functions rigorously, we first introduce the following preliminary definition:
+\begin{dfnbox}{Interior point}{inpt}
+    Let $P \in D \subseteq \R^n$. $P$ is known as an {\color{red} \textbf{interior point}} of $D$ if there exists some $\epsilon > 0$ such that the set
+    \begin{displaymath}
+        B_\epsilon(P) \coloneq \left\{ \, Q \in \R^n \,\colon d(P, Q) < \epsilon \, \right\}
+    \end{displaymath}
+    is a subset of $D$. The set of all interior points of $D$ is known as the {\color{red} \textbf{interior}} of $D$.
+
+    In particular, if $P \in D$ is not an interior point of $D$, then $P$ is a {\color{red} \textbf{boundary point}} of $D$. The set of all boundary points of $D$ is known as the {\color{red} \textbf{boundary}} of $D$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        If every point in $D$ is an interior point of $D$, i.e., $D$ equals its interior, then $D$ is said to be {\color{red} \textbf{open}}.
+    \end{remark}
+\end{notebox}
+And so we define differentiability as follows:
+\begin{dfnbox}{Differentiability of $n$-variable functions}{difnvarf}
+    Let $D \subseteq \R^n$ and let $P$ with position vector $\symbfit{p}$ be an interior point of $D$. A function $f \colon D \to \R$ is {\color{red} \textbf{differentiable}} at $\symbfit{p}$ if there exists a {\color{red} \textbf{linear mapping}} $L \colon \R^n \to \R$ such that
+    \begin{equation*}
+        \lim_{\symrm{\Delta}\symbfit{p} \to \symbf{0}}\frac{f \left(\symbfit{p} + \symrm{\Delta}\symbfit{p}\right) - f(\symbfit{p}) - L(\symrm{\Delta}\symbfit{p})}{\left\lVert \symrm{\Delta}\symbfit{p} \right\rVert} = 0.
+    \end{equation*}
+    The linear mapping $L$ is known as the {\color{red} \textbf{(total) derivative}} of $f$ at $\symbfit{p}$, which is denoted as $\symrm{D}f_{\symbfit{p}}$.
+
+    $f$ is said to be {\color{red} \textbf{differentiable on $D$}} if it is {\color{red} \textbf{continuous on $D$}} and {\color{red} \textbf{differentiable at every interior point}} in $D$.
+\end{dfnbox}
+Recall that the graph of an $n$-variable function $f$ is a surface in $\R^{n + 1}$, which is analogous to a curve in $\R^2$ which is the graph of a $1$-variable function. Therefore, we can define the notion of a {\color{red} \textbf{tangent plane}} analogously to that of a tangent line.
+
+Let $T_{\symbfit{a}}\R^n$ denote the set of all vectors in $\R^n$ with initial point whose position vector is $\symbfit{a}$. Then the position vector in $\R^n$ of any vector $\symbfit{b}$ in $T_{\symbfit{a}}\R^n$ is $\symbfit{a} + \symbfit{b}$.
+
+Thus, we can think $\symrm{D}f_{\symbfit{a}}$ as a linear mapping $\symbfit{b} \mapsto \symrm{D}f_{\symbfit{a}} \in \R$ for all vectors $\symbfit{b} \in T_{\symbfit{a}}\R^n$. Geometrically, this is the change in ``height'' between the initial and terminal points of $\symbfit{b}$.
+\begin{dfnbox}{Tangent plane}{tanplane}
+    Let $f$ be an $n$-variable function defined on $D \subseteq \R^n$. Let $f(\symbfit{x}) = f \left(x_1, x_2, \cdots, x_n\right) = x_{n + 1}$, then the {\color{red} \textbf{tangent plane}} to $f$ at $\left(x_1, x_2, \cdots, x_{n + 1}\right)$ is defined to be the graph of the mapping $\symbfit{y} \mapsto f(\symbfit{x}) + \symrm{D}f_{\symbfit{x}}(\symbfit{y - x})$.
+\end{dfnbox}
+Next, we shall introduce a way to systematically find this linear mapping $\symrm{D}f$.
+\begin{thmbox}{Formula for total derivative}{tdform}
+    If $f$ is an $n$-variable function which is differentiable at $\symbfit{a} = (a_1, a_2, \cdots, a_n)$, then
+    \begin{equation*}
+        \symrm{D}f_{\symbfit{a}}(\symbfit{x}) = \symrm{D}f_{\symbfit{a}}(x_1, x_2, \cdots, x_n) = \sum_{i = 1}^{n}f_{x_i}(\symbfit{a})x_i.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $\symrm{D}f_{\symbfit{a}}$ is a linear transformation, so it suffices to prove that $\symrm{D}f_{\symbfit{a}}(\symbfit{e}_i) = f_{x_i}(\symbfit{x})$ for $i = 1, 2, \cdots, n$ where $\symbfit{e}_i$ is the $i$-th vector in the standard basis for $\R^n$.
+
+        Let $\symrm{\Delta}\symbfit{p} = h\symbfit{e}_i$, then by Definition \ref{dfn:difnvarf}, we have:
+        \begin{equation*}
+            \lim_{h \to 0}\frac{f(\symbfit{a} + h \symbfit{e}_i) - f(\symbfit{a}) - h\symrm{D}f_{\symbfit{a}}(\symbfit{e}_i)}{h} = 0.
+        \end{equation*}
+        Re-arranging the above equation, we have:
+        \begin{equation*}
+            \symrm{D}f_{\symbfit{a}}(\symbfit{e}_i) = \lim_{h \to 0}\frac{f(\symbfit{a} + h \symbfit{e}_i) - f(\symbfit{a})}{h} = f_{x_i}(\symbfit{a}).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        Note that even though we compute the total derivative using the partial derivatives, the existence of partial derivatives {\color{red} \textbf{does not imply}} differentiability.
+    \end{remark}
+\end{notebox}
+Analogously to $1$-variable calculus, we can similarly prove the following laws for total derivatives:
+\begin{thmbox}{Arithmetic operations on total derivatives}{tdop}
+    Let $f$ and $g$ be $n$-variable functions which are differentiable at $\symbfit{a}$, then
+    \begin{enumerate}
+        \item $f \pm g$ is differentiable at $\symbfit{a}$ and $\symrm{D}(f \pm g)_{\symbfit{a}}(\symbfit{x}) = \symrm{D}f_{\symbfit{a}}(\symbfit{x}) \pm \symrm{D}g_{\symbfit{a}}(\symbfit{x})$;
+        \item $fg$ is differentiable at $\symbfit{a}$ and $\symrm{D}(fg)_{\symbfit{a}}(\symbfit{x}) = g(\symbfit{x})\symrm{D}f_{\symbfit{a}}(\symbfit{x}) + f(\symbfit{x})\symrm{D}g_{\symbfit{a}}(\symbfit{x})$;
+        \item $cf$ is differentiable at $\symbfit{a}$ for all $c \in \R$, and $\symrm{D}(cf)_{\symbfit{a}}(\symbfit{x}) = c\symrm{D}f_{\symbfit{a}}(\symbfit{x})$;
+        \item $\frac{f}{g}$ is differentiable at $\symbfit{a}$ if $g(\symbfit{a}) \neq 0$ and $\symrm{D}\left(\frac{f}{g}\right)_{\symbfit{a}}(\symbfit{x}) = \frac{1}{g(\symbfit{a})^2}\left(g(\symbfit{x})\symrm{D}f_{\symbfit{a}}(\symbfit{x}) \, - \right.$ \\
+              $\left.f(\symbfit{x})\symrm{D}g_{\symbfit{a}}(\symbfit{x})\right)$.
+    \end{enumerate}
+\end{thmbox}
+\begin{thmbox}{Chain rule for multivariable functions}{chainrulenvar}
+    Let $u$ be a differentiable function in $n$ variables $x_1, x_2, \cdots, x_n$, and let each of the $x_i$'s be differentiable functions in $m$ variables $t_1, t_2, \cdots, t_m$, then
+    \begin{equation*}
+        \frac{\partial u}{\partial t_j} = \sum_{i = 1}^n \frac{\partial u}{\partial x_i}\frac{\partial x_i}{\partial t_j}
+    \end{equation*}
+    for $j = 1, 2, \cdots, m$.
+\end{thmbox}
+Lastly, here is a more straight-forward way to check differentiability:
+\begin{thmbox}{Differentiability theorem}{difthm}
+    Let $f$ be an $n$-variable function defined on $D \subseteq \R^n$ and let $\symbfit{a} \in D$. If all first order partial derivatives of $f$ are defined on $D$ and continuous at $\symbfit{a}$, then $f$ is differentiable at $\symbfit{a}$.
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        The converse of the above theorem is {\color{red} \textbf{false}}, i.e., a differentiable function might have discontinuous partial derivatives!
+    \end{remark}
+\end{notebox}
+\subsection{Gradient Vectors}
+Note that in an $n$-dimensional space, we can describe a direction with the {\color{red} \textbf{unit vector}} in that direction. With this, we are able to compute the rate of change of a function $f$ at some point with position vector $\symbfit{a}$ in the direction of some unit vector $\symbfit{u}$, i.e., the change in $f(\symbfit{x})$ per unit length from $\symbfit{a}$ in the direction of $\symbfit{u}$. More formally, we have the following definition:
+\begin{dfnbox}{Directional derivative}{drd}
+    Let $f$ be an $n$-variable function and $\symbfit{u}$ be a unit vector in $\R^n$. The {\color{red} \textbf{direction derivative}} of $f$ at $\symbfit{a}$ in the direction of $\symbfit{u}$ is defined as
+    \begin{equation*}
+        \symrm{D}f_{\symbfit{a}}(\symbfit{u}) = \lim_{h \to 0}\frac{f(\symbfit{a} + h \symbfit{u}) - f(\symbfit{a})}{h}
+    \end{equation*}
+    provided that the limit exists.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The partial derivatives of $f$ is just special cases of directional derivatives in the directions of the vectors in the standard basis of $\R^n$.
+    \end{remark}
+\end{notebox}
+Recall that the existence of partial derivatives does not imply differentiability, so a function can still be not differentiable even if all the directional derivatives are defined at a point. However, conversely, differentiability does imply the existence of all directional derivatives.
+\begin{thmbox}{Directional derivatives of differentiable functions}{diffdrd}
+    Let $f$ be a function in $n$ variables $x_1, x_2, \cdots, x_n$ which is differentiable at $\symbfit{a}$, then all of the directional derivatives of $f$ at $\symbfit{a}$ exist, and for all unit vectors $\symbfit{u} \in \R^n$,
+    \begin{equation*}
+        \symrm{D}f_{\symbfit{a}}(\symbfit{u}) = \sum_{i = 1}^{n}f_{x_i}(\symbfit{a})u_i,
+    \end{equation*}
+    where
+    \begin{equation*}
+        \symbfit{u} = \left[\begin{array}{c}
+                u_1    \\
+                u_2    \\
+                \vdots \\
+                u_n
+            \end{array}\right]
+    \end{equation*}
+\end{thmbox}
+Note that the formula in \ref{thm:diffdrd} resembles the dot product between two vectors, which gives us motivation to define the following:
+\begin{dfnbox}{Gradient vector}
+    Let $f$ be a function in $n$ variables $x_1, x_2, \cdots, x_n$, then the {\color{red} \textbf{gradient vector}} of $f$ is defined as
+    \begin{equation*}
+        \nabla f(x_1, x_2, \cdots, x_n) =  \left[\begin{array}{c}
+                f_{x_1}(x_1, x_2, \cdots, x_n) \\
+                f_{x_2}(x_1, x_2, \cdots, x_n) \\
+                \vdots                         \\
+                f_{x_n}(x_1, x_2, \cdots, x_n)
+            \end{array}\right].
+    \end{equation*}
+\end{dfnbox}
+With the notion of the gradient vector, we are able to re-write the formula for directional derivative as $\symrm{D}f_{\symbfit{a}}(\symbfit{u}) = \nabla f(\symbfit{a}) \cdot \symbfit{u}$.
+
+We now follow up by discussing some useful properties of the gradient vector.
+\begin{thmbox}{Orthogonality between the gradient vector and level sets}{mvecortholvlset}
+    Let $f$ be a differentiable function in $n$ variables and let $\symbfit{a} \in \R^n$. Let $S$ be the level set of $f$ containing $\symbfit{a}$. If $\nabla f(\symbfit{a}) \neq \symbf{0}$, then $\nabla f(\symbfit{a}) \perp S$.
+    \tcblower
+    \begin{proof}
+        Let $S$ be the $k$-level set of $f$ and parametrised by
+        \begin{displaymath}
+            R(t) = \left[\begin{array}{c}
+                    x_1(t) \\
+                    x_2(t) \\
+                    \vdots \\
+                    x_n(t)
+                \end{array}\right],
+        \end{displaymath}
+        then $f(R(t)) = k$. Differentiating both sides with respect to $t$ yields
+        \begin{equation*}
+            \frac{\symrm{d}}{\symrm{d}t}f(R(t)) = \sum_{i = 1}^n \frac{\partial f}{\partial x_i}\frac{\partial x_i}{\partial t} = \nabla f(R(t)) \cdot R'(t) = 0.
+        \end{equation*}
+        Therefore, $\nabla f(R(t)) \perp R'(t)$ for all $t$, i.e., for all $\symbfit{a} \in S$, $\nabla f(\symbfit{a}) \perp S$ at $\symbfit{a}$.
+    \end{proof}
+\end{thmbox}
+Note that Theorem \ref{thm:mvecortholvlset} offers another way to find the tangent plane to a function $f$ at $\symbfit{a}$. Let this tangent plane be $T$ and let $\symbfit{r} \in T$ be an arbitrary vector, then $(\symbfit{r} - \symbfit{a}) \parallel T$ and so
+\begin{equation*}
+    \nabla f(\symbfit{a}) \cdot (\symbfit{r - a}) = 0.
+\end{equation*}
+
+Furthermore, we can also prove the following theorem:
+\begin{thmbox}{Computing directional derivatives with the gradient vector}{fastchangedr}
+    Let $f$ be a differentiable function in $n$ variables and let $P$ be a point with position vector $\symbfit{p}$ such that $\nabla f(\symbfit{p}) \neq \symbf{0}$. If $\symbfit{u}$ is a unit vector with initial point $P$ and $\theta$ is the angel between $\symbfit{u}$ and $\nabla f(\symbfit{p})$, then
+    \begin{equation*}
+        \symrm{D}f_{\symbfit{p}}(\symbfit{u}) = \left\lVert\nabla f(\symbfit{p})\right\rVert\cos{\theta}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        \begin{align*}
+            \symrm{D}f_{\symbfit{p}}(\symbfit{u}) & = \nabla f(\symbfit{p}) \cdot \symbfit{u}                                                        \\
+                                                  & = \left\lVert\nabla f(\symbfit{p})\right\rVert \left\lVert \symbfit{u} \right\rVert \cos{\theta} \\
+                                                  & = \left\lVert\nabla f(\symbfit{p})\right\rVert\cos{\theta}.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+The above theorem implies that
+\begin{displaymath}
+    -\left\lVert\nabla f(\symbfit{p})\right\rVert \leq \symrm{D}f_{\symbfit{p}}(\symbfit{u}) \leq \left\lVert\nabla f(\symbfit{p})\right\rVert.
+\end{displaymath}
+Note that $\symrm{D}f_{\symbfit{p}}(\symbfit{u})$ attains maximum and minimum at $\theta = 0$ and $\theta = \pi$ respectively, so $\pm\nabla f(\symbfit{p})$ points to the directions of fastest and slowest changes of $f$ respectively.
+\subsection{Implicit Differentiation in \textit{n}-Variables}
+Given variables $x_1, x_2, \cdots, x_n$, sometimes it may not be easy or even possible to define a function relating one of the $n$ variables to the rest $n - 1$ variables. Therefore, to analyse the derivatives between these variables, we need to perform differentiation implicitly.
+
+Let $F$ be a function in $n$ variables. Let $x_1, x_2, \cdots, x_n$ be such that $F(x_1, x_2, \cdots, x_n) = k$, then the set of all points $(x_1, x_2, \cdots, x_n)$ is exactly the $k$-level set of $F$.
+
+Note that this relationship helps us {\color{red} \textbf{implicitly define}} each of the $x_i$'s as a function in the other $n - 1$ variables. It is thus reasonable to differentiate each of the $x_i$'s with respect to some $x_j$ for $i \neq j$.
+\begin{thmbox}{Implicit differentiation in $n$ variables}{imdifnvar}
+    Let $F$ be a differentiable function in $n$ variables $x_1, x_2, \cdots, x_n$ and let $k$ be a real constant. If $F(x_1, x_2, \cdots, x_{i - 1}, x_i, x_{i + 1}, \cdots x_n) = k$ defines $x_i$ implicitly as a function of $x_1, x_2, \cdots, x_{i - 1}, x_{i + 1}, \cdots, x_n$ and $F_{x_i}(\symbfit{x}) \neq 0$, then
+    \begin{equation*}
+        \frac{\partial x_i}{\partial x_j}(\symbfit{x}) = -\frac{F_{x_j}(\symbfit{x})}{F_{x_i}(\symbfit{x})}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Differentiating both sides of $F(x_1, x_2, \cdots, x_i, \cdots x_n) = k$ with respect to $x_j$, by Theorem \ref{thm:chainrulenvar}, we have:
+        \begin{equation*}
+            \sum_{k = 1}^{n}F_{x_k}(\symbfit{x})\frac{\partial x_k}{\partial x_j} = 0,
+        \end{equation*}
+        which simplifies to
+        \begin{align*}
+            \sum_{\substack{1 \leq k \leq n \\
+            k \neq i, j}}F_{x_k}(\symbfit{x})\frac{\partial x_k}{\partial x_j} + F_{x_j}(\symbfit{x})\frac{\partial x_j}{\partial x_j} + F_{x_i}(\symbfit{x})\frac{\partial x_i}{\partial x_j} & = F_{x_j}(\symbfit{x}) + F_{x_i}(\symbfit{x})\frac{\partial x_i}{\partial x_j}\\
+            & = 0.
+        \end{align*}
+        Since $F_{x_i}(\symbfit{x}) \neq 0$, we have:
+        \begin{equation*}
+            \frac{\partial x_i}{\partial x_j}(\symbfit{x}) = -\frac{F_{x_j}(\symbfit{x})}{F_{x_i}(\symbfit{x})}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Applying implicit differentiation, we can conveniently compute the tangent plane to the graph of a function at some point in the $3$-dimensional Euclidean space.
+
+Let $F$ be a function of $3$ variables and let $S$ be the $k$-level set of $F$ for some real constant $k$, i.e., $S = \left\{ \, (x, y, z) \,\colon F(x, y, z) = k \, \right\}$. 
+
+Suppose that $F(x, y, z) = k$ defines one of $x$, $y$, $z$ implicitly as a function of the other two variables. Let $\symbfit{v}$ be the position vector of some point $(a, b, c) \in S$, then we can differentiate $\symbfit{v}$ with respect to $x$ and $y$ respectively to obtain two tangent vectors to $S$ at $(a, b, c)$ in the $x$- and $y$-directions respectively, given by
+\begin{align*}
+    \frac{\partial \symbfit{v}}{\partial x} & = \left[\begin{array}{c}
+        1 \\
+        0 \\
+        \frac{\partial z}{\partial x}(a, b, c)
+    \end{array}\right]; \\
+    \frac{\partial \symbfit{v}}{\partial y} & = \left[\begin{array}{c}
+        0 \\
+        1 \\
+        \frac{\partial z}{\partial y}(a, b, c)
+    \end{array}\right].
+\end{align*}
+Therefore, we compute a normal vector to $S$ at $(a, b, c)$ given by
+\begin{equation*}
+    \left[\begin{array}{c}
+        1 \\
+        0 \\
+        \frac{\partial z}{\partial x}(a, b, c)
+    \end{array}\right] \times \left[\begin{array}{c}
+        0 \\
+        1 \\
+        \frac{\partial z}{\partial y}(a, b, c)
+    \end{array}\right] = \left[\begin{array}{c}
+        \frac{\partial z}{\partial x}(a, b, c) \\
+        \frac{\partial z}{\partial y}(a, b, c) \\
+        -1
+    \end{array}\right].
+\end{equation*}
+By \ref{thm:eqnplane}, the equation for the tangent plane to $S$ at $(a, b, c)$ is
+\begin{equation*}
+    \frac{\partial z}{\partial x}(a, b, c)x + \frac{\partial z}{\partial y}(a, b, c)y - z = \frac{\partial z}{\partial x}(a, b, c)a + \frac{\partial z}{\partial y}(a, b, c)b - c.
+\end{equation*}
+\section{Optimisation Problems in Multivariable Calculus}
+In this section, we discuss an important application of multivariable calculus in optimisation problems.
+\subsection{Extrema of Multivariable Functions}
+We first give the definition of extrema in multivariable functions.
+\begin{dfnbox}{Local extrema of $n$-variable functions}{locexnvarf}
+    Let $f \colon D \to \R$ be a function in $n$ variables, where $D \subseteq \R^n$. Let $B$ be some disk centred at $C \in D$, then for all points $P \in B \cap D$:
+    \begin{itemize}
+        \item $C$ is a {\color{red} \textbf{local maximum}} of $f$ if $f(P) \leq f(C)$;
+        \item $C$ is a {\color{red} \textbf{local minimum}} of $f$ if $f(P) \geq f(C)$.
+    \end{itemize} 
+    A local minimum or local maximum is known as a {\color{red} \textbf{local extremum}} of $f$.
+\end{dfnbox}
+\begin{dfnbox}{Global extrema of $n$-variable functions}{globalexnvarf}
+    Let $f \colon D \to \R$ be a function in $n$ variables, where $D \subseteq \R^n$. For all points $Q \in D$:
+    \begin{itemize}
+        \item $C$ is a {\color{red} \textbf{global maximum}} of $f$ if $f(Q) \leq f(C)$;
+        \item $C$ is a {\color{red} \textbf{global minimum}} of $f$ if $f(Q) \geq f(C)$.
+    \end{itemize} 
+    A global minimum or global maximum is known as a {\color{red} \textbf{global extremum}} of $f$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that all global extrema of a function are necessarily its local extrema, but the coverse is not true.
+    \end{remark}
+\end{notebox}
+Observe that if $P$ is a local extremum of some function $f$, then all directional derivatives of $f$ at $P$ must evaluate to $0$. This is equivalent to having all partial derivatives of $f$ evaluate to $0$ at $P$, which motivates the following definition:
+\begin{dfnbox}{Critical point}{critpt}
+    Let $f \colon D \to \R$ be a function in $n$ variables $x_1, x_2, \cdots, x_n$ which is differentiable at some point $P$ in the interior of $D$. If $f_{x_i}(P) = 0$ for all $i$, then $P$ is said to be a {\color{red} \textbf{critical point}} of $f$.
+\end{dfnbox}
+Combining Definitions \ref{dfn:locexnvarf} and \ref{dfn:critpt}, we have:
+\begin{thmbox}{Relationship between local extrema and critical points}{relexpt}
+    If a function $f$ is differentiable at some point $P$ and achieves a local extremum at $P$, then $P$ is a critical point of $f$.
+\end{thmbox}
+Note that the converse to the above theorem is false. We shall illustrate this with a counter example.
+
+Consider the function $f(x, y) = y^2 - x^2$. Note that $f_x(x, y) = -2x$ and $f_y(x, y) = 2y$. Let $f_x(x, y) = f_y(x, y) = 0$, we have $x = y = 0$, so $(0, 0)$ is the only critical point of $f$.
+
+Note that $f(0, 0) = 0$. However, for all $t \neq 0$, we have $f(t, 0) = -t^2 < 0$ and $f(0, t) = t^2 > 0$, which means that $f(0, 0)$ is neither a local minimum nor a local maximum.
+
+Therefore, a function may not attain any local extremum at its critical points.
+\begin{dfnbox}{Saddle point}{saddlept}
+    Let $f \colon D \to \R$ be a function and let $P$ be a critical point of $f$. If for all disks $B$ centred at $P$, there is some $Q_1 \in B$ such that $f(Q_1) > f(P)$ and there is some $Q_2 \in B$ such that $f(Q_2) < f(P)$, then $P$ is called a {\color{red} \textbf{saddle point}} of $f$.
+\end{dfnbox}
+Next, we shall discuss the notion of global extrema. Note that a function might be unbounded, so it is necessary to restrict the function to a certain subset of its domain to ensure the existence of global extrema.
+\begin{dfnbox}{Openness of a set}{openset}
+    A set $D$ is called {\color{red} \textbf{open}} if for all $X \in D$ there is some disk $B$ centred at $X$ such that $B \subseteq D$.
+\end{dfnbox}
+\begin{dfnbox}{Closed and bounded set}{closedbounded}
+    A set is called {\color{red} \textbf{closed}} if its complement is open. A set $D$ is called {\color{red} \textbf{bounded}} if there is some disk $B$ such that $D \subseteq B$.
+\end{dfnbox}
+\begin{thmbox}{Extreme value theorem}{exvalthm}
+    If $f \colon D \to \R$ is continuous on $D$ which is a closed and bounded set, then $f$ has at least one global maximum and at least one global minimum.
+\end{thmbox}
+We thus give the following algorithm in computing the global extrema of a function $f \colon D \to \R$ where $D$ is closed and bounded:
+\begin{genbox}{An algorithm to compute global extrema}{}
+    \begin{enumerate}
+        \item Find the critical points of $f$.
+        \item Evaluate $f$ at each of the critical points.
+        \item Find the extreme values of $f$ on the boundary of $D$.
+        \item Among all values computed in the previous two steps, the largest and the smallest are the global maximum and global minimum of $f$ respectively.
+    \end{enumerate}
+\end{genbox}
+\subsection{Lagrange Multiplier}
+We now consider a special type of optimisation problems:
+
+Let $f \colon D \to \R$ be an $n$-variable function and $C \subseteq D$ be a curve in $D$. Consider $f$ restricted to $C$, i.e., the function ${\displaystyle f{\big\upharpoonright_{C}}}$. Can we optimise this restriction of $f$, i.e., can we find the global extrema of $f$ subject to the contraint $C$?
+
+It turns out that solving the above problem is possible if $C$ is given as some level set of an $n$-variable function.
+\end{document}
