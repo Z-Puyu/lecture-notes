@@ -374,7 +374,9 @@
 
     \newcommand{\alg}[1]{{\left\langle {#1} \right\rangle}}
 
-    \DeclarePairedDelimiter\abs{\lvert}{\rvert}    \DeclarePairedDelimiter\norm{\lVert}{\rVert}
+    \newcommand{\abs}[1]{{\left\lvert {#1} \right\rvert}}
+    \newcommand{\norm}[1]{{\left\lVert {#1} \right\rVert}}
+
     \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
     \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 

@@ -36,21 +36,78 @@
 
 \chapter{Permutations and Combinations}
 \section{Basic Counting Principles}
-\begin{thmbox}{Addition Priciple}{AP}
-   Let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
+An important motivation to study combinatorics is to count the {\color{red} \textbf{number of ways}} in which an event may occur. Intuitively, we have two approaches to count.
+
+The first approach is to categorise the event into {\color{red} \textbf{non-overlapping cases}}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
+
+Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a {\color{red} \textbf{partition}} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
+
+This motivates us to write the following principle using set notations.
+\begin{thmbox}{Addition Principle (AP)}{AP}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ finite sets which are pairwise disjoint, i.e. $A_i \cap A_j = \varnothing$ whenever~$i \neq j$, then
    \begin{equation*}
-        \left|\bigcup_{i = 1}^k A_i\right| = \sum_{i = 1}^{k}\left|{A_i}\right|.
+        \abs{\bigcup_{i = 1}^k A_i} = \sum_{i = 1}^{k}\abs{A_i}.
    \end{equation*} 
+   \tcblower
+   \begin{proof}
+        The case where $k = 1$ is trivial.
+
+        Suppose that when $k = n$, we have
+        \begin{equation*}
+            \abs{\bigcup_{i = 1}^n A_i} = \sum_{i = 1}^{n}\abs{A_i}
+        \end{equation*} 
+        for any $n$ finite sets which are pairwise disjoint. Let $A_{n + 1}$ be an arbitrary finite set which is disjoint with any of the $A_i$'s from the $n$ sets. So we have:
+        \begin{align*}
+            \abs{\bigcup_{i = 1}^{n + 1} A_i} & = \abs{\left(\bigcup_{i = 1}^n A_i\right) \cup A_{n + 1}} \\
+            & = \abs{\bigcup_{i = 1}^n A_i} + \abs{A_{n + 1}} - \abs{\left(\bigcup_{i = 1}^n A_i\right) \cap A_{n + 1}} \\
+            & = \left(\sum_{i = 1}^{n}\abs{A_i}\right) + \abs{A_{n + 1}} - \abs{\varnothing} \\
+            & = \sum_{i = 1}^{n + 1}\abs{A_i}.
+        \end{align*}
+        Therefore, the original statement holds for all $k \in \N^+$.
+   \end{proof}
 \end{thmbox}
-\begin{thmbox}{Multiplication Priciple}{MP}
-    Let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
+\begin{notebox}
+    In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
+\end{notebox}
+Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into {\color{red} \textbf{non-overlapping stages}}.
+
+With set notations, we can write the $i$-th stage for $E$ to occur as $e_i$, and so a way for $E$ to occur can be represented by an ordered tuple $(e_1, e_2, \cdots, e_k)$, where $k$ is the total number of stages to undergo for $E$ to occur.
+
+Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the {\color{red} \textbf{Cartesian product}} of all the $E_i$'s. Hence, we derive the following principle:
+\begin{thmbox}{Multiplication Principle (MP)}{MP}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
     \begin{equation*}
-        \left|\prod_{i = 1}^{k}A_i\right| = \prod_{i = 1}^{k}\left|A_i\right|.
+        \abs{\prod_{i = 1}^{k}A_i} = \prod_{i = 1}^{k}\abs{A_i}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        The case where $k = 1$ is trivial.
+
+        Suppose that when $k = n$, we have
+        \begin{equation*}
+            \abs{\prod_{i = 1}^{n}A_i} = \prod_{i = 1}^{n}\abs{A_i}
+        \end{equation*} 
+        for any $n$ finite sets which are pairwise disjoint. Let $A_{n + 1}$ be an arbitrary finite set which is disjoint with any of the $A_i$'s from the $n$ sets. Take $a_i, a_j \in A_{n + 1}$. Note that for all $\mathbfit{a} \in \prod_{i = 1}^{n}A_i$, $(\mathbfit{a}, a_i) \neq (\mathbfit{a}, a_j)$ whenever $a_i \neq a_j$. This means that
+        \begin{align*}
+            \abs{\prod_{i = 1}^{n + 1}A_i} & = \abs{\prod_{i = 1}^{n}A_i \times A_{n + 1}} \\
+            & = \abs{\prod_{i = 1}^{n}A_i}\abs{A_{n + 1}} \\
+            & = \left(\prod_{i = 1}^{n}\abs{A_i}\right)\abs{A_{n + 1}} \\
+            & = \prod_{i = 1}^{n + 1}\abs{A_i}
+        \end{align*}
+        Therefore, the original statement holds for all $k \in \N^+$.
+    \end{proof}
 \end{thmbox}
-\chapter{Permutations}
+\begin{notebox}
+    In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
+\end{notebox}
+\section{Permutations}
+A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many {\color{red} \textbf{distinct sequences}} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
+
+Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
+
+Continue choosing elements in this way, we realise that if we choose the terms sequentially, when we reach the $k$-th term we will be left with $n - k + 1$ options as the previous~$(k - 1)$ terms have taken away $(k - 1)$ elements. By Theorem \ref{thm:MP}, we know that the number of sequences which can be formed is given by $\prod_{i = 1}^{r}(n - r + i)$.
 \begin{dfnbox}{Permutations}{permutations}
-    Let $A$ be a finite set such that $\left|A\right| = n$, an $r$-permutation of $A$ is a way to arrange $r$ elements of $A$, denoted as
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-permutation of $A$ is a way to arrange $r$ elements of $A$, denoted as $P^n_r$ and given by
     \begin{equation*}
         P^n_r = \prod_{i = 1}^{r}(n - r + i) = \frac{n!}{(n - r)!}.
     \end{equation*}
