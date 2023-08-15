@@ -1,0 +1,58 @@
+\documentclass[math]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+
+\begin{document}
+\fancyhead[L]{
+    Combinatorics and Graphs I 
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Permutations and Combinations}
+\section{Basic Counting Principles}
+\begin{thmbox}{Addition Priciple}{AP}
+   Let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
+   \begin{equation*}
+        \left|\bigcup_{i = 1}^k A_i\right| = \sum_{i = 1}^{k}\left|{A_i}\right|.
+   \end{equation*} 
+\end{thmbox}
+\begin{thmbox}{Multiplication Priciple}{MP}
+    Let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
+    \begin{equation*}
+        \left|\prod_{i = 1}^{k}A_i\right| = \prod_{i = 1}^{k}\left|A_i\right|.
+    \end{equation*}
+\end{thmbox}
+\chapter{Permutations}
+\begin{dfnbox}{Permutations}{permutations}
+    Let $A$ be a finite set such that $\left|A\right| = n$, an $r$-permutation of $A$ is a way to arrange $r$ elements of $A$, denoted as
+    \begin{equation*}
+        P^n_r = \prod_{i = 1}^{r}(n - r + i) = \frac{n!}{(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
+\end{document}
