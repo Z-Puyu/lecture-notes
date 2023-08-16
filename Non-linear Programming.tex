@@ -1,0 +1,64 @@
+\documentclass[math]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+
+\begin{document}
+\fancyhead[L]{
+    Non-linear Programming
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Optimisation Models}
+\begin{dfnbox}{Optimal Solution}{optSoln}
+    Consider an optimisation problem with respect to $f(\mathbfit{x})$ subject to constraint $\mathbfit{x} \in S \subseteq \mathbfit{R}^n$. A feasible solution $\mathbfit{x}^*$ is called an {\color{red} \textbf{optimal solution}} if $f(\mathbfit{x}^*) \leq f(\mathbfit{x})$ for all $\mathbfit{x} \in S$.
+\end{dfnbox}
+\section{Unconstrained Non-linear Programs}
+\begin{dfnbox}{Open Set}{openSet}
+    Let $S \subseteq \mathbfit{R}^n$ be a set. $S$ is called {\color{red} \textbf{open}} if for all $\mathbfit{x} \in S$ there exists $\epsilon > 0$ such that the ball 
+    \begin{equation*}
+        B(\mathbfit{x}, \epsilon) = \left\{ \, \mathbfit{y} \in \mathbfit{R}^n \colon \left\lVert \mathbfit{y - x} \right\rVert < \epsilon \, \right\}
+    \end{equation*}
+    is a subset of $S$.
+\end{dfnbox}
+\begin{dfnbox}{Closed Set}{closedSet}
+    Let $S \subseteq \mathbfit{R}^n$ be a non-empty set. $S$ is said to be {\color{red} \textbf{closed}} if for all convergent sequences $\{\mathbfit{x}_i\}_{i = 1}^{\infty}$ with $\mathbfit{x}_i \in S$ for $i = 1, 2, \cdots$, the limit $\lim_{i \to \infty} \mathbfit{x}_i \in S$.
+\end{dfnbox}
+The empty set is both open and closed.
+\begin{notebox}
+    \begin{remark}
+        A set is open if and only if its complement is closed.
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Intersection of Closed Sets}{}
+    If $C_1$ and $C_2$ are both closed, then $C_1 \cap C_2$ is closed.
+\end{thmbox}
+\begin{thmbox}{}{}
+    
+\end{thmbox}
+\end{document}
