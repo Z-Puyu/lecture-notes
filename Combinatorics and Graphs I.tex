@@ -67,7 +67,9 @@ This motivates us to write the following principle using set notations.
    \end{proof}
 \end{thmbox}
 \begin{notebox}
-    In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
+    \begin{remark}
+        In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
+    \end{remark}
 \end{notebox}
 Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into {\color{red} \textbf{non-overlapping stages}}.
 
@@ -98,7 +100,9 @@ Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$
     \end{proof}
 \end{thmbox}
 \begin{notebox}
-    In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
+    \begin{remark}
+        In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
+    \end{remark}
 \end{notebox}
 Often times, it is not straight-forward to count directly due to the presence of restrictions. We shall consider the following:
 
@@ -113,6 +117,15 @@ i.e. $\left\{E(p), E(\neg p)\right\}$ is a partition of $E$. Therefore, to count
         \abs{E} = \abs{U} - \abs{U - E}.
     \end{equation*}
 \end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        It may also help to think the Principle of Complementation as an inverse of the Addition Principle, where
+        \begin{displaymath}
+            E = \bigcup_{i = 1}^n E_i
+        \end{displaymath}
+        is the total number of ways for an event to occur and $E_p$ is the number of ways for the event to occur with restriction $p$.
+    \end{remark}
+\end{notebox}
 \section{Permutations}
 A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many {\color{red} \textbf{distinct sequences}} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
