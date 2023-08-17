@@ -100,6 +100,19 @@ Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$
 \begin{notebox}
     In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
 \end{notebox}
+Often times, it is not straight-forward to count directly due to the presence of restrictions. We shall consider the following:
+
+Let $E$ be the set of all possible ways for an event to occur. Let $p$ be some predicate representing some restriction and let $E(p)$ denote the set of all possible ways for the event to occur while $p$ holds. Note that:
+\begin{displaymath}
+    E(p) \cup E(\neg p) = E \quad \textrm{and} \quad E(p) \cap E(\neg p) = \varnothing,
+\end{displaymath}
+i.e. $\left\{E(p), E(\neg p)\right\}$ is a partition of $E$. Therefore, to count the number of ways for the event to occur while $p$ holds, it suffices to compute $E(\neg p)$, i.e. find the number of ways for the event to occur while $p$ does not hold.
+\begin{thmbox}{Principle of Complementation}{PC}
+    Let $U$ be a set and let $E \subseteq U$, then 
+    \begin{equation*}
+        \abs{E} = \abs{U} - \abs{U - E}.
+    \end{equation*}
+\end{thmbox}
 \section{Permutations}
 A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many {\color{red} \textbf{distinct sequences}} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
@@ -112,4 +125,102 @@ Continue choosing elements in this way, we realise that if we choose the terms s
         P^n_r = \prod_{i = 1}^{r}(n - r + i) = \frac{n!}{(n - r)!}.
     \end{equation*}
 \end{dfnbox}
+With some algebraic manipulations, it is easy to derive the following formula, which we, however, will prove in a combinatorial manner.
+\begin{thmbox}{}{permutationId}
+    Let $n, r \in \N$ with $r \leq n$, then $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
+    \tcblower
+    \begin{proof}
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ represent $(n + 1)$ distinct objects. Consider a permutation of $S$:
+        \\\\
+        If $n + 1$ is not inside the permutation, this is equivalent to an $r$-permutation of~$S - \{n + 1\}$, so there are $P^n_r$ such permutations.
+        \\\\
+    If $n + 1$ is inside the permutation, it means we need to first find an $(r - 1)$-permuation of $S - \{n + 1\}$, which has $P^n_{r - 1}$ ways to do. After that, we need to insert~$n + 1$ into each of these $(r - 1)$-permutations. Note that for each of such permutations, there are $r$ positions into which we can place $n + 1$. Therefore, the total number of $r$-permuations of $S$ derived in this manner is $rP^n_{r - 1}$.
+        \\\\
+        Therefore, there are $P^n_{r} + rP^n_{r - 1}$ $r$-permutations of $S$, i.e. $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$. 
+    \end{proof}
+\end{thmbox}
+\subsection{Circular Permutations}
+Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
+
+However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the {\color{red} \textbf{relative positions}} of the objects matter.
+
+Let $\mathbfit{x}_i$ be an arbitrary straight-line permutations of the $n$ objects and let $\mathbfit{y}_i$ be the corresponding circular permutation of the $n$ objects.
+
+Note that if we translate every element in $\mathbfit{x}_i$ by $k$ positions, this will result in a different straight-line permutation $\mathbfit{x}_j$ but does not change the corresponding circular permutation because the relative positions of the objects remain unchanged.
+
+Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same set of $n$ distinct objects, every circular permutation is mapped to $n$ straight-line permutations.
+\begin{dfnbox}{Circular Permutations}{circPermutation}
+    Let $A$ be a finite set such that $\abs{A} = n$, a circular $r$ permutation of $A$ is a way to arrange~$r$ elements of $A$ around a circular locus, denoted as $Q^n_r$ and given by
+    \begin{equation*}
+        Q^n_r = \frac{P^n_r}{r} = \frac{n!}{r(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
+\subsection{Permutations with Idential Objects}
+\begin{thmbox}{Generalised Formula for Permutations}{genPnr}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of permutations for these $k$ objects are given by
+    \begin{equation*}
+        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
+    \end{equation*}
+\end{thmbox}
+\section{Combinations}
+Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection.
+
+Note that if we want to find a selection of $r$ elements from a set $A$ where the order of selected elements does not matter, it is equivalent to finding a subset of $A$ containing $r$ elements. This motivates us to give the following definition:
+\begin{dfnbox}{Combinations}{combinations}
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-combination of $A$ is a set $B \subseteq A$ with~$\abs{B} = r$. The number of combinations of $A$ is given by
+    \begin{equation*}
+        C^n_r = \frac{P^n_r}{P^r_r} = \frac{n!}{r!(n - r)!} = \begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Two obvious results:
+        \begin{enumerate}
+            \item If $r > n$ or $r < 0$, $C^n_r = 0$;
+            \item $C^n_r = C^n_{n - r}$ (By Theorem \ref{thm:PC}).
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+Similar to permutations, we have the following important identity:
+\begin{thmbox}{Pascal's Triangle}{pascalTri}
+    Let $n$ be an integer with $n \geq 2$ and let $r$ be an integer with $0 \leq r \leq n$, then
+    \begin{equation*}
+        C^{n + 1}_r = C^{n}_{r - 1} + C^{n}_r.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ represent $(n + 1)$ distinct objects. Consider an $r$-combination $T$ of $S$:
+        \\\\
+        If $n + 1 \notin T$, this is equivalent to an $r$-combination of $S - \{n + 1\}$, so there are $C^n_r$ such permutations.
+        \\\\
+        If $n + 1 \in T$, it suffices to find an $(r - 1)$-combination of $S - \{n + 1\}$, which has $C^n_{r - 1}$ ways to do.
+        \\\\
+        Therefore, there are $C^n_{r} + C^n_{r - 1}$ $r$-combinations of $S$, i.e. $C^{n + 1}_r = C^n_r + C^n_{r - 1}$. 
+    \end{proof}
+\end{thmbox}
+\subsection{Counting Subsets}
+A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$.
+
+Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearly
+\begin{equation*}
+    \abs{\mathcal{P}(A)} = \sum_{i = 0}^{n}\abs{A_i} = \sum_{i = 0}^{n}C^n_i.
+\end{equation*}
+We can expand the above expression algebraically and realise that it simpifies to $2^n$. However, in a combinatorial perspective, we are able to prove this result in a more succint manner:
+\begin{thmbox}{General Formula for $\mathcal{P}(A)$}{cardPowerset}
+    Let $A$ be a finite set. If $\abs{A} = n$, then $\abs{\mathcal{P}(A)} = 2^n$.
+    \tcblower
+    \begin{proof}
+        Let $S$ be an arbitrary subset of $A$. Consider an arbitrary element $a \in A$, then either $a \in S$ or $a \notin S$. 
+        \\\\
+        Let $a_i \in A$ for $i = 1, 2, \cdots, n$. For all $S \in \mathcal{P}(A)$, We replace $a_i$ by $1$ if $a_i \in S$, and by $0$ otherwise. Let $B$ be the set of all binary sequences of length $n$. It is clear that there exists a bijection between $\mathcal{P}(A)$ and $B$, and so $\abs{\mathcal{P}(A)} = \abs{B}$.
+        \\\\
+        For each binary sequence of length $n$, each of its digits is either $0$ or $1$. By Theorem \ref{thm:MP}, this means that there are in total $2^n$ such binary sequences. Therefore,
+        \begin{equation*}
+            \abs{\mathcal{P}(A)} = \abs{B} = 2^n.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 \end{document}
