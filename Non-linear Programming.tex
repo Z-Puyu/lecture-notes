@@ -95,7 +95,7 @@ The empty set and Euclidean spaces $\R^n$ are both open and closed.
         Note that a set which is not open may not necessarily be closed. However, a set is open if and only if its complement is closed.
     \end{remark}
 \end{notebox}
-\begin{thmbox}{Intersection of Closed Sets}{}
+\begin{thmbox}{Intersection of Closed Sets}{intersecClosed}
     If $C_1$ and $C_2$ are both closed, then $C_1 \cap C_2$ is closed.
     \tcblower
     \begin{proof}
@@ -115,12 +115,16 @@ We then follow up by introducing three important closed sets.
     are closed.
     \tcblower
     \begin{proof}
-        Consider $S_1$. Let $S'_1 = \mathbf{R}^n - S_1$, then
-        \begin{displaymath}
-            S'_1 = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) > 0\right\}.
-        \end{displaymath} 
+        Consider $S_1$. Let $\left\{\mathbfit{x}_i\right\}_{i = 1}^\infty$ be any convergent sequence with $\mathbfit{x}_i \in S_1$ for $i = 1, 2, \cdots$, then
+        \begin{equation*}
+            g\left(\lim_{i \to \infty}\mathbfit{x}_i\right) \leq 0
+        \end{equation*}
+        since $\mathbfit{x}_i \leq 0$. Therefore, $\lim_{i \to \infty}\mathbfit{x}_i \in S_1$ and so $S_1$ is closed.
+
+        $S_2$ and $S_3$ can be proved similarly.
     \end{proof}
 \end{thmbox}
+By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is closed, which motivates the following definition:
 \begin{dfnbox}{Constrained NLP}{constrainedNLP}
     A {\color{red} \textbf{constrained}} NLP is an NLP whose feasible set
     \begin{displaymath}
