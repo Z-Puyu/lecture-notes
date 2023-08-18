@@ -107,10 +107,10 @@ Continue choosing elements in this way, we realise that if we choose the terms s
     \end{equation*}
 \end{dfnbox}
 \subsection{Permutations with Idential Objects}
-\begin{thmbox}{Generalised Formula for Permutations}
-    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for $i = 1, 2, \cdots, k$, then the number of permutations for these $k$ objects are given by
+\begin{thmbox}{Generalised Formula for Permutations}{}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of permutations for these $k$ objects are given by
     \begin{equation*}
-        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}n_i!}.
+        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
     \end{equation*}
 \end{thmbox}
 \section{Combinations}
@@ -138,4 +138,72 @@ Continue choosing elements in this way, we realise that if we choose the terms s
         C^n_r = C^{n - 1}_{r - 1} + C^{n - 1}_r.
     \end{equation*}
 \end{thmbox}
+
+\section{Binomial and Multinomial Coefficients}
+Consider the expansion of $(x + y)^n$ where $n \in \N$. Note that this expansion is a linear combination of terms in the form of $x^ky^{n - k}$ where $k = 0, 1, 2, \cdots, n$. 
+
+Thus, fix any $k$, to determine how many copies of $x^ky^{n - k}$ there are, it suffices to compute~$C^n_k$. Therefore, in the expanded form of $(x + y)^n$, the coefficient is exactly $C^n_r$.
+\begin{thmbox}{Binomial Expansion}{binomialEx}
+    Let $n \in \N$, then
+    \begin{equation*}
+        (x + y)^n = \sum_{k = 0}^n \left[\begin{pmatrix}
+            n \\
+            k
+        \end{pmatrix}x^ky^{n - k}\right].
+    \end{equation*}
+\end{thmbox}
+We can extend the idea of binomial coefficients onto multinomial expansions, i.e. expressions in the form of $\left(\sum_{i = 1}^{r}x_i\right)^n$.
+
+Note that the binomial coefficient $C^n_r$ is essentially equivalent to dividing $n$ distinct elements into two groups with $r$ and $(n - r)$ members respectively. Now we consider dividing~$n$ distinct elements into $r$ groups with $n_1, n_2, \cdots, n_r$ members respectively for each group.
+
+Notice that we can simply permute the $n$ distinct elements and assign them sequentially into the $r$ groups, i.e. the first $n_1$ elements will go into the first group and so on.
+
+Since the order of elements within each group does not matter, we need to remove repeated selections by dividing by $\prod_{i = 1}^{r}(n_i!)$. So we have the following definition:
+\begin{dfnbox}{Multinomial Coefficients}{multinomialCoeff}
+    The {\color{red} \textbf{multinomial coefficient}} is defined by
+    \begin{equation*}
+        \begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_k
+        \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{k}\left(n_i!\right)}
+    \end{equation*}
+\end{dfnbox}
+\begin{thmbox}{Multinomial Expansion}{multinomialEx}
+    Let $n \in \N$, then 
+    \begin{equation*}
+        \left(\sum_{i = 1}^{r}x_i\right)^n = \sum_{
+            \substack{
+                n_1, n_2, \cdots, n_r \in \N \\
+                \sum_{j = 1}^rn_j = n
+            }
+        } \left[\begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_r
+        \end{pmatrix}\prod_{i = 1}^{r}x_i^{n_i}\right]
+    \end{equation*}
+\end{thmbox}
+
+\chapter{Axioms of Probability}
+\section{Sample Space and Events}
+\begin{dfnbox}{Sample Space}{sampleSpace}
+    Consider an experiment whose outcome is {\color{red} \textbf{not}} predictable, then the set of all possible outcomes of the experiment is called the {\color{red} \textbf{sample space}} of the experiment, denoted by $S$.
+\end{dfnbox}
+\begin{dfnbox}{Events}{event}
+    Let $S$ be a sample space, a set $E \subseteq S$ is known as an {\color{red} \textbf{event}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        $S$ itself is known as the {\color{red} \textbf{sure event}} and $\varnothing$ is known as the {\color{red} \textbf{null event}}.
+    \end{remark}
+\end{notebox}
+Note that since sample spaces and events are sets, we can apply operations onto events precisely in the same way for sets.
+
+By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called {\color{red} \textbf{mutually exclusive}}.
+\begin{dfnbox}{Probability}{probability}
+    Let $E$ be any event of an experiment and let $n(E)$ be the number of occurrences of $E$ in the first $n$ repetitions of the experiment, then the {\color{red} \textbf{probability}} of $E$ is
+    \begin{equation*}
+        P(E) = \lim_{n \to \infty}\frac{n(E)}{n},
+    \end{equation*}
+    if the limit exists.
+\end{dfnbox}
 \end{document}

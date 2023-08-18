@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  16 AUG 2023 09:34
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  18 AUG 2023 10:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1210,22 +1210,23 @@ Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 40.
 [2
 
-] [3] [4] [5] 
+] [3] [4] [5] [6]
+Chapter 2.
+[7
+
+] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Probability.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `Probability.out' has not changed.
-(rerunfilecheck)             Checksum: 248C3BC4A46AEE312D582CA78BDE58C0;762.
+(rerunfilecheck)             Checksum: BD5400EA8F196C0EE63202C14343A91D;1342.
  ) 
 Here is how much of TeX's memory you used:
- 36126 strings out of 478630
- 756764 string characters out of 5847730
- 1871012 words of memory out of 5000000
- 55653 multiletter control sequences out of 15000+600000
- 516143 words of font info for 84 fonts, out of 8000000 for 9000
+ 36149 strings out of 478630
+ 757291 string characters out of 5847730
+ 1872012 words of memory out of 5000000
+ 55673 multiletter control sequences out of 15000+600000
+ 516167 words of font info for 87 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Probability.pdf (5 pages).
+Output written on Probability.pdf (7 pages).
