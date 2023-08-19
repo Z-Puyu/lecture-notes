@@ -30,106 +30,12 @@
 
 \begin{document}
 \fancyhead[L]{
-    Non-linear Programming
+    Mathematical Analysis I
 }
 \fancyhead[R]{
     Lecture Notes
 }
 \tableofcontents
 
-\chapter{Non-linear Programming Problems}
-\section{Basic Terminology and Notations}
-\begin{dfnbox}{General Non-linear Programming (NLP) Problems}{geNLPProb}
-    Define the function $f \colon \mathbf{R}^n \to \mathbf{R}$. Let $\mathbfit{x} \in \mathbf{R}^n$ be a vector, then a general NLP problem aims to {\color{red} \textbf{optimise}} (i.e. maximise or minimise) $f(\mathbfit{x})$ subject to the constraint $\mathbfit{x} \in S \subseteq \mathbf{R}^n$, where
-    \begin{itemize}
-        \item $f$ is known as the {\color{red} \textbf{objective function}};
-        \item $S$ is known as the {\color{red} \textbf{feasible set}};
-        \item A solution (point) $\mathbfit{x} \in S$ is known as a {\color{red} \textbf{feasible solution (point)}}. Otherwise, it is known as an {\color{red} \textbf{infeasible solution(point)}}. 
-    \end{itemize}
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Note that to maximise $f(\mathbf{x})$ is equivalent to minimising $-f(\mathbf{x})$, so it suffices to only study minimisation problems.
-    \end{remark}
-\end{notebox}
-The word ``optimal'', however, can be ambiguous due to its qualitative nature. Thus, we shall define what it means to be optimal quantitatively with more rigorous terms.
-\begin{dfnbox}{Optimal Solution}{optSoln}
-    Consider a minimisation problem subject to constraint $\mathbfit{x} \in S \subseteq \mathbfit{R}^n$ whose objective function is $f(\mathbfit{x})$. A feasible solution $\mathbfit{x}^*$ is called an {\color{red} \textbf{optimal solution}} if $f(\mathbfit{x}^*) \leq f(\mathbfit{x})$ for all $\mathbfit{x} \in S$. We can write
-    \begin{equation*}
-        \mathbfit{x}^* = \argmin_{\mathbfit{x} \in S} f(\mathbfit{x}).
-    \end{equation*}
-    $f(\mathbfit{x}^*)$ is then known as the {\color{red} \textbf{optimal value}}.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        For maximisation problems, we can write
-        \begin{equation*}
-            \mathbfit{x}^* = \argmax_{\mathbfit{x} \in S} f(\mathbfit{x})
-        \end{equation*}
-    \end{remark}
-\end{notebox}
-Note that not all optimisation problems have an optimal solution. We shall still expect to encounter problems for which no optimal solution nor value exists.
-\begin{dfnbox}{Unboundedness}{nboundedness}
-    Consider a minimisation problem subject to constraint $\mathbfit{x} \in S \subseteq \mathbfit{R}^n$ whose objective function is $f(\mathbfit{x})$. The objective value is said to be {\color{red} \textbf{unbounded}} if for all $K \in \mathbf{R}$, there exists some $\mathbfit{x} \in S$ such that $f(\mathbfit{x}) < K$.
-\end{dfnbox}
-\section{Unconstrained Non-linear Programs}
-To introduce the notion of an unconstrained NLP, we shall first define the openness of a set.
-\begin{dfnbox}{Open Set}{openSet}
-    Let $S \subseteq \mathbfit{R}^n$ be a set. $S$ is called {\color{red} \textbf{open}} if for all $\mathbfit{x} \in S$ there exists $\epsilon > 0$ such that the ball
-    \begin{equation*}
-        B(\mathbfit{x}, \epsilon) \coloneqq \left\{\mathbfit{y} \in \mathbfit{R}^n \colon \left\lVert \mathbfit{y - x} \right\rVert < \epsilon\right\}
-    \end{equation*}
-    is a subset of $S$.
-\end{dfnbox}
-\begin{dfnbox}{Unconstrained NLP}{unconstrainedNLP}
-    An {\color{red} \textbf{unconstrained}} NLP is an NLP whose feasible set $\mathcal{X}$ is an {\color{red} \textbf{open}} subset of $\mathbf{R}^n$.
-\end{dfnbox}
-\section{Constrained Non-linear Programs}
-Similarly, to introduce the notion of a constrained NLP, we shall first define the closed-ness of a set.
-\begin{dfnbox}{Closed Set}{closedSet}
-    Let $S \subseteq \mathbfit{R}^n$ be a non-empty set. $S$ is said to be {\color{red} \textbf{closed}} if for all convergent sequences $\{\mathbfit{x}_i\}_{i = 1}^{\infty}$ with $\mathbfit{x}_i \in S$ for $i = 1, 2, \cdots$, the limit $\lim_{i \to \infty} \mathbfit{x}_i \in S$.
-\end{dfnbox}
-The empty set and Euclidean spaces $\R^n$ are both open and closed.
-\begin{notebox}
-    \begin{remark}
-        Note that a set which is not open may not necessarily be closed. However, a set is open if and only if its complement is closed.
-    \end{remark}
-\end{notebox}
-\begin{thmbox}{Intersection of Closed Sets}{intersecClosed}
-    If $C_1$ and $C_2$ are both closed, then $C_1 \cap C_2$ is closed.
-    \tcblower
-    \begin{proof}
-        The case where $C_1 \cap C_2 = \varnothing$ is trivial. If $C_1 \cap C_2 \neq \varnothing$, let $\{\mathbfit{x}_i\}_{i = 1}^{\infty}$ be an arbitrary convergent sequence in $C_1 \cap C_2$. Since $\{\mathbfit{x}_i\}_{i = 1}^{\infty} \in C_1$ which is closed, we have $\lim_{i \to \infty} \mathbfit{x}_i \in C_1$. Similarly, $\lim_{i \to \infty} \mathbfit{x}_i \in C_2$. Therefore, $\lim_{i \to \infty} \mathbfit{x}_i \in C_1 \cap C_2$.
-        \\\\
-        Therefore, $C_1 \cap C_2$ is closed.
-    \end{proof}
-\end{thmbox}
-We then follow up by introducing three important closed sets.
-\begin{thmbox}{}{}
-    Let $g \colon \mathbf{R}^n \to \mathbf{R}$ be a continuous function, then the sets
-    \begin{align*}
-        S_1 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) \leq 0\right\}, \\
-        S_2 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) \geq 0\right\}, \\
-        S_3 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) = 0\right\}
-    \end{align*}
-    are closed.
-    \tcblower
-    \begin{proof}
-        Consider $S_1$. Let $\left\{\mathbfit{x}_i\right\}_{i = 1}^\infty$ be any convergent sequence with $\mathbfit{x}_i \in S_1$ for $i = 1, 2, \cdots$, then
-        \begin{equation*}
-            g\left(\lim_{i \to \infty}\mathbfit{x}_i\right) \leq 0
-        \end{equation*}
-        since $\mathbfit{x}_i \leq 0$. Therefore, $\lim_{i \to \infty}\mathbfit{x}_i \in S_1$ and so $S_1$ is closed.
 
-        $S_2$ and $S_3$ can be proved similarly.
-    \end{proof}
-\end{thmbox}
-By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is closed, which motivates the following definition:
-\begin{dfnbox}{Constrained NLP}{constrainedNLP}
-    A {\color{red} \textbf{constrained}} NLP is an NLP whose feasible set
-    \begin{displaymath}
-        S \coloneqq \left\{\mathbfit{x} \in \mathbf{R}^n \colon g_i(\mathbfit{x}) = 0, i = 1, 2, \cdots, p, h_j(\mathbfit{x}) \leq 0, j = 1, 2, \cdots, q\right\}
-    \end{displaymath}
-    is {\color{red} \textbf{closed}}, where each of the $g_i$'s is known as an equality constraint and each of the $h_j$'s is known as an inequality constraint.
-\end{dfnbox}
 \end{document}
