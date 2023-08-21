@@ -318,6 +318,7 @@
     \newamzbox{lembox}{Lemma}{lem}{amzthmboxcolor}[thmboxstyle]
     \newamzbox{thmbox}{Theorem}{thm}{amzthmboxcolor}[thmboxstyle]
     \newamzbox{corbox}{Corollary}{cor}{amzthmboxcolor}[thmboxstyle]
+    \newamzbox{axibox}{Axiom}{axi}{amzthmboxcolor}[thmboxstyle]
 \fi
 
 \ifamznotes@code

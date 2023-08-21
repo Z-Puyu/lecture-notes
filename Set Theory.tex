@@ -1,0 +1,125 @@
+\documentclass[math]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\begin{document}
+\fancyhead[L]{
+    Set Theory
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Sets and Classes}
+\section{Classes}
+\textit{Russell's Paradox} states the following:
+\begin{genbox}{Russell's Paradox}
+    Let $X$ be the set of all sets which do not contain themselves, i.e.,
+    \begin{equation*}
+        X = \left\{S \colon S \notin S\right\}.
+    \end{equation*}
+    Now consider $X$. If $X \in X$, it means that $X$ contains itself and should not be a member of $X$, i.e., $X \in X \implies X \notin X$. If $X \notin X$, it means that $X$ does not contain itself and therefore should be a member of $X$, i.e. $X \notin X \implies X \in X$. Hence, we have a paradox and such a set $X$ does not exist.
+\end{genbox}
+However, in some cases it is still useful to consider the ``set'' of all sets for practical reasons. Therefore, we introduce the notion of a \textit{class} to avoid Russell's Paradox. 
+\begin{dfnbox}{Class}{class}
+    Let $\phi$ be some formula and $\mathbfit{u}$ be a vector, the collection
+    \begin{displaymath}
+        \mathbb{C} = \left\{X \colon \phi(X, \mathbfit{u})\right\}
+    \end{displaymath}
+    is called a {\color{red} \textbf{class}} of all sets satisfying $\phi(X, \mathbfit{u})$, where $\mathbb{C}$ is said to be {\color{red} \textbf{definable}} from $\mathbfit{u}$. Equivalently, we say that
+    \begin{displaymath}
+        X \in \mathbb{C} \iff \phi(X, \mathbfit{u}).
+    \end{displaymath}
+    In particular, if $\mathbb{C} = \left\{X \colon \phi(X)\right\}$, i.e., $\phi$ only has one free variable, then we say that $\mathbb{C}$ is {\color{red} \textbf{definable}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        It is easy to see that every set $X$ is a class given by $\left\{x \colon x \in X\right\}$.
+    \end{remark}
+\end{notebox}
+Intuitively, two classes are equal if they contain exactly the same members. We are able to give the following rigorous version of the notion of equality:
+\begin{dfnbox}{Equality between Classes}{classEquality}
+    Let $\mathbb{C} = \left\{X \colon \phi(X, \mathbfit{u})\right\}$ and $\mathbb{D} = \left\{X \colon \psi(X, \mathbfit{v})\right\}$, we say that $\mathbb{C} = \mathbb{D}$ if for all $X$,
+    \begin{displaymath}
+        \phi(X, \mathbfit{u}) \iff \psi(X, \mathbfit{u}).
+    \end{displaymath}
+\end{dfnbox}
+There are clearly two types of classes --- the ones which are also sets and the ones which are not. Formally, this is put as follows:
+\begin{dfnbox}{Proper Class}{properClass}
+    A class $\mathbb{C}$ is said to be a {\color{red} \textbf{proper class}} if $\mathbb{C} \neq X$ for all sets $X$.
+\end{dfnbox}
+Like sets, we can define subclasses:
+\begin{dfnbox}{Subclass}{subclass}
+    Let $\mathbb{A}$ and $\mathbb{B}$ be classes. We say that $\mathbb{A}$ is a {\color{red} \textbf{subclass}} of $\mathbb{B}$ if every member of $\mathbb{A}$ is also a member of $\mathbb{B}$, i.e.,
+    \begin{displaymath}
+        \mathbb{A} \subseteq \mathbb{B} \iff (X \in \mathbb{A} \implies X \in \mathbb{B}).
+    \end{displaymath}
+\end{dfnbox}
+We shall also define the operations applicable to classes:
+\begin{dfnbox}{Intersection, Union and Difference}{classOps}
+    Let $\mathbb{A}$ and $\mathbb{B}$ be classes. The {\color{red} \textbf{intersection}}, {\color{red} \textbf{union}} and {\color{red} \textbf{difference}} between $\mathbb{A}$ and $\mathbb{B}$ are given by
+    \begin{align*}
+        \mathbb{A \cap B} & \coloneqq \left\{X \colon X \in \mathbb{A} \wedge X \in\ \mathbb{B}\right\}, \\
+        \mathbb{A \cup B} & \coloneqq \left\{X \colon X \in \mathbb{A} \vee X \in\ \mathbb{B}\right\}, \\
+        \mathbb{A - B} & \coloneqq \left\{X \colon X \in \mathbb{A} \wedge X \notin\ \mathbb{B}\right\}
+    \end{align*}
+    respectively.
+\end{dfnbox}
+Finally, we shall introduce the universal class:
+\begin{dfnbox}{Universal Class}{univClass}
+    The {\color{red} \textbf{universal class}} is the class of all sets, denoted by
+    \begin{displaymath}
+        V \coloneqq \left\{X \colon X = X\right\}.
+    \end{displaymath}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        It is easy to prove that the universal class is \textbf{unique}.
+    \end{remark}
+\end{notebox}
+
+\chapter{Axiomatic Set Theory}
+\section{Axioms of Zermelo-Fraenkel (ZF)}
+In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy.
+\begin{axibox}{Existence}{existAxi}
+    There exists a set $X$ such that $X = X$.
+\end{axibox}
+\begin{axibox}{Extensionality}{extensionAxi}
+    Let $X$ and $Y$ be sets, then $X = Y$ if for all $u$, $u \in X$ if and only if $u \in Y$.
+\end{axibox}
+\begin{axibox}{Pairing}{pairAxi}
+    For all $u$ and $v$, there exists a set $X$ such that for all $z$, $z \in X$ if and only if $z = u$ or~$z = v$.
+\end{axibox}
+\begin{notebox}
+    \begin{remark}
+        Note that Axiom \ref{axi:pairAxi} essentially says that given any sets $u$ and $v$, there exists a set whose elements are exactly $u$ and $v$.
+    \end{remark}
+\end{notebox}
+\end{document}
