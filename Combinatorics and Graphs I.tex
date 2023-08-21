@@ -36,11 +36,11 @@
 
 \chapter{Permutations and Combinations}
 \section{Basic Counting Principles}
-An important motivation to study combinatorics is to count the {\color{red} \textbf{number of ways}} in which an event may occur. Intuitively, we have two approaches to count.
+An important motivation to study combinatorics is to count the \textbf{number of ways} in which an event may occur. Intuitively, we have two approaches to count.
 
-The first approach is to categorise the event into {\color{red} \textbf{non-overlapping cases}}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
+The first approach is to categorise the event into \textbf{non-overlapping cases}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
 
-Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a {\color{red} \textbf{partition}} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
+Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a \textbf{partition} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
 
 This motivates us to write the following principle using set notations.
 \begin{thmbox}{Addition Principle (AP)}{AP}
@@ -71,11 +71,11 @@ This motivates us to write the following principle using set notations.
         In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
     \end{remark}
 \end{notebox}
-Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into {\color{red} \textbf{non-overlapping stages}}.
+Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into \textbf{non-overlapping stages}.
 
 With set notations, we can write the $i$-th stage for $E$ to occur as $e_i$, and so a way for $E$ to occur can be represented by an ordered tuple $(e_1, e_2, \cdots, e_k)$, where $k$ is the total number of stages to undergo for $E$ to occur.
 
-Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the {\color{red} \textbf{Cartesian product}} of all the $E_i$'s. Hence, we derive the following principle:
+Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the \textbf{Cartesian product} of all the $E_i$'s. Hence, we derive the following principle:
 \begin{thmbox}{Multiplication Principle (MP)}{MP}
     Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
     \begin{equation*}
@@ -126,8 +126,23 @@ i.e. $\left\{E(p), E(\neg p)\right\}$ is a partition of $E$. Therefore, to count
         is the total number of ways for an event to occur and $E_p$ is the number of ways for the event to occur with restriction $p$.
     \end{remark}
 \end{notebox}
+In some cases, it is difficult to count the objects directly. However, note that the events for which we are counting are just sets, so we can treat ``number of occurrences'' of an event as the \textbf{cardinality} of a set. Therefore, we have the following principles:
+\begin{thmbox}{Injection Principle}{injPrinciple}
+    Let $A$, $B$ be finite sets. If there exists an injection
+    \begin{displaymath}
+        f \colon A \hookrightarrow B,
+    \end{displaymath}
+    then $\abs{A} \leq \abs{B}$.
+\end{thmbox}
+\begin{thmbox}{Bijection Principle}{bijPrinciple}
+    Let $A$, $B$ be finite sets. If there exists a bijection
+    \begin{displaymath}
+        f \colon A \to B,
+    \end{displaymath}
+    then $\abs{A} = \abs{B}$.
+\end{thmbox}
 \section{Permutations}
-A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many {\color{red} \textbf{distinct sequences}} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
+A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
 Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
 
@@ -155,7 +170,7 @@ With some algebraic manipulations, it is easy to derive the following formula, w
 \subsection{Circular Permutations}
 Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
 
-However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the {\color{red} \textbf{relative positions}} of the objects matter.
+However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the \textbf{relative positions} of the objects matter.
 
 Let $\mathbfit{x}_i$ be an arbitrary straight-line permutations of the $n$ objects and let $\mathbfit{y}_i$ be the corresponding circular permutation of the $n$ objects.
 
@@ -237,7 +252,16 @@ We can expand the above expression algebraically and realise that it simpifies t
     \end{proof}
 \end{thmbox}
 
-\section{Stirling Numbers}
+\section{Distribution Problems}
+Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
+\begin{enumerate}
+    \item distribute $r$ distinct objects into $n$ identical collections;
+    \item distribute $r$ distinct objects into $n$ distinct collections;
+    \item distribute $r$ identical objects into $n$ identical collections;
+    \item distribute $r$ identical objects into $n$ distinct collections.
+\end{enumerate}
+These $4$ basic models of distribution problems give rise to many variations. One important tool to solve these problems is the \textit{Stirling Numbers}.
+\subsection{Stirling Numbers}
 \begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
     Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
 \end{dfnbox}
@@ -252,25 +276,28 @@ We can expand the above expression algebraically and realise that it simpifies t
         \end{enumerate}
     \end{remark}
 \end{notebox}
-\begin{thmbox}{Recurrence Relation for $s(r, n)$}{recurrence1}
-    For $r, n \in \N$ and $r \leq n$, we have
+One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
+\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
+    For $r, n \in \N^+$ and $r \leq n$, we have
     \begin{equation*}
         s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
     \end{equation*}
-\end{thmbox}
-\section{Counting with Functions}
-\begin{thmbox}{Injection Principle}{injPrinciple}
-    Let $A$, $B$ be finite sets. If there exists an injection
-    \begin{displaymath}
-        f \colon A \hookrightarrow B,
-    \end{displaymath}
-    then $\abs{A} \leq \abs{B}$.
-\end{thmbox}
-\begin{thmbox}{Bijection Principle}{bijPrinciple}
-    Let $A$, $B$ be finite sets. If there exists a bijection
-    \begin{displaymath}
-        f \colon A \to B,
-    \end{displaymath}
-    then $\abs{A} = \abs{B}$.
+    \tcblower   
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            \left\{x_1, x_2, \cdots, x_r\right\}
+        \end{displaymath}
+        to be the $r$ distinct objects. We consider two cases.
+        \\\\
+        If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
+        \\\\
+        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects.
+        \\\\
+        By Theorem \ref{thm:AP}, the total number of distributions is 
+        \begin{equation*}
+            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
 \end{document}
