@@ -5,3 +5,5 @@
 \contentsline {subsection}{\numberline {1.2.2}Permutations with Idential Objects}{7}{subsection.1.2.2}%
 \contentsline {section}{\numberline {1.3}Combinations}{7}{section.1.3}%
 \contentsline {subsection}{\numberline {1.3.1}Counting Subsets}{8}{subsection.1.3.1}%
+\contentsline {section}{\numberline {1.4}Stirling Numbers}{9}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Counting with Functions}{9}{section.1.5}%

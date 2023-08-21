@@ -222,7 +222,7 @@ Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearl
     \abs{\mathcal{P}(A)} = \sum_{i = 0}^{n}\abs{A_i} = \sum_{i = 0}^{n}C^n_i.
 \end{equation*}
 We can expand the above expression algebraically and realise that it simpifies to $2^n$. However, in a combinatorial perspective, we are able to prove this result in a more succint manner:
-\begin{thmbox}{General Formula for $\mathcal{P}(A)$}{cardPowerset}
+\begin{thmbox}{General Formula for $\abs{\mathcal{P}(A)}$}{cardPowerset}
     Let $A$ be a finite set. If $\abs{A} = n$, then $\abs{\mathcal{P}(A)} = 2^n$.
     \tcblower
     \begin{proof}
@@ -235,5 +235,42 @@ We can expand the above expression algebraically and realise that it simpifies t
             \abs{\mathcal{P}(A)} = \abs{B} = 2^n.
         \end{equation*}
     \end{proof}
+\end{thmbox}
+
+\section{Stirling Numbers}
+\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
+    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
+        \begin{enumerate}
+            \item $s(r, 0) = 0$ if $r \geq 1$.
+            \item $s(r, r) = 1$ if $r \geq 0$.
+            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
+            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Recurrence Relation for $s(r, n)$}{recurrence1}
+    For $r, n \in \N$ and $r \leq n$, we have
+    \begin{equation*}
+        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+    \end{equation*}
+\end{thmbox}
+\section{Counting with Functions}
+\begin{thmbox}{Injection Principle}{injPrinciple}
+    Let $A$, $B$ be finite sets. If there exists an injection
+    \begin{displaymath}
+        f \colon A \hookrightarrow B,
+    \end{displaymath}
+    then $\abs{A} \leq \abs{B}$.
+\end{thmbox}
+\begin{thmbox}{Bijection Principle}{bijPrinciple}
+    Let $A$, $B$ be finite sets. If there exists a bijection
+    \begin{displaymath}
+        f \colon A \to B,
+    \end{displaymath}
+    then $\abs{A} = \abs{B}$.
 \end{thmbox}
 \end{document}
