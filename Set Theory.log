@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  19 AUG 2023 13:02
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  21 AUG 2023 17:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1212,21 +1212,36 @@ Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on inp
 
 ] [3]
 Chapter 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
 [4
 
-] 
+] [5] [6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 277--280
+
+ []
+
+[8] [9] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Set Theory.aux)
 Package rerunfilecheck Info: File `"Set Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36148 strings out of 478630
- 756837 string characters out of 5847730
- 1872012 words of memory out of 5000000
- 55677 multiletter control sequences out of 15000+600000
- 516127 words of font info for 82 fonts, out of 8000000 for 9000
+ 36216 strings out of 478630
+ 758318 string characters out of 5847730
+ 1877012 words of memory out of 5000000
+ 55740 multiletter control sequences out of 15000+600000
+ 516167 words of font info for 87 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,11n,128p,1197b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,12n,128p,1197b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Set Theory.pdf (4 pages).
+Output written on Set Theory.pdf (9 pages).

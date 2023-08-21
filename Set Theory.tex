@@ -108,18 +108,196 @@ Finally, we shall introduce the universal class:
 \chapter{Axiomatic Set Theory}
 \section{Axioms of Zermelo-Fraenkel (ZF)}
 In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy.
-\begin{axibox}{Existence}{existAxi}
-    There exists a set $X$ such that $X = X$.
-\end{axibox}
+\subsection{Extensionality}
 \begin{axibox}{Extensionality}{extensionAxi}
     Let $X$ and $Y$ be sets, then $X = Y$ if for all $u$, $u \in X$ if and only if $u \in Y$.
 \end{axibox}
+An immediate result from Axiom \ref{axi:extensionAxi} is that there exists a set $X$ such that $X = X$, i.e. every set equals itself. Moreover, we can also prove the following:
+\begin{thmbox}{The Empty Set}{emptySet}
+    The set which has no elements is unique.
+    \tcblower   
+    \begin{proof}
+        Let $X$ be a set with no elements. Note that this means that for all $u$, $u \notin X$.
+        \\\\
+        Let $Y$ be another set. Note that the statement $u \in X \implies u \in Y$ is vacuously true. Suppose that $Y$ has no elements, then similarly for all $u$, the statement~$u \in Y \implies u \in X$ is also vacuously true. 
+        \\\\
+        Therefore, for all $u$, we have proven that $u \in X$ if and only if $u \in Y$. By Axiom \ref{axi:extensionAxi}, this means that $X = Y$, i.e. the set with no elements is unique.
+    \end{proof}
+\end{thmbox}
+This set with no elements is known as the {\color{red} \textbf{empty set}}, denoted by $\varnothing$.
+\subsection{Pairing}
 \begin{axibox}{Pairing}{pairAxi}
     For all $u$ and $v$, there exists a set $X$ such that for all $z$, $z \in X$ if and only if $z = u$ or~$z = v$.
 \end{axibox}
 \begin{notebox}
     \begin{remark}
         Note that Axiom \ref{axi:pairAxi} essentially says that given any sets $u$ and $v$, there exists a set whose elements are exactly $u$ and $v$.
+    \end{remark}
+\end{notebox}
+This allows us to formally define the notion of a \textit{pair} as follows:
+\begin{dfnbox}{Pair}{pair}
+    For all $a$, $b$, the {\color{red} \textbf{pair}} $\{a, b\}$ is defined to be the set $C$ such that for all $x$, $x \in C$ if and only if $x = a$ or $x = b$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, we can define the {\color{red} \textbf{singleton}} $\{a\}$ to be the pair $\{a, a\}$.
+    \end{remark}
+\end{notebox}
+Furthermore, given any $a$ and $b$, we can prove by Extensionality that the the pair $\{a, b\}$ is unique:
+\begin{thmbox}{Uniqueness of Pairs}{uniquePairs}
+    For all $a$, $b$, the pair $\{a, b\}$ is unique.
+    \tcblower   
+    \begin{proof}
+        Let $C \coloneqq \{a, b\}$ and $D \coloneqq \{a, b\}$. Suppose $x \in C$, then $x = a$ or $x = b$, which means $x \in D$. Similarly, suppose $y \in D$, we can prove that $y \in C$. Therefore, for all~$x$, we have $x \in C$ if and only if $x \in D$. By Axiom \ref{axi:extensionAxi}, this means that $C = D$, i.e., the pair $\{a, b\}$ is unique.
+    \end{proof}
+\end{thmbox}
+We can further define the notion of an \textit{ordered pair}:
+\begin{dfnbox}{Ordered Pair}{orderedPair}
+    For all $a$ and $b$, the {\color{red} \textbf{ordered pair}} $(a, b)$ is defined to be the set $\left\{\{a\}, \{a, b\}\right\}$.
+\end{dfnbox}
+Again, one can use Extensionality to prove that such an ordered pair is always unique and that $(a, b) = (c, d)$ if and only if $a = c$ and $b = d$. The notions of pair and ordered pair can be extended to ordered and un-ordered $n$-tuples, which will have similar properties as we have proven as above. Recursively, we can write the following definition:
+\begin{dfnbox}{Ordered $n$-tuple}{nTuple}
+    The {\color{red} \textbf{$n$-tuple}} is defined as 
+    \begin{displaymath}
+        (a_1, a_2, \cdots, a_n) = ((a_1, a_2, \cdots, a_{n - 1}), a_n).
+    \end{displaymath}
+\end{dfnbox}
+By Extensionality, we can similarly prove that two ordered $n$-tuples $(a_1, a_2, \cdots, a_n)$ and $(b_1, b_2, \cdots, b_n)$ if and only if $a_i = b_i$ for $i = 1, 2, \cdots, n$.
+\subsection{Separtion}
+\begin{axibox}{Axiom Schema of Separation}{schemaSeparation}
+    If $P$ is a property with parameter $p$, then for all $X$ and $p$ there exists a set 
+    \begin{displaymath}
+        Y \coloneqq \left\{u \in X \colon P(u, p)\right\}.
+    \end{displaymath}
+\end{axibox}
+The above axiom justifies our set-builder notation
+\begin{displaymath}
+    \left\{x \colon \varphi(x, \mathbfit{p})\right\},
+\end{displaymath}
+where $\varphi$ is some formula and $\mathbfit{p}$ is an ordered $n$-tuple of parameters.
+
+Alternatively, we can write Axiom Schema \ref{axi:schemaSeparation} in the following form:
+
+    Let $\mathbb{C} = \left\{u \colon \varphi(u, \mathbfit{p})\right\}$ be a class, then for all sets $X$ there exists a set $Y$ such that $\mathbb{C} \cap X = Y$.
+
+    Consequently, the intersection and the difference between two sets is a set, which can be defined as
+    \begin{displaymath}
+        X \cap Y \coloneqq \left\{u \in X \colon u \in Y\right\} \quad \textrm{and} \quad X - Y \coloneqq \left\{u \in X \colon u \notin Y\right\}. 
+    \end{displaymath}
+    Suppose that there exists some set $X$ such that $X = X$, we can use Separtion to define the empty set as
+    \begin{displaymath}
+        \varnothing \coloneqq \left\{u \colon u \neq u\right\}.
+    \end{displaymath}
+    We shall define other notions related to Separation Axioms:
+    \begin{dfnbox}{Disjoint}{disjoint}
+        Two sets $X$ and $Y$ are called {\color{red} \textbf{disjoint}} if $X \cap Y = \varnothing$.
+    \end{dfnbox}
+    \begin{dfnbox}{Unary Intersection}{unaryIntersect}
+        Let $\mathbb{C}$ be a non-empty class of sets, we define the {\color{red} \textbf{unary intersection}} of $\mathbb{C}$ to be
+        \begin{displaymath}
+            \bigcap \mathbb{C} \coloneqq \left\{u \colon u \in X \textrm{ for all } X \in C\right\}.
+        \end{displaymath}
+    \end{dfnbox}   
+    Note that the unary intersection helps us define the intersection of two sets as 
+    \begin{equation*}
+        X \cap Y = \bigcap\{X, Y\}.
+    \end{equation*} 
+\subsection{Union}
+\begin{axibox}{Axiom of Union}{unionAxi}
+    For all $X$, there exists a set $Y = \bigcup X$ whose elements are all the elements of all elements of $X$, i.e.
+    \begin{displaymath}
+        Y \coloneqq \left\{u \in U \colon U \in X\right\}.
+    \end{displaymath}
+\end{axibox}
+\begin{notebox}
+    \begin{remark}
+        We often call $\bigcup X$ the {\color{red} \textbf{unary union}} of $X$.
+    \end{remark}
+\end{notebox}
+The unary union defines the union of two sets as 
+\begin{equation*}
+    X \cup Y = \bigcup\{X, Y\}.
+\end{equation*}
+One can prove that union between sets is \textbf{associative}. In general, we can also see that
+\begin{equation*}
+    \{a_1, a_2, \cdots, a_n\} = \bigcup_{i = 1}^n \{a_i\}.
+\end{equation*}
+In addition, we can also define the notion of \textit{symmetric difference}:
+\begin{dfnbox}{Symmetric Difference}{symDif}
+    The {\color{red} \textbf{symmetric difference}} between two sets $X$ and $Y$ is defined as 
+    \begin{displaymath}
+        X \triangle Y \coloneqq \left\{u \colon u \in X \cup Y, u \notin X \cap Y\right\} = (X - Y) \cup (Y - X).
+    \end{displaymath}
+\end{dfnbox}
+\subsection{Power Set}
+\begin{axibox}{Axiom of Power Set}{axiPowerSet}
+    For all $X$, there exists a set $Y = \mathcal{P}(X)$, known as the {\color{red} \textbf{power set}} of $X$, such that
+    \begin{equation*}
+        Y \coloneqq \left\{U \colon U \subseteq X\right\}.
+    \end{equation*}
+\end{axibox}
+This allows us to define the notion of the \textit{Cartesian product} (or simply the \textit{product}) of two sets:
+\begin{dfnbox}{Cartesian Product}{cartesianProd}
+    Let $X$ and $Y$ be sets. The {\color{red} \textbf{Cartesian product}} of $X$ and $Y$ is defined as the set
+    \begin{displaymath}
+        X \times Y \coloneqq \left\{(x, y) \colon x \in X, y \in Y\right\}.
+    \end{displaymath}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $X \times Y$ is a set because $X \times Y \subseteq \mathcal{P}(X \cup Y)$.
+    \end{remark}
+\end{notebox}
+Similar to how we defined $n$-tuples, we can also define Cartesian products of countably many sets recursively.
+\begin{dfnbox}{Cartesian Product of Countably Many Sets}
+    Let $n \in \N^+$ and let $X$ be a set, we define
+    \begin{displaymath}
+        X^n \coloneqq \prod_{i = 1}^n X = \left(\prod_{i = 1}^{n - 1} X\right) \times X.
+    \end{displaymath}
+\end{dfnbox}
+\begin{axibox}{Axiom of Infinity}{axiInf}
+    There exists an infinite set.
+\end{axibox}
+\begin{axibox}{Axiom Schema of Replacement}{schemaReplacement}
+    If a class $F$ is a function, then for all $X$ there exists a set $Y = F(X) = \left\{F(x) \colon x \in X\right\}$.
+\end{axibox}
+\begin{axibox}{Axiom of Regularity}{axiReg}
+    For every non-empty set $X$, there exists some $Y \in X$ such that $Y \cap X = \varnothing$.
+\end{axibox}
+\begin{notebox}
+    \begin{remark}
+        Axiom \ref{axi:axiReg} is sometimes known as the {\color{red} \textbf{Axiom of Foundation}}. A direct result from it is that for all sets $X$, there exists some $x \in X$ such that $x \not\subseteq X$.
+    \end{remark}
+\end{notebox}
+Furthermore, we can use Axiom \ref{axi:axiReg} to prove the following seemingly trivial result:
+\begin{thmbox}{}{}
+    There is no set $A$ such that $A \in A$.
+    \tcblower   
+    \begin{proof}
+        If $A = \varnothing$, it is immediate that $A \notin A$ by definition.
+        \\\\
+        Suppose that there exists a non-empty set $A$ such that $A \in A$. Note that $A \in \{A\}$, so 
+        \begin{equation*}
+            A \cap \{A\} = A.
+        \end{equation*}
+        However, by Axiom \ref{axi:axiReg}, since $A$ is the only member of $\{A\}$, we have 
+        \begin{equation*}
+            A \cap \{A\} = \varnothing,
+        \end{equation*}
+        which is a contradiction. Therefore, there exists no set $A$ such that $A \in A$.
+    \end{proof}
+\end{thmbox}
+Additionally, we also introduce the Axiom of Choice:
+\begin{axibox}{Axiom of Choice}{axiChoice}
+    For every $X$ with $\varnothing \notin X$, there exists a {\color{red} \textbf{choice function}}
+    \begin{displaymath}
+        f \colon X \to \bigcup X
+    \end{displaymath}
+    such that for all $S \in X$, we have $f(S) \in S$.
+\end{axibox}
+\begin{notebox}
+    \begin{remark}
+        Essentially, the choice function maps every set which is a member of some family of sets to one and only one element in that set.
     \end{remark}
 \end{notebox}
 \end{document}
