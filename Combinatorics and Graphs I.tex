@@ -25,6 +25,15 @@
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
 
+\newenvironment{solution}
+    {\let\oldqedsymbol=\qedsymbol
+    \renewcommand{\qedsymbol}{\ }
+    \begin{proof}[Solution]
+    }
+    {\end{proof}
+    \renewcommand{\qedsymbol}{\oldqedsymbol}
+    }
+
 \begin{document}
 \fancyhead[L]{
     Combinatorics and Graphs I 
@@ -251,6 +260,56 @@ We can expand the above expression algebraically and realise that it simpifies t
         \end{equation*}
     \end{proof}
 \end{thmbox}
+
+\section{Fun Problems Collection}
+\begin{genbox}{No Consecutive}
+    Let $X = \left\{x \in \N^+ \colon x \leq n\right\}$. Find the number of $r$-combinations of $X$ such that~$\abs{x_i - x_j} \geq 2$ whenever $i \neq j$.
+    \tcblower   
+    \begin{solution}
+        Note that for each of the $r$-combinations of $X$, we can re-write it into a strictly increasing sequence $\{x_i\}_{i = 1}^r$ with $x_i \in X$ and $x_{i + 1} - x_i \geq 2$. Let the set of all such sequences be $S_X$. Consider the function
+        \begin{displaymath}
+            f \colon S_X \to Y
+        \end{displaymath}
+        where $f\left(\{x_i\}_{i = 1}^r\right) = \{x_i - i + 1\}_{i = 1}^r$ and $Y$ is the set of all strictly increasing sequences whose terms are integers bounded between $1$ and $n - r + 1$ inclusive.
+        \\\\
+        Take two different sequences $s_1, s_2 \in S_X$. Let the $k$-th terms of $s_1$ and $s_2$ be $k_1$ and $k_2$ respectively such that $k_1 \neq k_2$. Let $t_1 = f(s_1)$ and $t_2 = f(s_2)$, whose $k$-th terms are $h_1$ and $h_2$ respectively. Note that $h_1 = k_1 - k + 1 \neq k_2 - k + 1 = h_2$, so~$t_1 \neq t_2$, which means $f$ is injective.
+        \\\\
+        Take an arbitrary $\{y_i\}_{i = 1}^r \in Y$ and consider the sequence $\{y_i + i - 1\}_{i = 1}^r$. Note that~$1 \leq y_i \leq n - r + 1$, so $1 \leq y_i + i - 1 \leq n$ for $i = 1, 2, \cdots, r$, which means~$\{y_i + i - 1\}_{i = 1}^r \in S_X$. This means that for all $y \in Y$, there exists some $s \in S_X$ such that $f(s) = y$, so $f$ is surjective.
+        \\\\
+        Therefore, $f$ is a bijection and so
+        \begin{equation*}
+            \abs{S_X} = \abs{Y} = C^{n - r + 1}_r.
+        \end{equation*}
+    \end{solution}
+\end{genbox}
+\begin{genbox}{Top Secret}
+    Six scientists are working on a secret project. They wish to lock up the documents in a cabinet so that the cabinet can be opened when and only when three or more of the scientists are present. Suppose that each lock has one and only one key with the locks being pairwise distinct.
+    \begin{enumerate}
+        \item What is the smallest number of locks needed?
+        \item What is the smallest number of keys that each scientist needs to carry?
+    \end{enumerate}
+    \tcblower   
+    \begin{solution}
+        Let $S = \left\{s_1, s_2, s_3, s_4, s_5, s_6\right\}$ be the set of scientists and $L$ be the set of locks. Define $T$ to be the set of all subsets of $S$ with $2$ elements, then for any $P \in T$, $P$ is a pair of distinct scientists.
+        \\\\
+        Let $L_P \subseteq L$ be the set of locks which cannot be opened by the pair of scientists in $P$. Note that for all $P \in T$, $L_P \neq \varnothing$. 
+        \\\\
+        Consider $P, Q \in T$ with $P \neq Q$, then $\abs{P \cup Q} \geq 3$. Thus, $L_P \cap L_Q = \varnothing$. Now, define the function
+        \begin{displaymath}
+            f \colon T \to L
+        \end{displaymath}
+        such that $f(P) = \ell_P$ where $\ell_P$ is an arbitrary element from $L_P$ (note that we can do this without using Choice as each of the $L_P$'s is finite).
+        \\\\
+        Suppose that there exist $P, Q \in T$ with $P \neq Q$ such that $f(P) = f(Q) = \ell_0$. Notice that this would mean that $\ell_0 \in L_P \cap L_Q$, which is a contradiction. Therefore,~$f$ must be injective. Hence, 
+        \begin{equation*}
+            \abs{L} \geq \abs{T} = C^6_2 = 15.
+        \end{equation*}
+        Now, choose an arbitrary element from $S$, say $s_k$, and consider the set $S' = S - \{s_k\}$. Let $T'$ be the set of all subsets of $S'$ with $2$ elements, then for any $P \in T'$, $L_{P \cup \{s_k\}} = \varnothing$, i.e., $s_k$ must have the keys to open all locks which the pair $P$ cannot open with their own keys. Let this set of keys be $K_P$. Note that $L_P \cap L_Q = \varnothing$ whenever $P \neq Q$, so~$K_P \cap K_Q = \varnothing$ whenever $P \neq Q$. Let the set of all keys held by $s_k$ be $H_k$, then
+        \begin{equation*}
+            \abs{H_k} \geq \abs{S'} = C^5_2 = 10.
+        \end{equation*}
+    \end{solution}
+\end{genbox}
 
 \section{Distribution Problems}
 Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
