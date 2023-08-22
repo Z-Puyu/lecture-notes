@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  22 AUG 2023 09:51
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  22 AUG 2023 13:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1092,7 +1092,8 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count363
- (./Set Theory.aux)
+
+No file "Set Theory".aux.
 \openout1 = `"Set Theory.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
@@ -1115,7 +1116,6 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1173,46 +1173,65 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                inconsistencies.
 
 Package hyperref Info: Link coloring ON on input line 31.
-(./Set Theory.out) (./Set Theory.out)
 \@outlinefile=\write4
 \openout4 = `"Set Theory.out"'.
 
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
 \c@lstlisting=\count364
- (./Set Theory.toc
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 12.00128pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 8.40088pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 6.60071pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 6.59929pt on input line 2.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+No file "Set Theory".toc.
 \tf@toc=\write5
 \openout5 = `"Set Theory.toc"'.
 
- [1
+
+LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 40.
+
+[1
 
 
 ]
 Chapter 1.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 12.00128pt on input line 44.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 8.40088pt on input line 44.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 6.60071pt on input line 44.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 44.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 8.3991pt on input line 44.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 6.59929pt on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 44.
+(c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 44.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 51.
+
+
+LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 73.
+
 [2
 
-] [3]
+]
+
+LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 108.
+
+[3]
 Chapter 2.
 
+LaTeX Warning: Reference `axi:extensionAxi' on page 4 undefined on input line 115.
+
+
+LaTeX Warning: Reference `axi:extensionAxi' on page 4 undefined on input line 124.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 120--125
 
  []
@@ -1221,27 +1240,89 @@ Underfull \hbox (badness 10000) in paragraph at lines 120--125
 Underfull \hbox (badness 10000) in paragraph at lines 120--125
 
  []
+
+
+LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 131.
 
 [4
 
-] [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 277--280
+]
+
+LaTeX Warning: Reference `axi:pairAxi' on page 5 undefined on input line 134.
+
+
+LaTeX Warning: Reference `axi:extensionAxi' on page 5 undefined on input line 151.
+
+
+LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 164.
+
+[5]
+
+LaTeX Warning: Reference `axi:schemaSeparation' on page 6 undefined on input line 179.
+
+
+LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 200.
+
+[6]
+
+LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 238.
+
+[7]
+
+LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 271.
+
+[8]
+
+LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 310.
+
+[9]
+
+LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 357.
+
+[10]
+
+LaTeX Warning: Reference `axi:axiReg' on page 11 undefined on input line 370.
+
+
+LaTeX Warning: Reference `axi:axiReg' on page 11 undefined on input line 373.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 378--381
 
  []
 
-[8] [9] 
+
+LaTeX Warning: Reference `axi:axiReg' on page 11 undefined on input line 384.
+
+
+LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 398.
+
+[11]
+
+LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 404.
+
+[12] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Set Theory.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Set Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
+
+Package lastpage Warning: Rerun to get the references right on input line 404.
+
  ) 
 Here is how much of TeX's memory you used:
- 36216 strings out of 478630
- 758318 string characters out of 5847730
- 1877012 words of memory out of 5000000
- 55740 multiletter control sequences out of 15000+600000
- 516167 words of font info for 87 fonts, out of 8000000 for 9000
+ 36224 strings out of 478630
+ 758579 string characters out of 5847730
+ 1873012 words of memory out of 5000000
+ 55753 multiletter control sequences out of 15000+600000
+ 516191 words of font info for 90 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,12n,128p,1197b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,13n,128p,1197b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Set Theory.pdf (9 pages).
+Output written on Set Theory.pdf (12 pages).

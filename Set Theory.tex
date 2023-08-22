@@ -107,8 +107,8 @@ Finally, we shall introduce the universal class:
 
 \chapter{Axiomatic Set Theory}
 \section{Axioms of Zermelo-Fraenkel (ZF)}
-In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy.
-\subsection{Extensionality}
+In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy. The following sections discuss each of the axioms in ZF set theory.
+\section{Extensionality}
 \begin{axibox}{Extensionality}{extensionAxi}
     Let $X$ and $Y$ be sets, then $X = Y$ if for all $u$, $u \in X$ if and only if $u \in Y$.
 \end{axibox}
@@ -125,7 +125,7 @@ An immediate result from Axiom \ref{axi:extensionAxi} is that there exists a set
     \end{proof}
 \end{thmbox}
 This set with no elements is known as the {\color{red} \textbf{empty set}}, denoted by $\varnothing$.
-\subsection{Pairing}
+\section{Pairing}
 \begin{axibox}{Pairing}{pairAxi}
     For all $u$ and $v$, there exists a set $X$ such that for all $z$, $z \in X$ if and only if $z = u$ or~$z = v$.
 \end{axibox}
@@ -163,7 +163,7 @@ Again, one can use Extensionality to prove that such an ordered pair is always u
     \end{displaymath}
 \end{dfnbox}
 By Extensionality, we can similarly prove that two ordered $n$-tuples $(a_1, a_2, \cdots, a_n)$ and $(b_1, b_2, \cdots, b_n)$ if and only if $a_i = b_i$ for $i = 1, 2, \cdots, n$.
-\subsection{Separtion}
+\section{Separtion}
 \begin{axibox}{Axiom Schema of Separation}{schemaSeparation}
     If $P$ is a property with parameter $p$, then for all $X$ and $p$ there exists a set 
     \begin{displaymath}
@@ -202,7 +202,7 @@ Alternatively, we can write Axiom Schema \ref{axi:schemaSeparation} in the follo
     \begin{equation*}
         X \cap Y = \bigcap\{X, Y\}.
     \end{equation*} 
-\subsection{Union}
+\section{Union}
 \begin{axibox}{Axiom of Union}{unionAxi}
     For all $X$, there exists a set $Y = \bigcup X$ whose elements are all the elements of all elements of $X$, i.e.
     \begin{displaymath}
@@ -229,7 +229,7 @@ In addition, we can also define the notion of \textit{symmetric difference}:
         X \triangle Y \coloneqq \left\{u \colon u \in X \cup Y, u \notin X \cap Y\right\} = (X - Y) \cup (Y - X).
     \end{displaymath}
 \end{dfnbox}
-\subsection{Power Set}
+\section{Power Set}
 \begin{axibox}{Axiom of Power Set}{axiPowerSet}
     For all $X$, there exists a set $Y = \mathcal{P}(X)$, known as the {\color{red} \textbf{power set}} of $X$, such that
     \begin{equation*}
@@ -248,13 +248,114 @@ This allows us to define the notion of the \textit{Cartesian product} (or simply
         Note that $X \times Y$ is a set because $X \times Y \subseteq \mathcal{P}(X \cup Y)$.
     \end{remark}
 \end{notebox}
-Similar to how we defined $n$-tuples, we can also define Cartesian products of countably many sets recursively.
+The above offers a new way to define $n$-tuples, as we can define Cartesian products of countably many sets recursively.
 \begin{dfnbox}{Cartesian Product of Countably Many Sets}
     Let $n \in \N^+$ and let $X$ be a set, we define
     \begin{displaymath}
         X^n \coloneqq \prod_{i = 1}^n X = \left(\prod_{i = 1}^{n - 1} X\right) \times X.
     \end{displaymath}
 \end{dfnbox}
+\subsection{Relations}
+Colloquially, we may want to express the idea that a collection of $n$ objects are related by some rules. Observe that such a \textit{relation} between $n$ objects can be precisely abstracted as an ordered $n$-tuple, which motivates the following definition:
+\begin{dfnbox}{Relation}{relation}
+    An {\color{red} \textbf{$n$-ary relation}} $R$ is a set of $n$-tuples. We say that $R$ is an $n$-ary relation on $X$ if $R \subseteq X^n$. Conventionally, to say that $x_1, x_2, \cdots, x_n$ are related by the rules defined by $R$, we use the notation $R(x_1, x_2, \cdots, x_n)$. Note that this notation is equivalent to 
+    \begin{displaymath}
+        (x_1, x_2, \cdots, x_n) \in R.
+    \end{displaymath}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In the case where $R$ is a binary relation, we can also use the notation $xRy$ to express that $(x, y) \in R$.
+    \end{remark}
+\end{notebox}
+If $R$ is a binary relation, then we define the \textit{domain} of $R$ to be
+\begin{displaymath}
+    \mathrm{dom}(R) = \left\{u \colon \exists v \textrm{s.t.} (u, v) \in R\right\},
+\end{displaymath}
+and the \textit{range} of $R$ to be
+\begin{displaymath}
+    \mathrm{ran}(R) = \left\{v \colon \exists u \textrm{s.t.} (u, v) \in R\right\}.
+\end{displaymath}
+Note that
+\begin{displaymath}
+    \mathrm{dom}(R) \subseteq \bigcup \left(\bigcup R\right) \quad \textrm{and} \quad \mathrm{ran}(R) \subseteq \bigcup \left(\bigcup R\right),
+\end{displaymath}
+so the domain and range of a relation are sets. Additionally, we define the \textit{field} of $R$ to be the set
+\begin{displaymath}
+    \mathrm{field}(R) = \mathrm{dom}(R) \cup \mathrm{ran}(R).
+\end{displaymath}
+\subsection{Functions}
+Given a binary relation $R$, we can see $R$ as a \textbf{mapping} which corresponds each $u \in \mathrm{dom}(R)$ with some $v \in \mathrm{ran}(R)$. From this, we are able to derive the following definition for a \textit{function}:
+\begin{dfnbox}{Function}{func}
+    Let $X$ be a set. A binary relation $f$ on $X$ is a {\color{red} \textbf{function}} if $(x, y) \in f$ and $(x, z) \in f$ implies that $y = z$, i.e. for all $x \in X$ there exists a unique $y$ such that $(x, y) \in f$. This unique $y$ is called the {\color{red} \textbf{value}} of $f$ at $x$. We may use the notations
+    \begin{displaymath}
+        y = f(x) \quad \textrm{or} \quad f \colon x \mapsto y
+    \end{displaymath}
+    to express that $(x, y) \in f$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        If $\mathrm{dom}(f) = X^n$, we also say that $f$ is an {\color{red} \textbf{$n$-nary function}} on $X$.
+    \end{remark}
+\end{notebox}
+We denote a function $f$ from $X$ to $Y$ by
+\begin{displaymath}
+    f \colon X \to Y,
+\end{displaymath}
+where $\mathrm{dom}(f) = X$ and $\mathrm{ran}(f) \subseteq Y$. The set of all functions from $X$ to $Y$ is denoted as $Y^X$, which is a set because
+\begin{displaymath}
+    Y^X \subseteq \mathcal{P}(X \times Y).
+\end{displaymath}
+If $\mathrm{ran}(f) = Y$, we say that $f$ is \textit{onto} $Y$ or that $f$ is \textit{surjective}. A function $f$ is \textit{one-to-one} or \textit{injective} if
+\begin{displaymath}
+    f(x) = f(y) \implies x = y.
+\end{displaymath}
+Additionally, we may call the function $f \colon X^n \to X$ an \textit{$n$-nary operation} on $X$.
+
+We may also define new functions from some existing function(s).
+\begin{dfnbox}{Restriction}{Restriction}
+    Let $f$ be a function. The {\color{red} \textbf{restriction}} of $f$ to a set $X$ is defined to be the function  
+    \begin{displaymath}
+        \restrict{f}{X} \coloneqq \left\{(x, y) \in f \colon x \in X\right\}.
+    \end{displaymath}
+\end{dfnbox}
+\begin{dfnbox}{Extension}{extension}
+    Let $f$, $g$ be functions. $g$ is called an {\color{red} \textbf{extension}} of $f$ if $f \subseteq g$, i.e.,
+    \begin{displaymath}
+        \mathrm{dom}(f) \subseteq \mathrm{dom}(g) \quad \textrm{and} \quad g(x) = f(x) \quad \textrm{for all } x \in \mathrm{dom}(f).
+    \end{displaymath}
+\end{dfnbox}
+\begin{dfnbox}{Composition}{composition}
+    Let $f$ and $g$ be functions such that $\mathrm{ran}(g) \subseteq \mathrm{dom}(f)$. The {\color{red} \textbf{composition}} of $f$ and $g$ is the function denoted by $f \circ g$ with $\mathrm{dom}(f \circ g) = \mathrm{dom}(g)$ such that
+    \begin{displaymath}
+        (f \circ g)(x) = f\left(g(x)\right) \quad \textrm{for all } x \in \mathrm{dom}(g).
+    \end{displaymath}
+\end{dfnbox}
+Note that a function provides a mapping from one set to another set, and so we can define the notion of an \textit{image}.
+\begin{dfnbox}{Image and Inverse Image}{image}
+    Let $f$ be a function and $X$ be a set. The {\color{red} \textbf{image}} of $X$ by $f$ is the set
+    \begin{displaymath}
+        \left\{y \colon \exists x \in X \textrm{ s.t. } y = f(x)\right\},
+    \end{displaymath}
+    denoted by $f[X]$. The {\color{red} \textbf{inverse image}} of $X$ by $f$ is the set
+    \begin{displaymath}
+        \left\{x \colon f(x) \in X\right\},
+    \end{displaymath}
+    denoted by $f^{-1}[X]$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Trivially, if $X \cap \mathrm{dom}(f) = \varnothing$, then $f[X] = \varnothing$.
+    \end{remark}
+\end{notebox}
+For injections, we can also define their \textit{inverses}.
+\begin{dfnbox}{Inverse}{invFunc}
+    Let $f$ be an injective function, then we denote the {\color{red} \textbf{inverse}} of $f$ by $f^{-1}$, which is defined by
+    \begin{displaymath}
+        f^{-1}(x) = y \quad \textrm{if and only if } x = f(y). 
+    \end{displaymath}
+\end{dfnbox}
+The above definitions for functions can be applied similarly with respect to classes.
 \begin{axibox}{Axiom of Infinity}{axiInf}
     There exists an infinite set.
 \end{axibox}
