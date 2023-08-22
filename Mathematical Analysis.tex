@@ -1,0 +1,89 @@
+\documentclass[math]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\begin{document}
+\fancyhead[L]{
+    Mathematical Analysis I
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{The Real Numbers}
+\section{Fields}
+\begin{dfnbox}{Field}{field}
+    A set $F$ with two binary operations, namely addition and multiplication, is called a {\color{red} \textbf{field}} if it satisfies the following axioms:
+    \begin{enumerate}
+        \item $\forall a, b \in F$, $a + b = b + a$.
+        \item $\forall a, b, c \in F$, $(a + b) + c = a + (b + c)$.
+        \item $\exists 0_F \in F$ such that $\forall a \in F$, $0_F + a = a + 0_F = a$.
+        \item $\forall a \in F$, $\exists a' \in F$ such that $a + a' = 0_F$.
+        \item $\forall a, b \in F$, $a \cdot b = b \cdot a$.
+        \item $\forall a, b, c \in F$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+        \item $\forall a, b, c \in F$, $a \cdot (b + c) = a \cdot b + a \cdot b$ and $(a + b) \cdot c = a \cdot c + b \cdot c$.
+        \item $\exists 1_F \in F$ such that $\forall a \in F$, $1_F \cdot a = a \cdot 1_F = a$.
+        \item $\forall a \in F$, $\exists a' \in F$ such that $a \cdot a' = 1_F$.
+    \end{enumerate}
+\end{dfnbox}
+If we denote addition by ``$+_F$'' and multiplication by ``$\cdot_F$'' or ``$\times_F$'', then we can denote the field over $F$ by $(F, +_F, \cdot_F)$ or $(F, +_F, \times_F)$.
+\subsection{Ordered Fields}
+\begin{dfnbox}{Total Order}{totalOrder}
+    A {\color{red} \textbf{total order}} on a set $X$ is a binary relation $R$ over $X$ such that for all $a, b, c \in X$:
+    \begin{enumerate}
+        \item $aRa$.
+        \item $aRb$ and $bRc$ implies $aRc$.
+        \item $aRb$ and $bRa$ implies $a = b$.
+        \item $aRb$ or $bRa$.
+    \end{enumerate}
+\end{dfnbox}
+\begin{dfnbox}{Strict Total Order}{strictTotalOrder}
+    A {\color{red} \textbf{strict total order}} on a set $X$ is a binary relation $R$ over $X$ such that for all $a, b, c \in X$:
+    \begin{enumerate}
+        \item $(a, a) \notin R$.
+        \item $aRb$ implies $(b, a) \notin R$.
+        \item $aRb$ and $bRc$ implies $aRc$.
+        \item trichotomy is satisfied.
+    \end{enumerate}
+\end{dfnbox}
+Define a field $(\R, +, \times)$ together with the total order $\leq$ (or the strict total order $<$), then clearly this field is an ordered field, which is known as the real numbers.
+\begin{thmbox}{}{}
+    If $a, b \in \R$, then $-ab + ab = 0$. 
+\end{thmbox}
+\begin{thmbox}{}{}
+    For all $a \in \R$ with $a \neq 0$, $a^2 > 0$.
+\end{thmbox}
+\begin{thmbox}{}{}
+    If $a \in \R$ is such that $0 \leq a < \epsilon$ for all $\epsilon \in \R^+$, then $a = 0$.
+\end{thmbox}
+\begin{thmbox}{Bernoulli's Inequality}{burnoulliIneq}
+    If $x > -1$, then $(1 + x)^n \geq 1 + nx$ for all $n \in \N$.
+\end{thmbox}
+\end{document}
