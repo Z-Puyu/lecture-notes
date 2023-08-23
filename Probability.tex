@@ -30,11 +30,11 @@
 
 \chapter{How to Count}
 \section{Basic Counting Principles}
-An important motivation to study combinatorics is to count the {\color{red} \textbf{number of ways}} in which an event may occur. Intuitively, we have two approaches to count.
+An important motivation to study combinatorics is to count the \textbf{number of ways} in which an event may occur. Intuitively, we have two approaches to count.
 
-The first approach is to categorise the event into {\color{red} \textbf{non-overlapping cases}}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
+The first approach is to categorise the event into \textbf{non-overlapping cases}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
 
-Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a {\color{red} \textbf{partition}} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
+Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a \textbf{partition} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
 
 This motivates us to write the following principle using set notations.
 \begin{thmbox}{Addition Principle (AP)}{AP}
@@ -63,11 +63,11 @@ This motivates us to write the following principle using set notations.
 \begin{notebox}
     In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
 \end{notebox}
-Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into {\color{red} \textbf{non-overlapping stages}}.
+Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into \textbf{non-overlapping stages}.
 
 With set notations, we can write the $i$-th stage for $E$ to occur as $e_i$, and so a way for $E$ to occur can be represented by an ordered tuple $(e_1, e_2, \cdots, e_k)$, where $k$ is the total number of stages to undergo for $E$ to occur.
 
-Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the {\color{red} \textbf{Cartesian product}} of all the $E_i$'s. Hence, we derive the following principle:
+Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the \textbf{Cartesian product} of all the $E_i$'s. Hence, we derive the following principle:
 \begin{thmbox}{Multiplication Principle (MP)}{MP}
     Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
     \begin{equation*}
@@ -95,7 +95,7 @@ Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$
     In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
 \end{notebox}
 \section{Permutations}
-A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many {\color{red} \textbf{distinct sequences}} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
+A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textit{permutation}.
 
 Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $(n - 1)$ choices. 
 
@@ -188,6 +188,11 @@ Since the order of elements within each group does not matter, we need to remove
 \begin{dfnbox}{Sample Space}{sampleSpace}
     Consider an experiment whose outcome is {\color{red} \textbf{not}} predictable, then the set of all possible outcomes of the experiment is called the {\color{red} \textbf{sample space}} of the experiment, denoted by $S$.
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $S \neq \varnothing$.
+    \end{remark}
+\end{notebox}
 \begin{dfnbox}{Events}{event}
     Let $S$ be a sample space, a set $E \subseteq S$ is known as an {\color{red} \textbf{event}}.
 \end{dfnbox}
@@ -198,7 +203,7 @@ Since the order of elements within each group does not matter, we need to remove
 \end{notebox}
 Note that since sample spaces and events are sets, we can apply operations onto events precisely in the same way for sets.
 
-By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called {\color{red} \textbf{mutually exclusive}}.
+By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called \textit{mutually exclusive}.
 \begin{dfnbox}{Probability}{probability}
     Let $E$ be any event of an experiment and let $n(E)$ be the number of occurrences of $E$ in the first $n$ repetitions of the experiment, then the {\color{red} \textbf{probability}} of $E$ is
     \begin{equation*}
@@ -206,4 +211,74 @@ By convention, the intersection of two events $E$ and $F$ is preferably written 
     \end{equation*}
     if the limit exists.
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that the following properties are satisfied:
+        \begin{enumerate}
+            \item $0 \leq P(E) \leq 1$.
+            \item Let $S$ be a sample space, then $P(S) = 1$.
+            \item If $E$ and $F$ are mutually exclusive, then $P(E \cup F) = P(E) + P(F)$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+With induction, one can easily show that if $E_1, E_2, \cdots$ to be any sequence of events in a sample space $S$, then
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
+\end{equation*}
+\begin{thmbox}{The Null Event}{null}
+    Consider the null event $\varnothing$, we have
+    \begin{equation*}
+        P(\varnothing) = 0.
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Let $S$ be a sample space and let $E_1, E_2, \cdots$ be a countably infinite sequence of events such that $E_i = \varnothing$ for all $i \in \N^+$. We can write
+        \begin{equation*}
+            P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
+        \end{equation*}
+        Note that the countable union of empty sets is empty, so the above is equivalent to
+        \begin{equation*}
+            P\left(\bigcup_{i = 1}^\infty \varnothing\right) = P(\varnothing) = \sum_{i = 1}^{\infty}P(\varnothing).
+        \end{equation*}
+        This means that $P(\varnothing)$ equals the sum of a countably infinite sequence of itself, so 
+        \begin{equation*}
+            P(\varnothing) = 0.
+        \end{equation*}
+    \end{proof} 
+\end{thmbox}
+\begin{thmbox}{Monotonity of Probability}{monotone}
+    Let $E$ and $F$ be events such that $E \subseteq F$, then 
+    \begin{equation*}
+        P(F) \geq P(E).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Note that $E$ and $F - E$ are mutually exclusive, so 
+        \begin{equation*}
+            P(F) = P(E \cup (F - E)) = P(E) + P(F - E).
+        \end{equation*}
+        Note that $P(F - E) \geq 0$, so $P(E) + P(F - E) \geq P(E)$, which means
+        \begin{equation*}
+            P(F) \geq P(E).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{thmbox}{Inclusion-Exclusion Principle}{in-exPrinciple}
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^n E_i\right) = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{k_1 \leq k_2 \leq \cdots \leq k_j}P\left(\bigcap_{h = 1}^{j}E_{k_h}\right)\right)\right].
+    \end{equation*}
+\end{thmbox}
+\begin{thmbox}{Boole's Inequality}{boole}
+    Let $E_1, E_2, \cdots, E_n, \cdots$ be a countable sequence of events, then
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^\infty E_i\right) \leq \sum_{i = 1}^{\infty}P(E_i).
+    \end{equation*}
+    In particular, equality is achieved if and only if the $E_i$'s are mutually exclusive.
+\end{thmbox}
+\begin{thmbox}{Probability in a Finite Sample Space}
+    Let $S$ be a sample space which is finite and let $E \subseteq S$ be an event, then 
+    \begin{equation*}
+        P(E) = \frac{\abs{E}}{\abs{S}}.
+    \end{equation*}
+\end{thmbox}
 \end{document}
