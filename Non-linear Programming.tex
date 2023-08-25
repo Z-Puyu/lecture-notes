@@ -132,4 +132,70 @@ By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is clo
     \end{displaymath}
     is {\color{red} \textbf{closed}}, where each of the $g_i$'s is known as an equality constraint and each of the $h_j$'s is known as an inequality constraint.
 \end{dfnbox}
+
+\chapter{Convex Functions}
+\section{Convex Sets and Functions}
+\begin{dfnbox}{Convex Set}{convexSet}
+    A set $D \subseteq \mathbf{R}^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    \begin{displaymath}
+        \lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y} \in D.
+    \end{displaymath}
+\end{dfnbox}
+\begin{dfnbox}{Convex Function}{convexFunc}
+    A function $f \colon D \to \mathbf{R}^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    \begin{displaymath}
+        f\left(\lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
+    \end{displaymath}
+\end{dfnbox}
+\begin{dfnbox}{Concave Function}{concaveFunc}
+    A function $f \colon D \to \mathbf{R}^n$ is said to be {\color{red} \textbf{concave}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    \begin{displaymath}
+        f\left(\lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) \geq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
+    \end{displaymath}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A function which is not convex must be concave. However, a function which is convex may not be non-concave (consider $f(x) = x$).
+    \end{remark}
+\end{notebox}
+\begin{dfnbox}{Epigraph}{epigraph}
+    Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The {\color{red} \textbf{epigraph}} of $f$ is the set $E_f \subseteq \mathbf{R}^{n + 1}$ defined by
+    \begin{displaymath}
+        E_f \coloneqq \left\{(\mathbfit{x}, \alpha) \colon \mathbfit{x} \in D, \alpha \in \mathbf{R}, f(\mathbfit{x}) \leq \alpha\right\}.
+    \end{displaymath}
+\end{dfnbox}
+\begin{thmbox}{Convexity of Epigraph}{convexEpi}
+    Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The epigraph $E_f$ is convex if and only if $f$ is convex.
+\end{thmbox}
+\begin{thmbox}{Generalised Convex Combination}{convexCombi}
+    Let $f \colon S \to \mathbf{R}$ be a convex function on the convex set $S \subseteq \mathbf{R}^n$ and let $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_k \in S$, then 
+    \begin{equation*}       
+        f\left(\sum_{i = 1}^{k}\lambda_i\mathbfit{x}_i\right) \leq \sum_{i = 1}^{k}\lambda_i f(\mathbfit{x}_i),
+    \end{equation*}     
+    where $\sum_{i = 1}^{k}\lambda_i = 1$ and $\lambda_i \geq 0$ for $i = 1, 2, \cdots, k$.
+\end{thmbox}
+\begin{thmbox}{An Alternative Expression for Directional Derivatives}{directionalDerivative}
+    Let $f$ be a function over $D \subseteq \mathbf{R}^n$ and let $\mathbfit{d} \in \mathbf{R}^n$ be non-zero, then
+    \begin{equation*}
+        \nabla f(\mathbfit{x})^{\mathrm{T}}\mathbfit{d} = \lim_{\lambda \to 0}\frac{f(\mathbfit{x + \lambda\mathbfit{d}}) - f(\mathbfit{x})}{\lambda}.
+    \end{equation*}
+\end{thmbox}
+\begin{thmbox}{Tangent Plane Characterisation of Convex Functions}{convexTan}
+    Let $f$ be a function over an open convex set $S \subseteq \mathbf{R}^n$ with continuous first partial derivatives, then $f$ is convex if and only if 
+    \begin{equation*}
+        f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \leq f(\mathbfit{y})
+    \end{equation*}
+    for all $\mathbfit{x}, \mathbfit{y} \in S$. In particular, $f$ is strictly convex if and only if the above inequality is strict.
+\end{thmbox}
+\begin{thmbox}{Global Minimiser of Convex Functions}{convexFuncMin}
+    Let $f \colon C \to \mathbf{R}$ be a convex and continuously differentiable function over a convex set~$C \subseteq \mathbf{R}^n$. Then $\mathbfit{x}^* \in C$ is a global minimiser for the minimisation problem 
+    \begin{displaymath}
+        \min\left\{f(\mathbfit{x}) \colon \mathbfit{x} \in C\right\}
+    \end{displaymath}
+    if and only if
+    \begin{equation*}
+        \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \geq 0
+    \end{equation*}
+    for all $\mathbfit{x} \in C$.
+\end{thmbox}
 \end{document}
