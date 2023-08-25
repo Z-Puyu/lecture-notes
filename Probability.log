@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  16 AUG 2023 08:03
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  25 AUG 2023 10:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1185,39 +1185,14 @@ No file Probability.toc.
 \openout5 = `Probability.toc'.
 
 
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 32.
+LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 31.
 
 [1
 
 
-] 
-enddocument/afterlastpage: lastpage setting LastPage.
-(./Probability.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `Probability.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Probability.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
-
-Package lastpage Warning: Rerun to get the references right on input line 32.
-
- ) 
-Here is how much of TeX's memory you used:
- 35962 strings out of 478630
- 752705 string characters out of 5847730
- 1850012 words of memory out of 5000000
- 55529 multiletter control sequences out of 15000+600000
- 513148 words of font info for 60 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 114i,11n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-Output written on Probability.pdf (1 page).
+]
+Chapter 1.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 12.00128pt on input line 37.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 8.40088pt on input l

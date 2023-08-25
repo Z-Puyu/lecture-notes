@@ -28,5 +28,257 @@
 }
 \tableofcontents
 
+\chapter{How to Count}
+\section{Basic Counting Principles}
+An important motivation to study combinatorics is to count the \textbf{number of ways} in which an event may occur. Intuitively, we have two approaches to count.
 
+The first approach is to categorise the event into \textbf{non-overlapping cases}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
+
+Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a \textbf{partition} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
+
+This motivates us to write the following principle using set notations.
+\begin{thmbox}{Addition Principle (AP)}{AP}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ finite sets which are pairwise disjoint, i.e. for all~$i, j$ such that $1 \leq i, j \leq k$, $A_i \cap A_j = \varnothing$ whenever~$i \neq j$, then
+   \begin{equation*}
+        \abs{\bigcup_{i = 1}^k A_i} = \sum_{i = 1}^{k}\abs{A_i}.
+   \end{equation*} 
+   \tcblower
+   \begin{proof}
+        The case where $k = 1$ is trivial.
+
+        Suppose that when $k = n$, we have
+        \begin{equation*}
+            \abs{\bigcup_{i = 1}^n A_i} = \sum_{i = 1}^{n}\abs{A_i}
+        \end{equation*} 
+        for any $n$ finite sets which are pairwise disjoint. Let $A_{n + 1}$ be an arbitrary finite set which is disjoint with any of the $A_i$'s from the $n$ sets. So we have:
+        \begin{align*}
+            \abs{\bigcup_{i = 1}^{n + 1} A_i} & = \abs{\left(\bigcup_{i = 1}^n A_i\right) \cup A_{n + 1}} \\
+            & = \abs{\bigcup_{i = 1}^n A_i} + \abs{A_{n + 1}} - \abs{\left(\bigcup_{i = 1}^n A_i\right) \cap A_{n + 1}} \\
+            & = \left(\sum_{i = 1}^{n}\abs{A_i}\right) + \abs{A_{n + 1}} - \abs{\varnothing} \\
+            & = \sum_{i = 1}^{n + 1}\abs{A_i}.
+        \end{align*}
+        Therefore, the original statement holds for all $k \in \N^+$.
+   \end{proof}
+\end{thmbox}
+\begin{notebox}
+    In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
+\end{notebox}
+Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into \textbf{non-overlapping stages}.
+
+With set notations, we can write the $i$-th stage for $E$ to occur as $e_i$, and so a way for $E$ to occur can be represented by an ordered tuple $(e_1, e_2, \cdots, e_k)$, where $k$ is the total number of stages to undergo for $E$ to occur.
+
+Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the \textbf{Cartesian product} of all the $E_i$'s. Hence, we derive the following principle:
+\begin{thmbox}{Multiplication Principle (MP)}{MP}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
+    \begin{equation*}
+        \abs{\prod_{i = 1}^{k}A_i} = \prod_{i = 1}^{k}\abs{A_i}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        The case where $k = 1$ is trivial.
+
+        Suppose that when $k = n$, we have
+        \begin{equation*}
+            \abs{\prod_{i = 1}^{n}A_i} = \prod_{i = 1}^{n}\abs{A_i}
+        \end{equation*} 
+        for any $n$ finite sets which are pairwise disjoint. Let $A_{n + 1}$ be an arbitrary finite set which is disjoint with any of the $A_i$'s from the $n$ sets. Take $a_i, a_j \in A_{n + 1}$. Note that for all $\mathbfit{a} \in \prod_{i = 1}^{n}A_i$, $(\mathbfit{a}, a_i) \neq (\mathbfit{a}, a_j)$ whenever $a_i \neq a_j$. This means that
+        \begin{align*}
+            \abs{\prod_{i = 1}^{n + 1}A_i} & = \abs{\prod_{i = 1}^{n}A_i \times A_{n + 1}} \\
+            & = \abs{\prod_{i = 1}^{n}A_i}\abs{A_{n + 1}} \\
+            & = \left(\prod_{i = 1}^{n}\abs{A_i}\right)\abs{A_{n + 1}} \\
+            & = \prod_{i = 1}^{n + 1}\abs{A_i}
+        \end{align*}
+        Therefore, the original statement holds for all $k \in \N^+$.
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
+\end{notebox}
+\section{Permutations}
+A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textit{permutation}.
+
+Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $(n - 1)$ choices. 
+
+Continue choosing elements in this way, we realise that if we choose the terms sequentially, when we reach the $k$-th term we will be left with $n - k + 1$ options as the previous~$(k - 1)$ terms have taken away $(k - 1)$ elements. By Theorem \ref{thm:MP}, we know that the number of sequences which can be formed is given by $\prod_{i = 1}^{r}(n - r + i)$.
+\begin{dfnbox}{Permutations}{permutations}
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-permutation of $A$ is a way to arrange $r$ elements of $A$, denoted as $P^n_r$ and given by
+    \begin{equation*}
+        P^n_r = \prod_{i = 1}^{r}(n - r + i) = \frac{n!}{(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
+\subsection{Permutations with Idential Objects}
+\begin{thmbox}{Generalised Formula for Permutations}{}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of permutations for these $k$ objects are given by
+    \begin{equation*}
+        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
+    \end{equation*}
+\end{thmbox}
+\section{Combinations}
+\begin{dfnbox}{Combinations}{combinations}
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-combination of $A$ is a way to choose $r$ elements from $A$ regardless of the order of selection, denoted as $C^n_r$ and given by
+    \begin{equation*}
+        C^n_r = \frac{P^n_r}{P^r_r} = \frac{n!}{r!(n - r)!} = \begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Two obvious results:
+        \begin{enumerate}
+            \item If $r > n$ or $r < 0$, $C^n_r = 0$;
+            \item $C^n_r = C^n_{n - r}$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Pascal's Triangle}{pascalTri}
+    Let $n$ be an integer with $n \geq 2$ and let $r$ be an integer with $0 \leq r \leq n$, then
+    \begin{equation*}
+        C^n_r = C^{n - 1}_{r - 1} + C^{n - 1}_r.
+    \end{equation*}
+\end{thmbox}
+
+\section{Binomial and Multinomial Coefficients}
+Consider the expansion of $(x + y)^n$ where $n \in \N$. Note that this expansion is a linear combination of terms in the form of $x^ky^{n - k}$ where $k = 0, 1, 2, \cdots, n$. 
+
+Thus, fix any $k$, to determine how many copies of $x^ky^{n - k}$ there are, it suffices to compute~$C^n_k$. Therefore, in the expanded form of $(x + y)^n$, the coefficient is exactly $C^n_r$.
+\begin{thmbox}{Binomial Expansion}{binomialEx}
+    Let $n \in \N$, then
+    \begin{equation*}
+        (x + y)^n = \sum_{k = 0}^n \left[\begin{pmatrix}
+            n \\
+            k
+        \end{pmatrix}x^ky^{n - k}\right].
+    \end{equation*}
+\end{thmbox}
+We can extend the idea of binomial coefficients onto multinomial expansions, i.e. expressions in the form of $\left(\sum_{i = 1}^{r}x_i\right)^n$.
+
+Note that the binomial coefficient $C^n_r$ is essentially equivalent to dividing $n$ distinct elements into two groups with $r$ and $(n - r)$ members respectively. Now we consider dividing~$n$ distinct elements into $r$ groups with $n_1, n_2, \cdots, n_r$ members respectively for each group.
+
+Notice that we can simply permute the $n$ distinct elements and assign them sequentially into the $r$ groups, i.e. the first $n_1$ elements will go into the first group and so on.
+
+Since the order of elements within each group does not matter, we need to remove repeated selections by dividing by $\prod_{i = 1}^{r}(n_i!)$. So we have the following definition:
+\begin{dfnbox}{Multinomial Coefficients}{multinomialCoeff}
+    The {\color{red} \textbf{multinomial coefficient}} is defined by
+    \begin{equation*}
+        \begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_k
+        \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{k}\left(n_i!\right)}
+    \end{equation*}
+\end{dfnbox}
+\begin{thmbox}{Multinomial Expansion}{multinomialEx}
+    Let $n \in \N$, then 
+    \begin{equation*}
+        \left(\sum_{i = 1}^{r}x_i\right)^n = \sum_{
+            \substack{
+                n_1, n_2, \cdots, n_r \in \N \\
+                \sum_{j = 1}^rn_j = n
+            }
+        } \left[\begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_r
+        \end{pmatrix}\prod_{i = 1}^{r}x_i^{n_i}\right]
+    \end{equation*}
+\end{thmbox}
+
+\chapter{Axioms of Probability}
+\section{Sample Space and Events}
+\begin{dfnbox}{Sample Space}{sampleSpace}
+    Consider an experiment whose outcome is {\color{red} \textbf{not}} predictable, then the set of all possible outcomes of the experiment is called the {\color{red} \textbf{sample space}} of the experiment, denoted by $S$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $S \neq \varnothing$.
+    \end{remark}
+\end{notebox}
+\begin{dfnbox}{Events}{event}
+    Let $S$ be a sample space, a set $E \subseteq S$ is known as an {\color{red} \textbf{event}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        $S$ itself is known as the {\color{red} \textbf{sure event}} and $\varnothing$ is known as the {\color{red} \textbf{null event}}.
+    \end{remark}
+\end{notebox}
+Note that since sample spaces and events are sets, we can apply operations onto events precisely in the same way for sets.
+
+By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called \textit{mutually exclusive}.
+\begin{dfnbox}{Probability}{probability}
+    Let $E$ be any event of an experiment and let $n(E)$ be the number of occurrences of $E$ in the first $n$ repetitions of the experiment, then the {\color{red} \textbf{probability}} of $E$ is
+    \begin{equation*}
+        P(E) = \lim_{n \to \infty}\frac{n(E)}{n},
+    \end{equation*}
+    if the limit exists.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that the following properties are satisfied:
+        \begin{enumerate}
+            \item $0 \leq P(E) \leq 1$.
+            \item Let $S$ be a sample space, then $P(S) = 1$.
+            \item If $E$ and $F$ are mutually exclusive, then $P(E \cup F) = P(E) + P(F)$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+With induction, one can easily show that if $E_1, E_2, \cdots$ to be any sequence of events in a sample space $S$, then
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
+\end{equation*}
+\begin{thmbox}{The Null Event}{null}
+    Consider the null event $\varnothing$, we have
+    \begin{equation*}
+        P(\varnothing) = 0.
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Let $S$ be a sample space and let $E_1, E_2, \cdots$ be a countably infinite sequence of events such that $E_i = \varnothing$ for all $i \in \N^+$. We can write
+        \begin{equation*}
+            P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
+        \end{equation*}
+        Note that the countable union of empty sets is empty, so the above is equivalent to
+        \begin{equation*}
+            P\left(\bigcup_{i = 1}^\infty \varnothing\right) = P(\varnothing) = \sum_{i = 1}^{\infty}P(\varnothing).
+        \end{equation*}
+        This means that $P(\varnothing)$ equals the sum of a countably infinite sequence of itself, so 
+        \begin{equation*}
+            P(\varnothing) = 0.
+        \end{equation*}
+    \end{proof} 
+\end{thmbox}
+\begin{thmbox}{Monotonity of Probability}{monotone}
+    Let $E$ and $F$ be events such that $E \subseteq F$, then 
+    \begin{equation*}
+        P(F) \geq P(E).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Note that $E$ and $F - E$ are mutually exclusive, so 
+        \begin{equation*}
+            P(F) = P(E \cup (F - E)) = P(E) + P(F - E).
+        \end{equation*}
+        Note that $P(F - E) \geq 0$, so $P(E) + P(F - E) \geq P(E)$, which means
+        \begin{equation*}
+            P(F) \geq P(E).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{thmbox}{Inclusion-Exclusion Principle}{in-exPrinciple}
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^n E_i\right) = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{k_1 \leq k_2 \leq \cdots \leq k_j}P\left(\bigcap_{h = 1}^{j}E_{k_h}\right)\right)\right].
+    \end{equation*}
+\end{thmbox}
+\begin{thmbox}{Boole's Inequality}{boole}
+    Let $E_1, E_2, \cdots, E_n, \cdots$ be a countable sequence of events, then
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^\infty E_i\right) \leq \sum_{i = 1}^{\infty}P(E_i).
+    \end{equation*}
+    In particular, equality is achieved if and only if the $E_i$'s are mutually exclusive.
+\end{thmbox}
+\begin{thmbox}{Probability in a Finite Sample Space}
+    Let $S$ be a sample space which is finite and let $E \subseteq S$ be an event, then 
+    \begin{equation*}
+        P(E) = \frac{\abs{E}}{\abs{S}}.
+    \end{equation*}
+\end{thmbox}
 \end{document}
