@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  25 AUG 2023 10:10
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  25 AUG 2023 11:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1092,8 +1092,7 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count363
-
-No file Probability.aux.
+ (./Probability.aux)
 \openout1 = `Probability.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
@@ -1116,6 +1115,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
 LaTeX Font Info:    ... okay on input line 22.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
 LaTeX Font Info:    ... okay on input line 22.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1173,26 +1173,60 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                inconsistencies.
 
 Package hyperref Info: Link coloring ON on input line 22.
+(./Probability.out) (./Probability.out)
 \@outlinefile=\write4
 \openout4 = `Probability.out'.
 
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
 \c@lstlisting=\count364
-No file Probability.toc.
+ (./Probability.toc
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 12.00128pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 8.40088pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 6.60071pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 8.3991pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 6.59929pt on input line 2.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
 \tf@toc=\write5
 \openout5 = `Probability.toc'.
 
-
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 31.
-
-[1
+ [1
 
 
 ]
 Chapter 1.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 12.00128pt on input line 37.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 8.40088pt on input l
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 40.
+[2
+
+] [3] [4] [5] [6]
+Chapter 2.
+[7
+
+] [8] [9] [10] 
+enddocument/afterlastpage: lastpage setting LastPage.
+(./Probability.aux)
+Package rerunfilecheck Info: File `Probability.out' has not changed.
+(rerunfilecheck)             Checksum: F3DA8D9DB4A5DD6911088B45A73D6041;1654.
+ ) 
+Here is how much of TeX's memory you used:
+ 36171 strings out of 478630
+ 757742 string characters out of 5847730
+ 1872012 words of memory out of 5000000
+ 55693 multiletter control sequences out of 15000+600000
+ 516183 words of font info for 89 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 114i,14n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on Probability.pdf (10 pages).

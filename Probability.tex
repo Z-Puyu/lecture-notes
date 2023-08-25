@@ -204,6 +204,8 @@ Since the order of elements within each group does not matter, we need to remove
 Note that since sample spaces and events are sets, we can apply operations onto events precisely in the same way for sets.
 
 By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called \textit{mutually exclusive}.
+
+\section{Probability}
 \begin{dfnbox}{Probability}{probability}
     Let $E$ be any event of an experiment and let $n(E)$ be the number of occurrences of $E$ in the first $n$ repetitions of the experiment, then the {\color{red} \textbf{probability}} of $E$ is
     \begin{equation*}
@@ -211,20 +213,23 @@ By convention, the intersection of two events $E$ and $F$ is preferably written 
     \end{equation*}
     if the limit exists.
 \end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Note that the following properties are satisfied:
-        \begin{enumerate}
-            \item $0 \leq P(E) \leq 1$.
-            \item Let $S$ be a sample space, then $P(S) = 1$.
-            \item If $E$ and $F$ are mutually exclusive, then $P(E \cup F) = P(E) + P(F)$.
-        \end{enumerate}
-    \end{remark}
-\end{notebox}
+However, notice that from the above, the notion of probability may not be well-defined as~$n(E)$ is not a function, which means that the limit is not defined.
+
+To avoid this problem, we shall use an axiomatic definition instead, i.e., we define probability to be such that if it exists and is well-defined, then it satisfies a series of axioms. 
+\begin{dfnbox}{Axioms of Probability}{probAxi}
+    Let $S$ be a sample space and let $P(E)$ be a real number defined for every $E \subseteq S$. If
+    \begin{itemize}
+        \item $0 \leq P(E) \leq 1$,
+        \item $P(S) = 1$, and
+        \item for all mutually exclusive $E$ and $F$, $P(E \cup F) = P(E) + P(F)$,
+    \end{itemize}
+    then $P(E)$ is the {\color{red} \textbf{probability}} of $E$.
+\end{dfnbox}
 With induction, one can easily show that if $E_1, E_2, \cdots$ to be any sequence of events in a sample space $S$, then
 \begin{equation*}
     P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
 \end{equation*}
+We now follow up with proofs for two seemingly intuitive results.
 \begin{thmbox}{The Null Event}{null}
     Consider the null event $\varnothing$, we have
     \begin{equation*}
@@ -263,10 +268,29 @@ With induction, one can easily show that if $E_1, E_2, \cdots$ to be any sequenc
         \end{equation*}
     \end{proof}
 \end{thmbox}
+
+\section{Inclusion-Exclusion Principle}
+It is easy to compute the probability of a countable union of mutually exclusive events. However, it may get tricky when an event is the union of events which are not mutually exclusive. Intuitively, we can sum up the probabilities of all individual events and subtract the portions which are double-counted. This approach is rigorously summarised as follows:
 \begin{thmbox}{Inclusion-Exclusion Principle}{in-exPrinciple}
+    Let $S$ be a sample space and let $E_1, E_2, \cdots, E_n$ be a sequence of events. In general, we have
     \begin{equation*}
         P\left(\bigcup_{i = 1}^n E_i\right) = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{k_1 \leq k_2 \leq \cdots \leq k_j}P\left(\bigcap_{h = 1}^{j}E_{k_h}\right)\right)\right].
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider the function $g \colon S \to \{0, 1\}$ given by
+        \begin{displaymath}
+            g(x) = \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right).
+        \end{displaymath}
+        For any $x \in S$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that $f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, $g(x) = 0$.
+    \end{proof}
 \end{thmbox}
 \begin{thmbox}{Boole's Inequality}{boole}
     Let $E_1, E_2, \cdots, E_n, \cdots$ be a countable sequence of events, then
