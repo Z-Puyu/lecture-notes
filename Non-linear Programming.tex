@@ -134,13 +134,17 @@ By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is clo
 \end{dfnbox}
 
 \chapter{Convex Functions}
-\section{Convex Sets and Functions}
+\section{Convexity of Sets and Functions}
+Intuitively, we describe two types of shapes in natural languages: the shapes which, if you choose any of its edges, lies in the same side of that edge, and the shapes which span across both sides from some chosen edge of its.
+
+Graphically, this means that some shapes are ``convex'' to all directions, where as some other shapes are ``concave''. We shall define this rigorously as follows:
 \begin{dfnbox}{Convex Set}{convexSet}
     A set $D \subseteq \mathbf{R}^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
     \begin{displaymath}
         \lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y} \in D.
     \end{displaymath}
 \end{dfnbox}
+We can define convexity over functions as follows:
 \begin{dfnbox}{Convex Function}{convexFunc}
     A function $f \colon D \to \mathbf{R}^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
     \begin{displaymath}
@@ -158,36 +162,95 @@ By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is clo
         A function which is not convex must be concave. However, a function which is convex may not be non-concave (consider $f(x) = x$).
     \end{remark}
 \end{notebox}
+We may derive the following relationship between a convex set and a convex function:
+\begin{probox}{Relations between Convex Sets and Convex Functions}{cSetRCFunc}
+    Let $D \subseteq \mathbf{R}^n$ be a convex set and let $f \colon D \to \mathbf{R}$ be a convex function, then for all $\alpha \in \mathbf{R}$, the set
+    \begin{displaymath}
+        S_\alpha \coloneqq \left\{\mathbfit{x} \in D \colon f(\mathbfit{x}) \leq \alpha\right\}
+    \end{displaymath}
+    is convex.
+    \tcblower   
+    \begin{proof}
+        Take $\mathbfit{x}, \mathbfit{y} \in S_\alpha$, then $f(\mathbfit{x}) \leq \alpha$ and $f(\mathbfit{y}) \leq \alpha$. Note that for any $\lambda \in [0, 1]$, we have
+        \begin{align*}
+            f\left(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) & \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}) \\
+            & \leq \lambda\alpha + (1 - \lambda)\alpha \\
+            & = \alpha.
+        \end{align*}
+        Therefore, $\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y} \in S_\alpha$, and so $S_\alpha$ is convex.
+    \end{proof}
+\end{probox}
+Next, we introduce the notion of an \textit{epigraph}.
 \begin{dfnbox}{Epigraph}{epigraph}
-    Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The {\color{red} \textbf{epigraph}} of $f$ is the set $E_f \subseteq \mathbf{R}^{n + 1}$ defined by
+    Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The {\color{red} \textbf{epigraph}} of $f$ is the set~$E_f \subseteq \mathbf{R}^{n + 1}$ defined by
     \begin{displaymath}
         E_f \coloneqq \left\{(\mathbfit{x}, \alpha) \colon \mathbfit{x} \in D, \alpha \in \mathbf{R}, f(\mathbfit{x}) \leq \alpha\right\}.
     \end{displaymath}
 \end{dfnbox}
-\begin{thmbox}{Convexity of Epigraph}{convexEpi}
+\begin{notebox}
+    \begin{remark}
+        A trivial result: $D \times \mathrm{range}(f) \subseteq E_f$.
+    \end{remark}
+\end{notebox}
+Note that graphically, the epigraph of a function is just the region above the graph of the function.
+\begin{probox}{Convexity of Epigraph}{convexEpi}
     Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The epigraph $E_f$ is convex if and only if $f$ is convex.
-\end{thmbox}
-\begin{thmbox}{Generalised Convex Combination}{convexCombi}
-    Let $f \colon S \to \mathbf{R}$ be a convex function on the convex set $S \subseteq \mathbf{R}^n$ and let $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_k \in S$, then 
+    \tcblower   
+    \begin{proof}
+        Suppose $E_f$ is convex. Take any $\mathbfit{x}, \mathbfit{y} \in D$, then $(\mathbfit{x}, f(\mathbfit{x})), (\mathbfit{y}, f(\mathbfit{y})) \in E_f$. Let $\lambda \in [0, 1]$, we have
+        \begin{displaymath}
+            \lambda(\mathbfit{x}, f(\mathbfit{x})) + (1 - \lambda)(\mathbfit{y}, f(\mathbfit{y})) = (\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}, \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y})) \in E_f.
+        \end{displaymath}
+        Therefore, 
+        \begin{align*}
+            f\left(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) & \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}),
+        \end{align*}
+        and so $f$ is convex.
+        \\\\
+        Suppose conversely that $f$ is convex. For any $\mathbfit{x}, \mathbfit{y} \in D$ and any $\alpha, \beta \in \mathbf{R}$ such that $f(\mathbfit{x}) \leq \alpha$ and $f(\mathbfit{y}) \leq \beta$, we have $(\mathbfit{x}, \alpha), (\mathbfit{y}, \beta) \in E_f$. For all $\lambda \in [0, 1]$, consider
+        \begin{align*}
+            \lambda(\mathbfit{x}, \alpha) + (1 - \lambda)(\mathbfit{y}, \beta) = (\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}, \lambda\alpha + (1 - \lambda)\beta).
+        \end{align*}
+        Since $f$ is convex, we have
+        \begin{align*}
+            f\left(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) & \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}) \\
+            & \leq \lambda\alpha + (1 - \lambda)\beta
+        \end{align*}
+        for all $\lambda \in [0, 1]$. Therefore, $(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}, \lambda\alpha + (1 - \lambda)\beta) \in E_f$, and so $E_f$ is convex.
+    \end{proof}
+\end{probox}
+Lastly, we generalise the notion of a \textit{convex combination}.
+\begin{probox}{Generalised Convex Combination}{convexCombi}
+    Let $k \in \N^+$ and let $f \colon S \to \mathbf{R}$ be a convex function on the convex set $S \subseteq \mathbf{R}^n$ and let $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_k \in S$, then 
     \begin{equation*}       
         f\left(\sum_{i = 1}^{k}\lambda_i\mathbfit{x}_i\right) \leq \sum_{i = 1}^{k}\lambda_i f(\mathbfit{x}_i),
     \end{equation*}     
     where $\sum_{i = 1}^{k}\lambda_i = 1$ and $\lambda_i \geq 0$ for $i = 1, 2, \cdots, k$.
-\end{thmbox}
-\begin{thmbox}{An Alternative Expression for Directional Derivatives}{directionalDerivative}
+    \tcblower
+    \begin{proof}
+        The case where $k = 1$ is trivial.
+        \\\\
+        Suppose that there exists some $n \in \N^+$ such that
+        \begin{equation*}
+            f\left(\sum_{i = 1}^{n}\lambda_i\mathbfit{x}_i\right) \leq \sum_{i = 1}^{n}\lambda_i f(\mathbfit{x}_i),
+        \end{equation*}
+    \end{proof}
+\end{probox}
+\section{Gradient Vectors}
+\begin{probox}{An Alternative Expression for Directional Derivatives}{directionalDerivative}
     Let $f$ be a function over $D \subseteq \mathbf{R}^n$ and let $\mathbfit{d} \in \mathbf{R}^n$ be non-zero, then
     \begin{equation*}
         \nabla f(\mathbfit{x})^{\mathrm{T}}\mathbfit{d} = \lim_{\lambda \to 0}\frac{f(\mathbfit{x + \lambda\mathbfit{d}}) - f(\mathbfit{x})}{\lambda}.
     \end{equation*}
-\end{thmbox}
-\begin{thmbox}{Tangent Plane Characterisation of Convex Functions}{convexTan}
+\end{probox}
+\begin{probox}{Tangent Plane Characterisation of Convex Functions}{convexTan}
     Let $f$ be a function over an open convex set $S \subseteq \mathbf{R}^n$ with continuous first partial derivatives, then $f$ is convex if and only if 
     \begin{equation*}
         f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \leq f(\mathbfit{y})
     \end{equation*}
     for all $\mathbfit{x}, \mathbfit{y} \in S$. In particular, $f$ is strictly convex if and only if the above inequality is strict.
-\end{thmbox}
-\begin{thmbox}{Global Minimiser of Convex Functions}{convexFuncMin}
+\end{probox}
+\begin{probox}{Global Minimiser of Convex Functions}{convexFuncMin}
     Let $f \colon C \to \mathbf{R}$ be a convex and continuously differentiable function over a convex set~$C \subseteq \mathbf{R}^n$. Then $\mathbfit{x}^* \in C$ is a global minimiser for the minimisation problem 
     \begin{displaymath}
         \min\left\{f(\mathbfit{x}) \colon \mathbfit{x} \in C\right\}
@@ -197,5 +260,5 @@ By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is clo
         \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \geq 0
     \end{equation*}
     for all $\mathbfit{x} \in C$.
-\end{thmbox}
+\end{probox}
 \end{document}
