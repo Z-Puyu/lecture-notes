@@ -151,6 +151,7 @@ In some cases, it is difficult to count the objects directly. However, note that
     then $\abs{A} = \abs{B}$.
 \end{thmbox}
 \section{Permutations}
+\subsection{Linear Permutations}
 A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
 Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
@@ -176,6 +177,7 @@ With some algebraic manipulations, it is easy to derive the following formula, w
         Therefore, there are $P^n_{r} + rP^n_{r - 1}$ $r$-permutations of $S$, i.e. $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$. 
     \end{proof}
 \end{thmbox}
+
 \subsection{Circular Permutations}
 Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
 
@@ -192,13 +194,26 @@ Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same se
         Q^n_r = \frac{P^n_r}{r} = \frac{n!}{r(n - r)!}.
     \end{equation*}
 \end{dfnbox}
-\subsection{Permutations with Idential Objects}
-\begin{thmbox}{Generalised Formula for Permutations}{genPnr}
-    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of permutations for these $k$ objects are given by
+
+\subsection{Permutations with Repetitions}
+\begin{probox}{Number of Permutations with Repetitions}{pnrRep}
+    Let $S$ be a set of $n$ distinct objects. The number of $r$-permutations formed using the elements of $S$ with repetitions allowed is given by $n^r$.
+\end{probox}
+
+\begin{probox}{Generalised Formula for Permutations}{genPnr}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of $k$-permutations for these $k$ objects, where each object only appears once, is given by
     \begin{equation*}
         \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
     \end{equation*}
-\end{thmbox}
+\end{probox}
+
+\begin{dfnbox}{Multi-set}{multiset}
+    The {\color{red} \textbf{multi-set}} is definied to be
+    \begin{equation*}
+        M \coloneqq \left\{r_1 \cdot a_1, r_2 \cdot a_2, \cdots, r_n \cdot a_n\right\},
+    \end{equation*}
+    where $a_i$ has $r_i$ identical copies.
+\end{dfnbox}
 \section{Combinations}
 Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection.
 
@@ -260,6 +275,21 @@ We can expand the above expression algebraically and realise that it simpifies t
         \end{equation*}
     \end{proof}
 \end{thmbox}
+
+\subsection{Combinations with repetitions}
+\begin{dfnbox}{Multi-subset}{multisubset}
+    Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$ be a multi-set where $n \in \N$. An $r$-element {\color{red} \textbf{multi-subset}} of $M$ is the set
+    \begin{displaymath}
+        \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_r \cdot a_r\right\}
+    \end{displaymath}
+    where each of the $m_i$'s is a non-negative integer. We denote the number of $r$-element multi-subsets of $M$ by $H^n_r$.
+\end{dfnbox}
+\begin{probox}{A Formula for $H^n_r$}{hnrFormula}
+    Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$, then the number of $r$-element multi-subsets of $M$ is given by
+    \begin{equation*}
+        H^n_r = C^{r + n - 1}_r.
+    \end{equation*}
+\end{probox}
 
 \section{Fun Problems Collection}
 \begin{genbox}{No Consecutive}
@@ -359,4 +389,17 @@ One thing to take note of is that there is no general algebraic formula for $s(r
         \end{equation*}
     \end{proof}
 \end{thmbox}
+
+\subsection{Distinct Objects into Distinct Collections}
+The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
+\begin{probox}{}{}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
+\end{probox}
+We then consider the case where each collection can contain any number of objects.
+\begin{probox}{}{}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
+    \begin{equation*}
+        \frac{(n + r - 1)!}{(n - 1)!}.
+    \end{equation*}
+\end{probox}
 \end{document}
