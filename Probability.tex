@@ -305,4 +305,78 @@ It is easy to compute the probability of a countable union of mutually exclusive
         P(E) = \frac{\abs{E}}{\abs{S}}.
     \end{equation*}
 \end{thmbox}
+
+\chapter{Conditional Probability}
+\section{Conditional Probability}
+Given a sample space $S$, we may wish to find the probability of two events $E$ and $F$ both occurring, $P(EF)$. However, suppose that we already know that event $F$ \textbf{has occurred}, then necessarily, the sample space we consider would no longer be $S$. Essentially, this condition of $F$ having occurred has restricted our sample space to $F$. Thus, we give the following definition:
+\begin{dfnbox}{Conditional Probability}{condProb}
+    Let $S$ be a sample space and $E, F \subseteq S$ be two events. If $P(F) \geq 0$, then the {\color{red} \textbf{conditional probability}} is the probability that $E$ occurs given that $F$ has occurred, denoted by
+    \begin{equation*}
+        P(E|F) = \frac{P(EF)}{P(F)}.
+    \end{equation*}
+    In particular, if $E \subseteq F$, we have $P(E|F) = \frac{P(E)}{P(F)}$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $P(E|F) = P(EF|F)$.
+    \end{remark}
+\end{notebox}
+It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F$ both occurring is the product of the probability of $F$ occurring and the probability of $E$ occurring given the occurrence of $F$. This complies with our intuition. We can generalise this for a countable number of events:
+\begin{probox}{Multiplication Rule}{multRule}
+    Let $S$ be a sample space and let $E_i \subseteq S$ for $i = 1, 2, \cdots, n$ be $n$ events, where $n \geq 2$. Suppose that $P\left(\bigcap_{i = 1}^{n - 1}E_i\right) > 0$, then 
+    \begin{equation*}
+        P\left(\bigcap_{i = 1}^{n}E_i\right) = P(E_1)\prod_{i = 2}^{n}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        The case where $n = 2$ is immediate from Definition \ref{dfn:condProb}.
+        \\\\
+        Suppose that there is some $k \in \N$ and $k \geq 2$ such that
+        \begin{equation*}
+            P\left(\bigcap_{i = 1}^{k}E_i\right) = P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right),
+        \end{equation*}
+        then we consider
+        \begin{align*}
+            P\left(E_{k + 1}\left\lvert\bigcap_{i = 1}^{k}E_i\right.\right) & = \frac{P\left(\bigcap_{i = 1}^{k + 1}E_i\right)}{P\left(\bigcap_{i = 1}^{k}E_i\right)} \\
+            & = \frac{P\left(\bigcap_{i = 1}^{k + 1}E_i\right)}{P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right)}.
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            P\left(\bigcap_{i = 1}^{k + 1}E_i\right) & = \left[P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right)\right]P\left(E_{k + 1}\left\lvert\bigcap_{i = 1}^{k}E_i\right.\right) \\
+            & = P(E_1)\prod_{i = 2}^{k + 1}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right)
+        \end{align*}
+    \end{proof}
+\end{probox}
+\section{Bayes's Formula}
+Consider a sample space $S$ and two events $E, F \subseteq S$. Suppose that $E$ occurs, then either $F$ has occurred or $F$ has never occurred (i.e. $F^c$ occurred). Therefore, it is easy to see that
+\begin{equation*}
+    P(E) = P(EF) + P(EF^c) = P(E|F) + P(E|F^c).
+\end{equation*}
+We can extend the above argument for more than two events. Suppose that $F_1, F_2, \cdots, F_n$ are $n$ mutually exclusive events such that $\bigcup_{i = 1}^n F_i = S$, then obviously $\left\{F_1, F_2, \cdots, F_n\right\}$ is a \textit{partition} of $S$.
+
+Consider any event $E$ and let $e \in E$. Clearly, $e$ must be in one and only one of $F_1, F_2, \cdots, F_n$. It then follows that $\left\{E \cap F_1, E \cap F_2, \cdots, E \cap F_n\right\}$ is a partition of $E$. Generalising this further to a countably infinite number of mutually exclusive events $F_1, F_2, \cdots$ such that $\bigcup_{i = 1}^\infty F_i = S$, we arrive at the following formula:
+\begin{equation*}
+    P(E) = \sum_{i = 1}^{\infty}P(E|F_i)P(F_i).
+\end{equation*}
+This leads to the \textit{Bayes's Formula}:
+\begin{thmbox}{Bayes's Formula}{BayesFormula}
+    Let $F_1, F_2, \cdots$ be a countably infinite sequence of events over a sample space $S$ such that $\bigcup_{i = 1}^\infty F_i = S$. For any event $E \subseteq S$, we have
+    \begin{equation*}
+        P(F_j|E) = \frac{P(E|F_j)P(F_j)}{\sum_{i = 1}^{\infty}P(E|F_i)P(F_i)}.
+    \end{equation*}
+\end{thmbox}
+\section{Indepedent Events}
+Note that in general, for two events $E$ and $F$, $P(E|F) \neq P(E)$, i.e., the occurrence of $F$ may affect the occurrence of $E$. However, in some cases, we notice that the occurrence of $E$ is \textit{independent} of $F$, and so we introduce the following definition:
+\begin{dfnbox}{Independent Events}{indEvents}
+    Let $S$ be a sample space and let $E, F \subseteq S$ be two events. We say that $E$ and $F$ are {\color{red} \textbf{independent}} if $P(EF) = P(E)P(F)$, and {\color{red} \textbf{dependent}} otherwise.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The following results are immediate:
+        \begin{enumerate}
+            \item If $P(E) = 0$ or $P(F) = 0$, then $E$ and $F$ are independent.
+            \item If $P(E) > 0$ (respectively, $P(F) > 0$), then $E$ and $F$ are independent if and only if $P(F|E) = P(F)$ (respectively, $P(E|F) = P(E)$).
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
 \end{document}

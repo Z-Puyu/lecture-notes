@@ -317,6 +317,7 @@
 \ifamznotes@math
     \newamzbox{lembox}{Lemma}{lem}{amzthmboxcolor}[thmboxstyle]
     \newamzbox{thmbox}{Theorem}{thm}{amzthmboxcolor}[thmboxstyle]
+    \newamzbox{probox}{Proposition}{pro}{amzthmboxcolor}[thmboxstyle]
     \newamzbox{corbox}{Corollary}{cor}{amzthmboxcolor}[thmboxstyle]
 \fi
 
