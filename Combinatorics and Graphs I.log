@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  28 AUG 2023 13:32
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  4 SEP 2023 17:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1225,97 +1225,114 @@ Underfull \hbox (badness 10000) in paragraph at lines 171--178
 
  []
 
-[6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 247--254
+[6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 264--271
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--254
+Underfull \hbox (badness 10000) in paragraph at lines 264--271
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--254
-
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 268--273
+Underfull \hbox (badness 10000) in paragraph at lines 264--271
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--273
+Underfull \hbox (badness 10000) in paragraph at lines 285--290
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 285--290
 
  []
 
 [9]
-Underfull \hbox (badness 1838) in paragraph at lines 296--297
-[]\TU/STIXTwoText(0)/m/n/12 Let $[] [] []$. Find the number of $[]$-combinations of $[]$ such
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 302--310
+Underfull \hbox (badness 10000) in paragraph at lines 313--316
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--310
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 302--310
+Underfull \hbox (badness 10000) in paragraph at lines 318--322
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 323--328
+Underfull \hbox (badness 1838) in paragraph at lines 327--328
+[]\TU/STIXTwoText(0)/m/n/12 Let $[] [] []$. Find the number of $[]$-combinations of $[]$ such
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 333--341
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--328
+Underfull \hbox (badness 10000) in paragraph at lines 333--341
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 330--334
+Underfull \hbox (badness 10000) in paragraph at lines 333--341
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 379--387
+Underfull \hbox (badness 10000) in paragraph at lines 354--359
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--387
+Underfull \hbox (badness 10000) in paragraph at lines 354--359
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--387
+Underfull \hbox (badness 10000) in paragraph at lines 361--365
 
  []
 
-[12] [13] [14] 
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 410--418
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--418
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--418
+
+ []
+
+[13] [14]
+Overfull \hbox (7.3802pt too wide) in paragraph at lines 445--479
+\TU/STIXTwoText(0)/m/n/12 In this section, we will see that there is a clear relation between the number of $[]$-combinations
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 533--537
+
+ []
+
+[16] [17] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs I.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Combinatorics and Graphs I".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36213 strings out of 478630
- 758747 string characters out of 5847730
- 1874012 words of memory out of 5000000
- 55738 multiletter control sequences out of 15000+600000
+ 36226 strings out of 478630
+ 758952 string characters out of 5847730
+ 1873012 words of memory out of 5000000
+ 55751 multiletter control sequences out of 15000+600000
  516159 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs I.pdf (14 pages).
+Output written on Combinatorics and Graphs I.pdf (17 pages).

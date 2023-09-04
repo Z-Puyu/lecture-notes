@@ -196,24 +196,41 @@ Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same se
 \end{dfnbox}
 
 \subsection{Permutations with Repetitions}
-\begin{probox}{Number of Permutations with Repetitions}{pnrRep}
-    Let $S$ be a set of $n$ distinct objects. The number of $r$-permutations formed using the elements of $S$ with repetitions allowed is given by $n^r$.
-\end{probox}
+Consider the following scenario: suppose $T_1, T_2, \cdots T_n$ are distinct labels and $a_1, a_2, \cdots, a_r$ are $r$ distinct objects. If we wish to associate each object with one label, then each of the ways to do so is a permutation, the terms of which are taken from the $T_i$'s. Notice that under this setting, the $T_i$'s are allowed to be repeated in a permutation.
 
-\begin{probox}{Generalised Formula for Permutations}{genPnr}
-    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of $k$-permutations for these $k$ objects, where each object only appears once, is given by
-    \begin{equation*}
-        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
-    \end{equation*}
-\end{probox}
-
+To reason such problems, we first introduce the notion of a \textit{multi-set}.
 \begin{dfnbox}{Multi-set}{multiset}
-    The {\color{red} \textbf{multi-set}} is definied to be
+    The {\color{red} \textbf{multi-set}} is defined to be
     \begin{equation*}
         M \coloneqq \left\{r_1 \cdot a_1, r_2 \cdot a_2, \cdots, r_n \cdot a_n\right\},
     \end{equation*}
     where $a_i$ has $r_i$ identical copies.
 \end{dfnbox}
+Observe that in a permutation of such a multi-set $M$, the object $a_i$ is repeated $r_i$ times. This brings us to the following formula:
+\begin{probox}{Generalised Formula for Permutations}{genPnr}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then each permutation for these objects, corresponds to a unique permutation of the multi-set
+    \begin{displaymath}
+        M = \left\{n_1 \cdot A_1, n_2 \cdot A_2, \cdots, n_k \cdot A_k\right\},
+    \end{displaymath}
+    and the total number of permutations is given by
+    \begin{equation*}
+        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
+    \end{equation*}
+\end{probox}
+We may also consider the special case where we want to form an $r$-permutation with $k$ objects, where each object can repeat an arbitrary number of times. Notice that this is equivalent to finding the permutations of the multi-set
+\begin{displaymath}
+    M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_k\right\}.
+\end{displaymath}
+In this case, we can simply iterate through each of the slots in the $r$-permutation and choose the object to be placed there. Trivially, there are always $k$ choices for each slot.
+\begin{probox}{A Special Case}{pnrSpe}
+    Consider the multi-set
+    \begin{displaymath}
+        M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}.
+    \end{displaymath}
+    The number of $r$-permutations formed using the elements from $M$ is given by $n^r$.
+\end{probox}
+
+
 \section{Combinations}
 Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection.
 
@@ -276,19 +293,33 @@ We can expand the above expression algebraically and realise that it simpifies t
     \end{proof}
 \end{thmbox}
 
-\subsection{Combinations with repetitions}
+\subsection{Combinations with Repetitions}
+Given a set of $n$ distinct objects, we wish to find the number of combinations taken from the set where any element is allowed to be selected for multiple times. To reason about such problems, we introduce the following notion of a \textit{multi-subset}.
 \begin{dfnbox}{Multi-subset}{multisubset}
     Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$ be a multi-set where $n \in \N$. An $r$-element {\color{red} \textbf{multi-subset}} of $M$ is the set
     \begin{displaymath}
-        \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_r \cdot a_r\right\}
+        \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}
     \end{displaymath}
-    where each of the $m_i$'s is a non-negative integer. We denote the number of $r$-element multi-subsets of $M$ by $H^n_r$.
+    where each of the $m_i$'s is a non-negative integer such that $\sum_{i = 1}^{n}m_i = r$. We denote the number of $r$-element multi-subsets of $M$ by $H^n_r$.
 \end{dfnbox}
+Intuitively, we can view each of the $a_i$'s as a ``box'' which holds $m_i$ balls. Therefore, if we can find the ways to distribute a total of $r$ balls into the $n$ ``boxes'', each of the distribution will then correspond to a multi-subset of $M$!
 \begin{probox}{A Formula for $H^n_r$}{hnrFormula}
     Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$, then the number of $r$-element multi-subsets of $M$ is given by
     \begin{equation*}
         H^n_r = C^{r + n - 1}_r.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider a binary string formed using $r$ zeros. Note that we can insert a number of ones into the binary string to partition the zeros into different sections. Now, suppose we insert $(n - 1)$ ones into the binary string, it will result in a binary string containing $r$ zeros and $(n - 1)$ ones, such that the zeros are partitioned into $n$ sections.
+        \\\\
+        We can then number the sections using $1, 2, 3, \cdots, n$. For the $i$-th section, the number of zeros is recorded as $m_i$. Notice that in this case, each of the binary strings will correspond to a multi-subset in the form of 
+        \begin{displaymath}
+            \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}.
+        \end{displaymath}
+        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and $(n - 1)$ ones.
+        \\\\
+        Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
+    \end{proof}
 \end{probox}
 
 \section{Fun Problems Collection}
@@ -402,4 +433,167 @@ We then consider the case where each collection can contain any number of object
         \frac{(n + r - 1)!}{(n - 1)!}.
     \end{equation*}
 \end{probox}
+
+\section{Binomial and Multinomial Coefficients}
+\subsection{Binomial Coefficients}
+In previous sections on combinations, we have already introduced the ways to choose $r$ items from a collection of $n$ distinct items, the number of which is given by
+\begin{displaymath}
+    C^n_r = \begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix}.
+\end{displaymath} 
+In this section, we will see that there is a clear relation between the number of $r$-combinations to the \textit{binomial expansion}.
+\begin{thmbox}{Binomial Expansion}{binomial}
+    Let $n \in \N$, then
+    \begin{equation*}
+        (x + y)^n = \sum_{i = 0}^{n}\left[\begin{pmatrix}
+            n \\
+            i
+        \end{pmatrix}x^{n - i}y^i\right].
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Note that 
+        \begin{equation*}
+            (x + y)^n = \prod_{i = 1}^{n}(x + y).
+        \end{equation*}
+        Let the coefficient of $x^{n - r}y^r$ be $k$, where $r$ is an integer with $0 \leq r \leq n$. Notice that $k$ is exactly the number of ways to choose $(n - r)$ copies of $x$'s from the distinct $n$ terms of $(x + y)$, which is given by
+        \begin{equation*}
+            \begin{pmatrix}
+                n \\
+                n - r
+            \end{pmatrix} = \begin{pmatrix}
+                n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+        Therefore, summing up the terms, we have
+        \begin{equation*}
+            (x + y)^n = \sum_{i = 0}^{n}\left[\begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}x^{n - i}y^i\right].
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+There are many nice algebraic properties about the binomial coefficient $\left(\begin{smallmatrix}
+    n \\
+    r
+\end{smallmatrix}\right)$. Beside Theorem \ref{thm:pascalTri}, the following can be proven with a few simple algebraic manipulations:
+\begin{enumerate}
+    \item $\begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix} = \frac{n}{r}\begin{pmatrix}
+        n - 1 \\
+        r - 1
+    \end{pmatrix}$.
+    \item $\begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix} = \frac{n - r + 1}{r}\begin{pmatrix}
+        n \\
+        r - 1
+    \end{pmatrix}$.
+    \item $\begin{pmatrix}
+        n \\
+        m
+    \end{pmatrix}\begin{pmatrix}
+        m \\
+        r
+    \end{pmatrix} = \begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix}\begin{pmatrix}
+        n - r \\
+        m - r
+    \end{pmatrix}$.
+\end{enumerate}
+We will focus on two important identities about the binomial coefficients, one of which is as follows:
+\begin{thmbox}{Vandermonde's Identity}{vadermonde}
+    Let $m, n, r \in \N$, then
+    \begin{equation*}
+        \sum_{i = 0}^{r}\left[\begin{pmatrix}
+            m \\
+            i
+        \end{pmatrix}\begin{pmatrix}
+            n \\
+            r - i
+        \end{pmatrix}\right] = \begin{pmatrix}
+            m + n \\
+            r
+        \end{pmatrix}.
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            X = \left\{a_1, a_2, \cdots, a_m, b_1, b_2, \cdots, b_n\right\}.
+        \end{displaymath}
+        Clearly, $\abs{X} = m + n$. Let $A \subseteq X$ such that $\abs{A} = r$, we consider the number of such $A$'s.
+        \\\\
+        Let $i$ be an integer with $0 \leq i \leq r$. If $A$ contains exactly $i$ elements from the $a_j$'s, then it will contain exactly $(r - 1)$ elements from the $b_j$'s. Therefore, the number of $A$'s for each $i = 1, 2, \cdots, r$ is given by
+        \begin{equation*}
+            \begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}.
+        \end{equation*}
+        However, we know that the total number of such $A$'s is just $C^{m + n}_r$, so we have
+        \begin{equation*}
+            \sum_{i = 0}^{r}\left[\begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}\right] = \begin{pmatrix}
+                m + n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{thmbox}{Chu Shih-Chieh (CSC) Identity}{CSC}
+    Let $r, n, k \in \N$ with $n \geq r$, then
+    \begin{equation*}
+        \sum_{i = 0}^{n - r}\begin{pmatrix}
+            r + i \\
+            r
+        \end{pmatrix} = \begin{pmatrix}
+            n + 1 \\
+            r + 1
+        \end{pmatrix}, \qquad \sum_{i = 0}^{k}\begin{pmatrix}
+            r + i \\
+            i
+        \end{pmatrix} = \begin{pmatrix}
+            r + k + 1 \\
+            k
+        \end{pmatrix}.
+    \end{equation*}
+\end{thmbox}
+\subsection{Multinomial Coefficients}
+\begin{dfnbox}{Multinomial Coefficient}{multinomialCoeff}
+    Let $m, n \in \N$, with $m \geq 1$. The {\color{red} \textbf{multinomial coefficient}}
+    \begin{displaymath}
+        \begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_m
+        \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{m}n_i!}
+    \end{displaymath}
+    is the number of ways to distribute $n$ distinct objects into $m$ distinct collections such that there are exactly $n_i$ objects in the $i$-th collection.
+\end{dfnbox}
+\begin{thmbox}{Multinomial Expansion}{multinomialEx}
+    For $m, n \in \N+$, we have
+    \begin{equation*}
+        \left(\sum_{i = 1}^{m}x_i\right)^n = \sum_{\substack{\sum_{j = 1}^{m}n_j = n}} \begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_m
+        \end{pmatrix}\prod_{i = 1}^{m}x_i^{n_i}.
+    \end{equation*}
+\end{thmbox}
 \end{document}
