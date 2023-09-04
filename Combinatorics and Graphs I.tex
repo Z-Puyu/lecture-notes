@@ -558,6 +558,7 @@ We will focus on two important identities about the binomial coefficients, one o
         \end{equation*}
     \end{proof}
 \end{thmbox}
+Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurrence relation for the binomial coefficients. Thus in theory, it is possible to generate any binomial coefficient recursively. The following theorem illustrates this.
 \begin{thmbox}{Chu Shih-Chieh (CSC) Identity}{CSC}
     Let $r, n, k \in \N$ with $n \geq r$, then
     \begin{equation*}
@@ -575,6 +576,42 @@ We will focus on two important identities about the binomial coefficients, one o
             k
         \end{pmatrix}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            X = \left\{x \in \N^+ \colon x \leq n + 1\right\}.
+        \end{displaymath}
+        We will count the number of $(r + 1)$-element subsets of $X$ in the following way:
+        \\\\
+        Fix $k$ to be the smallest element in some $Y \subseteq X$, then it suffices to choose $r$ elements from $X - \left\{x \in \N^+ \colon x \leq k\right\}$. Note that the maximum for $k$ is $n - r + 1$, and so there are $n - r + 1$ disjoint cases. Therefore, it is easy to see that the total number of subsets is given by
+        \begin{displaymath}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix}.
+        \end{displaymath}
+        However, we know that this is equivalent to choosing $(r + 1)$ elements directly from $X$, so
+        \begin{equation*}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix} = \begin{pmatrix}
+                n + 1 \\
+                r + 1
+            \end{pmatrix}.
+        \end{equation*}
+        Note that $C^{r + i}_r = C^{r + i}_i$ and $C^{n + 1}_{r + 1} = C^{n + 1}_{n - r}$. Therefore, by setting $k = n - r$, it is obvious by symmetry that
+        \begin{equation*}
+            \sum_{i = 0}^{k}\begin{pmatrix}
+                r + i \\
+                i
+            \end{pmatrix} = \begin{pmatrix}
+                r + k + 1 \\
+                k
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
 \subsection{Multinomial Coefficients}
 \begin{dfnbox}{Multinomial Coefficient}{multinomialCoeff}
