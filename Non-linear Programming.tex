@@ -261,4 +261,33 @@ Lastly, we generalise the notion of a \textit{convex combination}.
     \end{equation*}
     for all $\mathbfit{x} \in C$.
 \end{probox}
+\chapter{Unconstrained NLPs}
+\section{Coercive Functions}
+\begin{dfnbox}{Coercive Function}{coerciveFunc}
+    A {\color{red} \textbf{continuous}} function $f \colon \mathbf{R}^n \to \mathbf{R}$ is said to be {\color{red} \textbf{coercive}} if
+    \begin{equation*}
+        \lim_{\norm{\mathbfit{x}} \to \infty} f(\mathbfit{x}) = +\infty.
+    \end{equation*}
+    More formally, $f$ is coercive if and only if for all $M > 0$, there is some $r > 0$ such that~$f(\mathbfit{x}) > M$ whenever $\norm{\mathbfit{x}} > r$.
+\end{dfnbox}
+\begin{thmbox}{Global Minimiser of Coercive Functions}{globalMinCoerciveFunc}
+    If a function $f \colon \mathbf{R}^n \to \mathbf{R}$ is coercive, then $f$ has at least one global minimiser.
+    \tcblower   
+    \begin{proof}
+        Take $M = \abs{f(\mathbfit{0})} + 1 > 0$. Since $f$ is coercive, there exists some $r > 0$ such that $f(\mathbfit{x}) > M > f(\mathbfit{0})$ whenever $\norm{\mathbfit{x}} > r$. Consider
+        \begin{displaymath}
+            B(\mathbfit{0}, r) = \left\{\mathbfit{x} \in \mathbf{R}^n \colon \norm{\mathbfit{x}} \leq r\right\}
+        \end{displaymath}
+        which is a compact set. So by Weiestrass' Theorem, there exists some $\mathbfit{x}^* \in B(\mathbfit{0}, r)$ such that $f(\mathbfit{x}^*) \leq f(\mathbfit{x}) \leq f(\mathbfit{0})$ for all $\mathbfit{x} \in B(\mathbfit{0}, r)$. Now, this means that for all $\mathbfit{x} \in \mathbf{R}^n$, we have $(\mathbfit{x}^*) \leq f(\mathbfit{x})$, which means that $\mathbfit{x}^*$ is a global minimiser for $f$.
+    \end{proof}
+\end{thmbox}
+\begin{dfnbox}{Stationary (Critical) Point}{stationaryPt}
+    Let $X \subseteq \mathbf{R}^n$ be an open set and let $f \colon X \to \mathbf{R}$ be a function. An interior point $\mathbfit{x}^*$ is called a {\color{red} \textbf{stationary point}} of $f$ if $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$.
+\end{dfnbox}
+\begin{dfnbox}{Saddle Point}{Saddle}
+    A stationary point $\mathbfit{x}^*$ of a function $f$ which is neither a local minimisr nor a local maximiser is called a {\color{red} \textbf{saddle point}}.
+\end{dfnbox}
+\begin{corbox}{}{saddleCor}
+    Let $\mathbfit{x}^*$ be a stationary point of $f$. If $H_f(\mathbfit{x}^*)$ is indefinite, then $\mathbfit{x}^*$ is a saddle point.
+\end{corbox}
 \end{document}
