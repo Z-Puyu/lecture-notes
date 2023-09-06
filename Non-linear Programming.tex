@@ -237,18 +237,76 @@ Lastly, we generalise the notion of a \textit{convex combination}.
     \end{proof}
 \end{probox}
 \section{Gradient Vectors}
-\begin{probox}{An Alternative Expression for Directional Derivatives}{directionalDerivative}
-    Let $f$ be a function over $D \subseteq \mathbf{R}^n$ and let $\mathbfit{d} \in \mathbf{R}^n$ be non-zero, then
+Recall that for a function $f \colon \mathbf{R}^n \to \mathbf{R}$, the \textit{gradient vector} of $f$ at $\mathbf{x}$ is given by
+\begin{equation*}
+    \nabla f(\mathbf{x}) = \begin{bmatrix}
+        \frac{\partial}{\partial x_1}f(\mathbfit{x}) \\
+        \frac{\partial}{\partial x_2}f(\mathbfit{x}) \\
+        \vdots \\
+        \frac{\partial}{\partial x_n}f(\mathbfit{x}) \\
+    \end{bmatrix}.
+\end{equation*}
+\begin{probox}{Directional Derivative}{directionalDerivative}
+    Let $f$ be a function over $D \subseteq \mathbf{R}^n$ and let $\mathbfit{d} \in \mathbf{R}^n$ be non-zero, then the directional derivative of $f$ at $\mathbfit{x}$ along $\mathbfit{d}$ is
     \begin{equation*}
         \nabla f(\mathbfit{x})^{\mathrm{T}}\mathbfit{d} = \lim_{\lambda \to 0}\frac{f(\mathbfit{x + \lambda\mathbfit{d}}) - f(\mathbfit{x})}{\lambda}.
     \end{equation*}
+    In particular, if $\norm{\mathbf{d}} = 1$, then the above gives the rate of change of $f$ in the direction of $\mathbfit{d}$.
 \end{probox}
+\begin{notebox}
+    \begin{remark}
+        $f$ increases the fastest along the direction of $\nabla f(\mathbfit{x})$ and decreases the fastest along the direction of $-\nabla f(\mathbfit{x})$ for any $\mathbfit{x} \in \mathbf{R}^n$.
+    \end{remark}
+\end{notebox}
+The gradient vector of a function allows us to establish its tangent plane at a given point. Intuitively, we can see that a function is convex if its tangent plane lies below its graph. This can be described rigorously as follows:
 \begin{probox}{Tangent Plane Characterisation of Convex Functions}{convexTan}
     Let $f$ be a function over an open convex set $S \subseteq \mathbf{R}^n$ with continuous first partial derivatives, then $f$ is convex if and only if 
     \begin{equation*}
         f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \leq f(\mathbfit{y})
     \end{equation*}
     for all $\mathbfit{x}, \mathbfit{y} \in S$. In particular, $f$ is strictly convex if and only if the above inequality is strict.
+    \tcblower   
+    \begin{proof}
+        Suppose that $f$ is convex. Let $\mathbfit{x}, \mathbfit{y} \in S$ and let $\lambda \in [0, 1]$, then we have
+        \begin{equation*}
+            f\left(\mathbfit{x} + \lambda(\mathbfit{y} - \mathbfit{x})\right) = f\left(\lambda\mathbfit{y} + (1 - \lambda)\mathbfit{x}\right) \leq \lambda f(\mathbfit{y}) + (1 - \lambda)f(\mathbfit{x}).
+        \end{equation*} 
+        Therefore,
+        \begin{equation*}
+            \frac{f\left(\mathbfit{x} + \lambda(\mathbfit{y} - \mathbfit{x})\right) - f(\mathbfit{x})}{\lambda} \leq f(\mathbfit{y}) - f(\mathbfit{x}).
+        \end{equation*}
+        Taking the limit as $\lambda \to 0$ on both sides, we have
+        \begin{equation*}
+            \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) = \lim_{\lambda \to 0}\frac{f\left(\mathbfit{x} + \lambda(\mathbfit{y} - \mathbfit{x})\right) - f(\mathbfit{x})}{\lambda} \leq f(\mathbfit{y}) - f(\mathbfit{x}),
+        \end{equation*}
+        and so
+        \begin{equation*}
+            f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \leq f(\mathbfit{y}).
+        \end{equation*}
+        Suppose conversely that 
+        \begin{equation*}
+            f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \leq f(\mathbfit{y}).
+        \end{equation*}
+        Take $\mathbfit{u}, \mathbfit{v} \in S$ and let $\mathbfit{w} = \lambda\mathbfit{u} + (1 - \lambda)\mathbfit{v}$ for some $\lambda \in [0, 1]$, then
+        \begin{displaymath}
+            \mathbfit{u - w} = (1 - \lambda)(\mathbfit{u - v}), \qquad \mathbfit{v - w} = -\lambda(\mathbfit{u - v}).
+        \end{displaymath}
+        Therefore, we have
+        \begin{align*}
+            f(\mathbfit{w}) + \nabla f(\mathbfit{w})^{\mathrm{T}}(\mathbfit{u - w}) & \leq f(\mathbfit{u}), \\
+            f(\mathbfit{w}) + \nabla f(\mathbfit{w})^{\mathrm{T}}(\mathbfit{v - w}) & \leq f(\mathbfit{v}).
+        \end{align*}
+        Note that
+        \begin{align*}
+            \lambda\left(f(\mathbfit{w}) + \nabla f(\mathbfit{w})^{\mathrm{T}}(\mathbfit{u - w})\right) + (1 - \lambda)\left(f(\mathbfit{w}) + \nabla f(\mathbfit{w})^{\mathrm{T}}(\mathbfit{v - w})\right) = f(\mathbfit{w}),
+        \end{align*}
+        so we have
+        \begin{align*}
+            f(\lambda\mathbfit{u} + (1 - \lambda)\mathbfit{v}) & = f(\mathbfit{w}) \\
+            & \leq \lambda f(\mathbfit{u}) + (1 - \lambda)f(\mathbfit{v}).
+        \end{align*}
+        Hence, $f$ is convex.
+    \end{proof}
 \end{probox}
 \begin{probox}{Global Minimiser of Convex Functions}{convexFuncMin}
     Let $f \colon C \to \mathbf{R}$ be a convex and continuously differentiable function over a convex set~$C \subseteq \mathbf{R}^n$. Then $\mathbfit{x}^* \in C$ is a global minimiser for the minimisation problem 
