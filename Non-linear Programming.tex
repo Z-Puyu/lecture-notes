@@ -236,7 +236,7 @@ Lastly, we generalise the notion of a \textit{convex combination}.
         \end{equation*}
     \end{proof}
 \end{probox}
-\section{Gradient Vectors}
+\section{Tangent Plane Characterisation}
 Recall that for a function $f \colon \mathbf{R}^n \to \mathbf{R}$, the \textit{gradient vector} of $f$ at $\mathbf{x}$ is given by
 \begin{equation*}
     \nabla f(\mathbf{x}) = \begin{bmatrix}
@@ -306,9 +306,24 @@ The gradient vector of a function allows us to establish its tangent plane at a 
             & \leq \lambda f(\mathbfit{u}) + (1 - \lambda)f(\mathbfit{v}).
         \end{align*}
         Hence, $f$ is convex.
+        \\\\
+        We can similarly prove that $f$ is strictly convex if $f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) < f(\mathbfit{y})$. Now suppose that $f$ is strictly convex but there exists $\mathbfit{x}, \mathbfit{y} \in S$ with $\mathbfit{x} \neq \mathbfit{y}$ such that
+        \begin{equation*}
+            f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \geq f(\mathbfit{y}).
+        \end{equation*}
+        Take $\mathbfit{z} = \frac{1}{2}\mathbfit{x} + \frac{1}{2}\mathbfit{y}$. We have
+        \begin{align*}
+            \frac{1}{2}f(\mathbfit{x}) + \frac{1}{2}f(\mathbfit{y}) & > f(\mathbfit{z}) \\
+            & \geq f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{z - x}) \\
+            & = f(\mathbfit{x}) + \frac{1}{2}\nabla f(\mathbfit{x})^{\mathrm{T}}\left(\mathbfit{y - x}\right) \\
+            & \geq f(\mathbfit{x}) + \frac{1}{2}\left(f(\mathbfit{y}) - f(\mathbfit{x})\right) \\
+            & = \frac{1}{2}f(\mathbfit{x}) + \frac{1}{2}f(\mathbfit{y}),
+        \end{align*}
+        which is a contradiction.
     \end{proof}
 \end{probox}
-\begin{probox}{Global Minimiser of Convex Functions}{convexFuncMin}
+Proposition \ref{pro:convexTan} helps us determine whether a point is the global minimiser of a certain convex function.
+\begin{thmbox}{Global Minimiser of Convex Functions}{convexFuncMin}
     Let $f \colon C \to \mathbf{R}$ be a convex and continuously differentiable function over a convex set~$C \subseteq \mathbf{R}^n$. Then $\mathbfit{x}^* \in C$ is a global minimiser for the minimisation problem 
     \begin{displaymath}
         \min\left\{f(\mathbfit{x}) \colon \mathbfit{x} \in C\right\}
@@ -318,5 +333,143 @@ The gradient vector of a function allows us to establish its tangent plane at a 
         \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \geq 0
     \end{equation*}
     for all $\mathbfit{x} \in C$.
-\end{probox}
+    \tcblower   
+    \begin{proof}
+        Suppose $\nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \geq 0$. By Proposition \ref{pro:convexTan}, we have 
+        \begin{equation*}
+            \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \leq f(\mathbfit{x}) - f(\mathbfit{x}^*).
+        \end{equation*}
+        This means that $f(\mathbfit{x}) \geq f(\mathbfit{x}^*)$ for all $\mathbfit{x} \in C$, and so $\mathbfit{x}^*$ is a global minimiser.
+        \\\\
+        Suppose that $\mathbfit{x}^*$ is a global minimiser for $f$ but there exists some $\mathbfit{x}_0 \in C$ such that
+        \begin{equation*}
+            \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x}_0 - \mathbfit{x}^*) < 0.
+        \end{equation*}
+        Consider $\mathbfit{y} = \lambda\mathbfit{x}_0 + (1 - \lambda)\mathbfit{x}^*$ for $\lambda \in (0, 1)$. Notice that $f(\mathbfit{y}) \geq f(\mathbfit{x}^*)$, so by using Proposition \ref{pro:convexTan} we have
+        \begin{align*}
+            0 & \leq f(\mathbfit{y}) - f(\mathbfit{x}^*) \\
+            & \leq -\nabla f(\mathbfit{y})^{\mathrm{T}}(\mathbfit{y - x^*}) \\
+            & \leq \nabla f(\mathbfit{y})^{\mathrm{T}}(\mathbfit{y - x^*}) \\
+            & = \lambda\nabla f\left(\lambda\mathbfit{x}_0 + (1 - \lambda)\mathbfit{x}^*\right)^{\mathrm{T}}(\mathbfit{x_0 - x^*}) \\
+            & \leq \nabla f\left(\lambda\mathbfit{x}_0 + (1 - \lambda)\mathbfit{x}^*\right)^{\mathrm{T}}(\mathbfit{x_0 - x^*}).
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            \lim_{\lambda \to 0^+}\left[\nabla f\left(\lambda\mathbfit{x}_0 + (1 - \lambda)\mathbfit{x}^*\right)^{\mathrm{T}}(\mathbfit{x_0 - x^*})\right] & = \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x_0 - x^*}) \\
+            & \geq 0,
+        \end{align*}
+        which is a contradiction.
+    \end{proof}
+\end{thmbox}
+
+\section{Hessian Matrices}
+So far we have learnt how to determine a function's convexity by either Definition \ref{dfn:convexFunc} or Proposition \ref{pro:convexTan}. However, there are certain functions which are difficult to manipulate and apply those methods algebraically. Therefore, we introduce another method to determine convexity by \textit{Hessian Matrices}.
+\begin{dfnbox}{Hessian Matrix}{hessian}
+    Let $f \colon S \to \mathbf{R}$ where $S \subseteq \mathbf{R}^n$ is non-empty and let $\mathbfit{x}$ be an {\color{red} \textbf{interior point}} of $S$. The {\color{red} \textbf{Hessian}} of $f$ at $\mathbfit{x}$ is the $n \times n$ matrix
+    \begin{displaymath}
+        H_f(\mathbfit{x}) = \begin{bmatrix}
+            \frac{\partial^2f}{\partial x_1 \partial x_1}(\mathbfit{x}) & \frac{\partial^2f}{\partial x_1 \partial x_2}(\mathbfit{x}) & \cdots & \frac{\partial^2f}{\partial x_1 \partial x_n}(\mathbfit{x}) \\
+            \frac{\partial^2f}{\partial x_2 \partial x_1}(\mathbfit{x}) & \frac{\partial^2f}{\partial x_2 \partial x_2}(\mathbfit{x}) & \cdots & \frac{\partial^2f}{\partial x_2 \partial x_n}(\mathbfit{x}) \\
+            \vdots & \vdots & \ddots & \vdots \\
+            \frac{\partial^2f}{\partial x_n \partial x_1}(\mathbfit{x}) & \frac{\partial^2f}{\partial x_n \partial x_2}(\mathbfit{x}) & \cdots & \frac{\partial^2f}{\partial x_n \partial x_n}(\mathbfit{x})
+        \end{bmatrix}
+    \end{displaymath}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        If $f$ has continuous second order derivatives, then $H_f(\mathbfit{x})$ is symmetric.
+    \end{remark}
+\end{notebox}
+To use Hessian Matrices in convexity test, we also need to introduce the following notion of \textit{(semi)definiteness}:
+\begin{dfnbox}{(Semi)Definiteness}
+    Let $\mathbfit{A}$ be a real square matrix.
+    \begin{itemize}
+        \item $\mathbfit{A}$ is said to be {\color{red} \textbf{positive semidefinite}} if $\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} \geq 0$ for all $\mathbfit{x} \in \mathbfit{R}$.
+        \item $\mathbfit{A}$ is said to be {\color{red} \textbf{positive definite}} if $\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} > 0$ for all $\mathbfit{x} \in \mathbfit{R}$.
+        \item $\mathbfit{A}$ is said to be {\color{red} \textbf{negative semidefinite}} if $\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} \leq 0$ for all $\mathbfit{x} \in \mathbfit{R}$.
+        \item $\mathbfit{A}$ is said to be {\color{red} \textbf{negative definite}} if $\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} < 0$ for all $\mathbfit{x} \in \mathbfit{R}$.
+        \item $\mathbfit{A}$ is said to be {\color{red} \textbf{indefinite}} if it is neither positive semidefinite nor negative semidefinite.
+    \end{itemize}
+\end{dfnbox}
+Now, we are able to apply the following tests:
+\begin{thmbox}{Convexity Test for Differentiable Functions}{convexTest}
+    Let a function $f$ have continuous second order derivatives on an open convex set $D \subseteq \mathbf{R}^n$.
+    \begin{itemize}
+        \item $H_f(\mathbfit{x})$ is positive semidefinite for all $\mathbfit{x} \in D \iff f$ is convex on $D$.
+        \item $H_f(\mathbfit{x})$ is positive definite for all $\mathbfit{x} \in D \implies f$ is strictly convex on $D$.
+        \item $H_f(\mathbfit{x})$ is negative semidefinite for all $\mathbfit{x} \in D \iff f$ is concave on $D$.
+        \item $H_f(\mathbfit{x})$ is negative definite for all $\mathbfit{x} \in D \implies f$ is strictly concave on $D$.
+        \item $H_f(\mathbfit{x})$ is indefinite for some $\mathbfit{x} \in D \implies f$ is neither convex nor concave on $D$.
+    \end{itemize}
+\end{thmbox}
+To determine the definiteness of a matrix, we may use the following eigenvalue tests:
+\begin{thmbox}{Eigenvalue Test}{eigenTest}
+    If $\mathbfit{A}$ is a symmetric real square matrix, then:
+    \begin{itemize}
+        \item $\mathbfit{A}$ is positive semidefinite if and only if all eigenvalues of $\mathbfit{A}$ are non-negative.
+        \item $\mathbfit{A}$ is positive definite if and only if all eigenvalues of $\mathbfit{A}$ are positive.
+        \item $\mathbfit{A}$ is negative semiefinite if and only if all eigenvalues of $\mathbfit{A}$ are non-positive.
+        \item $\mathbfit{A}$ is negative definite if and only if all eigenvalues of $\mathbfit{A}$ are negative.
+        \item $\mathbfit{A}$ is indefinite if and only if it has at least one positive eigenvalue and at least one negative eigenvalue.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        We will only prove that $\mathbfit{A}$ is positive semidefinite if and only if all eigenvalues of $\mathbfit{A}$ are non-negative. The rest of the tests can be proven similarly.
+        \\\\
+        Suppose $\mathbfit{A}$ is positive semidefinite. Let $\lambda$ be any eigenvalue of $\mathbfit{A}$ and let $\mathbfit{x}$ be a corresponding eigenvector, then $\mathbfit{Ax} = \lambda\mathbfit{x}$. Therefore,
+        \begin{equation*}
+            \lambda\norm{\mathbfit{x}}^2 = \lambda\mathbfit{x}^{\mathrm{T}}\mathbfit{x} = \mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} \geq 0.
+        \end{equation*}
+        Since $\norm{\mathbfit{x}}^2 \geq 0$, this implies that $\lambda \geq 0$.
+        \\\\
+        Suppose conversely that all eigenvalues of $\mathbfit{A}$ are non-negative. Consider the diagonal matrix
+        \begin{displaymath}
+            \mathbfit{D} = \begin{bmatrix}
+                \lambda_1 & 0 & \cdots & 0 \\
+                0 & \lambda_2 & \cdots & 0 \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & \cdots & \lambda_n
+            \end{bmatrix}
+        \end{displaymath}
+        where $\lambda_i$ is the $i$-th eigenvalue of $\mathbfit{A}$. Then there exists some orthogonal square matrix $\mathbfit{Q}$ such that 
+        \begin{equation*}
+            \mathbfit{A} = \mathbfit{QDQ}^{\mathrm{T}}.
+        \end{equation*}
+        Let $\mathbfit{x} \in \mathbf{R}^n$ be an arbitrary vector, then 
+        \begin{align*}
+            \mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} & = \mathbfit{x}^{\mathrm{T}}\mathbfit{QDQ}^{\mathrm{T}}\mathbfit{x} \\
+            & = \left(\mathbfit{Q}^{\mathrm{T}}\mathbfit{x}\right)^{\mathrm{T}}\mathbfit{D}\left(\mathbfit{Q}^{\mathrm{T}}\mathbfit{x}\right) \\
+            & = \sum_{i = 1}^{n}\left(\lambda_i\norm{\mathbfit{Q}^{\mathrm{T}}\mathbfit{x}}^2\right) \\
+            & \geq 0.
+        \end{align*}
+        Therefore, $\mathbfit{A}$ is positive semidefinite.
+    \end{proof}
+\end{thmbox}
+However, eigenvalues can be troublesome to compute. Thus for \textbf{small matrices}, we may use the following test with the \textit{principal minors}:
+\begin{dfnbox}{Principal Minor}{prinMinor}
+    Let $\mathbfit{A}$ be an $n \times n$ matrix. The $k$-th {\color{red} \textbf{principal minor}} $\Delta_k$ of $\mathbfit{A}$ is defined to be the determinant of the $k$th principal submatrix of $\mathbfit{A}$, i.e.,
+    \begin{equation*}
+        \Delta_k = \begin{vmatrix}
+            a_{11} & a_{12} & \cdots & a_{1k} \\
+            a_{21} & a_{22} & \cdots & a_{2k} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            a_{k1} & a_{k2} & \cdots & a_{kk} \\
+        \end{vmatrix}
+    \end{equation*}
+\end{dfnbox}
+\begin{thmbox}{Definiteness Test Using Principal Minors}{prinMinorDefTest}
+    Let $\mathbfit{A}$ be a symmetric $n \times n$ matrix, then $\mathbfit{A}$ is positive definite if and only if $\Delta_k > 0$, and negative definite if and only if $(-1)^k\Delta_k > 0$, for all $k = 1, 2, \cdots, n$.
+\end{thmbox}
+\subsection{Taylor's Theorem}
+Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to prove it, we need to first introduce \textit{Taylor's Theorem}.
+\begin{thmbox}{Taylor's Theorem}{taylorThm}
+    Suppose that $f \colon S \to \mathbf{R}$ is a function with continuous second partial derivatives. Consider the set
+    \begin{displaymath}
+        [\mathbfit{x}, \mathbfit{y}] \coloneqq \left\{\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y} \colon \mathbfit{x}, \mathbfit{y} \in \mathbf{R}^n, \lambda \in [0, 1]\right\}.
+    \end{displaymath}
+    If $[\mathbfit{x}, \mathbfit{y}]$ is contained in the interior of $S$, then there exists some $\mathbfit{z} \in [\mathbfit{x}, \mathbfit{y}]$ such that
+    \begin{equation*}
+        f(\mathbfit{y}) = f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) + \frac{1}{2}(\mathbfit{y - x})^{\mathrm{T}}H_f(\mathbfit{z})(\mathbfit{y - x}).
+    \end{equation*}
+\end{thmbox}
 \end{document}
