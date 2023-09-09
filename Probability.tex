@@ -348,9 +348,9 @@ It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F
     \end{proof}
 \end{probox}
 \section{Bayes's Formula}
-Consider a sample space $S$ and two events $E, F \subseteq S$. Suppose that $E$ occurs, then either $F$ has occurred or $F$ has never occurred (i.e. $F^c$ occurred). Therefore, it is easy to see that
+Consider a sample space $S$ and two events $E, F \subseteq S$. Suppose that $E$ occurs, then either $F$ has occurred or $F$ has never occurred (i.e. $F^{\mathrm{c}}$ occurred). Therefore, it is easy to see that
 \begin{equation*}
-    P(E) = P(EF) + P(EF^c) = P(E|F) + P(E|F^c).
+    P(E) = P(EF) + P(EF^{\mathrm{c}}) = P(E|F) + P(E|F^{\mathrm{c}}).
 \end{equation*}
 We can extend the above argument for more than two events. Suppose that $F_1, F_2, \cdots, F_n$ are $n$ mutually exclusive events such that $\bigcup_{i = 1}^n F_i = S$, then obviously $\left\{F_1, F_2, \cdots, F_n\right\}$ is a \textit{partition} of $S$.
 
@@ -379,4 +379,121 @@ Note that in general, for two events $E$ and $F$, $P(E|F) \neq P(E)$, i.e., the 
         \end{enumerate}
     \end{remark}
 \end{notebox}
+Intuitively, given independent events $E$ and $F$, we may believe that if the occurrence of $E$ does not affect the occurrence of $F$, then naturally the occurrence of $E$ should also not affect the ``not-occurring'' of $F$, i.e., the following is true:
+\begin{probox}{}{independentComp}
+    $E$ and $F$ are independent events if and only if $E$ and $F^{\mathrm{c}}$ are independent events.
+    \tcblower
+    \begin{proof}
+        Since $F = \left(F^{\mathrm{c}}\right)^{\mathrm{c}}$, it suffices to prove for one direction. 
+        \\\\
+        Notice that $EF \cup EF^{\mathrm{c}} = E(F \cup F^{\mathrm{c}}) = E$, so
+        \begin{equation*}
+            P(E) = P(EF) + P(EF^{\mathrm{c}}) = P(E)P(F) + P(EF^{\mathrm{c}}).
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            P(EF^{\mathrm{c}}) = P(E) - P(E)P(F) = P(E)(1 - P(F)) = P(E)P(F^{\mathrm{c}}),
+        \end{equation*}
+        and so $E$ and $F^{\mathrm{c}}$ are independent.
+    \end{proof}
+\end{probox} 
+
+\chapter{Random Variables}
+
+\section{Random Variables}
+In many contexts, we might wish to generalise a formula to compute the probability of the occurrence of a certain event. However, in cases where the events are abstract or unquantifiable (e.g. the event ``tomorrow is rainy''), it becomes hard to formulate a well-defined mapping from a sample space to $[0, 1]$. Thus, to model all events easily using functions and mappings, we introduce the notion of \textit{random variables}.
+\begin{dfnbox}{Random Variable}{randVar}
+    Let $\Omega$ be a sample space, the {\color{red} \textbf{random variable}}
+    \begin{displaymath}
+        X \colon \Omega \to \R
+    \end{displaymath}
+    is a real-valued function such that for any event $E \subseteq \Omega$, 
+    \begin{equation*}
+        P(E) = P(X[E]) = P(X \in X[E]),
+    \end{equation*}
+    where
+    \begin{displaymath}
+        X[E] \coloneqq \left\{X(\omega) \colon \omega \in \Omega\right\}
+    \end{displaymath}
+    is the image of the event $E$ under $X$.
+\end{dfnbox}
+\section{Discrete Random Variables}
+Intuitively, there are certain events whose outcomes are finite or can be enumerated. In such cases, we may associate these events with a \textit{discrete random variable}.
+\begin{dfnbox}{Discrete Random Variable (DRV)}{DRV}
+    Let $X$ be a random variable over a sample space $S$, if $\mathrm{ran}(X)$ is countable, then $X$ is called a {\color{red} \textbf{discrete random variable}}.
+\end{dfnbox}
+\begin{dfnbox}{Probability Mass Function (PMF)}{PMF}
+    Let $X$ be a discrete random variable over a sample space $S$, the function
+    \begin{displaymath}
+        p_X \colon X[S] \to [0, 1]
+    \end{displaymath}
+    where $p_X(a) = P(X = a)$ is known as the {\color{red} \textbf{probability mass function}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        $\sum_{a \in X[S]} p_X(a) = 1$.
+    \end{remark}
+\end{notebox}
+For any discrete random variable $X$, $p_X(a) = 0$ if and only if $\left\{s \in S \colon X(s) = a\right\} = \varnothing$. This essentially means that if $p_X$ evaluates to $0$, then the corresponding event is an impossible event.
+
+Note that $p_X$ essentially gives the probability of \textbf{singleton} events in a sample space. Naturally, we can represent the probability of a union of singleton events as a linear combination of the values of $p_X$.
+\begin{dfnbox}{Cumulative Distribution Function (CDF)}{CDF}
+    Let $X$ be a discrete random variable over a sample space $S$ with PMF $p_X$, the function
+    \begin{displaymath}
+        F_X \colon X[S] \to [0, 1]
+    \end{displaymath}
+    where $F_X(a) = \sum_{x \leq a}p_X(x)$ is known as the {\color{red} \textbf{cumulative distribution function}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Suppose that $X(s_i) = a_i$ for all $s_i \in S$ such that $a_i < a_j$ whenever $i < j$, then $F_X$ is a non-decreasing {\color{red} \textbf{step function}}, i.e., for all $a$ such that $a_i \leq a < a_{i + 1}$,
+        \begin{equation*}
+            F_X(a) = \sum_{x \leq a}p_X(x) = \sum_{k = 1}^{i}p_X(a_k).
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+\subsection{Expectation of Discrete Random Variables}
+Suppose $X$ is a discrete random variable with range $\left\{x_1, x_2, \cdots, x_m\right\}$ and PMF $p_X$. By repeating an experiment of $X$ for $n$ times, we can approximate the total number of occurrences of $X = x_i$ by $np_X(x_i)$. Therefore, the average value of $X$ can be approximated by
+\begin{equation*}
+    \frac{\sum_{i = 1}^{m}nx_ip_X(x_i)}{n}.
+\end{equation*}
+For large $n$, we have
+\begin{equation*}
+    \lim_{n \to \infty}\frac{\sum_{i = 1}^{m}nx_ip_X(x_i)x_i}{n} = \lim_{n \to \infty}\sum_{i = 1}^{m}x_ip_X(x_i) = \sum_{i = 1}^{m}x_ip_X(x_i).
+\end{equation*}
+Similarly, if the range of $X$ is countably infinite, replacing from the above $\sum_{i = 1}^{m}nx_ip_X(x_i)x_i$ with $\sum_{i = 1}^{\infty}nx_ip_X(x_i)x_i$ will yield the same limit.
+
+Intuitively, the above limit represents the \textit{expected value} of $X$ when a large number of experiments are conducted, which leads to the following definition:
+\begin{dfnbox}{Expectation of Discrete Random Variables}{DRVExp}
+    Let $X$ be a discrete random variable. The {\color{red} \textbf{expectation}} (or {\color{red} \textbf{mean}}, {\color{red} \textbf{expected value}}) of~$X$ is defined to be
+    \begin{equation*}
+        E[X] = \sum_{i = 1}^{m}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{m}\left[x_iP(X = x_i)\right]
+    \end{equation*}
+    if $\abs{\mathrm{ran}(X)} = m$, and
+    \begin{equation*}
+        E[X] = \sum_{i = 1}^{\infty}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{\infty}\left[x_iP(X = x_i)\right]
+    \end{equation*}
+    if $\mathrm{ran}(X)$ is countably infinite.
+\end{dfnbox}
+For a discrete random variable $X$, we can define a function $g \colon \mathrm{ran}(X) \to \R$. It is easy to see that $g(X)$ is also a discrete random variable. Therefore, we may have the following result:
+\begin{thmbox}{Expectation of Functions}{FuncExp}
+    Let $X$ be a discrete random variable and define $Y = g(X)$, then
+    \begin{equation*}
+        E[Y] = E[g(X)] = \sum_{x}\left[g(x)P(X = x)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that for each $y \in \mathrm{ran}(Y)$, $g(x) = y$ for some $x \in \mathrm{ran}(X)$, and so
+        \begin{equation*}
+            P(Y = y) = \sum_{g(x) = y}P(X = x).
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            E[Y] & = \sum_{y}\left[yP(Y = y)\right] \\
+            & = \sum_{y}\left[y\!\sum_{g(x) = y}\!P(X = x)\right] \\
+            & = \sum_{y}\left[\sum_{g(x) = y}\!g(x)P(X = x)\right] \\
+            & = \sum_{x}\left[g(x)P(X = x)\right].
+        \end{align*}
+    \end{proof}
+\end{thmbox}
 \end{document}
