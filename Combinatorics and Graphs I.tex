@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usetikzlibrary{shapes.geometric}
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -642,13 +643,65 @@ Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurre
     \begin{proof}
         Let $a_1, a_2, \cdots, a_{kn + 1}$ be the $kn + 1$ distinct objects to be distributed into the sets~$K_1, K_2, \cdots, K_n$. Suppose there is no $i \in \N^+$ such that $\abs{K_i} \geq k + 1$, i.e. $K_i \leq k$ for all~$i = 1, 2, \cdots, n$.
         \\\\
-        However, this means that $\sum_{i = 1}^{n}\abs{K_i} \leq kn < kn + 1$, which is a contradiction.
+        This means that $\sum_{i = 1}^{n}\abs{K_i} \leq kn < kn + 1$, which is a contradiction.
     \end{proof}
 \end{thmbox}
-Note that Pigeonhole Principle only guarantees existence rather than uniqueness.
+Note that Pigeonhole Principle only guarantees existence rather than uniqueness. We may also consider the following generalised version:
+\begin{thmbox}{Generalised Pigeonhole Principle}{GPP}
+    Let $n, k_1, k_2, \cdots, k_n \in \N^+$. If at least $\left[\sum_{i = 1}^{n}k_i + (n - 1)\right]$ distinct objects are distributed into $n$ distinct sets $S_1, S_2, \cdots, S_n$, then there exists at least one $S_i$ for $i = 1, 2, \cdots, n$ such that $\abs{S_i} \geq k_i$.
+    \tcblower   
+    \begin{proof}
+        Suppose there is no $i \in \N^+$ such that $\abs{S_i} \geq k_i$, i.e., $\abs{S_i} \leq k_i - 1$ for all $i = 1, 2, \cdots, n$
+        \\\\
+        This means that $\sum_{i = 1}^{n}\abs{K_i} \leq \sum_{i = 1}^{n}(k_i - 1) = \sum_{i = 1}^{n}k_i - n$, which is a contradiction.
+    \end{proof}
+\end{thmbox}
+Note that by setting $k_1 = k_2 = \cdots = k_n = 2$ we get from Theorem \ref{thm:GPP} to Theorem \ref{thm:PP}.
+
+The Pigeonhole Principle is closely linked to the \textit{Ramsey Types of Problems}.
 \section{Ramsey Types of Problems}
+The Ramsey Types of Problems are motivated by the following question statement:
+\begin{exbox}{}{sixPts}
+    Let $A_1, A_2, A_3, A_4, A_5, A_6$ be six arbitrary points in a plane. We join these points pairwise with either a {\color{red} \textbf{red}} line segment or a {\color{blue} \textbf{blue}} line segment. Prove that after each point has been joined with any other point, there exists at least one {\color{blue} \textbf{blue}} triangle or at least one {\color{red} \textbf{red}} triangle whose vertices are three of the six points.
+    \tcblower   
+    \begin{proof}
+        Consider the line segments joining $A_h$ with the other five points. Note that this is equivalent to colouring $5$ line segments using either red or blue. By Theorem \ref{thm:PP}, this means that at least $3$ of these line segments have the same colour.
+        \\\\
+        Without loss of generality, suppose the line segments $A_hA_i$, $A_hA_j$ and $A_hA_k$ are red. Consider the line segments $A_iA_j$, $A_jA_k$ and $A_iA_k$. If they are all blue, then we will have a blue triangle. Otherwise, if any one of them is red, then those two vertices together with $A_h$ will form a red triangle.
+    \end{proof}
+\end{exbox}
+We can extend the above question a bit. Suppose we have $17$ arbitrary points $X_1, X_2, \cdots, X_{17}$ in a plane and we join these points in the same way as Example \ref{ex:sixPts} but with three distinct colours: {\color{red} \textbf{red}}, {\color{blue} \textbf{blue}} and {\color{orange} \textbf{orange}}. Can we still guarantee the existence of at least on triangle whose sides are all of the same colour?
+
+It turns out that we can! Again we can consider all line segments joining $X_1$ with the other $16$ vertices. By Theorem \ref{thm:PP}, we must have at least $6$ of them having the same colour. Without loss of generality, assume that these $6$ line segments are all red.
+
+Now, examine these $6$ vertices joined to $X_1$ with the same-coloured line segments. If any line segment between these $6$ vertices is red, then we have a red triangle. Otherwise, the line segments joining these $6$ vertices are coloured with only two colours, and by Example \ref{ex:sixPts} we are guaranteed to have a triangle with all three sides having the same colour as well.
+
+Going back to Example \ref{ex:sixPts}, one might notice that $6$ is the smallest possible number of vertices for us to guarantee the existence of such a triangle. In the case of $5$ vertices, consider:
+\begin{center}
+    \begin{tikzpicture}[mystyle/.style={draw,shape=circle,fill=green}]
+        \def\ngon{5}
+        \node[
+            regular polygon,
+            regular polygon sides=\ngon,
+            minimum size=3cm
+        ] (p) {};
+        \foreach\x in {1,...,\ngon}{
+            \node[mystyle] (p\x) at (p.corner \x){};
+        }
+        \draw [red, very thick] (p1) -- (p2) -- (p3) -- (p4) -- (p5) -- (p1);
+        \draw [blue, very thick] (p1) -- (p3);
+        \draw [blue, very thick] (p1) -- (p4);
+        \draw [blue, very thick] (p2) -- (p4);
+        \draw [blue, very thick] (p2) -- (p5);
+        \draw [blue, very thick] (p3) -- (p5);
+    \end{tikzpicture}
+\end{center}
+This motivates the following definitions:
+\begin{dfnbox}{Clique}{clique}
+    A {\color{red} \textbf{clique}} is defined to be a finite set of vertices such that every pair of vertices are adjacent to each other (i.e., there exists a line segment joining any two vertices). A clique with $k$ vertices is called a $k$-clique.
+\end{dfnbox}
 \begin{dfnbox}{Ramsey Number}{ramseyNum}
-    Given $p, q \in \N^+$. The {\color{red} \textbf{Ramsey Number}} $R(p, q)$ is the smallest natural number $n$ such that for any colouring of the edges of an $n$-clique by $2$ colours $a$ and $b$, there exists either a $a$ $p$-clique or a $b$ $q$-clique.
+    Given $p, q \in \N^+$. The {\color{red} \textbf{Ramsey Number}} $R(p, q)$ is the smallest natural number $n$ such that for any colouring of the edges of an $n$-clique by $2$ colours, there exists either a monochromatic $p$-clique or a monochromatic $q$-clique.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
@@ -660,13 +713,43 @@ Note that Pigeonhole Principle only guarantees existence rather than uniqueness.
         \end{itemize}
     \end{remark}
 \end{notebox}
-\begin{thmbox}{Ramsey's Theorem}{RamseyThm}
-    For all $p, q \in N^+$, the Ramsey Number $R(p, q)$ always exists.
-\end{thmbox}
-\begin{thmbox}{}{recurRamsey}
+These develop into what we now know as \textit{Ramsey Theory} which probes into the question:
+\begin{quote}
+    How many elements of a particular structure $S$ must there exist to guarantee that a certain property $p$ will always hold for $S$?
+\end{quote}
+It turns out that calculating the Ramsey Numbers can be extremely difficult. However, we do have a way to establish an upper bound for each of the Ramsey Numbers.
+\begin{thmbox}{Recurrence Relation of Ramsey Numbers}{recurRamsey}
     For all integers $p, q \geq 2$,
     \begin{equation*}
         R(p, q) \leq R(p - 1, q) + R(p, q - 1).
     \end{equation*}
+    In particular, if both $R(p - 1, q)$ and $R(p, q - 1)$ are even, then
+    \begin{equation*}
+        R(p, q) \leq R(p - 1, q) + R(p, q - 1) - 1.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $n = R(p - 1, q) + R(p, q - 1)$. To prove that $R(p, q) \leq n$, it suffices to prove that for any $n$-clique, any colouring of its edges using blue and red will result in either a blue $p$-clique or a red $q$ clique.
+        \\\\
+        Consider an arbitrary vertex $V$ of any $n$-clique. Note that $V$ is incident with $\left(R(p - 1, q) + R(p, q - 1) - 1\right)$ vertices and edges. By Theorem \ref{thm:GPP} this means that either at least $R(p - 1, q)$ edges are blue or at least $R(p, q - 1)$ edges are red.
+        \\\\ 
+        Without loss of generality, consider the $R(p - 1, q)$-clique whose vertices are joined to $V$ by blue edges. By Definition \ref{dfn:ramseyNum}, this clique contains either a blue $(p - 1)$-clique or a red $p$-clique. If it contains a red $p$-clique, then we are done. If it contains a blue $(p - 1)$-clique, this clique together with $V$ will form a blue $p$-clique. Either way, it is guaranteed that
+        \begin{equation*}
+            R(p, q) \leq n = R(p - 1, q) + R(p, q - 1).
+        \end{equation*}
+        Now we proceed to proving the case where $R(p - 1, q)$ and $R(p, q - 1)$ are both even.
+        \\\\
+        Let $m = R(p - 1, q) + R(p, q - 1) - 1$. Fix an arbitrary vertex $W$, then it suffices to prove that among the $(m - 1)$ edges incident to $W$, either at least $R(p - 1, q)$ are blue or at least $R(p, q - 1)$ are red.
+        \\\\
+        Suppose on contrary that there are exactly $\left(R(p - 1, q) - 1\right)$ blues edges and exactly $\left(R(p, q - 1) - 1\right)$ red edges for all vertices in the $m$-clique. This means that the total number of blue edges in the $m$-clique is
+        \begin{equation*}
+            N = \frac{m\left(R(p - 1, q) - 1\right)}{2}.
+        \end{equation*}
+        However, $m$ and $R(p - 1, q) - 1$ are both odd, this means that $N$ is not an integer, which is impossible.
+    \end{proof}
+\end{thmbox}
+The above recurrence allows us to prove the following theorem:
+\begin{thmbox}{Ramsey's Theorem}{RamseyThm}
+    For all $p, q \in N^+$, the Ramsey Number $R(p, q)$ always exists.
 \end{thmbox}
 \end{document}
