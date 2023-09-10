@@ -1,3 +1,6 @@
 \contentsline {chapter}{\numberline {1}The Real Numbers}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Fields}{2}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Ordered Fields}{2}{subsection.1.1.1}%
+\contentsline {section}{\numberline {1.2}Properties of $\symbb {R}$}{3}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Absolute Value}{4}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}The Completeness Property of $\symbb {R}$}{6}{subsection.1.2.2}%

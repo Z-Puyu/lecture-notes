@@ -42,48 +42,160 @@
 \begin{dfnbox}{Field}{field}
     A set $F$ with two binary operations, namely addition and multiplication, is called a {\color{red} \textbf{field}} if it satisfies the following axioms:
     \begin{enumerate}
-        \item $\forall a, b \in F$, $a + b = b + a$.
-        \item $\forall a, b, c \in F$, $(a + b) + c = a + (b + c)$.
-        \item $\exists 0_F \in F$ such that $\forall a \in F$, $0_F + a = a + 0_F = a$.
-        \item $\forall a \in F$, $\exists a' \in F$ such that $a + a' = 0_F$.
-        \item $\forall a, b \in F$, $a \cdot b = b \cdot a$.
-        \item $\forall a, b, c \in F$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
-        \item $\forall a, b, c \in F$, $a \cdot (b + c) = a \cdot b + a \cdot b$ and $(a + b) \cdot c = a \cdot c + b \cdot c$.
-        \item $\exists 1_F \in F$ such that $\forall a \in F$, $1_F \cdot a = a \cdot 1_F = a$.
-        \item $\forall a \in F$, $\exists a' \in F$ such that $a \cdot a' = 1_F$.
+        \item $\forall a, b \in F$, $a +_F b = b +_F a$.
+        \item $\forall a, b, c \in F$, $(a +_F b) +_F c = a +_F (b +_F c)$.
+        \item $\exists 0_F \in F$ such that $\forall a \in F$, $0_F +_F a = a +_F 0_F = a$.
+        \item $\forall a \in F$, $\exists a' \in F$ such that $a +_F a' = 0_F$.
+        \item $\forall a, b \in F$, $a \cdot_F b = b \cdot a$.
+        \item $\forall a, b, c \in F$, $(a \cdot_F b) \cdot c = a \cdot_F (b \cdot_F c)$.
+        \item $\forall a, b, c \in F$, $a \cdot_F (b +_F c) = a \cdot_F b +_F a \cdot_F b$ and $(a +_F b) \cdot_F c = a \cdot_F c +_F b \cdot_F c$.
+        \item $\exists 1_F \in F$ such that $\forall a \in F$, $1_F \cdot_F a = a \cdot_F 1_F = a$.
+        \item $\forall a \in F$, $\exists a' \in F$ such that $a \cdot_F a' = 1_F$.
     \end{enumerate}
 \end{dfnbox}
 If we denote addition by ``$+_F$'' and multiplication by ``$\cdot_F$'' or ``$\times_F$'', then we can denote the field over $F$ by $(F, +_F, \cdot_F)$ or $(F, +_F, \times_F)$.
+
+Among the commonly used number sets, one may check that $\R$, $\Q$ and $\C$ are fields, while $\N$ and $\Z$ are not.
 \subsection{Ordered Fields}
 \begin{dfnbox}{Total Order}{totalOrder}
-    A {\color{red} \textbf{total order}} on a set $X$ is a binary relation $R$ over $X$ such that for all $a, b, c \in X$:
+    A {\color{red} \textbf{total order}} on a set $X$ is a binary relation $\leq$ over $X$ such that for all $a, b, c \in X$:
     \begin{enumerate}
-        \item $aRa$.
-        \item $aRb$ and $bRc$ implies $aRc$.
-        \item $aRb$ and $bRa$ implies $a = b$.
-        \item $aRb$ or $bRa$.
+        \item $a \leq a$ (reflexive).
+        \item $a \leq b$ and $b \leq c$ implies $a \leq c$ (transitive).
+        \item $a \leq b$ and $b \leq a$ implies $a = b$ (antisymmetric).
+        \item either $a \leq b$ or $b \leq a$ (strongly connected).
     \end{enumerate}
 \end{dfnbox}
 \begin{dfnbox}{Strict Total Order}{strictTotalOrder}
-    A {\color{red} \textbf{strict total order}} on a set $X$ is a binary relation $R$ over $X$ such that for all $a, b, c \in X$:
+    A {\color{red} \textbf{strict total order}} on a set $X$ is a binary relation $<$ over $X$ such that for all $a, b, c \in X$:
     \begin{enumerate}
-        \item $(a, a) \notin R$.
-        \item $aRb$ implies $(b, a) \notin R$.
-        \item $aRb$ and $bRc$ implies $aRc$.
-        \item trichotomy is satisfied.
+        \item $a \not < a$ (irreflexive).
+        \item $a < b$ implies $b < a$ (asymmetric).
+        \item $a < b$ and $b < c$ implies $a < c$ (transitive).
+        \item if $a \neq b$, then either $a < b$ or $b < a$ (connected).
     \end{enumerate}
 \end{dfnbox}
-Define a field $(\R, +, \times)$ together with the total order $\leq$ (or the strict total order $<$), then clearly this field is an ordered field, which is known as the real numbers.
-\begin{thmbox}{}{}
-    If $a, b \in \R$, then $-ab + ab = 0$. 
-\end{thmbox}
-\begin{thmbox}{}{}
-    For all $a \in \R$ with $a \neq 0$, $a^2 > 0$.
-\end{thmbox}
-\begin{thmbox}{}{}
+It is easy to see that the real numbers form the ordered fields $(\R, +, \times, \leq)$ and $(\R, +, \times, <)$. Note that this means $\R$ satisfies trichotomy. If we choose any $x \in \R$, then exactly one of~$x = 0$, $x > 0$ and $x < 0$ is true. Therefore, we can define that if $x \in \R$ and $x > 0$, then $x$ is said to be positive. This leads to the following axiomatic results:
+\begin{enumerate}
+    \item If $a$ and $b$ are both positive, then $a + b$ is positive;
+    \item If $a$ and $b$ are both positive, then $ab$ is positive;
+    \item For any $a \in \R$, either $a = 0$, $a$ is positive, or $-a$ is positive.
+\end{enumerate}
+Note that $a < b$ if and only if $b - a$ is positive. So the trichotomy of $\R$ guarantees that for any $a, b \in \R$, either $a = b$, $a < b$ or $b < a$ (i.e., $a > b$).
+
+\section{Properties of $\R$}
+We can derive a few obvious minor results based on the field properties of $\R$:
+\begin{enumerate}
+    \item If $a, b \in \R$, then $-ab + ab = 0$;
+    \item For all $a \in \R$ with $a \neq 0$, $a^2 > 0$;
+    \item If $a \in \R$ is such that $0 \leq a < \epsilon$ for all $\epsilon \in \R^+$, then $a = 0$;
+    \item If $a < b$, then $a + c < b + c$ for all $c \in \R$.
+    \item If $a < b$, then $ac < bc$ for all $c \in \R^+$ and $ac > bc$ for all $c \in \R^-$.
+    \item For all $a \in \R$, $a^2 > 0$.
+\end{enumerate}
+We may consider the following interesting proposition:
+\begin{probox}{}{infSmall}
     If $a \in \R$ is such that $0 \leq a < \epsilon$ for all $\epsilon \in \R^+$, then $a = 0$.
-\end{thmbox}
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $a > 0$, then we can take $\epsilon_0 = \frac{a}{2}$. Note that $\epsilon_0 \in \R^+$ but $\epsilon_0 < a$, which is a contradiction. So $a = 0$.
+    \end{proof}
+\end{probox}
+The above essentially asserts that \textbf{a non-negative real number is strictly less than any positive real number if and only if it is $0$}.
+
+The properties of $\R$ also enables us to manipulate inequalities based on the following trivial results:
+\begin{enumerate}
+    \item If $ab > 0$, then $a$ and $b$ are either both positive or both negative;
+    \item If $ab < 0$, then exactly one of them is positive and exactly one of them is negative.
+\end{enumerate}
+We shall introduce a few well-known inequalities.
 \begin{thmbox}{Bernoulli's Inequality}{burnoulliIneq}
     If $x > -1$, then $(1 + x)^n \geq 1 + nx$ for all $n \in \N$.
+    \tcblower
+    \begin{proof}
+        The case where $n = 0$ is trivial.
+        \\\\
+        Suppose that $(1 + x)^k \geq 1 + kx$ for some $k \in \N$, consider
+        \begin{align*}
+            (1 + x)^{k + 1} & = (1 + x)(1 + x)^k \\
+            & \geq (1 + x)(1 + kx) \\
+            & = 1 + (k + 1)x + kx^2 \\
+            & \geq 1 + (k + 1)x.
+        \end{align*}
+        Therefore, $(1 + x)^n \geq 1 + nx$ for all $n \in \N$.
+    \end{proof}
 \end{thmbox}
+\begin{thmbox}{AM-GM-HM Inequality}{AM-GM-HM}
+    Let $n \in \N^+$ and let $a_1, a_2, \cdots, a_n$ be positive real numbers, then
+    \begin{equation*}
+        \frac{n}{\sum_{i = 1}^{n}\frac{1}{a_i}} \leq \left(\prod_{i = 1}^{n}a_i\right)^{\frac{1}{n}} \leq \frac{\sum_{i = 1}^{n}a_i}{n}.
+    \end{equation*}
+\end{thmbox}
+\subsection{Absolute Value}
+Given any real number $x$, intuitively we sense that $x$ possesses a certain ``distance'' from $0$. This distance can be formalised as follows:
+\begin{dfnbox}{Absolute Value}{abs}
+    Let $x \in \R$, the {\color{red} \textbf{absolute value}} of $x$ is defined as
+    \begin{displaymath}
+        \abs{x} = \begin{cases}
+            x \quad & \textrm{if } x > 0 \\
+            0 \quad & \textrm{if } x = 0 \\
+            -x \quad & \textrm{if } x < 0
+        \end{cases}.
+    \end{displaymath}
+\end{dfnbox}
+We have some trivial properties about the absolute value:
+\begin{enumerate}
+    \item For all $a, b \in \R$, $\abs{ab} = \abs{a}\abs{b}$;
+    \item For all $a \in \R$, $\abs{a}^2 = a^2$;
+    \item If $c \geq 0$, then $\abs{a} \leq c$ if and only if $-c \leq a \leq c$ for all $a \in \R$;
+    \item For all $a \in \R$, $-\abs{a} \leq a \leq \abs{a}$.
+\end{enumerate}
+Using these basic properties, we can prove the following results:
+\begin{thmbox}{Triangle Inequality}{triIneq}
+    For all $a, b \in \R$, $\abs{a + b} \leq \abs{a} + \abs{b}$.
+\end{thmbox}
+\begin{corbox}{Extended Triangle Inequality}{triIneqEx}
+    For all $a, b \in \R$, $\abs{\abs{a} - \abs{b}} \leq \abs{a - b}$ and $\abs{a - b} \leq \abs{a} + \abs{b}$.
+\end{corbox}
+\begin{corbox}{Generalised Triangle Inequality}{triIneqGen}
+    For all $a_1, a_2, \cdots, a_n \in \R$, 
+    \begin{equation*}
+        \abs{\sum_{i = 1}^{n}a_i} \leq \sum_{i = 1}^{n}\abs{a_i}.
+    \end{equation*}
+\end{corbox}
+Analogously, if $\abs{x}$ represents the ``distance'' between $x$ and $0$, then by a simple translation we can see that $\abs{x - a}$ represents the ``distance'' between $x$ and $a$. Thus, we can have the following definition:
+\begin{dfnbox}{Neighbourhood}{neighbourhood}
+    Let $a \in \R$ and $\epsilon \in \R^+$. The {\color{red} \textbf{$\epsilon$-neighbourhood}} of $a$ is defined to be the set
+    \begin{displaymath}
+        V_\epsilon(a) \coloneqq \left\{x \in \R \colon \abs{x - a} < \epsilon\right\}.
+    \end{displaymath}
+\end{dfnbox}
+Note that $x \in V_\epsilon(a)$ if and only if $-\epsilon < x - a < \epsilon$ or $a - \epsilon < x < a + \epsilon$. Which leads to the following interesting result:
+\begin{probox}{}{xIsA}
+    For any $a \in \R$, if $x \in V_\epsilon(a)$ for all $\epsilon \in \R^+$, then $x = a$.
+    \tcblower
+    \begin{proof}
+        Note that this essentially means that $\abs{x - a} < \epsilon$ for all $\epsilon \in \R^+$. By Proposition \ref{pro:infSmall}, we have $\abs{x - a} = 0$ and therefore $x = a$.
+    \end{proof}
+\end{probox}
+
+\subsection{The Completeness Property of $\R$}
+Intuitively, there are no ``gaps'' among the real numbers, i.e., if you take any two real numbers, between them there is nothing else than other real numbers. Therefore, we say that $\R$ is \textit{complete}. This is in contrast with $\Q$ where there are gaps in between any two rational numbers (because there always exists some irrational numbers in between).
+
+In this section, we probe into how the completeness of $\R$ can be established, and how the real numbers themselves can be constructed. To do that, we first establish the notion of \textit{boundedness}.
+
+\begin{dfnbox}{Boundedness}{bound}
+    Let $S \subseteq \R$. We say that $S$ is:
+    \begin{itemize}
+        \item {\color{red} \textbf{bounded above}} if there exists some $u \in R$ (known as the {\color{red} \textbf{upper bound}} of $S$) such that $u \geq s$ for all $s \in S$; 
+        \item {\color{red} \textbf{bounded below}} if there exists some $v \in R$ (known as the {\color{red} \textbf{lower bound}} of $S$) such that $v \leq s$ for all $s \in S$; 
+        \item {\color{red} \textbf{bounded}} if $S$ has both an upper bound and a lower bound;
+        \item {\color{red} \textbf{unbounded}} either if $S$ has no upper bound or if $S$ has no lower bound;     
+    \end{itemize}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $S$ is bounded if and only if there is some $M \geq 0$ such that $\abs{s} \leq M$ for all $s \in S$.
+    \end{remark}
+\end{notebox}
 \end{document}
