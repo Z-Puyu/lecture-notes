@@ -14,3 +14,6 @@
 \contentsline {section}{\numberline {1.6}Binomial and Multinomial Coefficients}{15}{section.1.6}%
 \contentsline {subsection}{\numberline {1.6.1}Binomial Coefficients}{15}{subsection.1.6.1}%
 \contentsline {subsection}{\numberline {1.6.2}Multinomial Coefficients}{17}{subsection.1.6.2}%
+\contentsline {chapter}{\numberline {2}Pigeonhole Principle}{19}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Pigeonhole Principle}{19}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Ramsey Types of Problems}{19}{section.2.2}%

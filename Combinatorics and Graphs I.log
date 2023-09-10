@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  4 SEP 2023 18:15
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  7 SEP 2023 13:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1333,7 +1333,16 @@ Package tcolorbox Warning: Discard zero height first box part due to break probl
 
 Package tcolorbox Warning: Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually on input line 626.
 
-[18] 
+[18]
+Chapter 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--646
+
+ []
+
+[19
+
+] [20] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs I.aux)
 
@@ -1343,12 +1352,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs I".out' has not cha
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36226 strings out of 478630
- 758952 string characters out of 5847730
+ 36239 strings out of 478630
+ 759153 string characters out of 5847730
  1875012 words of memory out of 5000000
- 55751 multiletter control sequences out of 15000+600000
+ 55764 multiletter control sequences out of 15000+600000
  516159 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs I.pdf (18 pages).
+Output written on Combinatorics and Graphs I.pdf (20 pages).

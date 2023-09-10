@@ -633,4 +633,40 @@ Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurre
         \end{pmatrix}\prod_{i = 1}^{m}x_i^{n_i}.
     \end{equation*}
 \end{thmbox}
+
+\chapter{Pigeonhole Principle}
+\section{Pigeonhole Principle}
+\begin{thmbox}{Pigeonhole Principle}{PP}
+    Let $k, n \in \N^+$. If at least $kn + 1$ distinct objects are distributed into $n$ distinct sets, then there exists a set $K$ such that $\abs{K} \geq k + 1$.
+    \tcblower   
+    \begin{proof}
+        Let $a_1, a_2, \cdots, a_{kn + 1}$ be the $kn + 1$ distinct objects to be distributed into the sets~$K_1, K_2, \cdots, K_n$. Suppose there is no $i \in \N^+$ such that $\abs{K_i} \geq k + 1$, i.e. $K_i \leq k$ for all~$i = 1, 2, \cdots, n$.
+        \\\\
+        However, this means that $\sum_{i = 1}^{n}\abs{K_i} \leq kn < kn + 1$, which is a contradiction.
+    \end{proof}
+\end{thmbox}
+Note that Pigeonhole Principle only guarantees existence rather than uniqueness.
+\section{Ramsey Types of Problems}
+\begin{dfnbox}{Ramsey Number}{ramseyNum}
+    Given $p, q \in \N^+$. The {\color{red} \textbf{Ramsey Number}} $R(p, q)$ is the smallest natural number $n$ such that for any colouring of the edges of an $n$-clique by $2$ colours $a$ and $b$, there exists either a $a$ $p$-clique or a $b$ $q$-clique.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
+        \begin{itemize}
+            \item $R(p, q) = R(q, p)$.
+            \item $R(1, q) = 1$.
+            \item $R(2, q) = q$.
+        \end{itemize}
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Ramsey's Theorem}{RamseyThm}
+    For all $p, q \in N^+$, the Ramsey Number $R(p, q)$ always exists.
+\end{thmbox}
+\begin{thmbox}{}{recurRamsey}
+    For all integers $p, q \geq 2$,
+    \begin{equation*}
+        R(p, q) \leq R(p - 1, q) + R(p, q - 1).
+    \end{equation*}
+\end{thmbox}
 \end{document}
