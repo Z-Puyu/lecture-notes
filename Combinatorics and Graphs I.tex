@@ -752,4 +752,52 @@ The above recurrence allows us to prove the following theorem:
 \begin{thmbox}{Ramsey's Theorem}{RamseyThm}
     For all $p, q \in N^+$, the Ramsey Number $R(p, q)$ always exists.
 \end{thmbox}
+
+\chapter{Principle of Inclusion and Exclusion}
+\section{Principle of Inclusion and Exclusion (PIE)}
+\begin{thmbox}{Principle of Inclusion and Exclusion (a special case)}{2PIE}
+    Let $A$ and $B$ be two finite sets, then
+    \begin{equation*}
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
+    \end{equation*}
+    In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
+\end{thmbox}
+\begin{thmbox}{Principle of Inclusion and Exclusion (general)}{PIE}
+    Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
+    \begin{equation*}
+        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{h = 1}^{j}E_{k_h}}\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider
+        \begin{equation}\label{eq:1}
+            \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right). \tag{*}
+        \end{equation}
+        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that $f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
+        \\\\
+        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$.
+    \end{proof}
+\end{thmbox}
+
+\section{General Principle of Inclusion and Exclusion (GPIE)}
+\begin{thmbox}{General Principle of Inclusion and Exclusion}{GenPIE}
+    Let $S$ be an $n$-element set and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that $E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that $\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
+    \begin{equation*}
+        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
+    \end{equation*}
+    then
+    \begin{equation*}
+        E(m) = \sum_{k = m}^{q}(-1)^{k - m}\begin{pmatrix}
+            k \\
+            m
+        \end{pmatrix}\omega(k).
+    \end{equation*}
+\end{thmbox}
 \end{document}
