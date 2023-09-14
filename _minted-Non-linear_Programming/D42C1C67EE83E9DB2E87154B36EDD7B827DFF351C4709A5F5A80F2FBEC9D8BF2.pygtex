@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{bisection}\PYG{p}{(}\PYG{n}{f}\PYG{p}{:} \PYG{n}{Callable}\PYG{p}{[[}\PYG{n+nb}{float}\PYG{p}{],} \PYG{n+nb}{float}\PYG{p}{],}\PYGZbs{}
+    \PYG{n}{a}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{b}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{t}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{x}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n+nb}{float}\PYG{p}{:}
+
+\end{Verbatim}

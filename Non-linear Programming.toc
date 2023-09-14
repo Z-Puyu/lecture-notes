@@ -9,3 +9,7 @@
 \contentsline {subsection}{\numberline {2.3.1}Taylor's Theorem}{14}{subsection.2.3.1}%
 \contentsline {chapter}{\numberline {3}Unconstrained NLPs}{15}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Coercive Functions}{15}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Numerical Methods}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Bisection}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Newton's Method}{17}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Goldern Section Method}{17}{section.4.3}%

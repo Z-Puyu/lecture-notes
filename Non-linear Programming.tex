@@ -1,4 +1,4 @@
-\documentclass[math]{amznotes}
+\documentclass[math, code]{amznotes}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -501,4 +501,51 @@ Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to pr
 \begin{corbox}{}{saddleCor}
     Let $\mathbfit{x}^*$ be a stationary point of $f$. If $H_f(\mathbfit{x}^*)$ is indefinite, then $\mathbfit{x}^*$ is a saddle point.
 \end{corbox}
+
+\chapter{Numerical Methods}
+\section{Bisection}
+Recall the \textit{Intermediate Value Theorem}:
+\begin{thmbox}{Intermediate Value Theorem}{interVal}
+    Let $f$ be a continuous function on $[a, b]$ with $f(a)f(b) < 0$, then there exists some $r \in (a, b)$ such that $f(r) = 0$.
+\end{thmbox}
+\begin{codebox}{Sample Code in Python}{}
+    \begin{amzcode}{python3}
+        def bisection(f: Callable[[float], float],\
+            a: float, b: float, t: float, x: float) -> float:
+
+    \end{amzcode}
+\end{codebox}
+
+\section{Newton's Method}
+
+\section{Goldern Section Method}
+\begin{dfnbox}{Unimodal Function}{unimodal}
+    A function $f$ is said to be {\color{red} \textbf{unimodal}} on $[a, b]$ if it has exactly one global minimiser (maximiser) $x^*$ in $[a, b]$ and is strictly decreasing (increasing) on $[a, x^*]$ abd strictly increasing (decreasing) on $[x^*, b]$.
+\end{dfnbox}
+\begin{tecbox}{Golden Section Method}{goldeSect}
+    Let $f$ be a unimodal function. Consider $[a_0, b_0]$ as the initial interval. For each iteration, we consider
+    \begin{align*}
+        \lambda_n & = b_n - \Phi(b_n - a_n) \\
+        \mu_n & = a_n + \Phi(b_n - a_n)
+    \end{align*}
+    where $\Phi = \frac{\sqrt{5} - 1}{2}$ is the Golden Ratio constant. Then we update the interval by:
+    \begin{equation*}
+        [a_{n + 1}, b_{n + 1}] = \begin{cases}
+            [\lambda_n, b_n], \quad \textrm{if } f(\lambda_n) > f(\mu_n)\\
+            [a_n, \mu_n], \quad \textrm{if } f(\lambda_n) < f(\mu_n)\\
+            [\lambda_n, \mu_n], \quad \textrm{if } f(\lambda_n) = f(\mu_n)
+        \end{cases}.
+    \end{equation*}
+    The reason why we use $\Phi$ to generate the intervals recursively is because that it reduces the number of computations. Consider that $[a_k, b_k] = [\lambda_{k - 1}, b_{k - 1}]$, then
+    \begin{align*}
+        \lambda_k & = b_k - \Phi(b_k - a_k) \\
+        & = b_{k - 1} - \Phi(b_{k - 1} - \lambda_{k - 1}) \\
+        & = b_{k - 1} - \Phi(b_{k - 1} - b_{k - 1} + \Phi(b_{k - 1} - a_{k - 1})) \\
+        & = b_{k - 1} - \Phi^2(b_{k - 1} - a_{k - 1}) \\
+        & = b_{k - 1} - (1 - \Phi)(b_{k - 1} - a_{k - 1}) \\
+        & = a_{k - 1} + \Phi(b_{k - 1} - a_{k - 1}) \\
+        & = \mu_{k - 1}.
+    \end{align*}
+    However, note that we have already computed $\mu_{k - 1}$ in the previous iteration! Therefore, by applying ideas of \textit{dynamic programming}, this eliminates the need to re-compute its value. Similarly, we can show that $\mu_k = \lambda_{k - 1}$ if $f(\lambda_k) < f(\mu_k)$.
+\end{tecbox}
 \end{document}
