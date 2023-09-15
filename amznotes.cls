@@ -33,6 +33,7 @@
 
 \RequirePackage[margin=1in]{geometry}   % set margins
 \RequirePackage{fontspec}               % set main font
+\RequirePackage{mathtools}  
 \RequirePackage{unicode-math}           % set math font; replaces amssymb
 \RequirePackage[dvipsnames]{xcolor}     % pretty colors
 \RequirePackage{hyperref}               % hyperlinks in pdf viewers; will appear underlined only in pdf viewer
@@ -51,7 +52,7 @@
 \RequirePackage{tabularx}
 
 \ifamznotes@math
-    \RequirePackage{mathtools}          % for math macros; also loads amsmath
+    %\RequirePackage{mathtools}          % for math macros; also loads amsmath
     \RequirePackage{amsthm}
     %\renewcommand\qedsymbol{$\squoval$}
 \fi
@@ -205,6 +206,7 @@
         overlay={\begin{tcbclipinterior}\fill[darkgray!20!white] (frame.south west) rectangle ([xshift=6mm]frame.north west);\end{tcbclipinterior}},
         skin=bicolor,
         collower=white,
+        fontupper=\tiny,
         colbacklower=darkgray
     },
 }
@@ -243,6 +245,7 @@
     codeboxstyle/.style={
         overlay={\begin{tcbclipinterior}\fill[darkgray!20!white] (frame.south west) rectangle ([xshift=6mm]frame.north west);\end{tcbclipinterior}},
         skin=bicolor,
+        fontupper = \fontsize{3mm}{3mm},
         collower=white,
         colbacklower=darkgray
     },
