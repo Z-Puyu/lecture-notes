@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  13 SEP 2023 14:25
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.28)  15 SEP 2023 13:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1357,21 +1357,13 @@ Chapter 3.
 Chapter 4.
 \openout4 = `Non-linear_Programming.pyg'.
 
-(./_minted-Non-linear_Programming/default.pygstyle)
-runsystem(for ^%i in (python.exe python.bat python.cmd) do set > Non-linear_Programming.aex <nul: /p x=^%~$PATH:i>> Non-linear_Programming.aex)...executed.
+(./_minted-Non-linear_Programming/default.pygstyle) (./_minted-Non-linear_Programming/ADEADD7403027C505F6252405CF0BC9627DFF351C4709A5F5A80F2FBEC9D8BF2.pygtex)
 
-runsystem(del Non-linear_Programming.aex)...executed.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 539.
 
-runsystem(python -c "import sys; import os; import textwrap; from io import open; fname = os.path.expanduser(os.path.expandvars(\"Non-linear_Programming.pyg\")); f = open(fname, \"r\", encoding=\"UTF8\") if os.path.isfile(fname) else None; t = f.readlines() if f is not None else None; t_opt = t if t is not None else []; f.close() if f is not None else None; tmpfname = os.path.expanduser(os.path.expandvars(\"Non-linear_Programming.pyg\")); f = open(tmpfname, \"w\", encoding=\"UTF8\") if t is not None else None; fvstartnum = 0; fvstopnum = -1; s = max(0, fvstartnum-1); e = max(s, fvstopnum) if fvstopnum > 0 else len(t_opt); [f.write(textwrap.dedent(\"\".join(x))) for x in (t_opt[0:s], t_opt[s:e], t_opt[e:]) if x and t is not None]; f.close() if t is not None else os.remove(tmpfname);")...executed.
+[17
 
-runsystem(pygmentize -l "python3" -f latex -P commandprefix=PYG -F tokenmerge -P stripnl="False" -o _minted-Non-linear_Programming/D42C1C67EE83E9DB2E87154B36EDD7B827DFF351C4709A5F5A80F2FBEC9D8BF2.pygtex Non-linear_Programming.pyg)...executed.
-
- (./_minted-Non-linear_Programming/D42C1C67EE83E9DB2E87154B36EDD7B827DFF351C4709A5F5A80F2FBEC9D8BF2.pygtex) [17
-
-]
-runsystem(del _minted-Non-linear_Programming\AD8A3FCCD25DDF86B45D7F5D23C030B727DFF351C4709A5F5A80F2FBEC9D8BF2.pygtex)...executed.
-
- [18] 
+] [18] [19] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Non-linear Programming.aux)
 Package rerunfilecheck Info: File `"Non-linear Programming".out' has not changed.
@@ -1380,12 +1372,12 @@ runsystem(del Non-linear_Programming.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 39206 strings out of 478630
- 826200 string characters out of 5847730
- 1878012 words of memory out of 5000000
- 58657 multiletter control sequences out of 15000+600000
- 516231 words of font info for 95 fonts, out of 8000000 for 9000
+ 39213 strings out of 478630
+ 826170 string characters out of 5847730
+ 1876012 words of memory out of 5000000
+ 58664 multiletter control sequences out of 15000+600000
+ 516239 words of font info for 96 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,15n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Non-linear Programming.pdf (18 pages).
+Output written on Non-linear Programming.pdf (19 pages).

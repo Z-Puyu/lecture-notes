@@ -12,4 +12,7 @@
 \contentsline {chapter}{\numberline {4}Numerical Methods}{17}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Bisection}{17}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Newton's Method}{17}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Goldern Section Method}{17}{section.4.3}%
+\contentsline {subsection}{\numberline {4.2.1}Multivariable Case}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Armijo Line Search}{18}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Goldern Section Method}{18}{section.4.3}%
+\contentsline {section}{\numberline {4.4}General Framework of Optimisation Algorithms}{19}{section.4.4}%
