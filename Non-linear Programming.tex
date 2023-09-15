@@ -474,6 +474,7 @@ Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to pr
 \end{thmbox}
 \chapter{Unconstrained NLPs}
 \section{Coercive Functions}
+To verify the existence of global minimisers for unbounded functions, we introduce the notion of \textit{coercive functions}.
 \begin{dfnbox}{Coercive Function}{coerciveFunc}
     A {\color{red} \textbf{continuous}} function $f \colon \mathbf{R}^n \to \mathbf{R}$ is said to be {\color{red} \textbf{coercive}} if
     \begin{equation*}
@@ -492,13 +493,63 @@ Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to pr
         which is a compact set. So by Weiestrass' Theorem, there exists some $\mathbfit{x}^* \in B(\mathbfit{0}, r)$ such that $f(\mathbfit{x}^*) \leq f(\mathbfit{x}) \leq f(\mathbfit{0})$ for all $\mathbfit{x} \in B(\mathbfit{0}, r)$. Now, this means that for all $\mathbfit{x} \in \mathbf{R}^n$, we have $(\mathbfit{x}^*) \leq f(\mathbfit{x})$, which means that $\mathbfit{x}^*$ is a global minimiser for $f$.
     \end{proof}
 \end{thmbox}
+
+\section{Stationary Points}
+It should be natural to think of a \textit{stationary point} when we try to determine the local extrema of a function.
 \begin{dfnbox}{Stationary (Critical) Point}{stationaryPt}
     Let $X \subseteq \mathbf{R}^n$ be an open set and let $f \colon X \to \mathbf{R}$ be a function. An interior point $\mathbfit{x}^*$ is called a {\color{red} \textbf{stationary point}} of $f$ if $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$.
 \end{dfnbox}
+Note that it is not sufficient to ascertain the existence of local extrema from stationary points, but the converse always holds.
+\begin{thmbox}{Necessary Condition for Local Extrema}{ifLocalExtremaThen}
+    Let $\mathcal{X} \subseteq \mathbf{R}^n$ be an open set and let $f \colon \mathcal{X} \to \mathbf{R}$ have continuous first order partial derivatives on $\mathcal{X}$. If $\mathbfit{x^*} \in \mathcal{X}$ is a local minimiser (maximiser) of $f$, then it is a stationary point, and $H_f(\mathbfit{x^*})$ is positive (negative) semidefinite if $f$ has continuous second order partial derivatives.
+\end{thmbox}
+We can use the above theorem to rule out the cases where a stationary point is not a point of local extrema. In this case, the stationary point is known as a \textit{saddle} point.
 \begin{dfnbox}{Saddle Point}{Saddle}
     A stationary point $\mathbfit{x}^*$ of a function $f$ which is neither a local minimisr nor a local maximiser is called a {\color{red} \textbf{saddle point}}.
 \end{dfnbox}
 \begin{corbox}{}{saddleCor}
     Let $\mathbfit{x}^*$ be a stationary point of $f$. If $H_f(\mathbfit{x}^*)$ is indefinite, then $\mathbfit{x}^*$ is a saddle point.
 \end{corbox}
+Note that we can impose a stronger requirement on top of Theorem \ref{thm:ifLocalExtremaThen} to derive a sufficient condition for local minimisers and maximisers.
+\begin{thmbox}{Sufficient Condition for Local Extrema}{ifThenLocalExtrema}
+    Let $\mathcal{X} \subseteq \mathbf{R}^n$ be an open set and let $f \colon \mathcal{X} \to \mathbf{R}$ have continuous second order partial derivatives on $\mathcal{X}$. If $\mathbfit{x^*} \in \mathcal{X}$ is a stationary point and $H_f(\mathbfit{x^*})$ is positive (negative) definite, then $\mathbfit{x^*}$ is a strict local minimiser (maximiser) of $f$.
+\end{thmbox}
+Note that the above is simply the generalised version of the \textbf{second order derivative test} in one-dimensional calculus.
+
+\section{Unconstrained Convex NLP}
+A convex function defined over a convex set has many nice properties. For example, the local minimiser of such a function would also be the global minimiser, which is formulated into the following:
+\begin{thmbox}{Global Minimisers of Convex Functions}{convexFuncGlobalMin}
+    Let $f \colon D \to \mathbf{R}$ be a convex function where $D$ is a non-empty open convex set. Suppose that $\mathbfit{x^*} \in D$ is a local minimiser of $f$, then it is a global minimiser of $f$. In particular, if $f$ is strictly convex, then $\mathbfit{x^*}$ is the unique global minimiser.
+\end{thmbox}
+Linking back to Proposition \ref{pro:convexTan} and Definition \ref{dfn:stationaryPt}, we arrive at the following corollary:
+\begin{corbox}{Stationary Points and Global Minimisers of Convex Functions}{stationaryGlovalMinConvexFunc}
+    If $f$ is a convex (respectively concave) function with continuous first partial derivatives on some open convex set $D$, then any stationary point of $f$ is a global minimiser (respectively maximiser) of $f$.
+\end{corbox}
+
+\subsection{Unconstrained Convex Quadratic Programming}
+Quadratic functions are a basic type of functions in which we are interested in many NLPs.
+\begin{dfnbox}{Quadratic Function}{quadFunc}
+    A {\color{red} \textbf{quadratic function}} $q \colon \mathbf{R}^n \to \mathbf{R}$ is defined by
+    \begin{equation*}
+        q(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx} + \mathbfit{c}^{\mathrm{T}}\mathbfit{x}
+    \end{equation*}
+    where $\mathbfit{Q}$ is an $n \times n$ symmetric matrix and $\mathbfit{c} \in \mathbf{R}^n$.
+\end{dfnbox}
+Note that $\mathbfit{Q}$ and $\mathbfit{c}$ are essentially the coefficients for the quadratic terms and linear terms respectively. In particular, we can determine the convexity of a quadratic function with the following theorem:
+\begin{thmbox}{Convexity of Quadratic Functions}{convexQuad}
+    Consider the quadratic function $q \colon \mathbf{R}^n \to \mathbf{R}$ defined by
+    \begin{equation*}
+        q(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx} + \mathbfit{c}^{\mathrm{T}}\mathbfit{x}
+    \end{equation*}
+    where $\mathbfit{Q}$ is an $n \times n$ symmetric matrix and $\mathbfit{c} \in \mathbf{R}^n$. $q$ is convex if and only if $\mathbfit{Q}$ is positive semidefinite.
+\end{thmbox}
+Analogously to the one-dimensional case, we have the following result:
+\begin{thmbox}{Global Minimiser of Quadratic Functions}{QuadGlobalMin}
+    Let $\mathbfit{c} \in \mathbf{R}^n$ and let $\mathbfit{Q}$ be a positive semidefinite $n \times n$ symmetric matrix, then the quadratic function
+    \begin{equation*}
+        q(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx} + \mathbfit{c}^{\mathrm{T}}\mathbfit{x}
+    \end{equation*}
+    over an open convex set has a global minimiser $\mathbfit{x^*}$ if and only if $\mathbfit{Qx^*} = -\mathbfit{c}$.
+\end{thmbox}
+Clearly, if $\mathbfit{Q}$ is invertible, we have $\mathbfit{x^*} = -\mathbfit{Q}^{-1}\mathbfit{c}$.
 \end{document}
