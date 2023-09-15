@@ -4,3 +4,6 @@
 \contentsline {section}{\numberline {1.2}Properties of $\symbb {R}$}{3}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Absolute Value}{4}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}The Completeness Property of $\symbb {R}$}{6}{subsection.1.2.2}%
+\contentsline {chapter}{\numberline {2}Sequences and Series}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Sequences}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Subsequences}{7}{subsection.2.1.1}%

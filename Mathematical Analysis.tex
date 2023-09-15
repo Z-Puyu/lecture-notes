@@ -198,4 +198,78 @@ In this section, we probe into how the completeness of $\R$ can be established, 
         Note that $S$ is bounded if and only if there is some $M \geq 0$ such that $\abs{s} \leq M$ for all $s \in S$.
     \end{remark}
 \end{notebox}
+
+\chapter{Sequences and Series}
+\section{Sequences}
+\begin{dfnbox}{Sequence}{seq}
+    A {\color{red} \textbf{sequence}} in $\R$ is a real-valued function $X \colon \N^+ \to \R$. Where $X(n)$ is called the $n$-th {\color{red} \textbf{term}} of the sequence.
+\end{dfnbox}
+\begin{dfnbox}{Convergence of Sequences}{seqConverge}
+    A sequence $(x_n)$ in $\R$ is said to be {\color{red} \textbf{convergent}} to $x$ if for all $\epsilon > 0$, there exists some $N \in \N$ such that whenever $n > N$, $\abs{x_n - x} < \epsilon$. $x$ is known as the {\color{red} \textbf{limit}} of $(x_n)$, denoted as
+    \begin{equation*}
+        \lim_{n \to \infty}x_n = x.
+    \end{equation*}
+\end{dfnbox}
+\subsection{Subsequences}
+\begin{dfnbox}{Peak Point}{peakPt}
+    Let $(x_n)$ be a sequence in $\R$, $x_m$ is called a {\color{red} \textbf{peak}} if for all $n \in \N$ with $n > m$, $x_m \geq x_n$.
+\end{dfnbox}
+\begin{thmbox}{Existence of Monotone Subsequences}{existMonoSubseq}
+    Every infinite sequence has an infinite monotone subsequence.
+    \tcblower
+    \begin{proof}
+        Let $(x_n)$ be any sequence in $\R$. We consider the following cases:
+        \\\\
+        \textit{Case 1.} $(x_n)$ has infinitely many peak points, so there exists infinitely many $m_1, m_2, \cdots \in \N$ such that $m_j > m_i$ whenever $j > i$. Therefore, the subsequence $(x_{m_n})$ is a monotone decreasing sequence.
+        \\\\
+        \textit{Case 2.} $(x_n)$ has finitely many peak points, so there exists $m_1, m_2, \cdots, m_k\in \N$.
+    \end{proof}
+\end{thmbox}
+\begin{thmbox}{Bolzano-Weierstrass Theorem}{bolzanoWeierstrass}
+    Every bounded sequence has a convergent subsequence.
+\end{thmbox}
+\begin{dfnbox}{Cauchy Sequence}{cauchySeq}
+    A sequence $(x_n)$ is said to be a {\color{red} \textbf{Cauchy sequence}} if for every $\epsilon > 0$, there exists some $H \in \N$ such that for all $n, m \in \N$ with $n, m \geq H$, $\abs{x_n - x_m} < \epsilon$.
+\end{dfnbox}
+
+\begin{thmbox}{Cauchy Convergence Criterion}{cauchyConvergeCri}
+    A sequence in $\R$ is convergent if and only if it is a Cauchy sequence.
+    \tcblower
+    \begin{proof}
+        Let $(x_n)$ be a sequence in $\R$. Suppose that $(x_n)$ converges to $x$, then for all $\epsilon > 0$, there exists some $N \in \N$ such that whenever $n > N$, $\abs{x_n - x} < \frac{\epsilon}{2}$. Therefore, for all $m, n > N$, we have
+        \begin{align*}
+            \abs{x_m - x_n} & = \abs{x_m - x - x_n + x} \\
+            & \leq \abs{x_m - x} + \abs{x_n - x} \\
+            & = \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+            & = \epsilon,
+        \end{align*}
+        and so $(x_n)$ is a Cauchy sequence.
+        \\\\
+        Suppose conversely that $(x_n)$ is a Cauchy sequence on $\R$. We consider the following lemma:
+        \begin{lembox}{Boundedness of Cauchy Sequences}{cauchySeqBound}
+            A Cauchy sequence in $\R$ is bounded.
+            \tcblower
+            \begin{proof}
+                Let $(x_n)$ be a Cauchy sequence, then by Definition \ref{dfn:cauchySeq} there is some $H \in \N$ such that for all natural numbers $n \geq H$, $\abs{x_n - x_H} < 1$. By Corollary \ref{cor:triIneqEx}, we have
+                \begin{equation*}
+                    \abs{\abs{x_n} - \abs{x_H}} \leq \abs{x_n - x_H} < 1,
+                \end{equation*}
+                and so $\abs{x_n} < \abs{x_H} + 1$. Take 
+                \begin{equation*}
+                    m = \max\left\{\abs{x_1}, \abs{x_2}, \cdots, \abs{x_H}, \abs{x_H} + 1\right\},
+                \end{equation*}
+                then $\abs{x_n} < m$ for all $n \in \N^+$.
+            \end{proof}
+        \end{lembox}
+        Therefore, by Theorem \ref{thm:bolzanoWeierstrass} there exists a subsequence $(x_{m_n})$ which converges to some $x \in \R$. Thus there exists some $M \in \N$ such that whenever $m_{n} > M$, $\abs{x_{m_n} - x} < \frac{\epsilon}{2}$ for all $\epsilon > 0$. By Definition \ref{dfn:cauchySeq}, there exists some $N \in \N$ such that $\abs{x_n - x_{m_n}} < \frac{\epsilon}{2}$ for all $\epsilon > 0$ and for all $n, m_n > N$. Take $K = \max\{M, N\}$, then whenever $n > K$, there is some $m_n > K$ such that
+        \begin{align*}
+            \abs{x_n - x} & = \abs{x_n - x_{m_n} + x_{m_n} - x} \\
+            & \leq \abs{x_n - x_{m_n}} + \abs{x_{m_n} - x} \\
+            & = \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+            & = \epsilon.
+        \end{align*}
+        Therefore, $\lim_{n \to \infty}x_n = x$.
+    \end{proof}
+    
+\end{thmbox}
 \end{document}
