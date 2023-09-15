@@ -800,4 +800,86 @@ The above recurrence allows us to prove the following theorem:
         \end{pmatrix}\omega(k).
     \end{equation*}
 \end{thmbox}
+
+\section{Stirling Numbers of the Second Kind}
+\begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
+    The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some trivial results:
+        \begin{itemize}
+            \item $S(0, 0)$ = 1.
+            \item $S(r, 0) = S(0, n) = 0$ for all $r, n \in \N^+$.
+            \item $S(r, n) > 0$ for all $r, n \in \N$ with $r \geq n \geq 1$.
+            \item $S(r, n) = 0$ if $n > r \geq 1$.
+            \item $S(r, 1) = S(r, r) = 1$ for all $r \in \N^+$.
+        \end{itemize}
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
+    For all $r, n \in \N$ with $r \geq n$,
+    \begin{equation*}
+        S(r, n) = S(r - 1, n - 1) + n(r - 1, n).
+    \end{equation*}
+\end{thmbox}
+\begin{dfnbox}{Partition}{partition}
+    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with $S_1 \neq S_2$, $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
+\end{dfnbox}
+Note that the number of all partitions of $A$ with $\abs{A} = n$ is just
+\begin{equation*}
+    \sum_{i = 1}^{n}S(n, i).
+\end{equation*}
+\begin{thmbox}{Number of Surjective Mappings}{numSurj}
+    Let $F(r, n)$ where $r, n \in \N^+$ deonote the number of surjective mappings
+    \begin{equation*}
+        f \colon [r] - \{0\} \to [n] - \{0\},
+    \end{equation*}
+    then
+    \begin{equation*}
+        F(r, n) = \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+            n \\
+            k
+        \end{pmatrix}(n - k)^r.
+    \end{equation*}
+\end{thmbox}
+Some corollaries:
+\begin{align*}
+    \frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r & = S(r, n) \\
+    \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r & = 0 \quad \textrm{if }n > r \geq 1
+\end{align*}
+\section{Derangement}
+\begin{dfnbox}{Derangement}{derangement}
+    Let $N_n = [n] - \{0\}$. A {\color{red} \textbf{derangement}} of $N_n$, denoted by $D_n$, is the permutation $a_1a_2\cdots a_n$ of $N_n$ such that $a_i \neq i$ for all $i = 1, 2, \cdots, n$.
+    \\\\
+    In general, we also say that an $r$-permutation of $N_n$ has a {\color{red} \textbf{fixed point}} at $i$ if $a_i = i$. The number of $r$-permutations of $N_n$ with $k$ fixed points is $D(n, r, k)$.
+\end{dfnbox}
+\begin{thmbox}{A Formula for $D(n, r, k)$}{dnrk}
+    For $n \geq r \geq k \geq -$ and $r \geq 1$,
+    \begin{equation*}
+        D(n, r, k) = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
+            r - k \\
+            i
+        \end{pmatrix}(n - k - i)!.
+    \end{equation*}
+\end{thmbox}
+Note that the number of derangement
+\begin{equation*}
+    D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}.
+\end{equation*}
+And so
+\begin{equation*}
+    \lim_{n \to \infty}P(\textrm{Having a derangement}) = \lim_{n \to \infty}\frac{D_n}{n!} = \mathrm{e}^{-1}.
+\end{equation*}
+
+\section{Euler $\phi$-Function}
+\begin{thmbox}{Euler $\phi$-Function}
+    
+\end{thmbox}
 \end{document}

@@ -20,3 +20,5 @@
 \contentsline {chapter}{\numberline {3}Principle of Inclusion and Exclusion}{23}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Principle of Inclusion and Exclusion (PIE)}{23}{section.3.1}%
 \contentsline {section}{\numberline {3.2}General Principle of Inclusion and Exclusion (GPIE)}{24}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Stirling Numbers of the Second Kind}{24}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Derangement}{25}{section.3.4}%
