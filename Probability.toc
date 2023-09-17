@@ -16,3 +16,6 @@
 \contentsline {section}{\numberline {4.1}Random Variables}{15}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Discrete Random Variables}{15}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Expectation of Discrete Random Variables}{16}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Variance}{18}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Bernoulli and Binomial Random Variables}{20}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Poisson Random Variable}{22}{subsection.4.2.4}%

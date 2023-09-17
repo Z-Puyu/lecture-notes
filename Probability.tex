@@ -475,8 +475,10 @@ Intuitively, the above limit represents the \textit{expected value} of $X$ when 
     \end{equation*}
     if $\mathrm{ran}(X)$ is countably infinite.
 \end{dfnbox}
+By convention, we use $\mu$ to denote expectation, so $X[E]$ can be written as $\mu_X$.
+
 For a discrete random variable $X$, we can define a function $g \colon \mathrm{ran}(X) \to \R$. It is easy to see that $g(X)$ is also a discrete random variable. Therefore, we may have the following result:
-\begin{thmbox}{Expectation of Functions}{FuncExp}
+\begin{thmbox}{Expectation of Functions}{funcExp}
     Let $X$ be a discrete random variable and define $Y = g(X)$, then
     \begin{equation*}
         E[Y] = E[g(X)] = \sum_{x}\left[g(x)P(X = x)\right].
@@ -495,5 +497,195 @@ For a discrete random variable $X$, we can define a function $g \colon \mathrm{r
             & = \sum_{x}\left[g(x)P(X = x)\right].
         \end{align*}
     \end{proof}
+\end{thmbox}
+Two simple corollaries to the above theorem are:
+\begin{align*}
+    E[aX + b] & = aE[X] + b \\
+    E[X + Y] & = E[X] + E[Y].
+\end{align*}
+In later sections, we will prove that the same rule applies to continuous random variables as well. The above theorem gives rise to the following notion of \textit{moments}:
+\begin{dfnbox}{Moment}{moment}
+    Let $X$ be a random variable. $E[X^n]$ is called the $n$-th {\color{red} \textbf{moment}} of $X$.
+\end{dfnbox}
+Following Theorem \ref{thm:funcExp}, it is easy to see that if $X$ is discrete, then
+\begin{equation*}
+    E[X^n] = \sum_{i = 1}^{\infty}x_ip_X(x_i).
+\end{equation*}
+
+\subsection{Variance}
+Note that given two different discrete random variables $X$ and $Y$, their probability mass functions can be different but they can still have identical expectations. For example, consider $p_X$ to be identically $0$ and $p_Y$ to be such that $p_Y(0) = 1$ and $p_Y(y) = 0$ for all $y \neq 0$.
+
+This motivates us to find other properties to classify and characterise random variables. One of these properties is the \textbf{spread} of the possible values taken by a random variable with respect to its mean, i.e., consider the random variable $X$ with $E[X] = \mu$, we wish to determine $E[\abs{X - \mu}]$ or equivalently $E[(X - \mu)^2]$. This spread is known as the \textit{variance} of a random variable.
+\begin{dfnbox}{Variance}{var}
+    Let $X$ be a random variable with $E[X] = \mu$, the {\color{red} \textbf{variance}} of $X$ is defined to be
+    \begin{equation*}
+        \mathrm{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2.
+    \end{equation*}
+\end{dfnbox}
+By convention, we use $\sigma^2$ to denote variance, so $\mathrm{Var}(X)$ can be written as $\sigma_X^2$.
+
+The formula for $\mathrm{Var}(X)$ can be derived via Theorem \ref{thm:funcExp}:
+\begin{align*}
+    \mathrm{Var}(X) & = E[(X - \mu)^2] \\
+    & = E[X^2 - 2\mu X + \mu^2] \\
+    & = E[X^2] - 2\mu E[X] + \mu^2 \\
+    & = E[X^2] - 2(E[X])^2 + (E[X])^2 \\
+    & = E[X^2] - (E[X])^2.
+\end{align*}
+Another term we hear often is \textit{standard deviation}, which is defined as follows:
+\begin{dfnbox}{Standard Deviation}{sd}
+    Let $X$ be a random variable, the {\color{red} \textbf{standard deviation}} of $X$ is defined to be
+    \begin{equation*}
+        \mathrm{SD}(X) = \sqrt{\mathrm{Var}(X)} = \sigma_X.
+    \end{equation*}
+\end{dfnbox}
+Note that we have computed the general formula for any linear combination of discrete random variables. We shall do the same for variance.
+\begin{probox}{Variance of Linear Combinations of Random Variables}{linearCombiVar}
+    Let $X$ be a random variable, then
+    \begin{align*}
+        \mathrm{Var}(aX + b) & = a^2\mathrm{Var}(X) \\
+        \mathrm{SD(aX + b)} & =\abs{a}\mathrm{SD}(X)
+    \end{align*}
+    for all $a, b \in \R$.
+    \tcblower
+    \begin{proof}
+        By using Theorem \ref{thm:funcExp}, we have
+        \begin{align*}
+            \mathrm{Var}(aX + b) & = E[(aX + b)^2] - (E[aX + b])^2 \\
+            & = a^2 E[X^2] + 2ab E[X] + b^2 - \left[a(E[X])^2 + 2abE[X] + b^2\right] \\
+            & = a^2\left[E[X^2] - (E[X])^2\right] \\
+            & = a^2\mathrm{Var}(X).
+        \end{align*}
+        Therefore,
+        \begin{equation*}
+            \mathrm{SD}(aX + b) = \sqrt{\mathrm{Var}(aX + b)} = \abs{a}\mathrm{SD}(X).
+        \end{equation*}
+    \end{proof}
+\end{probox}
+
+\subsection{Bernoulli and Binomial Random Variables}
+Suppose we conduct an experiment. In the most simplistic view, only two outcomes are considered, namely \textbf{success} and \textbf{failure}. We can model such experiments using a discrete random variable whose range has a cardinality of $2$.
+\begin{dfnbox}{Bernoulli Random Variable}{bernoulliRV}
+    A random variable $X$ is a {\color{red} \textbf{Bernoulli random variable}} if
+    \begin{align*}
+        p_X(x) = \begin{cases}
+            p, \quad & \textrm{if } x = 1 \\
+            1 - p, \quad & \textrm{if } x = 0 \\
+            0, \quad & \textrm{otherwise}
+        \end{cases}
+    \end{align*}
+    for some $p \in [0, 1]$.
+\end{dfnbox}
+Now, consider $n$ \textbf{independent} trials of an experiment with a probability for success of $p$. Let $X$ be the number of successes among these $n$ trials, then clearly,
+\begin{equation*}
+    p_X(x) = P(X = x) = \begin{pmatrix}
+        n \\
+        x
+    \end{pmatrix}p^x(1 - p)^{n - x}.
+\end{equation*}
+\begin{dfnbox}{Binomial Random Variable}{binRV}
+    A random variable $X$ is a {\color{red} \textbf{binomial random variable}} if
+    \begin{equation*}
+        p_X(x) = P(X = x) = \begin{pmatrix}
+            n \\
+            x
+        \end{pmatrix}p^x(1 - p)^{n - x}
+    \end{equation*}
+    for some $p \in [0, 1]$. $X$ is said to have a {\color{red} \textbf{binomial distribution}} with parameters $(n, p)$, denoted by $X \sim \mathrm{B}(n, p)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, if $X$ is a Bernoulli random variable, then $X \sim \mathrm{B}(1, p)$.
+    \end{remark}
+\end{notebox}
+Suppose $X \sim \mathrm{B}(n, p)$. Let $N$ be the average number of successes in the $n$ trials, it is expected that $p \approx \frac{N}{n}$. Therefore, we may conjure that $N \approx np$.
+\begin{thmbox}{Expectation and Variance of Binomial Distribution}{BExpVar}
+    Let $X \sim B(n, p)$, then $E[X] = np$ and $\mathrm{Var}(X) = np(1 - p)$.
+    \tcblower
+    \begin{proof}
+        Note that $iC^n_i = nC^{n - 1}_{i - 1}$, so
+        \begin{align*}
+            E[X] & = \sum_{i = 0}^{n}\left[i \begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] \\
+            & = \sum_{i = 1}^{n}\left[n \begin{pmatrix}
+                n - 1 \\
+                i - 1
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] \\
+            & = n\sum_{j = 0}^{n - 1}\left[\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^{j + 1}(1 - p)^{n - 1 - j}\right] \\
+            & = np\sum_{j = 0}^{n - 1}\left[\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^j(1 - p)^{n - 1 - j}\right] \\
+            & = np, \\
+            \mathrm{Var}(X) & = E[X^2] - (E[X])^2 \\
+            & = \sum_{i = 0}^{n}\left[i^2\begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] - n^2p^2 \\
+            & = n\sum_{i = 1}^{n}\left[i\begin{pmatrix}
+                n - 1 \\
+                i - 1
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] - n^2p^2 \\
+            & = n\sum_{j = 0}^{n - 1}\left[(j + 1)\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^{j + 1}(1 - p)^{n - 1 - j}\right] - n^2p^2 \\
+            & = np\left\{\sum_{j = 0}^{n - 1}\left[j\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^j(1 - p)^{n - 1 - j}\right] + 1\right\} - n^2p^2 \\
+            & = np\left[(n - 1)p + 1\right] - n^2p^2 \\
+            & = np - np^2 \\
+            & = np(1 - p).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+Let $X \sim \mathrm{B}(n, p)$, consider
+\begin{align*}
+    \frac{p_X(i + 1)}{p_X(i)} & = \frac{\frac{n!}{(i + 1)!(n - i - 1)!}p^{i + 1}(1 - p)^{n - i - 1}}{\frac{n!}{i!(n - i)!}p^i(1 - p)^{n - i}} \\
+    & = \frac{\frac{1}{i + 1}p}{\frac{1}{n - i}(1 - p)} \\
+    & = \frac{(n - i)p}{(i + 1)(1 - p)}.
+\end{align*}
+Suppose $p_X(i + 1) < p_X(i)$, then $(n - i)p < (i + 1)(1 - p)$. This implies that $i > (n + 1)p - 1$, which means that
+\begin{itemize}
+    \item $p_X(i)$ is monotonically increasing on $\left[0, (n + 1)p - 1\right]$.
+    \item $p_X(i)$ maximises when $i = \left\lceil (n + 1)p - 1 \right\rceil = \left\lfloor (n + 1)p \right\rfloor$.
+    \item $p_X(i)$ is monotincally decreasing on $\left((n + 1)p - 1, n\right]$.
+\end{itemize}
+
+\subsection{Poisson Random Variable}
+Suppose that $X \sim \mathrm{B}(n, p)$ such that $n$ is large and $p$ is small. Let $\lambda = np$, then
+\begin{align*}
+    p_X(i) & = \begin{pmatrix}
+        n \\
+        i
+    \end{pmatrix}p^i(1 - p)^{n - i} \\
+    & = \frac{\prod_{j = 0}^{i - 1}(n - j)}{i!}\left(\frac{\lambda}{n}\right)^i\left(1 - \frac{\lambda}{n}\right)^{n - i} \\
+    & = \frac{\prod_{j = 0}^{i - 1}(n - j)}{n^i}\cdot\frac{\lambda^i}{i!}\cdot\frac{\left(1 - \frac{\lambda}{n}\right)^n}{\left(1 - \frac{\lambda}{n}\right)^i}
+\end{align*}
+Therefore,
+\begin{equation*}
+    \lim_{n \to \infty}p_X(i) = e^{-\lambda}\frac{\lambda^i}{i!}.
+\end{equation*}
+Note that this means that we can use $e^{-\lambda}\frac{\lambda^i}{i!}$ as a good approximation for $p_X(i)$ when $n$ is large and $p$ is small! In this case, $\lambda$ is the expected frequency of occurrences of the event corresponding to $X = 1$ within a unit interval.
+\begin{dfnbox}{Poisson Random Variable}{poisson}
+    A random variable $X$ is a {\color{red} \textbf{Poisson random variable}} if 
+    \begin{equation*}
+        p_X(x) = P(X = x) = e^{-\lambda}\frac{\lambda^x}{x!}
+    \end{equation*}
+    for some $\lambda > 0$, denoted as $X \sim \mathrm{Po}(\lambda)$.
+\end{dfnbox}
+Note that for $X \sim \mathrm{Po}(\lambda)$, we can find some $Y \sim \mathrm{B}(n, p)$ where $n$ is large and $p$ is small such that $np = \lambda$. Therefore, it is expected that 
+\begin{align*}
+    E[X] & \approx E[Y] = \lambda, \\
+    \mathrm{Var}(X) & \approx \mathrm{Var}(Y) = np(1 - p) \approx \lambda.
+\end{align*}
+\begin{thmbox}{Expectation and Variance of Poisson Random Variables}{poExpVar}
+    If $X \sim \mathrm{Po}(\lambda)$ where $\lambda > 0$, then $E[X] = \mathrm{Var}(X) = \lambda$.
 \end{thmbox}
 \end{document}
