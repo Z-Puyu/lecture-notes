@@ -878,8 +878,47 @@ And so
     \lim_{n \to \infty}P(\textrm{Having a derangement}) = \lim_{n \to \infty}\frac{D_n}{n!} = \mathrm{e}^{-1}.
 \end{equation*}
 
-\section{Euler $\phi$-Function}
-\begin{thmbox}{Euler $\phi$-Function}
+%\section{Euler $\phi$-Function}
+%\begin{thmbox}{Euler $\phi$-Function}
     
-\end{thmbox}
+%\end{thmbox}
+
+\chapter{Generating Functions}
+\section{Ordinary Generating Functions}
+\begin{dfnbox}{Ordinary Generating Function (OGF)}{OGF}
+    Let $(a_r)$ be a sequence in $\R$. The {\color{red} \textbf{ordinary generating function}} of $(a_r)$ is defined to be the series
+    \begin{equation*}
+        A(x) = \sum_{i = 0}^{\infty}a_ix^0.
+    \end{equation*}
+\end{dfnbox}
+Note that the set of generating functions is a vector space.
+\begin{dfnbox}{Generalised Binomial Coefficients}{}
+    Let $\alpha \in \R$ and $r \in \N$, then 
+    \begin{equation*}
+        \begin{pmatrix}
+            \alpha \\
+            r
+        \end{pmatrix} = \frac{\prod_{i = 0}^{r - 1}(\alpha - i)}{r!}.
+    \end{equation*}
+\end{dfnbox}
+
+\begin{dfnbox}{Generalised Binomial Expansion}{}
+    Let $\alpha \in \R$ then 
+    \begin{equation*}
+        (1 \pm x)^\alpha = \sum_{r = 0}^{\infty}\begin{pmatrix}
+            \alpha \\
+            r
+        \end{pmatrix}(\pm x)^r.
+    \end{equation*}
+\end{dfnbox}
+Notice that
+\begin{equation*}
+    (1 - x)^{-n} = \sum_{i = 0}^{\infty} = \begin{pmatrix}
+        n - 1 + i \\
+        i
+    \end{pmatrix}x^i.
+\end{equation*}
+More generally, the GF for $\left(1, k, k^2, \cdots\right)$ is $\frac{1}{1 - kx}$.
+
+\section{Modelling with Generating Functions00}
 \end{document}
