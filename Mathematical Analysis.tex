@@ -201,42 +201,232 @@ In this section, we probe into how the completeness of $\R$ can be established, 
 
 \chapter{Sequences and Series}
 \section{Sequences}
+Informally, a sequence is a list of enuerable numbers. This means that we can view a sequence as a mapping from an interval of $\N^+$ to $\R$. In this course, we will mainly focus on infinite sequences.
 \begin{dfnbox}{Sequence}{seq}
     A {\color{red} \textbf{sequence}} in $\R$ is a real-valued function $X \colon \N^+ \to \R$. Where $X(n)$ is called the $n$-th {\color{red} \textbf{term}} of the sequence.
 \end{dfnbox}
+By convention, we denote $X(n)$ by $x_n$, and the sequence $X$ by $(x_n)$ or $(x_n \colon n \in \N^+)$.
+
+Alternatively, a sequence $(x_n)$ may be defined in the following manner: first, we define the value of $x_1$. Secondly, we define a mapping $(x_1, x_2, \cdots, x_n) \mapsto x_{n + 1}$. Sequences defined in this way are said to be \textbf{inductively} and \textbf{recursively} defined.
+
+\subsection{Limits of Sequences}
+As $n$ becomes very large, a sequence may exhibit certain limiting behaviour.
 \begin{dfnbox}{Convergence of Sequences}{seqConverge}
-    A sequence $(x_n)$ in $\R$ is said to be {\color{red} \textbf{convergent}} to $x$ if for all $\epsilon > 0$, there exists some $N \in \N$ such that whenever $n > N$, $\abs{x_n - x} < \epsilon$. $x$ is known as the {\color{red} \textbf{limit}} of $(x_n)$, denoted as
+    A sequence $(x_n)$ defined in $\R$ is said to be {\color{red} \textbf{convergent}} to $x$ if for all $\epsilon > 0$, there exists some~$N \in \N$ such that whenever $n \geq N$, $\abs{x_n - x} < \epsilon$. $x$ is known as the {\color{red} \textbf{limit}} of $(x_n)$, denoted as
     \begin{equation*}
         \lim_{n \to \infty}x_n = x.
     \end{equation*}
 \end{dfnbox}
+A sequence which is not convergent is said to be \textit{divergent}.
+
+Intuitively, a sequence can not converge to different values concurrently. This idea can be formulated formally as follows:
+\begin{thmbox}{Uniqueness of Limits}{uniqueLimit}
+    If $(x_n)$ converges, then its limit is unique.
+    \tcblower
+    \begin{proof}
+        Suppose that $x$ and $x'$ are both limits of $(x_n)$. For all $\epsilon > 0$, there exists $N_1 \in \N^+$ such that
+        \begin{equation*}
+            \abs{x_n - x} < \frac{\epsilon}{2}
+        \end{equation*}
+        whenever $n \geq N_1$ and there exists $N_2 \in \N^+$ such that
+        \begin{equation*}
+            \abs{x_n - x'} < \frac{\epsilon}{2}
+        \end{equation*}
+        whenever $n \geq N_2$. Take $N = \max\{N_1, N_2\}$, then for all $n \geq N$,
+        \begin{align*}
+            \abs{x - x'} & = \abs{x - x_n + x_n - x'} \\
+            & \leq \abs{x_n - x} + \abs{x_n - x'} \\
+            & < \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+            & = \epsilon
+        \end{align*}
+        for all $\epsilon > 0$. By Proposition \ref{pro:infSmall}, $x - x' = 0$, i.e., $x = x'$. This means that $\lim_{n \to \infty}x_n$ is unique.
+    \end{proof}
+\end{thmbox}
+Given sequences $(x_n)$ and $(y_n)$, we can form new sequences by applying arithmetic operations onto them, and we can relate the limits of these new sequences with the limits of $(x_n)$ and $(y_n)$.
+\begin{thmbox}{Limit Laws}{limitLaws}
+    If $\lim_{n \to \infty}x_n = x$ and $\lim_{n \to \infty}y_n = y$, then
+    \begin{enumerate}
+        \item $\lim_{n \to \infty}(x_n + y_n) = x + y$.
+        \item $\lim_{n \to \infty}(x_ny_n) = xy$.
+        \item $\lim_{n \to \infty}(cx_n) = cx$ for all $c \in \R$.
+        \item $\lim_{n \to \infty}\left(\frac{x_n}{y_n}\right) = \frac{x}{y}$.
+    \end{enumerate}
+\end{thmbox}
+In some cases, it may not be easy to prove the existence of limit or compute it directly for a sequence. Thus, the following may be useful:
+\begin{thmbox}{Squeeze Theorem}{squeeze}
+    Let $(x_n)$, $(y_n)$ and $(z_n)$ be sequences such thatr $x_n \leq y_n \leq z_n$ for all $n \in \N^+$. If $(x_n)$ and $(z_n)$ both converge and $\lim_{n \to \infty}x_n = \lim_{n \to \infty}z_n = \ell$, then $(y_n)$ converges and
+    \begin{equation*}
+        \lim_{n \to \infty}y_n = \ell.
+    \end{equation*}
+    \tcblower  
+    \begin{proof}
+        Let $\epsilon > 0$ be an arbitrary real number. Note that there exists $N \in \N^+$ such that for all $n \geq N$,
+        \begin{equation*}
+            \abs{x_n - \ell} < \epsilon, \qquad \abs{z_n - \ell} < \epsilon.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            -\epsilon < x_n - \ell \leq y_n - \ell \leq z_n - \ell < \epsilon,
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \abs{y_n - \ell} < \epsilon
+        \end{equation*}
+        for all $n \geq N$. Therefore, $\lim_{n \to \infty}y_n = \ell$.
+    \end{proof}
+\end{thmbox}
+Notice that the limit of a sequence essentially ``bounds'' the sequence. This motivates us to investigate the relation between a convergent sequence and the its bounds.
+\begin{dfnbox}{Boundedness of Sequences}{seqBound}
+    A sequence $(x_n)$ in $\R$ is {\color{red} \textbf{bounded}} if there exists some $M \in \R^+$ such that $\abs{x_n} \leq M$ for all $n \in \N^+$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $(x_n)$ is bounded if and only if the set $\left\{x_n \colon n \in \N^+\right\}$ is bounded.
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Boundedness of Convergent Sequences}{convergeSeqBound}
+    A sequence $(x_n)$ is bounded if it is convergent.
+    \tcblower
+    \begin{proof}
+        Let $\lim_{n \to \infty}x_n = x$. Note that there exists some $N \in \N^+$ such that whenever~$n \geq N$, $\abs{x_n - x} < 1$. Consider
+        \begin{align*}
+            \abs{x_n} & = \abs{x_n - x + x} \\
+            & \leq \abs{x_n - x} + \abs{x} \\
+            & < 1 + \abs{x}.
+        \end{align*}
+        Let
+        \begin{equation*}
+            M \coloneqq \sup \big\{\abs{x_1}, \abs{x_2}, \cdots, \abs{x_{N - 1}}, 1 + \abs{x}\big\},
+        \end{equation*}
+        then $\abs{x_n} \leq M$ for all $n \in \N^+$, and so $(x_n)$ is bounded.
+    \end{proof}
+\end{thmbox}
+The contrapositive statement to the above theorem concludes that \textbf{any unbounded sequence must be divergent}. However, note that the converse of Theorem \ref{thm:convergeSeqBound} is not true in general! As a counter example, consider $x_n = (-1)^n$.
+\begin{probox}{}{positiveLimit}
+    Let $(x_n)$ be a convergent sequence. If $x_n \geq 0$ for all $n \in \N^+$, then $\lim_{n \to \infty}x_n \geq 0$.
+    \tcblower
+    \begin{proof}
+        Let $\lim_{n \to \infty}x_n = x$. Suppose on contrary $x < 0$, then $-x > 0$. Therefore, there exists some $N \in \N^+$ such that whenever $n \geq N$, $\abs{x_n - x} < -x$. This means that for all $n \geq N$,
+        \begin{equation*}
+            x_n < x - x = 0.
+        \end{equation*}
+        However, this is a contradiction, so $\lim_{n \to \infty}x_n = x > 0$.
+    \end{proof}
+\end{probox}
+Here are two simple corollaries from Proposition \ref{pro:positiveLimit}, the proofs of which are left to the reader as an exercise.
+\begin{corbox}{}{limitCorOne}
+    If $(x_n)$ and $(y_n)$ are convergent sequences with $x_n \geq y_n$ for all $n \in \N^+$, then
+    \begin{equation*}
+        \lim_{n \to \infty}x_n \geq \lim_{n \to \infty}y_n.
+    \end{equation*}
+\end{corbox}
+\begin{corbox}{}{limitCorTwo}
+    If $(x_n)$ is a convergent sequence with $a \leq x_n \leq b$ for all $n \in \N^+$, then
+    \begin{equation*}
+        a \leq \lim_{n \to \infty}x_n \leq b.
+    \end{equation*}
+\end{corbox}
+In casual languages, we may be tempted to describe the limit of a sequence as ``a value to which the terms can get as close as possible, but which is never surpassed''. This intuition gives us an idea to prove convergence for a bounded sequence.
+\begin{dfnbox}{Monotone Sequences}{monotone}
+    Let $(x_n)$ be a sequence. $(x_n)$ is said to be {\color{red} \textbf{increasing}} if $x_i \geq x_j$ whenever $i \geq j$, and {\color{red} \textbf{decreasing}} if $x_i \leq x_j$ whenever $i \geq j$. A sequence is said to be {\color{red} \textbf{monotone}} if it is either increasing or decreasing.
+\end{dfnbox}
+Note that an increasing sequence is the same as an non-decreasing sequence and vice versa. Recall that we have stated that the converse of Theorem \ref{thm:convergeSeqBound} is not true in general, but if we impose an additional constraint on the monotonicity of the bounded sequence, we will get a stronger condition.
+\begin{thmbox}{Monotone Convergence Theorem}{monotoneConverge}
+    Let $(x_n)$ be a monotone sequence in $\R$, then $(x_n)$ converges if and only if it is bounded.
+    \tcblower
+    \begin{proof}
+        Suppose $(x_n)$ is convergent, then it follows from Theorem \ref{thm:convergeSeqBound} that it is bounded.
+        \\\\
+        Suppose conversely that $(x_n)$ is bounded. Without loss of generality, assume that $(x_n)$ is increasing, so $(x_n)$ has an upper bound. Let $\sup (x_n) = x$ and let $\epsilon > 0$ be an arbitrary real number. Note that $x - \epsilon$ is not an upper bound for $(x_n)$, so there exists some $x_N \in (x - \epsilon, x]$, which means that $0 \leq x - x_N < \epsilon$. Since $(x_n)$ is increasing, for all $n \geq N$, we have $x \geq x_n \geq x_N$, so
+        \begin{equation*}
+            0 \leq x - x_n \leq x - x_N < \epsilon.
+        \end{equation*}
+        Therefore, $\abs{x - x_n} < \epsilon$ for all $\epsilon > 0$ whenever $n \geq N$, and so $\lim_{n \to \infty}x_n = x$.
+    \end{proof}
+\end{thmbox}
+A classic application of Theorem \ref{thm:monotoneConverge} is an approximation of $\sqrt{2}$.
+\begin{exbox}{Mesopotamian Approximation of $\sqrt{2}$}{mesoApproxSqrt2}
+    Define $(x_n)$ such that $x_1 = 2$ and $x_{n + 1} = \frac{1}{2}\left(x_n + \frac{2}{x_n}\right)$. Show that $\lim_{n \to \infty}x_n = \sqrt{2}$.
+\end{exbox}
 \subsection{Subsequences}
+Recall that the sequence $x_n = (-1)^n$ is divergent. However, suppose we were to take all the odd terms from $(x_n)$ to form a new sequence, and to take all the even terms to form another new sequence. One would realise that both new sequences are convergent. This motivates us to study ``a part'' of a sequence as a new sequence.
+\begin{dfnbox}{Subsequence}{subseq}
+    Let $(x_n)$ be a sequence in $\R$ and let 
+    \begin{displaymath}
+        n_1 < n_2 < n_3 < \cdots < n_k < \cdots
+    \end{displaymath}
+    be an infinite sequence of strictly increasing positive integers, then the sequence $\left(x_{n_k}\right)$ is called a {\color{red} \textbf{subsequence}} of $(x_n)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that a sequence is always a subsequence of itself.
+    \end{remark}
+\end{notebox}
+Intuitively, if a sequence is convergent, then any of its subsequences should be convergent, too.
+\begin{thmbox}{Convergence of Subsequences}{convergeSubseq}
+    Let $(x_n)$ be a convergent sequence with $\lim_{n \to \infty}x_n = x$, then for any subsequence $(x_{n_k})$,
+    \begin{equation*}
+        \lim_{n_k \to \infty}x_{n_k} = \lim_{k \to \infty}x_{n_k} = x.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that for any $\epsilon > 0$, there exists some $N \in \N$ such that $\abs{x_n - x} < \epsilon$ for all $n \geq N$. Observe that $n_k \geq k$, so whenever $k \geq N$, we have $n_k \geq N$, and so
+        \begin{equation*}
+            \abs{x_{n_k} - x} < \epsilon
+        \end{equation*}
+        whenever $k \geq N$, i.e., 
+        \begin{equation*}
+            \lim_{n_k \to \infty}x_{n_k} = \lim_{k \to \infty}x_{n_k} = x.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Theorems \ref{thm:convergeSubseq} and \ref{thm:uniqueLimit} give rise to the following corollary. The proof is left to the reader as an exercise.
+\begin{corbox}{}{subseqTwoLimits}
+    Let $(x_n)$ be a sequence, then $(x_n)$ is divergent if there exists two subsequences $(x_{n_k})$ and $(x_{n_h})$ such that 
+    \begin{equation*}
+        \lim_{k \to \infty}x_{n_k} \neq \lim_{h \to \infty}x_{n_h}.
+    \end{equation*}
+\end{corbox}
+We may apply Theorem \ref{thm:monotoneConverge} with respect to subsequences. Let us first introduce the notion of \textit{peak points}.
 \begin{dfnbox}{Peak Point}{peakPt}
     Let $(x_n)$ be a sequence in $\R$, $x_m$ is called a {\color{red} \textbf{peak}} if for all $n \in \N$ with $n > m$, $x_m \geq x_n$.
 \end{dfnbox}
+Next, we shall prove that one can find a monotone subsequence from every sequence.
 \begin{thmbox}{Existence of Monotone Subsequences}{existMonoSubseq}
     Every infinite sequence has an infinite monotone subsequence.
     \tcblower
     \begin{proof}
         Let $(x_n)$ be any sequence in $\R$. We consider the following cases:
         \\\\
-        \textit{Case 1.} $(x_n)$ has infinitely many peak points, so there exists infinitely many $m_1, m_2, \cdots \in \N$ such that $m_j > m_i$ whenever $j > i$. Therefore, the subsequence $(x_{m_n})$ is a monotone decreasing sequence.
+        \textit{Case 1.} $(x_n)$ has infinitely many peak points.
+        
+        This means that there exists infinitely many $m_1, m_2, \cdots \in \N$ such that $m_j > m_i$ whenever $j > i$. Therefore, the subsequence $\left(x_{m_n}\right)$ is a monotone decreasing sequence.
         \\\\
-        \textit{Case 2.} $(x_n)$ has finitely many peak points, so there exists $m_1, m_2, \cdots, m_k\in \N$.
+        \textit{Case 2.} $(x_n)$ has finitely many peak points.
+        
+        This means that there exists $m_1, m_2, \cdots, m_k\in \N$ such that $x_{m_1}, x_{m_2}, \cdots, x_{m_k}$ are all the peak points of $(x_n)$. Take $N = m_k + 1$, then for all $n_{i} \geq N$, since $x_{n_i}$ is not a peak point, there exists some $n_{i + 1} > n_i$ such that $x_{n_{i + 1}} > x_{n_i}$. Therefore, $\left(x_{n_i}\right)$ is an increasing sequence.
     \end{proof}
 \end{thmbox}
-\begin{thmbox}{Bolzano-Weierstrass Theorem}{bolzanoWeierstrass}
+With these preparations done, we state the following theorem:
+\begin{thmbox}{Bolzano-Weierstrass Theorem (simplified ver.)}{bolzanoWeierstrass}
     Every bounded sequence has a convergent subsequence.
+    \tcblower
+    \begin{proof}
+        Let $(x_n)$ be a bounded sequence, then by Theorem \ref{thm:existMonoSubseq} we can find some subsequence $\left(x_{n_k}\right)$ which is monotone. Note that $\left(x_{n_k}\right)$ is also bounded, so by Theorem \ref{thm:monotoneConverge} it is convergent.
+    \end{proof}
 \end{thmbox}
+
+\subsection{Cauchy Criterion}
+Intuitively, if a sequence is convergent, then over a large interval of $\N$, the change in values of its terms will become smaller and smaller. Correspondingly, this means that the adjacent terms of the sequence will get closer and closer as $n$ becomes large.
 \begin{dfnbox}{Cauchy Sequence}{cauchySeq}
     A sequence $(x_n)$ is said to be a {\color{red} \textbf{Cauchy sequence}} if for every $\epsilon > 0$, there exists some $H \in \N$ such that for all $n, m \in \N$ with $n, m \geq H$, $\abs{x_n - x_m} < \epsilon$.
 \end{dfnbox}
-
+We can make use of the Cauchy sequence to test for convergence.
 \begin{thmbox}{Cauchy Convergence Criterion}{cauchyConvergeCri}
     A sequence in $\R$ is convergent if and only if it is a Cauchy sequence.
     \tcblower
     \begin{proof}
-        Let $(x_n)$ be a sequence in $\R$. Suppose that $(x_n)$ converges to $x$, then for all $\epsilon > 0$, there exists some $N \in \N$ such that whenever $n > N$, $\abs{x_n - x} < \frac{\epsilon}{2}$. Therefore, for all $m, n > N$, we have
+        Let $(x_n)$ be a sequence in $\R$. Suppose that $(x_n)$ converges to $x$, then for all~$\epsilon > 0$, there exists some $N \in \N$ such that whenever $n > N$, $\abs{x_n - x} < \frac{\epsilon}{2}$. Therefore, for all~$m, n > N$, we have
         \begin{align*}
             \abs{x_m - x_n} & = \abs{x_m - x - x_n + x} \\
             & \leq \abs{x_m - x} + \abs{x_n - x} \\
@@ -250,18 +440,18 @@ In this section, we probe into how the completeness of $\R$ can be established, 
             A Cauchy sequence in $\R$ is bounded.
             \tcblower
             \begin{proof}
-                Let $(x_n)$ be a Cauchy sequence, then by Definition \ref{dfn:cauchySeq} there is some $H \in \N$ such that for all natural numbers $n \geq H$, $\abs{x_n - x_H} < 1$. By Corollary \ref{cor:triIneqEx}, we have
+                Let $(x_n)$ be a Cauchy sequence, then by Definition \ref{dfn:cauchySeq}, there exists some~$H \in \N$ such that for all natural numbers $n \geq H$, $\abs{x_n - x_H} < 1$. By Corollary \ref{cor:triIneqEx}, we have
                 \begin{equation*}
-                    \abs{\abs{x_n} - \abs{x_H}} \leq \abs{x_n - x_H} < 1,
+                    \big\lvert\abs{x_n} - \abs{x_H}\big\rvert \leq \abs{x_n - x_H} < 1,
                 \end{equation*}
                 and so $\abs{x_n} < \abs{x_H} + 1$. Take 
                 \begin{equation*}
-                    m = \max\left\{\abs{x_1}, \abs{x_2}, \cdots, \abs{x_H}, \abs{x_H} + 1\right\},
+                    m = \max\big\{\abs{x_1}, \abs{x_2}, \cdots, \abs{x_H}, \abs{x_H} + 1\big\},
                 \end{equation*}
                 then $\abs{x_n} < m$ for all $n \in \N^+$.
             \end{proof}
         \end{lembox}
-        Therefore, by Theorem \ref{thm:bolzanoWeierstrass} there exists a subsequence $(x_{m_n})$ which converges to some $x \in \R$. Thus there exists some $M \in \N$ such that whenever $m_{n} > M$, $\abs{x_{m_n} - x} < \frac{\epsilon}{2}$ for all $\epsilon > 0$. By Definition \ref{dfn:cauchySeq}, there exists some $N \in \N$ such that $\abs{x_n - x_{m_n}} < \frac{\epsilon}{2}$ for all $\epsilon > 0$ and for all $n, m_n > N$. Take $K = \max\{M, N\}$, then whenever $n > K$, there is some $m_n > K$ such that
+        Therefore, by Theorem \ref{thm:bolzanoWeierstrass} there exists a subsequence $\left(x_{m_n}\right)$ which converges to some $x \in \R$. Thus, there exists some $M \in \N$ such that $\abs{x_{m_n} - x} < \frac{\epsilon}{2}$ for all~$\epsilon > 0$ whenever $m_{n} > M$. By Definition \ref{dfn:cauchySeq}, there exists some $N \in \N$ such that~$\abs{x_n - x_{m_n}} < \frac{\epsilon}{2}$ for all $\epsilon > 0$ and for all $n, m_n > N$. Take $K = \max\{M, N\}$, then whenever $n > K$, there is some $m_n > K$ such that
         \begin{align*}
             \abs{x_n - x} & = \abs{x_n - x_{m_n} + x_{m_n} - x} \\
             & \leq \abs{x_n - x_{m_n}} + \abs{x_{m_n} - x} \\
