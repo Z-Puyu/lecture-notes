@@ -105,7 +105,7 @@ The empty set and Euclidean spaces $\R^n$ are both open and closed.
     \end{proof}
 \end{thmbox}
 We then follow up by introducing three important closed sets.
-\begin{thmbox}{}{}
+\begin{probox}{}{}
     Let $g \colon \mathbf{R}^n \to \mathbf{R}$ be a continuous function, then the sets
     \begin{align*}
         S_1 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) \leq 0\right\}, \\
@@ -123,7 +123,7 @@ We then follow up by introducing three important closed sets.
 
         $S_2$ and $S_3$ can be proved similarly.
     \end{proof}
-\end{thmbox}
+\end{probox}
 By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is closed, which motivates the following definition:
 \begin{dfnbox}{Constrained NLP}{constrainedNLP}
     A {\color{red} \textbf{constrained}} NLP is an NLP whose feasible set
@@ -132,7 +132,18 @@ By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is clo
     \end{displaymath}
     is {\color{red} \textbf{closed}}, where each of the $g_i$'s is known as an equality constraint and each of the $h_j$'s is known as an inequality constraint.
 \end{dfnbox}
-
+If the feasible set of a constraind NLP is \textit{bounded}, then it will be easy to find an optimal solution.
+\begin{dfnbox}{Boundedness}{bounded}
+    Let $S \subseteq \mathbf{R}^n$. $S$ is said to be {\color{red} \textbf{bounded}} if there exists some $M \in \R^+$ such that $\norm{\mathbfit{x}} \leq M$ for all $\mathbfit{x} \in S$.
+\end{dfnbox}
+Note that a closed set may not be bounded and a bounded set may not be closed, so we are motivated to define a \textit{closed and bounded set} rigorously.
+\begin{dfnbox}{Compact Set}{compactSet}
+    A set $S \subseteq \mathbf{R}^n$ is {\color{red} \textbf{compact}} if it is closed and bounded.
+\end{dfnbox}
+It turns out that, on a compact feasible set, the existence of global minimiser is guaranteed!
+\begin{thmbox}{Weiestrass Theorem}{weiestrass}
+    Let $f$ be a continuous function on some non-empty $S \subseteq \mathbf{R}^n$. If $S$ is compact, then $f$ has a global minimiser and a global maximiser.
+\end{thmbox}
 \chapter{Convex Functions}
 \section{Convexity of Sets and Functions}
 Intuitively, we describe two types of shapes in natural languages: the shapes which, if you choose any of its edges, lies in the same side of that edge, and the shapes which span across both sides from some chosen edge of its.
@@ -391,17 +402,6 @@ To use Hessian Matrices in convexity test, we also need to introduce the followi
         \item $\mathbfit{A}$ is said to be {\color{red} \textbf{indefinite}} if it is neither positive semidefinite nor negative semidefinite.
     \end{itemize}
 \end{dfnbox}
-Now, we are able to apply the following tests:
-\begin{thmbox}{Convexity Test for Differentiable Functions}{convexTest}
-    Let a function $f$ have continuous second order derivatives on an open convex set $D \subseteq \mathbf{R}^n$.
-    \begin{itemize}
-        \item $H_f(\mathbfit{x})$ is positive semidefinite for all $\mathbfit{x} \in D \iff f$ is convex on $D$.
-        \item $H_f(\mathbfit{x})$ is positive definite for all $\mathbfit{x} \in D \implies f$ is strictly convex on $D$.
-        \item $H_f(\mathbfit{x})$ is negative semidefinite for all $\mathbfit{x} \in D \iff f$ is concave on $D$.
-        \item $H_f(\mathbfit{x})$ is negative definite for all $\mathbfit{x} \in D \implies f$ is strictly concave on $D$.
-        \item $H_f(\mathbfit{x})$ is indefinite for some $\mathbfit{x} \in D \implies f$ is neither convex nor concave on $D$.
-    \end{itemize}
-\end{thmbox}
 To determine the definiteness of a matrix, we may use the following eigenvalue tests:
 \begin{thmbox}{Eigenvalue Test}{eigenTest}
     If $\mathbfit{A}$ is a symmetric real square matrix, then:
@@ -471,6 +471,17 @@ Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to pr
     \begin{equation*}
         f(\mathbfit{y}) = f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) + \frac{1}{2}(\mathbfit{y - x})^{\mathrm{T}}H_f(\mathbfit{z})(\mathbfit{y - x}).
     \end{equation*}
+\end{thmbox}
+Now, we are able to apply the following tests:
+\begin{thmbox}{Convexity Test for Differentiable Functions}{convexTest}
+    Let a function $f$ have continuous second order derivatives on an open convex set $D \subseteq \mathbf{R}^n$.
+    \begin{itemize}
+        \item $H_f(\mathbfit{x})$ is positive semidefinite for all $\mathbfit{x} \in D \iff f$ is convex on $D$.
+        \item $H_f(\mathbfit{x})$ is positive definite for all $\mathbfit{x} \in D \implies f$ is strictly convex on $D$.
+        \item $H_f(\mathbfit{x})$ is negative semidefinite for all $\mathbfit{x} \in D \iff f$ is concave on $D$.
+        \item $H_f(\mathbfit{x})$ is negative definite for all $\mathbfit{x} \in D \implies f$ is strictly concave on $D$.
+        \item $H_f(\mathbfit{x})$ is indefinite for some $\mathbfit{x} \in D \implies f$ is neither convex nor concave on $D$.
+    \end{itemize}
 \end{thmbox}
 \chapter{Unconstrained NLPs}
 \section{Coercive Functions}
