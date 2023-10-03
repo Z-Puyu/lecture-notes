@@ -74,7 +74,7 @@
 ]
 \setmathfont{STIXTwoMath-Regular.otf}[math-style = ISO]
 \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
-%\setmonofont{JetBrainsMono-Regular_0}
+\setmonofont{JetBrainsMono-Regular}
 
 % ------------------------------------------------------------
 % PAGE LAYOUT
