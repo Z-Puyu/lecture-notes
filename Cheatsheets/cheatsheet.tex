@@ -1,0 +1,141 @@
+\documentclass[12pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+
+\begin{document}
+    \begin{multicols}{3}
+        \textbf{P \& C}:
+        \\
+        $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
+        \\\\
+        \textbf{Circular permutation}: $Q^n_r = \frac{P^n_r}{r}$.
+        \\\\
+        $C^{n + 1}_r = C^n_{r - 1} + C^n_r$.
+        \\\\
+        $H^n_r = C^{r + n - 1}_r$.
+        \\\\
+        Arrange $r$ distinct objects around $n$ identical circles such that no circle is empty: $s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n)$.
+        \\\\
+        $s(r, r - 1) = C^r_2$.
+        \\\\
+        \textbf{Binomial \& Multinomial}:
+        \\
+        $\begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix} = \frac{n}{r}\begin{pmatrix}
+            n - 1 \\
+            r - 1
+        \end{pmatrix}$.
+        \\\\
+        $\begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix} = \frac{n - r + 1}{r}\begin{pmatrix}
+            n \\
+            r - 1
+        \end{pmatrix}$.
+        \\\\
+        $\begin{pmatrix}
+            n \\
+            m
+        \end{pmatrix}\begin{pmatrix}
+            m \\
+            r
+        \end{pmatrix} = \begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix}\begin{pmatrix}
+            n - r \\
+            m - r
+        \end{pmatrix}$.
+        \\\\
+        \textbf{Vandermonde's Identity}: 
+        \begin{equation*}
+            \sum_{i = 0}^{r}\left[\begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}\right] = \begin{pmatrix}
+                m + n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+        \\\\
+        \textbf{Chu Shih-Chieh Identity}:
+        \begin{align*}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix} & = \begin{pmatrix}
+                n + 1 \\
+                r + 1
+            \end{pmatrix} \\
+            \sum_{i = 0}^{k}\begin{pmatrix}
+                r + i \\
+                i
+            \end{pmatrix} & = \begin{pmatrix}
+                r + k + 1 \\
+                k
+            \end{pmatrix}.
+        \end{align*}
+        \\\\
+        \textbf{Multinomial coefficient}:
+        \begin{equation*}
+            \begin{pmatrix}
+                n \\
+                n_1, n_2, \cdots, n_m
+            \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{m}n_i!}.
+        \end{equation*}
+        \\\\
+        \textbf{Pigeonhole Principle}: If at least $kn + 1$ objects are distributed into $n$ distinct sets, then there exists a set with at least $k + 1$ objects.
+        \\\\
+        \textbf{Generalised PP}: If at least $\sum_{i = 1}^{n}k_i + (n - 1)$ distinct objects are distributed into $n$ distinct sets, then there exists at least one set ($i$-th) with at least $k_i$ objects.
+        \\\\
+        \textbf{Ramsey Numbers}: $R(p, q) \leq R(p - 1, q) + R(p, q - 1)$. (Bound lowered by $1$ if both on RHS are even.)
+        \\\\
+        $R(2, q) = q$, $R(1, q) = 1$.
+        \\\\
+        \textbf{Distribution Problems}:
+        \\
+        \textbf{Distinct into distinct}:
+        \begin{itemize}
+            \item Each box at most 1: $P^n_r$.
+            \item Each box any number of objects: $n^r$.
+            \item Each box any number of objects with internal ordering: $\frac{(n - 1 + r)!}{(n - 1)!}$.
+        \end{itemize}
+        \textbf{Identical into distinct}: 
+        \begin{itemize}
+            \item Each box any number of objects: $H^n_r = C^{n + r - 1}_r$.
+            \item No box empty: $H^n_{r - n} = C^{r - 1}_{r - n}$.
+        \end{itemize}
+        \textbf{Distinct into identical}:
+        \begin{itemize}
+            \item No box empty: $S(r, n) = S(r - 1, n - 1) + nS(r - 1, n)$
+        \end{itemize}
+        Number of partitions of $A$ with $\left\lvert A \right\rvert = n$: $\sum_{i = 1}^{n}S(n, i)$.
+        \\\\
+        Number of surjective mapping from $[1, r] \cap \mathbb{N}$ to $[1, n] \cap \mathbb{N}$: $F(r, n) = \sum_{k = 0}^{n}(-1)^kC^n_k(n - k)^r$.
+        \\\\
+        $S(r, n) = \frac{1}{n!}F(r, n)$.
+        \\\\
+        $D(n, r, k) = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^iC^{r - k}_i(n - k - i)!$.
+        \\\\
+        $D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}$.
+        \\\\
+        \textbf{GPIE}: 
+        \begin{equation*}
+            E(m) = \sum_{k = m}^{q}(-1)^{k - m}C^k_m\omega(k).
+        \end{equation*}
+    \end{multicols}
+\end{document}
