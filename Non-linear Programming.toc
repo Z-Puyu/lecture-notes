@@ -16,3 +16,6 @@
 \contentsline {subsection}{\numberline {4.2.2}Armijo Line Search}{19}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}Goldern Section Method}{19}{section.4.3}%
 \contentsline {section}{\numberline {4.4}General Framework of Optimisation Algorithms}{20}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Steepest Descent}{20}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Conjugate Gradient Method}{21}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Karush-Kuhn-Tucker Condition}{22}{chapter.5}%

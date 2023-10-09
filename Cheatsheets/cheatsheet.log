@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  3 OCT 2023 10:50
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 OCT 2023 17:17
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**cheetsheet
-(./cheetsheet.tex
+**Cheatsheet
+(./cheatsheet.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
@@ -248,8 +248,9 @@ File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
 \g__pdf_backend_object_int=\count285
 \g__pdf_backend_annotation_int=\count286
 \g__pdf_backend_link_int=\count287
-) (./cheetsheet.aux)
-\openout1 = `cheetsheet.aux'.
+)
+No file cheatsheet.aux.
+\openout1 = `cheatsheet.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
@@ -261,7 +262,7 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 13.
- (c:/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
+(c:/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 13.
@@ -431,14 +432,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 71--76
 
 [1
 
-] (./cheetsheet.aux) ) 
+] (./cheatsheet.aux) ) 
 Here is how much of TeX's memory you used:
- 3763 strings out of 478630
- 59171 string characters out of 5847730
+ 3762 strings out of 478630
+ 59151 string characters out of 5847730
  1866012 words of memory out of 5000000
  23852 multiletter control sequences out of 15000+600000
  519733 words of font info for 63 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  58i,9n,63p,240b,276s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on cheetsheet.pdf (1 page).
+Output written on cheatsheet.pdf (1 page).

@@ -590,4 +590,68 @@ while the interval > tolerance, do:
 return x;
     \end{verbatim}
 \end{genbox}
+
+\section{Steepest Descent}
+Recall that $f$ decreases most rapidly along the direction of $-\nabla f$. So we can take
+\begin{equation*}
+    \hat{\mathbfit{d}} = -\frac{\nabla f(\mathbfit{x})}{\norm{\nabla f(\mathbfit{x})}}
+\end{equation*}
+at any given point $\mathbfit{x}$, where $-\nabla f(\mathbfit{x})$ is known as the \textit{steepest descent direction}. Notice that $f(\mathbfit{x} + \delta\hat{\mathbfit{d}}) = f(\mathbfit{x}) - \delta\norm{\nabla f(\mathbfit{x})}$.
+\begin{tecbox}{Steepest Descent Method}{steepestDescent}
+    Let $f$ be an objective function and $\mathbfit{x}_0$ be an initial guess. Let $\epsilon > 0$ be the tolerance level.
+    \\\\
+    At the $k$-th iteration, we evaluate the steepest descent direction
+    \begin{equation*}
+        \mathbfit{d}_k = -\nabla f\left(\mathbfit{x}_k\right).
+    \end{equation*}
+    If $\norm{\mathbfit{d}_k} < \epsilon$, $\mathbfit{x}_k$ is an approximate minimiser. Otherwise, compute
+    \begin{equation*}
+        \mathbfit{x}_{k + 1} = \mathbfit{x}_k + t_k\mathbfit{d}_k,
+    \end{equation*}
+    where $t_k$ is such that $f(\mathbfit{x}_k + t_k\mathbfit{d}_k)$ is minimised and is known as the step size.
+\end{tecbox}
+With a graphical illustration, one might observe that the approximations obtained via the steepest descent method trace out a ``zig-zag'' path. This behaviour is rigorously described as follows:
+\begin{probox}{}{zigzag}
+    If $(\mathbfit{x}_k)$ be a sequence of approximations for the function $f(\mathbfit{x})$ using steepest descent method, then
+    \begin{equation*}
+        (\mathbfit{x}_{k + 2} - \mathbfit{x}_{k + 1})^{\mathrm{T}}(\mathbfit{x}_{k + 1} - \mathbfit{x}_k) = 0
+    \end{equation*}
+    for all $k \in \N$.
+\end{probox}
+
+\section{Conjugate Gradient Method}
+\begin{dfnbox}{Conjugate Vectors}{conjVecs}
+    A set of vectors $\left\{\mathbfit{p}_0, \mathbfit{p}_1, \cdots, \mathbfit{p}_n\right\}$ is {\color{red} \textbf{conjugate}} with respect to $\mathbfit{A}$, where $\mathbfit{A} \succ 0$, if
+    \begin{equation*}
+        \mathbfit{p}_i^{\mathrm{T}}\mathbfit{Ap}_j = 0 \qquad \textrm{for all } i \neq j.
+    \end{equation*}
+\end{dfnbox}
+
+\chapter{Karush-Kuhn-Tucker Condition}
+\begin{dfnbox}{Active Constraint}{activeConstraint}
+    An inequality constraint $h_j(\mathbfit{x}) \leq 0$ is said to be {\color{red} \textbf{active}} at $\mathbfit{x}^* \in S$ if $h_j(\mathbfit{x}^*) = 0$. Otherwise, it is said to be {\color{red} \textbf{inactive}} or {\color{red} \textbf{slack}} at $\mathbfit{x}^*$.
+\end{dfnbox}
+Note that for any equality constraint $g_i(\mathbfit{x}) = 0$, any $\mathbfit{x}^* \in S$ is always active.
+\begin{dfnbox}{Regular Point}{regPt}
+    Let $\mathbfit{x}^* \in S$ and let
+    \begin{equation*}
+        J(\mathbfit{x}^*) = \left\{j \in \left\{1, \cdots, p\right\} \colon h_j(\mathbfit{x}^*) = 0\right\}
+    \end{equation*}
+    be the index set of active ineqaulity constraints at $
+    \mathbfit{x}^*$. If the set of gradient vectors
+    \begin{equation*}
+        \left\{\nabla g_i(\mathbfit{x}^*)\right\} \cup \left\{\nabla h_j(\mathbfit{x}^*) \colon j \in J(\mathbfit{x}^*)\right\}
+    \end{equation*}
+    is linearly independent, then we say that $\mathbfit{x}^*$ is a {\color{red} \textbf{regular point}}.
+\end{dfnbox}
+\begin{dfnbox}{KKT First Order Necessary Conditions}{}
+    Let $\mathbfit{x}^*$ be a regular point. $\mathbfit{x}^*$ satisfies the {\color{red} \textbf{KKT first order necessary conditions}} if there are scalars $\lambda_1, \cdots, \lambda_m$ and $\mu_1, \cdots, \mu_p$ such that
+    \begin{equation*}
+        \nabla f(\mathbfit{x}^*) + \sum_{i = 1}^{m}\lambda_i\nabla g_i(\mathbfit{x}^*) + \sum_{j = 1}^{p}\mu_j\nabla h_j(\mathbfit{x}^*) = \mathbf{0},
+    \end{equation*}
+    where $\mu_j \geq 0$ for all $j \in J(\mathbfit{x}^*)$ and $\mu_j = 0$ for all $j \notin J(\mathbfit{x}^*)$.
+\end{dfnbox}
+Note that the condition for the $\mu_j$'s is equivalent to $\mu_j h_j(\mathbfit{x}^*) = 0$ for all $j \in \N^+$. The reasoning is as follows:
+
+Suppose that $h_j$ is inactive at $\mathbfit{x}^*$, then we will have $\mu_j = 0$. Otherwise, $h_j$ is active at $\mathbfit{x}^*$, and so $h_j(\mathbfit{x}^*) = 0$. Either way, $\mu_j h_j(\mathbfit{x}^*) = 0$.
 \end{document}
