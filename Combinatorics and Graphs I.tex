@@ -923,4 +923,35 @@ More generally, the GF for $\left(1, k, k^2, \cdots\right)$ is $\frac{1}{1 - kx}
 \section{Modelling with Generating Functions}
 
 \chapter{Recurrence Relations}
+
+\chapter{Introduction to Graphs}
+\section{Terminologies}
+\begin{dfnbox}{Multigraph}{multigraph}
+    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$.
+    \\\\
+    The {\color{red} \textbf{order}} of $G$ is denoted by $v(G) = \abs{V(G)}$ and the {\color{red} \textbf{size}} of $G$ is denoted by $e(G) = \abs{E(G)}$.
+    \\\\
+    In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}.
+    \\\\
+    $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
+\end{dfnbox}
+
+\begin{dfnbox}{Simple Graph}{simpleGraph}
+    A multigraph $G$ is said to be {\color{red} \textbf{simple}} if there is at most edge between any two distinct vertices.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that if $G$ is simple, then
+        \begin{displaymath}
+            E(G) \subseteq \left\{(v_j, v_i) \colon v_j, v_i \in V(G), j > i\right\}.
+        \end{displaymath}
+    \end{remark}
+\end{notebox}
+\begin{dfnbox}{Adjacency}{adjacent}
+    Let $v_i, v_j \in V(G)$, we say that they are {\color{red} \textbf{adjacent}} if $v_iv_j \in E(G)$. Alternatively, we say that $v_i$ and $v_j$ are {\color{red} \textbf{neighbours}} to each other. The edge $v_iv_j$ is said to be {\color{red} \textbf{incident}} with $v_i$ and $v_j$. Two edges $e$ and $f$ are said to be {\color{red} \textbf{adjacent}} if there exists some $v \in V(G)$ such that both $e$ and $f$ are incident with $v$. 
+    \\\\
+    The number of edges incident to $v$ is called the {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$. If $d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. If $d_G(v) = k$ for all $v \in V(G)$, $G$ is known as a {\color{red} \textbf{$k$-regular graph}}.
+    \\\\
+    The set of all neighbours to some $v_i \in V(G)$ is called the {\color{red} \textbf{neighbourhood set}} of $v_i$, denoted by $N_G(v_i)$. In particular, the set $N_G[v_i] \coloneqq N_G(v_i)\cup\{v_i\}$ is known as the {\color{red} \textbf{closed neighbourhood set}} of $v_i$.
+\end{dfnbox}
 \end{document}

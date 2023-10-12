@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  9 OCT 2023 12:52
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 OCT 2023 16:09
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1200,12 +1200,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  [1
 
 
-]
+] [2]
 Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 56.
-[2
+[3
 
-] [3] [4] [5]
+] [4] [5] [6]
 Underfull \hbox (badness 10000) in paragraph at lines 172--179
 
  []
@@ -1220,7 +1220,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 172--179
 
  []
 
-[6] [7] [8]
+[7] [8] [9]
 Underfull \hbox (badness 10000) in paragraph at lines 265--272
 
  []
@@ -1245,7 +1245,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 286--291
 
  []
 
-[9]
+[10]
 Underfull \hbox (badness 10000) in paragraph at lines 314--317
 
  []
@@ -1255,7 +1255,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 319--323
 
  []
 
-[10]
+[11]
 Underfull \hbox (badness 1838) in paragraph at lines 328--329
 []\TU/STIXTwoText(0)/m/n/12 Let $[] [] []$. Find the number of $[]$-combinations of $[]$ such
  []
@@ -1275,7 +1275,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 334--342
 
  []
 
-[11]
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 355--360
 
  []
@@ -1290,7 +1290,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 362--366
 
  []
 
-[12]
+[13]
 Underfull \hbox (badness 10000) in paragraph at lines 411--419
 
  []
@@ -1305,12 +1305,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 411--419
 
  []
 
-[13] [14]
+[14] [15]
 Overfull \hbox (7.3802pt too wide) in paragraph at lines 446--480
 \TU/STIXTwoText(0)/m/n/12 In this section, we will see that there is a clear relation between the number of $[]$-combinations
  []
 
-[15]
+[16]
 Underfull \hbox (badness 10000) in paragraph at lines 534--538
 
  []
@@ -1320,15 +1320,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 585--589
 
  []
 
-[16]
+[17]
 
 Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 627.
 
-[17]
+[18]
 
 Package tcolorbox Warning: Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually on input line 627.
 
-[18]
+[19]
 Chapter 2.
 
 Underfull \hbox (badness 10000) in paragraph at lines 644--647
@@ -1350,9 +1350,9 @@ Underfull \hbox (badness 1990) in paragraph at lines 668--671
 \TU/STIXTwoText(0)/m/n/12 Without loss of generality, suppose the line segments $[][][][]$, $[][][][]$ and $[][][][]$
  []
 
-[19
+[20
 
-] [20]
+] [21]
 Underfull \hbox (badness 10000) in paragraph at lines 732--737
 
  []
@@ -1377,16 +1377,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 739--745
 
  []
 
-[21] [22]
+[22] [23]
 Chapter 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 782--786
 
  []
 
-[23
+[24
 
-] [24]
+] [25]
 Underfull \hbox (badness 10000) in paragraph at lines 859--862
 
  []
@@ -1399,15 +1399,44 @@ Underfull \hbox (badness 1028) in paragraph at lines 859--862
 
 Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 871.
 
-[25] [26]
+[26] [27]
 Chapter 4.
-[27
+[28
 
 ]
 Chapter 5.
-[28
+[29
 
-] 
+]
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 930--937
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 930--937
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 930--937
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 951--956
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 951--956
+
+ []
+
+[30
+
+] [31] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs I.aux)
 
@@ -1417,12 +1446,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs I".out' has not cha
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36848 strings out of 478630
- 772915 string characters out of 5847730
+ 36859 strings out of 478630
+ 773085 string characters out of 5847730
  1877012 words of memory out of 5000000
- 56369 multiletter control sequences out of 15000+600000
+ 56380 multiletter control sequences out of 15000+600000
  516135 words of font info for 83 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs I.pdf (28 pages).
+Output written on Combinatorics and Graphs I.pdf (31 pages).
