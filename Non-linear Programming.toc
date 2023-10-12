@@ -19,3 +19,11 @@
 \contentsline {section}{\numberline {4.5}Steepest Descent}{20}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Conjugate Gradient Method}{21}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Karush-Kuhn-Tucker Condition}{22}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Lagrange Multipliers}{22}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Linear Independence Constraint Qualification}{23}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Special Case: Only Equality Constraints}{24}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Special Case: Only Inequality Constraints}{24}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Karush-Kuhn-Tucker (KKT) Points}{24}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Special Case: Only One Inequality Constraint}{25}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Special Case: Only Two Inequality Constraints}{25}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Special Case: Interior Points}{25}{subsection.5.3.3}%

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  6 OCT 2023 13:25
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 OCT 2023 11:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1372,7 +1372,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 601--604
 Chapter 5.
 [22
 
-] 
+] [23] [24] [25] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Non-linear Programming.aux)
 
@@ -1384,12 +1384,12 @@ runsystem(del Non-linear_Programming.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 39196 strings out of 478630
- 825017 string characters out of 5847730
+ 39207 strings out of 478630
+ 825181 string characters out of 5847730
  1876012 words of memory out of 5000000
- 58655 multiletter control sequences out of 15000+600000
+ 58666 multiletter control sequences out of 15000+600000
  516183 words of font info for 89 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,15n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Non-linear Programming.pdf (22 pages).
+Output written on Non-linear Programming.pdf (25 pages).
