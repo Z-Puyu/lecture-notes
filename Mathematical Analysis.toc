@@ -9,3 +9,5 @@
 \contentsline {subsection}{\numberline {2.1.1}Limits of Sequences}{7}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Subsequences}{11}{subsection.2.1.2}%
 \contentsline {subsection}{\numberline {2.1.3}Cauchy Criterion}{13}{subsection.2.1.3}%
+\contentsline {chapter}{\numberline {3}Functions}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Limits of Functions}{16}{section.3.1}%

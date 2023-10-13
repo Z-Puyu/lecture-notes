@@ -460,6 +460,31 @@ We can make use of the Cauchy sequence to test for convergence.
         \end{align*}
         Therefore, $\lim_{n \to \infty}x_n = x$.
     \end{proof}
-    
 \end{thmbox}
+
+\chapter{Functions}
+\section{Limits of Functions}
+\begin{dfnbox}{Cluster Point}{clusterPt}
+    Let $A \subseteq \R$. A point $c$ is called a {\color{red} \textbf{cluster point}} of $A$ if for all $\delta > 0$, there exists at least one $x \in A$ such that $0 < \abs{x - c} < \delta$, i.e., $\bigl(V_\delta(c) - \{c\}\bigr) \cap A \neq \varnothing$ for all $\delta > 0$.
+\end{dfnbox}
+Intuitively, this means that the elements of a set $A$ is \textbf{densely distributed} around the cluster point, which motivates the following alternative definition:
+\begin{thmbox}{Alternative Definition of Cluster Points}{altClusterPt}
+    Let $A \subseteq \R$, then $c \in \R$ is a cluster point of $A$ if and only if there exists a sequence $(a_n)$ in~$A$ such that $\lim_{n \to \infty}a_n = c$ and $a_n \neq c$ for all $n \in \N$.
+    \tcblower
+    \begin{proof}
+        Suppose that $c$ is a cluster point of $A$. Fix any $n \in \N^+$, then there exists some $a_n \in A$ such that $0 < \abs{a_n - c} < \frac{1}{n}$. This means we can obtain a sequence $(a_n)$ with $a_n \neq c$ for all $n \in \N^+$.
+        \\\\
+        For any $\epsilon > 0$, note that there exists some $N \in \N^+$ such that $0 < \frac{1}{N} < \epsilon$. Therefore, for all $n \geq N$, we have $\abs{a_n - c} < \frac{1}{n} \leq \frac{1}{N} < \epsilon$, which means that $\lim_{n \to \infty}a_n = c$.
+        \\\\
+        Conversely, suppose that there is a sequence $(a_n)$ in $A$ with $a_n \neq c$ for all $n \in \N^+$ and $\lim_{n \to \infty}a_n = c$. For any $\delta > 0$, there is some $N \in \N^+$ such that for all $n \geq N$, $0 < \abs{a_n - c} < \delta$. Note that $a_n \in A$, so $c$ is a cluster point of $A$.
+    \end{proof}
+\end{thmbox}
+Analogously to the limit of sequences, we may describe the limiting behaviour of a function as the follows:
+
+As $x$ gets arbitrarily close to some point $c$, the function value $f(x)$ can get as close to a constant $L$ as possible.
+
+The above intuition is formulated formally as follows:
+\begin{dfnbox}{Limit of Functions}{funcLim}
+    Let $f$ be a function over some $A \subseteq \R$. If $c$ is a cluster point of $A$, then $L \in \R$ is called the {\color{red} \textbf{limit}} of $f$ at $c$ if for all $\epsilon > 0$, there exists some $\delta \in \R$ such that whenever $0 < \abs{x - c} < \delta$, $\abs{f(x) - L} < \epsilon$. 
+\end{dfnbox}
 \end{document}
