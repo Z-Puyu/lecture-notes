@@ -24,6 +24,7 @@
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
@@ -260,7 +261,7 @@ Recall that for a function $f \colon \mathbf{R}^n \to \mathbf{R}$, the \textit{g
 \begin{probox}{Directional Derivative}{directionalDerivative}
     Let $f$ be a function over $D \subseteq \mathbf{R}^n$ and let $\mathbfit{d} \in \mathbf{R}^n$ be non-zero, then the directional derivative of $f$ at $\mathbfit{x}$ along $\mathbfit{d}$ is
     \begin{equation*}
-        \nabla f(\mathbfit{x})^{\mathrm{T}}\mathbfit{d} = \lim_{\lambda \to 0}\frac{f(\mathbfit{x + \lambda\mathbfit{d}}) - f(\mathbfit{x})}{\lambda}.
+        \nabla f(\mathbfit{x})^{\mathrm{T}}\mathbfit{d} = \lim_{\lambda \to 0}\frac{f(\mathbfit{x} + \lambda\mathbfit{d}) - f(\mathbfit{x})}{\lambda}.
     \end{equation*}
     In particular, if $\norm{\mathbf{d}} = 1$, then the above gives the rate of change of $f$ in the direction of $\mathbfit{d}$.
 \end{probox}
@@ -514,45 +515,99 @@ Now, we are able to apply the following tests:
 \end{corbox}
 
 \chapter{Numerical Methods}
-\section{Bisection}
+\section{One-Dimensional Methods}
+\subsection{Bisection}
 Recall the \textit{Intermediate Value Theorem}:
 \begin{thmbox}{Intermediate Value Theorem}{interVal}
     Let $f$ be a continuous function on $[a, b]$ with $f(a)f(b) < 0$, then there exists some $r \in (a, b)$ such that $f(r) = 0$.
 \end{thmbox}
-\begin{codebox}{Sample Code in Python}{}
-    \begin{amzcode}{python3}
-        def bisection(f: Callable[[float], float],\
-            a: float, b: float, t: float, x: float) -> float:
-            while (Math.abs(a - b) > t):
-                if (f(a) * f(x) < 0):
-                    b = x;
-                    x = (b - a) / 2;
-            return x;
+Note that $f'(x) = 0$ if $x$ is a local optimiser for $f$. The bisection method aims to find the solution to $f'(x) = 0$ to determine an approximation for the local optimiser of $f$.
+\begin{tecbox}{Bisection Search Algorithm}{bisect}
+    Let $f$ be a one-dimensional function such that $f(a)f(b) < 0$. We initialise bisection search with the interval $[a_1, b_1] = [a, b]$ and a tolerance level $\epsilon > 0$.
+    \\\\
+    At the $k$-th iteration, set $x_k = \frac{a_k + b_k}{2}$ as the current approximation. 
+    \\\\
+    If $b_k - a_k \leq 2\epsilon$ or $f(x_k) = 0$, we can stop the search and output $x_k$ as an approximated root of $f(x) = 0$.
+    \\\\
+    Else, we update the interval by
+    \begin{equation*}
+        [a_{k + 1}, b_{k + 1}] = \begin{cases}
+            [a_k, x_k], & \quad\textrm{if } f(a_k)f(x_k) < 0 \\
+            [x_k, b_k], & \quad\textrm{if } f(b_k)f(x_k) < 0
+        \end{cases}.
+    \end{equation*} 
+\end{tecbox}
+Let $x^* \in [a, b]$ be the true root of $f(x) = 0$. Note that if the algorithm terminates at the $k$-th iteration, it means that $\abs{b_k - a_k} \leq 2\epsilon$. Since $x^* \in [a_k, b_k]$ and $x_k = \frac{b_k + a_k}{2}$, we have
+\begin{equation*}
+    \abs{x_k - x^*} \leq \frac{\abs{b_k - a_k}}{2} \leq \epsilon.
+\end{equation*}
+Furthermore, notice that the size of the interval $[a_i, b_i]$ is halved after each iteration, so we have $\abs{b_k - a_k} = \frac{\abs{b_1 - a_1}}{2^{k - 1}}$. This means to have $\abs{b_k - a_k} \leq 2\epsilon$, we need at least
+\begin{equation*}
+    k = \left\lceil\log_2\frac{\abs{b_1 - a_1}}{\epsilon}\right\rceil
+\end{equation*}
+iterations. In other words, bisection search with tolerance level $\epsilon$ and initial interval width $n$ is an $\bigO\left(\log\frac{n}{\epsilon}\right)$ algorithm.
+
+\begin{codebox}{Bisection Search Algorithm in Matlab}{}
+    \begin{amzcode}{matlab}
+function [x, k] = bisection(f, a, b, t)
+    fa = feval(f, a);
+    fb = feval(f, b);
+    if (sign(fa) == sign(fb))
+        error("f(a), f(b) have same sign.");
+    end
+    k = 1;
+    while abs(b - a) > t
+        x = (a + b) / 2;
+        fx = feval(f, x);
+        if (fx == 0)
+            break;
+        end
+        if (sign(fx) == sign(fa))
+            a = x; 
+            fa = fx;
+        else
+            b = x; 
+            fb = fx;
+        end
+        k += 1;
+    end
+end
     \end{amzcode}
 \end{codebox}
 
-\section{Newton's Method}
-\subsection{Multivariable Case}
-Let $f$ be a multivariable function with continuous second order partial derivatives. Given $\mathbfit{x_0} \in \mathbf{R}^n$, by Taylor expansion there is some quadratic function $q$ such that
+\subsection{Newton's Method}
+Let $f(x)$ be a function, then by Taylor expansion we can approximate $f$ by
 \begin{equation*}
-    f(\mathbfit{x}) \approx q(\mathbfit{x}) = f(\mathbfit{x}_0) + \nabla f(\mathbfit{x}_0)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}_0) + \frac{1}{2}(\mathbfit{x} - \mathbfit{x}_0)^{\mathrm{T}}H_f(\mathbfit{x}_0)(\mathbfit{x} - \mathbfit{x}_0).
+    f(x) \approx q(x) = f(x_k) + f'(x_k)(x - x_k) + \frac{1}{2}f''(x_k)(x - x_k)^2,
 \end{equation*}
-Assumptions:
-\begin{itemize}
-    \item The Hessian $H_f(\mathbfit{x}^*)$ at the stationary point $\mathbfit{x}^*$ is non-singular.
-    \item $H_f(\mathbfit{x})$ is Lipschitz continuous in a neighbourhood of $\mathbfit{x}^8$.
-\end{itemize}
-\begin{probox}{Convergence of the Newton Method}{newtonConverge}
-    If $\mathbfit{x}_0$ is sufficiently close to $\mathbfit{x}^*$, then the sequence $\{\mathbfit{x}_k\}$ generated by the Newton Method converges to $\mathbfit{x}^*$ quadratically, i.e., there exists some $M \in \R$ such that
-    \begin{equation*}
-        \norm{\mathbfit{x}_{k + 1} - \mathbfit{x}^*} \leq M\norm{\mathbfit{x}_k - \mathbfit{x}^*}^2.
-    \end{equation*}
-\end{probox}
-\subsection{Armijo Line Search}
+where $x_k$ is some approximation of the global minimiser of $f$. Let $x^*$ be the global minimiser for $q$, then
+\begin{equation*}
+    x^* = x_k - \frac{f'(x_k)}{f''(x_k)}.
+\end{equation*}
+This motivates the following algorithm:
+\begin{tecbox}{Newton's Method Algorithm}{newton}
+    Let $f$ be a one-dimensional function. We initialise Newton's method with an initial approximation $x_0$ and a tolerance level $\epsilon > 0$.
+    \\\\
+    At the $k$-th iteration, set $x_k = x_{k - 1} - \frac{f'(x_k)}{f''(x_k)}$. If $\abs{f'(x_k)} \leq \epsilon$, we can stop the algorithm and output $x_k$ as an approximated minimiser of $f$.
+\end{tecbox}
+\begin{codebox}{Newton's Method Algorithm in Matlab}{}
+    \begin{amzcode}{matlab}
+function [x, k] = newton(df, ddf, x0, t)
+    k = 0;
+    x = x0;
+    while abs(feval(df, x)) > t
+        x -= feval(df, x) / feval(ddf, x);
+        k += 1;
+    end
+end
+    \end{amzcode}
+\end{codebox}
+The rate of convergence of Newton's method is generally very fast, but for non-convex functions, there is a risk that the algorithm fails to find the approximation.
 
-\section{Goldern Section Method}
+\subsection{Golden Section Method}
+In some cases, we may encounter a function which is not differentiable (and thus we cannot use Newton's method to our advantage). It turns out, however, that if the function is \textit{unimodal}, then we can easily approximate its global minimiser.
 \begin{dfnbox}{Unimodal Function}{unimodal}
-    A function $f$ is said to be {\color{red} \textbf{unimodal}} on $[a, b]$ if it has exactly one global minimiser (maximiser) $x^*$ in $[a, b]$ and is strictly decreasing (increasing) on $[a, x^*]$ abd strictly increasing (decreasing) on $[x^*, b]$.
+    A function $f$ is said to be {\color{red} \textbf{unimodal}} on $[a, b]$ if it has exactly one global minimiser (maximiser) $x^*$ in $[a, b]$ and is strictly decreasing (increasing) on $[a, x^*]$ and strictly increasing (decreasing) on $[x^*, b]$.
 \end{dfnbox}
 \begin{tecbox}{Golden Section Method}{goldeSect}
     Let $f$ be a unimodal function. Consider $[a_0, b_0]$ as the initial interval. For each iteration, we consider
@@ -568,35 +623,160 @@ Assumptions:
             [\lambda_n, \mu_n], \quad \textrm{if } f(\lambda_n) = f(\mu_n)
         \end{cases}.
     \end{equation*}
-    The reason why we use $\Phi$ to generate the intervals recursively is because that it reduces the number of computations. Consider that $[a_k, b_k] = [\lambda_{k - 1}, b_{k - 1}]$, then
-    \begin{align*}
-        \lambda_k & = b_k - \Phi(b_k - a_k) \\
-        & = b_{k - 1} - \Phi(b_{k - 1} - \lambda_{k - 1}) \\
-        & = b_{k - 1} - \Phi(b_{k - 1} - b_{k - 1} + \Phi(b_{k - 1} - a_{k - 1})) \\
-        & = b_{k - 1} - \Phi^2(b_{k - 1} - a_{k - 1}) \\
-        & = b_{k - 1} - (1 - \Phi)(b_{k - 1} - a_{k - 1}) \\
-        & = a_{k - 1} + \Phi(b_{k - 1} - a_{k - 1}) \\
-        & = \mu_{k - 1}.
-    \end{align*}
-    However, note that we have already computed $\mu_{k - 1}$ in the previous iteration! Therefore, by applying ideas of \textit{dynamic programming}, this eliminates the need to re-compute its value. Similarly, we can show that $\mu_k = \lambda_{k - 1}$ if $f(\lambda_k) < f(\mu_k)$.
 \end{tecbox}
+The reason why we use $\Phi$ to generate the intervals recursively is because that it reduces the number of computations. Consider that $[a_k, b_k] = [\lambda_{k - 1}, b_{k - 1}]$, then
+\begin{align*}
+    \lambda_k & = b_k - \Phi(b_k - a_k) \\
+    & = b_{k - 1} - \Phi(b_{k - 1} - \lambda_{k - 1}) \\
+    & = b_{k - 1} - \Phi(b_{k - 1} - b_{k - 1} + \Phi(b_{k - 1} - a_{k - 1})) \\
+    & = b_{k - 1} - \Phi^2(b_{k - 1} - a_{k - 1}) \\
+    & = b_{k - 1} - (1 - \Phi)(b_{k - 1} - a_{k - 1}) \\
+    & = a_{k - 1} + \Phi(b_{k - 1} - a_{k - 1}) \\
+    & = \mu_{k - 1}.
+\end{align*}
+However, note that we have already computed $\mu_{k - 1}$ in the previous iteration! Therefore, by applying ideas of \textit{dynamic programming}, this eliminates the need to re-compute its value. Similarly, we can show that $\mu_k = \lambda_{k - 1}$ if $f(\lambda_k) < f(\mu_k)$.
+\begin{codebox}{Golden Section Algorithm in Matlab}{}
+    \begin{amzcode}{matlab}
+function [lhs, rhs, k] = golden_section(f, a, b, t)
+    lhs = a;
+    rhs = b;
+    k = 0;
+    phi = (sqrt(5) - 1) / 2;
+    lambda = b - phi * (b - a);
+    mu = a + phi * (b - a);
+    while abs(b - a) > t
+        f_lambda = feval(f, lambda);
+        f_mu = feval(f, mu);
+        if (f_lambda > f_mu) 
+            a = lambda;
+            lambda = mu;
+        elseif (f_lambda < f_mu)
+            b = mu;
+            mu = lambda;
+        else
+            a = lambda;
+            b = mu;
+            lambda = b - phi * (b - a);
+            mu = a + phi * (b - a);
+        end
+        lhs = a;
+        rhs = b;
+        k += 1;
+    end
+end
+    \end{amzcode}
+\end{codebox}
+\section{Multivariable Methods}
+Consider the following general framework of optimisation algorithms:
+\begin{itemize}
+    \item Initialise with an initial guess $\mathbfit{x}_0$.
+    \item At each iteration:
+        \begin{itemize}
+            \item If $\mathbfit{x}_k$ is considered optimal, stop the search and output.
+            \item Else, set $\mathbfit{x}_{k + 1} = \mathbfit{x}_k + \alpha_k\mathbfit{p}_k$.
+        \end{itemize}
+\end{itemize}
+$\mathbfit{p}_k$ is the search direction and $\alpha_k$ is the step size.
+\subsection{Newton's Method}
+Similar to the one-dimensional case, let $f$ be a multivariable function with continuous second order partial derivatives. Given $\mathbfit{x_k} \in \mathbf{R}^n$ as an approximation of the global minimiser of $f$, by Taylor expansion there is some quadratic function $q$ such that
+\begin{equation*}
+    f(\mathbfit{x}) \approx q(\mathbfit{x}) = f(\mathbfit{x}_k) + \nabla f(\mathbfit{x}_k)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}_k) + \frac{1}{2}(\mathbfit{x} - \mathbfit{x}_k)^{\mathrm{T}}H_f(\mathbfit{x}_k)(\mathbfit{x} - \mathbfit{x}_k).
+\end{equation*}
+The global minimiser of $q$ is given by
+\begin{equation*}
+    \hat{\mathbfit{x}} = \mathbfit{x}_k - H_f(\mathbfit{x}_k)^{-1}\nabla f(\mathbfit{x}_k).
+\end{equation*}
+However, for the above equation to hold, we require two important assumptions: first, $H_f$ must be non-singular at $\hat{\mathbfit{x}}$; second, $H_f(\mathbfit{x})$ is \textit{Lipschitz continuous} in a neighbourhood of $\hat{\mathbfit{x}}$. To formally introduce \textit{Lipschitz continuity}, we state the following definitions:
+\begin{dfnbox}{Frobenius Norm}{frobenius}
+    Let $\mathbfit{A} \in \mathbf{R}^{n \times n}$ be a square matrix. The {\color{red} \textbf{Frobenius norm}} of $\mathbfit{A}$ is defined by
+    \begin{equation*}
+        \norm{\mathbfit{A}}^2_F = \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}^2.
+    \end{equation*}
+\end{dfnbox}
+We can show that $\norm{\mathbfit{Ax}} \leq \norm{\mathbfit{A}}_F\norm{\mathbfit{x}}$ for any vector $\mathbfit{x} \in \mathbf{R}^n$ and that $\norm{\mathbfit{AB}} \leq \norm{\mathbfit{A}}_F\norm{\mathbfit{B}}_F$ for any $n \times n$ matrix $\mathbfit{B}$.
+\begin{dfnbox}{Lipschitz Continuity}{lipschitz}
+    Let $f \colon \mathbf{R}^n \to \mathbf{R}^{n \times n}$ be a function. $f$ is {\color{red} \textbf{Lipschitz continuous}} at $\mathbfit{x}^*$ if there exists some $\delta, L > 0$ such that for all $\mathbfit{x}, \mathbfit{y} \in B(\mathbfit{x}^*, \delta)$,
+    \begin{equation*}
+        \norm{f(\mathbfit{x}) - f(\mathbfit{y})}_F \leq L\norm{\mathbfit{x - y}}.
+    \end{equation*}
+\end{dfnbox}
+In practice when using Newton's method, we choose a neighbourhood of $\hat{\mathbfit{x}}$ which is small enough by setting $\delta = \frac{1}{\norm{H_f(\hat{\mathbfit{x}})^{-1}}_F}$.
+\begin{tecbox}{Multi-dimensional Newton's Method Algorithm}{multiDimNewton}
+    Let $f$ be a function. We initialise Newton's method with an initial approximation $\mathbfit{x}_0$ and a tolerance level $\epsilon > 0$.
+    \\\\
+    At the $k$-th iteration, set $\mathbfit{x}_k = \mathbfit{x}_{k - 1} - H_f(\mathbfit{x}_{k - 1})^{-1}\nabla f(\mathbfit{x}_{k - 1})$. If $\norm{\nabla f(\mathbfit{x}_k)} \leq \epsilon$, we can stop the algorithm and output $\mathbfit{x}_k$ as an approximated minimiser of $f$.
+\end{tecbox}
+Note that in the multi-dimensional case, although Newton's method still retain a fast rate of convergence, the computational cost per iteration is very high.
+\begin{probox}{Convergence of the Newton Method}{newtonConverge}
+    If $\mathbfit{x}_0$ is sufficiently close to $\mathbfit{x}^*$, then the sequence $\{\mathbfit{x}_k\}$ generated by the Newton Method converges to $\mathbfit{x}^*$ quadratically, i.e., there exists some $M \in \R$ such that
+    \begin{equation*}
+        \norm{\mathbfit{x}_{k + 1} - \mathbfit{x}^*} \leq M\norm{\mathbfit{x}_k - \mathbfit{x}^*}^2.
+    \end{equation*}
+\end{probox}
+Note that the search direction of Newton's method is $-H_f(\mathbfit{x}_k)^{-1}\nabla f(\mathbfit{x}_k)$ and the step size is $1$. However, we can choose a better step size $\alpha_k$ given by
+\begin{equation*}
+    \alpha_k = \argmin_{\alpha \geq 0}f(\mathbfit{x}_{k + 1}) = \argmin_{\alpha \geq 0}f\left(\mathbfit{x}_k - \alpha_kH_f(\mathbfit{x}_k)^{-1}\nabla f(\mathbfit{x}_k)\right).
+\end{equation*}
+\subsection{Armijo Line Search}
+Let $\mathbfit{x}_0$ be an approximation of some optimisation algorithm with search direction $\mathbfit{p}_0$ and step size $\alpha$. We can obtain the next approximation as
+\begin{equation*}
+    \hat{\mathbfit{x}} = \mathbfit{x}_0 + \alpha\mathbfit{p}_0.
+\end{equation*} 
+Correspondingly, the average change in the function value is given by
+\begin{equation*}
+    \frac{f(\hat{\mathbfit{x}}) - f(\mathbfit{x}_0)}{\alpha} = \frac{f(\mathbfit{x}_0 + \alpha\mathbfit{p}_0) - f(\mathbfit{x}_0)}{\alpha}.
+\end{equation*}
+Note that the rate of change along $\mathbfit{p}_0$ is given by $\nabla f(\mathbfit{x}_0)^{\mathrm{T}}\mathbfit{p}_0$. Suppose we wish $\alpha$ to be sufficiently small, then we can fix some $\sigma \in (0, 1)$ such that
+\begin{equation*}
+    \frac{f(\mathbfit{x}_0 + \alpha\mathbfit{p}_0) - f(\mathbfit{x}_0)}{\alpha} \leq \sigma\nabla f(\mathbfit{x}_0)^{\mathrm{T}}\mathbfit{p}_0.
+\end{equation*}
+If the above inequality holds true, it means that the average rate of decrease in the value of $f$ along $\mathbfit{p}_0$ with step size $\alpha$ is at least $\sigma$ of the instantaneous rate of decrease. If the choice of $\alpha$ is not ideal enough, we can then try $\beta\alpha$ for some $\beta \in (0, 1)$. This leads to the \textit{Armijo line search} algorithm. 
+\begin{tecbox}{Armijo Line Search Algorithm}{armijo}
+    Take $\sigma \in (0, 0.5)$ and $\beta \in (0, 1)$. Initialise $\alpha_0$ with a potentially large value.
+    \\\\
+    At the $k$-th iteration, consider $\alpha_k = \beta\alpha_{k - 1}$. If
+    \begin{equation*}
+        f(\mathbfit{x}_0 + \alpha_k\mathbfit{p}_0) \leq f(\mathbfit{x}_0) + \sigma\alpha_k\nabla f(\mathbfit{x}_0)^{\mathrm{T}}\mathbfit{p}_0,
+    \end{equation*}
+    we can output $\alpha_k$ as an sufficiently optimal choice of $\alpha$.
+\end{tecbox}
+We can then combine the Armijo line search with Newton's method as follows:
+\begin{codebox}{Newton's Method with Armijo Line Search in Matlab}{}
+    \begin{amzcode}{matlab}
+function [alpha, k] = armijo(f, fx, nabla, x, p, sigma, beta, init_a)
+    alpha = init_a;
+    dec = nabla' * p;
+    k = 0;
+    while feval(f, x + alpha * p) > sigma * alpha * dec 
+        alpha *= beta;
+        k += 1;
+    end
+end
 
-\section{General Framework of Optimisation Algorithms}
-\begin{genbox}{Pseudo-code}{}
-    \begin{verbatim}
-Initialise x with some guess;
-while the interval > tolerance, do:
-    x -> f(x);
-return x;
-    \end{verbatim}
-\end{genbox}
-
+function [x, k] = newton_armijo(f, df, ddf, x0, t)
+    x = x0;
+    i = 0;
+    alpha = 2;
+    df_val = feval(df, x);
+    while norm(df_val) > t
+        p = -feval(ddf, x) \ df_val;
+        [alpha, i] = armijo(f, feval(f, x), df_val, x, p, 0.48, 0.95, alpha);
+        x += alpha * p;
+    end
+end
+    \end{amzcode}
+\end{codebox}
 \section{Steepest Descent}
 Recall that $f$ decreases most rapidly along the direction of $-\nabla f$. So we can take
 \begin{equation*}
     \hat{\mathbfit{d}} = -\frac{\nabla f(\mathbfit{x})}{\norm{\nabla f(\mathbfit{x})}}
 \end{equation*}
-at any given point $\mathbfit{x}$, where $-\nabla f(\mathbfit{x})$ is known as the \textit{steepest descent direction}. Notice that $f(\mathbfit{x} + \delta\hat{\mathbfit{d}}) = f(\mathbfit{x}) - \delta\norm{\nabla f(\mathbfit{x})}$.
+at any $\mathbfit{x}$, where $-\nabla f(\mathbfit{x})$ is known as the \textit{steepest descent direction}. Recall \ref{pro:directionalDerivative}, so 
+\begin{align*}
+    f(\mathbfit{x} + \delta\hat{\mathbfit{d}}) & = f(\mathbfit{x}) + \delta\nabla f(\mathbfit{x})^{\mathrm{T}}\hat{\mathbfit{d}} \\
+    & = f(\mathbfit{x}) - \delta\frac{\norm{\nabla f(\mathbfit{x})}^2}{\norm{\nabla f(\mathbfit{x})}} \\
+    & = f(\mathbfit{x}) - \delta\norm{\nabla f(\mathbfit{x})}.
+\end{align*}
 \begin{tecbox}{Steepest Descent Method}{steepestDescent}
     Let $f$ be an objective function and $\mathbfit{x}_0$ be an initial guess. Let $\epsilon > 0$ be the tolerance level.
     \\\\
@@ -610,8 +790,27 @@ at any given point $\mathbfit{x}$, where $-\nabla f(\mathbfit{x})$ is known as t
     \end{equation*}
     where $t_k$ is such that $f(\mathbfit{x}_k + t_k\mathbfit{d}_k)$ is minimised and is known as the step size.
 \end{tecbox}
-With a graphical illustration, one might observe that the approximations obtained via the steepest descent method trace out a ``zig-zag'' path. This behaviour is rigorously described as follows:
-\begin{probox}{}{zigzag}
+\begin{codebox}{Steepest Descent Algorithm in Matlab}{}
+    \begin{amzcode}{matlab}
+function [x, d, k] = steepest_descent(f, nabla, x0, t)
+    x = x0;
+    grad = feval(nabla, x);
+    k = 0;
+    while norm(grad) > t
+        d = -grad;
+        fx = feval(f, x);
+        [step, i] = armijo(f, fx, nabla, x, d, 0.48, 0.95, 2);
+        x += step * d;
+        grad = feval(nabla, x);
+        k += 1;
+    end
+end
+    \end{amzcode}
+\end{codebox}
+Intuitively, suppose $\mathbfit{x}_0$ is some initial approximation located at the level set $f(\mathbfit{x}) = k$. Using the steepest descent method, we would search along the direction that is \textbf{orthogonal} to the level set at $\mathbfit{x}_0$. We denote this direction as $\mathbfit{d}$. Note that we will only find the next approximation when $f(\mathbfit{x})$ \textbf{cannot decrease further}, i.e., we encounter some other level set $f(\mathbfit{x}) = h$ to which $\mathbfit{d}$ is a tangential direction.
+
+With a graphical illustration, one might observe that the approximations obtained via the steepest descent method trace out a ``zig-zag'' path with an orthogonal turn between any two consecutive search directions. This behaviour is rigorously described as follows:
+\begin{probox}{Zig-zag Behaviour of Steepest Descent}{zigzag}
     If $(\mathbfit{x}_k)$ be a sequence of approximations for the function $f(\mathbfit{x})$ using steepest descent method, then
     \begin{equation*}
         (\mathbfit{x}_{k + 2} - \mathbfit{x}_{k + 1})^{\mathrm{T}}(\mathbfit{x}_{k + 1} - \mathbfit{x}_k) = 0
@@ -620,13 +819,117 @@ With a graphical illustration, one might observe that the approximations obtaine
 \end{probox}
 
 \section{Conjugate Gradient Method}
+Consider the quadratic function
+\begin{equation*}
+    \phi(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} - \mathbfit{b}^{\mathrm{T}}\mathbfit{x}
+\end{equation*}
+where $\mathbfit{A}$ is symmetric positive definite. Let $\mathbfit{x}_0$ be an initial approximation. Suppose we obtain $\mathbfit{x}_1$ along $\mathbfit{p}_0$ with exact line search, i.e.,
+\begin{equation*}
+    \mathbfit{x}_1 = \mathbfit{x}_0 + \alpha_0\mathbfit{p}_0, \qquad \alpha_0 = \argmin_{\alpha > 0} \phi(\mathbfit{x}_0 + \alpha\mathbfit{p}_0).
+\end{equation*}
+Notice that this means that $\alpha_0$ is a global minimiser to $g_0(\alpha) = \phi(\mathbfit{x}_0 + \alpha\mathbfit{p}_0)$, and so $g'_0(\alpha_0) = 0$. Let $\mathbfit{y}_0 = \mathbfit{x}_0 + \alpha\mathbfit{p}_0$, then
+\begin{align*}
+    g'_0(\alpha) & = \frac{\partial \phi}{\partial \mathbfit{y}_0}\cdot\frac{\partial \mathbfit{y}_0}{\partial \alpha} \\
+    & = \nabla \phi(\mathbfit{x}_0 + \alpha\mathbfit{p}_0)^{\mathrm{T}}\mathbfit{p}_0.
+\end{align*}
+This implies that $\nabla \phi(\mathbfit{x}_1)^{\mathrm{T}}\mathbfit{p}_0 = 0$. Let $\mathbfit{x}^*$ be the optimal point, we now wish to find some $\mathbfit{p}_1$ and $\alpha^*$ such that 
+\begin{equation*}
+    \mathbfit{x}_1 + \alpha^*\mathbfit{p}_1 = \mathbfit{x}^*.
+\end{equation*}
+Notice that $\nabla\phi(\mathbfit{x}) = \mathbfit{Ax - b}$, so $\nabla\phi(\mathbfit{x}^*) = \mathbfit{Ax}^* - \mathbfit{b} = 0$ and $\nabla \phi(\mathbfit{x}_1)^{\mathrm{T}}\mathbfit{p}_0 = (\mathbfit{Ax}_1 - \mathbfit{b})^{\mathrm{T}}\mathbfit{p}_0 = 0$, so we have
+\begin{align*}
+    0 & = (\mathbfit{Ax}_1 - \mathbfit{b})^{\mathrm{T}}\mathbfit{p}_0 \\
+    & = (\mathbfit{Ax}_1 - \mathbfit{Ax}^*)^{\mathrm{T}}\mathbfit{p}_0 \\
+    & = (\mathbfit{x}_1 - \mathbfit{x}^*)^{\mathrm{T}}\mathbfit{A}^{\mathrm{T}}\mathbfit{p}_0 \\
+    & = -\alpha^*\mathbfit{p}_1^{\mathrm{T}}\mathbfit{A}\mathbfit{p}_0.
+\end{align*}
+The above concludes that if there is $\mathbfit{p}_0, \mathbfit{p}_1$ and $\alpha^* \in \mathbf{R}$ such that for some initial approximation $\mathbfit{x}_0$ of the optimiser $\mathbfit{x}^*$ to a quadratic function $\phi$, we have
+\begin{align*}
+    \mathbfit{x}^* & = \mathbfit{x}_1 + \alpha^*\mathbfit{p}_1 \\
+    & = \mathbfit{x}_0 + \alpha_0\mathbfit{p}_0 + \alpha^*\mathbfit{p}_1
+\end{align*}
+where $\alpha_0 = \argmin_{\alpha > 0} \phi(\mathbfit{x}_0 + \alpha\mathbfit{p}_0)$, then necessarily $\mathbfit{p}_1^{\mathrm{T}}\mathbfit{Ap}_0 = 0$.
 \begin{dfnbox}{Conjugate Vectors}{conjVecs}
     A set of vectors $\left\{\mathbfit{p}_0, \mathbfit{p}_1, \cdots, \mathbfit{p}_n\right\}$ is {\color{red} \textbf{conjugate}} with respect to $\mathbfit{A}$, where $\mathbfit{A} \succ 0$, if
     \begin{equation*}
         \mathbfit{p}_i^{\mathrm{T}}\mathbfit{Ap}_j = 0 \qquad \textrm{for all } i \neq j.
     \end{equation*}
 \end{dfnbox}
-
+\begin{tecbox}{Conjugate Gradient Method Algorithm}{conjGrad}
+    Let 
+    \begin{equation*}
+        \phi(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} - \mathbfit{b}^{\mathrm{T}}\mathbfit{x}
+    \end{equation*}
+    where $\mathbfit{A} \succ 0$. Take $\mathbfit{x}_0$ be the initial approximation for the global minimiser of $\phi$ and $\left\{\mathbfit{p}_0, \mathbfit{p}_1, \cdots, \mathbfit{p}_{n - 1}\right\}$ be a set of directional vectors conjugate to $\mathbfit{A}$. Set
+    \begin{equation*}
+        \mathbfit{r}_n = \mathbfit{Ax}_n - \mathbfit{b} = \nabla \phi(\mathbfit{x}_n)
+    \end{equation*}
+    as the {\color{red} \textbf{residual}}.
+    \\\\
+    At the $k$-th iteration, consider
+    \begin{align*}
+        0 & = \phi(\mathbfit{x}_k + \alpha\mathbfit{p}_k)^{\mathrm{T}}\mathbfit{p}_k \\
+        & = \left[\mathbfit{A}(\mathbfit{x}_k + \alpha\mathbfit{p}_k) - \mathbfit{b}\right]^{\mathrm{T}}\mathbfit{p}_k \\
+        & = \left(\mathbfit{r}_k + \alpha\mathbfit{Ap}_k\right)^{\mathrm{T}}\mathbfit{p}_k \\
+        & = \mathbfit{r}_k^{\mathrm{T}}\mathbfit{p}_k + \alpha\mathbfit{p}_k^{\mathrm{T}}\mathbfit{A}^{\mathrm{T}}\mathbfit{p}_k.
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        \alpha_k = \argmin_{\alpha > 0}\phi(\mathbfit{x}_k + \alpha\mathbfit{p}_k) = -\frac{\mathbfit{r}_k^{\mathrm{T}}\mathbfit{p}_k + \mathbfit{p}_k}{\mathbfit{p}_k^{\mathrm{T}}\mathbfit{A}^{\mathrm{T}}\mathbfit{p}_k}.
+    \end{equation*}
+    Take $\mathbfit{x}_{k + 1} = \mathbfit{x}_k + \alpha_k\mathbfit{p}_k$.
+\end{tecbox}
+\begin{notebox}
+    \begin{remark}
+        Note that we can verify
+        \begin{align*}
+            \mathbfit{r}_{k + 1} & = \mathbfit{Ax}_{k + 1} - \mathbfit{b} \\
+            & = \mathbfit{A}(\mathbfit{x}_k + \alpha_k\mathbfit{p}_k) - \mathbfit{b} \\
+            & = \mathbfit{Ax}_{k} - \mathbfit{b} - \alpha_k\mathbfit{Ap}_k \\
+            & = \mathbfit{r}_k - \alpha_k\mathbfit{Ap}_k
+        \end{align*}
+    \end{remark}
+\end{notebox}
+To analyse the rate of convergence of conjugate gradient method, we consider the following theorem:
+\begin{thmbox}{Expanding Subspace Minimisation}{expandSubspaceMin}
+    Let $\mathbfit{x}_k$ be the $k$-th approximation generated by the conjugate gradient method with $\left\{\mathbfit{p}_0, \mathbfit{p}_1, \cdots, \mathbfit{p}_{k - 1}\right\}$ for the quadratic function
+    \begin{equation*}
+        \phi(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} - \mathbfit{b}^{\mathrm{T}}\mathbfit{x},
+    \end{equation*}
+    then $\mathbfit{x}_k$ minimises $\phi$ over the set
+    \begin{equation*}
+        \mathbfit{x}_0 + \mathrm{span}\left\{\mathbfit{p}_0, \mathbfit{p}_1, \cdots, \mathbfit{p}_{k - 1}\right\}.
+    \end{equation*}
+\end{thmbox}
+\begin{corbox}{Convergence of Conjugate Gradient Method}{convergeConjGrad}
+    For any $\mathbfit{x}_0$ as the initial approximation for the minimiser of some quadratic function $\phi$, the sequence $(\mathbfit{x}_k)$ generated by the conjugate gradient method converges to the global minimiser of $\phi$ in at most $n$ steps.
+\end{corbox}
+\begin{probox}{}{}
+    At the $(k + 1)$-th iteration of the conjugate gradient method, 
+    \begin{equation*}
+        \mathbfit{p}_{k + 1} = -\mathbfit{r}_{k + 1} + \beta_{k + 1}\mathbfit{p}_k,
+    \end{equation*}
+    where
+    \begin{align*}
+        \beta_{k + 1} = \frac{\mathbfit{r}_{k + 1}^{\mathrm{T}}\mathbfit{Ap}_k}{\mathbfit{p}_k^{\mathrm{T}}\mathbfit{Ap}_k} = \frac{\mathbfit{r}_{k + 1}^{\mathrm{T}}\mathbfit{r}_{k + 1}}{\mathbfit{r}_{k}^{\mathrm{T}}\mathbfit{r}_{k}}, \qquad \mathbfit{p}_0 = -\mathbfit{r}_0.
+    \end{align*}
+\end{probox}
+\begin{codebox}{Conjugate Gradient Method Algorithm in Matlab}{}
+    \begin{amzcode}{matlab}
+function x = conj_grad(x0, A, b, t)
+    x = x0;
+    r = A * x - b;
+    p = -r;
+    while norm(r) > t
+        alpha = -(r' * p + p) / (p' * A' * p);
+        x += alpha * p;
+        r_new = r - alpha * A * p;
+        beta = (r_new' * r_new) / (r' * r);
+        p = -r_new + beta * p;
+    end
+end
+    \end{amzcode}
+\end{codebox}
 \chapter{Karush-Kuhn-Tucker Condition}
 \section{Lagrange Multipliers}
 Recall that in multivariable calculus, we learn about the following method to deal with constrained optimisation problems:

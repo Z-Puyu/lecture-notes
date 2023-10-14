@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }\PYG{n+nf}{[alpha, k] = armijo}\PYG{p}{(}f, fx, nabla, x, p, sigma, beta, init\PYGZus{}a\PYG{p}{)}
+\PYG{+w}{    }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{init\PYGZus{}a}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{dec}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{nabla}\PYG{o}{\PYGZsq{}}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{k}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sigma}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{dec}
+\PYG{+w}{        }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{o}{*}\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{beta}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{end}
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }\PYG{n+nf}{[x, k] = newton\PYGZus{}armijo}\PYG{p}{(}f, df, ddf, x0, t\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{x}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{x0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n+nb}{i}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{df\PYGZus{}val}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{df}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{n+nb}{norm}\PYG{p}{(}\PYG{n}{df\PYGZus{}val}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{t}
+\PYG{+w}{        }\PYG{n}{p}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{ddf}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZbs{}}\PYG{+w}{ }\PYG{n}{df\PYGZus{}val}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{[}\PYG{n+nb}{alpha}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{armijo}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{df\PYGZus{}val}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.48}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.95}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{alpha}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{x}\PYG{+w}{ }\PYG{o}{+}\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{end}
+\PYG{k}{end}
+\end{Verbatim}
