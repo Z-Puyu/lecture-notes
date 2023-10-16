@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 OCT 2023 16:09
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  16 OCT 2023 13:26
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1193,14 +1193,14 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
  (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [1
+
+
+])
 \tf@toc=\write5
 \openout5 = `"Combinatorics and Graphs I.toc"'.
 
- [1
-
-
-] [2]
+ [2]
 Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 56.
 [3
@@ -1436,22 +1436,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 951--956
 
 [30
 
-] [31] 
+]
+Underfull \hbox (badness 10000) in paragraph at lines 970--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 984--988
+
+ []
+
+[31] [32] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs I.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Combinatorics and Graphs I".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36859 strings out of 478630
- 773085 string characters out of 5847730
- 1877012 words of memory out of 5000000
- 56380 multiletter control sequences out of 15000+600000
+ 36871 strings out of 478630
+ 773270 string characters out of 5847730
+ 1879012 words of memory out of 5000000
+ 56392 multiletter control sequences out of 15000+600000
  516135 words of font info for 83 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs I.pdf (31 pages).
+Output written on Combinatorics and Graphs I.pdf (32 pages).

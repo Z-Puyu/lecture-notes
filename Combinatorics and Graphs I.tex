@@ -937,7 +937,7 @@ More generally, the GF for $\left(1, k, k^2, \cdots\right)$ is $\frac{1}{1 - kx}
 \end{dfnbox}
 
 \begin{dfnbox}{Simple Graph}{simpleGraph}
-    A multigraph $G$ is said to be {\color{red} \textbf{simple}} if there is at most edge between any two distinct vertices.
+    A multigraph $G$ is said to be {\color{red} \textbf{simple}} if there is at most one edge between any two distinct vertices.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
@@ -954,4 +954,47 @@ More generally, the GF for $\left(1, k, k^2, \cdots\right)$ is $\frac{1}{1 - kx}
     \\\\
     The set of all neighbours to some $v_i \in V(G)$ is called the {\color{red} \textbf{neighbourhood set}} of $v_i$, denoted by $N_G(v_i)$. In particular, the set $N_G[v_i] \coloneqq N_G(v_i)\cup\{v_i\}$ is known as the {\color{red} \textbf{closed neighbourhood set}} of $v_i$.
 \end{dfnbox}
+\begin{dfnbox}{Empty and Complete Graphs}{empCom}
+    Let $G$ be a simple graph. $G$ is said to be an {\color{red} \textbf{empty graph}} if $e(G) = 0$, and a {\color{red} \textbf{complete graph}} if for all $u, v \in V(G)$, $(u, v) \in E(G)$. 
+\end{dfnbox}
+\begin{dfnbox}{Subgraph}{subgraph}
+    Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \subset V(G)$ and $E(H) \subset E(G)$.
+\end{dfnbox}
+\begin{dfnbox}{Spanning Subgraph}{spanSubgraph}
+    Let $H$ be a subgraph of $G$. $H$ is called a {\color{red} \textbf{spanning subgraph}} of $G$ if $V(H) = V(G)$.
+\end{dfnbox}
+\begin{dfnbox}{Induced Subgraph}{induceSubgraph}
+    Let $H$ be a subgraph of $G$. $H$ is called a {\color{red} \textbf{induced subgraph}} of $G$ if
+    \begin{equation*}
+        E(H) = \left\{uv \in E(G) \colon u, v \in V(H)\right\}.
+    \end{equation*}
+    Let $S \subseteq V(G)$, the subgraph of $G$ induced by $S$ is denoted by $[S]$.
+    \\\\
+    Alternatively, let $F \subseteq E(G)$. Define
+    \begin{equation*}
+        V' \coloneqq \bigcup \left\{\left\{u, v\right\} \colon uv \in F\right\},
+    \end{equation*}
+    then $(V', F)$ is the subgraph of $G$ induced by $F$, denoted by $G[F]$.
+\end{dfnbox}
+\section{Graph Traversal}
+\begin{dfnbox}{Walk, Trail, Path}{wtp}
+    Let $G$ be a graph and $x, y \in V(G)$, then an {\color{red} \textbf{$x$-$y$ walk}} is an alternating sequence
+    \begin{equation*}
+        W \coloneqq v_0e_1v_1e_2v_2\cdots v_{n - 1}e_nv_n
+    \end{equation*}
+    where $v_i \in V(G)$, $e_i = v_{i - 1}v_i \in E(G)$, $x = v_0$ and $y = v_n$. In particular, $W$ is {\color{red} \textbf{open}} if $v_0 \neq v_n$ and {\color{red} \textbf{closed}} otherwise. The {\color{red} \textbf{length}} of a walk is defined as the number of edges in it.
+    \\\\
+    If $e_i \neq e_j$ whenever $i \neq j$, then $W$ is called a {\color{red} \textbf{trail}}. A closed trail is called a {\color{red} \textbf{circuit}}. If $v_i \neq v_j$ whenever $i \neq j$, then $W$ is called a {\color{red} \textbf{path}}. A closed path is called a {\color{red} \textbf{cycle}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        All paths are trails and all trails are walks, but the converses are not true.
+    \end{remark}
+\end{notebox}
+Note that a path is essentially a gragh. We denote a path of order $n$ by $P_n$ and a cycle of order $n$ by $C_n$.
+
+A common tool in proofs of graph theory is the \textbf{extremal approach}, which can be demonstrated in the proposition below.
+\begin{probox}{}{}
+    If a graph $G$ conatins a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
+\end{probox}
 \end{document}
