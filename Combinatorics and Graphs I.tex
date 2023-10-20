@@ -997,4 +997,51 @@ A common tool in proofs of graph theory is the \textbf{extremal approach}, which
 \begin{probox}{}{}
     If a graph $G$ conatins a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
 \end{probox}
+\begin{dfnbox}{Connected Graph}{connected}
+    A vertex set $U \subseteq V(G)$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in U$, there exists a path from $u$ to $v$
+\end{dfnbox}
+Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then any $c(G) \in P$ induces a subgraph $[c(G)]$.
+\begin{dfnbox}{Complement}{comp}
+    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\bar{G}$ is the graph of order $n$ where
+    \begin{equation*}
+        V(\bar{G}) = V(G), \qquad e \in E(\bar{G}) \iff e \notin E(G).
+    \end{equation*}
+\end{dfnbox}
+\begin{thmbox}{Connectedness of Complement}{connectedComp}
+    If $G$ is disconnected, then $\bar{G}$ is connected.
+\end{thmbox}
+\begin{dfnbox}{Distance, Eccentricity, Diameter}{distEDia}
+    Let $G$ be a connected graph and let $u, v \in V(G)$. The {\color{red} \textbf{distance}} between $u$ and $v$, denoted by $d(u, v)$, is the length of the shortest path between $u$ and $v$. The {\color{red} \textbf{eccentricity}} of $u$ is defined to be
+    \begin{equation*}
+        e(u) = \max_{v \in V(G)}\{d(u, v)\}.
+    \end{equation*}
+    The {\color{red} \textbf{diameter}} of $G$ is defined by
+    \begin{equation*}
+        \mathrm{diam}(G) = \max_{u \in V(G)}\{e(u)\}.
+    \end{equation*}
+    The {\color{red} \textbf{radius}} of $G$ is defined by
+    \begin{equation*}
+        \mathrm{rad}(G) = \min_{u \in V(G)}\{e(u)\}.
+    \end{equation*}
+    A vertex $v$ is called a {\color{red} \textbf{central}} vertex if
+    \begin{equation*}
+        e(v) = \mathrm{rad}(v).
+    \end{equation*}
+    The subgraph induced by the set of central vertices of $G$ is known as the {\color{red} \textbf{centre}} of $G$.
+\end{dfnbox}
+\begin{thmbox}{Triangle Inequality}{triIneq}
+    If $G$ is connected, then for any $u, v, w \in V(G)$,
+    \begin{equation*}
+        d(u, v) \leq d(u, w) + d(w, v).
+    \end{equation*}
+\end{thmbox}
+\begin{thmbox}{Boundedness of Diameter}{boundedDiam}
+    If $G$ is connected, then
+    \begin{equation*}
+        \mathrm{rad}(G) \leq \mathrm{diam}(G) \leq \mathrm{rad}(G).
+    \end{equation*}
+\end{thmbox}
+\begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
+    Let $G$ be a non-trivial connected graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
+\end{dfnbox}
 \end{document}
