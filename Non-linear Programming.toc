@@ -30,3 +30,4 @@
 \contentsline {subsection}{\numberline {5.3.3}Special Case: Interior Points}{35}{subsection.5.3.3}%
 \contentsline {section}{\numberline {5.4}KKT Conditions}{35}{section.5.4}%
 \contentsline {section}{\numberline {5.5}Constrained Convex Optimisation Problems}{38}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Lagragian Dual Problems}{39}{chapter.6}%

@@ -1141,4 +1141,35 @@ Notice that for all $\mathbfit{z} \notin C(\mathbfit{x}^*, \lambda, \mu)$, eithe
         In other words, Slater's condition verifies that there is at least one point which is {\color{red} \textbf{strictly feasible}}, i.e., the interior of the feasible set is {\color{red} \textbf{non-empty}}.
     \end{remark}
 \end{notebox}
+
+\chapter{Lagragian Dual Problems}
+We would like to show that
+\begin{equation*}
+    \min_{\mathbfit{x} \in X} f(\mathbfit{x}) \quad\textrm{s.t. } g_1(\mathbfit{x})\equiv \min_{\mathbfit{x} \in X}\left\{\max_{\lambda_1 \in \mathbf{R}}\left[f(\mathbfit{x} + \lambda_1g_1(\mathbfit{x}))\right]\right\}.
+\end{equation*}
+\begin{probox}{}{}
+    \begin{equation*}
+        \max_{\lambda_1 \in \mathbf{R}}\left[f(\mathbfit{x} + \lambda_1g_1(\mathbfit{x}))\right] = \begin{cases}
+            f(\mathbfit{x}), &\quad\textrm{if } g_1(\mathbfit{x}) = 0 \\
+            \infty, &\quad\textrm{otherwise}
+        \end{cases},
+    \end{equation*}
+    \begin{equation*}
+        \max_{\mu_1 \in \mathbf{R}}\left[f(\mathbfit{x} + \mu_1h_1(\mathbfit{x}))\right] = \begin{cases}
+            f(\mathbfit{x}), &\quad\textrm{if } h_1(\mathbfit{x}) \leq 0 \\
+            \infty, &\quad\textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+\end{probox}
+\begin{equation*}
+    \min_{\mathbfit{x} \in X}\left\{\max_{\mathbfit{\lambda} \in \mathbf{R}^m, \mathbfit{\mu} \in \mathbf{R}^p_+}\left[f(\mathbfit{x}) + \mathbfit{\lambda}^{\mathrm{T}}\mathbfit{g}(\mathbfit{x}) + \mathbfit{\mu}^{\mathrm{T}}\mathbfit{h}(\mathbfit{x})\right]\right\}
+\end{equation*}
+Lagrangian function:
+\begin{equation*}
+    \mathcal{L}(\mathbfit{x}, \mathbfit{\lambda}, \mathbfit{\mu}) = f(\mathbfit{x}) + \mathbfit{\lambda}^{\mathrm{T}}\mathbfit{g}(\mathbfit{x}) + \mathbfit{\mu}^{\mathrm{T}}\mathbfit{h}(\mathbfit{x}).
+\end{equation*}
+Lagrangian dual function:
+\begin{equation*}
+    \theta(\mathbfit{\lambda}, \mathbfit{\mu}) = \inf_{\mathbfit{x} \in X} \mathcal{L}(\mathbfit{x}, \mathbfit{\lambda}, \mathbfit{\mu}).
+\end{equation*}
 \end{document}
