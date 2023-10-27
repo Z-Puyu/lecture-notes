@@ -29,3 +29,7 @@
 \contentsline {chapter}{\numberline {6}Introduction to Graphs}{30}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Terminologies}{30}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Graph Traversal}{32}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Graphs and Matrices}{34}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Bipartite Graphs}{35}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Bipartite Graphs}{35}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Tree}{36}{section.7.2}%

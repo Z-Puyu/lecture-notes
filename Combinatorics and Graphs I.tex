@@ -1044,4 +1044,73 @@ Note that connectedness is an equivalence relation. Let $P$ be a partition forme
 \begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
     Let $G$ be a non-trivial connected graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
 \end{dfnbox}
+
+\section{Graphs and Matrices}
+\begin{dfnbox}{Adjacency Matrix}{adMat}
+    Let $G$ be a multigraph with $v(G) = n$, then the {\color{red} \textbf{adjacency matrix}} denoted by $\mathbfit{A}(G)$ is an $n \times n$ matrix such that $a_{ij}$ is the number of edges incident to both $v_i, v_j \in V(G)$.
+\end{dfnbox}
+\begin{dfnbox}{Incidence Matrix}{inMat}
+    Let $G$ be a multigraph with $v(G) = n$ and $e(G) = m$, then the {\color{red} \textbf{incidence matrix}} denoted by $\mathbfit{M}(G)$ is an $n \times m$ matrix such that
+    \begin{equation*}
+        m_{ij} = \begin{cases}
+            1, &\textrm{if } e_j \textrm{ is incident with } v_i \\
+            0, &\textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+\end{dfnbox}
+\begin{probox}{}{}
+    Let $G$ be a simple graph with adjacency matrix $\mathbfit{A}$, then the $(i, j)$-th entry of $\mathbfit{A}^k$ is the number of different $v_i$-$v_j$ walks of length $k$ in $G$.
+\end{probox}
+\begin{corbox}{}{}
+    Let $G$ be a graph with $v(G) \geq 2$ and adjacency matrix $\mathbfit{A}$. Let
+    \begin{equation*}
+        \mathbfit{B} = \sum_{i = 1}^{n - 1}\mathbfit{A}^i,
+    \end{equation*}
+    then $G$ is connected if and only if $b_{ij} \neq 0$ for all $i \neq j$.
+\end{corbox}
+
+\chapter{Bipartite Graphs}
+\section{Bipartite Graphs}
+\begin{dfnbox}{Bipartite Graph}{bipartite}
+    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and $V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$.
+\end{dfnbox}
+Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is just
+\begin{equation*}
+    e(G) = \sum_{x \in V_1}d_G(x) = \sum_{y \in V_2}d_G(y).
+\end{equation*}
+\begin{dfnbox}{Join}{join}
+    Let $G_1$ and $G_2$ be two disjoint graphs of order $n_1$ and $n_2$ respectively. The {\color{red} \textbf{join}} of $G_1$ and $G_2$, deonoted by $G_1 + G_2$ is the graph such that
+    \begin{align*}
+        V(G_1 + G_2) & = V(G_1) \cup V(G_2) \\
+        E(G_1 + G_2) & = E(G_1) \cup E(G_2) \cup \left\{uv \colon u \in V(G_1), v \in V(G_2)\right\}.
+    \end{align*}
+\end{dfnbox}
+\begin{thmbox}{Complete Bipartite Graph}{completeBipartite}
+    Let $0_p$ and $0_q$ be graphs of size $0$ and orders $p$ and $q$ respectively, then $K_{p, q} = 0_p + 0_q$ is a complete bipartite graph.
+\end{thmbox}
+\begin{thmbox}{Determination of Bipartite Graphs}{bipartiteIff}
+    A graph is bipartite if and only if it contains no odd cycles.
+\end{thmbox}
+
+\section{Tree}
+\begin{dfnbox}{Tree}{tree}
+    A {\color{red} \textbf{tree}} is a {\color{red} \textbf{connected}} graph with {\color{red} \textbf{no cycles}}.
+\end{dfnbox}
+\begin{thmbox}{Equivalent Definitions for Trees}{equivDfnTree}
+    Let $T$ be a connected graph of order $n$ and size $m$, then the following statements are equivalent:
+    \begin{enumerate}
+        \item $T$ is a tree;
+        \item Every two vertices in $T$ are joined by a unique path;
+        \item $m = n - 1$.
+    \end{enumerate}
+\end{thmbox}
+\begin{dfnbox}{Forest}{forest}
+    A {\color{red} \textbf{forest}} is a graph $G$ in which each component is a tree.
+\end{dfnbox}
+\begin{probox}{}{}
+    Let $T$ be a tree with $\Delta(T) = k$. Let $n_i$ be the number of vertices in $T$ of degree $i$, then
+    \begin{equation*}
+        n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}.
+    \end{equation*}
+\end{probox}
 \end{document}
