@@ -509,7 +509,7 @@ In later sections, we will prove that the same rule applies to continuous random
 \end{dfnbox}
 Following Theorem \ref{thm:funcExp}, it is easy to see that if $X$ is discrete, then
 \begin{equation*}
-    E[X^n] = \sum_{i = 1}^{\infty}x_ip_X(x_i).
+    E[X^n] = \sum_{i = 1}^{\infty}x_i^np_X(x_i).
 \end{equation*}
 
 \subsection{Variance}
@@ -688,4 +688,198 @@ Note that for $X \sim \mathrm{Po}(\lambda)$, we can find some $Y \sim \mathrm{B}
 \begin{thmbox}{Expectation and Variance of Poisson Random Variables}{poExpVar}
     If $X \sim \mathrm{Po}(\lambda)$ where $\lambda > 0$, then $E[X] = \mathrm{Var}(X) = \lambda$.
 \end{thmbox}
+\begin{dfnbox}{Weakly Dependent}{weakDepend}
+    Let $E$ and $F$ be two events. If $P(E) \approx P(E\mid F)$, we say that $E$ and $F$ are {\color{red} \textbf{weakly dependent}}.
+\end{dfnbox}
+Let $i = 1, 2, 3, \cdots, n$ and $p_i$ be the probability of event $i$ occurring. If the $i$'s are independent or weakly dependent, then we can approximate for large $n$ that the rate of occurrences of these events is $\sum_{i = 1}^{n}p_i$. Let $X$ be the number of events which occur, then 
+\begin{equation*}
+    X \sim \mathrm{Po}\left(\sum_{i = 1}^{n}p_i\right).
+\end{equation*}
+\begin{thmbox}{Poisson Process}{poissonProcess}
+    Let $E$ be an event which occurs randomly. Assume that
+    \begin{enumerate}
+        \item there are $\lambda$ occurrences per unit interval;
+        \item no two occurrences happen at the same point;
+        \item numbers of occurrences in disjoint intervals are independent.
+    \end{enumerate}
+    Let $N(t)$ be the number of occurrences of $E$ in an interval of length $t$, then $N(t) \sim \mathrm{Po}(\lambda t)$.
+\end{thmbox}
+
+\subsection{Geometric Random Variable}
+Suppose we perform some experiment with a probability of success of $p$. Let $X$ be the number of failures before the first success occurs, then clearly,
+\begin{equation*}
+    P(X = x) = (1 - p)^xp.
+\end{equation*}
+Additionally, let $Y$ be the number of trials needed to reach the first success, then
+\begin{equation*}
+    P(Y = y) = (1 - p)^{y - 1}p.
+\end{equation*}
+Note that both $\bigl(P(X = x)\bigr)$ and $\bigl(P(Y = y)\bigr)$ form geometric sequences.
+\begin{dfnbox}{Geometric Random Variable}{geoDRV}
+    A random variable $X$ is called a {\color{red} \textbf{geometric random variable}} with parameter $p \in (0, 1)$, denoted by $X \sim \mathrm{Geo}(p)$, if
+    \begin{equation*}
+        p_X(n) = (1 - p)^{n - 1}p.
+    \end{equation*}
+\end{dfnbox}
+\begin{thmbox}{Expectation and Variance of Geometric Random Variables}{expVarGeo}
+    If $X \sim \mathrm{Geo}(p)$, then $E[X] = \frac{1}{p}$ and $\mathrm{Var}(X) = \frac{1 - p}{p^2}$.
+\end{thmbox}
+\subsection{Negative Binomial Random Variable}{negBinDRV}
+Suppose we perform some experiment with a probability of success of $p$. Let $X$ be the number of trials needed to achieve the $r$-th success, then clearly, for $X = n$, we need $(r - 1)$ successes (i.e., $(n - r)$ failures) in the first $(n - 1)$ trials and the $r$-th trial to be a success. Therefore,
+\begin{equation*}
+    P(X = n) = C^{n - 1}_{r - 1}p^{r - 1}(1 - p)^{n - r}p = C^{n - 1}_{r - 1}p^r(1 - p)^{n - r}.
+\end{equation*}
+\begin{dfnbox}{Negative Binomial Random Variable}{negBinDRV}
+    A random variable $X$ is called a {\color{red} \textbf{negative binomial random variable}} if
+    \begin{equation*}
+        p_X(n) = \begin{pmatrix}
+            n - 1 \\
+            r - 1
+        \end{pmatrix}p^r(1 - p)^{n - r},
+    \end{equation*}
+    where $0 < p < 1$ and $n \geq r$, denoted as $X \sim \mathrm{NB}(r, p)$.
+\end{dfnbox}
+\begin{thmbox}{Expection and Variance of Negative Binomial Variables}{expVarNegBin}
+    Let $X \sim \mathrm{NB}(r, p)$, then
+    \begin{equation*}
+        E[X] = \frac{r}{p}, \qquad \mathrm{Var}(X) = \frac{r(1 - p)}{p^2}.
+    \end{equation*}
+\end{thmbox}
+
+\subsection{Hypergeometric Random Variable}
+Suppose a collection contains $N$ objects, $m$ of which are of type A. If $n$ objects are selected randomly without replacement and let $X$ be the number of objects of type A selected, then 
+\begin{equation*}
+    P(X = x) = \frac{\begin{pmatrix}
+        m \\
+        x
+    \end{pmatrix}\begin{pmatrix}
+        N - m\\
+        n - x
+    \end{pmatrix}}{\begin{pmatrix}
+        N \\
+        n
+    \end{pmatrix}}.
+\end{equation*}
+\begin{dfnbox}{Hypergeometric Random Variable}{hGeo}
+    A random variable $X$ is called a {\color{red} \textbf{hypergeometric random variable}} with parameters $(n, N, m)$ if
+    \begin{equation*}
+        p_X(x) = \frac{\begin{pmatrix}
+            m \\
+            x
+        \end{pmatrix}\begin{pmatrix}
+            N - m\\
+            n - x
+        \end{pmatrix}}{\begin{pmatrix}
+            N \\
+            n
+        \end{pmatrix}},
+    \end{equation*}
+    where $0 \leq m, n \leq N$.
+\end{dfnbox}
+\begin{thmbox}{\small Expection and Variance of Hypergeometric Random Variables}{expVarHGeo}
+    Let $X$ be a hypergeometric random variable with parameters $(n, N, m)$, then
+    \begin{equation*}
+        E[X] = np, \qquad \mathrm{Var}(X) = np(1 - p)\left(1 - \frac{n - 1}{N - 1}\right).
+    \end{equation*}
+\end{thmbox}
+
+\section{Continuous Random Variables}
+In real life, the outcomes of certain events are infinitely many, and so they cannot be enumerated as discrete cases. Thus, we will need to use \textit{continuous random variables} to model these events.
+\begin{dfnbox}{Continuous Random Variable}{CRV}
+    A random variable $X$ is a {\color{red} \textbf{continuous random variable}} if there exists some non-negative function $f_X$ such that for all $B \subseteq \R$,
+    \begin{equation*}
+        P(X \in B) = \int_B\!f_X(x)\,\mathrm{d}x.
+    \end{equation*}
+    The function $f_X$ is known as the {\color{red} \textbf{probability density function}} of $X$. The function $F_X$ with $0 \leq F_X(x) \leq 1$ and $F_X'(x) = f_X(x)$ is known as the {\color{red} \textbf{cumulative distribution function}} of $X$.
+\end{dfnbox}
+An interesting property of a continuous random variable $X$ is that
+\begin{equation*}
+    P(X = x) = \int_{x}^{x}\!f_X(x) \,\mathrm{d}x = 0,
+\end{equation*}
+which means that the probability of any single outcome of an event is $0$, but this does not mean that it is impossible to occur! In particular, it is more meaningful to consider the probability of the occurrence of a range of outcomes. We have
+\begin{align*}
+    P(a \leq X \leq b) = P(a < X < b) = & P(a \leq X < b) = P(a < X \leq b) = \int_{a}^{b}\!f_X(x) \,\mathrm{d}x, \\
+    P(X \leq a) = & P(X < a) = \int_{-\infty}^{a}\!f_X(x) \,\mathrm{d}x.
+\end{align*}
+Let $X$ be a continuous random variable with probability density function $f_X$ such that $f_X(x) = 0$ for all $x \in \R - [a, b]$. We divide $[a, b]$ into $n$ intervals $[x_{i - 1}, x_i]$ for $i = 1, 2, 3, \cdots, n$ with equal length $\symrm{\Delta} x = \frac{b - a}{n}$. Thus,
+\begin{equation*}
+    P(x_{i - 1} < X < x_i) \approx \symrm{\Delta}xf_X(x_i).
+\end{equation*}
+Let $Y$ be a discrete random variable with $P(Y = x_i) = \symrm{\Delta}xf_X(x_i)$, then 
+\begin{equation*}
+    E[X] \approx E[Y] = \sum_{i = 1}^{n}x_i\symrm{\Delta}xf_X(x_i).
+\end{equation*}
+When $n \to \infty$, i.e., $\symrm{\Delta}x \to 0$, we have
+\begin{equation*}
+    \lim_{\symrm{\Delta}x \to 0}E[Y] = \int_{a}^{b}\!xf_X(x)\,\mathrm{d}x.
+\end{equation*}
+By letting $a \to -\infty$ and $b \to \infty$, we have arrived at the following definition:
+\begin{dfnbox}{Expectation of Continuous Random Variables}{expCRV}
+    Let $X$ be a continuous random variable with probability density function $f_X$, then
+    \begin{equation*}
+        E[X] = \int_{-\infty}^{\infty}\!xf_X(x)\,\mathrm{d}x.
+    \end{equation*}
+\end{dfnbox}
+Let $Y$ be a continuous random variable with probability density function $f$, consider
+\begin{align*}
+    \int_{0}^{\infty}\!P(Y > y)\,\mathrm{d}y & = \int_{0}^{\infty}\!\int_{y}^{\infty}\!f(x)\,\mathrm{d}x\,\mathrm{d}y \\
+    & = \int_{0}^{\infty}\!\int_{0}^{x}\!f(x)\,\mathrm{d}y\,\mathrm{d}x \\ 
+    & = \int_{0}^{\infty}\!xf(x)\,\mathrm{d}y\,\mathrm{d}x \\ 
+    & = E[Y].
+\end{align*}
+Therefore, set $Y = g(X)$, then similar to discrete random variables, we have
+\begin{equation*}
+    E\left[g(X)\right] = \int_{-\infty}^{\infty}\!g(x)f_X(x)\,\mathrm{d}x.
+\end{equation*}
+
+\subsection{Uniform Random Variable}
+Intuitively, we may call a random variable $X$ ``uniformly'' distributed in $(a, b)$ if $P(X = x)$ is a constant for all $x \in (a, b)$.
+\begin{dfnbox}{Uniform Random Variable}{uniCRV}
+    A continuous random variable $X$ is a {\color{red} \textbf{uniform random variable}} if
+    \begin{equation*}
+        f_X(x) = \begin{cases}
+            \frac{1}{b - a}, & \quad\textrm{if } a < x < b \\
+            0, & \quad\textrm{otherwise}
+        \end{cases},
+    \end{equation*}
+    denoted by $X \sim \mathrm{U}(a, b)$.
+\end{dfnbox}
+Let $X \sim \mathrm{U}(a, b)$, then the cumulative density function is
+\begin{equation*}
+    F_X(x) = \begin{cases}
+        0, & \quad\textrm{if } x \leq a \\
+        \frac{x - a}{b - a}, & \quad\textrm{if } a < x < b \\
+        1, & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+\begin{thmbox}{Expectation and Variance of Uniform Random Variables}{expVarUni}
+    Let $X \sim \mathrm{U}(a, b)$, then $E[X] = \frac{a + b}{2}$ and $\mathrm{Var}(X) = \frac{(b - a)^2}{12}$.
+\end{thmbox}
+
+\subsection{Normal Random Variable}
+\begin{dfnbox}{Normal Random Variable}{normal}
+    A continuous random variable $Z$ with probability density function $\phi$ is a {\color{red} \textbf{normal random variable}} if 
+    \begin{equation*}
+        \phi(z) = \frac{1}{\sqrt{2\symrm{\pi}}\sigma}e^{-\frac{(z - \mu)^2}{2\sigma^2}},
+    \end{equation*}
+    denoted as $Z \sim \mathcal{N}\left(\mu, \sigma^2\right)$.
+\end{dfnbox}
+In particular, $Z \sim \mathcal{N}(0, 1)$ is known as the \textit{standard normal random variable}. Let $\Phi$ be the cumulative density function for $Z$, then 
+\begin{equation*}
+    \Phi(z) = P(Z < z) = \frac{1}{\sqrt{2\symrm{\pi}}}\int_{-\infty}^{z}\!\mathrm{e}^{-\frac{t^2}{2}} \,\mathrm{d}t.
+\end{equation*}
+Let $X \sim \mathcal{N}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma}$, so
+\begin{equation*}
+    \Phi_X(x) = P\left(X < x\right) = P\left(\frac{X - \mu}{\sigma} < \frac{x - \mu}{\sigma}\right) = \Phi\left(\frac{x - \mu}{\sigma}\right)
+\end{equation*}
+\begin{thmbox}{Expection and Variance of Normal Random Variables}{expVarNormal}
+    Let $Z \sim \mathcal{N}(\mu, \sigma^2)$, then $E[Z] = \mu$ and $\mathrm{Var}(Z) = \sigma^2$.
+\end{thmbox}
+
+\subsection{Exponential Random Variable}
+Let $N(t) \sim \mathrm{Po}(t\lambda)$ be the number of occurrences of an event in an interval of length $t$. Suppose $X$ is the time before the first occurrence of the event, then
+\begin{equation*}
+    P(X > t) = P(N(t) = 0) = \mathrm{e}^{-\lambda t}.
+\end{equation*}
+In other words, if $F_X$ is the cumulative distribution function of $X$, then $F_X(x) = 1 - \mathrm{e}^{-\lambda t}$.
 \end{document}

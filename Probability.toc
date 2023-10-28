@@ -19,3 +19,10 @@
 \contentsline {subsection}{\numberline {4.2.2}Variance}{18}{subsection.4.2.2}%
 \contentsline {subsection}{\numberline {4.2.3}Bernoulli and Binomial Random Variables}{20}{subsection.4.2.3}%
 \contentsline {subsection}{\numberline {4.2.4}Poisson Random Variable}{22}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Geometric Random Variable}{24}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Negative Binomial Random Variable}{24}{subsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.2.7}Hypergeometric Random Variable}{25}{subsection.4.2.7}%
+\contentsline {section}{\numberline {4.3}Continuous Random Variables}{26}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Uniform Random Variable}{27}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Normal Random Variable}{28}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Exponential Random Variable}{29}{subsection.4.3.3}%
