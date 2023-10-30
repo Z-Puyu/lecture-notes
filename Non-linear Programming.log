@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  20 OCT 2023 12:32
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  30 OCT 2023 12:04
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1426,33 +1426,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 866--870
 Chapter 5.
 [32
 
-] [33] [34]
-
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1070.
-
-[35]
-Underfull \hbox (badness 10000) in paragraph at lines 1085--1091
+] [33] [34] [35]
+Underfull \hbox (badness 10000) in paragraph at lines 1118--1124
 
  []
 
 
-Underfull \hbox (badness 1297) in paragraph at lines 1085--1091
+Underfull \hbox (badness 1297) in paragraph at lines 1118--1124
 \TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker First Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[][]$ is
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1085--1091
+Underfull \hbox (badness 10000) in paragraph at lines 1118--1124
 
  []
 
 
-Underfull \hbox (badness 2443) in paragraph at lines 1085--1091
+Underfull \hbox (badness 2443) in paragraph at lines 1118--1124
 \TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker Second Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[]$
  []
 
-[36] [37] [38]
+[36] [37] [38] [39]
 Chapter 6.
-[39
+[40
 
 ] 
 enddocument/afterlastpage: lastpage setting LastPage.
@@ -1466,12 +1462,12 @@ runsystem(del Non-linear_Programming.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 39316 strings out of 478630
- 830165 string characters out of 5847730
+ 39310 strings out of 478630
+ 830065 string characters out of 5847730
  1876012 words of memory out of 5000000
- 58741 multiletter control sequences out of 15000+600000
+ 58735 multiletter control sequences out of 15000+600000
  517959 words of font info for 110 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,15n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,16n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Non-linear Programming.pdf (39 pages).
+Output written on Non-linear Programming.pdf (40 pages).

@@ -930,32 +930,52 @@ function x = conj_grad(x0, A, b, t)
 end
     \end{amzcode}
 \end{codebox}
-\chapter{Karush-Kuhn-Tucker Condition}
-\section{Lagrange Multipliers}
-Recall that in multivariable calculus, we learn about the following method to deal with constrained optimisation problems:
-\begin{thmbox}{Lagrange Multiplier Method}{lagrangeMult}
-    Let $f \colon \mathbf{R}^n \to \mathbf{R}$ be an objective function and $g(\mathbfit{x}) = 0$ be an equality constraint, then $\mathbfit{x}^*$ is a local optimum of $f$ under the constraint $g$ if and only if there is some $\lambda \in \R$ such that
-    \begin{equation*}
-        \nabla f(\mathbfit{x}^*) = \lambda \nabla g(\mathbfit{x}^*).
-    \end{equation*}
-\end{thmbox}
-Note that the condition in Theorem \ref{thm:lagrangeMult} is equivalent to 
+\chapter{Constrained Optimisation}
+\section{Dual Optimisation Problems}
+Consider the non-linear programming problem
+\begin{align*}
+    \min_{\mathbfit{x} \in \mathbf{R}^n} & f(\mathbfit{x}) \\
+    \textrm{s.t. } & g_i(\mathbfit{x}) = 0 \quad\textrm{for } i = 1, 2, \cdots, m \\
+    & h_j(\mathbfit{x}) \leq 0 \quad\textrm{for } j = 1, 2, \cdots, p.
+\end{align*}
+Previously, we have learnt how to optimise a function with no constraint. In non-rigorous language, if we were to convert this constrained problem to an unconstrained case, we would want to transform the objective function such that any points outside of the feasible set can never possibly be an optimal solution, i.e., choosing such a point will impose a penalty to our function value. To ``get rid of'' the constraints here, we may attempt to consider penalty functions
 \begin{equation*}
-    \nabla \left(f + \lambda g\right)(\mathbfit{x}^*) = \mathbfit{0}
+    \min_{\mathbfit{x} \in \mathbf{R}^n} \left[f(\mathbfit{x}) + \sum_{i = 1}^{m}P_i\bigl(g_i(\mathbfit{x})\bigr) + \sum_{j = 1}^{p}Q_j\bigl(h_j(\mathbfit{x})\bigr)\right],
 \end{equation*}
-for some $\lambda \in \R$. Therefore, we can define a function 
+where 
+\begin{align*}
+    P_i\bigl(g_i(\mathbfit{x})\bigr) & = \begin{cases}
+        \infty, & \quad\textrm{if } g_i(\mathbfit{x}) \neq 0 \\
+        0, & \quad\textrm{otherwise}
+    \end{cases}, \\
+    Q_j\bigl(h_j(\mathbfit{x})\bigr) & = \begin{cases}
+        \infty, & \quad\textrm{if } h_j(\mathbfit{x}) > 0 \\
+        0, & \quad\textrm{otherwise}
+    \end{cases}.
+\end{align*}
+However, notice that by doing so our objective function has become \textbf{discontinuous}! To fix this, we may instead try linear functions like
 \begin{equation*}
-    \mathcal{L}(\mathbfit{x}) = f(\mathbfit{x}) + \lambda g(\mathbfit{x})
+    P_i\bigl(g_i(\mathbfit{x})\bigr) = \abs{\lambda_ig_i(\mathbfit{x})}, \qquad Q_j\bigl(h_j(\mathbfit{x})\bigr) = \mu_jh_j(\mathbfit{x}),
 \end{equation*}
-for any $f$ and $g$. Notice that any stationary point of $\mathcal{L}$ will be a local optimum for $f$ under the constraint $g$.
+where $\lambda_i \in \mathbf{R}$ and $\mu_j \in \mathbfit{R}^+_0$. One way to interpret this construct is that when our constraints are not satisfied, the $P_i$'s and $Q_j$'s will make our function value larger than $f(\mathbfit{x})$. On the other hand, if our constraints are satisfied, the function value is even smaller than $f(\mathbfit{x})$.
 
-We can extend this for a more general case.
-\begin{dfnbox}{Lagrangian Function}{lagrangeFunc}
-    Let $f \colon \mathbf{R}^n \to \mathbf{R}$ be an objective function and $g_i(\mathbfit{x}) = 0$ for $i = 1, 2, \cdots, m$ be $m$ equality constraints, then the {\color{red} \textbf{Lagrangian function}} of $f$ and $g_i$'s is defined to be
+So an obvious pitfall of this transformation is that our optimal value will be altered. However, notice that if we take
+\begin{equation*}
+    P_i\bigl(g_i(\mathbfit{x})\bigr) = \max_{\lambda_i \in \mathbf{R}}\lambda_ig_i(\mathbfit{x}), \qquad Q_j\bigl(h_j(\mathbfit{x})\bigr) = \max_{\mu_j \geq 0}\mu_jh_j(\mathbfit{x}),
+\end{equation*}
+then we essentially get back to the first group of penalty functions! 
+\begin{dfnbox}{Lagrangian Dual Problem}{lagrangianDual}
+    Let
+    \begin{align*}
+        \min_{\mathbfit{x} \in X} & f(\mathbfit{x}) \\
+        \textrm{s.t. } & g_i(\mathbfit{x}) = 0 \quad\textrm{for } i = 1, 2, \cdots, m \\
+        & h_j(\mathbfit{x}) \leq 0 \quad\textrm{for } j = 1, 2, \cdots, p
+    \end{align*}
+    be a constrained optimisation problem known as the {\color{red} \textbf{primal}} problem. The function
     \begin{equation*}
-        \mathcal{L}(\mathbfit{x}, \mathbfit{\lambda}) = f(\mathbfit{x}) + \mathbfit{\lambda}^{\mathrm{T}}\mathbfit{g}(\mathbfit{x}) = f(\mathbfit{x}) + \sum_{i = 1}^{m}\lambda_i g(\mathbfit{x}),
+        \mathcal{L}(\mathbfit{x}, \mathbfit{\lambda}, \mathbfit{\mu}) = f(\mathbfit{x}) + \mathbfit{\lambda}^{\mathrm{T}}\mathbfit{g}(\mathbfit{x}) + \mathbfit{\mu}^{\mathrm{T}}\mathbfit{h}(\mathbfit{x}) = f(\mathbfit{x}) + \sum_{i = 1}^{m}\lambda_i g_i(\mathbfit{x}) + \sum_{j = 1}^{p}\mu_j h_j(\mathbfit{x})
     \end{equation*}
-    where
+    is known as the {\color{red} \textbf{Lagrangian}} of the optimisation problem, where
     \begin{equation*}
         \mathbfit{\lambda} = \begin{bmatrix}
             \lambda_1 \\
@@ -967,11 +987,24 @@ We can extend this for a more general case.
             g_2 \\
             \vdots \\
             g_m
-        \end{bmatrix}
+        \end{bmatrix}, \qquad \mathbfit{\mu} = \begin{bmatrix}
+            \mu_1 \\
+            \mu_2 \\
+            \vdots \\
+            \mu_p
+        \end{bmatrix}, \qquad \mathbfit{h} = \begin{bmatrix}
+            h_1 \\
+            h_2 \\
+            \vdots \\
+            h_p
+        \end{bmatrix}.
     \end{equation*}
-    and the $\lambda_i$'s are scalar coefficients.
+    The {\color{red} \textbf{Lagrangian dual}} problem is the optimisation problem
+    \begin{align*}
+        \max_{\lambda_i \in \mathbf{R}, \mu_j \geq 0}\left[\min_{\mathbfit{x}\in X}\mathcal{L}(\mathbfit{x}, \mathbfit{\lambda}, \mathbfit{\mu})\right].
+    \end{align*}
+    
 \end{dfnbox}
-Notice that it suffices to solve $\nabla \mathcal{L}(\mathbfit{x}, \mathbfit{\lambda}) = \mathbfit{0}$ to obtain the local optima of $f$ under the constraints $g_i$'s. However, in a constrained NLP we may also deal with inequality constraints, so we cannot use Lagrangian multiplier method directly in those cases! 
 
 However, notice that along the ``boundary'' of the feasible set, the inequality constraints will transform into equality constraints. This motivates us to consider the feasible points along the boundary first.
 
