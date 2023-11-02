@@ -484,7 +484,7 @@ Now, we are able to apply the following tests:
         \item $H_f(\mathbfit{x})$ is indefinite for some $\mathbfit{x} \in D \implies f$ is neither convex nor concave on $D$.
     \end{itemize}
 \end{thmbox}
-\chapter{Unconstrained NLPs}
+\chapter{Unconstrained Optimisation}
 \section{Coercive Functions}
 \begin{dfnbox}{Coercive Function}{coerciveFunc}
     A {\color{red} \textbf{continuous}} function $f \colon \mathbf{R}^n \to \mathbf{R}$ is said to be {\color{red} \textbf{coercive}} if
@@ -504,6 +504,7 @@ Now, we are able to apply the following tests:
         which is a compact set. So by Weiestrass' Theorem, there exists some $\mathbfit{x}^* \in B(\mathbfit{0}, r)$ such that $f(\mathbfit{x}^*) \leq f(\mathbfit{x}) \leq f(\mathbfit{0})$ for all $\mathbfit{x} \in B(\mathbfit{0}, r)$. Now, this means that for all $\mathbfit{x} \in \mathbf{R}^n$, we have $(\mathbfit{x}^*) \leq f(\mathbfit{x})$, which means that $\mathbfit{x}^*$ is a global minimiser for $f$.
     \end{proof}
 \end{thmbox}
+\section{Critical Points}
 \begin{dfnbox}{Stationary (Critical) Point}{stationaryPt}
     Let $X \subseteq \mathbf{R}^n$ be an open set and let $f \colon X \to \mathbf{R}$ be a function. An interior point $\mathbfit{x}^*$ is called a {\color{red} \textbf{stationary point}} of $f$ if $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$.
 \end{dfnbox}
