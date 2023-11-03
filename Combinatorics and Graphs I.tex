@@ -1123,4 +1123,31 @@ Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is
 \begin{corbox}{}{}
     If $G$ is a connected graph of order $n$, then $e(G) \geq n - 1$.
 \end{corbox}
+\begin{dfnbox}{Contraction}{contraction}
+    Let $G$ be a connected multigraph of order $n$ and let $e = uv$ be an egde of $G$. A {\color{red} \textbf{contraction}} of $G$ of $e$, denoted by $G \circ e$, is produced by removing $e$ and identifying $u$ and $v$ into a single vertex.
+\end{dfnbox}
+Let $G$ be a connected multigraph, we denote the number of spanning trees of $G$ by $\tau(G)$.
+\begin{thmbox}{Recursive Algorithm for $\tau(G)$}{recursiveTau}
+    Let $G$ be a connected multigraph, then
+    \begin{equation*}
+        \tau(G) = \tau(G - e) + \tau(G \circ e)
+    \end{equation*}
+    for all $e \in E(G)$.
+\end{thmbox}
+\begin{thmbox}{Matrix Tree Theorem}{matTree}
+    Let $\mathbfit{A}$ be the adjacency matrix of a multigraph $G$ and $\mathbfit{C}$ be the $n \times n$ diagonal matrix defined by
+    \begin{equation*}
+        c_{ij} = \begin{cases}
+            d(v_i) & \quad\textrm{if } i = j \\
+            0 & \quad\textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+    Then, $\tau(G)$ is the cofactor of any entry of $\mathbfit{C - A}$. 
+\end{thmbox}
+\begin{thmbox}{Number of Spanning Trees for Complete Graphs}{completeTau}
+    Let $n \in \N$ and $n \geq 2$ and let $K_n$ be a complete graph, then $\tau(K_n) = n^{n - 2}$.
+\end{thmbox}
+\begin{thmbox}{Number of Spanning Trees for Complete Bipartite Graphs}{completeBipartiteTau}
+    For all $r \in \Z^+$, let $K_{2, r}$ be a complete bipartite graph with partite sets of sizes $2$ and $r$, then $\tau\left(K_{2, r}\right) = 2^{r - 1}r$.
+\end{thmbox}
 \end{document}
