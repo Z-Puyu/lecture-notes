@@ -882,4 +882,70 @@ Let $N(t) \sim \mathrm{Po}(t\lambda)$ be the number of occurrences of an event i
     P(X > t) = P(N(t) = 0) = \mathrm{e}^{-\lambda t}.
 \end{equation*}
 In other words, if $F_X$ is the cumulative distribution function of $X$, then $F_X(x) = 1 - \mathrm{e}^{-\lambda t}$.
+\begin{dfnbox}{Exponential Random Variable}{expCRV}
+    A continuous random variable $X$ is an {\color{red} \textbf{exponential random variable}} if 
+    \begin{equation*}
+        f_X(x) = \begin{cases}
+            \lambda\mathrm{e}^{-\lambda x}, & \quad\textrm{if } x \geq 0 \\
+            0, & \quad\textrm{otherwise}
+        \end{cases},
+    \end{equation*}
+    where $\lambda > 0$, denoted as $X \sim \mathrm{Exp}\left(\lambda\right)$.
+\end{dfnbox}
+\begin{thmbox}{Expection and Variance of Exponential Random Variables}{expVarExp}
+    Let $X \sim \mathrm{Exp}(\lambda)$, then $E[X] = \frac{1}{\lambda}$ and $\mathrm{Var}(X) = \frac{1}{\lambda^2}$.
+\end{thmbox}
+Informally, an exponential random variable models the \textbf{waiting time} before an event occurs. Suppose we have already waited for $s$ unit of time for the occurrence, we may wish to know the probability of us having to wait for another $t$ unit of time. To solve such questions, we need to understand the \textit{memoryless} property.
+\begin{dfnbox}{Memoryless Property}{memoryless}
+    Let $X$ be a random variable, we say that $X$ is {\color{red} \textbf{memoryless}} if
+    \begin{equation*}
+        P(X > s + t \mid X > t) = P(X > s). 
+    \end{equation*}
+\end{dfnbox}
+In particular, if $X \sim \mathrm{Exp}(\lambda)$, consider
+\begin{align*}
+    P(X > s + t \mid X > t) & = \frac{\mathrm{e}^{-\lambda(s + t)}}{\mathrm{e}^{-\lambda t}} \\
+    & = \mathrm{e}^{-\lambda s} \\
+    & = P(X > s).
+\end{align*}
+Therefore, exponential random variables are memoryless. One may also prove that geometric random variables are also memoryless.
+
+Now we introduce another random variable which is closely related to the exponential random variable.
+\begin{dfnbox}{Double Exponential Random Variable}{doubleExpCRV}
+    A continuous random variable $X$ is a {\color{red} \textbf{double exponential variable}} if 
+    \begin{equation*}
+        f_X(x) = \frac{1}{2}\lambda x^{-\lambda\abs{x}}
+    \end{equation*}
+    for some $\lambda > 0$.
+\end{dfnbox}
+Consider $Y = \abs{X}$ where $X$ is a double exponential random variable. The double exponential random variable is so named because for any $y \geq 0$,
+\begin{align*}
+    P(Y > y) & = P(X > y) + P(X < -y) \\
+    & = 2P(X > y) \\
+    & = 2\int_{y}^{\infty}\!\frac{1}{2}\lambda \mathrm{e}^{-\lambda x}\,\mathrm{d}x \\
+    & = \mathrm{e}^{-\lambda y}.
+\end{align*}
+Thus, $Y = \abs{X} \sim \mathrm{Exp}(\lambda)$.
+
+A common application of exponential random variables is to determine the \textit{hazard rate}. Suppose $X$ is the survival time of some object and that the object has already survived for a time $t$. Consider $\epsilon$ to be a small interval, then the probability that the object cannot survive past this small interval is approximately
+\begin{align*}
+    P(X < t + \epsilon \mid X > t) & = \frac{P(t < X < t + \epsilon)}{P(X > t)} \\
+    & \approx \frac{\epsilon f_X(t)}{1 - F_X(t)}.
+\end{align*}
+In general, we have the following definition:
+\begin{dfnbox}{Hazard Rate Function}{hazardRatef}
+    Let $X$ be a positive continuous random variable and define $\overline{F_X}(x) = 1 - F_X(x)$, then the function
+    \begin{equation*}
+        \lambda(x) = \frac{f_X(x)}{\overline{F_X}(x)}
+    \end{equation*}
+    is known as the {\color{red} \textbf{hazard rate function}} of $X$.
+\end{dfnbox}
+In particular, if $X \sim \mathrm{Exp}(\lambda)$, then its hazard rate funtion is just $\lambda(x) = \lambda$, which is also known as the \textit{rate} of $X$.
+
+\section{Jointly Distributed Random Variables}
+Sometimes, the outcomes of the events we wish to study cannot be expressed with a single random variable. In general, if $X_1, X_2, \cdots, X_n$ are random variables, we may be interested to know
+\begin{equation*}
+    P\bigl((X_1, X_2, \cdots, X_n) \in C\bigr), \qquad C \subseteq \R^n.
+\end{equation*}
+Take $C = \bigcap_{i = 1}^{n}(-\infty, x_i]$, then $(X_1, X_2, \cdots, X_n) \in C$ if and only if $X_i \leq x_i$ for $i = 1, 2, \cdots, n$.
 \end{document}
