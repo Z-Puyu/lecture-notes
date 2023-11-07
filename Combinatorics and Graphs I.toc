@@ -34,3 +34,6 @@
 \contentsline {section}{\numberline {7.1}Bipartite Graphs}{35}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Tree}{36}{section.7.2}%
 \contentsline {subsection}{\numberline {7.2.1}Spanning Tree}{36}{subsection.7.2.1}%
+\contentsline {chapter}{\numberline {8}Weighted Graphs}{38}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Weight}{38}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Minimum Spanning Trees}{38}{section.8.2}%
