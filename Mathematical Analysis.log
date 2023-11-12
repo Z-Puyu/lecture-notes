@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  13 OCT 2023 16:34
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  7 NOV 2023 15:08
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1298,22 +1298,23 @@ Underfull \hbox (badness 1242) in paragraph at lines 475--480
 
 [16
 
-] [17] 
+] [17]
+Chapter 4.
+[18
+
+] [19] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Mathematical Analysis.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Mathematical Analysis".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36265 strings out of 478630
- 759742 string characters out of 5847730
+ 36273 strings out of 478630
+ 759862 string characters out of 5847730
  1885012 words of memory out of 5000000
- 55777 multiletter control sequences out of 15000+600000
+ 55785 multiletter control sequences out of 15000+600000
  519534 words of font info for 109 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,13n,128p,1208b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Mathematical Analysis.pdf (17 pages).
+Output written on Mathematical Analysis.pdf (19 pages).

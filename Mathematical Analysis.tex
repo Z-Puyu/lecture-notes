@@ -487,4 +487,45 @@ The above intuition is formulated formally as follows:
 \begin{dfnbox}{Limit of Functions}{funcLim}
     Let $f$ be a function over some $A \subseteq \R$. If $c$ is a cluster point of $A$, then $L \in \R$ is called the {\color{red} \textbf{limit}} of $f$ at $c$ if for all $\epsilon > 0$, there exists some $\delta \in \R$ such that whenever $0 < \abs{x - c} < \delta$, $\abs{f(x) - L} < \epsilon$. 
 \end{dfnbox}
+
+\chapter{Topology and Metric Spaces}
+\section{Metric Space}
+\begin{dfnbox}{Metric}{metric}
+    A {\color{red} \textbf{metric}} on a set $S$ is a function $d \colon S \times S \to \R$ that satisfies the following:
+    \begin{enumerate}
+        \item $d(x, y) \geq 0$ for all $x, y \in S$ (positivity);
+        \item $d(x, y) = 0$ if and only if $x = y$ (definiteness);
+        \item $d(x, y) = d(y, x)$ for all $x, y \in S$ (symmetry);
+        \item $d(x, y) \leq d(x, z) + d(z, y)$ for all $x, y, z \in S$ (triangular inequality).
+    \end{enumerate}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The metric is sometimes also called a {\color{red} \textbf{distance function}}.
+    \end{remark}
+\end{notebox}
+\begin{dfnbox}{Metirc Space}{metricSpace}
+    A {\color{red} \textbf{emtric space}} $(S, d)$ is a set $S$ together with a metric $d$ on $S$.    
+\end{dfnbox}
+In the Euclidean space $\R^n$, a usual definition for distance is
+\begin{equation*}
+    d_2(\mathbfit{x}, \mathbfit{y}) = \left[\sum_{i = 1}^{n}(y_i - x_i)^2\right]^{\frac{1}{2}}.
+\end{equation*}
+Note that $(\R^n, d_2)$ is a metric space, where $d_2$ is known as the \textit{Euclidean distance}. In general, we can prove that for any $p \in \N^+$,
+\begin{equation*}
+    d_p(\mathbfit{x}, \mathbfit{y}) = \left[\sum_{i = 1}^{n}\abs{y_i - x_i}^p\right]^{\frac{1}{p}}
+\end{equation*}
+is a metric over $\R^n$. Furthermore, notice that
+\begin{equation*}
+    \max_{i \in \N^+, i \leq n}\abs{y_i - x_i}^p \leq \sum_{i = 1}^{n}\abs{y_i - x_i}^p \leq n\max_{i \in \N^+, i \leq n}\abs{y_i - x_i}^p.
+\end{equation*}
+Taking the $p$-th root on all three parts, we have
+\begin{equation*}
+    \max_{i \in \N^+, i \leq n}\abs{y_i - x_i} \leq \left[\sum_{i = 1}^{n}\abs{y_i - x_i}^p\right]^{\frac{1}{p}} \leq n^{\frac{1}{p}}\max_{i \in \N^+, i \leq n}\abs{y_i - x_i}.
+\end{equation*}
+By Theorem \ref{thm:squeeze}, this allows us to define
+\begin{equation*}
+    d_\infty(\mathbfit{x}, \mathbfit{y}) = \lim_{p \to \infty}d_p(\mathbfit{x}, \mathbfit{y}) = \max_{i \in \N^+, i \leq n}\abs{y_i - x_i}.
+\end{equation*}
+$d_\infty(\mathbfit{x}, \mathbfit{y})$ can be alternatively written as $\norm{\mathbfit{x - y}}_\infty$, which is known as the \textit{infinite norm}.
 \end{document}
