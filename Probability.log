@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  4 NOV 2023 19:08
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 NOV 2023 19:25
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1227,7 +1227,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 387--390
 Chapter 4.
 [15
 
-] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28] [29] [30] [31] 
+] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28] [29] [30] [31] [32] [33] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Probability.aux)
 
@@ -1237,12 +1237,12 @@ Package rerunfilecheck Info: File `Probability.out' has not changed.
 (rerunfilecheck)             Checksum: B7FD3B540D64ACF3443CD352693FFCCD;5195.
  ) 
 Here is how much of TeX's memory you used:
- 36260 strings out of 478630
- 758336 string characters out of 5847730
+ 36272 strings out of 478630
+ 758518 string characters out of 5847730
  1880012 words of memory out of 5000000
- 55787 multiletter control sequences out of 15000+600000
+ 55799 multiletter control sequences out of 15000+600000
  516143 words of font info for 84 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Probability.pdf (31 pages).
+Output written on Probability.pdf (33 pages).
