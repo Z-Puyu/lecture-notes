@@ -13,3 +13,4 @@
 \contentsline {section}{\numberline {3.1}Limits of Functions}{16}{section.3.1}%
 \contentsline {chapter}{\numberline {4}Topology and Metric Spaces}{18}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Metric Space}{18}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Compact Sets}{19}{section.4.2}%

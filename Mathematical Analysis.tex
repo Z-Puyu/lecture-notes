@@ -501,11 +501,11 @@ The above intuition is formulated formally as follows:
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        The metric is sometimes also called a {\color{red} \textbf{distance function}}.
+        A metric is sometimes also called a {\color{red} \textbf{distance function}}.
     \end{remark}
 \end{notebox}
 \begin{dfnbox}{Metirc Space}{metricSpace}
-    A {\color{red} \textbf{emtric space}} $(S, d)$ is a set $S$ together with a metric $d$ on $S$.    
+    A {\color{red} \textbf{metric space}} $(S, d)$ is a set $S$ together with a metric $d$ on $S$.    
 \end{dfnbox}
 In the Euclidean space $\R^n$, a usual definition for distance is
 \begin{equation*}
@@ -528,4 +528,30 @@ By Theorem \ref{thm:squeeze}, this allows us to define
     d_\infty(\mathbfit{x}, \mathbfit{y}) = \lim_{p \to \infty}d_p(\mathbfit{x}, \mathbfit{y}) = \max_{i \in \N^+, i \leq n}\abs{y_i - x_i}.
 \end{equation*}
 $d_\infty(\mathbfit{x}, \mathbfit{y})$ can be alternatively written as $\norm{\mathbfit{x - y}}_\infty$, which is known as the \textit{infinite norm}.
+
+Using metric spaces, we can extend and generalise many notions defined in previous chapters from $\R$ to any set.
+\begin{dfnbox}{Neighbourhood}{neighbourhoodGen}
+    Let $(S, d)$ be a metric space. For any $\epsilon > 0$, the {\color{red} \textbf{$\epsilon$-neighbourhood}} of $x_0 \in S$ is the set
+    \begin{equation*}
+        V_\epsilon(x_0) \coloneqq \left\{x \in S \colon d(x_0, x) < \epsilon\right\}.
+    \end{equation*}
+    Generally, a set $U$ is called a {\color{red} \textbf{neighbourhood}} of $x \in S$ if there exists some $V_\epsilon(x) \subseteq U$.
+\end{dfnbox}
+Now, we are able to define convergence of a sequence over any general set.
+\begin{dfnbox}{Convergence}{convergenceGen}
+    Let $(x_n)$ be a sequence over a metric space $(S, d)$. $(x_n)$ is said to be {\color{red} \textbf{convergent}} to $x \in S$ if for all $\epsilon > 0$, there exists some $K \in \N$ such that whenever $n \geq K$, $d(x_n, x) < \epsilon$.
+\end{dfnbox}
+
+\section{Compact Sets}
+In real numbers, we can define the boundedness and openness of an interval. These ideas can be extended to a metric space. In particular, we would like to investigate a set which can be informally stated as ``closed and bounded''. We will define openness first.
+\begin{dfnbox}{Open and Closed Sets}{openSet}
+    Let $(S, d)$ be a metric space. $S$ is called an {\color{red} \textbf{open set}} if and only if for all $x \in S$, $S$ is a neighbourhood of $x$. A set whose complement is open is said to be {\color{red} \textbf{closed}}.
+\end{dfnbox} 
+\begin{dfnbox}{Open Cover}{openCover}
+    Let $(S, d)$ be a metric space. For $A \subseteq S$, an {\color{red} \textbf{open cover}} of $A$ is a collection
+    \begin{equation*}
+        \mathcal{G} \coloneqq \left\{G \in \mathcal{P}(S) \colon G \textrm{ is open}, A \subseteq \bigcup G\right\}.
+    \end{equation*}
+    If $\mathcal{G}' \subseteq \mathcal{G}$ and $\mathcal{G}'$ is an open cover of $A$, then $\mathcal{G}'$ is a {\color{red} \textbf{subcover}} of $\mathcal{G}$.
+\end{dfnbox}
 \end{document}
