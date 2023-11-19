@@ -19,6 +19,9 @@
 \newtheorem*{claim}{Claim}
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
+
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\dif}{\mathrm{d}}
 \begin{document}
 \fancyhead[L]{
     MA2116 Probability
@@ -798,9 +801,16 @@ An interesting property of a continuous random variable $X$ is that
 \end{equation*}
 which means that the probability of any single outcome of an event is $0$, but this does not mean that it is impossible to occur! In particular, it is more meaningful to consider the probability of the occurrence of a range of outcomes. We have
 \begin{align*}
-    P(a \leq X \leq b) = P(a < X < b) = & P(a \leq X < b) = P(a < X \leq b) = \int_{a}^{b}\!f_X(x) \,\mathrm{d}x, \\
-    P(X \leq a) = & P(X < a) = \int_{-\infty}^{a}\!f_X(x) \,\mathrm{d}x.
+    P(a \leq X \leq b) & = P(a < X < b) = P(a \leq X < b) = P(a < X \leq b) = \int_{a}^{b}\!f_X(x) \,\mathrm{d}x, \\
+    P(X \leq a) & = P(X < a) = \int_{-\infty}^{a}\!f_X(x) \,\mathrm{d}x.
 \end{align*}
+It is not surprising that a function of a continuous random variable is still a continuous random variable.
+\begin{thmbox}{Function of Continuous Random Variables}{funcCRV}
+    Let $X$ be a continuous random variable and $Y = g(X)$. If $g$ is strictly monotonic and differentiable, then 
+    \begin{equation*}
+        f_Y(y) = f_X\left(g^{-1}(y)\right)\abs{\frac{\dif}{\dif y}g^{-1}(y)}.
+    \end{equation*}
+\end{thmbox}
 Let $X$ be a continuous random variable with probability density function $f_X$ such that $f_X(x) = 0$ for all $x \in \R - [a, b]$. We divide $[a, b]$ into $n$ intervals $[x_{i - 1}, x_i]$ for $i = 1, 2, 3, \cdots, n$ with equal length $\symrm{\Delta} x = \frac{b - a}{n}$. Thus,
 \begin{equation*}
     P(x_{i - 1} < X < x_i) \approx \symrm{\Delta}xf_X(x_i).
@@ -942,6 +952,78 @@ In general, we have the following definition:
 \end{dfnbox}
 In particular, if $X \sim \mathrm{Exp}(\lambda)$, then its hazard rate funtion is just $\lambda(x) = \lambda$, which is also known as the \textit{rate} of $X$.
 
+\subsection{Gamma Random Variable}
+We have seen that the exponential random variable can be used to model the waiting time between two consecutive occurrences of an event modelled by a Poisson random variable. We would also like to know the waiting time till the $n$-th occurrence of an event.
+
+Let $N(t)$ be a Poisson process with rate $\lambda$, so $P\bigl(N(t) = n\bigr) = \frac{\e^{-\lambda t\left(\lambda t\right)^n}}{n!}$. Let $T_n$ be the waiting time till the $n$-th event with $f_k$ being the probability density function, then
+\begin{align*}
+    f_k(t) & = \frac{\dif}{\dif t}\bigl(1 - P(T_n > t)\bigr) \\
+    & = \frac{\dif}{\dif t}\Bigl(1 - P\bigl(N(t) < k\bigr)\Bigr) \\
+    & = \frac{\dif}{\dif t}\left(1 - \e^{-\lambda t}\sum_{i = 0}^{k - 1}\frac{(\lambda t)^i}{i!}\right) \\
+    & = \frac{\lambda\e^{-\lambda t}(\lambda t)^{k - 1}}{(k - 1)!}.
+\end{align*}
+\begin{dfnbox}{Gamma Random Variable}{gamma}
+    A continuous random variable $X$ is called a {\color{red} \textbf{gamma}} random variable with parameters $(n, \lambda)$ where $\lambda > 0$ if 
+    \begin{equation*}
+        f(t) = \frac{\lambda\e^{-\lambda t}(\lambda t)^{n - 1}}{(n - 1)!}
+    \end{equation*}
+    for all $t \geq 0$.
+\end{dfnbox}
+\begin{dfnbox}{Gamma Function}{gammaFunc}
+    Let $\alpha > 0$, the {\color{red} \textbf{gamma function}} is defined as
+    \begin{align*}
+        \Gamma(\alpha) & = \int_{0}^{\infty}\!\lambda\e^{-\lambda t}(\lambda t)^{\alpha - 1}\,\dif t \\
+        & = \int_{0}^{\infty}\!\lambda\e^{-x}x^{\alpha - 1}\,\dif x.
+    \end{align*}
+    In particular, if $X$ is a continuous random variable with probability density function
+    \begin{equation*}
+        f(t) = \frac{\lambda\e^{-\lambda t}(\lambda t)^{\alpha - 1}}{\Gamma(\alpha)},
+    \end{equation*}
+    where $\lambda > 0$ and $t \geq 0$, then $X$ is a gamma random variable with parameters $(\alpha, \lambda)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        One can prove that
+        \begin{enumerate}
+            \item $\Gamma(\alpha + 1) = \alpha\Gamma(\alpha)$ for all $\alpha > 0$.
+            \item $\Gamma(n) = (n - 1)!$ for all $n \in \Z^+$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Expectation and Variance of Gamma Random Variables}{expVarGamma}
+    Let $X$ be a gamma random variable with parameters $(\alpha, \lambda)$, then 
+    \begin{equation*}
+        E[X] = \frac{\alpha}{\lambda}, \qquad \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}.
+    \end{equation*}
+\end{thmbox}
+
+\subsection{Beta Random Variable}
+In real life, sometimes we may not know the exact probability distribution of a random variable and wish to deduce its probability distribution based on experiments. In other words, suppose there are $a$ successes and $b$ failures of an experiment, we wish to know what is the \textbf{most likely} probability of success.
+\begin{dfnbox}{Beta Random Variable}{beta}
+    A continuous random variable $X$ is a {\color{red} \textbf{beta}} random variable with parameters $(a, b)$ with $a, b > 0$ if 
+    \begin{equation*}
+        f_X(x) = \frac{1}{B(a, b)}x^{a - 1}(1 - x)^{b - 1},
+    \end{equation*}
+    where 
+    \begin{equation*}
+        B(a, b) = \int_{0}^{1}\!x^{a - 1}(1 - x)^{b - 1}\,\dif x = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a + b)}.
+    \end{equation*}
+\end{dfnbox}
+If $a = b = 1$, we see that
+\begin{equation*}
+    f_X(x) = \frac{\Gamma(2)}{\bigl(\Gamma(1)\bigr)^2},
+\end{equation*}
+so $X$ is uniform on $(0, 1)$. In particular, we also see that
+\begin{equation*}
+    \frac{B(a + 1, b)}{B(a, b)} = \frac{a}{a + b}.
+\end{equation*}
+\begin{thmbox}{Expectation and Variance of Beta Random Variables}{expVarBeta}
+    Let $X$ be a beta random variable with parameters $(a, b)$, then 
+    \begin{equation*}
+        E[X] = \frac{a}{a + b}, \qquad \mathrm{Var}(X) = \frac{ab}{(a + b)^2(a + b + 1)}.
+    \end{equation*}
+\end{thmbox}
+
 \section{Jointly Distributed Random Variables}
 Sometimes, the outcomes of the events we wish to study cannot be expressed with a single random variable. In general, if $X_1, X_2, \cdots, X_n$ are random variables, we may be interested to know
 \begin{equation*}
@@ -1013,6 +1095,7 @@ These are known as \textit{marginal probability density functions}.
         f_Y(y) & = \int_{-\infty}^{\infty}\!f_{X, Y}(x, y)\,\mathrm{d}x.
     \end{align*}
 \end{dfnbox}
+\subsection{Independent Random Variables}
 Recall that we have previously defined the notion of independent events (Definition \ref{dfn:indEvents}). Observe that an event can be precisely expressed as $X \in A$ for some random variable $X$ and set $A$, which motivates us to define independence of random variables.
 \begin{dfnbox}{Independent Random Variables}{indRV}
     Two random variables $X$ and $Y$ are {\color{red} \textbf{independent}} if for any sets $A$ and $B$,
@@ -1020,4 +1103,39 @@ Recall that we have previously defined the notion of independent events (Definit
         P(X \in A, Y \in B) = P(X \in A)P(Y \in B).
     \end{equation*}
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Less rigorously, notice that for Borel sets $A$ and $B$, since they can be expressed as countable unions and intersections of intervals, we can say that $X$ and $Y$ are independent if and only if $F_{X, Y}(x, y) = F_X(x)F_Y(y)$.
+    \end{remark}
+\end{notebox}
+Since the cumulative distribution functions are closely related to the probability mass and probability density, we can then check for independence using them instead. We first consider the discrete case.
+\begin{thmbox}{Independence of Discrete Random Variables}{indDRV}
+    Let $X$ and $Y$ be discrete random variables with probability mass functions $p_X$ and $p_Y$. $X$ and $Y$ are independent if and only if $p_{X, Y}(x, y) = p_X(x)p_Y(y)$.
+\end{thmbox}
+Based on Theorem \ref{thm:indDRV}, one may check that if $X$ and $Y$ are independent discrete random variables, then 
+\begin{align*}
+    E[XY] & = E[X]E[Y], \qquad \mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
+\end{align*}
+In the continuous case, we have a similar conclusion.
+\begin{thmbox}{Independence of Continuous Random Variables}{indCRV}
+    Let $X$ and $Y$ be continuous random variables with probability density functions $f_X$ and $f_Y$. $X$ and $Y$ are independent if and only if $f_{X, Y}(x, y) = f_X(x)f_Y(y)$.
+\end{thmbox}
+The above theorems and definitions can be easily extended to a countable number of independent random variables.
+
+\subsection{Sums of Independent Random Variables}
+Suppose $X$ and $Y$ are independent \textbf{integer-valued} discrete random variables, then clearly
+\begin{align*}
+    p_{X + Y}(n) & = P(X + Y = n) \\
+    & = \sum_{i}P(X = i, Y = n - i) \\
+    & = \sum_{i}p_X(i)p_Y(n - i) \\
+    & = \sum_{i + j = n}p_X(i)p_Y(j).
+\end{align*}
+On the other hand, if $X$ and $Y$ are independent continuous random variables, we have
+\begin{align*}
+    F_{X + Y}(n) & = \iint_{x + y \leq n}\!f_{X + Y}(x + y)\,\mathrm{d}x\,\mathrm{d}y \\
+    & = \int_{-\infty}^{\infty}\int_{-\infty}^{n - y}\!f_X(x)f_Y(y)\,\mathrm{d}x\,\mathrm{d}y \\
+    & = \int_{-\infty}^{\infty}\!F_X(n - y)f_Y(y)\,\mathrm{d}y \\
+    & = \int_{-\infty}^{\infty}\!F_X(n - y)\,\mathrm{d}F_Y(y).
+\end{align*}
+We say that $F_{X + Y}$ is the \textit{convolution} $F_X * F_Y$.
 \end{document}

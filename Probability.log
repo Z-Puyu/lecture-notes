@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 NOV 2023 19:25
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 NOV 2023 14:43
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1090,26 +1090,26 @@ LaTeX Warning: Label `dfn:expCRV' multiply defined.
 )
 \openout1 = `Probability.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1146,9 +1146,9 @@ LaTeX Font Info:    ... okay on input line 22.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 22.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 25.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 22.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 25.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1167,7 +1167,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 22.
+Package hyperref Info: Link coloring ON on input line 25.
 (./Probability.out) (./Probability.out)
 \@outlinefile=\write4
 \openout4 = `Probability.out'.
@@ -1193,56 +1193,60 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
  (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [1
+
+
+])
 \tf@toc=\write5
 \openout5 = `Probability.toc'.
 
- [1
-
-
-]
+ [2]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 40.
-[2
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 43.
+[3
 
-] [3] [4] [5] [6]
+] [4] [5] [6] [7]
 Chapter 2.
-[7
+[8
 
-] [8] [9] [10]
+] [9] [10] [11]
 Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--335
+Underfull \hbox (badness 10000) in paragraph at lines 335--338
 
  []
 
-[11
+[12
 
-] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 387--390
+] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 390--393
 
  []
 
-[13] [14]
+[14] [15]
 Chapter 4.
-[15
+[16
 
-] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28] [29] [30] [31] [32] [33] 
+] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28] [29] [30] [31]
+
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 983.
+
+[32] [33] [34] [35] [36] [37] [38] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Probability.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Probability.out' has not changed.
-(rerunfilecheck)             Checksum: B7FD3B540D64ACF3443CD352693FFCCD;5195.
+(rerunfilecheck)             Checksum: 9600D84E935EA3BF14DD0FF9FBC507AD;5998.
  ) 
 Here is how much of TeX's memory you used:
- 36272 strings out of 478630
- 758518 string characters out of 5847730
+ 36291 strings out of 478630
+ 758785 string characters out of 5847730
  1880012 words of memory out of 5000000
- 55799 multiletter control sequences out of 15000+600000
+ 55818 multiletter control sequences out of 15000+600000
  516143 words of font info for 84 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Probability.pdf (33 pages).
+Output written on Probability.pdf (38 pages).
