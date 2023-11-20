@@ -25,6 +25,7 @@
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+\newcommand{\e}{\mathrm{e}}
 
 \newenvironment{solution}
     {\let\oldqedsymbol=\qedsymbol
@@ -888,10 +889,10 @@ And so
 \begin{dfnbox}{Ordinary Generating Function (OGF)}{OGF}
     Let $(a_r)$ be a sequence in $\R$. The {\color{red} \textbf{ordinary generating function}} of $(a_r)$ is defined to be the series
     \begin{equation*}
-        A(x) = \sum_{i = 0}^{\infty}a_ix^0.
+        A(x) = \sum_{i = 0}^{\infty}a_ix^i.
     \end{equation*}
 \end{dfnbox}
-Note that the set of generating functions is a vector space.
+Note that the set of generating functions is a vector space. In particular, if $C(x) = A(x) + B(x)$, then $c_r = a_r + b_r$ and if $C(x) = A(x)B(x)$, then $c_r = \sum_{i = 0}^{r}a_ib_{r - i}$.
 \begin{dfnbox}{Generalised Binomial Coefficients}{}
     Let $\alpha \in \R$ and $r \in \N$, then 
     \begin{equation*}
@@ -911,16 +912,170 @@ Note that the set of generating functions is a vector space.
         \end{pmatrix}(\pm x)^r.
     \end{equation*}
 \end{dfnbox}
+\subsection{Basic Ordinary Generating Functions}
+We now examine a few basic ordinary generating functions. First, consider
+\begin{equation*}
+    a_r = \begin{cases}
+        1, & \quad\textrm{if } r = n \\
+        0, & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+It is easy to see that $A(x) = x^n$ generates this sequence.
+
+Suppose we wish to generate the number of ways to choose $r$ objects from $n$ objects, i.e., consider
+\begin{equation*}
+    a_r = \begin{cases}
+        \begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix}, & \quad\textrm{if } 0 \leq r \leq n \\
+        0, & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Note that the generating function is just the binomial expansion
+\begin{equation*}
+    (1 + x)^n = \sum_{i = 0}^{n}\begin{pmatrix}
+        n \\
+        i
+    \end{pmatrix}x^i.
+\end{equation*}
+Now consider a special case where $a_r = 1$ forms a constant sequence. In this case we have
+\begin{equation*}
+    A(x) = \sum_{i = 0}^{\infty}x^i = \frac{1}{1 - x}.
+\end{equation*}
+More generally, one can verify with generalised binomial expansion that the generating function for $\left(1, k, k^2, \cdots\right)$ is $\frac{1}{1 - kx}$.
+
 Notice that
 \begin{equation*}
-    (1 - x)^{-n} = \sum_{i = 0}^{\infty} = \begin{pmatrix}
+    (1 - x)^{-n} = \sum_{i = 0}^{\infty}\begin{pmatrix}
         n - 1 + i \\
         i
     \end{pmatrix}x^i.
 \end{equation*}
-More generally, the GF for $\left(1, k, k^2, \cdots\right)$ is $\frac{1}{1 - kx}$.
+This means that the series $(1 - x)^{-n}$ generates the number of ways to choose $r$ objects from $(n - 1 + r)$ objects. In particular, if $a_r = r + 1$, note that $a_r = C^{r + 1}_r$, so substituting $n = 2$ yields
+\begin{equation*}
+    A(x) = (1 - x)^{-2} = \frac{1}{(1 - x)^2}
+\end{equation*}
+as the generating function for $(a_r)$.
+\subsection{Operations on Ordinary Generating Functions}
+Note that an ordinary generating function is an infinite polynomial, so the set of all ordinary generating functions form a vector space. 
 
-\section{Modelling with Generating Functions}
+Additionally, the following conclusions hold:
+\begin{enumerate}
+    \item For any $\alpha, \beta \in \R$, $C(x) = \alpha A(x) + \beta B(x)$ generates $c_r = \alpha a_r + \beta b_r$.
+    \item $C(x) = A(x)B(x)$ generates $c_r = \sum_{i = 0}^{r}a_ib_{r - i}$.
+    \item For $m \in \N^+$, $C(x) = x^mA(x)$ generates 
+    \begin{equation*}
+        c_r = \begin{cases}
+            0, & \quad\textrm{if } 0 \leq r \leq m - 1 \\
+            a_{r - m}, & \quad\textrm{if } r \geq m
+        \end{cases}.
+    \end{equation*}
+    \item $C(x) = A(kx)$ generates $c_r = k^ra_r$.
+    \item $C(x) = (1 - x)A(x)$ generates
+    \begin{equation*}
+        c_r = \begin{cases}
+            a_0, & \quad\textrm{if } r = 0 \\
+            a_r - a_{r - 1} & \quad\textrm{if } r \geq 1
+        \end{cases}.
+    \end{equation*}
+    \item $C(x) = \frac{A(x)}{1 - x}$ generates $c_r = \sum_{i = 0}^{r}a_i$.
+    \item $C(x) = A'(x)$ generates $c_r = (r + 1)a_{r + 1}$.
+    \item $C(x) = xA'(x)$ generates $c_r = ra_r$.
+\end{enumerate}
+\subsection{Modelling with Generating Functions}
+\begin{tecbox}{\small Modelling Combinations with Ordinary Generating Functions}{}
+    Let $S = \left\{s_1, s_2, \cdots, s_n\right\}$ be $n$ distinct objects and let $a_r$ be the number of ways to select $r$ objects from $S$.
+    \\\\
+    To model this problem using ordinary generating functions, let $x^0$ denote the event that $s_i$ is not selected and $s_ix$ denote the event that $s_i$ is selected. Consider
+    \begin{equation*}
+        \prod_{i = 1}^{n}(1 + s_ix).
+    \end{equation*}
+    Note that the number of $r$-combinations is essentially the number of terms in the coefficient of $x^r$ in the expansion. Therefore, setting $s_i = 1$ for $i = 1, 2, \cdots, n$, the generating function for $(a_r)$ is
+    \begin{equation*}
+        (1 + x)^n = \sum_{i = 0}^{n}\begin{pmatrix}
+            n \\
+            i
+        \end{pmatrix}x^i,
+    \end{equation*}
+    which is essentially the binomial expansion.
+\end{tecbox}
+While the above modelling seems an over-kill, it becomes more useful when dealing with multi-sets. Suppose $S$ is now a multi-set instead with $s_i$ having $c_i$ copies. Then, we can let $s_i^jx^j$ denote the event that $s_i$ is selected $j$ times. Following a similar process we can obtain the corresponding generating function.
+
+In general, let 
+\begin{equation*}
+    M = \left\{n_1 \cdot b_1, n_2 \cdot b_2, \cdots, n_k \cdot b_k\right\}
+\end{equation*}
+be a multi-set and let $a_r$ be the number of ways to select $r$ objects from $M$. The generating function of $(a_r)$ is
+\begin{equation*}
+    A(x) = \prod_{i = 1}^{k}\left(\sum_{j = 0}^{n_i}x^j\right).
+\end{equation*}
+The above method enables us to also model distribution problems of $n$ identical objects into $k$ distinct collections. 
+
+However, the above method will not work if the collections are also identical. Let $x^i$ denote a collection which contains $i$ of the identical objects and let $a_r$ denote the number of ways to distribute $n$ identical objects into $r$ non-empty identical collections of size at most $k$, then $\left(x^i\right)^j$ denotes the event that there are $j$ collections of size $i$ in the distribution. As such, the generating function for $(a_r)$ is
+\begin{equation*}
+    A(x) = \prod_{i = 1}^{k}\left(\sum_{j = 0}^{\infty}x^{ij}\right) = \frac{1}{\prod_{i = 1}^{k}(1 - x^i)}.
+\end{equation*}
+This allows us to model distribution problems with various constriants.
+
+\subsection{Ferrers Diagram}
+A common application of distribution problems with $n$ identical objects and $m$ identical collections is the partition of an integer.
+\begin{dfnbox}{Integer Partition}{intPart}
+    Let $n \in \N^+$. A {\color{red} \textbf{partition}} of $n$ is a non-increasing sequence of positive integers whose sum is $n$. 
+\end{dfnbox}
+A useful tool to study such partitions is \textit{Ferrers diagram}.
+\begin{dfnbox}{Ferrers Diagram}{ferrers}
+    Let $n \in \N^+$ and consider a partition $P = \left\{n_1, n_2, \cdots, n_k\right\}$. The {\color{red} \textbf{Ferrers diagram}} of the partition, denoted as $\mathcal{F}(P)$, is an array of left-justified asterisks in which the $i$-th row has the length of $n_i$.
+\end{dfnbox}
+Just like matrices, a Ferrers diagram can be transposed.
+\begin{dfnbox}{Conjugate Partition}{conjPart}
+    Let $\mathcal{F}(P)$ be the Ferrers diagram of an integer partition $P$. $Q$ is known as the {\color{red} \textbf{conjugate partition}} of $P$ if $\mathcal{F}(Q) = \mathcal{F}(P)^{\mathrm{T}}$.
+\end{dfnbox}
+Intuitively, conjugate partition is a \textbf{symmetric relation}, and if $P$ and $Q$ are conjugate partitions, the number of parts of $Q$ is just the size of the largest part of $P$. This leads to the following theorem:
+\begin{thmbox}{Size of Conjugate Partitions}{sizeConj}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into $k$ parts equals the number of partitions of $r$ with the largest part having size $k$.
+    \tcblower   
+    \begin{proof}
+        Let $\mathcal{P}$ be the family of partitions of $r$ into $k$ parts and $\mathcal{Q}$ be the family of partitions of $r$ whose largest part has size $k$.
+        \\\\
+        Define $f \colon \mathcal{P} \to \mathcal{Q}$ such that $\mathcal{F}\bigl(f(X)\bigr) = \mathcal{F}(X)^{\mathrm{T}}$, i.e., $f(X)$ and $X$ are conjugates.
+        \\\\
+        It is easy to see that $f$ is well-defined and bijective, so $\abs{\mathcal{P}} = \abs{\mathcal{Q}}$.
+    \end{proof}
+\end{thmbox}
+Theorem \ref{thm:sizeConj} leads to the following corollary:
+\begin{corbox}{}{}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into at most $k$ parts equals the number of partitions of $r$ with the largest part having size at most $k$.
+\end{corbox}
+
+\section{Exponential Generating Functions}
+\begin{dfnbox}{Exponential Generating Function (EGF)}
+    Let $(a_r)$ be a sequence in $\R$. The {\color{red} \textbf{exponential generating function}} of $(a_r)$ is defined to be the series
+    \begin{equation*}
+        A(x) = \sum_{i = 0}^{\infty}a_i\frac{x^i}{i!}.
+    \end{equation*}
+\end{dfnbox}
+Here we introduce three basic exponential generating functions:
+\begin{enumerate}
+    \item $a_r = 1$: $A(x) = \sum_{i = 0}^{\infty}\frac{x^i}{i!} = \e^x$.
+    \item $a_r = r!$: $A(x) = \sum_{i = 0}^{\infty}x_i = \frac{1}{1 - x}$.
+    \item $a_r = k^r$ for $k \neq 0$: $A(x) = \sum_{i = 0}^{\infty}\frac{(kx)^i}{i!} = \e^{kx}$.
+\end{enumerate}
+Let $a_r = P^n_r$ be the number of $r$-permutations of $n$ distinct objects. The exponential generating function for $(a_r)$ is just 
+\begin{align*}
+    A(x) & = \sum_{i = 0}^{n}P^n_r\frac{x^i}{i!} \\
+    & = \sum_{i = 0}^{n}i!C^n_r\frac{x^i}{i!} \\
+    & = \sum_{i = 0}^{n}C^n_rx^i \\
+    & = (1 + x)^n.
+\end{align*}
+In general, let 
+\begin{equation*}
+    M = \left\{n_1 \cdot b_1, n_2 \cdot b_2, \cdots, n_k \cdot b_k\right\}
+\end{equation*}
+be a multi-set and let $a_r$ be the number of $r$-permutations of $M$. The generating function of $(a_r)$ is
+\begin{equation*}
+    A(x) = \prod_{i = 1}^{k}\left(\sum_{j = 0}^{n_i}\frac{x^j}{j!}\right).
+\end{equation*}
 
 \chapter{Recurrence Relations}
 

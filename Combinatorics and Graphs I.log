@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  6 NOV 2023 12:25
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 NOV 2023 19:11
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1090,26 +1090,26 @@ File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
  (./Combinatorics and Graphs I.aux)
 \openout1 = `"Combinatorics and Graphs I.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1146,9 +1146,9 @@ LaTeX Font Info:    ... okay on input line 38.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 38.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 39.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 38.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 39.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1167,7 +1167,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 38.
+Package hyperref Info: Link coloring ON on input line 39.
 (./Combinatorics and Graphs I.out) (./Combinatorics and Graphs I.out)
 \@outlinefile=\write4
 \openout4 = `"Combinatorics and Graphs I.out"'.
@@ -1202,257 +1202,277 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
  [2]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 56.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 57.
 [3
 
 ] [4] [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 172--179
+Underfull \hbox (badness 10000) in paragraph at lines 173--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--179
+Underfull \hbox (badness 10000) in paragraph at lines 173--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--179
+Underfull \hbox (badness 10000) in paragraph at lines 173--180
 
  []
 
 [7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 265--272
+Underfull \hbox (badness 10000) in paragraph at lines 266--273
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 265--272
+Underfull \hbox (badness 10000) in paragraph at lines 266--273
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 265--272
+Underfull \hbox (badness 10000) in paragraph at lines 266--273
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 286--291
+Underfull \hbox (badness 10000) in paragraph at lines 287--292
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 286--291
+Underfull \hbox (badness 10000) in paragraph at lines 287--292
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 314--317
+Underfull \hbox (badness 10000) in paragraph at lines 315--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 319--323
+Underfull \hbox (badness 10000) in paragraph at lines 320--324
 
  []
 
 [11]
-Underfull \hbox (badness 1838) in paragraph at lines 328--329
+Underfull \hbox (badness 1838) in paragraph at lines 329--330
 []\TU/STIXTwoText(0)/m/n/12 Let $[] [] []$. Find the number of $[]$-combinations of $[]$ such
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--342
+Underfull \hbox (badness 10000) in paragraph at lines 335--343
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--342
+Underfull \hbox (badness 10000) in paragraph at lines 335--343
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--342
+Underfull \hbox (badness 10000) in paragraph at lines 335--343
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 355--360
+Underfull \hbox (badness 10000) in paragraph at lines 356--361
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 355--360
+Underfull \hbox (badness 10000) in paragraph at lines 356--361
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 362--366
+Underfull \hbox (badness 10000) in paragraph at lines 363--367
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 411--419
+Underfull \hbox (badness 10000) in paragraph at lines 412--420
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 411--419
+Underfull \hbox (badness 10000) in paragraph at lines 412--420
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 411--419
+Underfull \hbox (badness 10000) in paragraph at lines 412--420
 
  []
 
 [14] [15]
-Overfull \hbox (7.3802pt too wide) in paragraph at lines 446--480
+Overfull \hbox (7.3802pt too wide) in paragraph at lines 447--481
 \TU/STIXTwoText(0)/m/n/12 In this section, we will see that there is a clear relation between the number of $[]$-combinations
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 534--538
+Underfull \hbox (badness 10000) in paragraph at lines 535--539
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 585--589
+Underfull \hbox (badness 10000) in paragraph at lines 586--590
 
  []
 
 [17]
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 627.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 628.
 
 [18]
 
-Package tcolorbox Warning: Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually on input line 627.
+Package tcolorbox Warning: Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually on input line 628.
 
 [19]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--647
+Underfull \hbox (badness 10000) in paragraph at lines 645--648
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 654--657
+Underfull \hbox (badness 10000) in paragraph at lines 655--658
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 668--671
+Underfull \hbox (badness 10000) in paragraph at lines 669--672
 
  []
 
 
-Underfull \hbox (badness 1990) in paragraph at lines 668--671
+Underfull \hbox (badness 1990) in paragraph at lines 669--672
 \TU/STIXTwoText(0)/m/n/12 Without loss of generality, suppose the line segments $[][][][]$, $[][][][]$ and $[][][][]$
  []
 
 [20
 
 ] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 732--737
+Underfull \hbox (badness 10000) in paragraph at lines 733--738
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 732--737
+Underfull \hbox (badness 10000) in paragraph at lines 733--738
 
  []
 
 
-Underfull \hbox (badness 1655) in paragraph at lines 732--737
+Underfull \hbox (badness 1655) in paragraph at lines 733--738
 \TU/STIXTwoText(0)/m/n/12 Without loss of generality, consider the $[][][] [] [][] [][]$-clique whose vertices are
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 739--745
+Underfull \hbox (badness 10000) in paragraph at lines 740--746
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 739--745
+Underfull \hbox (badness 10000) in paragraph at lines 740--746
 
  []
 
 [22] [23]
 Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 782--786
+Underfull \hbox (badness 10000) in paragraph at lines 783--787
 
  []
 
 [24
 
 ] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 859--862
+Underfull \hbox (badness 10000) in paragraph at lines 860--863
 
  []
 
 
-Underfull \hbox (badness 1028) in paragraph at lines 859--862
+Underfull \hbox (badness 1028) in paragraph at lines 860--863
 \TU/STIXTwoText(0)/m/n/12 In general, we also say that an $[]$-permutation of $[][]$ has a []\TU/STIXTwoText(0)/b/n/12 fixed point[] \TU/STIXTwoText(0)/m/n/12 at $[]$ if
  []
 
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 871.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 872.
 
 [26] [27]
 Chapter 4.
 [28
 
-]
+] [29]
+Underfull \hbox (badness 10000) in paragraph at lines 988--991
+
+ []
+
+
+Underfull \hbox (badness 1178) in paragraph at lines 988--991
+\TU/STIXTwoText(0)/m/n/12 To model this problem using ordinary generating functions, let $[][]$ denote the
+ []
+
+[30]
+Underfull \hbox (badness 10000) in paragraph at lines 1039--1044
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1039--1044
+
+ []
+
+[31] [32] [33]
 Chapter 5.
-[29
+[34
 
 ]
 Chapter 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--937
+Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--937
+Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--937
+Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 951--956
+Underfull \hbox (badness 10000) in paragraph at lines 1106--1111
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 951--956
+Underfull \hbox (badness 10000) in paragraph at lines 1106--1111
 
  []
 
-[30
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 970--974
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 984--988
-
- []
-
-[31] [32] [33] [34]
-Chapter 7.
 [35
 
-] [36] [37]
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1125--1129
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1139--1143
+
+ []
+
+[36] [37] [38] [39]
+Chapter 7.
+[40
+
+] [41] [42]
 Chapter 8.
-[38
+[43
 
 ] 
 enddocument/afterlastpage: lastpage setting LastPage.
@@ -1461,12 +1481,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs I".out' has not cha
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36934 strings out of 478630
- 774403 string characters out of 5847730
- 1881012 words of memory out of 5000000
- 56453 multiletter control sequences out of 15000+600000
- 516151 words of font info for 85 fonts, out of 8000000 for 9000
+ 36953 strings out of 478630
+ 774812 string characters out of 5847730
+ 1882012 words of memory out of 5000000
+ 56471 multiletter control sequences out of 15000+600000
+ 516159 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs I.pdf (38 pages).
+Output written on Combinatorics and Graphs I.pdf (43 pages).
