@@ -1095,6 +1095,27 @@ These are known as \textit{marginal probability density functions}.
         f_Y(y) & = \int_{-\infty}^{\infty}\!f_{X, Y}(x, y)\,\mathrm{d}x.
     \end{align*}
 \end{dfnbox}
+Lastly, we state the notion of \textit{joint distribution of functions}.
+\begin{thmbox}{Joint Distribution of Functions}{jointDistrFunc}
+    Let $X_1$ and $X_2$ be jointly continuous random variables. Let $Y_1 = g_1(X_1, X_2)$ and $Y_2 = g_2(X_1, X_2)$. If for all $y_1, y_2$, the linear system
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1 \\
+            y_2
+        \end{bmatrix} = \begin{bmatrix}
+            g_1(x_1, x_2) \\
+            g_2(x_1, x_2)
+        \end{bmatrix}
+    \end{equation*}
+    has a unique solution, and the Jacobian
+    \begin{equation*}
+        J(x_1, x_2) = \frac{\partial y_1}{\partial x_1}\cdot\frac{\partial y_2}{\partial x_2} - \frac{\partial y_1}{\partial x_2}\cdot \frac{\partial y_2}{\partial x_1}
+    \end{equation*}
+    is continuous and non-zero, then
+    \begin{equation*}
+        f_{Y_1, Y_2}(y_1, y_2) = f_{X_1, X_2}(x_1, x_2)\abs{J(x_1, x_2)}^{-1}.
+    \end{equation*}
+\end{thmbox}
 \subsection{Independent Random Variables}
 Recall that we have previously defined the notion of independent events (Definition \ref{dfn:indEvents}). Observe that an event can be precisely expressed as $X \in A$ for some random variable $X$ and set $A$, which motivates us to define independence of random variables.
 \begin{dfnbox}{Independent Random Variables}{indRV}
@@ -1138,4 +1159,381 @@ On the other hand, if $X$ and $Y$ are independent continuous random variables, w
     & = \int_{-\infty}^{\infty}\!F_X(n - y)\,\mathrm{d}F_Y(y).
 \end{align*}
 We say that $F_{X + Y}$ is the \textit{convolution} $F_X * F_Y$.
+
+Now, we proceed to discussing some special cases.
+
+Let $X$ and $Y$ be independent uniform random variables on $(a, b)$. Note that $f_Y(y) = \frac{1}{b - a}$ for all $y \in (a, b)$, so
+\begin{align*}
+    f_{X + Y}(n) & = \int_{a}^{b}\!f_X(n - y)f_Y(y)\,\mathrm{d}y \\
+    & = \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y.
+\end{align*}
+Note that $f_X(n - y) = \frac{1}{b - a}$ if and only if $a < n - y < b$, i.e., $n - b < y < n - a$. Otherwise, $f_X(n - y) = 0$. If $2a < n < a + b$, we have $(a, b) \cap (n - b, n - a) = (a, n - a)$, so
+\begin{align*}
+    \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y & = \frac{1}{b - a}\int_{a}^{n - a}\!\frac{1}{b - a}\,\mathrm{d}y \\
+    & = \frac{n - 2a}{(b - a)^2}.
+\end{align*}
+If $a + b < n < 2b$, then $(a, b) \cap (n - b, n - a) = (n - b, b)$, so
+\begin{align*}
+    \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y & = \frac{1}{b - a}\int_{n - b}^{b}\!\frac{1}{b - a}\,\mathrm{d}y \\
+    & = \frac{2b - n}{(b - a)^2}.
+\end{align*}
+Therefore,
+\begin{equation*}
+    f_{X + Y}(n) = \begin{cases}
+        \frac{n - 2a}{(b - a)^2} & \quad\textrm{if } 2a < n \leq a + b \\
+        \frac{2b - n}{(b - a)^2} & \quad\textrm{if } a + b < n < 2b \\
+        0 & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+This is known as a \textit{triangular distribution}.
+
+Let $X$ and $Y$ be independent gamma random variables with parameters $(\alpha, \lambda)$ and $(\beta, \lambda)$. One may check with some computation that
+\begin{align*}
+    f_{X + Y}(n) & = \frac{B(\alpha, \beta)}{\Gamma(\alpha)\Gamma(\beta)}\lambda\e^{-\lambda n}(\lambda n)^{\alpha + \beta - 1} \\
+    & = \frac{1}{\Gamma(\alpha + \beta)}\lambda\e^{-\lambda n}(\lambda n)^{\alpha + \beta - 1}.
+\end{align*}
+Therefore, $X + Y$ is a gamma random variable with parameters $(\alpha + \beta, \lambda)$.
+
+Lastly, we shall state the following theorem without proof:
+\begin{thmbox}{Sum of Normal Random Variables Is Normal}{sumOfNormal}
+    Let $X \sim N\left(\mu_X, \sigma_X^2\right)$ and $Y \sim N\left(\mu_Y, \sigma_Y^2\right)$, then 
+    \begin{equation*}
+        X + Y \sim N\left(\mu_X + \mu_Y, \sigma_X^2 + \sigma_Y^2\right).
+    \end{equation*}
+\end{thmbox}
+
+\section{Conditional Distribution}
+Recall that previously, we have defined the conditional probability
+\begin{equation*}
+    P(E \mid F) = \frac{P(EF)}{P(F)}.
+\end{equation*}
+Let $X$ and $Y$ be discrete random variables, we can similarly see that
+\begin{align*}
+    P(X = x \mid Y = y) & = \frac{P(X = x, Y = y)}{P(Y = y)} \\
+    & = \frac{p_{X, Y}(x, y)}{p_Y(y)}.
+\end{align*}
+\begin{dfnbox}{Conditional Probability Mass Function}{condPMF}
+    Let $X$ and $Y$ be discrete random variables with probability mass functions $p_X$ and $p_Y$ respectively, the {\color{red} \textbf{conditional probability mass function}} of $X$ given $Y = y$ is defined as
+    \begin{equation*}
+        p_{X \mid Y}(x \mid y) = \frac{p_{X, Y}(x, y)}{p_Y(y)}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, we have
+        \begin{equation*}
+            P(X = x \mid X \in A) = \begin{cases}
+                \frac{P(X = x)}{P(X \in A)}, & \quad\textrm{if } x \in A \\
+                0, & \quad\textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+We can similar define for the continuous case:
+\begin{dfnbox}{Conditional Probability Density Function}{condPDF}
+    Let $X$ and $Y$ be jointly continuous random variables with probability density functions $f_X$ and $f_Y$ respectively, the {\color{red} \textbf{conditional probability density function}} of $X$ given $Y = y$ is defined as
+    \begin{equation*}
+        f_{X \mid Y}(x \mid y) = \frac{f_{X, Y}(x, y)}{f_Y(y)}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, we have
+        \begin{equation*}
+            f_{X \mid X \in A}(x) = \frac{f_X(x)}{\int_A\!f_X(x)\,\mathrm{d}x}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+Now, we can compute the conditional probability for jointly distributed continuous random variables with
+\begin{equation*}
+    P(X \in A \mid Y = y) = \int_{A}\!f_{X \mid Y}(x \mid y)\,\mathrm{d}x.
+\end{equation*}
+In particular, we could define the \textit{conditional cumulative distribution function} as
+\begin{align*}
+    F_{X \mid Y}(x \mid y) & = P(X \leq x \mid Y = y) \\
+    & = \int_{-\infty}^x\!f_{X \mid Y}(x \mid y)\,\mathrm{d}x
+\end{align*}
+What if $X$ is continuous but $Y$ is discrete? In this case, we have
+\begin{align*}
+    f_{X \mid Y}(x \mid y) = \frac{P(Y = y \mid X = x)}{P(Y = y)}f_X(x).
+\end{align*}
+
+\chapter{Expectation}
+\section{Sums of Random Variables}
+In general, we have:
+\begin{thmbox}{\small Expectation of Functions of Jointly Distributed Random Variables}{expFuncJoint}
+    Let $X$ and $Y$ be jointly distributed random variables. If $X$ and $Y$ are discrete, then 
+    \begin{equation*}
+        E[g(X, Y)] = \sum_{x}\sum_{y}g(x, y)p_{X, Y}(x, y).
+    \end{equation*}
+    If $X$ and $Y$ are continuous, then 
+    \begin{equation*}
+        E[g(X, Y)] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\!g(x, y)f_{X, Y}(x, y)\,\mathrm{d}x\,\mathrm{d}y.
+    \end{equation*}
+\end{thmbox}
+Based on the above, it is easy to see that if $X_1, X_2, \cdots, X_n$ are random variables,
+\begin{equation*}
+    E\left[\sum_{i = 1}^{n}X_i\right] = \sum_{i = 1}^{n}E[X_i].
+\end{equation*}
+\begin{dfnbox}{Sample Mean}{mean}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables. The {\color{red} \textbf{sample mean}} is defined as
+    \begin{equation*}
+        \overline{X} = \frac{1}{n}\sum_{i = 1}^{n}X_i.
+    \end{equation*}
+\end{dfnbox}
+Clearly, if $X_i = \mu$ for all $i = 1, 2, \cdots, n$,
+\begin{equation*}
+    E\left[\overline{X}\right] = \frac{1}{n}\sum_{i = 1}^{n}E[X_i] = \mu.
+\end{equation*}
+This means that given a random sample, its sample mean is an \textit{unbiased estimate} of its expectation.
+
+Using the expectation of the sum of random variables, we can also prove the following inequality:
+\begin{thmbox}{Boole's Inequality}{boole}
+    Let $A_1, A_2, \cdots, A_n$ be events, then 
+    \begin{equation*}
+        \sum_{i = 1}^{n}P(A_i) \geq P\left(\bigcup_{i = 1}^{n}A_i\right).
+    \end{equation*}
+    \tcblower       
+    \begin{proof}
+        Define
+        \begin{equation*}
+            X_i = \begin{cases}
+                1, & \quad\textrm{if } A_i \textrm{ occurs} \\
+                0, & \quad\textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        Let $X = \sum_{i = 1}^{n}X_i$ and $Y = \max\{X_1, X_2, \cdots, X_n\}$. Note that $Y = 1$ if and only if at least one of the $A_i$'s occurs, so 
+        \begin{equation*}
+            E[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
+        \end{equation*}
+        Note that $E[X] = \sum_{i = 1}^{n}P(A_i)$ and that $X \geq Y$, so
+        \begin{equation*}
+            \sum_{i = 1}^{n}P(A_i) = E[X] \geq E[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+So far we have been discussing the sum of finitely many random variables. It turns out that in the infinite case, the following applies:
+\begin{thmbox}{Expectation of Infinite Sum of Random Variables}{expInfSum}
+    Let $X_1, X_2, \cdots$ be infinitely many random variables, if 
+    \begin{itemize}
+        \item $X_i \geq 0$ for all $i \in \N^+$, or
+        \item the series $\sum_{i = 1}^{\infty}E\left[\abs{X_i}\right]$ converges,
+    \end{itemize}
+    then 
+    \begin{equation*}
+        E\left[\sum_{i = 1}^{\infty}X_i\right] = \sum_{i = 1}^{\infty}E[X_i].
+    \end{equation*}
+\end{thmbox}
+
+\section{Moments}
+Consider $n$ events $A_1, A_2, \cdots, A_n$. Define
+\begin{equation*}
+    X_i = \begin{cases}
+        1, & \quad\textrm{if } A_i \textrm{ occurs} \\
+        0, & \quad\textrm{otherwise}
+    \end{cases},
+\end{equation*}
+then $X = \sum_{i = 1}^{n}X_i$ is the number of events which have occurred. Observe that $E[X] = \sum_{i = 1}^{n}P(A_i)$. Define the event
+\begin{equation*}
+    E_{m, k} = \bigcap_{i = 1}^{k}A_{m_i}
+\end{equation*}
+where $1 \leq m_i \leq n$ for any $i = 1, 2, \cdots, k$, then the number of such $E_{m, k}$'s which have occurred is given by $\left(\begin{smallmatrix}
+    X \\
+    k
+\end{smallmatrix}\right)$. Note that the event $\bigcap_{i = 1}^{k}A_{m_i}$ occurs if and only if $\prod_{i = 1}^{k}X_{m_i} = 1$, so
+\begin{equation*}
+    \begin{pmatrix}
+        X \\
+        k
+    \end{pmatrix} = \sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right).
+\end{equation*}
+Therefore, 
+\begin{align*}
+    E\left[\begin{pmatrix}
+        X \\
+        k
+    \end{pmatrix}\right] & = E\left[\sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right)\right] \\
+    & = \sum_{m_1 < m_2 < \cdots < m_k}P\left(E_{m, k}\right).
+\end{align*}
+
+\section{Covariance and Correlations}
+\subsection{Covariance}
+Suppose that $X$ and $Y$ are independent random variables. We have seen that
+\begin{equation*}
+    E[XY] = E[X]E[Y].
+\end{equation*}
+This motivates us to consider the quantity $E[XY] - E[X]E[Y]$.
+\begin{dfnbox}{Covariance}{covar}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{covariance}} of $X$ and $Y$ is defined as
+    \begin{equation*}
+        \mathrm{Cov}(X, Y) = E[XY] - E[X]E[Y].
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        We have seen that if $X$ and $Y$ are independent, then $\mathrm{Cov}(X, Y) = 0$. But the converse is not true in general!
+    \end{remark}
+\end{notebox}
+Note that covariance has the following properties:
+\begin{enumerate}
+    \item $\mathrm{Cov}(X, X) = \mathrm{Var}(X)$.
+    \item $\mathrm{Cov}(X, Y) = \mathrm{Cov}(Y, X)$.
+    \item $\mathrm{Cov}(aX, Y) = a\mathrm{Cov}(X, Y)$.
+    \item $\mathrm{Cov}(X_1 + X_2, Y) = \mathrm{Cov}(X_1, Y) + \mathrm{Cov}(X_2, Y)$.
+\end{enumerate}
+\begin{notebox}
+    \begin{remark}
+        Let $V$ be the set of all random variables, then $\mathrm{Cov}(\cdot, \cdot) \colon V \times V \to \R$ is an inner product over $V$.
+    \end{remark}
+\end{notebox}
+Let $X$ and $Y$ be random variables, then by the above properties, we have
+\begin{align*}
+    \mathrm{Var}(X + Y) & = \mathrm{Cov}(X + Y, X + Y) \\
+    & = \mathrm{Cov}(X, X + Y) + \mathrm{Cov}(Y, X + Y) \\
+    & = \mathrm{Cov}(X + Y, X) + \mathrm{Cov}(X + Y, Y) \\
+    & = \mathrm{Cov}(X, X) + \mathrm{Cov}(Y, X) + \mathrm{Cov}(X, Y) + \mathrm{Cov}(Y, Y) \\
+    & = \mathrm{Var}(X) + \mathrm{Var}(Y) + 2\mathrm{Cov}(X, Y).
+\end{align*}
+In general, we have the following formula:
+\begin{probox}{}{}
+    Let $X_1, X_2, \cdots, X_n$ be random variables, then
+    \begin{equation*}
+        \mathrm{Var}\left(\sum_{i = 1}^{n}X_i\right) = \sum_{i = 1}^{n}\mathrm{Var}(X_i) + 2\sum_{i < j}\mathrm{Cov}(X_i, X_j).
+    \end{equation*}
+    In particular, if all of the $X_i$'s are independent, then
+    \begin{equation*}
+        \mathrm{Var}\left(\sum_{i = 1}^{n}X_i\right) = \sum_{i = 1}^{n}\mathrm{Var}(X_i).
+    \end{equation*}
+\end{probox}
+\begin{dfnbox}{Deviation}{deviation}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{deviation}} is defined as
+    \begin{equation*}
+        X_i - \overline{X} = X_i - \frac{1}{n}\sum_{i = 1}^{n}X_i.
+    \end{equation*}
+\end{dfnbox}
+Similar to the sample mean, we would wish the deviation gives an unbiased estimate for the variance. However, 
+\begin{equation*}
+    E\left[X_i - \overline{X}\right] = \frac{n - 1}{n}\sigma^2.
+\end{equation*}
+Therefore, we need to eliminate the bias from the deviation.
+\begin{dfnbox}{Sample Variance}{sampleVar}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{sample variance}} is defined as
+    \begin{equation*}
+        S^2 = \sum_{i = 1}^{n}\frac{X_i - \overline{X}}{n - 1}.
+    \end{equation*}
+\end{dfnbox}
+\subsection{Correlation}
+Intuitively, we view covariance $\mathrm{Cov}(X, Y)$ as a measure of the degree of spread of the joint distribution of $X$ and $Y$. Naturally, we can make use of it to measure how related are $X$ and~$Y$.
+\begin{dfnbox}{Correlation}{correlation}
+    Let $X$ and $Y$ be random variables with positive variances. The {\color{red} \textbf{correlation}} of $X$ and $Y$ is defined as
+    \begin{equation*}
+        \rho(X, Y) = \frac{\mathrm{Cov}(X, Y)}{\sqrt{\mathrm{Var}(X)\mathrm{Var}(Y)}}.
+    \end{equation*}
+    In particular, $X$ and $Y$ are said to be {\color{red} \textbf{uncorrelated}} if $\rho(X, Y) = 0$.
+\end{dfnbox}
+It is easy to see that for $c > 0$, $\rho(\pm cX, Y) = \pm\rho(X, Y)$. Suppose $X$ and $Y$ have variances $\sigma_X^2$ and $\sigma_Y^2$ respectively, we have
+\begin{equation*}
+    \rho(X, Y) = \rho\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right) = \mathrm{Cov}\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right).
+\end{equation*}
+The above property leads to the following result:
+\begin{thmbox}{Boundedness of Correlation}{boundedCorrelation}
+    Let $X$ and $Y$ be random variables, then 
+    \begin{equation*}
+        -1 \leq \rho(X, Y) \leq 1.
+    \end{equation*}
+\end{thmbox}
+Note that $\mathrm{Var}(X) = 0$ if and only if $X$ is a constant, i.e., $P(X = c) = 1$ and $P(X = x) = 0$ for all $x \neq c$. Therefore, $\rho(X, Y) = \pm 1$ if and only if $Y = \pm aX + b$ for some constants $a$, $b$ with $a > 0$.
+\section{Conditional Expectation and Variance}
+\subsection{Conditional Expectation}
+Recall that in Definitions \ref{dfn:condPMF} and \ref{dfn:condPDF}, we have defined conditional distribution of a random variable $X$ given $Y = y$. We will study the notion of \textit{conditional expectation} now.
+\begin{dfnbox}{Conditional Expectation}{condExp}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{conditional expectation}} of $X$ given $Y = y$ is defined as
+    \begin{equation*}
+        E\left[X \mid Y = y\right] = \sum_{x}xp_{X \mid Y}(x \mid y)
+    \end{equation*}
+    if $X$ and $Y$ are discrete, and
+    \begin{equation*}
+        E\left[X \mid Y = y\right] = \int_{-\infty}^{\infty}\!\frac{f_{X, Y}(x, y)}{f_Y(y)}\,\mathrm{d}x
+    \end{equation*}
+    if $X$ and $Y$ are jointly continuous.
+\end{dfnbox}
+All properties of expectation are still satisfied by conditional expectation. In particular, notice that $E\left[X \mid Y\right]$ is a function in $Y$, so it is a random variable by itself. Let $Z = E[X \mid Y]$, what is the expectation of $Z$?
+\begin{probox}{}{}
+    Let $X$ and $Y$ are random variables, then
+    \begin{equation*}
+        E\bigl[E[X \mid Y]\bigr] = E[X].
+    \end{equation*}
+\end{probox}
+\subsection{Conditional Variance}
+Similarly, we can define \textit{conditional variance}.
+\begin{dfnbox}{Conditional Variance}{condVar}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{condtional variance}} of $X$ given $Y$ is defined as
+    \begin{equation*}
+        \mathrm{Var}(X \mid Y) = E\bigl[(X - E[X \mid Y])^2 \mid Y\bigr].
+    \end{equation*}
+\end{dfnbox}
+Notice that $\mathrm{Var}(X \mid Y)$ is also a random variable as it is a function of $Y$. Since $\mathrm{Var}(X \mid Y) = E\left[X^2 \mid Y\right] - \bigl(E[X \mid Y]\bigr)^2$, we have
+\begin{align*}
+    E\left[\mathrm{Var}(X \mid Y)\right] & = E\Bigl[E\left[X^2 \mid Y\right]\Bigr] - E\left[\bigl(E[X \mid Y]\bigr)^2\right] \\
+    & = E\left[X^2\right] - E\left[\bigl(E[X \mid Y]\bigr)^2\right], \\
+    \mathrm{Var}\bigl(\mathrm{Var}(X \mid Y)\bigr) & = E\left[(E[X \mid Y])^2\right] - \left(E\bigl[E[X \mid Y]\bigr]\right)^2.
+\end{align*}
+With some manipulations we can prove the following proposition:
+\begin{probox}{}{}
+    Let $X$ and $Y$ be random variables, then
+    \begin{equation*}
+        \mathrm{Var}(X) = E[\mathrm{Var}(X \mid Y)] + \mathrm{Var}(E[X \mid Y]).
+    \end{equation*}
+\end{probox}
+\subsection{Prediction}
+In many situations, we seek to \textbf{predict} the outcome of an event. Specifically, given $X = x$, we wish to find a function $g \colon \mathrm{Range}(X) \to \mathrm{Range}(Y)$ such that $g(x) = \hat{y}$ is the prediction for $Y$. In an ideal case, we would want $g(X)$ to be the \textbf{closest} to $Y$. In other words, we would minimise $g(X) - Y$. To eliminate the inconvenience of a negative difference, we would choose a $g$ such that $E\left[\bigl(Y - g(X)\bigr)^2\right]$ is minimised.
+
+Let us consider a simpler case. When $g(x) = c$, to minimise $E\left[(Y - c)^2\right]$, consider
+\begin{align*}
+    E\left[(Y - c)^2\right] & = c^2 - 2cE[Y] + E\left[Y^2\right] \\
+    & = \left(c - E[Y]\right)^2 + \mathrm{Var}(Y).
+\end{align*}
+Therefore, we need $c = E[Y]$. Since $c = g(x)$, this implies that $g(x) = E[Y \mid X = x]$. This is summarised into the following theorem:
+\begin{thmbox}{Best Predictor}{bestPredict}
+    Let $X$ and $Y$ be random variables. Given $X$, the best predictor of $Y$ is the function 
+    \begin{equation*}
+        g(X) = E[Y \mid X].
+    \end{equation*}
+\end{thmbox}
+Essentially, this implies that for all function $f$ of $X$, $E\left[\bigl(Y - f(X)\bigr)^2\right] \geq E\left[\bigl(Y - E[Y \mid X]\bigr)^2\right]$.
+
+However, in some cases we do not know the exact joint distribution of $X$ and $Y$ and so we cannot find $E[Y \mid X]$. Therefore, we may attempt to predict $Y$ with a linear function of $X$ which can be easily formulated. Hence, we will find constants $a$ and $b$ such that $E\left[(Y - a - bX)^2\right]$ is minimised.
+
+Let $E[X] = \mu_X$, $E[Y] = \mu_Y$, $\mathrm{Var}(X) = \sigma_X^2$, $\mathrm{Var}(Y) = \sigma_Y^2$. Define
+\begin{equation*}
+    X' = \frac{X - \mu_X}{\sigma_X}, \qquad Y' = \frac{Y - \mu_Y}{\sigma_Y}.
+\end{equation*}
+Then, $E\left[X'\right] = E\left[Y'\right] = 0$ and $\mathrm{Var}(X') = \mathrm{Var}(Y') = 1$. Note that
+\begin{equation*}
+    Y - a - bX = \sigma_Y\left(Y' - \frac{a + b\mu_X - \mu_Y}{\sigma_Y} - \frac{b\sigma_X}{\sigma_Y}X'\right).    
+\end{equation*}
+Therefore, setting $\frac{a + b\mu_X - \mu_Y}{\sigma_Y} = a'$ and $\frac{b\sigma_X}{\sigma_Y} = b'$, we have 
+\begin{align*}
+    E\left[(Y - a - bX)^2\right] & = \sigma_Y^2E\left[\left(Y' - a' - b'X'\right)^2\right] \\
+    & = \sigma_Y^2E\left[Y'^2 + a'^2 + b'^2X'^2 - 2a'Y' + 2a'b'X' - 2b'X'Y'\right] \\
+    & = \sigma_Y^2\left(1 + a'^2 + b'^2 - 2b'\rho(X, Y)\right) \\
+    & = \sigma_Y^2\left(a'^2 + \bigl(b' - \rho(X, Y)\bigr)^2 + 1 - \rho(X, Y)^2\right).
+\end{align*}
+Therefore, we need $a' = 0$ and $b' = \rho(X, Y)$, i.e.,
+\begin{align*}
+    a = \mu_Y - b\mu_X, \qquad b = \rho(X, Y)\frac{\sigma_Y}{\sigma_X}.
+\end{align*}
+Therefore, 
+\begin{align*}
+    a + bX & = \mu_Y - b\mu_X + bX \\
+    & = \mu_Y + b(X - \mu_X) \\
+    & = \mu_Y + \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)
+\end{align*}
+and the minimum of $E\left[(Y - a - bX)^2\right]$ is $\sigma_Y^2\left(1 - \rho(X, Y)^2\right)$.
+\begin{thmbox}{Best Linear Predictor}{bestLinPredict}
+    Let $X$ and $Y$ be random variables with means $\mu_X$ and $\mu_Y$, and variances $\sigma_X^2$ and $\sigma_Y^2$ respectively. Given $X$, the best linear predictor of $Y$ is
+    \begin{equation*}
+        g(X) = E\left[\left(Y - \mu_Y - \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)\right)\right].
+    \end{equation*}
+\end{thmbox}
 \end{document}

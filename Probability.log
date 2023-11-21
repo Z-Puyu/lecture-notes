@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 NOV 2023 14:43
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 NOV 2023 23:16
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1087,6 +1087,9 @@ LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 
 LaTeX Warning: Label `dfn:expCRV' multiply defined.
 
+
+LaTeX Warning: Label `thm:boole' multiply defined.
+
 )
 \openout1 = `Probability.aux'.
 
@@ -1231,22 +1234,30 @@ Chapter 4.
 
 Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 983.
 
-[32] [33] [34] [35] [36] [37] [38] 
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41]
+Chapter 5.
+[42
+
+] [43] [44] [45] [46] [47]
+
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1502.
+
+[48] [49] [50] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Probability.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Probability.out' has not changed.
-(rerunfilecheck)             Checksum: 9600D84E935EA3BF14DD0FF9FBC507AD;5998.
+(rerunfilecheck)             Checksum: 62CAA7FB5BAC8A55248C386790F526FB;7675.
  ) 
 Here is how much of TeX's memory you used:
- 36291 strings out of 478630
- 758785 string characters out of 5847730
- 1880012 words of memory out of 5000000
- 55818 multiletter control sequences out of 15000+600000
+ 36337 strings out of 478630
+ 759532 string characters out of 5847730
+ 1882012 words of memory out of 5000000
+ 55864 multiletter control sequences out of 15000+600000
  516143 words of font info for 84 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Probability.pdf (38 pages).
+Output written on Probability.pdf (50 pages).
