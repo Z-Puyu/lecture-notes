@@ -1355,7 +1355,60 @@ Therefore,
     \end{pmatrix}\right] & = E\left[\sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right)\right] \\
     & = \sum_{m_1 < m_2 < \cdots < m_k}P\left(E_{m, k}\right).
 \end{align*}
+Notice that $E\left[\left(\begin{smallmatrix}
+    X \\
+    k
+\end{smallmatrix}\right)\right]$ is a linear combination of the first $k$-th momenets of $X$. We would like to find a way to quickly compute the $n$-th moment of a random variable.
 
+Let $X$ be a discrete random variable, then 
+\begin{equation*}
+    E\left[X^n\right] = \sum_{x}x^np_X(x).
+\end{equation*}
+Note that by Maclaurin Series, we have
+\begin{equation*}
+    g(t) = \sum_{n = 0}^{\infty}\frac{g^{(n)(0)}}{n!}t^n
+\end{equation*}
+for any function $g$. A motivation is to construct $g$ such that $g^{(n)}(0) = E\left[X^n\right]$. Therefore,
+\begin{align*}
+    g(t) & = \sum_{n = 0}^{\infty}\frac{E\left[X^n\right]}{n!}t^n \\
+    & = \sum_{n = 0}^{\infty}\frac{\sum_{x}x^np_X(x)}{n!}t^n \\
+    & = \sum_{x}\left(p_X(x)\sum_{n = 0}^{\infty}\frac{(tx)^n}{n!}\right) \\
+    & = \sum_{x}\e^{tx}p_X(x) \\
+    & = E\left[\e^{tX}\right].
+\end{align*}
+\begin{dfnbox}{Moment Generating Function}{momentGenFunc}
+    Let $X$ be a random variable, the {\color{red} \textbf{moment generating function}} of $X$ is defined as 
+    \begin{equation*}
+        M_X(t) = E\left[\e^{tX}\right]
+    \end{equation*}
+    such that 
+    \begin{equation*}
+        E\left[X^n\right] = M_X^{(n)}(0) \quad\textrm{for all } n \in \N.
+    \end{equation*}
+\end{dfnbox}
+It can be proven that for any random variable $X$, $M_X$ is unique. In other words, if two random variables have the same moment generating function, they must be the same random variable.
+\begin{thmbox}{Uniqueness of Moment Generating Function}{uniqueMomentGenFunc}
+    Let $X$ and $Y$ be random variables. If
+    \begin{equation*}
+        \lim_{t \to 0}M_X(t) = \lim_{t \to 0}M_Y(t),
+    \end{equation*}
+    then $X$ and $Y$ have the same distribution.
+\end{thmbox}
+By properties of exponential functions, the following theorem can also be easily proven:
+\begin{probox}{\small Moment Generating Function of Sum of Independent Random Variables}{momentSumIndRV}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables, then 
+    \begin{equation*}
+        M_{\sum_{i = 1}^{n}X_i}(t) = \prod_{i = 1}^{n}M_{X_i}(t).
+    \end{equation*}
+\end{probox}
+However, note that the converse of Proposition \ref{pro:momentSumIndRV} is not true in general.
+\begin{dfnbox}{Joint Moment Generating Function}{jointMomentGenFunc}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{joint moment generating function}} of $X$ and $Y$ is defined as
+    \begin{equation*}
+        M_{X, Y}(s, t) = E\left[\e^{sX + tY}\right].
+    \end{equation*}
+\end{dfnbox}
+Observe that in the joint case, $M_X(s) = M_{X, Y}(s, 0)$ and $M_Y(t) = M_{X, Y}(0, t)$. $X$ and $Y$ are independent if and only if $M_{X, Y}(s, t) = M_X(s)M_Y(t)$.
 \section{Covariance and Correlations}
 \subsection{Covariance}
 Suppose that $X$ and $Y$ are independent random variables. We have seen that
