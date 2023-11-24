@@ -30,14 +30,22 @@
 \contentsline {subsection}{\numberline {4.1.4}Ferrers Diagram}{31}{subsection.4.1.4}%
 \contentsline {section}{\numberline {4.2}Exponential Generating Functions}{32}{section.4.2}%
 \contentsline {chapter}{\numberline {5}Recurrence Relations}{34}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Introduction to Graphs}{35}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Terminologies}{35}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Graph Traversal}{37}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Graphs and Matrices}{39}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Bipartite Graphs}{40}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Bipartite Graphs}{40}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Tree}{41}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Spanning Tree}{41}{subsection.7.2.1}%
-\contentsline {chapter}{\numberline {8}Weighted Graphs}{43}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Weight}{43}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Minimum Spanning Trees}{43}{section.8.2}%
+\contentsline {section}{\numberline {5.1}Recurrence Relations}{34}{section.5.1}%
+\contentsline {section}{\numberline {5.2}System of Recurrence Relations}{36}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Recurrence Relations and Generating Functions}{36}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Graph Structures}{37}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Multigraph}{37}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Handshaking Lemma}{38}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Subgraph}{39}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Graph Isomorphism}{41}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Graph Traversal}{45}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Path and Connectedness}{45}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Distance between Vertices}{48}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Graphs and Matrices}{50}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Bipartite Graphs}{52}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Bipartite Graphs}{52}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Trees}{54}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Spanning Tree}{55}{subsection.8.2.1}%
+\contentsline {chapter}{\numberline {9}Weighted Graphs}{61}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Weight}{61}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Minimum Spanning Trees}{61}{section.9.2}%

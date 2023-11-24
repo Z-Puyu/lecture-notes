@@ -1078,46 +1078,179 @@ be a multi-set and let $a_r$ be the number of $r$-permutations of $M$. The gener
 \end{equation*}
 
 \chapter{Recurrence Relations}
+In this chapter, we will study how to utilise sequences, particularly recurrence relations, to help solve some counting problems. 
+\section{Recurrence Relations}
+A recurrence relation, informally, is an equation that relates the $n$-th term of a sequence to its previous $k$ terms.
+\begin{dfnbox}{Recurrence Relation}{RR}
+    Let $(a_n)$ be a sequence. A {\color{red} \textbf{$k$-th order recurrence relation}} on $(a_n)$ is defined to be the equation
+    \begin{equation*}
+        a_n = f(a_{n - 1}, a_{n - 2}, \cdots, a_{n - k})
+    \end{equation*}
+    for some $k \in \Z$. An expression $a_n = g(n)$ which satisfies the recurrence relation for all $n$ is known as the {\color{red} \textbf{solution}}. 
+\end{dfnbox}
+Note that to explicitly define a sequence, we need to define the first $k$ terms of the sequence given a recurrence relation. These are known as the \textit{initial condition}.
 
-\chapter{Introduction to Graphs}
-\section{Terminologies}
+We will first study a most basic type of recurrence relations --- \textit{linear homogeneous} recurrecne relations.
+\begin{dfnbox}{Linear Homogeneous Recurrence Relations}{linHomoRR}
+    A {\color{red} \textbf{$k$-th order linear homogeneous recurrence relation}} of a sequence $(a_n)$ is defined as
+    \begin{equation*}
+        \sum_{i = 0}^{k}c_ia_{n - i} = 0
+    \end{equation*}
+    where $c_0, c_k \neq 0$.
+\end{dfnbox}
+A \textit{characteristic equation} of a recurrence relation of order $k$ is obtained by replacing $a_{n - i}$ with $x^{k - i}$. In the linear homogeneous case, the characteristic equation is 
+\begin{equation*}
+    \sum_{i = 0}^{k}c_ix^{k - i} = 0.
+\end{equation*} 
+Let $\alpha_1, \alpha_2, \cdots, \alpha_p$ be the distinct roots to the equation with multiplicity $m_1, m_2, \cdots, m_p$ respectively, then 
+\begin{equation*}
+    a_n = \sum_{i = 1}^{p}\left[\left(\sum_{j = 1}^{m_i}A_{ij}n^{j - 1}\right)\alpha_i^n\right]
+\end{equation*}
+is the general solution to the recurrence relation, where the $A_{ij}$'s are constants. We can further generalise this to a non-homogeneous case.
+\begin{dfnbox}{General Linear Recurrence Relation}{genLinRR}
+    A {\color{red} \textbf{$k$-th order linear recurrence relation}} of a sequence $(a_n)$ is defined as
+    \begin{equation*}
+        \sum_{i = 0}^{k}c_ia_{n - i} = f(n)
+    \end{equation*}
+    where $c_0, c_k \neq 0$ and $f$ is a function in $n$.
+\end{dfnbox}
+To solve a general linear recurrence relation, we first introduce the notion of a \textit{particular solution}.
+\begin{dfnbox}{Particular Solution}{particularSoln}
+    Let $a_n = r(a_{n - 1}, a_{n - 2}, \cdots, a_{n - k})$ be a recurrence relation. A {\color{red} \textbf{particular solution}} is defined as a function $p(n)$ that satisfies the recurrence relation.
+\end{dfnbox}
+It turns out that to solve a general linear recurrence relation, we can first convert it to the homogeneous case and find its solution known as the \textit{complementary solution}. Augmenting the complementary solution with a particular solution will yield the general solution!
+\begin{thmbox}{Solution of Linear Recurrence Relations}{linRRSoln}
+    Let
+    \begin{equation*}
+        \sum_{i = 0}^{k}c_ia_{n - i} = f(n)
+    \end{equation*}
+    be a linear recurrence relation. Suppose $p(n)$ is a particular solution and $c(n)$ is the solution to the homogeneous recurrence relation
+    \begin{equation*}
+        \sum_{i = 0}^{k}c_ia_{n - i} = 0,
+    \end{equation*}
+    then $a_n = p(n) + c(n)$ is the general solution to the original linear recurrence relation.
+\end{thmbox}
+There is no general way to derive the particular solution of a recurrence relation. Under some special cases, however, we can make a reasonable guess of the particular solution based on the form of $f(n)$. This is summarised as follows
+\begin{center}
+    \begin{tabular}{|c|l|}
+        \hline
+        $f(n)$ &  $a_n^{(p)}$ \\
+        \hline
+        $Ak^n$ & $\begin{cases}
+            Bk^n & \quad\textrm{if } k \textrm{ is not a characteristic root} \\
+            Bn^mk^n & \quad\textrm{if } k \textrm{ is a characteristic root with multiplicity } m
+        \end{cases}$ \\
+        \hline
+        $\sum_{i = 0}^{t}p_in^i$ & $\begin{cases}
+            \sum_{i = 0}^{t}q_in^i & \quad\textrm{if } 1 \textrm{ is not a characteristic root} \\
+            n^m\sum_{i = 0}^{t}p_in^i & \quad\textrm{if } 1 \textrm{ is a characteristic root with multiplicity } m
+        \end{cases}$ \\
+        \hline
+        $An^tk^n$ & $\begin{cases}
+            \left(\sum_{i = 0}^{t}q_in^i\right)k^n & \quad\textrm{if } k \textrm{ is not a characteristic root} \\
+            n^m\left(\sum_{i = 0}^{t}p_in^i\right)k^n & \quad\textrm{if } k \textrm{ is a characteristic root with multiplicity } m
+        \end{cases}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+\section{System of Recurrence Relations}
+Just like systems of equations, we can have two recurrence relations on sequences $(a_n)$ and $(b_n)$, which form a system of equations. We can solve the system by substitution to solve one of the recurrence relation first, just like solving a system of equations.
+\section{Recurrence Relations and Generating Functions}
+Note that for a sequence $(a_n)$, we can define
+\begin{equation*}
+    A(x) = \sum_{i = 0}^{\infty}a_ix^i
+\end{equation*}
+as the generating function. Recall that we can transform $A(x)$ to generate a linear combination of $a_i$'s. Therefore, we could use generating functions to solve a recurrence relation.
+
+\chapter{Graph Structures}
+\section{Multigraph}
+Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
 \begin{dfnbox}{Multigraph}{multigraph}
-    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$.
-    \\\\
-    The {\color{red} \textbf{order}} of $G$ is denoted by $v(G) = \abs{V(G)}$ and the {\color{red} \textbf{size}} of $G$ is denoted by $e(G) = \abs{E(G)}$.
+    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by $v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
     \\\\
     In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}.
     \\\\
     $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
 \end{dfnbox}
-
+Note that in a multigraph, by default there can be a plural number of edges between any two vertices. We would define the notion of \textit{simple graph} as a special multigraph.
 \begin{dfnbox}{Simple Graph}{simpleGraph}
     A multigraph $G$ is said to be {\color{red} \textbf{simple}} if there is at most one edge between any two distinct vertices.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        Note that if $G$ is simple, then
+        Note that if $G$ is simple and undirected, then
         \begin{displaymath}
-            E(G) \subseteq \left\{(v_j, v_i) \colon v_j, v_i \in V(G), j > i\right\}.
+            E(G) \subseteq \left\{(v_j, v_i) \colon v_j, v_i \in V(G), j \geq i\right\}.
         \end{displaymath}
     \end{remark}
 \end{notebox}
-\begin{dfnbox}{Adjacency}{adjacent}
+Notice that if $(v_i, v_i)$ is an edge, it connects a vertex to itself. This is known as a \textit{loop}.
+
+In a graph, it is important to know the layout of the vertices and edges. For this purpose, we define the notion of \textit{adjacency} in a multigraph.
+\begin{dfnbox}{Adjacency and Neighbourhood}{adjacent}
     Let $v_i, v_j \in V(G)$, we say that they are {\color{red} \textbf{adjacent}} if $v_iv_j \in E(G)$. Alternatively, we say that $v_i$ and $v_j$ are {\color{red} \textbf{neighbours}} to each other. The edge $v_iv_j$ is said to be {\color{red} \textbf{incident}} with $v_i$ and $v_j$. Two edges $e$ and $f$ are said to be {\color{red} \textbf{adjacent}} if there exists some $v \in V(G)$ such that both $e$ and $f$ are incident with $v$. 
-    \\\\
-    The number of edges incident to $v$ is called the {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$. If $d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. If $d_G(v) = k$ for all $v \in V(G)$, $G$ is known as a {\color{red} \textbf{$k$-regular graph}}.
     \\\\
     The set of all neighbours to some $v_i \in V(G)$ is called the {\color{red} \textbf{neighbourhood set}} of $v_i$, denoted by $N_G(v_i)$. In particular, the set $N_G[v_i] \coloneqq N_G(v_i)\cup\{v_i\}$ is known as the {\color{red} \textbf{closed neighbourhood set}} of $v_i$.
 \end{dfnbox}
+We can further add on to the definition by discussing the size of the neighbourhood of a vertex.
+\begin{dfnbox}{Degree}{deg}
+    The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If $d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. 
+    \\\\
+    In particular, we define
+    \begin{equation*}
+        \Delta(G) = \max_{v \in G}d_G(v), \qquad \delta(G) = \min_{v \in G}d_G(v).
+    \end{equation*}
+\end{dfnbox}
+With the notion of degree established, we can now define a \textit{regular graph}.
+\begin{dfnbox}{Regular Graph}{regGraph}
+    A {\color{red} \textbf{regular graph}} is a graph in which every vertex has the same degree. In particular, if $d_G(v) = k$ for all $v \in V(G)$, $G$ is known as a {\color{red} \textbf{$k$-regular graph}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A graph $G$ is regular if and only if $\Delta(G) = \delta(G)$.
+    \end{remark}
+\end{notebox}
+\section{Handshaking Lemma}
+In this section, we discuss the following interesting question:
+\begin{quote}
+    $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the number of handshakes made by each student was recorded and it was reported that the sum was $39$. Was this possible?
+\end{quote}
+Note that if we represent each student as a vertex, then we can use $V(G) = \left\{v_1, v_2, \cdots, v_{15}\right\}$ to construct a graph, in which an edge $v_iv_j \in E(G)$ if and only if students $i$ and $j$ shook hands. As such, $d_G(v_i)$ is the number of persons student $i$ shook hands with.
+
+Note that if we sum up $d_G(v_i)$ for all the vertices, every edge will be counted exactly twice! This means that
+\begin{equation*}
+    \sum_{i = 1}^{15}d_G(v_i) = 39
+\end{equation*}
+is impossible since the left-hand side must be even. In fact, by the above reasoning, we see that in any graph, the sum of degrees of its vertices must be even.
+\begin{lembox}{Handshaking Lemma}{handshake}
+    If $G$ is a graph of order $n$ and size $m$, then
+    \begin{equation*}
+        \sum_{i = 1}^{n}d_G(v_i) = 2m.
+    \end{equation*}
+\end{lembox}
+\begin{notebox}
+    \begin{remark}
+        It can be easily deduced from the above lemma that in any graph, the number of vertices with odd degrees must be even.
+    \end{remark}
+\end{notebox}
+As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is obviously $0$, and the maximum size of a simple graph occurs when there is an edge between any two vertices.
 \begin{dfnbox}{Empty and Complete Graphs}{empCom}
-    Let $G$ be a simple graph. $G$ is said to be an {\color{red} \textbf{empty graph}} if $e(G) = 0$, and a {\color{red} \textbf{complete graph}} if for all $u, v \in V(G)$, $(u, v) \in E(G)$. 
+    Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, $(u, v) \in E(G)$. 
 \end{dfnbox}
+\section{Subgraph}
+Since a multigraph is just two sets, we can define a ``subset'' relation between graphs.
 \begin{dfnbox}{Subgraph}{subgraph}
-    Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \subset V(G)$ and $E(H) \subset E(G)$.
+    Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, a subgraph $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \neq V(G)$ or $E(H) \neq E(G)$.
 \end{dfnbox}
+Note that we a graph can possibly be reproduced by connecting its vertices correctly, so a subgraph containing all vertices of a graph ``spans'' the original graph.
 \begin{dfnbox}{Spanning Subgraph}{spanSubgraph}
     Let $H$ be a subgraph of $G$. $H$ is called a {\color{red} \textbf{spanning subgraph}} of $G$ if $V(H) = V(G)$.
 \end{dfnbox}
+Note that by definition, a spanning subgraph retains all vertices of the original graph. Therefore, a way to quickly generate a subgraph of a given graph $G$ is to keep the vertex set and delete some edges from the edge set. We denote such a graph by $H = G - F$ for some $F \subset E(G)$. Observe that 
+\begin{equation*}
+    V(H) = V(G), \qquad E(H) = E(G) - F.
+\end{equation*}
+On the other hand, by deleting some vertices together with edges incident to them, we can produce a subgraph from any given graph.
 \begin{dfnbox}{Induced Subgraph}{induceSubgraph}
     Let $H$ be a subgraph of $G$. $H$ is called a {\color{red} \textbf{induced subgraph}} of $G$ if
     \begin{equation*}
@@ -1127,11 +1260,146 @@ be a multi-set and let $a_r$ be the number of $r$-permutations of $M$. The gener
     \\\\
     Alternatively, let $F \subseteq E(G)$. Define
     \begin{equation*}
-        V' \coloneqq \bigcup \left\{\left\{u, v\right\} \colon uv \in F\right\},
+        V' \coloneqq \bigcup \bigl\{\left\{u, v\right\} \colon uv \in F\bigr\},
     \end{equation*}
     then $(V', F)$ is the subgraph of $G$ induced by $F$, denoted by $G[F]$.
 \end{dfnbox}
-\section{Graph Traversal}
+Intuitively, an induced subgraph pf $G$ consists of a selected subset of the vertices of $G$ together with all edges in $G$ connecting any vertices in this subset.
+
+Using the idea of deletion, we can quickly generate an induced subgraph $H$ of $G$ as follows: first, set $V(H) = V(G) - A$ for some $A \subseteq V(G)$, i.e., remove some vertices; then, we will remove all edges from $E(G)$ which are incident to some vertices in $A$, i.e., set
+\begin{equation*}
+    E(H) = \left\{e \in E(G) \colon e \textrm{ is not incident to any } v \in A\right\}.
+\end{equation*}
+Then, $H = \bigl(V(H), E(H)\bigr)$ is an induced subgraph of $G$. In fact, we can denote $H$ as
+\begin{equation*}
+    H = G - A = [V(G) - A].
+\end{equation*}
+This leads to the following proposition:
+\begin{probox}{}{}
+    Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of $G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
+\end{probox}
+\section{Graph Isomorphism}
+Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent question proves to be extremely hard to answer. Two graphs can look drastically different but be structurally identical in reality. For example, we could shift around the vertices of a graph without changing any edge to alter the shape of the graph dramatically. Therefore, to compare the structures of graphs, we require some rigorous definition.
+\begin{dfnbox}{Graph Isomorphism}{graphIsomorph}
+    Two graphs $G$ and $H$ are said to be {\color{red} \textbf{isomorphic}}, denoted by $G \cong H$, if there exists a bijection $f \colon V(G) \to V(H)$ such that
+    \begin{equation*}
+        uv \in E(G) \quad\textrm{ if and only if } f(u)f(v) \in E(H).
+    \end{equation*}
+\end{dfnbox}
+Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$.
+
+It is very hard to determine whether two specific graphs are isomorphic, but there are some considerations in the general case. For example, some trivial conclusions include:
+\begin{itemize}
+    \item Two graphs with different orders cannot be isomorphic.
+    \item Two graphs with different sizes cannot be isomorphic.
+    \item Two graphs with different numbers of components cannot be isomorphic.
+    \item If the numbers of vertices with degree $k$ are different in two graphs, they cannot be isomorphic.
+\end{itemize}
+Here we introduce a way to determine isomorphism by considering complement graphs.
+\begin{probox}{Complementation Preserves Isomorphism}{compIso}
+    Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\overline{G} \cong \overline{H}$.
+\end{probox}
+Now let us think the reverse: if it is not easy to prove isomorphism, can we find a way to quickly determine that two graphs are not isomorphic? Here we present the necessary conditions for isomorphism:
+\begin{thmbox}{Necessary Conditions for Isomorphism}{necessaryCondIso}
+    If $G \cong H$, then
+    \begin{enumerate}
+        \item $G$ and $H$ must have the same order and size.
+        \item $\delta(G) = \delta(H)$ and $\Delta(G) = \Delta(H)$.
+        \item The number of vertices with degree $i$ in $G$ and $H$ is the same for all $i \in \N$.
+    \end{enumerate}
+\end{thmbox}
+The first two conditions are easy to observe. For the third condition, we introduce a tool known as \textit{degree sequences}.
+\begin{dfnbox}{Degree Sequence}{degSeq}
+    Let $G$ be a graph of order $n$. If we label its vertices by $v_1, v_2, \cdots, v_n$ such that
+    \begin{equation*}
+        d(v_1) \geq d(v_2) \geq \cdots \geq d(v_n),
+    \end{equation*}
+    then the non-increasing sequence $\bigl(d(v_n)\bigr)$ is known as the {\color{red} \textbf{degree sequence}} of $G$.
+\end{dfnbox}
+Now we consider the following question:
+\begin{quote}
+    Let $(d_n)$ be a non-increasing sequence, is there some graph whose degree sequence is $(d_n)$?
+\end{quote}
+We will make use of the following definition:
+\begin{dfnbox}{Graphic Sequence}{graphicSeq}
+    Let $(d_n)$ be a sequence of non-negative integers at most $n - 1$. $(d_n)$ is said to be {\color{red} \textbf{graphic}} if there exists a graph $G$ whose degree sequence is $(d_n)$.
+\end{dfnbox}
+To determine whether a sequence is graphic by eye power is difficult. Fortunately, we have the following recursive approach:
+\begin{thmbox}{Graphic Sequence Characterisation}{graphicSeqChar}
+    Let $(d_n)$ be a non-increasing sequence of non-negative integers at most $n - 1$. Define
+    \begin{equation*}
+        d^*_m = \begin{cases}
+            d_{m + 1} - 1 & \quad\textrm{if } 1 \leq m \leq d_1 \\
+            d_{m + 1} & \quad\textrm{if } d_1 + 1 \leq m \leq n - 1
+        \end{cases}.
+    \end{equation*}
+    $(d_n)$ is graphic if and only if $\left(d^*_m\right)$ is graphic.
+    \tcblower
+    \begin{proof}
+        Suppose $(d_n)$ is graphic,we consider the following lemma:
+        \begin{lembox}{}{graphicLemma}
+            For any graphic sequence $(d_n)$, there is some graph $G$ of order $n$ with $d_G(v_i) = d_i$ for $i = 1, 2, \cdots, n$ such that $v_1$ is adjacent to $v_j$ for $j = 2, 3, \cdots, d_1 + 1$.
+            \tcblower
+            \begin{proof}
+                Suppose on contrary there is no such a graph $G$, then for any graph $G$ with degree sequence $(d_n)$, $v_1$ is adjacent to at most $d_1 - 1$ vertices in
+                \begin{equation*}
+                    A \coloneqq \left\{v_j \colon j = 2, 3, \cdots, d_1 + 1\right\}.
+                \end{equation*}
+                Therefore, there exists some $v_j \in A$ such that $v_1v_j \notin E(G)$. However, $d_G(v_1) = d_1$, so there exists some $v_k \in V(G) - A$ with $v_k \neq v_1$ such that $v_1v_k \in E(G)$.
+                \\\\
+                Notice that since $v_k \notin A \cup \{v_1\}$, $k > j$ and so $d_G(v_k) = d_k \leq d_j = d_G(v_j)$. Therefore, $v_j$ has at least as many neighbours as $v_k$, which means there must exists some $v_r$ with $v_jv_r \in E(G)$ such that $v_kv_r \notin E(G)$.
+                \\\\
+                Define a graph $G'$ by
+                \begin{equation*}
+                    V(G') = V(G), \qquad E(G') = E(G) - v_jv_r - v_1v_k + v_jv_k + v_1v_j.
+                \end{equation*}
+                Note that $d_{G'}(v_i) = d_G(v_i)$ for all $i = 1, 2, \cdots, n$, so $(d_n)$ is also a degree sequence for $G'$. However, now $v_1$ in $G'$ is adjacent to all vertices in $A$, which is a contradiction.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:graphicLemma}, we can choose some graph $G$ whose degree sequence is $(d_n)$ such that $v_1$ is adjacent to $d_1$ vertices $v_2, v_3, \cdots, v_{d_1 + 1}$. Let $H = G - v_1$, then for any $u_i \in H$,
+        \begin{equation*}
+            d_H(u_i) = \begin{cases}
+                d_G(v_{i + 1}) - 1 & \quad\textrm{if } 1 \leq i \leq d_1 \\
+                d_G(v_{i + 1}) & \quad\textrm{if } d_1 + 1 \leq i \leq n - 1
+            \end{cases}.
+        \end{equation*}
+        Therefore, $\left(d^*_m\right)$ is graphic.
+        \\\\
+        Conversely, suppose $\left(d^*_m\right)$ is graphic, then there is some graph $H$ of order $n - 1$ such that $d_H(u_i) = d^*_i$ for $i = 1, 2, \cdots, d_1$. Construct a graph $G = H + v_1$ such that $v_i = u_{i - 1}$ for $i = 2, 3, \cdots, n$ and $v_1$ is adjacent to $v_2, v_3, \cdots, v_{d_1 + 1}$. Therefore,
+        \begin{equation*}
+            d_G(v_i) = \begin{cases}
+                d_1 & \quad\textrm{if } i = 1 \\
+                d^*_{i - 1} + 1 & \quad\textrm{if } 2 \leq i \leq d_1 + 1 \\
+                d^*_{i} & \quad\textrm{if } d_1 + 2 \leq i \leq n
+            \end{cases}.
+        \end{equation*}
+        Note that $d_G(v_i) = d_i$, so $(d_n)$ is graphic.
+    \end{proof}
+\end{thmbox}
+By Theorem \ref{thm:graphicSeqChar}, we can reduce a sequence recursively until we reach some obvious case. This obvious case is graphic if and only if the original sequence is graphic. We can also build the graph corresponding to the original sequence from a simple graphic sequence.
+
+Lastly, we introduce a special type of graphs known as \textit{self-complementary} graphs.
+\begin{dfnbox}{Self-Complementary Graph}{selfComp}
+    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
+\end{dfnbox}
+It turns out that a self-complementary graph satisfies some special properties.
+\begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
+    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
+    \tcblower
+    \begin{proof}
+        Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
+        \begin{equation*}
+            e(G) + e\left(\overline{G}\right) = \begin{pmatrix}
+                n \\
+                2
+            \end{pmatrix} = \frac{n(n - 1)}{2},
+        \end{equation*}
+        so we have $e(G) = \frac{n(n - 1)}{4}$. Since $e(G) \in \Z^+$, either $n$ or $n - 1$ is divisible by $4$, so $n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
+    \end{proof}
+\end{probox}
+\chapter{Graph Traversal}
+In this chapter, we study the movement within a graph, that is, how to traverse the vertices in a graph along its edges.
+\section{Path and Connectedness}
 \begin{dfnbox}{Walk, Trail, Path}{wtp}
     Let $G$ be a graph and $x, y \in V(G)$, then an {\color{red} \textbf{$x$-$y$ walk}} is an alternating sequence
     \begin{equation*}
@@ -1146,25 +1414,81 @@ be a multi-set and let $a_r$ be the number of $r$-permutations of $M$. The gener
         All paths are trails and all trails are walks, but the converses are not true.
     \end{remark}
 \end{notebox}
+In more informal terms, a trail is a walk with no repeated edge and a path is a trail with no repeated vertex.
+
 Note that a path is essentially a gragh. We denote a path of order $n$ by $P_n$ and a cycle of order $n$ by $C_n$.
 
 A common tool in proofs of graph theory is the \textbf{extremal approach}, which can be demonstrated in the proposition below.
 \begin{probox}{}{}
     If a graph $G$ conatins a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
+    \tcblower
+    \begin{proof}
+        Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path.
+        \\\\
+        Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However, $Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path.
+        \\\\
+        Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
+    \end{proof}
 \end{probox}
+An important question we are interested in with graphs is the reachability of a vertex, i.e., given two vertices $u$ and $v$, we want to know whether we can reach one vertex from another. Intuitively, we can traverse between two vertices if there is a path between them. From here we define the notion of a \textit{connected graph}.
 \begin{dfnbox}{Connected Graph}{connected}
-    A vertex set $U \subseteq V(G)$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in U$, there exists a path from $u$ to $v$
+    Let $G$ be a graph. Two vertices $u$ and $v$ are {\color{red} \textbf{connected}} if there is a path betweem them. $G$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in V(G)$, there exists a path from $u$ to $v$. For any $u \in V(G)$, we denote the set of all vertices connected to $u$ (inclusive of $u$) as $c(u)$.
 \end{dfnbox}
-Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then any $c(G) \in P$ induces a subgraph $[c(G)]$.
-\begin{dfnbox}{Complement}{comp}
-    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\bar{G}$ is the graph of order $n$ where
+Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and $v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
+\begin{dfnbox}{Connected Component}{CC}
+    Let $G$ be a graph and $R$ be a relation such that for any $u, v \in V(G)$, $uRv$ if and only if $u$ and $v$ are connected. Let
     \begin{equation*}
-        V(\bar{G}) = V(G), \qquad e \in E(\bar{G}) \iff e \notin E(G).
+        C \coloneqq V(G)/R
+    \end{equation*}
+    be the quotient set, then any $c(u) \in C$ is known as a (connected) {\color{red} \textbf{component}} of $G$.
+    \\\\
+    The number of components of $G$ is denoted by $\omega(G)$.
+\end{dfnbox}
+It can be easily seen that $G$ is connected if and only if $\omega(G) = 1$.
+
+We now proceed to introducing the notion of \textit{complement}.
+\begin{dfnbox}{Complement}{comp}
+    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\overline{G}$, is the graph of order $n$ where
+    \begin{equation*}
+        V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
     \end{equation*}
 \end{dfnbox}
+We will now establish a relationship between connectedness and complementation.
 \begin{thmbox}{Connectedness of Complement}{connectedComp}
-    If $G$ is disconnected, then $\bar{G}$ is connected.
+    If $G$ is disconnected, then $\overline{G}$ is connected.
+    \tcblower
+    \begin{proof}
+        Let $u, v \in V\left(\overline{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\overline(G)\right)$ and so $u$ and $v$ are connected in $\overline{G}$.
+        \\\\
+        If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that $uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\overline{G}\right)$. This means that there is a $u$-$v$ path in $\overline{G}$ and so $u$ and $v$ are connected in $\overline{G}$.
+        \\\\
+        Therefore, $\overline{G}$ is connected.
+    \end{proof}
 \end{thmbox}
+Intuitively, we can transform a connected graph into a disconnected one by deleting some vertices or edges. It can be easily observed that in certain graphs, deleting one particular vertex or edge will immediately disconnect the graph.
+\begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
+    Let $G$ be a non-trivial graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
+\end{dfnbox}
+Note that a graph does not have to be connected to have cut vertices and bridges. Essentially, a cut-vertex (or bridge) is just a vertex (or edge) which disconnects a component upon removal.
+
+Now the next question is how do we identify a cut-vertex or a bridge in a graph? Intuitively, a cut-vertex divides a graph into two portions such that traversal between the two portions has to pass through it.
+\begin{thmbox}{Cut-Vertex Characterisation}{cutVertex}
+    Let $G$ be a graph. $v \in V(G)$ is a cut-vertex if and only if there exists $a, b \in V(G)$ such that $v$ is in every path between $a$ and $b$.
+\end{thmbox}
+A similar argument can be established for bridges. Furthermore, since we have to pass through the bridge when traversing between the two portions, it can be easily seen that we have to reuse the bridge in order to traverse back.
+\begin{thmbox}{Bridge Characterisation}{bridge}
+    Let $G$ be a graph. $e \in E(G)$ is a bridge if and only if $e$ is not contained by any cycle in $G$.
+\end{thmbox}
+Combining the two characterisations, we can relate cut-vertices to bridges as follows:
+\begin{probox}{}{cutVertexNBridge}
+    Let $G$ be a graph. If $uv \in E(G)$ is a bridge and $u$ is not an end vertex, then $u$ is a cut-vertex.
+\end{probox}
+A direct consequence of this is the following corollary:
+\begin{corbox}{}{}
+    If $G$ is a graph with order at least $3$ and $G$ contains a bridge, then $G$ contains a cut-vertex.
+\end{corbox}
+\section{Distance between Vertices}
+Given a graph $G$ with $u$, $v$ being two connected vertices, we are interested in the notion of distance between them. Intuitively, if there are multiple paths between $u$ and $v$, we would take the length of the shortest one to represent their distance.
 \begin{dfnbox}{Distance, Eccentricity, Diameter}{distEDia}
     Let $G$ be a connected graph and let $u, v \in V(G)$. The {\color{red} \textbf{distance}} between $u$ and $v$, denoted by $d(u, v)$, is the length of the shortest path between $u$ and $v$. The {\color{red} \textbf{eccentricity}} of $u$ is defined to be
     \begin{equation*}
@@ -1184,26 +1508,53 @@ Note that connectedness is an equivalence relation. Let $P$ be a partition forme
     \end{equation*}
     The subgraph induced by the set of central vertices of $G$ is known as the {\color{red} \textbf{centre}} of $G$.
 \end{dfnbox}
+This also justifies the use of words ``diameter'' and ``radius'' in a circle. We can view a circle as a graph consisting of a centre and infinitely many vertices in the circumference, with edges of length $r$ connecting the centre to the circumference. Indeed, in this definition, the farthest vertices will be any two on the circumference with a distance of $2r$, and the nearest vertices will be the centre and any vertex on the circumference with a distance of $r$.
+
+For readers with knowledge in real analysis or topology, it is easy to see that an undirected unweighted connected graph is a metric space with distance between vertices as its metric. Thus it is natural to have the following result:
 \begin{thmbox}{Triangle Inequality}{triIneq}
     If $G$ is connected, then for any $u, v, w \in V(G)$,
     \begin{equation*}
         d(u, v) \leq d(u, w) + d(w, v).
     \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then $U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
+        \begin{equation*}
+            d(u, v) \leq d(u, w) + d(w, v).
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
+An application of Theorem \ref{thm:triIneq} allows us to establish the following:
 \begin{thmbox}{Boundedness of Diameter}{boundedDiam}
     If $G$ is connected, then
     \begin{equation*}
-        \mathrm{rad}(G) \leq \mathrm{diam}(G) \leq \mathrm{rad}(G).
+        \mathrm{rad}(G) \leq \mathrm{diam}(G) \leq 2\mathrm{rad}(G).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        $\mathrm{rad}(G) \leq \mathrm{diam}(G)$ is immediate from Definition \ref{dfn:distEDia}. Take $u, v \in V(G)$ with $d(u, v) = \mathrm{diam}(G)$ and take $w \in V(G)$ such that $e(w) = \mathrm{rad}(G)$. Notice that this implies
+        \begin{align*}
+            d(u, w) & \leq e(w) = \mathrm{rad}(G) \\
+            d(w, v) & \leq e(w) = \mathrm{rad}(G).
+        \end{align*}
+        By Theorem \ref{thm:triIneq}, 
+        \begin{equation*}
+            \mathrm{diam}(G) = d(u, v) \leq d(u, w) + d(w, v) = 2\mathrm{rad}(G).
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
-\begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
-    Let $G$ be a non-trivial connected graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
-\end{dfnbox}
 
 \section{Graphs and Matrices}
+So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and egdes, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
 \begin{dfnbox}{Adjacency Matrix}{adMat}
     Let $G$ be a multigraph with $v(G) = n$, then the {\color{red} \textbf{adjacency matrix}} denoted by $\mathbfit{A}(G)$ is an $n \times n$ matrix such that $a_{ij}$ is the number of edges incident to both $v_i, v_j \in V(G)$.
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        For an undirected multigraph, $\mathbfit{A}$ is always symmetric.
+    \end{remark}
+\end{notebox}
+Note that an adjacency matrix does not tell us which edges are incident to a particular vertex, so we may consider the following alternative:
 \begin{dfnbox}{Incidence Matrix}{inMat}
     Let $G$ be a multigraph with $v(G) = n$ and $e(G) = m$, then the {\color{red} \textbf{incidence matrix}} denoted by $\mathbfit{M}(G)$ is an $n \times m$ matrix such that
     \begin{equation*}
@@ -1213,9 +1564,30 @@ Note that connectedness is an equivalence relation. Let $P$ be a partition forme
         \end{cases}.
     \end{equation*}
 \end{dfnbox}
-\begin{probox}{}{}
-    Let $G$ be a simple graph with adjacency matrix $\mathbfit{A}$, then the $(i, j)$-th entry of $\mathbfit{A}^k$ is the number of different $v_i$-$v_j$ walks of length $k$ in $G$.
+\begin{notebox}
+    \begin{remark}
+        For an undirected multigraph, consider an arbitrary $k$-th column of $\mathbfit{M}$. Note that any column will have exactly $2$ non-zero entries. Suppose $m_{ik} = m_{jk} = 1$, it means that $e_k = v_iv_j$.
+    \end{remark}
+\end{notebox}
+For readers who have learnt about basic data structures in computer science, an incidence matrix is just an adjacency list with each list of neighbours converted to a (non-compact) boolean array.
+\\\\
+Note that the sum of the $i$-th row for both $\mathbfit{A}$ and $\mathbfit{M}$ is the degree of vertex $i$. 
+\\\\
+Since $\mathbfit{A}$ and $\mathbfit{M}$ carries information about adjacencies between vertices, we can use them to draw some conclusions regarding graph traversal.
+\begin{probox}{}{numWalks}
+    Let $G$ be a simple graph of order $n$ with adjacency matrix $\mathbfit{A}$, then the $(i, j)$ entry of $\mathbfit{A}^k$ is the number of $v_i$-$v_j$ walks of length $k$.
+    \tcblower   
+    \begin{proof}
+        The case where $k = 1$ is trivially true since there is a $v_i$-$v_j$ walk of length $1$ if and only if $v_i$ and $v_j$ are neighbours.
+        \\\\
+        Let the $(i, j)$ entry of $\mathbfit{A}^m$ be $m_{ij}$. Suppose $m_{ij}$ is the number of $v_i$-$v_j$ walks of length $m$. Then the $(i, j)$ entry of $\mathbfit{A}^{m + 1}$ is given by
+        \begin{align*}
+            \sum_{r = 1}^{n}m_{ir}a_{rj}.
+        \end{align*}
+        Note that $m_{ir}$ is the number of $v_i$-$v_r$ walks of length $m$ and $a_{rj}$ is the number of $v_r$-$v_j$ walks of length $1$, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length $n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
+    \end{proof}
 \end{probox}
+Additionally, we have the following corollary:
 \begin{corbox}{}{}
     Let $G$ be a graph with $v(G) \geq 2$ and adjacency matrix $\mathbfit{A}$. Let
     \begin{equation*}
@@ -1227,12 +1599,13 @@ Note that connectedness is an equivalence relation. Let $P$ be a partition forme
 \chapter{Bipartite Graphs}
 \section{Bipartite Graphs}
 \begin{dfnbox}{Bipartite Graph}{bipartite}
-    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and $V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$.
+    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and $V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$. $(V_1, V_2)$ is known as a {\color{red} \textbf{bipartition}} of $G$.
 \end{dfnbox}
 Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is just
 \begin{equation*}
     e(G) = \sum_{x \in V_1}d_G(x) = \sum_{y \in V_2}d_G(y).
 \end{equation*}
+It can be deduced that the maximal size of a bipartite graph is achieved when every vertex in $V_1$ is connected to every vertex in $V_2$. To define this rigorously, we first introduce the notion of \textit{join}.
 \begin{dfnbox}{Join}{join}
     Let $G_1$ and $G_2$ be two disjoint graphs of order $n_1$ and $n_2$ respectively. The {\color{red} \textbf{join}} of $G_1$ and $G_2$, deonoted by $G_1 + G_2$ is the graph such that
     \begin{align*}
@@ -1240,17 +1613,45 @@ Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is
         E(G_1 + G_2) & = E(G_1) \cup E(G_2) \cup \left\{uv \colon u \in V(G_1), v \in V(G_2)\right\}.
     \end{align*}
 \end{dfnbox}
-\begin{thmbox}{Complete Bipartite Graph}{completeBipartite}
-    Let $0_p$ and $0_q$ be graphs of size $0$ and orders $p$ and $q$ respectively, then $K_{p, q} = 0_p + 0_q$ is a complete bipartite graph.
-\end{thmbox}
-\begin{thmbox}{Determination of Bipartite Graphs}{bipartiteIff}
+Informally, we can describe the join of $G_1$ and $G_2$ as a graph containing all vertices from $G_1$ and $G_2$, all existing edges from $G_1$ and $G_2$, and new edges connecting every vertex in $G_1$ to every vertex in $G_2$. Therefore, we can define a complete bipartite graph using a join.
+\begin{dfnbox}{Complete Bipartite Graph}{completeBipartite}
+    A {\color{red} \textbf{complete bipartite graph}} is defined as $K_{p, q} = 0_p + 0_q$.
+\end{dfnbox}
+Sometimes, it is not easy to identify the bipartition in a bipartite graph. Therefore, to quickly determine whether a graph is bipartite, we consider the following theorem:
+\begin{thmbox}{Bipartite Graph Characterisation}{bipartiteIff}
     A graph is bipartite if and only if it contains no odd cycles.
+    \tcblower
+    \begin{proof}
+        Suppose $G$ is bipartite with bipartition $(U, V)$. If $G$ contains no cycle then we are done. Suppose $G$ contains some cycle. Let $u_i$ be the $i$-th visited vertex from $U$ in the cycle. Note that between $u_i$ and $u_{i + 1}$ there exists one and only one vertex from $V$. Suppose $k$ vertices from $U$ are contained in the cycle, then it is easy to see that there are also $k$ vertices from $V$ contained in the cycle. Therefore, every cycle in $G$ must be even.
+        \\\\
+        Suppose conversely that $G$ contains no odd cycles. Note that it suffices to prove that every component of $G$ is bipartite. Let $C$ be a component of $G$, then $C$ contains no odd cycles. Take some $w \in V(C)$ and define the sets
+        \begin{align*}
+            V_1 & \coloneqq \left\{v \colon d(v, w) \textrm{ is even}\right\} \\
+            V_2 & \coloneqq \left\{v \colon d(v, w) \textrm{ is odd}\right\}.
+        \end{align*}
+        We will prove $(V_1, V_2)$ is a bipartition. Suppose it is not a bipartition, then without loss of generality, let $a, b \in V_1$ be neighbours. Note that there is a path $A$ between $w$ and $a$ of even length and a path $B$ between $w$ and $b$ of even length, so $A \cup B \cup \{ab\}$ is a closed walk of odd length. Consider the following lemma:
+        \begin{lembox}{}{existOddCycle}
+            A closed walk of odd length in a graph contains an odd cycle.
+            \tcblower
+            \begin{proof}
+                Let the walk have a length of $p$. The case where $p = 3$ is trivially true since the only closed walk of length $3$ is $C_3$. 
+                \\\\
+                Suppose any closed walk of odd length less than $p$ contains an odd cycle. Let $P$ be a closed walk of length $p$. If $P$ is a cycle then we are done. If $P$ is not a cycle, then there exist some $w_1 = w_2$ in $P$. Note that $w_1 = w_2$ is a cut-vertex. So there exists two closed walks $Q_1$ and $Q_2$ such that $Q_1 \cap Q_2 = \{w_1\}$. Notice that one of $Q_1$ and $Q_2$ must have an odd length and so contains an odd cycle, so $P$ contains an odd cycle.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:existOddCycle}, $A \cup B \cup \{ab\}$ contains an odd cycle, which is a contradiction. 
+    \end{proof}
 \end{thmbox}
 
-\section{Tree}
+\section{Trees}
 \begin{dfnbox}{Tree}{tree}
     A {\color{red} \textbf{tree}} is a {\color{red} \textbf{connected}} graph with {\color{red} \textbf{no cycles}}.
 \end{dfnbox}
+Consider the following question:
+\begin{quote}
+    What is the minimal number of edges needed to construct a connected graph of order $n$?
+\end{quote}
+Intuitively, we need at least $(n - 1)$ edges. On the other hand, it is also easy to see that a tree of order $n$ is of the smallest size among all order-$n$ graphs.
 \begin{thmbox}{Equivalent Definitions for Trees}{equivDfnTree}
     Let $T$ be a connected graph of order $n$ and size $m$, then the following statements are equivalent:
     \begin{enumerate}
@@ -1259,36 +1660,123 @@ Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is
         \item $m = n - 1$.
     \end{enumerate}
 \end{thmbox}
-\begin{dfnbox}{Forest}{forest}
-    A {\color{red} \textbf{forest}} is a graph $G$ in which each component is a tree.
-\end{dfnbox}
-\begin{probox}{}{}
+We introduce $2$ interesting properties of trees.
+\begin{probox}{}{numDeg1}
     Let $T$ be a tree with $\Delta(T) = k$. Let $n_i$ be the number of vertices in $T$ of degree $i$, then
     \begin{equation*}
         n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let the order of $T$ be $n$, then $n = \sum_{i = 1}^{k}n_i$. By Lemma \ref{lem:handshake}, we have
+        \begin{equation*}
+            \sum_{v \in V(T)}d(v) = 2(n - 1).
+        \end{equation*}
+        However, since there are $n_i$ vertices with degree $i$, we have
+        \begin{equation*}
+            \sum_{v \in V(T)}d(v) = \sum_{i = 1}^{k}in_i.
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            2\sum_{i = 1}^{k}n_i - 2 & = \sum_{i = 1}^{k}in_i \\
+            n_1 & = \sum_{i = 3}^{k}in_i \\
+            n_1 & = \sum_{i = 1}^{k - 2}in_{i + 2}.
+        \end{align*}
+    \end{proof}
 \end{probox}
+The following corollary is an immediate consequence of Proposition \ref{pro:numDeg1}:
+\begin{corbox}{}{}
+    A tree of order at least $2$ contains at least $2$ end vertices.
+\end{corbox}
+A tree with exactly $2$ end vertices is a doubly linked list.
+
+A collection of disjoint trees are vividly named as a \textit{forest}.
+\begin{dfnbox}{Forest}{forest}
+    A {\color{red} \textbf{forest}} is a graph $G$ in which each component is a tree.
+\end{dfnbox}
+
 \subsection{Spanning Tree}
 \begin{dfnbox}{Spanning Tree}{spanTree}
     Let $G$ be a multigraph, a tree $T$ which is a spanning graph of $G$ is known as the {\color{red} \textbf{spanning tree}} of $G$.
 \end{dfnbox}
+Intuitively, one can traverse along a spanning tree of a graph to reach every vertex of the graph from any source vertex. Therefore, a spanning tree essentially gives all paths between any pair of vertices, and so the existence of a spanning tree is an indicator of connectedness.
 \begin{probox}{}{}
     A graph $G$ is connected if and only if it contains a spanning tree.
+    \tcblower
+    \begin{proof}
+        If $G$ contains a spanning tree, then every pair of vertices in $G$ are connected, and so $G$ is connected.
+        \\\\
+        Suppose $G$ is connected. If $G$ is a tree, then it is a spanning tree of itself. Otherwise, $G$ contains some cycle $C$. Let $e$ be any edge in $C$, then $e$ is not a bridge so $G - e$ is connected. Set $G' = G - e$ and repeat the process for $G'$. Since $G$ is finite, we will eventually remove all cycles in $G$ and derive a tree containing all vertices in $G$, i.e., a spanning tree.
+    \end{proof}
 \end{probox}
+Notice that a connected graph cannot be smaller in size than its spanning tree, so we have the following corollary:
 \begin{corbox}{}{}
     If $G$ is a connected graph of order $n$, then $e(G) \geq n - 1$.
 \end{corbox}
+Now, we wish to answer the following question:
+\begin{quote}
+    Let $G$ be a connected multigraph of order $n$ and size $m$. Suppose the vertices of $G$ are labelled and duplicated egdes between any pair of vertices distinguished, how many different spanning trees of $G$ there are?
+\end{quote}
+Let $G$ be a connected multigraph, we denote \textbf{the number of spanning trees} of $G$ by $\tau(G)$. It is not an easy task to count directly by observation. We introduce a useful concept known as \textit{contraction}.
 \begin{dfnbox}{Contraction}{contraction}
-    Let $G$ be a connected multigraph of order $n$ and let $e = uv$ be an egde of $G$. A {\color{red} \textbf{contraction}} of $G$ of $e$, denoted by $G \circ e$, is produced by removing $e$ and identifying $u$ and $v$ into a single vertex.
+    Let $G$ be a connected multigraph of order $n$ and let $e = uv$ be an egde of $G$. A {\color{red} \textbf{contraction}} of $G$ by $e$, denoted by $G \circ e$, is produced by removing all edges joining $u$ and $v$ and identifying $u$ and $v$ into a single vertex.
 \end{dfnbox}
-Let $G$ be a connected multigraph, we denote the number of spanning trees of $G$ by $\tau(G)$.
+We may make use of contractions to compute $\tau(G)$ in a recursive manner.
 \begin{thmbox}{Recursive Algorithm for $\tau(G)$}{recursiveTau}
     Let $G$ be a connected multigraph, then
     \begin{equation*}
         \tau(G) = \tau(G - e) + \tau(G \circ e)
     \end{equation*}
     for all $e \in E(G)$.
+    \tcblower
+    \begin{proof}
+        Let $G$ be a multigraph and $e \in E(G)$. Define $A$ to be the set of spanning trees of $G$ which contains $e$ aand $B$ to be that which does not contain $e$.
+        \\\\
+        Take any $T_A \in A$, then $e \in E(T_A)$ is a bridge. Notice that if $T_1, T_2 \in A$, then $T_1 \neq T_2$, so they have at least one different edge which is not $e$. Define
+        \begin{equation*}
+            A' \coloneqq \left\{T'_A = T_A - e \colon T_A \in A\right\}.
+        \end{equation*}
+        Clearly, for $T'_1, T'_2 \in A'$, $T'_1 \neq T'_2$ are different spanning trees.Observe that there is a bijection between $A$ and $A'$, so $\abs{A} = \abs{A'} = \tau(G \circ e)$.
+        \\\\
+        Take any $T_B \in B$, since $e \notin E(T_B)$, $T_B$ must be a spanning tree of $G - e$. Therefore, $\abs{B} = \tau(G - e)$. Hence,
+        \begin{equation*}
+            \tau(G) = \abs{B} + \abs{A} = \tau(G - e) + \tau(G \circ e).
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
+Theorem \ref{thm:recursiveTau} allows us to reduce $\tau(G)$ for a complex graph $G$ into a linear combination of $\tau$'s for simpler graphs. So now we will discuss some basic cases where $\tau$ is easy to compute.
+\begin{enumerate}
+    \item A simple cycle of order $n$:
+    
+    Note that for any $e \in E(C_n)$, $C_n - e$ is a spanning tree, so $\tau(C_n) = e(C_n) = n$.
+    \item A connected graph $G$ with a cut-vertex $v$:
+    
+    Let $G_1$ and $G_2$ be two components of $G - v$. A spanning tree of $G$ consists of a spanning tree of $\bigl[V(G_1) \cup \{v\}\bigr]$ and a spanning tree of $\bigl[V(G_2) \cup \{v\}\bigr]$, so 
+    \begin{equation*}
+        \tau(G) = \tau\Bigl(\bigl[V(G_1) \cup \{v\}\bigr]\Bigr)\tau\Bigl(\bigl[V(G_2) \cup \{v\}\bigr]\Bigr).
+    \end{equation*}
+    \item A connected graph $G$ with a bridge $e$:
+    
+    By a similar argument as the previous case, let $G_1$ and $G_2$ be the two components of $G - e$, then $\tau(G) = \tau(G_1)\tau(G_2)$.
+    \item A connected graph $G$ consisting of two simple cycles $C_p$ and $C_q$ sharing a common edge $e$:
+    
+    Note that $G - e$ is a simple cycle $C_{p + q - 2}$ and $G \circ e$ is two simple cycles $C_{p - 1}$ and $C_{q - 1}$ sharing a cut-vertex. By Theorem \ref{thm:recursiveTau},
+    \begin{align*}
+        \tau(G) & = \tau(G - e) + \tau(G \circ e) \\
+        & = p + q - 2 + (p - 1)(q - 1).
+    \end{align*}
+    \item A simple cycle $C_p$ with exactly one edge $uv$ duplicated.
+    
+    Let $e$ and $f$ be the duplicated edges. Observe that there is only $1$ spanning tree which contains neither $e$ nor $f$. If exactly one of $e$ and $f$ is part of the spanning tree, that spanning tree also spans a simple cycle $C_p$. Therefore, $\tau(G) = 2(p - 1) + 1 = 2p - 1$. 
+    \item A connected graph $G$ consisting of two simple cycles $C_p$ and $C_q$ sharing a pair of duplicated edges $e$ and $f$:
+    
+    Note that $G - e$ is just the graph in case $4$ and $G \circ e$ is $C_{p - 1}$ and $C_{q - 1}$ joined by a common cut-vertex, so by Theorem \ref{thm:recursiveTau},
+    \begin{align*}
+        \tau(G) & = \tau(G - e) + \tau(G \circ e) \\
+        & = p + q - 2 + 2(p - 1)(q - 1).
+    \end{align*}
+\end{enumerate}
+When dealing with large graphs, we can make use of matrices just like what we did for graph traversal. In particular, we shall state the following useful theorem without proof.
 \begin{thmbox}{Matrix Tree Theorem}{matTree}
     Let $\mathbfit{A}$ be the adjacency matrix of a multigraph $G$ and $\mathbfit{C}$ be the $n \times n$ diagonal matrix defined by
     \begin{equation*}
@@ -1299,12 +1787,101 @@ Let $G$ be a connected multigraph, we denote the number of spanning trees of $G$
     \end{equation*}
     Then, $\tau(G)$ is the cofactor of any entry of $\mathbfit{C - A}$. 
 \end{thmbox}
-\begin{thmbox}{Number of Spanning Trees for Complete Graphs}{completeTau}
+Using Theorem \ref{thm:matTree}, we can prove the following propositions:
+\begin{probox}{Number of Spanning Trees for Complete Graphs}{completeTau}
     Let $n \in \N$ and $n \geq 2$ and let $K_n$ be a complete graph, then $\tau(K_n) = n^{n - 2}$.
-\end{thmbox}
-\begin{thmbox}{Number of Spanning Trees for Complete Bipartite Graphs}{completeBipartiteTau}
+    \tcblower
+    \begin{proof}
+        Note that since $K_n$ is complete, $\mathbfit{C}(K_n)$ is defined by
+        \begin{equation*}
+            c_{ij} = \begin{cases}
+                n - 1 & \quad\textrm{if } i = j \\
+                0 & \quad\textrm{otherwise}
+            \end{cases}
+        \end{equation*}
+        and the adjacency matrix $\mathbfit{A}(K_n)$ is such that
+        \begin{equation*}
+            a_{ij} = \begin{cases}
+                1 & \quad\textrm{if } i \neq j \\
+                0 & \quad\textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        Therefore, the cofactor of $\mathbfit{C}(K_n) - \mathbfit{A}(K_n)$ will be the $(n - 1) \times (n - 1)$ determinant
+        \begin{equation*}
+            \begin{vmatrix}
+                n - 1 & -1 & -1 & \cdots & -1 \\
+                -1 & n - 1 & -1 & \cdots & -1 \\
+                -1 & -1 & n - 1 & \cdots & -1 \\
+                \vdots & \vdots & \vdots & \ddots & \vdots \\
+                -1 & -1 & -1 & \cdots & n - 1
+            \end{vmatrix} \longrightarrow \begin{vmatrix}
+                1 & 1 & 1 & \cdots & 1 \\
+                -1 & n - 1 & -1 & \cdots & -1 \\
+                -1 & -1 & n - 1 & \cdots & -1 \\
+                \vdots & \vdots & \vdots & \ddots & \vdots \\
+                -1 & -1 & -1 & \cdots & n - 1
+            \end{vmatrix},
+        \end{equation*}
+        where the latter is obtained by adding all other rows to the first row. Performing row operations by adding the first row to every other row, the determinant becomes
+        \begin{equation*}
+            \begin{vmatrix}
+                1 & 1 & 1 & \cdots & 1 \\
+                0 & n & 0 & \cdots & 0 \\
+                0 & 0 & n & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & 0 & \cdots & n
+            \end{vmatrix} = n^{n - 2}.
+        \end{equation*}
+        Since such row operations do not change the determinant, $\tau(K_n) = n^{n - 2}$.
+    \end{proof}
+\end{probox}
+\begin{probox}{Number of Spanning Trees for Complete Bipartite Graphs}{completeBipartiteTau}
     For all $r \in \Z^+$, let $K_{2, r}$ be a complete bipartite graph with partite sets of sizes $2$ and $r$, then $\tau\left(K_{2, r}\right) = 2^{r - 1}r$.
-\end{thmbox}
+    \tcblower
+    \begin{proof}
+        Note that
+        \begin{equation*}
+            \mathbfit{C}(K_{2, r}) - \mathbfit{A}(K_{2, r}) = \begin{bmatrix}
+                r & 0 & -1 & -1 & \cdots & -1 \\
+                0 & r & -1 & -1 & \cdots & -1 \\
+                -1 & -1 & 2 & 0 & \cdots & 0 \\
+                -1 & -1 & 0 & 2 & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+                -1 & -1 & 0 & 0 & \cdots & 2
+            \end{bmatrix}.
+        \end{equation*}
+        Consider the $(r + 2, r + 2)$ cofactor:
+        \begin{equation*}
+            \begin{vmatrix}
+                r & 0 & -1 & -1 & \cdots & -1 \\
+                0 & r & -1 & -1 & \cdots & -1 \\
+                -1 & -1 & 2 & 0 & \cdots & 0 \\
+                -1 & -1 & 0 & 2 & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+                -1 & -1 & 0 & 0 & \cdots & 2
+            \end{vmatrix} \longrightarrow \begin{vmatrix}
+                1 & 1 & 0 & 0 & \cdots & 0 \\
+                0 & r & -1 & -1 & \cdots & -1 \\
+                -1 & -1 & 2 & 0 & \cdots & 0 \\
+                -1 & -1 & 0 & 2 & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+                -1 & -1 & 0 & 0 & \cdots & 2
+            \end{vmatrix},
+        \end{equation*}
+        where the latter is obtained by adding every other row to the first row. Performing row operations by adding the first row to every row starting from the third row, the determinant becomes
+        \begin{equation*}
+            \begin{vmatrix}
+                1 & 1 & -1 & -1 & \cdots & -1 \\
+                0 & r & -1 & -1 & \cdots & -1 \\
+                0 & 0 & 2 & 0 & \cdots & 0 \\
+                0 & 0 & 0 & 2 & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & 0 & 0 & \cdots & 2
+            \end{vmatrix} = 2^{r - 1}r.
+        \end{equation*}
+        Since such row operations do not change the determinant, so $\tau(K_{2, r}) = 2^{r - 1}r$.
+    \end{proof}
+\end{probox}
 
 \chapter{Weighted Graphs}
 \section{Weight}

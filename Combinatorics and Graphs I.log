@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 NOV 2023 19:11
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  24 NOV 2023 14:36
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1427,52 +1427,131 @@ Underfull \hbox (badness 10000) in paragraph at lines 1039--1044
 Chapter 5.
 [34
 
-]
+] [35] [36]
 Chapter 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
+Underfull \hbox (badness 10000) in paragraph at lines 1169--1174
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
+Underfull \hbox (badness 10000) in paragraph at lines 1169--1174
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
+Underfull \hbox (badness 10000) in paragraph at lines 1191--1194
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1106--1111
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1106--1111
-
- []
-
-[35
+[37
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1125--1129
+Underfull \hbox (badness 10000) in paragraph at lines 1197--1200
+
+ []
+
+[38] [39]
+Underfull \hbox (badness 10000) in paragraph at lines 1258--1262
+
+ []
+
+[40] [41]
+Underfull \hbox (badness 10000) in paragraph at lines 1347--1353
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1139--1143
+Underfull \hbox (badness 10000) in paragraph at lines 1347--1353
 
  []
 
-[36] [37] [38] [39]
+
+Underfull \hbox (badness 10000) in paragraph at lines 1365--1369
+
+ []
+
+[42] [43] [44]
 Chapter 7.
-[40
 
-] [41] [42]
+Underfull \hbox (badness 10000) in paragraph at lines 1407--1411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1426--1431
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1426--1431
+
+ []
+
+[45
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1442--1446
+
+ []
+
+[46]
+Underfull \hbox (badness 10000) in paragraph at lines 1461--1466
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1461--1466
+
+ []
+
+[47] [48] [49]
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1584
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1572--1589
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1572--1589
+
+ []
+
+[50] [51]
 Chapter 8.
-[43
+
+Underfull \hbox (badness 10000) in paragraph at lines 1625--1628
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1637--1640
+
+ []
+
+[52
+
+] [53] [54]
+Underfull \hbox (badness 10000) in paragraph at lines 1707--1710
+
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 1733--1736
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1738--1742
+
+ []
+
+[56] [57] [58] [59] [60]
+Chapter 9.
+[61
 
 ] 
 enddocument/afterlastpage: lastpage setting LastPage.
@@ -1481,12 +1560,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs I".out' has not cha
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36953 strings out of 478630
- 774812 string characters out of 5847730
- 1882012 words of memory out of 5000000
- 56471 multiletter control sequences out of 15000+600000
+ 37018 strings out of 478630
+ 775863 string characters out of 5847730
+ 1889012 words of memory out of 5000000
+ 56536 multiletter control sequences out of 15000+600000
  516159 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,14n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,16n,128p,1213b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs I.pdf (43 pages).
+Output written on Combinatorics and Graphs I.pdf (61 pages).
