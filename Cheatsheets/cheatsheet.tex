@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -11,7 +11,7 @@
 \usepackage[a4paper,margin=1cm,landscape]{geometry}
 
 \begin{document}
-    \begin{multicols}{3}
+    \begin{multicols*}{3}
         \textbf{P \& C}:
         \\
         $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
@@ -71,7 +71,6 @@
                 r
             \end{pmatrix}.
         \end{equation*}
-        \\\\
         \textbf{Chu Shih-Chieh Identity}:
         \begin{align*}
             \sum_{i = 0}^{n - r}\begin{pmatrix}
@@ -97,7 +96,6 @@
                 n_1, n_2, \cdots, n_m
             \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{m}n_i!}.
         \end{equation*}
-        \\\\
         \textbf{Pigeonhole Principle}: If at least $kn + 1$ objects are distributed into $n$ distinct sets, then there exists a set with at least $k + 1$ objects.
         \\\\
         \textbf{Generalised PP}: If at least $\sum_{i = 1}^{n}k_i + (n - 1)$ distinct objects are distributed into $n$ distinct sets, then there exists at least one set ($i$-th) with at least $k_i$ objects.
@@ -133,9 +131,122 @@
         \\\\
         $D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}$.
         \\\\
+        $\varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right)$.
+
+        \textbf{Identicial into Identical}
+
+        Number of partitions of $n$ into $k$ parts equals the number of partition of $k$ where the largest part has size $k$.
+        \\\\
+        $\sum_{k = 1}^{m}p(n, k) = p(n + m, m)$.
+        \\\\
         \textbf{GPIE}: 
         \begin{equation*}
             E(m) = \sum_{k = m}^{q}(-1)^{k - m}C^k_m\omega(k).
         \end{equation*}
-    \end{multicols}
+        \textbf{OGF}:
+        \begin{itemize}
+            \item $\begin{pmatrix}
+                \alpha \\
+                r
+            \end{pmatrix} = \frac{\prod_{i = 0}^{r - 1}(\alpha - i)}{r!}$.
+            \item $(1 \pm x)^\alpha = \sum_{r = 0}^{\infty}\begin{pmatrix}
+                \alpha \\
+                r
+            \end{pmatrix}(\pm x)^r$.
+            \item $\frac{1}{1 - kx}$ generates $(1, k, k^2, \cdots)$.
+            \item $(1 - x)^{-n} = \sum_{i = 0}^{\infty}\begin{pmatrix}
+                n - 1 + i \\
+                i
+            \end{pmatrix}x^i$.
+            \item $\alpha A(x) + \beta B(x)$ generates $\alpha a_r + \beta b_r$.
+            \item $A(x)B(x)$ generates $\sum_{i = 0}^{r}a_ib_{r - i}$.
+            \item $x^mA(x)$ translates $a_i$ to $a_{i + m}$.
+            \item $A(kx)$ generates $k^ra_r$.
+            \item $(1 - x)A(x)$ generates $c_r = a_r - a_{r - 1}$.
+            \item $\frac{A(x)}{1 - x}$ generates $c_r = \sum_{i = 0}^{r}a_i$.
+            \item $A'(x)$ generates $(r + 1)a_{r + 1}$.
+            \item $xA'(x)$ generates $ra_r$.
+            \item $r$-combination of multi-set: $\prod_{i = 1}^{k}\left(\sum_{j = 0}^{n_i}x^j\right)$.
+            \item $r$-partition of $n$ of size at most $k$: $\frac{1}{\prod_{i = 1}^{k}(1 - x^i)}$.
+        \end{itemize}
+        \textbf{EGF}:
+        \begin{itemize}
+            \item $\mathrm{e}^x = \sum_{i = 0}^{\infty}\frac{x^i}{i!}$ generates $a_r = 1$.
+            \item $\frac{1}{1 - x} = \sum_{i = 0}^{\infty}x_i$ generates $a_r = r!$.
+            \item $\mathrm{e}^{kx} = \sum_{i = 0}^{\infty}\frac{(kx)^i}{i!}$ generates $a_r = k^r$.
+            \item $(1 + x)^n = \sum_{i = 0}^{n}i!C^n_r\frac{x^i}{i!}$ generates $P^n_r$.
+            \item $r$-permutation of multi-set: $\prod_{i = 1}^{k}\left(\sum_{j = 0}^{n_i}\frac{x^j}{j!}\right)$
+            \item $\frac{\mathrm{e}^x + \mathrm{e}^{-x}}{2}$: even number of elements.
+            \item $\frac{\mathrm{e}^x - \mathrm{e}^{-x}}{2}$: odd number of elements.
+        \end{itemize}
+        \textbf{Particular solutions:}
+        \begin{center}
+            \begin{tabular}{|c|l|}
+                \hline
+                $f(n)$ &  $a_n^{(p)}$ \\
+                \hline
+                $Ak^n$ & $\begin{cases}
+                    Bk^n & k \textrm{ not a root} \\
+                    Bn^mk^n & k \textrm{ has multiplicity } m
+                \end{cases}$ \\
+                \hline
+                $\sum_{i = 0}^{t}p_in^i$ & $\begin{cases}
+                    \sum_{i = 0}^{t}q_in^i & 1 \textrm{ not a root} \\
+                    n^m\sum_{i = 0}^{t}p_in^i & 1 \textrm{ multiplicity } m
+                \end{cases}$ \\
+                \hline
+                $An^tk^n$ & $\begin{cases}
+                    \left(\sum_{i = 0}^{t}q_in^i\right)k^n \\
+                    n^m\left(\sum_{i = 0}^{t}p_in^i\right)k^n
+                \end{cases}$ \\
+                \hline
+            \end{tabular}
+        \end{center}
+        \textbf{Graph}:
+        \begin{itemize}
+            \item \textbf{Handshaking Lemma}: $\sum d_G(v) = 2e(G)$. The number of vertices with odd degrees is even.
+            \item A subgraph $H$ of $G$ is induced iff $H = G - (V(G) - V(H))$.
+            \item $G \cong H$ iff $\overline{G} \cong \overline{H}$.
+            \item If $G \cong H$, then
+            \begin{itemize}
+                \item $G$ and $H$ have same order and size.
+                \item $\delta(G) = \delta(H)$ and $\Delta(G) = \delta(H)$.
+                \item Number of vertices with degree $i$ is the same.
+            \end{itemize}
+            \item $(d_1, d_2, \cdots, d_n)$ is graphic iff $(d_2 - 1, \cdots, d_{d_1 + 1} - 1, d_{d_1 + 2}, \cdots, d_n)$ is graphic.
+            \item Order of self-complementary $G$ is either $4k$ or $4k + 1$.
+            \item $\exists u$-$v$ walk of length $k \implies \exists u$-$v$ path of length at most $k$.
+            \item $\omega(G)$: number of components of $G$.
+            \item Complement of connected graph is connected.
+            \item $v$ is a cut-vertex iff $\exists a, b$ such that $v$ is in every $a$-$b$ path.
+            \item $e$ is a bridge iff it is not part of any cycle.
+            \item $uv$ is a bridge and $u$ is not end vertex $\implies u$ is a cut-vertex.
+            \item A graph with order at least $3$ which contains a bridge contains a cut-vertex.
+            \item $\mathrm{rad}(G) \leq \mathrm{diam}(G) \leq 2\mathrm{rad}(G)$.
+            \item Incidence matrix is $v(G)$ rows $e(G)$ columns.
+            \item $(i, j)$ entry of $\bm{A}^k$ is the number of $v_i$-$v_j$ walks of length $k$.
+            \item $G$ is connected if and only if the $(i, j)$ entry of $\sum_{i = 1}^{n - 1}$ is nonzero for all $i \neq j$.
+            \item Size of bipartite is sum of degrees of any partite set.
+            \item Join: $V(G + H) = V(G) \cup V(H)$, $E(G, H) = E(G) \cup E(H) \cup \left\{uv \colon u \in V(G), v \in V(H)\right\}$.
+            \item Bipartite iff no odd cycles.
+            \item $T$ is a tree iff every two vertices are joined by a unique path iff $e(T) = v(T) - 1$.
+            \item If $\Delta(T) = k$, then $n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}$.
+            \item A tree of order at least $2$ contains at least $2$ end vertices.
+            \item The centre of a tree is either $K_1$ or $K_2$.
+            \item A graph is connected iff it contains a spanning tree.
+            \item $\tau(G) = \tau(G - e) + \tau(G \circ e)$.
+            \begin{itemize}
+                \item $\tau(C_n) = n$.
+                \item Connected with a cut-vertex or a bridge: $\tau(G) = \tau(G_1)\tau(G_2)$.
+                \item $C_p$ and $C_q$ sharing a commen edge: $\tau(G) = p + q - 2 + (p - 1)(q - 1)$.
+                \item $C_p$ with a duplicated edge: $\tau(G) = 2p - 1$.
+                \item $C_p$ and $C_q$ sharing a pair of duplicated edges: $\tau(G) = p + q - 2 + 2(p - 1)(q - 1)$.
+                \item $\tau(K_n) = n^{n - 2}$.
+                \item $\tau(K_{2, r}) = 2^{r - 1}r$.
+            \end{itemize}
+            \item \textbf{Matrix tree theorem:} $\tau(G)$ is the cofactor of any entry of $\bm{C - A}$ where $\bm{C}$ is a diagonal matrix containing the degrees of vertices.
+        \end{itemize}
+        
+        
+    \end{multicols*}
 \end{document}

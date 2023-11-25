@@ -756,14 +756,20 @@ The above recurrence allows us to prove the following theorem:
 
 \chapter{Principle of Inclusion and Exclusion}
 \section{Principle of Inclusion and Exclusion (PIE)}
-\begin{thmbox}{Principle of Inclusion and Exclusion (a special case)}{2PIE}
+We consider the following question:
+\begin{quote}
+    Let $A$ and $B$ be finite sets, how many elements are there in their union?
+\end{quote}
+A naïve idea is to simply compute $\abs{A} + \abs{B}$. However, note that if $A \cap B$ is non-empty, then the elements in this intersection would have been counted twice! Therefore, we need to subtract off the repeated counting.
+\begin{probox}{A Simple Case of Principle of Inclusion and Exclusion}{2PIE}
     Let $A$ and $B$ be two finite sets, then
     \begin{equation*}
         \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
     \end{equation*}
     In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
-\end{thmbox}
-\begin{thmbox}{Principle of Inclusion and Exclusion (general)}{PIE}
+\end{probox}
+The above and be generalised as follows:
+\begin{thmbox}{Principle of Inclusion and Exclusion}{PIE}
     Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
     \begin{equation*}
         \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{h = 1}^{j}E_{k_h}}\right)\right].
@@ -786,12 +792,11 @@ The above recurrence allows us to prove the following theorem:
         Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$.
     \end{proof}
 \end{thmbox}
-
-\section{General Principle of Inclusion and Exclusion (GPIE)}
+In an even more general case, let $P_1, P_2, \cdots, P_n$ be sets, we would like to know how many elements are in exactly $m$ of the sets.
 \begin{thmbox}{General Principle of Inclusion and Exclusion}{GenPIE}
-    Let $S$ be an $n$-element set and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that $E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that $\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
+    Let $S$ be an $n$-element set and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that $E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that $\omega\left(P_{i_1}P_{i_2}\cdots P_{i_m}\right)$ is the number of elements in $S$ that satisfy at least $P_{i_1}, P_{i_2},\cdots, P_{i_m}$. Define
     \begin{equation*}
-        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
+        \omega(m) = \sum \omega\left(P_{i_1}P_{i_2}\cdots P_{i_m}\right),
     \end{equation*}
     then
     \begin{equation*}
@@ -801,7 +806,11 @@ The above recurrence allows us to prove the following theorem:
         \end{pmatrix}\omega(k).
     \end{equation*}
 \end{thmbox}
-
+In particular, we see that 
+\begin{equation*}
+    E(0) = \sum_{i = 0}^{q}(-1)^i\omega(i).
+\end{equation*}
+We will introduce some related applications of Theorem \ref{thm:GenPIE}.
 \section{Stirling Numbers of the Second Kind}
 \begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
     The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
@@ -818,20 +827,23 @@ The above recurrence allows us to prove the following theorem:
         \end{itemize}
     \end{remark}
 \end{notebox}
+Based on the above trivial results, we can use the following recurrence relation to derive $S(r, n)$ for any $r$ and $n$.
 \begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
     For all $r, n \in \N$ with $r \geq n$,
     \begin{equation*}
         S(r, n) = S(r - 1, n - 1) + n(r - 1, n).
     \end{equation*}
 \end{thmbox}
+The Stirling numbers of the second kind are closely related to the problem of set partition.
 \begin{dfnbox}{Partition}{partition}
     Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with $S_1 \neq S_2$, $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
 \end{dfnbox}
-Note that the number of all partitions of $A$ with $\abs{A} = n$ is just
+Note that in a set, the elements are pairwise distinct. Therefore, a partition of $A$ into $i$ disjoint subsets is equivalent to a distribution of $\abs{A}$ distinct objects into $i$ identical collections. Therefore, the number of different partitions of $A$ is just
 \begin{equation*}
-    \sum_{i = 1}^{n}S(n, i).
+    \sum_{i = 1}^{\abs{A}}S(\abs{A}, i).
 \end{equation*}
-\begin{thmbox}{Number of Surjective Mappings}{numSurj}
+To find an exact formula for $S(r, n)$, we consider the following proposition:
+\begin{probox}{Number of Surjective Mappings}{numSurj}
     Let $F(r, n)$ where $r, n \in \N^+$ deonote the number of surjective mappings
     \begin{equation*}
         f \colon [r] - \{0\} \to [n] - \{0\},
@@ -843,19 +855,24 @@ Note that the number of all partitions of $A$ with $\abs{A} = n$ is just
             k
         \end{pmatrix}(n - k)^r.
     \end{equation*}
-\end{thmbox}
-Some corollaries:
+\end{probox}
+Note that $F(r, n)$ is just the number of ways to distribute $r$ distinct elements into $n$ collections where the order of the collections matters, so $F(r, n) = n!S(r, n)$. This gives rise to some corollaries, for example:
 \begin{align*}
-    \frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+    S(r, n) & =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
         n \\
         k
-    \end{pmatrix}(n - k)^r & = S(r, n) \\
+    \end{pmatrix}(n - k)^r \\
     \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
         n \\
         k
     \end{pmatrix}(n - k)^r & = 0 \quad \textrm{if }n > r \geq 1
 \end{align*}
 \section{Derangement}
+The concept of derangements arises from the following question:
+\begin{quote}
+    Given an increasing sequence of consecutive integers from $1$ to $n$ inclusive. How many permutations of the sequence are there such that the integer at index $i$ in the permuted sequence is not $i$?
+\end{quote}
+Here we give a rigorous definition along with a generalised notion of \textit{fixed points}.
 \begin{dfnbox}{Derangement}{derangement}
     Let $N_n = [n] - \{0\}$. A {\color{red} \textbf{derangement}} of $N_n$, denoted by $D_n$, is the permutation $a_1a_2\cdots a_n$ of $N_n$ such that $a_i \neq i$ for all $i = 1, 2, \cdots, n$.
     \\\\
@@ -870,19 +887,41 @@ Some corollaries:
         \end{pmatrix}(n - k - i)!.
     \end{equation*}
 \end{thmbox}
-Note that the number of derangement
+Using Theorem \ref{thm:dnrk}, we see that the number of derangements is just
 \begin{equation*}
     D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}.
 \end{equation*}
-And so
+Relating this to probability, we see that given a sequence of $n$ integers, the probability of us having a derangement is given by:
 \begin{equation*}
     \lim_{n \to \infty}P(\textrm{Having a derangement}) = \lim_{n \to \infty}\frac{D_n}{n!} = \mathrm{e}^{-1}.
 \end{equation*}
 
-%\section{Euler $\phi$-Function}
-%\begin{thmbox}{Euler $\phi$-Function}
-    
-%\end{thmbox}
+\section{Counting Co-prime Numbers}
+In the last section, we introduce an application of the general principle of inclusion and exclusion in the context of prime numbers. In particular, we wish to investigate a standardised method to count the number of prime numbers between $2$ and $n$ inclusive.
+
+We will first introduce an ancient algorithm discovered by Greek mathematician Eratosthenes.
+\begin{tecbox}{Sieve of Eratosthenes}{sieve}
+    Let $n \in \N$ and $n \geq 2$.
+    \begin{itemize}
+        \item Define $L$ to be the list of all integers from $2$ to $n$ inclusive, arranged in ascending order.
+        \item For every $i \in L$, while $i \leq \sqrt{n}$:
+        \begin{itemize}
+            \item If $i$ is a prime, remove all multiples of $i$ from $L$.
+        \end{itemize}
+        \item All remaining integers in $L$ are primes.
+    \end{itemize}
+\end{tecbox}
+To extend the problem further, we can instead consider counting the number of positive integers up to $n$ inclusive which are \textbf{co-prime} to $n$.
+\begin{thmbox}{Euler $\varphi$-Function}{eulerPhi}
+    Let $n \in \N^+$ and $\varphi(n)$ is the number of positive integers which are co-prime to $n$. If $p_1, p_2, \cdots, p_k$ are distinct prime numbers such that
+    \begin{equation*}
+        n = \prod_{i = 1}^{k}p_i^{m_i},
+    \end{equation*} 
+    then
+    \begin{equation*}
+        \varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+    \end{equation*}
+\end{thmbox}
 
 \chapter{Generating Functions}
 \section{Ordinary Generating Functions}
@@ -1047,7 +1086,10 @@ Theorem \ref{thm:sizeConj} leads to the following corollary:
 \begin{corbox}{}{}
     Let $k \leq r \in \N^+$. The number of partitions of $r$ into at most $k$ parts equals the number of partitions of $r$ with the largest part having size at most $k$.
 \end{corbox}
-
+The following formula can de derived:
+\begin{equation*}
+    \sum_{k = 1}^{m}p(n, k) = p(n + m, m).
+\end{equation*}
 \section{Exponential Generating Functions}
 \begin{dfnbox}{Exponential Generating Function (EGF)}
     Let $(a_r)$ be a sequence in $\R$. The {\color{red} \textbf{exponential generating function}} of $(a_r)$ is defined to be the series
@@ -1885,12 +1927,69 @@ Using Theorem \ref{thm:matTree}, we can prove the following propositions:
 
 \chapter{Weighted Graphs}
 \section{Weight}
+So far we have been dealing with graphs in which edges do not differ from one another except the vertices they are incident to. However, in real life, there are many scenarios where some egdes in a graph are ``more important'' than others. For example, when building roads to connect villages, we wish to choose edges with the lowest cost. Therefore, we introduce the notion of \textit{weighted graphs}
 \begin{dfnbox}{Weighted Graph}{weightedGraph}
     A {\color{red} \textbf{weighted graph}} is a graph $G$ with a function $w \colon E(G) \to \R$. For any $e \in E(G)$, $w(e)$ is called the {\color{red} \textbf{weight}} of $e$. If $H$ is a subgraph of $G$, the {\color{red} \textbf{weight}} $H$ is defined to be
     \begin{equation*}
         \sum_{e \in E(H)}w(e).
     \end{equation*}
 \end{dfnbox}
-
+There are two classic problems regarding a weighted graph.
 \section{Minimum Spanning Trees}
+The minimum spanning tree problem asks the following:
+\begin{quote}
+    Given a connected graph $G$, what is a spanning tree of $G$ with the smallest possible weight, and what is this smallest weight?
+\end{quote}
+More formally, we wish to find a spanning tree $T$ of $G$ such that $w(T) \leq w(T')$ for any spanning tree $T'$ of $G$.
+
+Intuitively, if we already have a partial minimum spanning tree of $G$, we can greedily choose the edge with the smallest weight from $E(G)$ such that the spanning tree is maintained after adding this edge. We introduce two famous algorithms for this purpose.
+
+\begin{tecbox}{Kruskal's Algorithm}{kruskal}
+    Let $G$ be a graph of order $n$. 
+    \begin{itemize}
+        \item Define 
+        \begin{itemize}
+            \item $i$: Current size of the partial spanning tree.
+            \item $E_i$: The set of edges contained in the partial spanning tree of size $i$.
+        \end{itemize}
+        \item Initialise $i = 0$ and $E_0 = \varnothing$.
+        \item Select $e \in E(G) - E_i$ such that $w(e)$ is the minimum and $\bigl[E_i \cup \{e\}\bigr]$ contains no cycle.
+        \item Set $E_{i + 1} = E_i \cup \{e\}$ and increment $i$.
+        \item Repeat the above processes until $i = n - 1$, and $\bigl[E_i\bigr]$ is a minimum spanning tree of $G$.
+    \end{itemize}
+\end{tecbox}
+\begin{tecbox}{Prim's Algorithm}{prim}
+    Let $G$ be a graph of order $n$. 
+    \begin{itemize}
+        \item Define 
+        \begin{itemize}
+            \item $i$: Current size of the partial spanning tree.
+            \item $S_i$: The set of vertices contained in the partial spanning tree of size $i$.
+            \item $E_i$: The set of edges contained in the partial spanning tree of size $i$.
+        \end{itemize}
+        \item Initialise $i = 1$, $S_1 = \{u_1, v_1\}$ and $E_1 = \{u_1v_1\}$ where $w(uv) \leq w(e)$ for all $e \in E(G)$.
+        \item Select $uv \in E(G) - E_i$ such that $u \in S_i$, $v\notin S_i$ and $w(uv)$ is the minimum.
+        \item Set $S_{i + 1} = S_i \cup \{v\}$, $E_{i + 1} = E_i \cup \{uv\}$ and increment $i$.
+        \item Repeat the above processes until $i = n$, and $\bigl[E_i\bigr]$ is a minimum spanning tree of $G$.
+    \end{itemize}
+\end{tecbox}
+\section{(Single-Source) Shortest Path}
+In an unweighted graph, we define the length of a path to be the number of edges it contains. However, in a weighted graph we need a different definition to distinguish edges of different weights.
+\begin{dfnbox}{Length of a Weighted Path}{weightedPathLen}
+    Let $G$ be a weighted graph and $P$ be a path in $G$. The {\color{red} \textbf{length}} of $P$ is defined as $w(P)$.
+\end{dfnbox}
+Similarly, we can define the shortest path in a weighted graph as the path with the lowest weight, and the distance between two vertex as the weight of the shortest path between them. The (single-source) shortest path problem asks:
+\begin{quote}
+    Let $G$ be a weighted graph and $s$ be the source vertex. For any $v \in V(G)$, what is the distance between $s$ and $v$?
+\end{quote}
+Let us consider the following idea: suppose we are already certain that the distance from $s$ to $u$ cannot be further reduced, then we can safely take the shortest edge from $u$ to $u'$ and compute the weight of the $s$-$u'$ path containing $u$. If this path is shorter than the known distance from $s$ to $u'$, we will ``relax'' this distance. A common and famous algorithm to solve a (single-source) shortest path problem is the \textit{Dijkstra's algorithm}.
+\begin{tecbox}{Dijkstra's Algorithm}{dijkstra}
+    Let $G$ be a weighted graph.
+    \begin{itemize}
+        \item Define
+        \begin{itemize}
+            \item $L \colon V(G) \to \R$: A function which maps a vertex in $G$ to the current distance between it and the source vertex.  
+        \end{itemize}
+    \end{itemize} 
+\end{tecbox}
 \end{document}
