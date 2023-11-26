@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  22 NOV 2023 13:17
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  25 NOV 2023 16:57
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1242,22 +1242,26 @@ Chapter 5.
 
 Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1403.
 
-[45] [46] [47] [48] [49] [50] [51] 
+[45] [46] [47] [48] [49] [50] [51]
+Chapter 6.
+[52
+
+] [53] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Probability.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Probability.out' has not changed.
-(rerunfilecheck)             Checksum: 62CAA7FB5BAC8A55248C386790F526FB;7675.
+(rerunfilecheck)             Checksum: 56DB5E3C0109E0FA8F8D935F0AFD86BB;7960.
  ) 
 Here is how much of TeX's memory you used:
- 36344 strings out of 478630
- 759671 string characters out of 5847730
- 1883012 words of memory out of 5000000
- 55871 multiletter control sequences out of 15000+600000
+ 36359 strings out of 478630
+ 759919 string characters out of 5847730
+ 1886012 words of memory out of 5000000
+ 55886 multiletter control sequences out of 15000+600000
  516143 words of font info for 84 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Probability.pdf (51 pages).
+Output written on Probability.pdf (53 pages).

@@ -1589,4 +1589,41 @@ and the minimum of $E\left[(Y - a - bX)^2\right]$ is $\sigma_Y^2\left(1 - \rho(X
         g(X) = E\left[\left(Y - \mu_Y - \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)\right)\right].
     \end{equation*}
 \end{thmbox}
+\chapter{Limit Theorems}
+\section{Chebyshev's Inequality}
+Let $X$ be a non-negative random variable and $a > 0$. Define $I$ to be the indicator of $X$, i.e., $I = 0$ if and only if $X < a$, and $I = 1$ otherwise. Observe that if $X \geq a$, $aI = a \leq X$ and if $X < a$, $aI = 0 \leq X$. Therefore, $X \geq aI$ for all $a$ and so $E[X] \geq aE[I] = aP(X \geq a)$.
+\begin{thmbox}{Markov's Inequality}{markovIneq}
+    If $X$ is a non-negative random variables, then for any $a > 0$, $P(X \geq a) \leq \frac{E[X]}{a}$.
+\end{thmbox}
+We can generalise this result. Suppose $X$ is a random variable with mean $\mu$ and variance $\sigma^2$. Recall that $\sigma^2 = E\bigl[(X - \mu)^2\bigr]$. Set $Y = (X - \mu)^2 \geq 0$. Now we can apply Theorem \ref{thm:markovIneq} to $Y$ and derive the following:
+\begin{thmbox}{Chebyshev's Inequality}{chebyshevIneq}
+    Let $X$ be any random variable with mean $\mu$ and variance $\sigma^2$, then for any $a > 0$,
+    \begin{equation*}
+        P\bigl(\abs{X - \mu} \geq a\bigr) \leq \frac{\sigma^2}{a^2}.
+    \end{equation*}
+\end{thmbox}
+Using Theorem \ref{thm:chebyshevIneq}, we can get the following result:
+\begin{corbox}{}{}
+    If $X$ is a random variable with $\mathrm{Var}(X) = 0$, then $P(X = E[X]) = 1$.
+\end{corbox}
+Recall that if $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then $E\left[\overline{X}\right] = E[X_i]$ and $\mathrm{Var}\left(\overline{X}\right) = \frac{\mathrm{Var}(X_i)}{n}$. Applying the above theorems we will have the following conclusion:
+\begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeN}
+    If $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then for any $\epsilon > 0$, we have
+    \begin{equation*}
+        \lim_{n \to \infty}P\left(\abs{\frac{\overline{X}}{n}} \geq \epsilon\right) = 0.
+    \end{equation*}
+\end{thmbox}
+\begin{thmbox}{Central Limit Theorem}{CLT}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with identical distribution. Let $E[X_i] = \mu$ and $\mathrm{Var}(X_i) = \sigma^2$, then the distribution of
+    \begin{equation*}
+        \frac{\sum_{i = 0}^{n}X_i - n\mu}{\sigma\sqrt{n}}
+    \end{equation*}
+    tends to standard normal distribution as $n \to \infty$.
+\end{thmbox}
+\begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeN}
+    If $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then for any $\epsilon > 0$, we have
+    \begin{equation*}
+        P\left(\lim_{n \to \infty}\frac{\overline{X}}{n} = \mu\right) = 1.
+    \end{equation*}
+\end{thmbox}
 \end{document}
