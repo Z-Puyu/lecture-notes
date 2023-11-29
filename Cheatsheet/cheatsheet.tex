@@ -1,0 +1,153 @@
+\documentclass[9pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{graphicx}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+
+\graphicspath{ {./images/} }
+
+\begin{document}
+    \begin{multicols*}{2}
+        \textbf{P \& C}: $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
+        \\
+        \textbf{Circular permutation}: $Q^n_r = \frac{P^n_r}{r}$.
+        \\
+        $C^{n + 1}_r = C^n_{r - 1} + C^n_r$.
+        \\
+        $H^n_r = C^{r + n - 1}_r$.
+        \\\\
+        \textbf{Binomial \& Multinomial}:
+        \\
+        $\begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix} = \frac{n}{r}\begin{pmatrix}
+            n - 1 \\
+            r - 1
+        \end{pmatrix}$.
+        \\\\
+        $\begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix} = \frac{n - r + 1}{r}\begin{pmatrix}
+            n \\
+            r - 1
+        \end{pmatrix}$.
+        \\\\
+        $\begin{pmatrix}
+            n \\
+            m
+        \end{pmatrix}\begin{pmatrix}
+            m \\
+            r
+        \end{pmatrix} = \begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix}\begin{pmatrix}
+            n - r \\
+            m - r
+        \end{pmatrix}$.
+        \\\\
+        \textbf{Multinomial coefficient}:
+        \begin{equation*}
+            \begin{pmatrix}
+                n \\
+                n_1, n_2, \cdots, n_m
+            \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{m}n_i!}.
+        \end{equation*}
+        \textbf{Boole's Inequality:} $P\left(\bigcup E_i\right) \leq \sum P(E_i)$.
+        \\\\
+        \textbf{Conditional Probability}
+        \begin{itemize}
+            \item $P(E \mid F) = \frac{P(EF)}{P(F)}$.
+            \item $P(E_1E_2\cdots E_n) = P(E_1)P(E_2 \mid E_1)P(E_3 \mid E_1E_2)\cdots P(E_n \mid E_1E_2\cdots E_{n - 1})$.
+            \item $P(E) = P(E \mid F)P(F) + P(E \mid F^c)P(F^c)$.
+            \item $P(F_j \mid E) = \frac{P(E \mid F_j)P(F_j)}{P(E)} = \frac{P(E \mid F_j)P(F_j)}{\sum P(E \mid F_i)P(F_i)}$.
+            \item $E$ and $F$ are independent iff $E$ and $F^c$ are independent.
+        \end{itemize}
+        \textbf{DRV \& CRV:}
+        \begin{itemize}
+            \item $\mathrm{Var}(X) = E[X^2] - (E[X])^2 = E[(X - \mu_X)^2]$.
+            \item Binomial: $p(x) = C^n_xp^x(1 - p)^{n - x}, \mu = np, \sigma^2 = np(1 - p)$.
+            \item Poisson: $p(x) = \mathrm{e}^{-\lambda}\frac{\lambda^x}{x!}, \mu = \sigma^2 = \lambda, N(t) \sim \mathrm{Po}(\lambda t)$.
+            \item Geo (no. of trials up to the 1st success): $p(x) = (1 - p)^{x - 1}p, \mu = \frac{1}{p}, \sigma^2 = \frac{1 - p}{p^2}$.
+            \item Neg. B (up to the $r$-th success): $p(x) = C^{x - 1}_{r - 1}p^r(1 - p)^{x - r}, \mu = \frac{r}{p}, \sigma^2 = \frac{r(1 - p)}{p^2}$.
+            \item Hypergeo (choose $n$ from $N$ with $m$ type 1): $p(x) = \frac{C^m_xC^{N - m}_{n - x}}{C^N_n}, \mu = np, \sigma^2 = np(1 - p)\left(1 - \frac{n - 1}{N - 1}\right)$.
+            \item Uniform: $f(x) = \frac{1}{b - a}, F(x) = \frac{x - a}{b - a}, \mu = \frac{a + b}{2}, \sigma^2 = \frac{(b - a)^2}{12}$.
+            \item Normal: $\phi(z) = \frac{1}{\sqrt{2\pi}\sigma}\mathrm{exp}\left(-\frac{(z - \mu)^2}{2\sigma^2}\right)$.
+            \item Exponential: $f(x) = \lambda\mathrm{e}^{-\lambda x}, F(x) = 1 - \mathrm{e}^{-\lambda x}, \mu = \frac{1}{\lambda}, \sigma^2 = \frac{1}{\lambda^2}$.
+            \item Hazard rate: $\lambda(x) = \frac{f(x)}{1 - F(x)}$.
+            \item $\Gamma(\alpha) = \int_{0}^{\infty}\!\lambda\mathrm{e}^{-\lambda t}(\lambda t)^{\alpha - 1}\,\mathrm{d}t = \int_{0}^{\infty}\!\lambda\mathrm{e}^{-\lambda t}x^{\alpha - 1}\,\mathrm{d}x$.
+            \item $\Gamma(\alpha + 1) = \alpha\Gamma(\alpha), \Gamma(n) = (n - 1)!$.
+            \item Gamma (time till $n$-th occurrence): $f(t) = \frac{\lambda\mathrm{e}^{-\lambda t}(\lambda t)^{\alpha - 1}}{\Gamma(\alpha)}, \mu = \frac{\alpha}{\lambda}, \sigma^2 = \frac{\alpha}{\lambda^2}$.
+            \item $B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a + b)} = \int_{0}^{1}\!x^{a - 1}(1 - x)^{b - 1}\,\mathrm{d}x, \frac{B(a + 1, b)}{B(a, b)} = \frac{a}{a + b}$.
+            \item Beta (probability of success if $a$ successes and $b$ failures): $f(x) = \frac{x^{a - 1}(1 - x)^{b - 1}}{B(a, b)}, \mu = \frac{a}{a + b}, \sigma^2 = \frac{ab}{(a + b)^2(a + b + 1)}$.
+        \end{itemize}
+        \textbf{Joint Distribution:}
+        \begin{itemize}
+            \item $p_X(x) = \sum_{y}p(x, y), f_X(x) = \int_{-\infty}^{\infty}\!f(x, y)\,\mathrm{d}y$.
+            \item $f(x, y) = \frac{\partial^2}{\partial a \partial b}F(x, y)$.
+            \item Jacobian: $J(x, y) = \frac{\partial u}{\partial x}\frac{\partial v}{\partial y} - \frac{\partial u}{\partial y}\frac{\partial v}{\partial x}$.
+            \item $f_{U, V}(u, v) = f_{X, Y}(x, y)\left\lvert J(x, y)\right\rvert^{-1}$.
+            \item $X, Y$ independent iff $F(x, y) = F_X(x)F_Y(y)$ or $f(x, y) = f_X(x)f_Y(y)$ or $p(x, y) = p_X(x)p_Y(y)$.
+            \item $X, Y$ independent discrete: $p_{X + Y}(n) = \sum_{i + j = n}p_X(i)p_Y(j)$.
+            \item $X, Y$ independent continuous, $f_{X + Y}(n) = \int_{-\infty}^{\infty}\int_{-\infty}^{n - y}\!f_X(x)f_Y(y)\,\mathrm{d}x\,\mathrm{d}y = \int_{-\infty}^{\infty}\!F_X(n - y)f_Y(y)\,\mathrm{d}y = \int_{-\infty}^{\infty}\!F_X(n - y)\,\mathrm{d}F_Y(y)$.
+            \item Sum of independent uniform is triangular:
+            \begin{equation*}
+                f(N) = \begin{cases}
+                    \frac{n - 2a}{(b - a)^2} & 2a < n \leq a + b \\
+                    \frac{2b - n}{(b - a)^2} & a + b < n < 2b
+                \end{cases}.
+            \end{equation*}
+            \item Sum of Gamma$(\alpha, \lambda)$ and Gamma$(\beta, \lambda)$ is Gamma$(\alpha + \beta, \lambda)$.
+        \end{itemize}
+        \textbf{Conditional Distribution:}
+        \begin{itemize}
+            \item $p_{X \mid Y}(x \mid y) = \frac{p(x, y)}{p_Y(y)}, f_{X \mid Y}(x \mid y) = \frac{f(x, y)}{f_Y(y)}, f_{X \mid X \in A} = \frac{f(x)}{\int_{A}\!f(x)\,\mathrm{d}x}$.
+            \item $X$ continuous, $N$ discrete: $f_{X \mid N}(x \mid n) = \frac{P(N = n \mid X = x)}{P(N = n)}f(x)$.
+            \item $E[X] = \sum \bigl(E[X \mid E]P(E)\bigr)$.
+        \end{itemize}
+        \textbf{Expectation:}
+        \begin{itemize}
+            \item Deviation: $X_i - \overline{X}$.
+            \item Sample variance: $\sum \frac{(X_i - \overline{X})^2}{n - 1}$.
+            \item MGF: $M_X(t) = E[\mathrm{e}^{tX}], E[X^n] = M_X^{(n)}(0)$.
+            \item $M_{X, Y}(s, t) = E[\mathrm{e}^{sX + tY}], M_X(s) = M_{X, Y}(s, 0), M_Y(t) = M_{X, Y}(0, t)$. $X, Y$ independent iff $M_{X, Y}(s, t) = M_X(s)M_Y(t)$.
+            \item $X$ is sum of independent r.v.: $M_X(t) = \prod M_{X_i}(t)$.
+            \item $X$ and $Y$ are identically distributed iff $M_X = M_Y$ near $0$.
+            \item $\mathrm{Cov}(X, Y) = E[XY] - E[X]E[Y]$.
+            \begin{itemize}
+                \item $\mathrm{Cov}(X, X) = \mathrm{Var}(X)$.
+                \item $\mathrm{Cov}(X, Y) = \mathrm{Cov}(Y, X)$.
+                \item $\mathrm{Cov}(aX, Y) = a\mathrm{Cov}(X, Y)$.
+                \item $\mathrm{Cov}(X_1 + X_2, Y) = \mathrm{Cov}(X_1, Y) + \mathrm{Cov}(X_2, Y)$.
+            \end{itemize}
+            \item $\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y) + 2\mathrm{Cov}(X, Y)$.
+            \item $\rho(X, Y) = \frac{\mathrm{Cov}(X, Y)}{\sqrt{\mathrm{Var}(X)\mathrm{Var}(Y)}} = \mathrm{Cov}\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right)$.
+            \item $E\bigl[E[X \mid Y]\bigr] = E[X]$.
+            \item $\mathrm{Var}(X) = E[\mathrm{Var}(X \mid Y)] - \mathrm{Var}(E[X \mid Y])$.
+            \item Given $X$, $E[Y \mid X]$ is the best predictor for $Y$.
+            \item Given $X$, the best linear predictor for $Y$: 
+            \begin{equation*}
+                g(X) = E\left[\left(Y - \mu_Y - \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)\right)\right].
+            \end{equation*}
+        \end{itemize}
+        \textbf{Limit Theorems:}
+        \begin{itemize}
+            \item Markov: $P(X \geq a) \leq \frac{\mu}{a}$.
+            \item Chebyshev: $P(|X - \mu| \geq a) \leq \frac{\sigma^2}{a}$.
+            \item $\sigma^2 = 0 \implies P(X = \mu) = 1$.
+            \item Weak: independent identical $X \implies \lim_{n \to \infty}P\left(\left\lvert\frac{\overline{X}}{n}\right\rvert \geq \epsilon\right) = 0$.
+            \item Strong: $P\left(\lim_{n \to \infty}\frac{\overline{X}}{n} = \mu\right) = 1$.
+            \item CLT: $\frac{\sum X_i - n\mu}{\sigma\sqrt{n}}$ tends to standard normal.
+        \end{itemize}
+        \includegraphics*{images/NormalTable.png}
+    \end{multicols*}
+\end{document}
