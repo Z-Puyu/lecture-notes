@@ -12,16 +12,14 @@
 
 \begin{document}
     \begin{multicols*}{3}
-        \textbf{P \& C}:
-        \\
-        $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
-        \\\\
+        \textbf{P \& C}: $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
+
         \textbf{Circular permutation}: $Q^n_r = \frac{P^n_r}{r}$.
-        \\\\
+        
         $C^{n + 1}_r = C^n_{r - 1} + C^n_r$.
-        \\\\
+        
         $H^n_r = C^{r + n - 1}_r$.
-        \\\\
+        
         Arrange $r$ distinct objects around $n$ identical circles such that no circle is empty: $s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n)$.
         \\\\
         $s(r, r - 1) = C^r_2$.
@@ -88,7 +86,6 @@
                 k
             \end{pmatrix}.
         \end{align*}
-        \\\\
         \textbf{Multinomial coefficient}:
         \begin{equation*}
             \begin{pmatrix}
@@ -132,18 +129,23 @@
         $D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}$.
         \\\\
         $\varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right)$.
+        \\\\
+        $\varphi(2n) = \varphi(n)$ ($n$ odd) or $2\varphi(n)$ ($n$ even)
 
         \textbf{Identicial into Identical}
-
-        Number of partitions of $n$ into $k$ parts equals the number of partition of $k$ where the largest part has size $k$.
-        \\\\
+        \begin{itemize}
+            \item Number of partitions of $n$ into $k$ parts equals the number of partition of $k$ where the largest part has size $k$.
+            \item $r$-partition of $n$ of size at most $k$: $\frac{1}{\prod_{i = 1}^{k}(1 - x^i)}$.
+            \item Number of partitions of $r$ into distinct parts is the number of partitions of $r$ into odd parts.
+            \item Number of partitions of $r$ into at most $k$ parts is the number of partitions of $r$ into parts whose size does not excced $k$
+        \end{itemize}
         $\sum_{k = 1}^{m}p(n, k) = p(n + m, m)$.
         \\\\
         \textbf{GPIE}: 
         \begin{equation*}
             E(m) = \sum_{k = m}^{q}(-1)^{k - m}C^k_m\omega(k).
         \end{equation*}
-        \textbf{OGF}:
+        \textbf{OGF (Identical into distinct \& identical into identical)}:
         \begin{itemize}
             \item $\begin{pmatrix}
                 \alpha \\
@@ -167,9 +169,8 @@
             \item $A'(x)$ generates $(r + 1)a_{r + 1}$.
             \item $xA'(x)$ generates $ra_r$.
             \item $r$-combination of multi-set: $\prod_{i = 1}^{k}\left(\sum_{j = 0}^{n_i}x^j\right)$.
-            \item $r$-partition of $n$ of size at most $k$: $\frac{1}{\prod_{i = 1}^{k}(1 - x^i)}$.
         \end{itemize}
-        \textbf{EGF}:
+        \textbf{EGF (Distinct into distinct)}:
         \begin{itemize}
             \item $\mathrm{e}^x = \sum_{i = 0}^{\infty}\frac{x^i}{i!}$ generates $a_r = 1$.
             \item $\frac{1}{1 - x} = \sum_{i = 0}^{\infty}x_i$ generates $a_r = r!$.
@@ -225,7 +226,7 @@
             \item $\mathrm{rad}(G) \leq \mathrm{diam}(G) \leq 2\mathrm{rad}(G)$.
             \item Incidence matrix is $v(G)$ rows $e(G)$ columns.
             \item $(i, j)$ entry of $\bm{A}^k$ is the number of $v_i$-$v_j$ walks of length $k$.
-            \item $G$ is connected if and only if the $(i, j)$ entry of $\sum_{i = 1}^{n - 1}$ is nonzero for all $i \neq j$.
+            \item $G$ is connected if and only if the $(i, j)$ entry of $\sum_{i = 1}^{n - 1}\bm{A}^i$ is nonzero for all $i \neq j$.
             \item Size of bipartite is sum of degrees of any partite set.
             \item Join: $V(G + H) = V(G) \cup V(H)$, $E(G, H) = E(G) \cup E(H) \cup \left\{uv \colon u \in V(G), v \in V(H)\right\}$.
             \item Bipartite iff no odd cycles.
