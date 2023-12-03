@@ -464,6 +464,7 @@ We can make use of the Cauchy sequence to test for convergence.
 
 \chapter{Functions}
 \section{Limits of Functions}
+As a priliminary concept, we shall introduce the notion of a \textit{cluster point}.
 \begin{dfnbox}{Cluster Point}{clusterPt}
     Let $A \subseteq \R$. A point $c$ is called a {\color{red} \textbf{cluster point}} of $A$ if for all $\delta > 0$, there exists at least one $x \in A$ such that $0 < \abs{x - c} < \delta$, i.e., $\bigl(V_\delta(c) - \{c\}\bigr) \cap A \neq \varnothing$ for all $\delta > 0$.
 \end{dfnbox}
@@ -480,16 +481,374 @@ Intuitively, this means that the elements of a set $A$ is \textbf{densely distri
     \end{proof}
 \end{thmbox}
 Analogously to the limit of sequences, we may describe the limiting behaviour of a function as the follows:
-
-As $x$ gets arbitrarily close to some point $c$, the function value $f(x)$ can get as close to a constant $L$ as possible.
-
-The above intuition is formulated formally as follows:
+\begin{quote}
+    As $x$ gets arbitrarily close to some point $c$, the function value $f(x)$ can get as close to a constant $L$ as possible.
+\end{quote}
+The notion of $x$ being ``arbitrarily close to $c$'' can be precisely captured by a cluster point. The above intuition is formulated formally as follows:
 \begin{dfnbox}{Limit of Functions}{funcLim}
     Let $f$ be a function over some $A \subseteq \R$. If $c$ is a cluster point of $A$, then $L \in \R$ is called the {\color{red} \textbf{limit}} of $f$ at $c$ if for all $\epsilon > 0$, there exists some $\delta \in \R$ such that whenever $0 < \abs{x - c} < \delta$, $\abs{f(x) - L} < \epsilon$. 
 \end{dfnbox}
+It is worth noting that a cluster point $c$ of $A$ may not belong to $A$ itself. Therefore, $f$ can have a limit at $c$ even if it is not defined at $c$. Conversely, even if $f$ is defined at $c$, the value $f(c)$ is unrelated to $\lim_{x \to c}f(x)$ in general.
+
+Similar to sequences and series, the limit of a function is unique.
+\begin{thmbox}{Uniqueness of Limit of Functions}{funcLimUnique}
+    Let $f$ be a function over some $A \subseteq \R$ and $c$ be a cluster point of $A$. If $\lim_{x \to c}f(x)$ exists, then it is unique.
+    \tcblower
+    \begin{proof}
+        Suppose there are $L, L' \in \R$ to which $f$ converges at $c$, then for any $\epsilon > 0$, there exists $\delta_1$ such that whenever $0 < \abs{x - c} < \delta_1$, $\abs{f(x) - L} < \frac{\epsilon}{2}$ and there exists $\delta_2$ such that whenever $0 < \abs{x - c} < \delta_2$, $\abs{f(x) - L} < \frac{\epsilon}{2}$.
+        \\\\
+        Take $\delta = \min\{\delta_1, \delta_2\}$, then whenever $0 < \abs{x - c} < \delta$, we have
+        \begin{align*}
+            \abs{L - L'} & = \abs{f(x) - L' - f(x) + L} \\
+            & \leq \abs{f(x) - L'} + \abs{f(x) - L} \\
+            & < \epsilon
+        \end{align*}
+        for all $\epsilon > 0$. Therefore, $L = L'$, i.e., $\lim_{x \to c}f(x)$ is unique.
+    \end{proof}
+\end{thmbox}
+We now proceed to discussing the boundedness of functions.
+\begin{thmbox}{Boundedness of Functions}{funcBound}
+    Let $f$ be a function over some $A \subseteq \R$. If $\lim_{x \to c}f(x)$ exists for some cluster point $c$ of $A$, then $f$ is bounded in some neighbourhood of $c$.
+    \tcblower
+    \begin{proof}
+        Let $\lim_{x \to c}f(x) = L$. Note that there exists some $\delta > 0$ such that whenever $x \in V_\delta(c)$, $\abs{f(x) - L} < 1$. Consider
+        \begin{align*}
+            \abs{f(x)} & = \abs{f(x) - L + L} \\
+            & \leq \abs{f(x) + L} + \abs{L} \\
+            & < 1 + \abs{L}.
+        \end{align*}
+        Take
+        \begin{equation*}
+            M = \begin{cases}
+                1 + \abs{L} & \quad \textrm{if } c \notin A \\
+                \max\{f(c), 1 + \abs{L}\} & \quad \textrm{if } c \in A
+            \end{cases},
+        \end{equation*}
+        then $\abs{f(x)} < M$ for all $x \in V_\delta(c)$, i.e., $f$ is bounded in $V_\delta(c)$.
+    \end{proof}
+\end{thmbox}
+Now suppose $\lim_{x \to c}f(x) = L$, then it is easy to visualise that the value of $f(x)$ approaches $L$ indefinitely. Therefore, if we ``choose'' infinitely many values of $f$ near $c$, we naturally obtain a convergent sequence.
+\begin{thmbox}{Sequential Criterion of Limits}{seqCriterion}
+    Let $f$ be a function over some $A \subseteq \R$ and $c$ be a cluster point of $A$. $\lim_{x \to c}f(x) = L$ if and only if for every sequence $(x_n)$ in $A$ that converges to $c$, the sequence $\bigl(f(x_n)\bigr)$ converges to $L$.
+    \tcblower
+    \begin{proof}
+        Suppose $\lim_{x \to c}f(x) = L$, then for all $\epsilon > 0$, there exists some $\delta > 0$ such that $\abs{f(x) - L} < \epsilon$ whenever $0 < \abs{x - c} < \delta$.
+        \\\\
+        Let $(x_n)$ be a sequence with $\lim_{n \to \infty}x_n = c$, then there exists some $N \in \N$ such that whenever $n \geq N$, $\abs{x_n - c} < \delta$. Therefore, $\abs{f(x_n) - L} < \epsilon$ for all $n \geq N$, and so $\lim_{n \to \infty}f(x_n) = L$.
+        \\\\
+        We shall prove the converse by considering its contrapositive. If $f$ converges to $L' \neq L$, then by the previous argument every sequence $(x_n)$ converging to $c$ is such that $\bigl(f(x_n)\bigr)$ converges to $L' \neq L$. 
+        \\\\
+        If $f$ diverges at $c$, then there exists some $\epsilon_0 > 0$ such that for all $\delta > 0$, there is some $x_0$ with $0 < \abs{x - c} < \delta$ such that $\abs{f(x_0) - L} \geq \epsilon_0$. Therefore, for all $n \in \N$, we can take some $x_n \in V_{1 / n}(c)$ such that $\abs{f(x_n) - L} \geq \epsilon_0$. Either way, there exists a sequence $(x_n)$ converging to $c$ such that $\bigl(f(x_n)\bigr)$ does not converge to $L$.
+    \end{proof}
+\end{thmbox}
+Let $\lim_{x \to c}f(x) = L$ and $\lim_{x \to c}g(x) = M$. By using Theorem \ref{thm:seqCriterion}, we obtain the following limit laws:
+\begin{enumerate}
+    \item $\lim_{x \to c}\bigl(f(x) + g(x)\bigr) = L + M$.
+    \item $\lim_{x \to c}\bigl(f(x)g(x)\bigr) = LM$.
+    \item $\lim_{x \to c}\frac{f(x)}{g(x)} = \frac{L}{M}$ if $M \neq 0$.
+\end{enumerate}
+Additionally, Theorem \ref{thm:squeeze} also applies for limits of functions.
+\subsection{One-Sided Limits}
+In constrast to limits of sequences, for a function, $x$ can approach the cluster point $c$ from different directions. This may result in different limiting behaviours.
+\begin{dfnbox}{One-Sided Limit}{oneSideLim}
+    Let $f$ be a function over some $A \subseteq \R$ and $c$ be a cluster point of $A$. If for all $\epsilon > 0$, there exists some $\delta > 0$ such that $\abs{f(x) - L} < \epsilon$ whenever $0 < x - c < \delta$, then $L = \lim_{x \to c^+}f(x)$ is called the {\color{red} \textbf{right-hand limit}} of $f$ at $c$.
+    \\\\
+    If for all $\epsilon > 0$, there exists some $\delta > 0$ such that $\abs{f(x) - L} < \epsilon$ whenever $-\delta < x - c < 0$, then $L = \lim_{x \to c^-}f(x)$ is called the {\color{red} \textbf{left-hand limit}} of $f$ at $c$.
+\end{dfnbox}
+By restricting the values of $x_n$ to either $(-\infty, c)$ or $(c, \infty)$, we obtain the one-sided version of Theorem \ref{thm:seqCriterion}. One can check that the limit laws still hold for one-sided limits. Note that for $f$ to have a limit at $c$, its limits from both sides must be consistent.
+\begin{thmbox}{One-Sided Limits and Limit}{}
+    $\lim_{x \to c}f(x)$ exists if and only if both $\lim_{x \to c^+}f(x)$ and $\lim_{x \to c^-}f(x)$ exists and are equal.
+\end{thmbox}
+\section{Continuity}
+Previously we have stated that the existence and value of $\lim_{x \to c}f(x)$ is unrelated to $f(c)$. However, when it is indeed that case that $f(c) = \lim_{x \to c}f(x)$, it is intuitive to think that $f$ has no gaps around $c$, which motivates us to define a \textit{continuous function}.
+\begin{dfnbox}{Continuity}{continuity}
+    Let $f$ be a function over some $A \subseteq \R$. $f$ is said to be {\color{red} \textbf{continuous}} at $c \in A$ if for all $\epsilon > 0$, there exists some $\delta > 0$ such that $\abs{f(x) - f(c)} < \epsilon$ whenever $\abs{x - c} < \delta$. Otherwise, $f$ is {\color{red} \textbf{discontinuous}} at $c$. If $f$ is continuous at all $x \in A$, we say that $f$ is continuous on $A$.
+\end{dfnbox}
+Specially, we consider the situation where $c$ is not a cluster point of $A$, i.e., $c$ is ``isolated''. In this case $f$ is continuous at $c$ trivially, but such continuity is of less interest.
+
+If we wish to prove a function $f$ is continuous over a closed interval $[a, b]$, then other than proving $\lim_{x \to c}f(x) = f(c)$ for all $c \in (a, b)$, we also need to make sure $\lim_{x \to a^+}f(x) = f(a)$ and $\lim_{x \to b^-}f(x) = f(b)$.
+
+We can make use of Theorem \ref{thm:seqCriterion} to prove continuity, the proof of which is left to the reader as an exercise.
+\begin{thmbox}{Sequential Criterion of Continuity}{seqCriterionContinuity}
+    Let $f$ be a function over some $A \subseteq \R$. $f$ is continuous at $c \in A$ if and only if for every sequence $(x_n)$ in $A$ that converges to $c$, the sequence $\bigl(f(x_n)\bigr)$ converges to $f(c)$.
+\end{thmbox}
+By negating the above, we derive a simple corollary:
+\begin{corbox}{Discontinuous Criterion}{disconCriterion}
+    Let $f$ be a function over some $A \subseteq \R$. $f$ is discontinuous at $c \in A$ if and only if there is a sequence $(x_n)$ in $A$ that converges to $c$ such that the sequence $\bigl(f(x_n)\bigr)$ does not converge to $f(c)$.
+\end{corbox}
+If $f$ and $g$ are continuous at $c$, using limit laws, we can easily prove the following results:
+\begin{enumerate}
+    \item $f \pm g$ is continuous at $c$.
+    \item $fg$ is continuous at $c$.
+    \item $kf$ is continuous at $c$ for all $k \in \R$.
+    \item $\frac{f}{g}$ is continuous at $c$ if $g(c) \neq 0$.
+\end{enumerate}
+In particular, we also have the following conclusion:
+\begin{thmbox}{Continuity of Composite Functions}{compFuncContinuity}
+    Let $f \colon A \to \R$, $g \colon B \to \R$ be functions with $f(A) \subseteq B$. If $f$ is continuous at $c$ ad $g$ is continuous at $b = f(c)$, then $g \circ f$ is continuous at $c$.
+    \tcblower
+    \begin{proof}
+        Since $g$ is continuous at $b$, for all $\epsilon > 0$ there exists some $\delta > 0$ such that $\abs{g(x) - g(b)} < \epsilon$ whenever $\abs{x - b} < \delta$.
+        \\\\
+        Since $f$ is continuous at $c$, there is some $\gamma > 0$ such that $\abs{f(x) - f(c)} < \delta$ whenever $\abs{x - c} < \gamma$. Therefore, for all $\epsilon > 0$, whenever $\abs{x - c} < \gamma$, we have $\abs{g\bigl(f(x)\bigr) - g\bigl(f(c)\bigr)} < \epsilon$, and so $g \circ f$ is continuous at $c$.
+    \end{proof}
+\end{thmbox}
+Recall that in Theorem \ref{thm:funcBound}, we obtain some boundedness properties using the limiting behaviour of a function. For a continuous function, we can derive some more specific conclusion.
+\begin{thmbox}{Boundedness Theorem}{boundThm}
+    If $f$ is continuous on $[a, b]$, then $f$ is bounded on $[a, b]$.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary $f$ is unbounded on $[a, b]$, then for all $n \in \N$, there is some $x_n \in [a, b]$ such that $\abs{f(x_n)} > n$. Note that by this way we obtain a sequence $(x_n)$ bounded on $[a, b]$. By Theorem \ref{thm:bolzanoWeierstrass}, this means that $(x_n)$ has a convergent subsequence $\left(x_{n_k}\right)$.
+        \\\\
+        Let $\lim_{k \to \infty}x_{n_k} = c$, then $c \in [a, b]$. Since $f$ is continuous on $[a, b]$, by Theorem \ref{thm:seqCriterionContinuity}, $\Bigl(f\left(x_{n_k}\right)\Bigr)$ converges to $f(c)$. However,
+        \begin{equation*}
+            \abs{f\left(x_{n_k}\right)} > n_k \geq k
+        \end{equation*}
+        for all $k \in \N$, which means that $\Bigl(f\left(x_{n_k}\right)\Bigr)$ is divergent. This is a contradiction.
+    \end{proof}
+\end{thmbox}
+Intuitively, if $f$ is bounded on $[a, b]$, it cannot increase nor decrease indefinitely in $[a, b]$ and so it must attain a maximum and a minimum value somewhere in the interval.
+\begin{thmbox}{Maximum-Minimum Theorem}{maxMin}
+    If $f$ is continuous on $[a, b]$, then there exists some $x^* \in [a, b]$ such that $f(x^*) \geq f(x)$ for all $x \in [a, b]$ and there exists some $x_* \in [a, b]$ such that $f(x_*) \leq f(x)$ for all $x \in [a, b]$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove the existence of $x^*$. The existence of $x_*$ can be proved similarly by considering symmetry. By Theorem \ref{thm:boundThm}, $\sup f([a, b])$ exists. Let $M = \sup f([a, b])$, then for all $n \in \N$, there exists some $x_n \in [a, b]$ such that
+        \begin{equation*}
+            M - \frac{1}{n} < f(x_n) \leq M.
+        \end{equation*}
+        By Theorem \ref{thm:squeeze}, $\lim_{n \to \infty}f(x_n) = M$. Notice that $(x_n)$ is bounded in $[a, b]$, so by Theorem \ref{thm:bolzanoWeierstrass}, it has a subsequence $\left(x_{n_k}\right)$ that converges to $x^* \in [a, b]$. Note that $f$ is continuous on $[a, b]$, so by Theorem \ref{thm:seqCriterionContinuity},
+        \begin{equation*}
+            \lim_{k \to \infty}f\left(x_{n_k}\right) = f(x^*).
+        \end{equation*}
+        This implies that $\lim_{n \to \infty}f(x_n) = f(x^*)$, i.e., $x^* = M$. Therefore, $f(x^*) \geq f(x)$ for all $x \in [a, b]$ and is an absolute maximum.
+    \end{proof}
+\end{thmbox}
+\subsection{Bisection Method}
+Continuity of a function is a very useful property which can be exploited in root approximation. Informally, if $f(a) < 0$ and $f(b) > 0$ and $f$ is continuous on $[a, b]$, then for $f$ to ``reach'' $f(b)$ from $f(a)$, it has to cross over some point at which it evaluates to $0$.
+\begin{thmbox}{Location of Roots Theorem}{rootLocation}
+    If $f$ is continuous on $[a, b]$ and $f(a)f(b) < 0$, then there exists some $c \in (a, b)$ such that $f(c) = 0$.
+    \tcblower
+    \begin{proof}
+        Without loss of generality, assume $f(a) < 0 < f(b)$. Take $a_1 = a$, $b_1 = b$ and let $I_1 = [a_1, b_1]$. Let $m_n = \frac{a_n + b_n}{2} \in (a, b)$. If $f(m_1) = 0$, then we are done. Otherwise, define recursively that
+        \begin{equation*}
+            I_{n + 1} = \begin{cases}
+                [a_n, m_n] & \quad\textrm{if } f(m_n) > 0 \\
+                [m_n, b_n] & \quad\textrm{if } f(m_n) < 0
+            \end{cases}.
+        \end{equation*}
+        This way, we obtain a sequence of nested intervals $(I_n)$. Note that
+        \begin{equation*}
+            b_n - a_n = \frac{b - a}{2^{n - 1}},
+        \end{equation*}
+        so $\lim_{n \to \infty}(b_n - a_n) = 0$. Note that $(a_n)$ is a monotone increasing sequence and $(b_n)$ is a monotone decreasing sequence, so $\sup(a_n) = \inf(b_n)$. Therefore,
+        \begin{equation*}
+            \bigcap_{n = 1}^{\infty}[a_n, b_n] = \{c\} \subseteq (a, b).
+        \end{equation*}
+        Note that both $(a_n)$ and $(b_n)$ are bounded. Since $f$ is continuous at $c$, by Theorems \ref{thm:monotoneConverge} and \ref{thm:seqCriterionContinuity},
+        \begin{equation*}
+            \lim_{n \to \infty}f(a_n) = \lim_{n \to \infty}f(b_n) = f(c).
+        \end{equation*}
+        Notice that $f(a_n) < 0$ for all $n \in \N$, so $f(c) = \lim_{n \to \infty}f(a_n) \leq 0$. Similarly, $f(c) \geq 0$. Therefore, $f(c) = 0$.
+    \end{proof}
+\end{thmbox}
+In particular, the construction of nested intervals $I_n$'s is known as the \textit{bisection algorithm}. Theorem \ref{thm:rootLocation} helps approximate the roots for $f(x) = 0$. Clearly, this means we can determine the existence and location of roots for $f(x) = b$ in a similar fashion.
+\begin{thmbox}{Intermediate Value Theorem}{intermediateVal}
+    Let $f$ be continuous over some interval $I$. If $a, b \in I$ are such that $f(a) \leq f(b)$, then for all $k \in [f(a), f(b)]$, there is some $c \in I$ with $f(c) = k$.
+    \tcblower
+    \begin{proof}
+        Without loss of generality, assume $a \leq b$. If $k = f(a)$ or $k = f(b)$, by taking $c = a$ or $c = b$ respectively we are done. If $f(a) < k < f(b)$, consider $g(x) = f(x) - k$. Note that $g$ is continuous over $[a, b] \subseteq I$ and $g(a)g(b) < 0$, so by Theorem \ref{thm:rootLocation}, there is some $c \in (a, b) \subseteq I$ such that $g(c) = f(c) - k = 0$, i.e., $f(c) = k$.
+    \end{proof}
+\end{thmbox}
+We can generalise the above further.
+\begin{thmbox}{Preservation of Closed Intervals}{closedIntPreserve}
+    If $f$ is continuous on $[a, b]$, then 
+    \begin{equation*}
+        f([a, b]) = \bigl[\inf f([a, b]), \sup f([a, b])\bigr].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $f([a, b]) \subseteq \bigl[\inf f([a, b]), \sup f([a, b])\bigr]$. By Theorem \ref{thm:maxMin}, there exists $x^*, x_* \in [a, b]$ such that $f(x^*) = \sup f([a, b])$ and $f(x_*) = \inf f([a, b])$. Take any $k \in [f(x_*), f(x^*)]$, by Theorem \ref{thm:intermediateVal}, there is some $c \in [a, b]$ such that $f(c) = k$. This means $k \in f([a, b])$ and so 
+        \begin{equation*}
+            \bigl[\inf f([a, b]), \sup f([a, b])\bigr] = [f(x_*), f(x^*)] \subseteq f([a, b]).
+        \end{equation*}
+        Therefore, $f([a, b]) = \bigl[\inf f([a, b]), \sup f([a, b])\bigr]$.
+    \end{proof}
+\end{thmbox}
+\subsection{Uniform Continuity}
+To determine continuity of a function $f$ at a point $c$, we need to find a $\delta > 0$ for each $\epsilon > 0$. Note that our choice of $\delta$ here might depend on both $c$ and $\epsilon$. However, for certain functions, we can ``generate'' an appropriate $\delta$ based solely on the $\epsilon$ given, i.e., we can find some $\delta = g(\epsilon)$ which is \textbf{independent} of the value of $c$. Such functions are said to be \textit{uniformly continuous}.
+\begin{dfnbox}{Uniform Continuity}{uniContinuity}
+    Let $f$ be a function over some $A \subseteq \R$. $f$ is said to be {\color{red} \textbf{uniformly continuous}} if for all $\epsilon > 0$, there exists some $\delta > 0$ such that for all $x, y \in A$, 
+    \begin{equation*}
+        \abs{f(x) - f(y)} < \epsilon
+    \end{equation*}
+    whenever $\abs{x - y} <\delta$.
+\end{dfnbox}
+Notice that in Definition \ref{dfn:uniContinuity}, the choice of $\delta$ is independent of $x$ and $y$.
+
+Theorem \ref{thm:seqCriterionContinuity} has a version for uniform continuity as well.
+\begin{thmbox}{Sequential Criterion of Uniform Continuity}{seqCriterionUniContinuity}
+    Let $f$ be a function over some $A \subseteq \R$. $f$ is uniformly continuous on $A$ if and only if for any two convergent sequences $(x_n)$ and $(y_n)$ in $A$ such that $\lim_{n \to \infty}(x_n - y_n) = 0$, 
+    \begin{equation*}
+        \lim_{n \to \infty}\bigl(f(x_n) - f(y_n)\bigr) = 0.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Suppose $f$ is uniformly continuous on $A$, then for all $\epsilon > 0$, there exists some $\delta > 0$ such that
+        \begin{equation*}
+            \abs{f(x) - f(y)} < \epsilon
+        \end{equation*}
+        for all $x, y \in A$ with $\abs{x - y} < \delta$. Let $(x_n)$ and $(y_n)$ be two convergent sequences in $A$ with $\lim_{n \to \infty}(x_n - y_n) = 0$, then there is some $N \in \N$ such that 
+        \begin{equation*}
+            \abs{x_n - y_n} < \delta
+        \end{equation*}
+        whenever $n \geq N$. Therefore, for all $\epsilon > 0$, whenever $n \geq N$, 
+        \begin{equation*}
+            \abs{f(x_n) - f(y_n)} < \epsilon,
+        \end{equation*}
+        and so $\lim_{n \to \infty}\bigl(f(x_n) - f(y_n)\bigr) = 0$.
+        \\\\
+        We shall prove the converse by considering its contrapositive. Suppose $f$ is not uniformly continuous on $A$, then there is some $\epsilon_0 > 0$ such that for all $\delta > 0$, there exists some $x, y \in A$ with $\abs{x - y} < \delta$ but $\abs{f(x) - f(y)} \geq \epsilon_0$.
+        \\\\
+        This means that for all $n \in \N$, we can take some $x_n, y_n \in A$ with $0 \leq \abs{x_n - y_n} < \frac{1}{n}$, thus obtaining two sequences $(x_n)$ and $(y_n)$. Note that $\lim_{n \to \infty}(x_n - y_n) = 0$, but 
+        \begin{equation*}
+            \abs{f(x_n) - f(y_n)} \geq \epsilon_0,
+        \end{equation*}
+        which means $\bigl(f(x_n) - f(y_n)\bigr)$ does not converge to $0$.
+    \end{proof}
+\end{thmbox}
+The negations of Definition \ref{dfn:uniContinuity} and Theorem \ref{thm:seqCriterionUniContinuity} can be very useful when proving by contrapositive. For example, we can consider the following result:
+\begin{thmbox}{Uniform Continuity Theorem}{uniContinuityThm}
+    If a function $f$ is continuous on a closed and bounded interval $[a, b]$, then it is uniformly continuous on $[a, b]$.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $f$ is not uniformly continuous on $[a, b]$, then there is some $\epsilon_0 > 0$ such that for all $n \in \N$, we can find $x_n, y_n \in [a, b]$ with $\abs{x_n - y_n} < \frac{1}{n}$ but $\abs{f(x_n) - f(y_n)} \geq \epsilon_0$. Note that $(x_n)$ is bounded, so by Theorem \ref{thm:bolzanoWeierstrass}, it has a subsequence $\left(x_{n_k}\right)$ such that $\lim_{k \to \infty}x_{n_k} = c$. Similarly, $(y_n)$ has a convergent subsequence $\left(y_{n_k}\right)$. Therefore,
+        \begin{align*}
+            \lim_{k \to \infty}y_{n_k} & = \lim_{k \to \infty}\left[x_{n_k} - \left(x_{n_k} - y_{n_k}\right)\right] \\ 
+            & = c - \lim_{n \to \infty}(x_n - y_n) \\
+            & = c.
+        \end{align*}
+        By Theorem \ref{thm:seqCriterionContinuity}, since $f$ is continuous at $c$, 
+        \begin{equation*}
+            \lim_{k \to \infty}f\left(x_{n_k}\right) = \lim_{k \to \infty}f\left(y_{n_k}\right) = f(c).
+        \end{equation*}
+        This implies $\lim_{k \to \infty}\Bigl(f\left(x_{n_k}\right) - f\left(y_{n_k}\right)\Bigr) = 0$, but
+        \begin{equation*}
+            \abs{f\left(x_{n_k}\right) - f\left(x_{n_k}\right)} \geq \epsilon_0 > 0,
+        \end{equation*}
+        which is a contradiction.
+    \end{proof}
+\end{thmbox}
+While the negations of Definition \ref{dfn:uniContinuity} and Theorem \ref{thm:seqCriterionUniContinuity} aids in many proofs, proving uniform continuity directly with them are difficult. Thus, we introduce another tool to prove uniform continuity.
+\begin{dfnbox}{Lipschitz Function}{lipschitz}
+    Let $f$ be a function over some $A \subseteq \R$. $f$ is said to be a {\color{red} \textbf{Lipschitz Function}} (or satisfy the {\color{red} \textbf{Lipschitz Condition}}) if there exists some $K > 0$ such that
+    \begin{equation*}
+        \abs{f(x) - f(y)} \leq K\abs{x - y}
+    \end{equation*}
+    for all $x, y \in A$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that we can re-write the Lipschitz Condition as
+        \begin{equation*}
+            \frac{\abs{f(x) - f(y)}}{\abs{x - y}} \leq K
+        \end{equation*}
+        for all $x \neq y$. Note that the limit as $y \to x$ of the left-hand side is the \textit{first order derivative} of $f$, so the above expression suggests that $f'(x)$ is bounded.
+    \end{remark}
+\end{notebox}
+It can be easily seen that by taking $\delta = \frac{\epsilon}{K}$ for each $\epsilon > 0$, a Lipschitz function can be proven to be uniformly continuous on $A$.
+\begin{thmbox}{Uniform Continuity of Lipschitz Functions}{lipschitzUniContinuous}
+    If $f \colon A \to \R$ is a Lipschitz function, then it is uniformly continuous on $A$.
+\end{thmbox}
+Lastly, we shall state the relation between uniform continuity and Cauchy sequences.
+\begin{thmbox}{Preservation of Cauchy Sequences}{preserveCauchy}
+    If $f$ is uniformly continuous on $A \subseteq \R$ and $(x_n)$ is a Cauchy sequence on $A$, then $\bigl(f(x_n)\bigr)$ is also a Cauchy sequence.
+    \tcblower
+    \begin{proof}
+        Since $f$ is uniformly continuous on $A$, for all $\epsilon > 0$ there is some $\delta > 0$ such that for all $x, y \in A$,
+        \begin{equation*}
+            \abs{f(x) - f(y)} < \epsilon
+        \end{equation*}
+        whenever $\abs{x - y} < \delta$. Since $(x_n)$ is Cauchy, there is some $N \in \N$ such that for all $m, n \geq N$, $\abs{x_m - x_n} < \delta$. Therefore,
+        \begin{equation*}
+            \abs{f(x_m) - f(y_n)} < \epsilon
+        \end{equation*}
+        whenever $m, n \geq N$. Therefore, $\bigl(f(x_n)\bigr)$ is a Cauchy sequence.
+    \end{proof}
+\end{thmbox}
+Using the preservation of Cauchy sequences, we can prove the following result:
+\begin{thmbox}{Continuous Extension Theorem}{continuousEx}
+    A function $f$ is uniformly continuous on $(a, b)$ if and only if it can be defined at $a$ and $b$ such that the extended function is continuous on $[a, b]$.
+    \tcblower
+    \begin{proof}
+        The leftward direction is obvious by Theorem \ref{thm:uniContinuityThm}. Suppose $f$ is uniformly continuous on $(a, b)$. Let $(x_n)$ be a sequence in $(a, b)$ that converges to $a$. By Theorem \ref{thm:cauchyConvergeCri}, $(x_n)$ is Cauchy, and so $\bigl(f(x_n)\bigr)$ is Cauchy by Theorem \ref{thm:preserveCauchy}. 
+        \\\\
+        Define $f(a) = \lim_{n \to \infty}f(x_n)$, and let $(y_n)$ be a sequence in $(a, b)$ that converges to $a$. Since $f$ is uniformly continuous on $(a, b)$, by Theorem \ref{thm:seqCriterionUniContinuity}, 
+        \begin{equation*}
+            \lim_{n \to \infty}\bigl(f(x_n) - f(y_n)\bigr) = 0,
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            \lim_{n \to \infty}f(y_n) = \lim_{n \to \infty}\left[f(x_n) - \bigl(f(x_n) - f(y_n)\bigr)\right] = f(a).
+        \end{equation*}
+        Note that $y_n > a$ for all $n \in \N$, so $\lim_{x \to a^+}f(x) = f(a)$. Similarly, defining $f(b) = \lim_{n \to \infty}f(z_n)$ for some sequence $(z_n)$ that converges to $b$, we can prove that $\lim_{x \to b^-}f(x) = f(b)$. Therefore, the extended function is continuous on $[a, b]$.
+    \end{proof}
+\end{thmbox}
+\subsection{Discontinuity}
+A discontinuous function can take a number of forms, one of which is a sudden change of value at a point $c$. Such functions can be vividly depicted as a continuous function ``ripped apart'' at $x = c$. Intuitively, the left-hand and right-hand limits of $f$ would still exist despite discontinuity.
+\begin{thmbox}{One-Sided Limit for Monotone Functions}
+    Let $f$ be increasing on $I \subseteq \R$. If $c \in I$ is not an end point, then
+    \begin{align*}
+        \lim_{x \to c^-}f(x) & = \sup \left\{f(x) \colon x \in I, x < c\right\} \\
+        \lim_{x \to c^+}f(x) & = \inf \left\{f(x) \colon x \in I, x > c\right\}.
+    \end{align*}
+    \tcblower
+    \begin{proof}
+        Without loss of generality, it suffices to prove for the left-hand limit. Note that $S \coloneqq \left\{f(x) \colon x \in I, x < c\right\}$ is non-empty and $f(c)$ is its upper bound. Therefore, $\sup S$ exists. Denote this supremum by $L$, then for all $\epsilon > 0$, $L - \epsilon$ is not an upper bound of $S$, which mean that there is some $y \in I$ with $y < c$ such that $L - \epsilon < f(y) \leq L$.
+        \\\\
+        Take $\delta = c - y > 0$, then whenever $-\delta < x - c < 0$, we have $y < x < c$. Since $f$ is increasing on $I$, this implies that \begin{equation*}
+            L - \epsilon < f(y) < f(x) \leq L < L + \epsilon.
+        \end{equation*}
+        Therefore, $\abs{f(x) - L} <  \epsilon$ and so $\lim_{x \to c^-} = \sup \left\{f(x) \colon x \in I, x < c\right\}$.
+    \end{proof}
+\end{thmbox}
+Note that $c$ is the only discontinuous point of $f$, therefore, $f$ is continuous if the ``gap'' at $c$ were to be closed.
+\begin{corbox}{}{}
+    Let $f$ be increasing on $I \subseteq \R$. If $c \in I$ is not an end point, then the followings are equivalent:
+    \begin{enumerate}
+        \item $f$ is continuous at $c$.
+        \item $\lim_{x \to c^-}f(x) = \lim_{x \to c^+}f(x) = f(c)$.
+        \item $\sup \left\{f(x) \colon x \in I, x < c\right\} = \inf \left\{f(x) \colon x \in I, x > c\right\} = f(c)$.
+    \end{enumerate}
+\end{corbox}
+Such discontinuity as described above is known as a \textit{jump discontinuity} at $c$. The following definition gives a measure for ``how discontinuous'' $f$ is at $c$:
+\begin{dfnbox}{Jump}{jump}
+    Let $f$ be increasing on $[a, b]$. The {\color{red} \textbf{jump}} of $f$ at $c$ is defined as
+    \begin{equation*}
+        j_f(c) = \begin{cases}
+            \lim_{x \to a^+}f(x) - f(a) & \quad\textrm{if } c = a \\
+            f(b) - \lim_{x \to b^-}f(x) & \quad\textrm{if } c = b \\
+            \lim_{x \to c^+}f(x) - \lim_{x \to c^-}f(x) & \quad\textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+\end{dfnbox}
+It can be immediately seen that $f$ is continuous at $c$ if and only if $j_f(c) = 0$.
+
+Next, let us consider an interesting question:
+\begin{quote}
+    How many jump discontinuities can a monotone function have over its domain?
+\end{quote}
+The answer might be surprising: the number of jump discontinuities of a monotone function is at most countably infinite!
+\begin{thmbox}{Discontinuous Points of Monotone Functions}{monoFuncDiscon}
+    Let $f$ be a monotone function over $I \subseteq \R$, then $f$ has countably many points of discontinuity.
+\end{thmbox}
+Lastly, we shall state a theorem regarding inverse functions.
+\begin{thmbox}{Continuous Inverse Theorem}{continuousInv}
+    Let $f \colon I \to \R$ be a strictly monotone and continuous function, then $f^{-1} \colon f(I) \to I$ is also a strictly monotone and continuous function.
+\end{thmbox}
 
 \chapter{Topology and Metric Spaces}
 \section{Metric Space}
+So far we have been dealing with sequences and functions which are real-valued. However, other abstract objects might also exhibit limiting bahaviours. Note that when we define the notion of limits, we focus on the behaviour of an object as it ``gets arbitrarily close'' to a certain point. We would like to abstract the concept of closeness.
 \begin{dfnbox}{Metric}{metric}
     A {\color{red} \textbf{metric}} on a set $S$ is a function $d \colon S \times S \to \R$ that satisfies the following:
     \begin{enumerate}
@@ -541,12 +900,41 @@ Now, we are able to define convergence of a sequence over any general set.
 \begin{dfnbox}{Convergence}{convergenceGen}
     Let $(x_n)$ be a sequence over a metric space $(S, d)$. $(x_n)$ is said to be {\color{red} \textbf{convergent}} to $x \in S$ if for all $\epsilon > 0$, there exists some $K \in \N$ such that whenever $n \geq K$, $d(x_n, x) < \epsilon$.
 \end{dfnbox}
+Similarly, we can re-state the definitions and theorems regarding limits and continuity in terms of metric spaces.
 
 \section{Compact Sets}
 In real numbers, we can define the boundedness and openness of an interval. These ideas can be extended to a metric space. In particular, we would like to investigate a set which can be informally stated as ``closed and bounded''. We will define openness first.
 \begin{dfnbox}{Open and Closed Sets}{openSet}
     Let $(S, d)$ be a metric space. $S$ is called an {\color{red} \textbf{open set}} if and only if for all $x \in S$, $S$ is a neighbourhood of $x$. A set whose complement is open is said to be {\color{red} \textbf{closed}}.
 \end{dfnbox} 
+\begin{notebox}
+    \begin{remark}
+        Note that $\R$ and $\varnothing$ are both closed and open.
+    \end{remark}
+\end{notebox}
+We have the following important properties:
+\begin{thmbox}{Open Set Properties}{openSetProps}
+    The union of open sets is open and the intersection of finitely many open sets is open.
+\end{thmbox}
+\begin{thmbox}{Closed Set Properties}{closedSetProps}
+    The intersection of closed sets is closed and the union of finitely many closed sets is closed.
+\end{thmbox}
+It turns out that openness of a set has important relations to the convergence of sequences defined over the set.
+\begin{thmbox}{Characterisation of Closed Sets}{characterisationClosed}
+    A set $F$ is closed if and only if for every convergent sequence $(x_n)$ in $F$, $\lim_{n \to \infty}x_n \in F$.
+\end{thmbox}
+\begin{thmbox}{Alternative Characterisation of Closed Sets}{characterisationClosedAlt}
+    A set $F$ is closed if and only if it contains all of its cluster points.
+\end{thmbox}
+We can use open sets to test the continuity of a function.
+\begin{thmbox}{Global Continuity Theorem}{globalContinuityThm}
+    Let $(A, d_A)$ and $(B, d_B)$ be metric spaces. $f \colon A \to B$ is continuous on $A$ if and only if for every open set $G \subseteq B$, there exists an open set $H$ such that $H \cap A = f^{-1}(G)$.
+\end{thmbox}
+In real numbers, the above theorem gives the following corollary:
+\begin{corbox}{Global Continuity Theorem on $\R$}{globalContinuityThmR}
+    $f \colon \R \to \R$ is continuous over $\R$ if and only if for every open set $G \subseteq \R$, $f^{-1}(G)$ is open.
+\end{corbox}
+A closed and bounded set is the pre-requisite of many important theorems. Before we formally define it, we introduce the notion of an \textit{open cover}.
 \begin{dfnbox}{Open Cover}{openCover}
     Let $(S, d)$ be a metric space. For $A \subseteq S$, an {\color{red} \textbf{open cover}} of $A$ is a collection
     \begin{equation*}
@@ -554,4 +942,34 @@ In real numbers, we can define the boundedness and openness of an interval. Thes
     \end{equation*}
     If $\mathcal{G}' \subseteq \mathcal{G}$ and $\mathcal{G}'$ is an open cover of $A$, then $\mathcal{G}'$ is a {\color{red} \textbf{subcover}} of $\mathcal{G}$.
 \end{dfnbox}
+Indeed, an open cover is just a collection of open sets which ``covers up'' a set $A$. Intuitively, $A$ has a boundary if it can be ``covered'' with finitely many such open sets.
+\begin{dfnbox}{Compact Set}{compact}
+   Let $(S, d)$ be a metric space. A set $K \subseteq S$ is said to be {\color{red} \textbf{compact}} if every open cover $\mathcal{G}$ of $K$ has a finite subcover. 
+\end{dfnbox}
+In other words, Definition \ref{dfn:compact} states that if $\mathcal{G}$ is any open cover of $K$, then $K$ is compact if there are finitely many open sets $G_1, G_2, \cdots, G_n \in \mathcal{G}$ whose union is $K$.
+
+Next, we reveal the equivalence between compactness and closed-and-boundedness.
+\begin{dfnbox}{Bounded Set}{boundedSet}
+    Let $(S, d)$ be a metric space. A set $A \subseteq S$ is {\color{red} \textbf{bounded}} if there exist some $M \in \R$ and $x \in S$ such that $A \subseteq V_M(x)$.
+\end{dfnbox}
+It can be seen that a bounded set is confined within a particular open set. Naturally, this means we only need finitely many open sets for their union to contain this set.
+\begin{thmbox}{Heine-Borel Theorem}{closedBounded}
+    Let $(S, d)$ be a metric space. $K \subseteq S$ is compact if and only if it is closed and bounded.
+\end{thmbox}
+Consider a compact set $K$ and a function $f$ whose domain contains $K$. This means that $f$ would map $K$ to another set. Intuitively, this image should be compact as well provided that $f(K)$ has no ``gaps''.
+\begin{thmbox}{Preservation of Compactness}{preserveCompact}
+    Let $(S, d)$ be a metric space and $f \colon S \to \R$. If $K \subseteq S$ is compact and $f$ is continuous, then $f(K)$ is compact.
+\end{thmbox}
+The notion of having no gaps in a set means that the set is connected, which can be defined as follows:
+\begin{dfnbox}{Connected Set}{connected}
+    A set $U$ is {\color{red} \textbf{disconnected}} if it has an open cover $\{A, B\}$ such that $A \cap U$, $B \cap U$ are both non-empty but disjoint. Otherwise, $U$ is {\color{red} \textbf{connected}}.
+\end{dfnbox}
+An interval in $\R$ is trivially connected. However, we would like to state that any connected subset of $\R$ must also be an interval.
+\begin{probox}{Connectedness and Intervals}{}
+    A subset of $\R$ is connected if and only if it is an interval.
+\end{probox}
+Lastly, we state without proof the analogue of the Intermediate Value Theorem in terms of connected sets.
+\begin{thmbox}{Generalised Intermediate Value Theorem}{genIntVal}
+    Let $f \colon S \to \R$ be a function. If $E \subseteq S$ is connected, then $f(E)$ is connected.
+\end{thmbox}
 \end{document}
