@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  15 SEP 2023 22:00
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  4 DEC 2023 16:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1184,30 +1184,30 @@ runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Non
 
 runsystem(del Non-linear_Programming.aex)...executed.
 
-
-No file "Non-linear Programming".aux.
+ (./Non-linear Programming.aux)
 \openout1 = `"Non-linear Programming.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1243,9 +1243,9 @@ LaTeX Font Info:    ... okay on input line 31.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 31.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 32.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 31.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 32.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1264,240 +1264,217 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 31.
+Package hyperref Info: Link coloring ON on input line 32.
+(./Non-linear Programming.out) (./Non-linear Programming.out)
 \@outlinefile=\write6
 \openout6 = `"Non-linear Programming.out"'.
 
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
 \c@lstlisting=\count393
-No file "Non-linear Programming".toc.
+ (./Non-linear Programming.toc
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 12.00128pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 8.40088pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 6.60071pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 8.3991pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 6.59929pt on input line 2.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+ (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+ (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+
+])
 \tf@toc=\write7
 \openout7 = `"Non-linear Programming.toc"'.
 
-
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 40.
-
-[1
-
-
-]
+ [2]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 12.00128pt on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 8.40088pt on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 6.60071pt on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 6.59929pt on input line 42.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 42.
-(f:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 42.
- (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 74.
-
-[2
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 43.
+[3
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 102--105
+Underfull \hbox (badness 10000) in paragraph at lines 103--106
 
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 106.
-
-[3]
-
-LaTeX Warning: Reference `thm:intersecClosed' on page 4 undefined on input line 127.
-
-
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 136.
-
-[4]
+[4] [5] [6]
 Chapter 2.
-
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 182.
-
-[5
+[7
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 207--211
+Underfull \hbox (badness 10000) in paragraph at lines 219--223
 
  []
-
-
-LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 221.
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 231--234
-
- []
-
-
-LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 248.
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 307--311
-
- []
-
-
-LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 324.
 
 [8]
+Underfull \hbox (badness 10000) in paragraph at lines 243--246
 
-LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 324.
+ []
 
 [9]
+Underfull \hbox (badness 10000) in paragraph at lines 319--323
 
-LaTeX Warning: Reference `pro:convexTan' on page 10 undefined on input line 325.
+ []
 
+[10] [11]
+Underfull \hbox (badness 10000) in paragraph at lines 353--357
 
-LaTeX Warning: Reference `pro:convexTan' on page 10 undefined on input line 338.
+ []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 341--345
+[12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 418--421
 
  []
 
 
-LaTeX Warning: Reference `pro:convexTan' on page 10 undefined on input line 348.
-
-
-LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 363.
-
-[10]
-
-LaTeX Warning: Reference `dfn:convexFunc' on page 11 undefined on input line 366.
-
-
-LaTeX Warning: Reference `pro:convexTan' on page 11 undefined on input line 366.
-
-
-LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 393.
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 417--420
+Underfull \hbox (badness 10000) in paragraph at lines 423--427
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 422--426
-
- []
-
-
-Underfull \hbox (badness 1584) in paragraph at lines 422--426
+Underfull \hbox (badness 1584) in paragraph at lines 423--427
 \TU/STIXTwoText(0)/m/n/12 Suppose conversely that all eigenvalues of $[]$ are non-negative. Consider the
  []
 
-
-LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 447.
-
-[12]
-
-LaTeX Warning: Reference `thm:convexTest' on page 13 undefined on input line 464.
-
-
-LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 474.
-
-[13]
-
-LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 475.
-
 [14]
+
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 475.
+
+[15] [16]
 Chapter 3.
-
-LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 501.
-
-[15
+[17
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 531--534
 
-LaTeX Warning: Reference `thm:ifLocalExtremaThen' on page 16 undefined on input line 513.
+ []
 
-
-LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 523.
-
-[16]
-
-LaTeX Warning: Reference `pro:convexTan' on page 17 undefined on input line 524.
-
-
-LaTeX Warning: Reference `dfn:stationaryPt' on page 17 undefined on input line 524.
-
-
-LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 553.
-
-[17]
-
-LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 556.
-
-[18]
+[18] [19] [20]
 Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 573--580
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 573--580
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 573--580
+
+ []
+
+[21
+
+]
 \openout4 = `Non-linear_Programming.pyg'.
 
-(./_minted-Non-linear_Programming/default.pygstyle) (./_minted-Non-linear_Programming/ADEADD7403027C505F6252405CF0BC9627DFF351C4709A5F5A80F2FBEC9D8BF2.pygtex
+ (./_minted-Non-linear_Programming/default.pygstyle) (./_minted-Non-linear_Programming/7DB42AEB7DD819462B3E7DA0501ED7C1BBA61CBC955F87590AD1262FB6AAE5A1.pygtex
 
 LaTeX Font Warning: Font shape `TU/JetBrainsMono-Regular(0)/b/n' undefined
 (Font)              using `TU/JetBrainsMono-Regular(0)/m/n' instead on input line 2.
 
-)
+) [22]
+Underfull \hbox (badness 10000) in paragraph at lines 636--639
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 590.
+ []
+
+\openout4 = `Non-linear_Programming.pyg'.
+
+(./_minted-Non-linear_Programming/ADC1F76DBE6870BF2A944D0E0E5963EBBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [23]
+\openout4 = `Non-linear_Programming.pyg'.
+
+ (./_minted-Non-linear_Programming/BB2103577AB816CFF868A69F8F2DB158BBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [24] [25]
+Underfull \hbox (badness 10000) in paragraph at lines 752--755
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 782--785
+
+ []
+
+[27]
+\openout4 = `Non-linear_Programming.pyg'.
+
+ (./_minted-Non-linear_Programming/518EE3B2579DDF76CD91AF92D1CA29CDBBA61CBC955F87590AD1262FB6AAE5A1.pygtex
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 6.00064pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 5.00053pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 2.
+) [28]
+Underfull \hbox (badness 10000) in paragraph at lines 828--831
+
+ []
+
+\openout4 = `Non-linear_Programming.pyg'.
+
+(./_minted-Non-linear_Programming/68639FED2AEDB50B3046E8727DD8853DBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [29] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 913--917
+
+ []
+
+[31] [32]
+\openout4 = `Non-linear_Programming.pyg'.
+
+ (./_minted-Non-linear_Programming/98294383593E8353A24DC85DCFC0867FBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [33]
+Chapter 5.
+[34
+
+] [35] [36] [37] [38] [39] [40]
+Underfull \hbox (badness 10000) in paragraph at lines 1249--1255
+
+ []
 
 
-LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 590.
+Underfull \hbox (badness 1297) in paragraph at lines 1249--1255
+\TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker First Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[][]$ is
+ []
 
-[19
 
-]
+Underfull \hbox (badness 10000) in paragraph at lines 1249--1255
 
-LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 622.
+ []
 
-[20]
 
-LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 633.
+Underfull \hbox (badness 2443) in paragraph at lines 1249--1255
+\TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker Second Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[]$
+ []
 
-[21] 
+[41] [42] [43] [44] [45] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Non-linear Programming.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Non-linear Programming".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
-
-Package lastpage Warning: Rerun to get the references right on input line 633.
-
 runsystem(del Non-linear_Programming.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 39198 strings out of 478630
- 825515 string characters out of 5847730
- 1876012 words of memory out of 5000000
- 58662 multiletter control sequences out of 15000+600000
- 516199 words of font info for 91 fonts, out of 8000000 for 9000
+ 39380 strings out of 478630
+ 831907 string characters out of 5847730
+ 1879012 words of memory out of 5000000
+ 58802 multiletter control sequences out of 15000+600000
+ 517983 words of font info for 113 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,15n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,16n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Non-linear Programming.pdf (21 pages).
+Output written on Non-linear Programming.pdf (45 pages).

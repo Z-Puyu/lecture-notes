@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\begin{document}
+    \begin{multicols}{3}
+        \textbf{Weiestrass Theorem}: $S$ is compact $\implies f$ has a global max and a global min in $S$.
+        \\\\
+        If $f$ is convex, then $\left\{\bm{x} \colon f(\bm{x}) \leq a \right\}$ is convex.
+        \\\\
+        Epigraph $E_f$ is convex $\iff f$ is convex.
+        \\\\
+        \textbf{Directional derivative} at $\bm{x}$ along $\bm{d}$: 
+        \begin{equation*}
+            \nabla f(\bm{x})^{\mathrm{T}}\bm{d} = \lim_{\lambda \to 0}\frac{f(\bm{x} + \lambda\bm{d}) - f(\bm{x})}{\lambda}.
+        \end{equation*}
+        \\\\
+        $f$ is convex if and only if $f(\bm{x}) + \nabla f(\bm{x})^{\mathrm{T}}(\bm{y - x}) \leq f(\bm{y})$.
+        \\\\
+        $f$ is a convex and continuously differentiable function, then $\bm{x}^*$ is a global minimiser $\iff \nabla f(\bm{x}^*)^{\mathrm{T}}(\bm{x - x}^*)$.
+        \\\\
+        \textbf{Eigenvalue Test}: If $\bm{A}$ is a \textbf{symmetric real} matrix, then $\bm{A}$ is positive semidefinite $\iff$ all eigenvalues of $\bm{A}$ are non-negative.
+        \\\\
+        If $\bm{A}$ is a \textbf{symmetric} matrix, then $\bm{A}$ is positive definite $\iff \Delta_k < 0$ and negative definite $\iff (-1)^k\Delta_k > 0$.
+        \\\\
+        \textbf{Taylor's Theorem}: If $f$ has continuous 2nd order partial derivatives and if the set
+        \begin{displaymath}
+            [\bm{x}, \bm{y}] \coloneqq \left\{\lambda\bm{x} + (1 - \lambda)\bm{y} \colon \lambda \in [0, 1]\right\}
+        \end{displaymath}  
+        is in the interior of $D_f$, then $\exists \bm{z} \in [\bm{x}, \bm{y}]$ s.t. 
+        \begin{multline*}
+            f(\bm{y}) = f(\bm{x}) + \nabla f(\bm{x})^{\mathrm{T}}(\bm{y - x}) + \\
+            \frac{1}{2}(\bm{y - x})^{\mathrm{T}}H_f(\bm{z})(\bm{y - x}).
+        \end{multline*}
+        \\\\
+        $H_f$ is semidefinite $\iff f$ is convex/concave; $H_f$ is definite $\implies f$ is strictly convex/concave; $H_f$ is indefinite $\implies f$ is neither convex nor concave.
+        \\\\
+        \textbf{Coercive Function}: $\lim_{\left\lVert\bm{x}\right\rVert \to \infty}f(\bm{x}) = \infty$.
+        \\\\
+        $\left\lVert\bm{x}\right\rVert_\infty \leq \left\lVert\bm{x}\right\rVert \leq \sqrt{2}\left\lVert\bm{x}\right\rVert_\infty$, where $\left\lVert\bm{x}\right\rVert_\infty = \max\{\left\lvert x_i \right\rvert\}$.
+        \\\\
+        $\nabla f(\bm{x}^*) = 0$ and $H_f(\bm{x}^*)$ is positive definite $\implies \bm{x}^*$ is a \textbf{strict} local minimiser.
+        \\\\
+        If $f$ is convex, then a local minimiser of $f$ is a global minimiser. If $f$ is strictly convex, then it has a unique global minimiser.
+        \\\\
+        If $f$ is convex, then any stationary point of $f$ is a global minimiser.
+        \\\\
+        $q(\bm{x}) = \frac{1}{2}\bm{x}^{\mathrm{T}}\bm{Qx} + \bm{c}^{\mathrm{T}}\bm{x}$ is a quadratic function where $\bm{Q}$ is symmetric.
+        \\\\
+        If $q$ is defined over a convex set, then $\bm{x}^*$ is a global minimiser $\iff \bm{Qx}^* = -\bm{c}$.
+        \\\\
+        \textbf{Bisection Method}: 
+        \begin{equation*}
+            [a_{k + 1}, b_{k + 1}] = \begin{cases}
+                \left[a_k, 
+                \frac{a_k + b_k}{2}\right], \quad \textrm{if } f\left(\frac{a_k + b_k}{2}\right)f(a_k) < 0 \\
+                \left[\frac{a_k + b_k}{2}, b_k\right], \quad \textrm{if } f\left(\frac{a_k + b_k}{2}\right)f(a_k) > 0 \\
+            \end{cases}
+        \end{equation*}
+        Take $x_k = \frac{a_k + b_k}{2}$. At termination, $\left\lvert x^* - x_k \right\rvert \leq \frac{\left\lvert a_k - b_k \right\rvert}{2} \leq \epsilon$, so we need
+        \begin{equation*}
+            k = \left\lceil\frac{\log\left(\frac{b_1 - a_1}{\epsilon}\right)}{\log{2}}\right\rceil
+        \end{equation*}
+        \\\\
+        \textbf{Newton's Method}: $x_{k + 1} = x_k - \frac{f'(x_k)}{f''(x_k)}$ until $\left\lvert f'(x_k)\right\rvert < \epsilon$.
+        \\\\
+        \textbf{Golden Section Method}: 
+
+        Set $[a_0, b_0] = [a, b]$ and take $\alpha = \frac{\sqrt{5} - 1}{2}$. Compute
+        \begin{align*}
+            \lambda_0 & = b - \alpha(b - a) \\
+            \mu_0 & = a + \alpha(b - a).
+        \end{align*}
+        If $f(\lambda_k) > f(\mu_k)$, then
+        \begin{align*}
+            a_{k + 1} = \lambda_k &\qquad b_{k + 1} = b_k \\
+            \lambda_{k + 1} = \mu_k &\qquad \mu_{k + 1} = \lambda_k + \alpha(b_k - \lambda_k).
+        \end{align*}
+    \end{multicols}
+\end{document}

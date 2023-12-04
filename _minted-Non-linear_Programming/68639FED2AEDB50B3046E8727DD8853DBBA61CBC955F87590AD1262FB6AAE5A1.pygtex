@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }\PYG{n+nf}{[x, d, k] = steepest\PYGZus{}descent}\PYG{p}{(}f, nabla, x0, t\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{x}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{x0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{grad}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{nabla}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{k}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{n+nb}{norm}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{t}
+\PYG{+w}{        }\PYG{n}{d}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{grad}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{fx}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{);}
+\PYG{+w}{        }\PYG{p}{[}\PYG{n+nb}{step}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{armijo}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{fx}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{nabla}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.48}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.95}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{x}\PYG{+w}{ }\PYG{o}{+}\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{step}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{grad}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{feval}\PYG{p}{(}\PYG{n}{nabla}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{+}\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{end}
+\PYG{k}{end}
+\end{Verbatim}

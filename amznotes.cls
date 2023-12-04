@@ -206,7 +206,7 @@
         overlay={\begin{tcbclipinterior}\fill[darkgray!20!white] (frame.south west) rectangle ([xshift=6mm]frame.north west);\end{tcbclipinterior}},
         skin=bicolor,
         collower=white,
-        fontupper=\tiny,
+        fontupper=\scriptsize,
         colbacklower=darkgray
     },
 }
@@ -245,7 +245,7 @@
     codeboxstyle/.style={
         overlay={\begin{tcbclipinterior}\fill[darkgray!20!white] (frame.south west) rectangle ([xshift=6mm]frame.north west);\end{tcbclipinterior}},
         skin=bicolor,
-        fontupper = \fontsize{3mm}{3mm},
+        fontupper = \normalsize,
         collower=white,
         colbacklower=darkgray
     },
