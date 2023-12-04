@@ -41,7 +41,7 @@
 \chapter{Non-linear Programming Problems}
 \section{Basic Terminology and Notations}
 \begin{dfnbox}{General Non-linear Programming (NLP) Problems}{geNLPProb}
-    Define the function $f \colon \mathbf{R}^n \to \mathbf{R}$. Let $\mathbfit{x} \in \mathbf{R}^n$ be a vector, then a general NLP problem aims to {\color{red} \textbf{optimise}} (i.e. maximise or minimise) $f(\mathbfit{x})$ subject to the constraint $\mathbfit{x} \in S \subseteq \mathbf{R}^n$, where
+    Define the function $f \colon \R^n \to \R$. Let $\mathbfit{x} \in \R^n$ be a vector, then a general NLP problem aims to {\color{red} \textbf{optimise}} (i.e. maximise or minimise) $f(\mathbfit{x})$ subject to the constraint $\mathbfit{x} \in S \subseteq \R^n$, where
     \begin{itemize}
         \item $f$ is known as the {\color{red} \textbf{objective function}};
         \item $S$ is known as the {\color{red} \textbf{feasible set}};
@@ -71,7 +71,7 @@ The word ``optimal'', however, can be ambiguous due to its qualitative nature. T
 \end{notebox}
 Note that not all optimisation problems have an optimal solution. We shall still expect to encounter problems for which no optimal solution nor value exists.
 \begin{dfnbox}{Unboundedness}{nboundedness}
-    Consider a minimisation problem subject to constraint $\mathbfit{x} \in S \subseteq \mathbfit{R}^n$ whose objective function is $f(\mathbfit{x})$. The objective value is said to be {\color{red} \textbf{unbounded}} if for all $K \in \mathbf{R}$, there exists some $\mathbfit{x} \in S$ such that $f(\mathbfit{x}) < K$.
+    Consider a minimisation problem subject to constraint $\mathbfit{x} \in S \subseteq \mathbfit{R}^n$ whose objective function is $f(\mathbfit{x})$. The objective value is said to be {\color{red} \textbf{unbounded}} if for all $K \in \R$, there exists some $\mathbfit{x} \in S$ such that $f(\mathbfit{x}) < K$.
 \end{dfnbox}
 \section{Unconstrained Non-linear Programs}
 To introduce the notion of an unconstrained NLP, we shall first define the openness of a set.
@@ -83,7 +83,7 @@ To introduce the notion of an unconstrained NLP, we shall first define the openn
     is a subset of $S$.
 \end{dfnbox}
 \begin{dfnbox}{Unconstrained NLP}{unconstrainedNLP}
-    An {\color{red} \textbf{unconstrained}} NLP is an NLP whose feasible set $\mathcal{X}$ is an {\color{red} \textbf{open}} subset of $\mathbf{R}^n$.
+    An {\color{red} \textbf{unconstrained}} NLP is an NLP whose feasible set $\mathcal{X}$ is an {\color{red} \textbf{open}} subset of $\R^n$.
 \end{dfnbox}
 \section{Constrained Non-linear Programs}
 Similarly, to introduce the notion of a constrained NLP, we shall first define the closed-ness of a set.
@@ -107,11 +107,11 @@ The empty set and Euclidean spaces $\R^n$ are both open and closed.
 \end{thmbox}
 We then follow up by introducing three important closed sets.
 \begin{probox}{}{}
-    Let $g \colon \mathbf{R}^n \to \mathbf{R}$ be a continuous function, then the sets
+    Let $g \colon \R^n \to \R$ be a continuous function, then the sets
     \begin{align*}
-        S_1 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) \leq 0\right\}, \\
-        S_2 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) \geq 0\right\}, \\
-        S_3 & = \left\{\mathbfit{x} \in \mathbf{R}^n \colon g(\mathbfit{x}) = 0\right\}
+        S_1 & = \left\{\mathbfit{x} \in \R^n \colon g(\mathbfit{x}) \leq 0\right\}, \\
+        S_2 & = \left\{\mathbfit{x} \in \R^n \colon g(\mathbfit{x}) \geq 0\right\}, \\
+        S_3 & = \left\{\mathbfit{x} \in \R^n \colon g(\mathbfit{x}) = 0\right\}
     \end{align*}
     are closed.
     \tcblower
@@ -129,21 +129,21 @@ By Theorem \ref{thm:intersecClosed}, we know that $S_1 \cup S_2 \cup S_3$ is clo
 \begin{dfnbox}{Constrained NLP}{constrainedNLP}
     A {\color{red} \textbf{constrained}} NLP is an NLP whose feasible set
     \begin{displaymath}
-        S \coloneqq \left\{\mathbfit{x} \in \mathbf{R}^n \colon g_i(\mathbfit{x}) = 0, i = 1, 2, \cdots, p, h_j(\mathbfit{x}) \leq 0, j = 1, 2, \cdots, q\right\}
+        S \coloneqq \left\{\mathbfit{x} \in \R^n \colon g_i(\mathbfit{x}) = 0, i = 1, 2, \cdots, p, h_j(\mathbfit{x}) \leq 0, j = 1, 2, \cdots, q\right\}
     \end{displaymath}
     is {\color{red} \textbf{closed}}, where each of the $g_i$'s is known as an equality constraint and each of the $h_j$'s is known as an inequality constraint.
 \end{dfnbox}
 If the feasible set of a constraind NLP is \textit{bounded}, then it will be easy to find an optimal solution.
 \begin{dfnbox}{Boundedness}{bounded}
-    Let $S \subseteq \mathbf{R}^n$. $S$ is said to be {\color{red} \textbf{bounded}} if there exists some $M \in \R^+$ such that $\norm{\mathbfit{x}} \leq M$ for all $\mathbfit{x} \in S$.
+    Let $S \subseteq \R^n$. $S$ is said to be {\color{red} \textbf{bounded}} if there exists some $M \in \R^+$ such that $\norm{\mathbfit{x}} \leq M$ for all $\mathbfit{x} \in S$.
 \end{dfnbox}
 Note that a closed set may not be bounded and a bounded set may not be closed, so we are motivated to define a \textit{closed and bounded set} rigorously.
 \begin{dfnbox}{Compact Set}{compactSet}
-    A set $S \subseteq \mathbf{R}^n$ is {\color{red} \textbf{compact}} if it is closed and bounded.
+    A set $S \subseteq \R^n$ is {\color{red} \textbf{compact}} if it is closed and bounded.
 \end{dfnbox}
 It turns out that, on a compact feasible set, the existence of global minimiser is guaranteed!
 \begin{thmbox}{Weiestrass Theorem}{weiestrass}
-    Let $f$ be a continuous function on some non-empty $S \subseteq \mathbf{R}^n$. If $S$ is compact, then $f$ has a global minimiser and a global maximiser.
+    Let $f$ be a continuous function on some non-empty $S \subseteq \R^n$. If $S$ is compact, then $f$ has a global minimiser and a global maximiser.
 \end{thmbox}
 \chapter{Convex Functions}
 \section{Convexity of Sets and Functions}
@@ -151,20 +151,20 @@ Intuitively, we describe two types of shapes in natural languages: the shapes wh
 
 Graphically, this means that some shapes are ``convex'' to all directions, where as some other shapes are ``concave''. We shall define this rigorously as follows:
 \begin{dfnbox}{Convex Set}{convexSet}
-    A set $D \subseteq \mathbf{R}^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    A set $D \subseteq \R^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
     \begin{displaymath}
         \lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y} \in D.
     \end{displaymath}
 \end{dfnbox}
 We can define convexity over functions as follows:
 \begin{dfnbox}{Convex Function}{convexFunc}
-    A function $f \colon D \to \mathbf{R}^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    A function $f \colon D \to \R^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
     \begin{displaymath}
         f\left(\lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
     \end{displaymath}
 \end{dfnbox}
 \begin{dfnbox}{Concave Function}{concaveFunc}
-    A function $f \colon D \to \mathbf{R}^n$ is said to be {\color{red} \textbf{concave}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    A function $f \colon D \to \R^n$ is said to be {\color{red} \textbf{concave}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
     \begin{displaymath}
         f\left(\lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) \geq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
     \end{displaymath}
@@ -176,7 +176,7 @@ We can define convexity over functions as follows:
 \end{notebox}
 We may derive the following relationship between a convex set and a convex function:
 \begin{probox}{Relations between Convex Sets and Convex Functions}{cSetRCFunc}
-    Let $D \subseteq \mathbf{R}^n$ be a convex set and let $f \colon D \to \mathbf{R}$ be a convex function, then for all $\alpha \in \mathbf{R}$, the set
+    Let $D \subseteq \R^n$ be a convex set and let $f \colon D \to \R$ be a convex function, then for all $\alpha \in \R$, the set
     \begin{displaymath}
         S_\alpha \coloneqq \left\{\mathbfit{x} \in D \colon f(\mathbfit{x}) \leq \alpha\right\}
     \end{displaymath}
@@ -194,9 +194,9 @@ We may derive the following relationship between a convex set and a convex funct
 \end{probox}
 Next, we introduce the notion of an \textit{epigraph}.
 \begin{dfnbox}{Epigraph}{epigraph}
-    Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The {\color{red} \textbf{epigraph}} of $f$ is the set~$E_f \subseteq \mathbf{R}^{n + 1}$ defined by
+    Let $f \colon D \to \R$ be a function over a convex set $D \subseteq \R^n$. The {\color{red} \textbf{epigraph}} of $f$ is the set~$E_f \subseteq \R^{n + 1}$ defined by
     \begin{displaymath}
-        E_f \coloneqq \left\{(\mathbfit{x}, \alpha) \colon \mathbfit{x} \in D, \alpha \in \mathbf{R}, f(\mathbfit{x}) \leq \alpha\right\}.
+        E_f \coloneqq \left\{(\mathbfit{x}, \alpha) \colon \mathbfit{x} \in D, \alpha \in \R, f(\mathbfit{x}) \leq \alpha\right\}.
     \end{displaymath}
 \end{dfnbox}
 \begin{notebox}
@@ -206,7 +206,7 @@ Next, we introduce the notion of an \textit{epigraph}.
 \end{notebox}
 Note that graphically, the epigraph of a function is just the region above the graph of the function.
 \begin{probox}{Convexity of Epigraph}{convexEpi}
-    Let $f \colon D \to \mathbf{R}$ be a function over a convex set $D \subseteq \mathbf{R}^n$. The epigraph $E_f$ is convex if and only if $f$ is convex.
+    Let $f \colon D \to \R$ be a function over a convex set $D \subseteq \R^n$. The epigraph $E_f$ is convex if and only if $f$ is convex.
     \tcblower   
     \begin{proof}
         Suppose $E_f$ is convex. Take any $\mathbfit{x}, \mathbfit{y} \in D$, then $(\mathbfit{x}, f(\mathbfit{x})), (\mathbfit{y}, f(\mathbfit{y})) \in E_f$. Let $\lambda \in [0, 1]$, we have
@@ -219,7 +219,7 @@ Note that graphically, the epigraph of a function is just the region above the g
         \end{align*}
         and so $f$ is convex.
         \\\\
-        Suppose conversely that $f$ is convex. For any $\mathbfit{x}, \mathbfit{y} \in D$ and any $\alpha, \beta \in \mathbf{R}$ such that $f(\mathbfit{x}) \leq \alpha$ and $f(\mathbfit{y}) \leq \beta$, we have $(\mathbfit{x}, \alpha), (\mathbfit{y}, \beta) \in E_f$. For all $\lambda \in [0, 1]$, consider
+        Suppose conversely that $f$ is convex. For any $\mathbfit{x}, \mathbfit{y} \in D$ and any $\alpha, \beta \in \R$ such that $f(\mathbfit{x}) \leq \alpha$ and $f(\mathbfit{y}) \leq \beta$, we have $(\mathbfit{x}, \alpha), (\mathbfit{y}, \beta) \in E_f$. For all $\lambda \in [0, 1]$, consider
         \begin{align*}
             \lambda(\mathbfit{x}, \alpha) + (1 - \lambda)(\mathbfit{y}, \beta) = (\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}, \lambda\alpha + (1 - \lambda)\beta).
         \end{align*}
@@ -233,7 +233,7 @@ Note that graphically, the epigraph of a function is just the region above the g
 \end{probox}
 Lastly, we generalise the notion of a \textit{convex combination}.
 \begin{probox}{Generalised Convex Combination}{convexCombi}
-    Let $k \in \N^+$ and let $f \colon S \to \mathbf{R}$ be a convex function on the convex set $S \subseteq \mathbf{R}^n$ and let $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_k \in S$, then 
+    Let $k \in \N^+$ and let $f \colon S \to \R$ be a convex function on the convex set $S \subseteq \R^n$ and let $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_k \in S$, then 
     \begin{equation*}       
         f\left(\sum_{i = 1}^{k}\lambda_i\mathbfit{x}_i\right) \leq \sum_{i = 1}^{k}\lambda_i f(\mathbfit{x}_i),
     \end{equation*}     
@@ -249,7 +249,7 @@ Lastly, we generalise the notion of a \textit{convex combination}.
     \end{proof}
 \end{probox}
 \section{Tangent Plane Characterisation}
-Recall that for a function $f \colon \mathbf{R}^n \to \mathbf{R}$, the \textit{gradient vector} of $f$ at $\mathbf{x}$ is given by
+Recall that for a function $f \colon \R^n \to \R$, the \textit{gradient vector} of $f$ at $\mathbf{x}$ is given by
 \begin{equation*}
     \nabla f(\mathbf{x}) = \begin{bmatrix}
         \frac{\partial}{\partial x_1}f(\mathbfit{x}) \\
@@ -259,7 +259,7 @@ Recall that for a function $f \colon \mathbf{R}^n \to \mathbf{R}$, the \textit{g
     \end{bmatrix}.
 \end{equation*}
 \begin{probox}{Directional Derivative}{directionalDerivative}
-    Let $f$ be a function over $D \subseteq \mathbf{R}^n$ and let $\mathbfit{d} \in \mathbf{R}^n$ be non-zero, then the directional derivative of $f$ at $\mathbfit{x}$ along $\mathbfit{d}$ is
+    Let $f$ be a function over $D \subseteq \R^n$ and let $\mathbfit{d} \in \R^n$ be non-zero, then the directional derivative of $f$ at $\mathbfit{x}$ along $\mathbfit{d}$ is
     \begin{equation*}
         \nabla f(\mathbfit{x})^{\mathrm{T}}\mathbfit{d} = \lim_{\lambda \to 0}\frac{f(\mathbfit{x} + \lambda\mathbfit{d}) - f(\mathbfit{x})}{\lambda}.
     \end{equation*}
@@ -267,12 +267,12 @@ Recall that for a function $f \colon \mathbf{R}^n \to \mathbf{R}$, the \textit{g
 \end{probox}
 \begin{notebox}
     \begin{remark}
-        $f$ increases the fastest along the direction of $\nabla f(\mathbfit{x})$ and decreases the fastest along the direction of $-\nabla f(\mathbfit{x})$ for any $\mathbfit{x} \in \mathbf{R}^n$.
+        $f$ increases the fastest along the direction of $\nabla f(\mathbfit{x})$ and decreases the fastest along the direction of $-\nabla f(\mathbfit{x})$ for any $\mathbfit{x} \in \R^n$.
     \end{remark}
 \end{notebox}
 The gradient vector of a function allows us to establish its tangent plane at a given point. Intuitively, we can see that a function is convex if its tangent plane lies below its graph. This can be described rigorously as follows:
 \begin{probox}{Tangent Plane Characterisation of Convex Functions}{convexTan}
-    Let $f$ be a function over an open convex set $S \subseteq \mathbf{R}^n$ with continuous first partial derivatives, then $f$ is convex if and only if 
+    Let $f$ be a function over an open convex set $S \subseteq \R^n$ with continuous first partial derivatives, then $f$ is convex if and only if 
     \begin{equation*}
         f(\mathbfit{x}) + \nabla f(\mathbfit{x})^{\mathrm{T}}(\mathbfit{y - x}) \leq f(\mathbfit{y})
     \end{equation*}
@@ -336,7 +336,7 @@ The gradient vector of a function allows us to establish its tangent plane at a 
 \end{probox}
 Proposition \ref{pro:convexTan} helps us determine whether a point is the global minimiser of a certain convex function.
 \begin{thmbox}{Global Minimiser of Convex Functions}{convexFuncMin}
-    Let $f \colon C \to \mathbf{R}$ be a convex and continuously differentiable function over a convex set~$C \subseteq \mathbf{R}^n$. Then $\mathbfit{x}^* \in C$ is a global minimiser for the minimisation problem 
+    Let $f \colon C \to \R$ be a convex and continuously differentiable function over a convex set~$C \subseteq \R^n$. Then $\mathbfit{x}^* \in C$ is a global minimiser for the minimisation problem 
     \begin{displaymath}
         \min\left\{f(\mathbfit{x}) \colon \mathbfit{x} \in C\right\}
     \end{displaymath}
@@ -377,7 +377,7 @@ Proposition \ref{pro:convexTan} helps us determine whether a point is the global
 \section{Hessian Matrices}
 So far we have learnt how to determine a function's convexity by either Definition \ref{dfn:convexFunc} or Proposition \ref{pro:convexTan}. However, there are certain functions which are difficult to manipulate and apply those methods algebraically. Therefore, we introduce another method to determine convexity by \textit{Hessian Matrices}.
 \begin{dfnbox}{Hessian Matrix}{hessian}
-    Let $f \colon S \to \mathbf{R}$ where $S \subseteq \mathbf{R}^n$ is non-empty and let $\mathbfit{x}$ be an {\color{red} \textbf{interior point}} of $S$. The {\color{red} \textbf{Hessian}} of $f$ at $\mathbfit{x}$ is the $n \times n$ matrix
+    Let $f \colon S \to \R$ where $S \subseteq \R^n$ is non-empty and let $\mathbfit{x}$ be an {\color{red} \textbf{interior point}} of $S$. The {\color{red} \textbf{Hessian}} of $f$ at $\mathbfit{x}$ is the $n \times n$ matrix
     \begin{displaymath}
         H_f(\mathbfit{x}) = \begin{bmatrix}
             \frac{\partial^2f}{\partial x_1 \partial x_1}(\mathbfit{x}) & \frac{\partial^2f}{\partial x_1 \partial x_2}(\mathbfit{x}) & \cdots & \frac{\partial^2f}{\partial x_1 \partial x_n}(\mathbfit{x}) \\
@@ -436,7 +436,7 @@ To determine the definiteness of a matrix, we may use the following eigenvalue t
         \begin{equation*}
             \mathbfit{A} = \mathbfit{QDQ}^{\mathrm{T}}.
         \end{equation*}
-        Let $\mathbfit{x} \in \mathbf{R}^n$ be an arbitrary vector, then 
+        Let $\mathbfit{x} \in \R^n$ be an arbitrary vector, then 
         \begin{align*}
             \mathbfit{x}^{\mathrm{T}}\mathbfit{Ax} & = \mathbfit{x}^{\mathrm{T}}\mathbfit{QDQ}^{\mathrm{T}}\mathbfit{x} \\
             & = \left(\mathbfit{Q}^{\mathrm{T}}\mathbfit{x}\right)^{\mathrm{T}}\mathbfit{D}\left(\mathbfit{Q}^{\mathrm{T}}\mathbfit{x}\right) \\
@@ -464,9 +464,9 @@ However, eigenvalues can be troublesome to compute. Thus for \textbf{small matri
 \subsection{Taylor's Theorem}
 Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to prove it, we need to first introduce \textit{Taylor's Theorem}.
 \begin{thmbox}{Taylor's Theorem}{taylorThm}
-    Suppose that $f \colon S \to \mathbf{R}$ is a function with continuous second partial derivatives. Consider the set
+    Suppose that $f \colon S \to \R$ is a function with continuous second partial derivatives. Consider the set
     \begin{displaymath}
-        [\mathbfit{x}, \mathbfit{y}] \coloneqq \left\{\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y} \colon \mathbfit{x}, \mathbfit{y} \in \mathbf{R}^n, \lambda \in [0, 1]\right\}.
+        [\mathbfit{x}, \mathbfit{y}] \coloneqq \left\{\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y} \colon \mathbfit{x}, \mathbfit{y} \in \R^n, \lambda \in [0, 1]\right\}.
     \end{displaymath}
     If $[\mathbfit{x}, \mathbfit{y}]$ is contained in the interior of $S$, then there exists some $\mathbfit{z} \in [\mathbfit{x}, \mathbfit{y}]$ such that
     \begin{equation*}
@@ -475,7 +475,7 @@ Note that we have not given the proof to Theorem \ref{thm:convexTest}. Now to pr
 \end{thmbox}
 Now, we are able to apply the following tests:
 \begin{thmbox}{Convexity Test for Differentiable Functions}{convexTest}
-    Let a function $f$ have continuous second order derivatives on an open convex set $D \subseteq \mathbf{R}^n$.
+    Let a function $f$ have continuous second order derivatives on an open convex set $D \subseteq \R^n$.
     \begin{itemize}
         \item $H_f(\mathbfit{x})$ is positive semidefinite for all $\mathbfit{x} \in D \iff f$ is convex on $D$.
         \item $H_f(\mathbfit{x})$ is positive definite for all $\mathbfit{x} \in D \implies f$ is strictly convex on $D$.
@@ -486,36 +486,82 @@ Now, we are able to apply the following tests:
 \end{thmbox}
 \chapter{Unconstrained Optimisation}
 \section{Coercive Functions}
+Given any unconstrained optimisation problem, how do we determine whether an optimal solution exists? Intuitively, an optimal solution is a point from which the function value increases in all directions.
 \begin{dfnbox}{Coercive Function}{coerciveFunc}
-    A {\color{red} \textbf{continuous}} function $f \colon \mathbf{R}^n \to \mathbf{R}$ is said to be {\color{red} \textbf{coercive}} if
+    A {\color{red} \textbf{continuous}} function $f \colon \R^n \to \R$ is said to be {\color{red} \textbf{coercive}} if
     \begin{equation*}
         \lim_{\norm{\mathbfit{x}} \to \infty} f(\mathbfit{x}) = +\infty.
     \end{equation*}
     More formally, $f$ is coercive if and only if for all $M > 0$, there is some $r > 0$ such that~$f(\mathbfit{x}) > M$ whenever $\norm{\mathbfit{x}} > r$.
 \end{dfnbox}
+In informal terms, a coercive function is such that the function value increases indefinitely as $\mathbfit{x}$ moves away from the origin. Therefore, there is some point at which the function value would be ``forced'' to be minimal.
 \begin{thmbox}{Global Minimiser of Coercive Functions}{globalMinCoerciveFunc}
-    If a function $f \colon \mathbf{R}^n \to \mathbf{R}$ is coercive, then $f$ has at least one global minimiser.
+    If a function $f \colon \R^n \to \R$ is coercive, then $f$ has at least one global minimiser.
     \tcblower   
     \begin{proof}
         Take $M = \abs{f(\mathbfit{0})} + 1 > 0$. Since $f$ is coercive, there exists some $r > 0$ such that $f(\mathbfit{x}) > M > f(\mathbfit{0})$ whenever $\norm{\mathbfit{x}} > r$. Consider
         \begin{displaymath}
-            B(\mathbfit{0}, r) = \left\{\mathbfit{x} \in \mathbf{R}^n \colon \norm{\mathbfit{x}} \leq r\right\}
+            B(\mathbfit{0}, r) = \left\{\mathbfit{x} \in \R^n \colon \norm{\mathbfit{x}} \leq r\right\}
         \end{displaymath}
-        which is a compact set. So by Weiestrass' Theorem, there exists some $\mathbfit{x}^* \in B(\mathbfit{0}, r)$ such that $f(\mathbfit{x}^*) \leq f(\mathbfit{x}) \leq f(\mathbfit{0})$ for all $\mathbfit{x} \in B(\mathbfit{0}, r)$. Now, this means that for all $\mathbfit{x} \in \mathbf{R}^n$, we have $(\mathbfit{x}^*) \leq f(\mathbfit{x})$, which means that $\mathbfit{x}^*$ is a global minimiser for $f$.
+        which is a compact set. So by Weiestrass' Theorem, there exists some $\mathbfit{x}^* \in B(\mathbfit{0}, r)$ such that $f(\mathbfit{x}^*) \leq f(\mathbfit{x}) \leq f(\mathbfit{0})$ for all $\mathbfit{x} \in B(\mathbfit{0}, r)$. Now, this means that for all $\mathbfit{x} \in \R^n$, we have $(\mathbfit{x}^*) \leq f(\mathbfit{x})$, which means that $\mathbfit{x}^*$ is a global minimiser for $f$.
     \end{proof}
 \end{thmbox}
 \section{Critical Points}
 \begin{dfnbox}{Stationary (Critical) Point}{stationaryPt}
-    Let $X \subseteq \mathbf{R}^n$ be an open set and let $f \colon X \to \mathbf{R}$ be a function. An interior point $\mathbfit{x}^*$ is called a {\color{red} \textbf{stationary point}} of $f$ if $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$.
+    Let $X \subseteq \R^n$ be an open set and let $f \colon X \to \R$ be a function. An interior point $\mathbfit{x}^*$ is called a {\color{red} \textbf{stationary point}} of $f$ if $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$.
 \end{dfnbox}
+It is easy to see that at the optimal point, the function value increases towards all directions. Therefore, finding the optimal solution for an unconstrained optimisation problem is analogous to optimising a function in $1$-dimensional case.
+\begin{thmbox}{Necessary Conditions of Local Optimisers}{necessaryCondLocalOpt}
+    Let $X \subseteq \R^n$ be an open set. Suppose $f \colon X \to \R$ has continuous first order partial derivatives in $X$. If $\mathbfit{x}^* \in X$ is a local minimiser (maximiser) of $f$, then $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$. In particular, if $f$ has continuous second order partial derivatives, then $H_f(\mathbfit{x}^*)$ is positive (negative) semidefinite.
+\end{thmbox}
+Applying the above conditions helps rule out stationary points which are not optimisers.
 \begin{dfnbox}{Saddle Point}{Saddle}
     A stationary point $\mathbfit{x}^*$ of a function $f$ which is neither a local minimisr nor a local maximiser is called a {\color{red} \textbf{saddle point}}.
 \end{dfnbox}
-\begin{corbox}{}{saddleCor}
+\begin{corbox}{Condition for Saddle Points}{saddleCor}
     Let $\mathbfit{x}^*$ be a stationary point of $f$. If $H_f(\mathbfit{x}^*)$ is indefinite, then $\mathbfit{x}^*$ is a saddle point.
 \end{corbox}
+Note that just like $1$-dimensional optimisation, the converse of Theorem \ref{thm:necessaryCondLocalOpt} is not true in general and we need stronger conditions.
+\begin{thmbox}{Sufficient Conditions of Local Optimisers}{sufficientCondLocalOpt}
+    Let $X \subseteq \R^n$ be an open set. Suppose $f \colon X \to \R$ has continuous second order partial derivatives. If $\nabla f(\mathbfit{x}^*) = \mathbfit{0}$ and $H_f(\mathbfit{x}^*)$ is positive (negative) definite, then $\mathbfit{x}^*$ is a strict local minimiser (maximiser).
+\end{thmbox}
+\section{Unconstrained Convex Optimisation Problems}
+In general, a local optimiser is not necessarily a global optimiser. However, if the objective function is convex, we would have some nice properties and guarantee that any local optimiser must also be a global optimiser.
+\begin{thmbox}{\small Global Optimiser of Unconstrained Convex Optimisation Problems}{globalOptUnconConvex}
+    Let $D \subset \R^n$ and $f \colon D \to \R$ be convex. If $\mathbfit{x}^* \in D$ is a local optimiser of $f$, then it is a global optimiser.
+    \\\\
+    In particular, if $f$ is strictly convex, then $\mathbfit{x}^*$ is the unique global optimiser. 
+\end{thmbox}
+It feels natural that a convex function does not have saddle points. Indeed, we can prove the following corollary:
+\begin{corbox}{Stationary Points of Convex Functions}{StationConvex}
+    Let $D \subset \R^n$ and $f \colon D \to \R$ be convex, then any stationary point of $f$ is a global optimiser.
+\end{corbox}
+One special type of convex functions is the quadratic functions. We have studied quadratic functions intensively for the $1$-dimensional case. In the multi-dimensional case, we express a quadratic function using matrices for the sake of simplicity.
+\begin{dfnbox}{Quadratic Function}{qFunc}
+    A {\color{red} \textbf{quadratic function}} $q \colon \R^n \to \R$ is defined as
+    \begin{equation*}
+        q(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx} + \mathbfit{c}^{\mathrm{T}}\mathbfit{x},
+    \end{equation*}
+    where $\mathbfit{Q}$ is an $n \times n$ symmetric matrix and $\mathbfit{c} \in \R^n$.
+\end{dfnbox}
+Analogously, $\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx}$ are the quadratic terms and $\mathbfit{c}^{\mathrm{T}}\mathbfit{x}$ are the linear terms. In other words, $q$ can be seen as a linear combination of $2$ functions. Since a linear function is always convex, we only need to test convexity on $\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx}$.
+\begin{thmbox}{Convexity of Quadratic Functions}{ConvQuad}
+    Let $q \colon \R^n \to \R$ be a quadratic function defined as
+    \begin{equation*}
+        q(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx} + \mathbfit{c}^{\mathrm{T}}\mathbfit{x}.
+    \end{equation*}
+    $q$ is convex if and only if $\mathbfit{Q}$ is positive semidefinite.
+\end{thmbox}
+Recall that in the $1$-dimensional case, $f(x) = (x + c)^2 + b$ is minimised if and only if $x = -c$ since the quadratic term is non-negative. In the multi-dimensional case, we have a similar conclusion.
+\begin{thmbox}{Unconstrained Convex Quadratic Program}{UnconConvQuadProg}
+    Let $q \colon D \to \R$ be a quadratic function defined as
+    \begin{equation*}
+        q(\mathbfit{x}) = \frac{1}{2}\mathbfit{x}^{\mathrm{T}}\mathbfit{Qx} + \mathbfit{c}^{\mathrm{T}}\mathbfit{x}.
+    \end{equation*}
+    If $\mathbfit{Q}$ is positive semidefinite, then $\mathbfit{x}^*$ is a global minimiser of $q$ if and only if $\mathbfit{Qx}^* = -\mathbfit{c}$. If $\mathbfit{Q}$ is invertible, then $\mathbfit{x}^* = -\mathbfit{Q}^{-1}\mathbfit{c}$. 
+\end{thmbox}
 
-\chapter{Numerical Methods}
+\chapter{Numerical Methods I}
 \section{One-Dimensional Methods}
 \subsection{Bisection}
 Recall the \textit{Intermediate Value Theorem}:
@@ -679,7 +725,7 @@ Consider the following general framework of optimisation algorithms:
 \end{itemize}
 $\mathbfit{p}_k$ is the search direction and $\alpha_k$ is the step size.
 \subsection{Newton's Method}
-Similar to the one-dimensional case, let $f$ be a multivariable function with continuous second order partial derivatives. Given $\mathbfit{x_k} \in \mathbf{R}^n$ as an approximation of the global minimiser of $f$, by Taylor expansion there is some quadratic function $q$ such that
+Similar to the one-dimensional case, let $f$ be a multivariable function with continuous second order partial derivatives. Given $\mathbfit{x_k} \in \R^n$ as an approximation of the global minimiser of $f$, by Taylor expansion there is some quadratic function $q$ such that
 \begin{equation*}
     f(\mathbfit{x}) \approx q(\mathbfit{x}) = f(\mathbfit{x}_k) + \nabla f(\mathbfit{x}_k)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}_k) + \frac{1}{2}(\mathbfit{x} - \mathbfit{x}_k)^{\mathrm{T}}H_f(\mathbfit{x}_k)(\mathbfit{x} - \mathbfit{x}_k).
 \end{equation*}
@@ -689,14 +735,14 @@ The global minimiser of $q$ is given by
 \end{equation*}
 However, for the above equation to hold, we require two important assumptions: first, $H_f$ must be non-singular at $\hat{\mathbfit{x}}$; second, $H_f(\mathbfit{x})$ is \textit{Lipschitz continuous} in a neighbourhood of $\hat{\mathbfit{x}}$. To formally introduce \textit{Lipschitz continuity}, we state the following definitions:
 \begin{dfnbox}{Frobenius Norm}{frobenius}
-    Let $\mathbfit{A} \in \mathbf{R}^{n \times n}$ be a square matrix. The {\color{red} \textbf{Frobenius norm}} of $\mathbfit{A}$ is defined by
+    Let $\mathbfit{A} \in \R^{n \times n}$ be a square matrix. The {\color{red} \textbf{Frobenius norm}} of $\mathbfit{A}$ is defined by
     \begin{equation*}
         \norm{\mathbfit{A}}^2_F = \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}^2.
     \end{equation*}
 \end{dfnbox}
-We can show that $\norm{\mathbfit{Ax}} \leq \norm{\mathbfit{A}}_F\norm{\mathbfit{x}}$ for any vector $\mathbfit{x} \in \mathbf{R}^n$ and that $\norm{\mathbfit{AB}} \leq \norm{\mathbfit{A}}_F\norm{\mathbfit{B}}_F$ for any $n \times n$ matrix $\mathbfit{B}$.
+We can show that $\norm{\mathbfit{Ax}} \leq \norm{\mathbfit{A}}_F\norm{\mathbfit{x}}$ for any vector $\mathbfit{x} \in \R^n$ and that $\norm{\mathbfit{AB}} \leq \norm{\mathbfit{A}}_F\norm{\mathbfit{B}}_F$ for any $n \times n$ matrix $\mathbfit{B}$.
 \begin{dfnbox}{Lipschitz Continuity}{lipschitz}
-    Let $f \colon \mathbf{R}^n \to \mathbf{R}^{n \times n}$ be a function. $f$ is {\color{red} \textbf{Lipschitz continuous}} at $\mathbfit{x}^*$ if there exists some $\delta, L > 0$ such that for all $\mathbfit{x}, \mathbfit{y} \in B(\mathbfit{x}^*, \delta)$,
+    Let $f \colon \R^n \to \R^{n \times n}$ be a function. $f$ is {\color{red} \textbf{Lipschitz continuous}} at $\mathbfit{x}^*$ if there exists some $\delta, L > 0$ such that for all $\mathbfit{x}, \mathbfit{y} \in B(\mathbfit{x}^*, \delta)$,
     \begin{equation*}
         \norm{f(\mathbfit{x}) - f(\mathbfit{y})}_F \leq L\norm{\mathbfit{x - y}}.
     \end{equation*}
@@ -844,7 +890,7 @@ Notice that $\nabla\phi(\mathbfit{x}) = \mathbfit{Ax - b}$, so $\nabla\phi(\math
     & = (\mathbfit{x}_1 - \mathbfit{x}^*)^{\mathrm{T}}\mathbfit{A}^{\mathrm{T}}\mathbfit{p}_0 \\
     & = -\alpha^*\mathbfit{p}_1^{\mathrm{T}}\mathbfit{A}\mathbfit{p}_0.
 \end{align*}
-The above concludes that if there is $\mathbfit{p}_0, \mathbfit{p}_1$ and $\alpha^* \in \mathbf{R}$ such that for some initial approximation $\mathbfit{x}_0$ of the optimiser $\mathbfit{x}^*$ to a quadratic function $\phi$, we have
+The above concludes that if there is $\mathbfit{p}_0, \mathbfit{p}_1$ and $\alpha^* \in \R$ such that for some initial approximation $\mathbfit{x}_0$ of the optimiser $\mathbfit{x}^*$ to a quadratic function $\phi$, we have
 \begin{align*}
     \mathbfit{x}^* & = \mathbfit{x}_1 + \alpha^*\mathbfit{p}_1 \\
     & = \mathbfit{x}_0 + \alpha_0\mathbfit{p}_0 + \alpha^*\mathbfit{p}_1
@@ -935,13 +981,13 @@ end
 \section{Dual Optimisation Problems}
 Consider the non-linear programming problem
 \begin{align*}
-    \min_{\mathbfit{x} \in \mathbf{R}^n} & f(\mathbfit{x}) \\
+    \min_{\mathbfit{x} \in \R^n} & f(\mathbfit{x}) \\
     \textrm{s.t. } & g_i(\mathbfit{x}) = 0 \quad\textrm{for } i = 1, 2, \cdots, m \\
     & h_j(\mathbfit{x}) \leq 0 \quad\textrm{for } j = 1, 2, \cdots, p.
 \end{align*}
 Previously, we have learnt how to optimise a function with no constraint. In non-rigorous language, if we were to convert this constrained problem to an unconstrained case, we would want to transform the objective function such that any points outside of the feasible set can never possibly be an optimal solution, i.e., choosing such a point will impose a penalty to our function value. To ``get rid of'' the constraints here, we may attempt to consider penalty functions
 \begin{equation*}
-    \min_{\mathbfit{x} \in \mathbf{R}^n} \left[f(\mathbfit{x}) + \sum_{i = 1}^{m}P_i\bigl(g_i(\mathbfit{x})\bigr) + \sum_{j = 1}^{p}Q_j\bigl(h_j(\mathbfit{x})\bigr)\right],
+    \min_{\mathbfit{x} \in \R^n} \left[f(\mathbfit{x}) + \sum_{i = 1}^{m}P_i\bigl(g_i(\mathbfit{x})\bigr) + \sum_{j = 1}^{p}Q_j\bigl(h_j(\mathbfit{x})\bigr)\right],
 \end{equation*}
 where 
 \begin{align*}
@@ -958,11 +1004,11 @@ However, notice that by doing so our objective function has become \textbf{disco
 \begin{equation*}
     P_i\bigl(g_i(\mathbfit{x})\bigr) = \abs{\lambda_ig_i(\mathbfit{x})}, \qquad Q_j\bigl(h_j(\mathbfit{x})\bigr) = \mu_jh_j(\mathbfit{x}),
 \end{equation*}
-where $\lambda_i \in \mathbf{R}$ and $\mu_j \in \mathbfit{R}^+_0$. One way to interpret this construct is that when our constraints are not satisfied, the $P_i$'s and $Q_j$'s will make our function value larger than $f(\mathbfit{x})$. On the other hand, if our constraints are satisfied, the function value is even smaller than $f(\mathbfit{x})$.
+where $\lambda_i \in \R$ and $\mu_j \in \mathbfit{R}^+_0$. One way to interpret this construct is that when our constraints are not satisfied, the $P_i$'s and $Q_j$'s will make our function value larger than $f(\mathbfit{x})$. On the other hand, if our constraints are satisfied, the function value is even smaller than $f(\mathbfit{x})$.
 
 So an obvious pitfall of this transformation is that our optimal value will be altered. However, notice that if we take
 \begin{equation*}
-    P_i\bigl(g_i(\mathbfit{x})\bigr) = \max_{\lambda_i \in \mathbf{R}}\lambda_ig_i(\mathbfit{x}), \qquad Q_j\bigl(h_j(\mathbfit{x})\bigr) = \max_{\mu_j \geq 0}\mu_jh_j(\mathbfit{x}),
+    P_i\bigl(g_i(\mathbfit{x})\bigr) = \max_{\lambda_i \in \R}\lambda_ig_i(\mathbfit{x}), \qquad Q_j\bigl(h_j(\mathbfit{x})\bigr) = \max_{\mu_j \geq 0}\mu_jh_j(\mathbfit{x}),
 \end{equation*}
 then we essentially get back to the first group of penalty functions! 
 \begin{dfnbox}{Lagrangian Dual Problem}{lagrangianDual}
@@ -1006,7 +1052,7 @@ then we essentially get back to the first group of penalty functions!
     \end{equation*}
     The {\color{red} \textbf{Lagrangian dual}} problem is the optimisation problem
     \begin{align*}
-        \max_{\lambda_i \in \mathbf{R}, \mu_j \geq 0}\theta(\mathbfit{\lambda}, \mathbfit{\mu}).
+        \max_{\lambda_i \in \R, \mu_j \geq 0}\theta(\mathbfit{\lambda}, \mathbfit{\mu}).
     \end{align*}
 \end{dfnbox}
 The Lagrangian dual problem can be interpreted as follows: we first choose an $\mathbfit{x}$ such that~$\mathcal{L}$ is as small as possible for any $\mathbfit{\lambda}$ and $\mathbfit{\mu}$. With respect to this chosen $\mathbfit{x}$, we then try to make~$\mathcal{L}$ as large as possible by choosing appropriate $\mathbfit{\lambda}$ and $\mathbfit{u}$. However, note that if our choice of $\mathbfit{x}$ is feasible, then in the most ideal case, the penalty functions evaluate to $0$ and we restore our original optimal value!
@@ -1178,7 +1224,7 @@ Before we state the KKT conditions formally, we first consider the following pre
     \end{equation*}
     then the set
     \begin{equation*}
-        C(\mathbfit{x}^*, \lambda, \mu) \coloneqq \left\{\mathbfit{y} \in \mathbf{R}^n \colon \begin{array}{l}
+        C(\mathbfit{x}^*, \lambda, \mu) \coloneqq \left\{\mathbfit{y} \in \R^n \colon \begin{array}{l}
             \nabla g_i(\mathbfit{x}^*)^{\mathrm{T}}\mathbfit{y} = 0 \quad\textrm{for } i = 1, 2, \cdots, m \\
             \nabla h_j(\mathbfit{x}^*)^{\mathrm{T}}\mathbfit{y} = 0 \quad\textrm{for } j \in J(\mathbfit{x^*}), \mu_j > 0 \\
             \nabla h_j(\mathbfit{x}^*)^{\mathrm{T}}\mathbfit{y} \leq 0 \quad\textrm{for } j \in J(\mathbfit{x^*}), \mu_j = 0
@@ -1243,12 +1289,57 @@ Notice that for all $\mathbfit{z} \notin C(\mathbfit{x}^*, \lambda, \mu)$, eithe
     A {\color{red} \textbf{constrained convex non-linear programming problem}} is defined as
     \begin{align*}
         \min & \quad f(\mathbfit{x}) \\
-        \mathrm{s.t.} & \quad g_i(\mathbfit{x}) = \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} - \mathbfit{b} = 0 \quad\textrm{for } i = 1, 2, \cdots, m \\
+        \mathrm{s.t.} & \quad g_i(\mathbfit{x}) = \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} - b_i = 0 \quad\textrm{for } i = 1, 2, \cdots, m \\
         & \quad h_j(\mathbfit{x}) \leq 0 \quad\textrm{for } j = 1, 2, \cdots, p,
     \end{align*}
     where $f$ and the $h_j$'s are convex functions and the $g_i$'s are linear functions. 
 \end{dfnbox}
+It turns out that if a constrained optimisation problem is convex, it suffices to consider only the KKT points.
 \begin{thmbox}{Optimum of Constrained Convex NLPs}{constrainConvexOpt}
-    Let $f$ be an objective function with equality constraints $g_i(\mathbfit{x}) = 0$ for $i = 1, 2, \cdots, m$ and ineqaulity constraints $h_j(\mathbfit{x}) \leq 0$ for $j = 1, 2, \cdots, p$. If $f$ and the $h_j$'s are differentiable convex functions and $g_i(\mathbfit{x}) = \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} - \mathbfit{b}$ is linear for $i = 1, 2, \cdots, m$. If $\mathbfit{x}^*$ is a feasible KKT point, then it is a global minimiser for $f$.
+    Let $f$ be an objective function with equality constraints $g_i(\mathbfit{x}) = 0$ for $i = 1, 2, \cdots, m$ and ineqaulity constraints $h_j(\mathbfit{x}) \leq 0$ for $j = 1, 2, \cdots, p$. If 
+    \begin{enumerate}
+        \item $f$ and the $h_j$'s are differentiable convex functions, and
+        \item $g_i(\mathbfit{x}) = \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} - \mathbfit{b}$ is linear for $i = 1, 2, \cdots, m$,
+    \end{enumerate} 
+    Then a KKT point $\mathbfit{x}^*$ is a global minimiser for $f$.
+    \tcblower
+    \begin{proof}
+        Since $f$ is convex, for any feasible $\mathbfit{x}$, by Proposition \ref{pro:convexTan} we have
+        \begin{equation*}
+            f(\mathbfit{x}^*) + \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \leq f(\mathbfit{x}).
+        \end{equation*}
+        Let $J(\mathbfit{x}^*) \coloneqq \left\{j \in \N \colon h_j(\mathbfit{x}^*) = 0\right\}$. Since $\mathbfit{x}^*$ is a KKT point, there are constants $\lambda_i \in \R$ and $\mu_j \geq 0$ such that
+        \begin{equation*}
+            K(\mathbfit{x}^*) = \nabla f(\mathbfit{x}^*) + \sum_{i = 0}^{m}\lambda_i\mathbfit{a_i} + \sum_{j \in J(\mathbfit{x}^*)}\mu_j\nabla h_j(\mathbfit{x}^*) = \mathbf{0}.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            K(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) & = \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) + \sum_{j \in J(\mathbfit{x}^*)}\mu_j\nabla h_j(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) = 0.
+        \end{align*}
+        Note that $h_j$ is convex, so $h_j(\mathbfit{x}^*) + \nabla h_j(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \leq h_j(\mathbfit{x})$. Since $h_j(\mathbfit{x}^*) = 0$ and $h_j(\mathbfit{x}) \leq 0$, we have 
+        \begin{equation*}
+            \nabla h_j(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \leq 0.
+        \end{equation*}
+        This implie that $\nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \geq 0$, and so
+        \begin{equation*}
+            f(\mathbfit{x}^*) \leq f(\mathbfit{x}^*) + \nabla f(\mathbfit{x}^*)^{\mathrm{T}}(\mathbfit{x} - \mathbfit{x}^*) \leq f(\mathbfit{x})
+        \end{equation*}
+        for all feasible $\mathbfit{x}$, i.e., $\mathbfit{x}^*$ is the global minimiser for $f$.
+    \end{proof}
+\end{thmbox}
+However, the converse of Theorem \ref{thm:constrainConvexOpt} might not be true in general, i.e., a global minimiser might not be a KKT point for a convex program. To ensure the converse to be true, we need to impose some extra conditions.
+\begin{probox}{}{}
+    Let $f$ be an objective function with equality constraints $g_i(\mathbfit{x}) = 0$ for $i = 1, 2, \cdots, m$ and ineqaulity constraints $h_j(\mathbfit{x}) \leq 0$ for $j = 1, 2, \cdots, p$. If 
+    \begin{enumerate}
+        \item $p \geq 1$,
+        \item $f$ and the $h_j$'s are differentiable convex functions,
+        \item $g_i(\mathbfit{x}) = \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} - \mathbfit{b}$ is linear for $i = 1, 2, \cdots, m$, and
+        \item Slater's Condition holds,
+    \end{enumerate} 
+    then a global minimiser of $f$ will be a KKT point.
+\end{probox}
+In fact, we can derive an even stronger conclusion.
+\begin{thmbox}{Optimum of Linear Equality Constrained Convex Program}{LinEqConstrainConvOpt}
+    Let $f \colon \R^n \to \R$ be a differentiable convex function and $\mathbfit{A}$ be a matrix with linearly independent rows. $\mathbfit{x}^*$ is a global minimiser of $f$ under constraint $\mathbfit{Ax = b}$ if and only if it is a KKT point.
 \end{thmbox}
 \end{document}

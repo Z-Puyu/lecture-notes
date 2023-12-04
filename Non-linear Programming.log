@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 NOV 2023 13:33
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  2 DEC 2023 20:07
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1284,14 +1284,14 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
  (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [1
+
+
+])
 \tf@toc=\write7
 \openout7 = `"Non-linear Programming.toc"'.
 
- [1
-
-
-] [2]
+ [2]
 Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 43.
 [3
@@ -1348,24 +1348,29 @@ Package tcolorbox Warning: Discard zero height first box part due to break probl
 Chapter 3.
 [17
 
-] [18]
+]
+Underfull \hbox (badness 10000) in paragraph at lines 531--534
+
+ []
+
+[18] [19] [20]
 Chapter 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 527--534
+Underfull \hbox (badness 10000) in paragraph at lines 573--580
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 527--534
+Underfull \hbox (badness 10000) in paragraph at lines 573--580
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 527--534
+Underfull \hbox (badness 10000) in paragraph at lines 573--580
 
  []
 
-[19
+[21
 
 ]
 \openout4 = `Non-linear_Programming.pyg'.
@@ -1375,27 +1380,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 527--534
 LaTeX Font Warning: Font shape `TU/JetBrainsMonoNL-Regular(0)/b/n' undefined
 (Font)              using `TU/JetBrainsMonoNL-Regular(0)/m/n' instead on input line 2.
 
-) [20]
-Underfull \hbox (badness 10000) in paragraph at lines 590--593
+) [22]
+Underfull \hbox (badness 10000) in paragraph at lines 636--639
 
  []
 
 \openout4 = `Non-linear_Programming.pyg'.
 
-(./_minted-Non-linear_Programming/ADC1F76DBE6870BF2A944D0E0E5963EBBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [21]
+(./_minted-Non-linear_Programming/ADC1F76DBE6870BF2A944D0E0E5963EBBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [23]
 \openout4 = `Non-linear_Programming.pyg'.
 
- (./_minted-Non-linear_Programming/BB2103577AB816CFF868A69F8F2DB158BBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [22] [23]
-Underfull \hbox (badness 10000) in paragraph at lines 706--709
+ (./_minted-Non-linear_Programming/BB2103577AB816CFF868A69F8F2DB158BBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [24] [25]
+Underfull \hbox (badness 10000) in paragraph at lines 752--755
 
  []
 
-[24]
-Underfull \hbox (badness 10000) in paragraph at lines 736--739
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 782--785
 
  []
 
-[25]
+[27]
 \openout4 = `Non-linear_Programming.pyg'.
 
  (./_minted-Non-linear_Programming/518EE3B2579DDF76CD91AF92D1CA29CDBBA61CBC955F87590AD1262FB6AAE5A1.pygtex
@@ -1407,46 +1412,46 @@ LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
 (Font)              scaled to size 5.99936pt on input line 2.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
 (Font)              scaled to size 4.99947pt on input line 2.
-) [26]
-Underfull \hbox (badness 10000) in paragraph at lines 782--785
+) [28]
+Underfull \hbox (badness 10000) in paragraph at lines 828--831
 
  []
 
 \openout4 = `Non-linear_Programming.pyg'.
 
-(./_minted-Non-linear_Programming/68639FED2AEDB50B3046E8727DD8853DBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 867--871
+(./_minted-Non-linear_Programming/68639FED2AEDB50B3046E8727DD8853DBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [29] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 913--917
 
  []
 
-[29] [30]
+[31] [32]
 \openout4 = `Non-linear_Programming.pyg'.
 
- (./_minted-Non-linear_Programming/98294383593E8353A24DC85DCFC0867FBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [31]
+ (./_minted-Non-linear_Programming/98294383593E8353A24DC85DCFC0867FBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [33]
 Chapter 5.
-[32
+[34
 
-] [33] [34] [35] [36] [37] [38]
-Underfull \hbox (badness 10000) in paragraph at lines 1203--1209
+] [35] [36] [37] [38] [39] [40]
+Underfull \hbox (badness 10000) in paragraph at lines 1249--1255
 
  []
 
 
-Underfull \hbox (badness 1297) in paragraph at lines 1203--1209
+Underfull \hbox (badness 1297) in paragraph at lines 1249--1255
 \TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker First Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[][]$ is
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1203--1209
+Underfull \hbox (badness 10000) in paragraph at lines 1249--1255
 
  []
 
 
-Underfull \hbox (badness 2443) in paragraph at lines 1203--1209
+Underfull \hbox (badness 2443) in paragraph at lines 1249--1255
 \TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker Second Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[]$
  []
 
-[39] [40] [41] 
+[41] [42] [43] [44] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Non-linear Programming.aux)
 
@@ -1458,12 +1463,12 @@ runsystem(del Non-linear_Programming.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 39325 strings out of 478630
- 830336 string characters out of 5847730
- 1876012 words of memory out of 5000000
- 58750 multiletter control sequences out of 15000+600000
- 517959 words of font info for 110 fonts, out of 8000000 for 9000
+ 39347 strings out of 478630
+ 830827 string characters out of 5847730
+ 1879012 words of memory out of 5000000
+ 58771 multiletter control sequences out of 15000+600000
+ 517967 words of font info for 111 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,16n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Non-linear Programming.pdf (41 pages).
+Output written on Non-linear Programming.pdf (44 pages).
