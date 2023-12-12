@@ -106,7 +106,6 @@ Finally, we shall introduce the universal class:
 \end{notebox}
 
 \chapter{Axiomatic Set Theory}
-\section{Axioms of Zermelo-Fraenkel (ZF)}
 In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy. The following sections discuss each of the axioms in ZF set theory.
 \section{Extensionality}
 \begin{axibox}{Extensionality}{extensionAxi}
@@ -153,13 +152,13 @@ Furthermore, given any $a$ and $b$, we can prove by Extensionality that the the 
 \end{thmbox}
 We can further define the notion of an \textit{ordered pair}:
 \begin{dfnbox}{Ordered Pair}{orderedPair}
-    For all $a$ and $b$, the {\color{red} \textbf{ordered pair}} $(a, b)$ is defined to be the set $\left\{\{a\}, \{a, b\}\right\}$.
+    For all $a$ and $b$, the {\color{red} \textbf{ordered pair}} $(a, b)$ is defined to be the set $\bigl\{\{a\}, \{a, b\}\bigr\}$.
 \end{dfnbox}
 Again, one can use Extensionality to prove that such an ordered pair is always unique and that $(a, b) = (c, d)$ if and only if $a = c$ and $b = d$. The notions of pair and ordered pair can be extended to ordered and un-ordered $n$-tuples, which will have similar properties as we have proven as above. Recursively, we can write the following definition:
 \begin{dfnbox}{Ordered $n$-tuple}{nTuple}
     The {\color{red} \textbf{$n$-tuple}} is defined as 
     \begin{displaymath}
-        (a_1, a_2, \cdots, a_n) = ((a_1, a_2, \cdots, a_{n - 1}), a_n).
+        (a_1, a_2, \cdots, a_n) = \bigl((a_1, a_2, \cdots, a_{n - 1}), a_n\bigr).
     \end{displaymath}
 \end{dfnbox}
 By Extensionality, we can similarly prove that two ordered $n$-tuples $(a_1, a_2, \cdots, a_n)$ and $(b_1, b_2, \cdots, b_n)$ if and only if $a_i = b_i$ for $i = 1, 2, \cdots, n$.
@@ -170,7 +169,7 @@ By Extensionality, we can similarly prove that two ordered $n$-tuples $(a_1, a_2
         Y \coloneqq \left\{u \in X \colon P(u, p)\right\}.
     \end{displaymath}
 \end{axibox}
-The above axiom justifies our set-builder notation
+Informally, this means that for every set $X$, we can form another set $Y$ by taking the elements from $X$ which satisfy a given property $P$. The above axiom justifies our set-builder notation
 \begin{displaymath}
     \left\{x \colon \varphi(x, \mathbfit{p})\right\},
 \end{displaymath}
@@ -270,11 +269,11 @@ Colloquially, we may want to express the idea that a collection of $n$ objects a
 \end{notebox}
 If $R$ is a binary relation, then we define the \textit{domain} of $R$ to be
 \begin{displaymath}
-    \mathrm{dom}(R) = \left\{u \colon \exists v \textrm{s.t.} (u, v) \in R\right\},
+    \mathrm{dom}(R) = \left\{u \colon \exists v \textrm{ s.t. } (u, v) \in R\right\},
 \end{displaymath}
 and the \textit{range} of $R$ to be
 \begin{displaymath}
-    \mathrm{ran}(R) = \left\{v \colon \exists u \textrm{s.t.} (u, v) \in R\right\}.
+    \mathrm{ran}(R) = \left\{v \colon \exists u \textrm{ s.t. } (u, v) \in R\right\}.
 \end{displaymath}
 Note that
 \begin{displaymath}
@@ -284,6 +283,31 @@ so the domain and range of a relation are sets. Additionally, we define the \tex
 \begin{displaymath}
     \mathrm{field}(R) = \mathrm{dom}(R) \cup \mathrm{ran}(R).
 \end{displaymath}
+There are some special relations which possess certain useful properties. For now, we shall introduce one such special relation known as the \textit{equivalence relation}.
+\begin{dfnbox}{Equivalence Relation}{equiv}
+    An {\color{red} \textbf{equivalence relation}} on a set $X$ is a binary relation $\equiv$ such that for all $x, y, z \in X$,
+    \begin{enumerate}
+        \item $x \equiv x$ (reflexive);
+        \item $x \equiv y \implies y \equiv x$ (symmetric);
+        \item $x \equiv y$ and $y \equiv z \implies x \equiv z$ (transitive).
+    \end{enumerate}
+    The {\color{red} \textbf{equivalence class}} of $x \in X$ under $\equiv$ is defined as
+    \begin{equation*}
+        [x] \coloneqq \left\{y \in X \colon y \equiv x \right\}.
+    \end{equation*}
+    Furthermore, the {\color{red} \textbf{quotient}} of $X$ by $\equiv$ is defined as 
+    \begin{equation*}
+        X/\equiv \coloneqq \bigl\{[x] \colon x \in X\bigr\}.
+    \end{equation*}
+\end{dfnbox}
+With a bit of observation, one can check that the equivalence classes of any set $X$ are pairwise disjoint. Therefore, the quotient of a set is a \textit{partition} of the set.
+\begin{dfnbox}{Partition}{partition}
+    Let $X$ be a set. A {\color{red} \textbf{partition}} of $X$ is the family $P$ of disjoint non-empty sets such that
+    \begin{equation*}
+        X = \bigcup \left\{Y \colon Y \in P\right\}.
+    \end{equation*}
+\end{dfnbox}
+We see that every equivalence relation determines a partition for a set $X$. Conversely, a partition of $X$ can also determine an equivalence relation where $x \equiv y$ if and only if there is some $Y \in P$ such that $x, y \in Y$.
 \subsection{Functions}
 Given a binary relation $R$, we can see $R$ as a \textbf{mapping} which corresponds each $u \in \mathrm{dom}(R)$ with some $v \in \mathrm{ran}(R)$. From this, we are able to derive the following definition for a \textit{function}:
 \begin{dfnbox}{Function}{func}
@@ -328,7 +352,7 @@ We may also define new functions from some existing function(s).
 \begin{dfnbox}{Composition}{composition}
     Let $f$ and $g$ be functions such that $\mathrm{ran}(g) \subseteq \mathrm{dom}(f)$. The {\color{red} \textbf{composition}} of $f$ and $g$ is the function denoted by $f \circ g$ with $\mathrm{dom}(f \circ g) = \mathrm{dom}(g)$ such that
     \begin{displaymath}
-        (f \circ g)(x) = f\left(g(x)\right) \quad \textrm{for all } x \in \mathrm{dom}(g).
+        (f \circ g)(x) = f\bigl(g(x)\bigr) \quad \textrm{for all } x \in \mathrm{dom}(g).
     \end{displaymath}
 \end{dfnbox}
 Note that a function provides a mapping from one set to another set, and so we can define the notion of an \textit{image}.
@@ -356,12 +380,22 @@ For injections, we can also define their \textit{inverses}.
     \end{displaymath}
 \end{dfnbox}
 The above definitions for functions can be applied similarly with respect to classes.
+\section{Infinity}
 \begin{axibox}{Axiom of Infinity}{axiInf}
     There exists an infinite set.
 \end{axibox}
+In the usual sense, we would define finiteness with the aid of natural numbers. However, notice that by now we have not formally defined the natural numbers yet. Therefore we take a different approach here.
+
+In the most intuitive sense, a set is infinite if given any sub-collection of the set we can produce an element of the set outside of the sub-collection.
+\begin{dfnbox}{Inductive Set}{inductiveSet}
+    A set $S$ is inductive if $\varnothing \in S$ and for all $x \in S$, $x \cup \{x\} \in S$.
+\end{dfnbox}
+In later chapters, we will discuss inductiveness and infinity in more detail.
+\section{Replacement}
 \begin{axibox}{Axiom Schema of Replacement}{schemaReplacement}
     If a class $F$ is a function, then for all $X$ there exists a set $Y = F(X) = \left\{F(x) \colon x \in X\right\}$.
 \end{axibox}
+Similar to Axiom \ref{axi:schemaSeparation}, the Replacement Schema states that given any set, we can produce another set by mapping each element to an image via a function. In particular, this is equivelent to saying that for any function $F$, if $\mathrm{dom}(F)$ is a set, then so is $\mathrm{ran}(F)$.
 \begin{axibox}{Axiom of Regularity}{axiReg}
     For every non-empty set $X$, there exists some $Y \in X$ such that $Y \cap X = \varnothing$.
 \end{axibox}
@@ -401,4 +435,111 @@ Additionally, we also introduce the Axiom of Choice:
         Essentially, the choice function maps every set which is a member of some family of sets to one and only one element in that set.
     \end{remark}
 \end{notebox}
+
+\chapter{Ordinal Numbers}
+\section{Ordering}
+By the term ``ordinal'', we suggest that these numbers can be placed in such a way that any number is comparable to its neighbours in terms of precedence. Therefore, it is necessary to first define the notion of ordering over a set.
+\begin{dfnbox}{Linear and Partial Ordering}{partOrder}
+    A binary relation $<$ on a set $P$ is a {\color{red} \textbf{partial ordering}} if 
+    \begin{enumerate}
+        \item $p \not < p$ for all $p \in P$ (irreflexive);
+        \item $p < q$ and $q < r$ implies $p < r$ (transitive).
+    \end{enumerate}
+    We say that $(P, <)$ is a {\color{red} \textbf{partially ordered set}}. In particular, if a partial ordering $<$ on $P$ satisfies trichotomy, then it is known as a {\color{red} \textbf{linear ordering}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        It is important to recognise the difference between $p \not < q$ and $q \leq p$. The former means that either $q \leq p$ or $p$ and $q$ are not comparable.
+    \end{remark}
+\end{notebox}
+A partial ordering, therefore, does not guarantee that every pair of elements in a set are mutually comparable. Moreover, the trichotomy condition for linear orderings essentially confines that any two elements of a set can be compared by the relation.
+
+In the case of a linear ordering $<$, the relation $\leq$ will also be a partial (and linear) ordering. In this case, we say $<$ is \textit{strict}.
+
+The direct consequence of an ordered set is that we can now define the extreme values in the set.
+\begin{dfnbox}{Maxima, Suprema, Upper Bounds and Greatest-ness}{max}
+    Let $(P, <)$ be a partially ordered set and $X \subseteq P$ be non-empty, then 
+    \begin{enumerate}
+        \item $a$ is a {\color{red} \textbf{maximal}} element of $X$ if $a \in X$ and $a \not < x$ for all $x \in X$;
+        \item $a$ is the {\color{red} \textbf{greatest}} element of $X$ if $a \in X$ and $x \leq a$ for all $x \in X$;
+        \item $a$ is an {\color{red} \textbf{upper bound}} of $X$ if $x \leq a$ for all $x \in X$.
+        \item $a$ is the {\color{red} \textbf{supremum}} of $X$ if $a$ is the least upper bound of $X$.
+    \end{enumerate}
+\end{dfnbox}
+We shall discuss some subtle differences between the definitions. First, we notice that both the maxima and the greatest element of a set must belong to the set, while upper bounds and the supremum can be outside of the set.
+
+Second, one may check that the greatest element of a set is unique if it exists because the notation $x \leq a$ for all $x \in X$ suggests that $a$ is comparable to all elements in $X$. On the other hand, a maximum of a set may not be so. Suppose we have a set $X$ with $a \in X$ which is not comparable to any other element in $X$ via $<$, then $a$ still satisfies the definition of a maximum. From here, we can see that if $<$ is linear, then the greatest element equals the maximum.
+
+Similarly, we can define the minima, least element, lower bounds and infinum of a set.
+
+Intuitively, let us consider two partially ordered sets $P$ and $Q$. While their elements can be very different, we can conveniently regard them as the same if their elements can be ordered in the same way, i.e., we can map the elements of $P$ to those of $Q$ without changing their ordering. If such a mapping $f$ exists, then we say that $f$ is \textit{order-preserving}.
+\begin{dfnbox}{Isomorphism}{isomorphism}
+    Let $(P, <)$ and $(Q, <)$ be partially ordered sets and $f \colon P \to Q$ be a function. $f$ is said to be {\color{red} \textbf{order-preserving}} if $f(x) < f(y)$ for all $x < y$. If $f$ is a bijection, then it is an {\color{red} \textbf{isomorphism}} of $P$ and $Q$ if both $f$ and $f^{-1}$ are order-preserving. An isomorphism of $P$ onto itself is known as an {\color{red} \textbf{automorphism}}.    
+\end{dfnbox}
+Suppose we have a linearly ordered set $P$. The fact that the elements of $P$ are pairwise comparable is a very nice property. However, mutual comparability alone is not sufficient for us to define the notion of ordinal numbers. Notice that for any two ordinal numbers, we would like to know not only which one is bigger, but also by how much do the two numbers differ. For this purpose, we will further introduce the notion of \textit{well-ordering}.
+\begin{dfnbox}{Well-Ordering}{wellOrder}
+    A linear ordering $<$ of a set $P$ is a {\color{red} \textbf{well-ordering}} if every non-empty subset of $P$ has a least element.
+\end{dfnbox}
+What Definition \ref{dfn:wellOrder} suggests is that we can now compare the ``lengths'' of well-ordered sets by considering their respective least elements. More formally, we have the following:
+\begin{thmbox}{Trichotomy of Well-Ordered Sets}{wellOrderTrichotomy}
+    If $W_1$ and $W_2$ are well-ordered sets, then exactly one of the following holds:
+    \begin{enumerate}
+        \item $W_1$ is isomorphic to $W_2$;
+        \item $W_1$ is isomorphic to an initial segment of $W_2$;
+        \item $W_2$ is isomorphic to an initial segment of $W_1$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        We first consider the following lemma:
+        \begin{lembox}{}{increasingFWellOrder}
+            If $(W, <)$ be a well-ordered set and $f \colon W \to W$ be an increasing function, then $f(x) \geq x$ for all $x \in W$.
+            \tcblower
+            \begin{proof}
+                Suppose on contrary there is some $x \in W$ such that $f(x) < x$, then the set 
+                \begin{equation*}
+                    X \coloneqq \left\{x \in W \colon f(x) < x\right\} 
+                \end{equation*}
+                is non-empty. Since $X \subseteq W$ is well-ordered, it has a least element $z$. Let $f(z) = w$. Since $z \in X$, we have $w = f(z) < z$, so $z$ is not the least element of $X$, which is a contradiction.
+            \end{proof}  
+        \end{lembox}
+        Lemma \ref{lem:increasingFWellOrder} leads to the following lemma:
+        \begin{lembox}{}{nonIsomorphicToInitSegment}
+            Let $W$ be a well-ordered set, then $W$ is not isomorphic to an initial segment of itself.
+            \tcblower
+            \begin{proof}
+                Let $V \coloneqq \left\{x \in W \colon x < u\right\}$ be some initial segment of $W$. Suppose on contrary that $f \colon W \to V$ is an isomorphism, then $f(u) < u$. However, $f$ is increasing, so this is a contradiction by Lemma \ref{lem:increasingFWellOrder}.
+            \end{proof}
+        \end{lembox}
+        Let $W_i(u) \coloneqq \left\{w \colon w < u\right\}$ for $i = 1, 2$. Define
+        \begin{equation*}
+            f \coloneqq \left\{(x, y) \in W_1 \times W_2 \colon W_1(x) \textrm{ is isomorphic to } W_2(y)\right\}.
+        \end{equation*}
+        Let $(x, y_1), (x, y_2) \in f$, then $W_2(y_1)$ is isomorphic to $W_2(y_2)$. Similarly, if $(x_1, y), (x_2, y) \in f$, then $W_1(x_1)$ is isomorphic to $W_1(x_2)$. By Lemma \ref{lem:nonIsomorphicToInitSegment}, it is easy to see that $y_1 = y_2$ and $x_1 = x_2$, so $f$ is well-defined and injective. The surjectivity of $f$ is immediate from its definition, so $f$ is a bijection.
+        \\\\
+        Let $h$ be an isomorphism of $W_1(x)$ and $W_2(y)$ and let $x' < x$. Note that $x' \in W_1(x)$, so $h(x') \in W_2(y)$. This means that $\restrict{h}{W_1(x')}$ is an isomorphism of $W_1(x')$ and $W_2\bigl(h(x')\bigr)$. Therefore, $f(x') = h(x') < y = f(x)$, which means $f$ is order-preserving, so $\mathrm{dom}(f)$ is isomorphic to $\mathrm{ran}(f)$.
+        \\\\
+        If $\mathrm{dom}(f) = W_1$ and $\mathrm{ran}(f) = W_2$, then $W_1$ is isomorphic to $W_2$. 
+        \\\\
+        If $\mathrm{ran}(f) \neq W_2$, let $y_0$ be the least element of $W_2 - \mathrm{ran}(f)$, then for all $y < y_0$, $y \in \mathrm{ran}(f)$. Take any $y > y_0$, if $y \in \mathrm{ran}(f)$, then there is some $x \in W_1$ such that $W_1(x)$ is isomorphic to $W_2(y)$, but $y_0 \in W_2(y)$, so there is some $x_0 \in W_1(x)$ such that $W_1(x_0)$ is isomorphic to $W_2(y_0)$, which is impossible. Therefore, $\mathrm{ran}(f) = W_2(y_0)$. 
+        \\\\
+        Consider $W_1 - \mathrm{dom}(f)$. If it is non-empty, let $x_0$ be its least element, and so $W_1(x_0)$ is isomorphic to $W_2(y_0)$. Which is impossible since $(x_0, y_0) \notin f$. Therefore, $\mathrm{dom}(f) = W_1$. This means $W_1$ is isomorphic to $W_2(y_0)$. Similarly, one may check that if $\mathrm{dom}(f) \neq W_1$, then $W_2$ is isomorphic to $W_1(x_0)$. By Lemma \ref{lem:nonIsomorphicToInitSegment}, we can prove that the three cases are mutually exclusive.
+    \end{proof}
+\end{thmbox}
+Intuitively, for isomorphic sets $W_1$ and $W_2$, we would consider them to follow the same ordering, or the same \textit{order-type} as a formal notion. We informally view the ordinal numbers as a representation of the order-type.
+\section{Ordinal Numbers}
+The idea behind ordinal numbers is that every ordinal number is uniquely determined by all ordinals which are strictly less than itself. For instance, the natural number $10$ is uniquely determined as ``the natural number which is bigger than exactly natural numbers $0, 1, 2, \cdots, 9$''. 
+
+In this sense, an ordinal $\alpha$ is nothing more but a set of ordinals which are strictly less than $\alpha$. Meanwhile, we can see that the statement $\beta < \alpha$ between two ordinals is equivalent to $\beta \in \alpha$. To better define this concept in rigorous languages, we shall introduce a preliminary notion of \textit{transitivity}.
+\begin{dfnbox}{Transitive Set}{transitiveSet}
+    A set $T$ is {\color{red} \textbf{transitive}} if $t \subseteq T$ for all $t \in T$.
+\end{dfnbox}
+While being a very abstract notion, it is worth noting that if $T$ is transitive, then every element of $T$ is its subset, i.e., $T \subseteq \mathcal{P}(T)$.
+\begin{dfnbox}{Ordinal Number}{ordinal}
+    A set is an {\color{red} \textbf{ordinal number}} if it is transitive and well-ordered by $\in$. The class of all ordinals is denoted by $Ord$.
+\end{dfnbox}
+It might be useful to consider what it means by being ``well-ordered by $\in$''. Essentially, this means for any two different ordinals $\alpha$ and $\beta$, either $\alpha \in \beta$ or $\beta \in \alpha$. Being a well-ordering, it implies that there exists an ordinal which is in every other ordinals, i.e., it is smaller than all other ordinals (which is the zero). We might notice that $\alpha < \beta$ if and only if $\alpha \in \beta$.
+
+Vacuously, $\varnothing$ is a transitive well-ordered set, so it is an ordinal. We denote it by $0$. Since there is no set which is an element of $\varnothing$, $0$ being the least ordinal is justified.
+
+Now, let $\alpha$ be an ordinal and $\beta \in \alpha$, then $\beta \subseteq \alpha$. Take any $\gamma \in \beta$, then $\gamma \in \alpha$ and so $\gamma \subseteq \alpha$. Note that $\in$ is transitive on $\alpha$, so for all $\delta \in \gamma$ we have $\delta \in \beta$. Therefore, $\gamma \subseteq \beta$, which means $\beta$ is transitive. Moreover, let $\gamma \subseteq \beta$, then for all $\delta \in \gamma$, we have $\delta \in \beta \subseteq \alpha$, so $\gamma \subseteq \alpha$ and so it has a $\in$-least element, which means $\beta$ is well-ordered by $\in$. Therefore, any element of an ordinal is an ordinal.
 \end{document}
