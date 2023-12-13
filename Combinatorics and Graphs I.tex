@@ -152,6 +152,55 @@ In some cases, it is difficult to count the objects directly. However, note that
     \end{displaymath}
     then $\abs{A} = \abs{B}$.
 \end{thmbox}
+We will finish this section with two interesting problems.
+\begin{exbox}{No Consecutive}{}
+    Let $X = \left\{x \in \N^+ \colon x \leq n\right\}$. Find the number of $r$-combinations of $X$ such that~$\abs{x_i - x_j} \geq 2$ whenever $i \neq j$.
+    \tcblower   
+    \begin{solution}
+        Note that for each of the $r$-combinations of $X$, we can re-write it into a strictly increasing sequence $\{x_i\}_{i = 1}^r$ with $x_i \in X$ and $x_{i + 1} - x_i \geq 2$. Let the set of all such sequences be $S_X$. Consider the function
+        \begin{displaymath}
+            f \colon S_X \to Y
+        \end{displaymath}
+        where $f\left(\{x_i\}_{i = 1}^r\right) = \{x_i - i + 1\}_{i = 1}^r$ and $Y$ is the set of all strictly increasing sequences whose terms are integers bounded between $1$ and $n - r + 1$ inclusive.
+        \\\\
+        Take two different sequences $s_1, s_2 \in S_X$. Let the $k$-th terms of $s_1$ and $s_2$ be $k_1$ and $k_2$ respectively such that $k_1 \neq k_2$. Let $t_1 = f(s_1)$ and $t_2 = f(s_2)$, whose $k$-th terms are $h_1$ and $h_2$ respectively. Note that $h_1 = k_1 - k + 1 \neq k_2 - k + 1 = h_2$, so~$t_1 \neq t_2$, which means $f$ is injective.
+        \\\\
+        Take an arbitrary $\{y_i\}_{i = 1}^r \in Y$ and consider the sequence $\{y_i + i - 1\}_{i = 1}^r$. Note that~$1 \leq y_i \leq n - r + 1$, so $1 \leq y_i + i - 1 \leq n$ for $i = 1, 2, \cdots, r$, which means~$\{y_i + i - 1\}_{i = 1}^r \in S_X$. This means that for all $y \in Y$, there exists some $s \in S_X$ such that $f(s) = y$, so $f$ is surjective.
+        \\\\
+        Therefore, $f$ is a bijection and so
+        \begin{equation*}
+            \abs{S_X} = \abs{Y} = C^{n - r + 1}_r.
+        \end{equation*}
+    \end{solution}
+\end{exbox}
+\begin{exbox}{Top Secret}{}
+    Six scientists are working on a secret project. They wish to lock up the documents in a cabinet so that the cabinet can be opened when and only when three or more of the scientists are present. Suppose that each lock has one and only one key with the locks being pairwise distinct.
+    \begin{enumerate}
+        \item What is the smallest number of locks needed?
+        \item What is the smallest number of keys that each scientist needs to carry?
+    \end{enumerate}
+    \tcblower   
+    \begin{solution}
+        Let $S = \left\{s_1, s_2, s_3, s_4, s_5, s_6\right\}$ be the set of scientists and $L$ be the set of locks. Define $T$ to be the set of all subsets of $S$ with $2$ elements, then for any $P \in T$, $P$ is a pair of distinct scientists.
+        \\\\
+        Let $L_P \subseteq L$ be the set of locks which cannot be opened by the pair of scientists in $P$. Note that for all $P \in T$, $L_P \neq \varnothing$. 
+        \\\\
+        Consider $P, Q \in T$ with $P \neq Q$, then $\abs{P \cup Q} \geq 3$. Thus, $L_P \cap L_Q = \varnothing$. Now, define the function
+        \begin{displaymath}
+            f \colon T \to L
+        \end{displaymath}
+        such that $f(P) = \ell_P$ where $\ell_P$ is an arbitrary element from $L_P$ (note that we can do this without using Choice as each of the $L_P$'s is finite).
+        \\\\
+        Suppose that there exist $P, Q \in T$ with $P \neq Q$ such that $f(P) = f(Q) = \ell_0$. Notice that this would mean that $\ell_0 \in L_P \cap L_Q$, which is a contradiction. Therefore,~$f$ must be injective. Hence, 
+        \begin{equation*}
+            \abs{L} \geq \abs{T} = C^6_2 = 15.
+        \end{equation*}
+        Now, choose an arbitrary element from $S$, say $s_k$, and consider the set $S' = S - \{s_k\}$. Let $T'$ be the set of all subsets of $S'$ with $2$ elements, then for any $P \in T'$, $L_{P \cup \{s_k\}} = \varnothing$, i.e., $s_k$ must have the keys to open all locks which the pair $P$ cannot open with their own keys. Let this set of keys be $K_P$. Note that $L_P \cap L_Q = \varnothing$ whenever $P \neq Q$, so~$K_P \cap K_Q = \varnothing$ whenever $P \neq Q$. Let the set of all keys held by $s_k$ be $H_k$, then
+        \begin{equation*}
+            \abs{H_k} \geq \abs{S'} = C^5_2 = 10.
+        \end{equation*}
+    \end{solution}
+\end{exbox}
 \section{Permutations}
 \subsection{Linear Permutations}
 A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
@@ -273,7 +322,7 @@ Similar to permutations, we have the following important identity:
     \end{proof}
 \end{thmbox}
 \subsection{Counting Subsets}
-A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$.
+A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, if we are given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$.
 
 Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearly
 \begin{equation*}
@@ -318,63 +367,13 @@ Intuitively, we can view each of the $a_i$'s as a ``box'' which holds $m_i$ ball
         \begin{displaymath}
             \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}.
         \end{displaymath}
-        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and $(n - 1)$ ones.
+        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and~$(n - 1)$ ones.
         \\\\
         Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
     \end{proof}
 \end{probox}
 
-\section{Fun Problems Collection}
-\begin{genbox}{No Consecutive}
-    Let $X = \left\{x \in \N^+ \colon x \leq n\right\}$. Find the number of $r$-combinations of $X$ such that~$\abs{x_i - x_j} \geq 2$ whenever $i \neq j$.
-    \tcblower   
-    \begin{solution}
-        Note that for each of the $r$-combinations of $X$, we can re-write it into a strictly increasing sequence $\{x_i\}_{i = 1}^r$ with $x_i \in X$ and $x_{i + 1} - x_i \geq 2$. Let the set of all such sequences be $S_X$. Consider the function
-        \begin{displaymath}
-            f \colon S_X \to Y
-        \end{displaymath}
-        where $f\left(\{x_i\}_{i = 1}^r\right) = \{x_i - i + 1\}_{i = 1}^r$ and $Y$ is the set of all strictly increasing sequences whose terms are integers bounded between $1$ and $n - r + 1$ inclusive.
-        \\\\
-        Take two different sequences $s_1, s_2 \in S_X$. Let the $k$-th terms of $s_1$ and $s_2$ be $k_1$ and $k_2$ respectively such that $k_1 \neq k_2$. Let $t_1 = f(s_1)$ and $t_2 = f(s_2)$, whose $k$-th terms are $h_1$ and $h_2$ respectively. Note that $h_1 = k_1 - k + 1 \neq k_2 - k + 1 = h_2$, so~$t_1 \neq t_2$, which means $f$ is injective.
-        \\\\
-        Take an arbitrary $\{y_i\}_{i = 1}^r \in Y$ and consider the sequence $\{y_i + i - 1\}_{i = 1}^r$. Note that~$1 \leq y_i \leq n - r + 1$, so $1 \leq y_i + i - 1 \leq n$ for $i = 1, 2, \cdots, r$, which means~$\{y_i + i - 1\}_{i = 1}^r \in S_X$. This means that for all $y \in Y$, there exists some $s \in S_X$ such that $f(s) = y$, so $f$ is surjective.
-        \\\\
-        Therefore, $f$ is a bijection and so
-        \begin{equation*}
-            \abs{S_X} = \abs{Y} = C^{n - r + 1}_r.
-        \end{equation*}
-    \end{solution}
-\end{genbox}
-\begin{genbox}{Top Secret}
-    Six scientists are working on a secret project. They wish to lock up the documents in a cabinet so that the cabinet can be opened when and only when three or more of the scientists are present. Suppose that each lock has one and only one key with the locks being pairwise distinct.
-    \begin{enumerate}
-        \item What is the smallest number of locks needed?
-        \item What is the smallest number of keys that each scientist needs to carry?
-    \end{enumerate}
-    \tcblower   
-    \begin{solution}
-        Let $S = \left\{s_1, s_2, s_3, s_4, s_5, s_6\right\}$ be the set of scientists and $L$ be the set of locks. Define $T$ to be the set of all subsets of $S$ with $2$ elements, then for any $P \in T$, $P$ is a pair of distinct scientists.
-        \\\\
-        Let $L_P \subseteq L$ be the set of locks which cannot be opened by the pair of scientists in $P$. Note that for all $P \in T$, $L_P \neq \varnothing$. 
-        \\\\
-        Consider $P, Q \in T$ with $P \neq Q$, then $\abs{P \cup Q} \geq 3$. Thus, $L_P \cap L_Q = \varnothing$. Now, define the function
-        \begin{displaymath}
-            f \colon T \to L
-        \end{displaymath}
-        such that $f(P) = \ell_P$ where $\ell_P$ is an arbitrary element from $L_P$ (note that we can do this without using Choice as each of the $L_P$'s is finite).
-        \\\\
-        Suppose that there exist $P, Q \in T$ with $P \neq Q$ such that $f(P) = f(Q) = \ell_0$. Notice that this would mean that $\ell_0 \in L_P \cap L_Q$, which is a contradiction. Therefore,~$f$ must be injective. Hence, 
-        \begin{equation*}
-            \abs{L} \geq \abs{T} = C^6_2 = 15.
-        \end{equation*}
-        Now, choose an arbitrary element from $S$, say $s_k$, and consider the set $S' = S - \{s_k\}$. Let $T'$ be the set of all subsets of $S'$ with $2$ elements, then for any $P \in T'$, $L_{P \cup \{s_k\}} = \varnothing$, i.e., $s_k$ must have the keys to open all locks which the pair $P$ cannot open with their own keys. Let this set of keys be $K_P$. Note that $L_P \cap L_Q = \varnothing$ whenever $P \neq Q$, so~$K_P \cap K_Q = \varnothing$ whenever $P \neq Q$. Let the set of all keys held by $s_k$ be $H_k$, then
-        \begin{equation*}
-            \abs{H_k} \geq \abs{S'} = C^5_2 = 10.
-        \end{equation*}
-    \end{solution}
-\end{genbox}
-
-\section{Distribution Problems}
+\section{Basic Distribution Problems}
 Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
 \begin{enumerate}
     \item distribute $r$ distinct objects into $n$ identical collections;
@@ -382,8 +381,8 @@ Another problem in which we are interested is to \textbf{distribute} the objects
     \item distribute $r$ identical objects into $n$ identical collections;
     \item distribute $r$ identical objects into $n$ distinct collections.
 \end{enumerate}
-These $4$ basic models of distribution problems give rise to many variations. One important tool to solve these problems is the \textit{Stirling Numbers}.
-\subsection{Stirling Numbers}
+These $4$ basic models of distribution problems give rise to many variations. We will only discuss two simple types of distribution problems. More detailed discussion will be given in later chapters.
+\subsection{Stirling Numbers of the First Kind}
 \begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
     Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
 \end{dfnbox}
@@ -626,6 +625,7 @@ Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurre
     \end{displaymath}
     is the number of ways to distribute $n$ distinct objects into $m$ distinct collections such that there are exactly $n_i$ objects in the $i$-th collection.
 \end{dfnbox}
+Note that the binomial coefficient is just a special case for multinomial coefficients where $m = 2$ and $n_1 + n_2 = n$. Respectively, multinomial coefficients also generalise binomial expansion.
 \begin{thmbox}{Multinomial Expansion}{multinomialEx}
     For $m, n \in \N+$, we have
     \begin{equation*}
@@ -756,23 +756,23 @@ The above recurrence allows us to prove the following theorem:
 
 \chapter{Principle of Inclusion and Exclusion}
 \section{Principle of Inclusion and Exclusion (PIE)}
-We consider the following question:
+Consider the following naïve question:
 \begin{quote}
-    Let $A$ and $B$ be finite sets, how many elements are there in their union?
+    If $\abs{A} = a$ and $\abs{B} = b$, what is $\abs{A \cup B}$?
 \end{quote}
-A naïve idea is to simply compute $\abs{A} + \abs{B}$. However, note that if $A \cap B$ is non-empty, then the elements in this intersection would have been counted twice! Therefore, we need to subtract off the repeated counting.
-\begin{probox}{A Simple Case of Principle of Inclusion and Exclusion}{2PIE}
+The solution is simple: we first count how many elements are in $A$ and then count how many elements are in $B$, but note that there are some elements which might be in both sets and are thus counted twice, so we need to subtract these elements away.
+\begin{probox}{Cardinality of the Union of Two Finite Sets}{2PIE}
     Let $A$ and $B$ be two finite sets, then
     \begin{equation*}
         \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
     \end{equation*}
     In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
 \end{probox}
-The above and be generalised as follows:
+Proposition \ref{pro:2PIE} can be generalised for a finite sequence of finite sets.
 \begin{thmbox}{Principle of Inclusion and Exclusion}{PIE}
     Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
     \begin{equation*}
-        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{h = 1}^{j}E_{k_h}}\right)\right].
+        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{r = 1}^{j}E_{k_r}}\right)\right].
     \end{equation*}
     \tcblower
     \begin{proof}
@@ -787,28 +787,72 @@ The above and be generalised as follows:
         \begin{equation}\label{eq:1}
             \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right). \tag{*}
         \end{equation}
-        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that $f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
+        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that~$f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
         \\\\
-        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$.
+        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$. In particular, $f_{E \cap E_i}(x) = f_{E_i}(x)$ for all $i = 1, 2, \cdots, n$. Expanding (\ref{eq:1}), we have
+        \begin{equation*}
+            f_E(x) = \bigl[f_E(x)\bigr]^n = \sum_{j = 1}^{n} \left\{(-1)^{j + 1}\left[\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\left(\prod_{r = 1}^{j}f_{E_{k_r}}(x)\right)\right]\right\}.
+        \end{equation*}
+        Summing up $f_E(x)$ over all $x$ leads to the identity in the original statement.
     \end{proof}
 \end{thmbox}
-In an even more general case, let $P_1, P_2, \cdots, P_n$ be sets, we would like to know how many elements are in exactly $m$ of the sets.
+We can generalise this further. Note that every set is uniquely determined by some formula~$\phi$ with some parameter $p$. This means that the statement $x \in X$ is logically equivalent to ``$x$ satisfies a property $\phi(x, p)$''. This leads to the general principle of inclusion and exclusion.
 \begin{thmbox}{General Principle of Inclusion and Exclusion}{GenPIE}
-    Let $S$ be an $n$-element set and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that $E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that $\omega\left(P_{i_1}P_{i_2}\cdots P_{i_m}\right)$ is the number of elements in $S$ that satisfy at least $P_{i_1}, P_{i_2},\cdots, P_{i_m}$. Define
+    Let $S$ be a finite set with $\abs{S} = n$ and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that~$E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that~$\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
     \begin{equation*}
-        \omega(m) = \sum \omega\left(P_{i_1}P_{i_2}\cdots P_{i_m}\right),
+        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
     \end{equation*}
     then
     \begin{equation*}
-        E(m) = \sum_{k = m}^{q}(-1)^{k - m}\begin{pmatrix}
+        E(m) = \sum_{k = m}^{q}\left[(-1)^{k - m}\begin{pmatrix}
             k \\
             m
-        \end{pmatrix}\omega(k).
+        \end{pmatrix}\omega(k)\right].
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $x \in S$ be an arbitrary element which satisfies exactly $t$ properties. If $t < m$ or $q < t$, then $x$ contributes a count of $0$ to both sides. If $t = m$, then $x$ contributes a count of $1$ to $E(m)$ and to $\omega(m)$ and contributes a count of $0$ to $\omega(k)$ for all $k > m$.
+        \\\\
+        If $q \geq t > m$, then $x$ contributes a count of $0$ to the left-hand side. On the right-hand side, $x$ is counted $\left(\begin{smallmatrix}
+            t \\
+            k
+        \end{smallmatrix}\right)$ times for $k = m, m + 1, \cdots, t$. So the total contribution of $x$ to the right-hand side is
+        \begin{align*}
+            \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                k \\
+                m
+            \end{pmatrix}\right] & = \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k - m
+            \end{pmatrix}\right] \\
+            & = \sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = \begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = 0.
+        \end{align*}
+        Therefore, every $x \in S$ contributes an equal count to both sides of the identity, so the identity holds.
+    \end{proof}
 \end{thmbox}
 In particular, we see that 
 \begin{equation*}
-    E(0) = \sum_{i = 0}^{q}(-1)^i\omega(i).
+    E(0) = \sum_{i = 0}^{q}\left[(-1)^i\omega(i)\right].
 \end{equation*}
 We will introduce some related applications of Theorem \ref{thm:GenPIE}.
 \section{Stirling Numbers of the Second Kind}
@@ -831,8 +875,15 @@ Based on the above trivial results, we can use the following recurrence relation
 \begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
     For all $r, n \in \N$ with $r \geq n$,
     \begin{equation*}
-        S(r, n) = S(r - 1, n - 1) + n(r - 1, n).
+        S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the first object. If the first object is alone in a collection, it is equivalent to distributing $(r - 1)$ distinct objects into $(n - 1)$ identical collections such that no collection is empty, which can be done in $S(r - 1, n - 1)$ ways. If the first object is not alone, we first distribute the rest $(r - 1)$ distinct objects into the $n$ identical collections in $S(r - 1, n)$ ways, and then choose a collection to place the first object into in $n$ ways, which can be done in $nS(r - 1, n)$ ways. Therefore, 
+        \begin{equation*}
+            S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
 The Stirling numbers of the second kind are closely related to the problem of set partition.
 \begin{dfnbox}{Partition}{partition}
@@ -850,23 +901,43 @@ To find an exact formula for $S(r, n)$, we consider the following proposition:
     \end{equation*}
     then
     \begin{equation*}
-        F(r, n) = \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        F(r, n) = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
             n \\
             k
-        \end{pmatrix}(n - k)^r.
+        \end{pmatrix}(n - k)^r\right].
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $f$ is a mapping from a domain of $r$ elements to a co-domain of $n$ elements. Let $M_k$ be the set of such mappings by which at least $k$ elements in the co-domain do not have pre-images. Note that for each element in the domain, its image can be any of the remaining $(n - k)$ elements. Therefore, 
+        \begin{equation*}
+            \abs{M_k} = \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE}, 
+        \begin{equation*}
+            F(r, n) = \abs{\left(\bigcup_{k = 0}^nM_k\right)'} = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r\right].
+        \end{equation*}
+    \end{proof}
 \end{probox}
 Note that $F(r, n)$ is just the number of ways to distribute $r$ distinct elements into $n$ collections where the order of the collections matters, so $F(r, n) = n!S(r, n)$. This gives rise to some corollaries, for example:
 \begin{align*}
-    S(r, n) & =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+    S(r, n) =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
         n \\
         k
-    \end{pmatrix}(n - k)^r \\
+    \end{pmatrix}(n - k)^r
+\end{align*}
+Since $S(r, n) = 0$ if $n > r \geq 1$, we have
+\begin{equation*}
     \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
         n \\
         k
-    \end{pmatrix}(n - k)^r & = 0 \quad \textrm{if }n > r \geq 1
-\end{align*}
+    \end{pmatrix}(n - k)^r = 0 \quad \textrm{if }n > r \geq 1.
+\end{equation*}
 \section{Derangement}
 The concept of derangements arises from the following question:
 \begin{quote}
@@ -886,6 +957,41 @@ Here we give a rigorous definition along with a generalised notion of \textit{fi
             i
         \end{pmatrix}(n - k - i)!.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $a_1a_2\cdots a_r$ be a permutation and let $P_i$ be a property satisfied by a permutation with $a_i = i$, then $D(n, r, k) = E(k)$. Suppose $A$ is a permutation with at least $t$ fixed points, then the rest $(r - t)$ digits form an $(r - t)$-permutation of $(n - t)$ integers. Therefore, 
+        \begin{equation*}
+            \omega(t) = \begin{pmatrix}
+                r \\
+                t
+            \end{pmatrix}\frac{(n - t)!}{(n - r)!}.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE},
+        \begin{align*}
+            D(n, r, k) & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                k + i \\
+                k
+            \end{pmatrix}\omega(k + i)\right] \\
+            & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                k + i \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                r \\
+                k + i
+            \end{pmatrix}\frac{(n - k - i)!}{(n - r)!}\right] \\
+            & = \frac{1}{(n - r)!}\sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                r \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                r - k \\
+                i
+            \end{pmatrix}(n - k - i)!\right] \\
+            & = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
+                r - k \\
+                i
+            \end{pmatrix}(n - k - i)!.
+        \end{align*}
+    \end{proof}
 \end{thmbox}
 Using Theorem \ref{thm:dnrk}, we see that the number of derangements is just
 \begin{equation*}
@@ -913,14 +1019,26 @@ We will first introduce an ancient algorithm discovered by Greek mathematician E
 \end{tecbox}
 To extend the problem further, we can instead consider counting the number of positive integers up to $n$ inclusive which are \textbf{co-prime} to $n$.
 \begin{thmbox}{Euler $\varphi$-Function}{eulerPhi}
-    Let $n \in \N^+$ and $\varphi(n)$ is the number of positive integers which are co-prime to $n$. If $p_1, p_2, \cdots, p_k$ are distinct prime numbers such that
+    Let $n \in \N^+$ and $\varphi(n)$ be the number of positive integers which are smaller than $n$ and co-prime to $n$. If $p_1, p_2, \cdots, p_k$ are distinct prime numbers such that
     \begin{equation*}
-        n = \prod_{i = 1}^{k}p_i^{m_i},
+        n = \prod_{i = 1}^{k}p_i^{m_i}
     \end{equation*} 
-    then
+    for positive $m_i$'s, then
     \begin{equation*}
         \varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $S_t$ be the set of positive integers at most $n$ which are divisible by at least $t$ of the $k$ primes. For $t = 1, 2, \cdots, k$, consider
+        \begin{equation*}
+            \abs{S_t} = \sum_{i_1 < i_2 < \cdots < i_t}\left\lfloor\frac{n}{\prod_{j = 1}^{t}p_{i_j}}\right\rfloor = \sum_{i_1 < i_2 < \cdots < i_t}\frac{n}{\prod_{j = 1}^{t}p_{i_j}}
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE},
+        \begin{align*}
+            \varphi(n) & = n - \abs{\left(\bigcup_{t = 1}^{k}S_t\right)} \\
+            & = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+        \end{align*}
+    \end{proof}
 \end{thmbox}
 
 \chapter{Generating Functions}
@@ -1171,6 +1289,22 @@ It turns out that to solve a general linear recurrence relation, we can first co
         \sum_{i = 0}^{k}c_ia_{n - i} = 0,
     \end{equation*}
     then $a_n = p(n) + c(n)$ is the general solution to the original linear recurrence relation.
+    \tcblower
+    \begin{proof}
+        Since $p(n)$ is a particular solution, we have 
+        \begin{equation*}
+            \sum_{i = 0}^{k}c_ip(n - i) = f(n).
+        \end{equation*}
+        Furthermore, we have
+        \begin{equation*}
+            \sum_{i = 0}^{k}c_ic(n - i) = 0.
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            \sum_{i = 0}^{k}c_i\bigl(p(n - i) + c(n - i)\bigr) = f(n),
+        \end{align*}
+        which means $a_n = p(n) + c(n)$ is the general solution to the original linear recurrence relation.
+    \end{proof}
 \end{thmbox}
 There is no general way to derive the particular solution of a recurrence relation. Under some special cases, however, we can make a reasonable guess of the particular solution based on the form of $f(n)$. This is summarised as follows
 \begin{center}
@@ -1204,11 +1338,12 @@ Note that for a sequence $(a_n)$, we can define
 \end{equation*}
 as the generating function. Recall that we can transform $A(x)$ to generate a linear combination of $a_i$'s. Therefore, we could use generating functions to solve a recurrence relation.
 
-\chapter{Graph Structures}
-\section{Multigraph}
+\chapter{Graph Theory}
+\section{Graph Structures}
+\subsection{Multigraph}
 Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
 \begin{dfnbox}{Multigraph}{multigraph}
-    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by $v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
+    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
     \\\\
     In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}.
     \\\\
@@ -1230,13 +1365,13 @@ Notice that if $(v_i, v_i)$ is an edge, it connects a vertex to itself. This is 
 
 In a graph, it is important to know the layout of the vertices and edges. For this purpose, we define the notion of \textit{adjacency} in a multigraph.
 \begin{dfnbox}{Adjacency and Neighbourhood}{adjacent}
-    Let $v_i, v_j \in V(G)$, we say that they are {\color{red} \textbf{adjacent}} if $v_iv_j \in E(G)$. Alternatively, we say that $v_i$ and $v_j$ are {\color{red} \textbf{neighbours}} to each other. The edge $v_iv_j$ is said to be {\color{red} \textbf{incident}} with $v_i$ and $v_j$. Two edges $e$ and $f$ are said to be {\color{red} \textbf{adjacent}} if there exists some $v \in V(G)$ such that both $e$ and $f$ are incident with $v$. 
+    Let $v_i, v_j \in V(G)$, we say that they are {\color{red} \textbf{adjacent}} if $v_iv_j \in E(G)$. Alternatively, we say that $v_i$ and $v_j$ are {\color{red} \textbf{neighbours}} to each other. The edge $v_iv_j$ is said to be {\color{red} \textbf{incident}} with~$v_i$ and $v_j$. Two edges $e$ and $f$ are said to be {\color{red} \textbf{adjacent}} if there exists some~$v \in V(G)$ such that both $e$ and $f$ are incident with $v$. 
     \\\\
     The set of all neighbours to some $v_i \in V(G)$ is called the {\color{red} \textbf{neighbourhood set}} of $v_i$, denoted by $N_G(v_i)$. In particular, the set $N_G[v_i] \coloneqq N_G(v_i)\cup\{v_i\}$ is known as the {\color{red} \textbf{closed neighbourhood set}} of $v_i$.
 \end{dfnbox}
 We can further add on to the definition by discussing the size of the neighbourhood of a vertex.
 \begin{dfnbox}{Degree}{deg}
-    The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If $d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. 
+    The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If~$d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. 
     \\\\
     In particular, we define
     \begin{equation*}
@@ -1252,7 +1387,14 @@ With the notion of degree established, we can now define a \textit{regular graph
         A graph $G$ is regular if and only if $\Delta(G) = \delta(G)$.
     \end{remark}
 \end{notebox}
-\section{Handshaking Lemma}
+Since a graph essentially consists of two sets, it is natural to consider the notion of graph complementation. We now proceed to introducing the notion of \textit{complement}.
+\begin{dfnbox}{Complement}{comp}
+    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\overline{G}$, is the graph of order $n$ where
+    \begin{equation*}
+        V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
+    \end{equation*}
+\end{dfnbox}
+\subsection{Handshaking Lemma}
 In this section, we discuss the following interesting question:
 \begin{quote}
     $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the number of handshakes made by each student was recorded and it was reported that the sum was $39$. Was this possible?
@@ -1277,9 +1419,9 @@ is impossible since the left-hand side must be even. In fact, by the above reaso
 \end{notebox}
 As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is obviously $0$, and the maximum size of a simple graph occurs when there is an edge between any two vertices.
 \begin{dfnbox}{Empty and Complete Graphs}{empCom}
-    Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, $(u, v) \in E(G)$. 
+    Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, we have $(u, v) \in E(G)$. 
 \end{dfnbox}
-\section{Subgraph}
+\subsection{Subgraph}
 Since a multigraph is just two sets, we can define a ``subset'' relation between graphs.
 \begin{dfnbox}{Subgraph}{subgraph}
     Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, a subgraph $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \neq V(G)$ or $E(H) \neq E(G)$.
@@ -1320,7 +1462,7 @@ This leads to the following proposition:
 \begin{probox}{}{}
     Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of $G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
 \end{probox}
-\section{Graph Isomorphism}
+\subsection{Graph Isomorphism}
 Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent question proves to be extremely hard to answer. Two graphs can look drastically different but be structurally identical in reality. For example, we could shift around the vertices of a graph without changing any edge to alter the shape of the graph dramatically. Therefore, to compare the structures of graphs, we require some rigorous definition.
 \begin{dfnbox}{Graph Isomorphism}{graphIsomorph}
     Two graphs $G$ and $H$ are said to be {\color{red} \textbf{isomorphic}}, denoted by $G \cong H$, if there exists a bijection $f \colon V(G) \to V(H)$ such that
@@ -1337,10 +1479,10 @@ It is very hard to determine whether two specific graphs are isomorphic, but the
     \item Two graphs with different numbers of components cannot be isomorphic.
     \item If the numbers of vertices with degree $k$ are different in two graphs, they cannot be isomorphic.
 \end{itemize}
-Here we introduce a way to determine isomorphism by considering complement graphs.
-\begin{probox}{Complementation Preserves Isomorphism}{compIso}
+Notice that by Definition \ref{dfn:graphIsomorph}, we can define a function $g$ such that $uv \notin E(G)$ if and only if $g(u)g(v) \notin E(H)$ and relate this function to the complement graphs of $G$ and $H$. Here we introduce a way to determine isomorphism by considering complement graphs, the proof of which is left to the reader as an exercise.
+\begin{thmbox}{Complementation Preserves Isomorphism}{compIso}
     Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\overline{G} \cong \overline{H}$.
-\end{probox}
+\end{thmbox}
 Now let us think the reverse: if it is not easy to prove isomorphism, can we find a way to quickly determine that two graphs are not isomorphic? Here we present the necessary conditions for isomorphism:
 \begin{thmbox}{Necessary Conditions for Isomorphism}{necessaryCondIso}
     If $G \cong H$, then
@@ -1387,7 +1529,7 @@ To determine whether a sequence is graphic by eye power is difficult. Fortunatel
                 \begin{equation*}
                     A \coloneqq \left\{v_j \colon j = 2, 3, \cdots, d_1 + 1\right\}.
                 \end{equation*}
-                Therefore, there exists some $v_j \in A$ such that $v_1v_j \notin E(G)$. However, $d_G(v_1) = d_1$, so there exists some $v_k \in V(G) - A$ with $v_k \neq v_1$ such that $v_1v_k \in E(G)$.
+                Thus, there exists some $v_j \in A$ such that $v_1v_j \notin E(G)$. However,~$d_G(v_1) = d_1$, so there exists some $v_k \in V(G) - A$ with $v_k \neq v_1$ such that $v_1v_k \in E(G)$.
                 \\\\
                 Notice that since $v_k \notin A \cup \{v_1\}$, $k > j$ and so $d_G(v_k) = d_k \leq d_j = d_G(v_j)$. Therefore, $v_j$ has at least as many neighbours as $v_k$, which means there must exists some $v_r$ with $v_jv_r \in E(G)$ such that $v_kv_r \notin E(G)$.
                 \\\\
@@ -1407,7 +1549,7 @@ To determine whether a sequence is graphic by eye power is difficult. Fortunatel
         \end{equation*}
         Therefore, $\left(d^*_m\right)$ is graphic.
         \\\\
-        Conversely, suppose $\left(d^*_m\right)$ is graphic, then there is some graph $H$ of order $n - 1$ such that $d_H(u_i) = d^*_i$ for $i = 1, 2, \cdots, d_1$. Construct a graph $G = H + v_1$ such that $v_i = u_{i - 1}$ for $i = 2, 3, \cdots, n$ and $v_1$ is adjacent to $v_2, v_3, \cdots, v_{d_1 + 1}$. Therefore,
+        Conversely, suppose $\left(d^*_m\right)$ is graphic, then there is some graph $H$ of order $n - 1$ such that $d_H(u_i) = d^*_i$ for $i = 1, 2, \cdots, d_1$. Construct a graph $G = H + v_1$ such that~$v_i = u_{i - 1}$ for $i = 2, 3, \cdots, n$ and $v_1$ is adjacent to $v_2, v_3, \cdots, v_{d_1 + 1}$. Therefore,
         \begin{equation*}
             d_G(v_i) = \begin{cases}
                 d_1 & \quad\textrm{if } i = 1 \\
@@ -1426,7 +1568,7 @@ Lastly, we introduce a special type of graphs known as \textit{self-complementar
 \end{dfnbox}
 It turns out that a self-complementary graph satisfies some special properties.
 \begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
-    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
+    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
     \tcblower
     \begin{proof}
         Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
@@ -1436,12 +1578,12 @@ It turns out that a self-complementary graph satisfies some special properties.
                 2
             \end{pmatrix} = \frac{n(n - 1)}{2},
         \end{equation*}
-        so we have $e(G) = \frac{n(n - 1)}{4}$. Since $e(G) \in \Z^+$, either $n$ or $n - 1$ is divisible by $4$, so $n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
+        so we have $e(G) = \frac{n(n - 1)}{4}$. Since $e(G) \in \Z^+$, either $n$ or $n - 1$ is divisible by $4$, so~$n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
     \end{proof}
 \end{probox}
-\chapter{Graph Traversal}
+\section{Graph Traversal}
 In this chapter, we study the movement within a graph, that is, how to traverse the vertices in a graph along its edges.
-\section{Path and Connectedness}
+\subsection{Path and Connectedness}
 \begin{dfnbox}{Walk, Trail, Path}{wtp}
     Let $G$ be a graph and $x, y \in V(G)$, then an {\color{red} \textbf{$x$-$y$ walk}} is an alternating sequence
     \begin{equation*}
@@ -1467,7 +1609,7 @@ A common tool in proofs of graph theory is the \textbf{extremal approach}, which
     \begin{proof}
         Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path.
         \\\\
-        Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However, $Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path.
+        Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However,~$Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path.
         \\\\
         Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
     \end{proof}
@@ -1476,9 +1618,9 @@ An important question we are interested in with graphs is the reachability of a 
 \begin{dfnbox}{Connected Graph}{connected}
     Let $G$ be a graph. Two vertices $u$ and $v$ are {\color{red} \textbf{connected}} if there is a path betweem them. $G$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in V(G)$, there exists a path from $u$ to $v$. For any $u \in V(G)$, we denote the set of all vertices connected to $u$ (inclusive of $u$) as $c(u)$.
 \end{dfnbox}
-Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and $v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
+Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and~$v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
 \begin{dfnbox}{Connected Component}{CC}
-    Let $G$ be a graph and $R$ be a relation such that for any $u, v \in V(G)$, $uRv$ if and only if $u$ and $v$ are connected. Let
+    Let $G$ be a graph and $R$ be a relation such that for any $u, v \in V(G)$, $uRv$ if and only if~$u$ and $v$ are connected. Let
     \begin{equation*}
         C \coloneqq V(G)/R
     \end{equation*}
@@ -1488,21 +1630,14 @@ Note that connectedness is an equivalence relation. Let $P$ be a partition forme
 \end{dfnbox}
 It can be easily seen that $G$ is connected if and only if $\omega(G) = 1$.
 
-We now proceed to introducing the notion of \textit{complement}.
-\begin{dfnbox}{Complement}{comp}
-    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\overline{G}$, is the graph of order $n$ where
-    \begin{equation*}
-        V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
-    \end{equation*}
-\end{dfnbox}
 We will now establish a relationship between connectedness and complementation.
 \begin{thmbox}{Connectedness of Complement}{connectedComp}
     If $G$ is disconnected, then $\overline{G}$ is connected.
     \tcblower
     \begin{proof}
-        Let $u, v \in V\left(\overline{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\overline(G)\right)$ and so $u$ and $v$ are connected in $\overline{G}$.
+        Let $u, v \in V\left(\overline{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\overline{G}\right)$ and so $u$ and $v$ are connected in $\overline{G}$.
         \\\\
-        If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that $uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\overline{G}\right)$. This means that there is a $u$-$v$ path in $\overline{G}$ and so $u$ and $v$ are connected in $\overline{G}$.
+        If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that~$uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\overline{G}\right)$. This means that there is a~$u$-$v$ path in $\overline{G}$ and so $u$ and $v$ are connected in $\overline{G}$.
         \\\\
         Therefore, $\overline{G}$ is connected.
     \end{proof}
@@ -1516,12 +1651,24 @@ Note that a graph does not have to be connected to have cut vertices and bridges
 Now the next question is how do we identify a cut-vertex or a bridge in a graph? Intuitively, a cut-vertex divides a graph into two portions such that traversal between the two portions has to pass through it.
 \begin{thmbox}{Cut-Vertex Characterisation}{cutVertex}
     Let $G$ be a graph. $v \in V(G)$ is a cut-vertex if and only if there exists $a, b \in V(G)$ such that $v$ is in every path between $a$ and $b$.
+    \tcblower
+    \begin{proof}
+        Let $v \in V(G)$ be a cut-vertex and consider $H = G - v$, then we can find two non-empty disjoint connected components of $H$, say $H_1$ and $H_2$. Now, take $a \in V(H_1)$ and $b \in V_(H_2)$, then they are disconnected. However, $a$ and $b$ are connected in $G$, which means $v$ is in every $a$-$b$ path.
+        \\\\
+        We will prove the converse by contrapositive. Suppose $v$ is not a cut-vertex of $G$, then $G - v$ is connected. Therefore, for any $u, w \in V(G)$, there is a path between them which does not contain $v$.
+    \end{proof}
 \end{thmbox}
 A similar argument can be established for bridges. Furthermore, since we have to pass through the bridge when traversing between the two portions, it can be easily seen that we have to reuse the bridge in order to traverse back.
 \begin{thmbox}{Bridge Characterisation}{bridge}
     Let $G$ be a graph. $e \in E(G)$ is a bridge if and only if $e$ is not contained by any cycle in $G$.
+    \tcblower
+    \begin{proof}
+        We will prove the forward direction by contrapositive. Suppose $e = xy$ is contained in some cycle in $G$, then there is some $x$-$y$ path in $G - e$. Suppose $a, b \in V(G)$ are connected in $G$ via a path containing $e$, this implies that there is some $a$-$b$ path in $G - e$ and so $G - e$ is connected, which means that $e$ is not a bridge.
+        \\\\
+        We will prove the converse also by contrapositive. Suppose $e = xy$ is not a bridge, the $G - e$ is connected and so there is some $x$-$y$ path in $G - e$. Let this path be $P$, then $P \cup \{e\}$ is a cycle in $G$.
+    \end{proof}
 \end{thmbox}
-Combining the two characterisations, we can relate cut-vertices to bridges as follows:
+Combining the two characterisations, we can relate cut-vertices to bridges in the following proposition, the proof of which is left to the reader as an exercise:
 \begin{probox}{}{cutVertexNBridge}
     Let $G$ be a graph. If $uv \in E(G)$ is a bridge and $u$ is not an end vertex, then $u$ is a cut-vertex.
 \end{probox}
@@ -1529,7 +1676,7 @@ A direct consequence of this is the following corollary:
 \begin{corbox}{}{}
     If $G$ is a graph with order at least $3$ and $G$ contains a bridge, then $G$ contains a cut-vertex.
 \end{corbox}
-\section{Distance between Vertices}
+\section{Weighted Graphs}
 Given a graph $G$ with $u$, $v$ being two connected vertices, we are interested in the notion of distance between them. Intuitively, if there are multiple paths between $u$ and $v$, we would take the length of the shortest one to represent their distance.
 \begin{dfnbox}{Distance, Eccentricity, Diameter}{distEDia}
     Let $G$ be a connected graph and let $u, v \in V(G)$. The {\color{red} \textbf{distance}} between $u$ and $v$, denoted by $d(u, v)$, is the length of the shortest path between $u$ and $v$. The {\color{red} \textbf{eccentricity}} of $u$ is defined to be
@@ -1560,7 +1707,7 @@ For readers with knowledge in real analysis or topology, it is easy to see that 
     \end{equation*}
     \tcblower   
     \begin{proof}
-        Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then $U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
+        Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then~$U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
         \begin{equation*}
             d(u, v) \leq d(u, w) + d(w, v).
         \end{equation*}
@@ -1574,7 +1721,7 @@ An application of Theorem \ref{thm:triIneq} allows us to establish the following
     \end{equation*}
     \tcblower
     \begin{proof}
-        $\mathrm{rad}(G) \leq \mathrm{diam}(G)$ is immediate from Definition \ref{dfn:distEDia}. Take $u, v \in V(G)$ with $d(u, v) = \mathrm{diam}(G)$ and take $w \in V(G)$ such that $e(w) = \mathrm{rad}(G)$. Notice that this implies
+        $\mathrm{rad}(G) \leq \mathrm{diam}(G)$ is immediate from Definition \ref{dfn:distEDia}. Take $u, v \in V(G)$ with~$d(u, v) = \mathrm{diam}(G)$ and take $w \in V(G)$ such that $e(w) = \mathrm{rad}(G)$. Notice that this implies
         \begin{align*}
             d(u, w) & \leq e(w) = \mathrm{rad}(G) \\
             d(w, v) & \leq e(w) = \mathrm{rad}(G).
@@ -1585,6 +1732,39 @@ An application of Theorem \ref{thm:triIneq} allows us to establish the following
         \end{equation*}
     \end{proof}
 \end{thmbox}
+The notion of distance between vertices can be abstracted into a concept known as edge (vertex) weight. So far we have been dealing with graphs in which edges do not differ from one another except the vertices they are incident to. However, in real life, there are many scenarios where some egdes in a graph are ``more important'' than others. For example, when building roads to connect villages, we wish to choose edges with the lowest cost. Therefore, we introduce the notion of \textit{weighted graphs}
+\begin{dfnbox}{Weighted Graph}{weightedGraph}
+    A {\color{red} \textbf{weighted graph}} is a graph $G$ with a function $w \colon E(G) \to \R$. For any $e \in E(G)$,~$w(e)$ is called the {\color{red} \textbf{weight}} of $e$. If $H$ is a subgraph of $G$, the {\color{red} \textbf{weight}} $H$ is defined to be
+    \begin{equation*}
+        \sum_{e \in E(H)}w(e).
+    \end{equation*}
+\end{dfnbox} 
+One classic problem on weighted graphs is the (single-source) shortest path problem.
+\subsection{(Single-Source) Shortest Path}
+In an unweighted graph, we define the length of a path to be the number of edges it contains. However, in a weighted graph we need a different definition to distinguish edges of different weights.
+\begin{dfnbox}{Length of a Weighted Path}{weightedPathLen}
+    Let $G$ be a weighted graph and $P$ be a path in $G$. The {\color{red} \textbf{length}} of $P$ is defined as $w(P)$.
+\end{dfnbox}
+Similarly, we can define the shortest path in a weighted graph as the path with the lowest weight, and the distance between two vertex as the weight of the shortest path between them. The (single-source) shortest path problem asks:
+\begin{quote}
+    Let $G$ be a weighted graph and $s$ be the source vertex. For any $v \in V(G)$, what is the distance between $s$ and $v$?
+\end{quote}
+Let us consider the following idea: suppose we are already certain that the distance from $s$ to $u$ cannot be further reduced, then we can safely take the shortest edge from $u$ to $u'$ and compute the weight of the $s$-$u'$ path containing $u$. If this path is shorter than the known distance from $s$ to $u'$, we will ``relax'' this distance. A common and famous algorithm to solve a (single-source) shortest path problem is the \textit{Dijkstra's algorithm}.
+\begin{tecbox}{Dijkstra's Algorithm}{dijkstra}
+    Let $G$ be a weighted graph and $u_0$ be the source.
+    \begin{itemize}
+        \item Define $L \colon V(G) \to \R$: A function which maps a vertex in $G$ to the current distance between it and the source vertex. 
+        \item Initialise $L(u_0) = 0$ and $L(u_i) = \infty$ for all other vertices.
+        \item Declare all vertices as temporary.
+        \item Let $v$ be the vertex such that $L(v)$ is the lowest among all temporary vertices. Declare $v$ as final.
+        \item For each neighbour $u_i$ of $v$:
+        \begin{itemize}
+            \item If $w(vu_i) + L(v) < L(u_i)$, relax $L(u_i)$.
+        \end{itemize}
+        \item Repeat the process until all vertices have become final.
+    \end{itemize} 
+\end{tecbox}
+In real programming, the notion of ``temporary'' and ``final'' vertices can be easily implemented with a priority queue to achieve logarithmic complexity in distance update.
 
 \section{Graphs and Matrices}
 So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and egdes, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
@@ -1626,7 +1806,7 @@ Since $\mathbfit{A}$ and $\mathbfit{M}$ carries information about adjacencies be
         \begin{align*}
             \sum_{r = 1}^{n}m_{ir}a_{rj}.
         \end{align*}
-        Note that $m_{ir}$ is the number of $v_i$-$v_r$ walks of length $m$ and $a_{rj}$ is the number of $v_r$-$v_j$ walks of length $1$, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length $n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
+        Notice that $m_{ir}$ is the number of $v_i$-$v_r$ walks of length $m$ and $a_{rj}$ is the number of $v_r$-$v_j$ walks of length $1$, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length~$n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
     \end{proof}
 \end{probox}
 Additionally, we have the following corollary:
@@ -1638,10 +1818,9 @@ Additionally, we have the following corollary:
     then $G$ is connected if and only if $b_{ij} \neq 0$ for all $i \neq j$.
 \end{corbox}
 
-\chapter{Bipartite Graphs}
 \section{Bipartite Graphs}
 \begin{dfnbox}{Bipartite Graph}{bipartite}
-    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and $V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$. $(V_1, V_2)$ is known as a {\color{red} \textbf{bipartition}} of $G$.
+    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and~$V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$. $(V_1, V_2)$ is known as a {\color{red} \textbf{bipartition}} of $G$.
 \end{dfnbox}
 Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is just
 \begin{equation*}
@@ -1655,7 +1834,7 @@ It can be deduced that the maximal size of a bipartite graph is achieved when ev
         E(G_1 + G_2) & = E(G_1) \cup E(G_2) \cup \left\{uv \colon u \in V(G_1), v \in V(G_2)\right\}.
     \end{align*}
 \end{dfnbox}
-Informally, we can describe the join of $G_1$ and $G_2$ as a graph containing all vertices from $G_1$ and $G_2$, all existing edges from $G_1$ and $G_2$, and new edges connecting every vertex in $G_1$ to every vertex in $G_2$. Therefore, we can define a complete bipartite graph using a join.
+Informally, we can describe the join of $G_1$ and $G_2$ as a graph which contains all the vertices from $G_1$ and $G_2$, all existing edges from~$G_1$ and $G_2$, and new edges connecting every vertex in $G_1$ to every vertex in $G_2$. Thus, we can define a complete bipartite graph using a join.
 \begin{dfnbox}{Complete Bipartite Graph}{completeBipartite}
     A {\color{red} \textbf{complete bipartite graph}} is defined as $K_{p, q} = 0_p + 0_q$.
 \end{dfnbox}
@@ -1748,7 +1927,7 @@ Intuitively, one can traverse along a spanning tree of a graph to reach every ve
     \begin{proof}
         If $G$ contains a spanning tree, then every pair of vertices in $G$ are connected, and so $G$ is connected.
         \\\\
-        Suppose $G$ is connected. If $G$ is a tree, then it is a spanning tree of itself. Otherwise, $G$ contains some cycle $C$. Let $e$ be any edge in $C$, then $e$ is not a bridge so $G - e$ is connected. Set $G' = G - e$ and repeat the process for $G'$. Since $G$ is finite, we will eventually remove all cycles in $G$ and derive a tree containing all vertices in $G$, i.e., a spanning tree.
+        Suppose $G$ is connected. If $G$ is a tree, then it is a spanning tree of itself. Otherwise, $G$ contains some cycle $C$. Let $e$ be any edge in $C$, then $e$ is not a bridge so~$G - e$ is connected. Set $G' = G - e$ and repeat the process for $G'$. Since $G$ is finite, we will eventually remove all cycles in $G$ and derive a tree containing all vertices in $G$, i.e., a spanning tree.
     \end{proof}
 \end{probox}
 Notice that a connected graph cannot be smaller in size than its spanning tree, so we have the following corollary:
@@ -1761,7 +1940,7 @@ Now, we wish to answer the following question:
 \end{quote}
 Let $G$ be a connected multigraph, we denote \textbf{the number of spanning trees} of $G$ by $\tau(G)$. It is not an easy task to count directly by observation. We introduce a useful concept known as \textit{contraction}.
 \begin{dfnbox}{Contraction}{contraction}
-    Let $G$ be a connected multigraph of order $n$ and let $e = uv$ be an egde of $G$. A {\color{red} \textbf{contraction}} of $G$ by $e$, denoted by $G \circ e$, is produced by removing all edges joining $u$ and $v$ and identifying $u$ and $v$ into a single vertex.
+    Let $G$ be a connected multigraph of order $n$ and let $e = uv$ be an egde of $G$. A {\color{red} \textbf{contraction}} of $G$ by $e$, denoted by $G \circ e$, is produced by removing all edges joining $u$ and~$v$ and identifying $u$ and $v$ into a single vertex.
 \end{dfnbox}
 We may make use of contractions to compute $\tau(G)$ in a recursive manner.
 \begin{thmbox}{Recursive Algorithm for $\tau(G)$}{recursiveTau}
@@ -1774,19 +1953,19 @@ We may make use of contractions to compute $\tau(G)$ in a recursive manner.
     \begin{proof}
         Let $G$ be a multigraph and $e \in E(G)$. Define $A$ to be the set of spanning trees of $G$ which contains $e$ aand $B$ to be that which does not contain $e$.
         \\\\
-        Take any $T_A \in A$, then $e \in E(T_A)$ is a bridge. Notice that if $T_1, T_2 \in A$, then $T_1 \neq T_2$, so they have at least one different edge which is not $e$. Define
+        Take any $T_A \in A$, then $e \in E(T_A)$ is a bridge. Notice that if $T_1, T_2 \in A$, then~$T_1 \neq T_2$, so they have at least one different edge which is not $e$. Define
         \begin{equation*}
             A' \coloneqq \left\{T'_A = T_A - e \colon T_A \in A\right\}.
         \end{equation*}
         Clearly, for $T'_1, T'_2 \in A'$, $T'_1 \neq T'_2$ are different spanning trees.Observe that there is a bijection between $A$ and $A'$, so $\abs{A} = \abs{A'} = \tau(G \circ e)$.
         \\\\
-        Take any $T_B \in B$, since $e \notin E(T_B)$, $T_B$ must be a spanning tree of $G - e$. Therefore, $\abs{B} = \tau(G - e)$. Hence,
+        Take any $T_B \in B$, since $e \notin E(T_B)$, $T_B$ must be a spanning tree of $G - e$. Therefore,~$\abs{B} = \tau(G - e)$. Hence,
         \begin{equation*}
             \tau(G) = \abs{B} + \abs{A} = \tau(G - e) + \tau(G \circ e).
         \end{equation*}
     \end{proof}
 \end{thmbox}
-Theorem \ref{thm:recursiveTau} allows us to reduce $\tau(G)$ for a complex graph $G$ into a linear combination of $\tau$'s for simpler graphs. So now we will discuss some basic cases where $\tau$ is easy to compute.
+Theorem \ref{thm:recursiveTau} allows us to reduce $\tau(G)$ for a complex graph $G$ into a linear combination of~$\tau$'s for simpler graphs. So now we will discuss some basic cases where $\tau$ is easy to compute.
 \begin{enumerate}
     \item A simple cycle of order $n$:
     
@@ -1913,10 +2092,9 @@ Using Theorem \ref{thm:matTree}, we can prove the following propositions:
         where the latter is obtained by adding every other row to the first row. Performing row operations by adding the first row to every row starting from the third row, the determinant becomes
         \begin{equation*}
             \begin{vmatrix}
-                1 & 1 & -1 & -1 & \cdots & -1 \\
-                0 & r & -1 & -1 & \cdots & -1 \\
-                0 & 0 & 2 & 0 & \cdots & 0 \\
-                0 & 0 & 0 & 2 & \cdots & 0 \\
+                1 & 1 & -1 & \cdots & -1 \\
+                0 & r & -1 & \cdots & -1 \\
+                0 & 0 & 2 & \cdots & 0 \\
                 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
                 0 & 0 & 0 & 0 & \cdots & 2
             \end{vmatrix} = 2^{r - 1}r.
@@ -1924,18 +2102,7 @@ Using Theorem \ref{thm:matTree}, we can prove the following propositions:
         Since such row operations do not change the determinant, so $\tau(K_{2, r}) = 2^{r - 1}r$.
     \end{proof}
 \end{probox}
-
-\chapter{Weighted Graphs}
-\section{Weight}
-So far we have been dealing with graphs in which edges do not differ from one another except the vertices they are incident to. However, in real life, there are many scenarios where some egdes in a graph are ``more important'' than others. For example, when building roads to connect villages, we wish to choose edges with the lowest cost. Therefore, we introduce the notion of \textit{weighted graphs}
-\begin{dfnbox}{Weighted Graph}{weightedGraph}
-    A {\color{red} \textbf{weighted graph}} is a graph $G$ with a function $w \colon E(G) \to \R$. For any $e \in E(G)$, $w(e)$ is called the {\color{red} \textbf{weight}} of $e$. If $H$ is a subgraph of $G$, the {\color{red} \textbf{weight}} $H$ is defined to be
-    \begin{equation*}
-        \sum_{e \in E(H)}w(e).
-    \end{equation*}
-\end{dfnbox}
-There are two classic problems regarding a weighted graph.
-\section{Minimum Spanning Trees}
+\subsection{Minimum Spanning Trees}
 The minimum spanning tree problem asks the following:
 \begin{quote}
     Given a connected graph $G$, what is a spanning tree of $G$ with the smallest possible weight, and what is this smallest weight?
@@ -1967,29 +2134,11 @@ Intuitively, if we already have a partial minimum spanning tree of $G$, we can g
             \item $S_i$: The set of vertices contained in the partial spanning tree of size $i$.
             \item $E_i$: The set of edges contained in the partial spanning tree of size $i$.
         \end{itemize}
-        \item Initialise $i = 1$, $S_1 = \{u_1, v_1\}$ and $E_1 = \{u_1v_1\}$ where $w(uv) \leq w(e)$ for all $e \in E(G)$.
+        \item Initialise $i = 1$, $S_1 = \{u_1, v_1\}$ and $E_1 = \{u_1v_1\}$ such that $w(u_1v_1) \leq w(e)$ for all~$e \in E(G)$.
         \item Select $uv \in E(G) - E_i$ such that $u \in S_i$, $v\notin S_i$ and $w(uv)$ is the minimum.
         \item Set $S_{i + 1} = S_i \cup \{v\}$, $E_{i + 1} = E_i \cup \{uv\}$ and increment $i$.
-        \item Repeat the above processes until $i = n$, and $\bigl[E_i\bigr]$ is a minimum spanning tree of $G$.
+        \item Repeat the processes until $i = n$, and $\bigl[E_i\bigr]$ is a minimum spanning tree of $G$.
     \end{itemize}
 \end{tecbox}
-\section{(Single-Source) Shortest Path}
-In an unweighted graph, we define the length of a path to be the number of edges it contains. However, in a weighted graph we need a different definition to distinguish edges of different weights.
-\begin{dfnbox}{Length of a Weighted Path}{weightedPathLen}
-    Let $G$ be a weighted graph and $P$ be a path in $G$. The {\color{red} \textbf{length}} of $P$ is defined as $w(P)$.
-\end{dfnbox}
-Similarly, we can define the shortest path in a weighted graph as the path with the lowest weight, and the distance between two vertex as the weight of the shortest path between them. The (single-source) shortest path problem asks:
-\begin{quote}
-    Let $G$ be a weighted graph and $s$ be the source vertex. For any $v \in V(G)$, what is the distance between $s$ and $v$?
-\end{quote}
-Let us consider the following idea: suppose we are already certain that the distance from $s$ to $u$ cannot be further reduced, then we can safely take the shortest edge from $u$ to $u'$ and compute the weight of the $s$-$u'$ path containing $u$. If this path is shorter than the known distance from $s$ to $u'$, we will ``relax'' this distance. A common and famous algorithm to solve a (single-source) shortest path problem is the \textit{Dijkstra's algorithm}.
-\begin{tecbox}{Dijkstra's Algorithm}{dijkstra}
-    Let $G$ be a weighted graph.
-    \begin{itemize}
-        \item Define
-        \begin{itemize}
-            \item $L \colon V(G) \to \R$: A function which maps a vertex in $G$ to the current distance between it and the source vertex.  
-        \end{itemize}
-    \end{itemize} 
-\end{tecbox}
+
 \end{document}
