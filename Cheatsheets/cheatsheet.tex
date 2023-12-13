@@ -10,8 +10,11 @@
 \usepackage{mathtools}
 \usepackage{bm}
 
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\R}{\mathbb{R}}
+
 \begin{document}
-    \begin{multicols}{3}
+    \begin{multicols*}{3}
         \textbf{Weiestrass Theorem}: $S$ is compact $\implies f$ has a global max and a global min in $S$.
         \\\\
         If $f$ is convex, then $\left\{\bm{x} \colon f(\bm{x}) \leq a \right\}$ is convex.
@@ -71,6 +74,10 @@
         \end{equation*}
         \\\\
         \textbf{Newton's Method}: $x_{k + 1} = x_k - \frac{f'(x_k)}{f''(x_k)}$ until $\left\lvert f'(x_k)\right\rvert < \epsilon$.
+
+        \textbf{Multivariable Newton:} $\bm{x}_{k + 1} = \bm{x}_k - H_f(\bm{x}_k)^{-1}\nabla f(\bm{x}_k)$ until $\norm{\nabla f(\bm{x}_k)} \leq \epsilon$.
+
+        \textbf{Armijo:} $f(\bm{x}_0 + \alpha_k\bm{p}_0) \leq f(\bm{x}_0) + \sigma\alpha_k\nabla f(\bm{x}_0)^{\mathrm{T}}\bm{p}_0$, $\sigma \in (0, 0.5)$, $\beta \in (0, 1)$.
         \\\\
         \textbf{Golden Section Method}: 
 
@@ -84,5 +91,99 @@
             a_{k + 1} = \lambda_k &\qquad b_{k + 1} = b_k \\
             \lambda_{k + 1} = \mu_k &\qquad \mu_{k + 1} = \lambda_k + \alpha(b_k - \lambda_k).
         \end{align*}
-    \end{multicols}
+        \\\\
+        \textbf{Steepest Descent:} $\bm{x}_{k + 1} = \bm{x}_k - t_{k - 1}\nabla f(\bm{x}_k)$ until $\norm{\nabla f(\bm{x}_k)} < \epsilon$.
+
+        $(\bm{x}_{k + 2} - \bm{x}_{k + 1})^{\mathrm{T}}(\bm{x}_{k + 1} - \bm{x}_k) = 0$.
+        \\\\
+        \textbf{Conjugate Gradient:} $\bm{r}_n = \bm{Ax}_n - \bm{b} = \nabla \phi(\bm{x}_n)$ where $\phi$ is quadratic.
+
+        $\alpha_k = -\frac{\bm{r}_k^{\mathrm{T}}\bm{p}_k + \bm{p}_k}{\bm{p}_k^{\mathrm{T}}\bm{A}^{\mathrm{T}}\bm{p}_k}$.
+
+        $\bm{x}_{k + 1} = \bm{x}_k + \alpha_k\bm{p}_k$.
+        \\\\
+        \textbf{Lagragian:} $\mathcal{L}(\bm{x}, \bm{\lambda}, \bm{\mu}) = f(\bm{x}) + \bm{\lambda}^{\mathrm{T}}\bm{g}(\bm{x}) + \bm{\mu}^{\mathrm{T}}\bm{h}(\bm{x})$.
+        \\
+        \textbf{Lagragian dual function:} $\inf_{\bm{x} \in X}\mathcal{L}(\bm{x}, \bm{\lambda}, \bm{\mu})$. Dual problem: $\max_{\lambda_i \in \R, \mu_j \geq 0}\theta(\bm{\lambda}, \bm{\mu})$. $\theta$ is concave if finite.
+        \\
+        \textbf{Weak Duality:} $f(\bm{x}^*) \geq \theta(\bm{\lambda}^*, \bm{\mu}^*)$. Equality holds when Slater's holds ($\inf f = \sup \theta)$
+        \\
+        \textbf{Saddle point:} $\mathcal{L}(\bm{x}^*, \bm{\lambda}, \bm{\mu}) \leq \mathcal{L}(\bm{x}^*, \bm{\lambda}^*, \bm{\mu}^*) \leq \mathcal{L}(\bm{x}, \bm{\lambda}^*, \bm{\mu}^*)$. Saddle point is KKT.
+        \\
+        \textbf{KKT point:} 
+        \begin{itemize}
+            \item $\nabla f(\bm{x}^*) + \sum\lambda_i\nabla g_i(\bm{x}^*) + \sum\nabla h_j(\bm{x}^*) = \mathbf{0}$
+            \item $g_i(\bm{x}^*) = 0$ and $h_i(\bm{x}^*) \leq 0$
+            \item $\mu_i \geq 0$ for $i = 1, 2, \cdots, p$
+            \item $\mu_i = 0$ for $i \notin J(\bm{x}^*)$
+        \end{itemize}
+        \textbf{Complementary slackness:} $\mu_ih_i(x) = 0$.
+        \\
+        \textbf{Critical Cone: } $C(\bm{x}^*, \lambda, \mu) \coloneqq \left\{\bm{y} \in \R^n \colon \begin{array}{l}
+            \nabla g_i(\bm{x}^*)^{\mathrm{T}}\bm{y} = 0 \\
+            \nabla h_j(\bm{x}^*)^{\mathrm{T}}\bm{y} = 0 \quad\mu_j > 0 \\
+            \nabla h_j(\bm{x}^*)^{\mathrm{T}}\bm{y} \leq 0 \quad\mu_j = 0
+        \end{array}\right\}$
+        \\
+        \textbf{KKT 2nd necessary: } $\bm{y}^{\mathrm{T}}H_{L}(\bm{x}^*)\bm{y} \geq 0$ for $\bm{y} \in C(\bm{x}^*, \lambda, \mu)$.
+        \\
+        \textbf{KKT sufficient:} $\bm{x}^*$ is KKT and $\bm{y}^{\mathrm{T}}H_{L}(\bm{x}^*)\bm{y} > 0$ for nonzero for $\bm{y} \in C(\bm{x}^*, \lambda, \mu) \implies$ strict local min. 
+        \\
+        \textbf{Convex constrained:} convex $f$, convex $h$, linear $g$ differentiable constraints. KKT is global min. If Slater's holds, or no $h$, then global min is KKT.
+        \\
+        $\bm{x}^*$ is KKT, then $(\bm{x}^*, \bm{\lambda}^*, \bm{\mu}^*)$ is saddle.
+        \\
+        $(\bm{x}^*, \bm{\lambda}^*, \bm{\mu}^*)$ is KKT, then $\bm{x}^*$ optimises primal and $(\bm{\lambda}^*, \bm{\mu}^*)$ optimises dual.
+        \\\\
+        \textbf{Subgradient: }
+        \begin{itemize}
+            \item $\bm{\beta(x)} = (\bm{g(x)}, \bm{h(x)})$: constraint vector.
+            \item $\bm{w} = (\bm{\lambda}, \bm{\mu})$: multiplier vector.
+            \item Lagrangian: $f(\bm{x}) + \bm{w}^{\mathrm{T}}\bm{\beta(x)}$,
+            \item $\bm{X(w)}$: set of $\bm{x}$ minimising $\mathcal{L}$ at $\bm{w}$.
+        \end{itemize}
+        $\bm{X(w)}$ is singleton, then $\theta$ is differentiable and $\nabla\theta(\bm{w}) = \bm{\beta(x^*)}$.
+        \\
+        Subgradient of convex $f$: $f(\bm{x}) \geq f(\bm{x}^*) + \bm{\xi}^{\mathrm{T}}(\bm{x - x}^*)$, the set of which is subdifferential.
+        \\
+        Directional derivative: $\theta(\bm{w}^*, \bm{d}) = \inf\{\bm{d}^{\mathrm{T}}\bm{\xi(\bm{w}^*)}\}$.
+        \\
+        $\partial\theta(\bm{w}) = \mathrm{conv}\{\bm{\beta(x)} \colon \bm{x} \in \bm{X(w)}\}$ the linear span of $\beta$.
+        \\\\
+        \textbf{Steepest ascent direction} $\bm{d}^*$: $\theta(\bm{w}^*, \bm{d}^*)$ is max among all unit vector $\bm{d}$.
+        \\
+        $\hat{\bm{\xi}}$: Subgradient with smallest norm. $\bm{d}^* = \bm{0}$ if $\hat{\bm{\xi}} = \bm{0}$ and $\frac{\hat{\bm{\xi}}}{\norm{\hat{\bm{\xi}}}}$ otherwise.
+        \\\\
+        \textbf{Frank-Wolfe: } convex $f$ with linear constraints.
+        \begin{itemize}
+            \item $z(\bm{x}) = f(\bm{x}_k) + \nabla f(\bm{x}_k)^{\mathrm{T}}(\bm{x} - \bm{x}_k)$.
+            \item linear sol: $\hat{\bm{x}_k}$, optimal linear val: $\hat{z_k}$.
+            \item Lower bound is the higher of the previous lower bound and $\hat{z_k}$, upper bound is $f(\bm{x}_k)$.
+            \item $\bm{d}_k = \hat{\bm{x}_k} - \bm{x}_k$ is search direction. Find $t_k$ s.t. $f(\bm{x}_k + t_k\bm{d}_k)$ is min.
+            \item $\bm{x}_{k + 1} = \bm{x}_k + t_k\bm{d}_k$.
+        \end{itemize}
+        \textbf{Quadratic penalty}: $Q(\bm{x}; \mu) = f(\bm{x}) + \frac{1}{2\mu}\sum c^2(\bm{x})$ where $c$ are equlity constriants.
+        \begin{itemize}
+            \item $\nabla_{\bm{x}} Q(\bm{x}, \mu) = \nabla f(\bm{x}) + \frac{1}{\mu}\sum c(\bm{x})\nabla c(\bm{x})$
+            \item $H_Q(\bm{x}, \mu) = H_f(\bm{x}) + \frac{1}{\mu}\sum \left[\norm{\nabla c(\bm{x})} + c(\bm{x})H_c(\bm{x})\right] \approx H_f(\bm{x}) + \frac{1}{\mu}\sum \norm{\nabla c(\bm{x})}$
+            \item Approximate minimiser $\bm{x}_{k + 1}$ of $Q(\bm{x}; \mu_k)$ e.g. with Newton with $\bm{x}_k$ as initial.
+            \item $\mu_{k + 1} = \rho\mu_k < \mu_k$ until $\norm{c(\bm{x}_{k + 1})} < \epsilon$.
+            \item Limit point of $(\bm{x}_k)$ minimises $f$.
+        \end{itemize}
+        If $\nabla_{\bm{x}} Q(\bm{x}_k, \mu) \leq \tau_k \to 0$, $\mu_k \to 0$, $\bm{x}_k \to \bm{x}^*$ is regular, the for any subsequence $\lim \bm{x}_k = \bm{x}^*$, $\bm{x}^*$ is KKT with $\lambda^*_i = \lim\frac{c_i(\bm{x}_k)}{\mu_{k - 1}}$.
+        \\\\
+        \textbf{Augmented Lagrangian:} $L_A(\bm{x}, \bm{\lambda}, \mu) = f(\bm{x}) + \sum \lambda_i c_i(\bm{x}) + \frac{1}{2\mu}\sum c(\bm{x})^2$.
+        \begin{itemize}
+            \item Let $\mu_0, \tau_0 > 0$. Approximate minimiser $\bm{x}_{k + 1}$ of $L_A$ e.g. with Newton with $\bm{x}_k$ as initial.
+            \item If $\nabla L_A(\bm{x}_{k + 1}) = 0$, stop.
+            \item $\lambda_{k + 1} = \lambda_k + \frac{c(\bm{x}_{k + 1})}{\mu_k}$.
+            \item Choose new $\mu$ and $\tau$.
+        \end{itemize}
+        \textbf{Barrier function:} $B(\bm{x}) = \sum\phi(c(\bm{x}))$. Commonly $\phi = -\log$.
+        \begin{itemize}
+            \item $P(\bm{x}; \mu_k) = f(\bm{x}) + \mu_kB(\bm{x})$.
+            \item Approximate minimiser $\bm{x}_{k + 1}$ of $P$ s.t. $\norm{P(\bm{x}_{k + 1}, \mu_k)} < \tau_k$.
+            \item Choose smaller $\mu$ and $\tau$ until $\bm{x}_{k + 1}$ is regular KKT point with $\lambda = \lim \mu_k\phi'(-c(\bm{x}_k))$.
+        \end{itemize}
+    \end{multicols*}
 \end{document}

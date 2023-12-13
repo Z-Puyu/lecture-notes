@@ -1,14 +1,14 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 OCT 2023 17:17
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  6 DEC 2023 14:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**Cheatsheet
+**cheatsheet
 (./cheatsheet.tex
 LaTeX2e <2022-11-01> patch level 1
-L3 programming layer <2023-02-22> (c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
+L3 programming layer <2023-02-22> (f:/texlive/2023/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(c:/texlive/2023/texmf-dist/tex/latex/base/size12.clo
+(f:/texlive/2023/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count181
@@ -22,14 +22,14 @@ File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
-) (c:/texlive/2023/texmf-dist/tex/latex/geometry/geometry.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (c:/texlive/2023/texmf-dist/tex/latex/graphics/keyval.sty
+ (f:/texlive/2023/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
-) (c:/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
+) (f:/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (c:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
+ (f:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ))
 \Gm@cnth=\count189
@@ -44,7 +44,7 @@ Package: iftex 2022/02/03 v1.0f TeX engine tests
 \Gm@layouthoffset=\dimen147
 \Gm@layoutvoffset=\dimen148
 \Gm@dimlist=\toks17
-) (c:/texlive/2023/texmf-dist/tex/latex/tools/multicol.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2021/11/30 v1.9d multicolumn formatting (FMi)
 \c@tracingmulticols=\count192
 \mult@box=\box51
@@ -112,7 +112,7 @@ Package: multicol 2021/11/30 v1.9d multicolumn formatting (FMi)
 \mult@nat@firstbox=\box94
 \colbreak@box=\box95
 \mc@col@check@num=\count267
-) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks18
 \inpenc@posthook=\toks19
@@ -120,21 +120,21 @@ Package: inputenc 2021/02/14 v1.3d Input encoding file
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
-) (c:/texlive/2023/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2022/04/08 v2.17n AMS math features
 \@mathmargin=\skip52
 
 For additional information on amsmath, use the `?' option.
-(c:/texlive/2023/texmf-dist/tex/latex/amsmath/amstext.sty
+(f:/texlive/2023/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
- (c:/texlive/2023/texmf-dist/tex/latex/amsmath/amsgen.sty
+ (f:/texlive/2023/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks20
 \ex@=\dimen158
-)) (c:/texlive/2023/texmf-dist/tex/latex/amsmath/amsbsy.sty
+)) (f:/texlive/2023/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen159
-) (c:/texlive/2023/texmf-dist/tex/latex/amsmath/amsopn.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count268
@@ -184,16 +184,16 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \mathdisplay@stack=\toks24
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
-) (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-) (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amssymb.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-) (c:/texlive/2023/texmf-dist/tex/latex/amscls/amsthm.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks25
 \thm@bodyfont=\toks26
@@ -204,9 +204,9 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip56
 \thm@headsep=\skip57
 \dth@everypar=\toks30
-) (c:/texlive/2023/texmf-dist/tex/latex/mathtools/mathtools.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/mathtools/mathtools.sty
 Package: mathtools 2022/06/29 v1.29 mathematical typesetting tools
- (c:/texlive/2023/texmf-dist/tex/latex/tools/calc.sty
+ (f:/texlive/2023/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count280
 \calc@Bcount=\count281
@@ -218,7 +218,7 @@ LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count282
 \calc@Cskip=\skip60
-) (c:/texlive/2023/texmf-dist/tex/latex/mathtools/mhsetup.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/mathtools/mhsetup.sty
 Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 )
 \g_MT_multlinerow_int=\count283
@@ -232,7 +232,7 @@ Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 \l_MT_below_shortintertext_sep=\dimen175
 \xmathstrut@box=\box98
 \xmathstrut@dim=\dimen176
-) (c:/texlive/2023/texmf-dist/tex/latex/tools/bm.sty
+) (f:/texlive/2023/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2022/01/05 v1.2f Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup6
 \symboldletters=\mathgroup7
@@ -241,37 +241,36 @@ Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
 Package bm Info: No bold for \U/msa/m/n, using \pmb.
 Package bm Info: No bold for \U/msb/m/n, using \pmb.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
-) (c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+) (f:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
 \g__graphics_track_int=\count284
 \l__pdf_internal_box=\box99
 \g__pdf_backend_object_int=\count285
 \g__pdf_backend_annotation_int=\count286
 \g__pdf_backend_link_int=\count287
-)
-No file cheatsheet.aux.
+) (./cheatsheet.aux)
 \openout1 = `cheatsheet.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 13.
-(c:/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 16.
+ (f:/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -307,139 +306,189 @@ LaTeX Font Info:    ... okay on input line 13.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-(c:/texlive/2023/texmf-dist/tex/latex/graphics/graphicx.sty
+(f:/texlive/2023/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (c:/texlive/2023/texmf-dist/tex/latex/graphics/graphics.sty
+ (f:/texlive/2023/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
- (c:/texlive/2023/texmf-dist/tex/latex/graphics/trig.sty
+ (f:/texlive/2023/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (c:/texlive/2023/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (f:/texlive/2023/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 107.
- (c:/texlive/2023/texmf-dist/tex/latex/graphics-def/xetex.def
+ (f:/texlive/2023/texmf-dist/tex/latex/graphics-def/xetex.def
 File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen177
 \Gin@req@width=\dimen178
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+LaTeX Font Info:    Trying to load font information for U+msa on input line 18.
+ (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 18.
+ (f:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 15--22
+Underfull \hbox (badness 10000) in paragraph at lines 18--25
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 15--22
+Underfull \hbox (badness 10000) in paragraph at lines 18--25
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 15--22
+Underfull \hbox (badness 10000) in paragraph at lines 18--25
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--35
+Underfull \hbox (badness 10000) in paragraph at lines 27--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--35
+Underfull \hbox (badness 10000) in paragraph at lines 27--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--35
+Underfull \hbox (badness 10000) in paragraph at lines 27--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--35
+Underfull \hbox (badness 10000) in paragraph at lines 27--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--35
+Underfull \hbox (badness 10000) in paragraph at lines 27--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--61
+Underfull \hbox (badness 10000) in paragraph at lines 45--64
 
  []
 
 
-Overfull \hbox (18.13644pt too wide) detected at line 67
+Overfull \hbox (18.13644pt too wide) detected at line 70
 \OT1/cmr/m/n/12 [\OML/cmm/m/it/12 a[]; b[]\OT1/cmr/m/n/12 ] = []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--76
+Underfull \hbox (badness 10000) in paragraph at lines 74--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--76
+Underfull \hbox (badness 8000) in paragraph at lines 80--83
+[]\TU/lmr/bx/n/12 Armijo: $\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/b/it/12 x[] \OT1/cmr/m/n/12 + \OML/cmm/m/it/12 ^^K[]\OML/cmm/b/it/12 p[]\OT1/cmr/m/n/12 ) \OMS/cmsy/m/n/12 ^^T \OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/b/it/12 x[]\OT1/cmr/m/n/12 ) +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--83
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--96
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--100
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--114
 
  []
 
 [1
 
-] (./cheatsheet.aux) ) 
+]
+Underfull \hbox (badness 10000) in paragraph at lines 120--139
+\TU/lmr/bx/n/12 Critical Cone:  $\OML/cmm/m/it/12 C\OT1/cmr/m/n/12 (\OML/cmm/b/it/12 x[]\OML/cmm/m/it/12 ; ^^U; ^^V\OT1/cmr/m/n/12 ) [][]=
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--139
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--158
+
+ []
+
+
+Overfull \hbox (32.46469pt too wide) in paragraph at lines 168--169
+[]$\OML/cmm/m/it/12 H[]\OT1/cmr/m/n/12 (\OML/cmm/b/it/12 x\OML/cmm/m/it/12 ; ^^V\OT1/cmr/m/n/12 ) = \OML/cmm/m/it/12 H[]\OT1/cmr/m/n/12 (\OML/cmm/b/it/12 x\OT1/cmr/m/n/12 ) + [] [] [] \OMS/cmsy/m/n/12 ^^Y
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--176
+
+ []
+
+[2] (./cheatsheet.aux) ) 
 Here is how much of TeX's memory you used:
- 3762 strings out of 478630
- 59151 string characters out of 5847730
+ 3764 strings out of 478630
+ 59175 string characters out of 5847730
  1866012 words of memory out of 5000000
- 23852 multiletter control sequences out of 15000+600000
+ 23853 multiletter control sequences out of 15000+600000
  519733 words of font info for 63 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 58i,9n,63p,240b,276s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 58i,9n,63p,277b,308s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on cheatsheet.pdf (1 page).
+Output written on cheatsheet.pdf (2 pages).
