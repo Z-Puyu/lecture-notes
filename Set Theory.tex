@@ -537,9 +537,187 @@ While being a very abstract notion, it is worth noting that if $T$ is transitive
 \begin{dfnbox}{Ordinal Number}{ordinal}
     A set is an {\color{red} \textbf{ordinal number}} if it is transitive and well-ordered by $\in$. The class of all ordinals is denoted by $Ord$.
 \end{dfnbox}
-It might be useful to consider what it means by being ``well-ordered by $\in$''. Essentially, this means for any two different ordinals $\alpha$ and $\beta$, either $\alpha \in \beta$ or $\beta \in \alpha$. Being a well-ordering, it implies that there exists an ordinal which is in every other ordinals, i.e., it is smaller than all other ordinals (which is the zero). We might notice that $\alpha < \beta$ if and only if $\alpha \in \beta$.
+It might be useful to consider what it means by being ``well-ordered by $\in$''. Essentially, this means for any two different ordinals $\alpha$ and $\beta$, either $\alpha \in \beta$ or $\beta \in \alpha$. Being a well-ordering, it implies that there exists an ordinal which is in every other ordinals, i.e., it is smaller than all other ordinals (which is the zero).
 
 Vacuously, $\varnothing$ is a transitive well-ordered set, so it is an ordinal. We denote it by $0$. Since there is no set which is an element of $\varnothing$, $0$ being the least ordinal is justified.
 
 Now, let $\alpha$ be an ordinal and $\beta \in \alpha$, then $\beta \subseteq \alpha$. Take any $\gamma \in \beta$, then $\gamma \in \alpha$ and so $\gamma \subseteq \alpha$. Note that $\in$ is transitive on $\alpha$, so for all $\delta \in \gamma$ we have $\delta \in \beta$. Therefore, $\gamma \subseteq \beta$, which means $\beta$ is transitive. Moreover, let $\gamma \subseteq \beta$, then for all $\delta \in \gamma$, we have $\delta \in \beta \subseteq \alpha$, so $\gamma \subseteq \alpha$ and so it has a $\in$-least element, which means $\beta$ is well-ordered by $\in$. Therefore, any element of an ordinal is an ordinal.
+
+The above argument proves that every element of an ordinal is an ordinal. This means we can define $\alpha < \beta$ if $\alpha \in \beta$. Next, let there be ordinals $\alpha \neq \beta$ with $\alpha \subset \beta$, then $\beta - \alpha$ is non-empty and so it has a least element $\gamma$. By Theorem \ref{thm:wellOrderTrichotomy}, it can be proven that $\alpha = \left\{\xi \in \beta \colon \xi < \gamma\right\} = \gamma \in \beta$.
+
+Lastly, we prove that trichotomy holds for ordinals. Note that it suffices to prove that for any ordinals $\alpha \neq \beta$, either $\alpha \subset \beta$ or $\beta \subset \alpha$. First, observe that $\alpha \cap \beta$ is clearly an ordinal, so we can denote $\gamma = \alpha \cap \beta$. Suppose $\gamma \neq \alpha$, but since $\gamma \subset \alpha$ we have $\gamma \in \alpha$. Similarly, if $\gamma \neq \beta$ we would have $\gamma \in \beta$. This implies that $\gamma \in \gamma$ which is not possible, so either $\gamma = \alpha$ or $\gamma = \beta$. Therefore, we have $\alpha \subset \beta$ or $\beta \subset \alpha$ as desired. With trichotomy established, we see that $<$ is a linear ordering for the class $Ord$.
+
+With the above reasonings, one gets the following important results:
+\begin{enumerate}
+    \item If $\C$ is a non-empty class of ordinals, then $\bigcap\C$ is an ordinal. In particular, $\bigcap\C \in \C$ and $\bigcap\C \subseteq \gamma$ for all $\gamma \in \C$. We denote $\bigcap\C = \inf\C$.
+    \item If $X$ is a non-empty set of ordinals, then $\bigcup X$ is an ordinal. We can denote $\bigcup X = \sup X$.
+    \item If $\alpha$ is an ordinal, $\alpha \cup \{\alpha\}$ is an ordinal. In particular, $\alpha \cup \{\alpha\} = \inf\,\{\beta \colon \beta > \alpha\}$.
+\end{enumerate}
+The last result shows that $\alpha \cup \{\alpha\}$ is the \textbf{smallest ordinal which is greater than} $\alpha$. We call it the \textit{successor} of $\alpha$ and denote by $\alpha + 1$.
+\begin{dfnbox}{Successor Ordinal}{successor}
+    An ordinal $\alpha$ is a {\color{red} \textbf{successor ordinal}} if there is some ordinal $\beta$ such that $\alpha = \beta + 1$.
+\end{dfnbox}
+Additionally, we can also argue that $Ord$ must be a proper class. Otherwise, $\sup\,Ord$ is an ordinal and so $\sup\,Ord + 1 \in Ord$, which is a contradiction.
+
+Recall that we previously mentioned that ordinals are a order-type for well-ordered sets. More formally, this can be formulated as below:
+\begin{thmbox}{Isomorphism of Well-Ordered Sets and Ordinals}{wellOrderOrdinalIsomorphism}
+    Every well-ordered set is isomorphic to a unique ordinal number.
+    \tcblower
+    \begin{proof}
+        Let $W$ be a well-ordered set. For each $x \in W$, we can define 
+        \begin{equation*}
+            W(x) \coloneqq \left\{w \in W \colon w < x\right\}
+        \end{equation*} 
+        to be an initial segment of $W$ given by $x$. Define $F \colon W \to Ord$ by $F(x) = \alpha$ if $\alpha$ is isomorphic to $W(x)$. By Theorem \ref{thm:wellOrderTrichotomy}, such an $\alpha$ always exists. By Axiom Schema \ref{axi:schemaReplacement}, $F[W]$ is a set of ordinals, so $\sup F[W]$ exists. Therefore, we have established an isomorphism between $W$ and $\sup F[W]$ which is an ordinal. Furthermore, suppose there are $\alpha, \beta \in Ord$ which are both isomorphic to $W$, then $\alpha$ must be isomorphic to $\beta$ which implies $\alpha = \beta$. This means that $F[W]$ is unique for each $W$.
+    \end{proof}
+\end{thmbox}
+One commonly used class of ordinals is the \textit{natural numbers}. A convenient analogy for natural numbers is to consider
+\begin{equation*}
+    \varnothing = 0, \qquad 1 = 0 + 1, \cdots
+\end{equation*}
+and so on, but this definition is not very rigorous. Recall that we previously justified that every ordinal has a successor, but is the converse true? In other words, \textbf{is every ordinal a successor ordinal?} Well, obviously $\varnothing$ is not a successor ordinal. Suppose $\alpha = \beta + 1$ is a successor ordinal, then we have $\bigcup\alpha = \beta$, i.e., $\bigcup\alpha < \alpha$. Notice that it is not possible that $\alpha < \bigcup\alpha$, so negating the definition of successor ordinal we have $\alpha = \bigcup\alpha$ if $\alpha$ is not a successor ordinal.
+\begin{dfnbox}{Limit Ordinal}{limitOrd}
+    An ordinal $\alpha$ is called a {\color{red} \textbf{limit ordinal}} if $\alpha = \sup\alpha$.
+\end{dfnbox}
+We will justify the existence of limit ordinals. 
+\begin{thmbox}{Existence of Least Non-zero Limit Ordinal}{leastLimOrdExist}
+    $\N = \bigcap\{X \colon X \textrm{ is inductive}\}$ is the least non-zero limit ordinal.
+    \tcblower
+    \begin{proof}
+        Since there exists an inductive set, $\N$ is a set by Axiom Schema \ref{axi:schemaSeparation} and $\N$ is inductive. $\N$ is non-empty because $\varnothing \in \N$. Let $S$ be the set of all successor ordinals. Notice that $S \cup \{\varnothing\}$ is inductive, so for all $\eta \in \N$, $\eta$ is either $0$ or a successor ordinal. Therefore, $\N \cap \mathit{Ord} = \N$, which means $\N \subseteq Ord$ and is an ordinal.
+        \\\\
+        Take any $n \in \N$. Since $n \cup \{n\} \in \N$, we have $n \in \bigcup\N$, and so $\N \subseteq \bigcup\N$. Conversely, we wish to prove that $\bigcup\N \subseteq \N$. Note that for all $m \in \bigcup\N$, $m \in \eta$ for some $\eta \in \N$. Therefore, it suffices to prove that $\N$ is transitive.
+        \\\\
+        Let $\mu \in \N$ be an ordinal. If $\mu = \varnothing$ then we are done. Otherwise, suppose on contrary that $\N$ is not transitive. Let $\nu \in \mu$ be the least ordinal such that $\nu \notin \N$. Clearly, $\nu \neq \varnothing$, so there is some $\nu' \in \mu$ such that $\nu = \nu' + 1$. However, $\nu' < \nu$, so $\nu' \in \N$. By the inductive property of $\N$ we have $\nu \in \N$ which is a contradiction. Therefore, $\N$ is transitive.
+        \\\\
+        Therefore, $\N = \bigcup\N$. Since for all $n \in \N$, we have $n = \varnothing$ or $n$ is a successor ordinal, this implies that $\N$ is the least limit ordinal.
+    \end{proof}
+\end{thmbox}
+Sometimes, this least non-zero limit ordinal is denoted by $\omega$. Clearly, $0 \in \N$ and for all $n \in \N$, $n + 1 \in \N$ --- indeed, this least non-zero limit ordinal defines exactly the notion of \textit{natural numbers}.
+\begin{dfnbox}{Natural Numbers}{N}
+    Let $\N$ be the least non-zero limit ordinal. An ordinal $\alpha$ is a {\color{red} \textbf{finite ordinal}} or {\color{red} \textbf{natural number}} if $\alpha < \N$.
+\end{dfnbox}
+\section{Induction and Recursion}
+Induction is a common tool used in mathematical proofs. We can generalise the notion of induction using the language of ordinals.
+\begin{thmbox}{Transfinite Induction}{transfiniteInduction}
+    Let $\C$ be a class of ordinals such that
+    \begin{enumerate}
+        \item $0 \in \C$;
+        \item $\alpha \in \C$ implies that $\alpha + 1 \in \C$;
+        \item if $\alpha$ is a limit ordinal with $\beta \in \C$ for all $\beta < \alpha$, then $\alpha \in \C$,
+    \end{enumerate}
+    then $\C = Ord$.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $\C \neq Ord$, then there exists a least ordinal $\alpha \in Ord - \C$. Note that $\alpha \neq 0$. If $\alpha$ is a successor ordinal, then there is some $\beta \in Ord$ such that $\beta + 1 = \alpha$, but $\beta < \alpha$ so $\beta \in \C$, which implies that $\alpha \in \C$. Therefore, $\alpha$ must be a non-zero limit ordinal. However, this means for all $\beta < \alpha$, we have $\beta \in \C$, which again implies that $\alpha \in \C$, a contradiction.
+    \end{proof}
+\end{thmbox}
+Another term closely associated to induction is \textit{recursion}. To define a recurrence behaviour, we first consider the notion of a \textit{sequence}.
+\begin{dfnbox}{Sequence}{seq}
+    An {\color{red} \textbf{(infinite) sequence}} in $X$ is a function $f \colon \N \to X$. A {\color{red} \textbf{finite sequence}} of length $n$ is a function whose domain is $\left\{i \colon i < n\right\}$ for some $n \in \N$. A {\color{red} \textbf{transfinite sequence}} is a function whose domain is an ordinal.
+\end{dfnbox}
+Let $\alpha \in Ord$, we can denote an $\alpha$-sequence or a sequence of length $\alpha$ by
+\begin{equation*}
+    \left\langle a_\xi \colon \xi < \alpha \right\rangle.
+\end{equation*}
+Such a sequence is also called an \textit{enumeration} of its range. If $s$ is a sequence of length $\alpha$, then we can extend it by appending some $x$ as its $(\alpha + 1)$-th term. This extended sequence can be denoted by $s \overset{\frown}{} x$.
+
+Now we proceed to defining recursion.
+\begin{thmbox}{Transfinite Recursion}{transfiniteRecursion}
+    Let $X$ be a set. For every function $G$ on the set of all transfinite sequences in $X$ of length less than $\theta \in Ord$ such that $\mathrm{ran}(G) \subseteq X$, then there exists a unique $\theta$-sequence $\left\langle a_\alpha \colon \alpha < \theta \right\rangle$ in $X$ such that
+    \begin{equation*}
+        a_\alpha = G\left(\left\langle a_\xi \colon \xi < \alpha \right\rangle\right)
+    \end{equation*}
+    for all $\alpha < \theta$.
+    \tcblower
+    \begin{proof}
+        Define a mapping $F \colon Ord \to X$ by $F(\alpha) = x$ if and only if there is a sequence $\left\langle a_\xi \colon \xi < \alpha \right\rangle$ such that 
+        \begin{equation*}
+            a_\xi = G\left(\left\langle a_\eta \colon \eta < \xi \right\rangle\right) \quad \textrm{for all } \xi < \alpha, \quad \textrm{and} \quad x = G\left(\left\langle a_\xi \colon \xi < \alpha \right\rangle\right).
+        \end{equation*}
+        Note that such a sequence $\left\langle a_\xi \colon \xi < \alpha \right\rangle$ exists by definition of $G$. By induction on $\xi$, one can check that this sequence is unique. Therefore, $F$ is a well-defined function since $G$ is well-defined. By taking $a_\alpha = F(\alpha)$ we therefore obtain an $(\alpha + 1)$-sequence.
+        \\\\
+        Let $F' \colon Ord \to X$ be any function with the above property, then by induction on $\alpha$ we can prove that $F'(\alpha) = F(\alpha)$ for all $\alpha \in Ord$, i.e., $F$ is unique.
+    \end{proof}
+\end{thmbox}
+Lastly, we define the limiting behaviour of a sequence.
+\begin{dfnbox}{Limit and Continuity of Sequences}{seqLim}
+    Let $\alpha > 0$ be a limit ordinal and let $\left\langle \gamma_\xi \colon \xi < \alpha \right\rangle$ be a non-decreasing sequence of ordinals. The {\color{red} \textbf{limit}} of the sequence is defined as
+    \begin{equation*}
+        \lim_{\xi \to \alpha} = \sup\left\{\gamma_\xi \colon \xi < \alpha\right\}.
+    \end{equation*}
+    A sequence in $Ord$ is {\color{red} \textbf{continuous}} if for every limit ordinal $\alpha$, $\gamma_\alpha = \lim_{\xi \to \alpha}\gamma_xi$. A sequence in $Ord$ is {\color{red} \textbf{normal}} if it is increasing and continuous.   
+\end{dfnbox}
+\section{Ordinal Arithmetic}
+Arithmetic operations, namely addition, multiplication and exponentiation, can be defined rigorously using recursion.
+\begin{dfnbox}{Ordinal Addtion}{ordAdd}
+    For all $\alpha, \beta \in Ord$,
+    \begin{enumerate}
+        \item $\alpha + 0 = \alpha$;
+        \item $\alpha + (\beta + 1) = (\alpha + \beta) + 1$;
+        \item $\alpha + \beta = \lim_{\xi \to \beta}(\alpha + \xi)$ if $\beta$ is a limit ordinal.
+    \end{enumerate}
+\end{dfnbox}
+\begin{dfnbox}{Ordinal Multiplication}{ordMult}
+    For all $\alpha, \beta \in Ord$,
+    \begin{enumerate}
+        \item $\alpha \cdot 0 = 0$;
+        \item $\alpha \cdot (\beta + 1) = \alpha \cdot \beta + \alpha$;
+        \item $\alpha \cdot \beta = \lim_{\xi \to \beta}(\alpha \cdot \xi)$ if $\beta$ is a limit ordinal.
+    \end{enumerate}
+\end{dfnbox}
+\begin{dfnbox}{Ordinal Exponentiation}{ordExp}
+    For all $\alpha, \beta \in Ord$,
+    \begin{enumerate}
+        \item $\alpha^0 = 1$;
+        \item $\alpha^{\beta + 1} = \alpha^\beta \cdot \alpha$;
+        \item $\alpha^\beta = \lim_{\xi \to \beta}\alpha^\xi$ if $\beta$ is a limit ordinal.
+    \end{enumerate}
+\end{dfnbox}
+Note that in the above definitions, we make use of limit of sequences only for the case where $\beta$ is a limit ordinal, as for successor ordinals we can apply the definition of successors iteratively.
+
+We can prove that both addition and multiplication are associative on $Ord$ by induction. However, they are \textbf{not commutative} on $Ord$. First, notice that 
+\begin{equation*}
+    1 + \omega = \sup\,\{1 + \xi \colon \xi < \omega\} = \sup\N = \omega
+\end{equation*}
+but $\omega + 1 = \omega \cup \{\omega\} \neq \omega$. Therefore, we can show that for any finite ordinal $n$, 
+\begin{equation*}
+    n + \omega = \omega \neq \omega + n.
+\end{equation*}
+Similarly, we have $2 \cdot \omega = \omega \neq \omega \cdot 2 = \omega + \omega$, so $n \cdot \omega = \omega \neq \omega \cdot n$ for any finite ordinal $n$.
+
+Note that ordinals are essentially linearly ordered sets. Therefore, we can relate ordinal arithmetic to the sums and products of arbitrary linearly ordered sets.
+\begin{dfnbox}{Sum of Linear Orders}{SumLinOrd}
+    Let $(A, <_A)$ and $(B, <_B)$ be disjoint linearly ordered sets. The {\color{red} \textbf{sum}} of $A$ and $B$ is defined as $A \cup B$ such that for any $x, y \in A \cup B$, $x < y$ if and only if
+    \begin{itemize}
+        \item $x, y \in A$ and $x <_A y$, or
+        \item $x, y \in B$ and $x <_B y$, or
+        \item $x \in A$ and $y \in B$.
+    \end{itemize}
+\end{dfnbox}
+\begin{dfnbox}{Product of Linear Orders}{prodLinOrd}
+    Let $(A, <_A)$ and $(B, <_B)$ be linearly ordered sets. The {\color{red} \textbf{product}} of $A$ and $B$ is the set $A \times B$ such that for any $(a_1, b_1), (a_2, b_2) \in A \times B$, $(a_1, b_1) < (a_2, b_2)$ if and only if
+    \begin{itemize}
+        \item $b_1 < b_2$, or
+        \item $b_1 = b_2$ and $a_1 < a_2$.
+    \end{itemize}
+\end{dfnbox}
+Given any ordinals $\alpha$ and $\beta$, by induction on $\beta$ we can prove that $\alpha + \beta$ is isomorphic to $\alpha \cup \alpha \triangle \beta$ and $\alpha \cdot \beta$ is isomorphic to $\alpha \times \beta$.
+
+There are some properties for ordinal arithmetic which comply with arithmetic over natural numbers. For example:
+\begin{enumerate}
+    \item If $\beta < \gamma$, then $\alpha + \beta < \alpha + \gamma$.
+    \item If $\alpha < \beta$, then there exists a unique $\delta$ such that $\alpha + \delta = \beta$.
+    \item If $\beta < \gamma$ and $\alpha > 0$, then $\alpha \cdot \beta < \alpha \cdot \gamma$.
+    \item If $\alpha > 0$, then for any $\gamma$, there exists a unique $\beta$ and a unique $\rho < \alpha$ such that $\gamma = \alpha \cdot \beta + \rho$.
+    \item If $\beta < \gamma$ and $\alpha > 1$, then $\alpha^\beta < \alpha^\gamma$.
+\end{enumerate}
+This leads to what is known as \textit{Cantor's Normal Form Theorm}.
+\begin{thmbox}{Cantor's Normal Form Theorem}{cantorNormal}
+    Every ordinal $\alpha > 0$ can be uniquely represented in the form
+    \begin{equation*}
+        \alpha = \omega^{\beta_1} \cdot k_1 + \cdots + \omega^{\beta_n} \cdot k_n,
+    \end{equation*}
+    where $n \geq 1$, $\alpha \geq \beta_1 > \cdots > \beta_n$, and $k_1, \cdots, k_n$ are non-zero natural numbers.
+\end{thmbox}
 \end{document}
