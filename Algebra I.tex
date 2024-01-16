@@ -1,0 +1,127 @@
+\documentclass[math, code]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\begin{document}
+\fancyhead[L]{
+    Algebra I
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Introduction to Groups}
+\section{Axioms of Groups}
+In this section, we will introduce the fundamental axioms which define the abstract mathematical notion of groups, as well as some simple results derived from these axioms.
+\begin{dfnbox}{Group}{grp}
+    A {\color{red} \textbf{group}} is a set $G$ with an {\color{red} \textbf{associative}} map $\star \colon G \times G \to G$ such that there exists some $e \in G$ with $a \star e = e \star a = a$ for all $a \in G$ and another map $(\quad)^{-1} \colon G \to G$ such that $a \star a^{-1} = a^{-1} \star a = e$.
+\end{dfnbox}
+In Definition \ref{dfn:grp}, the map $\star$ is often called \textit{multiplication} by convention, the element $e$ is known as the \textit{identity} element of $G$, and the map $(\quad)^{-1}$ is known as the \textit{inversion} map.
+
+Therefore, a group can be defined as a set in which:
+\begin{enumerate}
+    \item any two elements can be multiplied,
+    \item every element has an inverse in the set itself, and
+    \item there exists an identity element which equals the product of any element multiplied by its inverse and multiplied by which any element equals itself.
+\end{enumerate}
+A group can be finite or infinite. A group defined over $G$ is finite if and only if $G$ is finite, where $\abs{G}$ is known as the \textit{order} of the group. 
+
+The very first thing to take note here is that the order of multiplication matters in groups! In other words, $a \star b \neq b \star a$ in general.
+\begin{dfnbox}{Abelian Group}{abelian}
+    A group $G$ is called an {\color{red} \textbf{Abelian}} or {\color{red} \textbf{commutative}} group if $a \star b = b \star a$ for all $a, b \in G$.
+\end{dfnbox}
+Another important thing to remember here is that, although we call the map $\star$ ``multiplication'' conventionally, it does not have to be referring to the multiplication between real numbers or vectors or anything that we commonly take to be able to be multiplied together in elementary mathematics. In fact, we will see that by taking $\Z$ as the set and addition $+$ as the multiplication map, we get a group that satisfies Definition \ref{dfn:grp} perfectly!
+
+We shall prove two trivial results directly from the definition.
+\begin{thmbox}{Uniqueness of Identity and Inverse of Groups}{uniqueIdAndInv}
+    Let $G$ be a group under $\star$ with identity $e$, then $e$ is unique and for all $a \in G$, $a^{-1}$ is unique.
+    \tcblower
+    \begin{proof}
+        Suppose there exists $f \in G$ such that $a \star f = f \star a = a$ for all $a \in G$. Since $e \in G$, we have $e \star f = e$, but $e$ is the identity and $f \in G$, so $f \star e = f$. Therefore,
+        \begin{equation*}
+            f = f \star e = e \star f = e,
+        \end{equation*}
+        which means that $e$ is unique.
+        \\\\
+        Suppose that there is some $a \in G$ such that there is some $b \in G$ with $a \star b = b \star a = e$, then
+        \begin{align*}
+            b & = b \star e \\
+            & = b \star \left(a \star a^{-1}\right) \\
+            & = \left(b \star a\right) \star a^{-1} \\
+            & = e \star a^{-1} \\
+            & = a^{-1}.
+        \end{align*}
+        Therefore, $a^{-1}$ is unique for all $a \in G$.
+    \end{proof}
+\end{thmbox}
+Theorem \ref{thm:uniqueIdAndInv} shows that if the map $\star$ is such that an identity exists in the set $G$, then it is unique, which also uniquely determines the inversion map as there cannot be different $a, b \in G$ such that $ac = bc = e$ for some $c \in G$. In other words, \textbf{a group is uniquely determined by the multiplication map} given a set $G$.
+
+We will now introduce some simple groups. First, it is easy to see that any singleton set $\{e\}$ is a group with $e$ being the identity and the inverse of itself. One can check that the only valid multiplication map is the map $(e, e) \mapsto e$.
+
+$\Z, \Q, \R, \C$ under $+$ are known as \textit{additive groups}. $\Q^{\times} \coloneqq \Q - \{0\},\R^{\times} \coloneqq \R - \{0\}, \C^{\times} \coloneqq \C - \{0\}$ under $\times$ are known as \textit{multiplicative groups}. Note that $\Z - \{0\}$ under $\times$ is not a group because there is no inverse for any $n \in \Z$ with $\abs{n} > 1$. So we define $\Z^{\times} \coloneqq \{-1, 1\}$ which under $\times$ is a multiplicative group.
+
+\begin{notebox}
+    \begin{remark}
+        In general, if $A$ is a ring, then $A$ under $+$ is an additive group and the set
+        \begin{equation*}
+            A^{\times} \coloneqq \left\{a \in A \colon \exists b \in A \textrm{ such that } ab = ba = 1_A\right\}
+        \end{equation*}
+        under $\times$ is a multiplicative group. 
+    \end{remark}
+\end{notebox}
+As an extension, for any $n \in \Z^+$, the quotient set $\Z/n\Z$ under $+$ is an additive group and the set $(Z/n\Z)^{\times}$ under $\times$ is a multiplicative group.
+
+We can do a bit of nesting with the definitions. First, we shall prove a preliminary theorem.
+\begin{thmbox}{Bijectivity and Invertibility Are Equivalent}{BijEquivInv}
+    Let $X, Y$ be any sets and let $\sigma \in \mathrm{Maps}(X, Y)$ be a map, then $\sigma$ is invertible if and only if it is bijective.
+    \tcblower
+    \begin{proof}
+        Suppose that $\sigma$ is invertible. Let $x_1, x_2 \in X$ be such that $\sigma(x_1) = \sigma(x_2)$, then 
+        \begin{equation*}
+            x_1 = \sigma^{-1}\bigl(\sigma(x_1)\bigr) = \sigma^{-1}\bigl(\sigma(x_2)\bigr) = x_2,
+        \end{equation*}
+        so $\sigma$ is injective. Take some $y \in Y$, then there exists $\sigma^{-1}(y) \in X$ with $\sigma\bigl(\sigma^{-1}(y)\bigr) = y$, so $\sigma$ is surjective. Therefore, $\sigma$ is a bijection.
+        \\\\
+        Conversely, suppose that $\sigma$ is bijective. Define a map $\tau \colon Y \to X$ by $\tau(y) = x$ if and only if $\sigma(x) = y$. Since $\sigma$ is injective, for every $y \in Y$ there is a unique $x$ with $\sigma(x) = y$, so $\tau$ is well-defined. Take any $x \in X$ with $\sigma(x) = y$, we have
+        \begin{equation*}
+            \tau\bigl(\sigma(x)\bigr) = \tau(y) = x,
+        \end{equation*}
+        so $\tau \circ \sigma = \mathrm{id}_X$. Similarly, $\sigma \circ \tau = \mathrm{id}_Y$. Therefore, $\sigma$ is invertible.
+    \end{proof}
+\end{thmbox}
+Now for an arbitrary set $\Omega$, we will consider the set 
+\begin{equation*}
+    \mathrm{Perm}(\Omega) \coloneqq \left\{\sigma \in \mathrm{Maps}(\Omega, \Omega) \colon \sigma \textrm{ is bijective}\right\}.
+\end{equation*}
+$\mathrm{Perm}(\Omega)$ under $\circ$ is known as the \textit{permutation group} of $\Omega$. This group is intuitively named as such in a sense that each $\sigma \in \mathrm{Perm}(\Omega)$ defines a unique way to map an element of $\Omega$ to some element of $\Omega$ itself, forming a permutation of the set. 
+
+In particular, let $[n]$ denote the set of all natural numbers not greater than $n$, then the group of $\mathrm{Perm}([n] - \{0\})$ under $\circ$ is known as a \textit{symmetric group} of degree $n$.
+\end{document}
