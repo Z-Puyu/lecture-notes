@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  2 DEC 2023 20:07
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  15 JAN 2024 08:49
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"Non-linear Programming"
-(./Non-linear Programming.tex
+**"Linear Algebra II"
+(./Linear Algebra II.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (./amznotes.cls
 Document Class: amznotes 2023/03/03 amznotes
@@ -889,7 +889,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@listing=\toks53
 \c@listing=\count390
 )
-runsystem(if not exist _minted-Non-linear_Programming mkdir _minted-Non-linear_Programming)...executed.
+runsystem(if not exist _minted-Linear_Algebra_II mkdir _minted-Linear_Algebra_II)...executed.
 
  (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
 Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
@@ -1174,12 +1174,12 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count392
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Non-linear_Programming.aex <nul: /p x=^%~$PATH:i>> Non-linear_Programming.aex)...executed.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Linear_Algebra_II.aex <nul: /p x=^%~$PATH:i>> Linear_Algebra_II.aex)...executed.
 
-runsystem(del Non-linear_Programming.aex)...executed.
+runsystem(del Linear_Algebra_II.aex)...executed.
 
- (./Non-linear Programming.aux)
-\openout1 = `"Non-linear Programming.aux"'.
+ (./Linear Algebra II.aux)
+\openout1 = `"Linear Algebra II.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
@@ -1259,216 +1259,31 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                inconsistencies.
 
 Package hyperref Info: Link coloring ON on input line 32.
-(./Non-linear Programming.out) (./Non-linear Programming.out)
+(./Linear Algebra II.out) (./Linear Algebra II.out)
 \@outlinefile=\write6
-\openout6 = `"Non-linear Programming.out"'.
+\openout6 = `"Linear Algebra II.out"'.
 
 \c@lstlisting=\count393
- (./Non-linear Programming.toc
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 12.00128pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 8.40088pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 6.60071pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 6.59929pt on input line 2.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
-
-
-])
+ (./Linear Algebra II.toc)
 \tf@toc=\write7
-\openout7 = `"Non-linear Programming.toc"'.
+\openout7 = `"Linear Algebra II.toc"'.
 
- [2]
-Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 43.
-[3
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 103--106
-
- []
-
-[4] [5] [6]
-Chapter 2.
-[7
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 219--223
-
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 243--246
-
- []
-
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 319--323
-
- []
-
-[10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 353--357
-
- []
-
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 418--421
-
- []
+ [1
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 423--427
-
- []
-
-
-Underfull \hbox (badness 1584) in paragraph at lines 423--427
-\TU/STIXTwoText(0)/m/n/12 Suppose conversely that all eigenvalues of $[]$ are non-negative. Consider the
- []
-
-[14]
-
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 475.
-
-[15] [16]
-Chapter 3.
-[17
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 531--534
-
- []
-
-[18] [19] [20]
-Chapter 4.
-
-Underfull \hbox (badness 10000) in paragraph at lines 573--580
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 573--580
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 573--580
-
- []
-
-[21
-
-]
-\openout4 = `Non-linear_Programming.pyg'.
-
- (./_minted-Non-linear_Programming/default.pygstyle) (./_minted-Non-linear_Programming/7DB42AEB7DD819462B3E7DA0501ED7C1BBA61CBC955F87590AD1262FB6AAE5A1.pygtex
-
-LaTeX Font Warning: Font shape `TU/JetBrainsMonoNL-Regular(0)/b/n' undefined
-(Font)              using `TU/JetBrainsMonoNL-Regular(0)/m/n' instead on input line 2.
-
-) [22]
-Underfull \hbox (badness 10000) in paragraph at lines 636--639
-
- []
-
-\openout4 = `Non-linear_Programming.pyg'.
-
-(./_minted-Non-linear_Programming/ADC1F76DBE6870BF2A944D0E0E5963EBBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [23]
-\openout4 = `Non-linear_Programming.pyg'.
-
- (./_minted-Non-linear_Programming/BB2103577AB816CFF868A69F8F2DB158BBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [24] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 752--755
-
- []
-
-[26]
-Underfull \hbox (badness 10000) in paragraph at lines 782--785
-
- []
-
-[27]
-\openout4 = `Non-linear_Programming.pyg'.
-
- (./_minted-Non-linear_Programming/518EE3B2579DDF76CD91AF92D1CA29CDBBA61CBC955F87590AD1262FB6AAE5A1.pygtex
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 6.00064pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 2.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 2.
-) [28]
-Underfull \hbox (badness 10000) in paragraph at lines 828--831
-
- []
-
-\openout4 = `Non-linear_Programming.pyg'.
-
-(./_minted-Non-linear_Programming/68639FED2AEDB50B3046E8727DD8853DBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [29] [30]
-Underfull \hbox (badness 10000) in paragraph at lines 913--917
-
- []
-
-[31] [32]
-\openout4 = `Non-linear_Programming.pyg'.
-
- (./_minted-Non-linear_Programming/98294383593E8353A24DC85DCFC0867FBBA61CBC955F87590AD1262FB6AAE5A1.pygtex) [33]
-Chapter 5.
-[34
-
-] [35] [36] [37] [38] [39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 1249--1255
-
- []
-
-
-Underfull \hbox (badness 1297) in paragraph at lines 1249--1255
-\TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker First Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[][]$ is
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1249--1255
-
- []
-
-
-Underfull \hbox (badness 2443) in paragraph at lines 1249--1255
-\TU/STIXTwoText(0)/m/it/12 The []\TU/STIXTwoText(0)/b/it/12 Kurash-Kuhn-Tucker Second Order Necessary Condition[] \TU/STIXTwoText(0)/m/it/12 states that if $[]$
- []
-
-[41] [42] [43] [44] 
+] 
 enddocument/afterlastpage: lastpage setting LastPage.
-(./Non-linear Programming.aux)
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
-Package rerunfilecheck Info: File `"Non-linear Programming".out' has not changed.
+(./Linear Algebra II.aux)
+Package rerunfilecheck Info: File `"Linear Algebra II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
-runsystem(del Non-linear_Programming.pyg)...executed.
-
  ) 
 Here is how much of TeX's memory you used:
- 39347 strings out of 478630
- 830827 string characters out of 5847730
- 1879012 words of memory out of 5000000
- 58771 multiletter control sequences out of 15000+600000
- 517967 words of font info for 111 fonts, out of 8000000 for 9000
+ 38766 strings out of 478630
+ 815510 string characters out of 5847730
+ 1850012 words of memory out of 5000000
+ 58276 multiletter control sequences out of 15000+600000
+ 513092 words of font info for 53 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,16n,128p,1209b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,11n,128p,1204b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Non-linear Programming.pdf (44 pages).
+Output written on Linear Algebra II.pdf (1 page).
