@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  15 JAN 2024 08:49
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  16 JAN 2024 13:52
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"Linear Algebra II"
-(./Linear Algebra II.tex
+**"Combinatorics and Graphs II"
+(./Combinatorics and Graphs II.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (./amznotes.cls
 Document Class: amznotes 2023/03/03 amznotes
@@ -889,7 +889,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@listing=\toks53
 \c@listing=\count390
 )
-runsystem(if not exist _minted-Linear_Algebra_II mkdir _minted-Linear_Algebra_II)...executed.
+runsystem(if not exist _minted-Combinatorics_and_Graphs_II mkdir _minted-Combinatorics_and_Graphs_II)...executed.
 
  (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
 Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
@@ -1174,12 +1174,13 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count392
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Linear_Algebra_II.aex <nul: /p x=^%~$PATH:i>> Linear_Algebra_II.aex)...executed.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Combinatorics_and_Graphs_II.aex <nul: /p x=^%~$PATH:i>> Combinatorics_and_Graphs_II.aex)...executed.
 
-runsystem(del Linear_Algebra_II.aex)...executed.
+runsystem(del Combinatorics_and_Graphs_II.aex)...executed.
 
- (./Linear Algebra II.aux)
-\openout1 = `"Linear Algebra II.aux"'.
+
+No file "Combinatorics and Graphs II".aux.
+\openout1 = `"Combinatorics and Graphs II.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
@@ -1201,7 +1202,6 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1259,31 +1259,45 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                inconsistencies.
 
 Package hyperref Info: Link coloring ON on input line 32.
-(./Linear Algebra II.out) (./Linear Algebra II.out)
 \@outlinefile=\write6
-\openout6 = `"Linear Algebra II.out"'.
+\openout6 = `"Combinatorics and Graphs II.out"'.
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 \c@lstlisting=\count393
- (./Linear Algebra II.toc)
+No file "Combinatorics and Graphs II".toc.
 \tf@toc=\write7
-\openout7 = `"Linear Algebra II.toc"'.
+\openout7 = `"Combinatorics and Graphs II.toc"'.
 
- [1
+
+LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 41.
+
+[1
 
 
 ] 
 enddocument/afterlastpage: lastpage setting LastPage.
-(./Linear Algebra II.aux)
-Package rerunfilecheck Info: File `"Linear Algebra II".out' has not changed.
+(./Combinatorics and Graphs II.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
+
+Package lastpage Warning: Rerun to get the references right on input line 41.
+
  ) 
 Here is how much of TeX's memory you used:
- 38766 strings out of 478630
- 815510 string characters out of 5847730
+ 38757 strings out of 478630
+ 815582 string characters out of 5847730
  1850012 words of memory out of 5000000
- 58276 multiletter control sequences out of 15000+600000
- 513092 words of font info for 53 fonts, out of 8000000 for 9000
+ 58274 multiletter control sequences out of 15000+600000
+ 513100 words of font info for 54 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,11n,128p,1204b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,11n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear Algebra II.pdf (1 page).
+Output written on Combinatorics and Graphs II.pdf (1 page).
