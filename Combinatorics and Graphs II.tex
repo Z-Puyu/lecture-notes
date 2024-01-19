@@ -38,4 +38,26 @@
 }
 \tableofcontents
 
+\chapter{Graph Structures}
+\begin{probox}{}{}
+    Every non-empty graph $G$ has a subgraph $H$ such that $\delta(H) \geq \frac{1}{2} \bar{d}(G)$.
+\end{probox}
+\begin{thmbox}{Erdos-Gallai Algorithm}{ErdosGallai}
+    A non-increasing sequence $(d_1, d_2, \cdots, d_n)$ is graphic if and only if $\sum_{i = 1}^n d_i$ is even and for all $k = 1, 2, \cdots, n$,
+    \begin{equation*}
+        \sum_{i = 1}^{k} d_i \leq k(k - 1) + \sum_{i = k + 1}^{n}\min\{d_i, k\}.
+    \end{equation*}
+\end{thmbox}
+\begin{probox}{}{}
+    Let $\mathbfit{M}$ and $\mathbfit{A}$ be the incidence matrix and adjacency matrix of a simple graph $G$ respectively, then
+    \begin{equation*}
+        \mathbfit{M}\mathbfit{M}^{\mathrm{T}} = \begin{bmatrix}
+            d_1 & 0 & 0 & \cdots & 0 \\
+            0 & d_2 & 0 & \cdots & 0 \\
+            0 & 0 & d_3 & \cdots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & \cdots & d_n
+        \end{bmatrix} + \mathbfit{A}.
+    \end{equation*}
+\end{probox}
 \end{document}
