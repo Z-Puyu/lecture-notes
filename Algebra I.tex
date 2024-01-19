@@ -124,4 +124,33 @@ Now for an arbitrary set $\Omega$, we will consider the set
 $\mathrm{Perm}(\Omega)$ under $\circ$ is known as the \textit{permutation group} of $\Omega$. This group is intuitively named as such in a sense that each $\sigma \in \mathrm{Perm}(\Omega)$ defines a unique way to map an element of $\Omega$ to some element of $\Omega$ itself, forming a permutation of the set. 
 
 In particular, let $[n]$ denote the set of all natural numbers not greater than $n$, then the group of $\mathrm{Perm}([n] - \{0\})$ under $\circ$ is known as a \textit{symmetric group} of degree $n$.
+
+\section{Multiplication}
+\begin{probox}{}{uniqueFactor}
+    Let $G$ be a group. For any $a, b \in G$, there exists a unique $x \in G$ such that $ax = b$ and a unique $y \in G$ such that $ya = b$.
+    \tcblower
+    \begin{proof}
+        Observe that $x = a^{-1}b$ is such that $x \in G$ and $ax = b$. Suppose there is $x' \in G$ such that $ax' = b$, then
+        \begin{align*}
+            x' = a^{-1}ax' = a^{-1}b = a^{-1}ax = x.
+        \end{align*}
+        Therefore, $x$ is unique. One can check similarly that there exists a unique $y \in G$ such that $ya = b$.
+    \end{proof}
+\end{probox}
+An important implication of Proposition \ref{pro:uniqueFactor} is that we can cancel ``common factors'' in multiplication between group elements.
+\begin{corbox}{Cancellation Laws}{cancelLaw}
+    Let $G$ be a group. For any $a, u, v \in G$, if $au = av$, then $u = v$. Similarly, if $ua = va$, then $u = v$.
+\end{corbox}
+It is also easy to see that for any $a$ in a group $G$, the maps $x \mapsto ax$ and $x \mapsto xa$ where $x \in G$ are always bijective.
+\begin{dfnbox}{Direct Product}{dirProd}
+    Let $(A, \star)$ and $(B, \circ)$ be groups. The {\color{red} \textbf{direct product}} $A \times B$ is defined by the set
+    \begin{equation*}
+        \left\{(a, b) \colon a \in A, b \in B\right\}
+    \end{equation*}
+    where
+    \begin{equation*}
+        (a_1, b_1)(a_2, b_2) = (a_1 \star a_2, b_1 \circ b_2).
+    \end{equation*}
+\end{dfnbox}
+One may check that for  any groups $A$ and $B$, the direct product $A \times B$ is always a group with identity $(1_A, 1_B)$ and inversion map $(a, b) \mapsto (a^{-1}, b^{-1})$.
 \end{document}

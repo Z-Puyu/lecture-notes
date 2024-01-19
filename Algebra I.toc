@@ -1,2 +1,3 @@
 \contentsline {chapter}{\numberline {1}Introduction to Groups}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Axioms of Groups}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Multiplication}{5}{section.1.2}%
