@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 JAN 2024 15:22
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 JAN 2024 20:59
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"Combinatorics and Graphs II"
-(./Combinatorics and Graphs II.tex
+**"Linear and Network Optimisations"
+(./Linear and Network Optimisations.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (./amznotes.cls
 Document Class: amznotes 2023/03/03 amznotes
@@ -889,7 +889,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@listing=\toks53
 \c@listing=\count390
 )
-runsystem(if not exist _minted-Combinatorics_and_Graphs_II mkdir _minted-Combinatorics_and_Graphs_II)...executed.
+runsystem(if not exist _minted-Linear_and_Network_Optimisations mkdir _minted-Linear_and_Network_Optimisations)...executed.
 
  (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
 Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
@@ -1174,13 +1174,12 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count392
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Combinatorics_and_Graphs_II.aex <nul: /p x=^%~$PATH:i>> Combinatorics_and_Graphs_II.aex)...executed.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Linear_and_Network_Optimisations.aex <nul: /p x=^%~$PATH:i>> Linear_and_Network_Optimisations.aex)...executed.
 
-runsystem(del Combinatorics_and_Graphs_II.aex)...executed.
+runsystem(del Linear_and_Network_Optimisations.aex)...executed.
 
-
-No file "Combinatorics and Graphs II".aux.
-\openout1 = `"Combinatorics and Graphs II.aux"'.
+ (./Linear and Network Optimisations.aux)
+\openout1 = `"Linear and Network Optimisations.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
@@ -1202,6 +1201,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1259,73 +1259,56 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                inconsistencies.
 
 Package hyperref Info: Link coloring ON on input line 32.
+(./Linear and Network Optimisations.out) (./Linear and Network Optimisations.out)
 \@outlinefile=\write6
-\openout6 = `"Combinatorics and Graphs II.out"'.
-
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
+\openout6 = `"Linear and Network Optimisations.out"'.
 
 \c@lstlisting=\count393
-No file "Combinatorics and Graphs II".toc.
+ (./Linear and Network Optimisations.toc
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 12.00128pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 8.40088pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 6.60071pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 8.3991pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 6.59929pt on input line 2.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
 \tf@toc=\write7
-\openout7 = `"Combinatorics and Graphs II.toc"'.
+\openout7 = `"Linear and Network Optimisations.toc"'.
 
-
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 41.
-
-[1
+ [1
 
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 42.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 12.00128pt on input line 43.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 8.40088pt on input line 43.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 6.60071pt on input line 43.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 43.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 43.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 6.59929pt on input line 43.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 43.
-(c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 43.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 63.
-
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 49.
 [2
 
 ] 
 enddocument/afterlastpage: lastpage setting LastPage.
-(./Combinatorics and Graphs II.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
+(./Linear and Network Optimisations.aux)
+Package rerunfilecheck Info: File `"Linear and Network Optimisations".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
-
-Package lastpage Warning: Rerun to get the references right on input line 63.
-
  ) 
 Here is how much of TeX's memory you used:
- 38874 strings out of 478630
- 818657 string characters out of 5847730
- 1863012 words of memory out of 5000000
- 58360 multiletter control sequences out of 15000+600000
- 516087 words of font info for 77 fonts, out of 8000000 for 9000
+ 38899 strings out of 478630
+ 819664 string characters out of 5847730
+ 1858012 words of memory out of 5000000
+ 58373 multiletter control sequences out of 15000+600000
+ 516119 words of font info for 81 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,11n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,11n,128p,1219b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (2 pages).
+Output written on Linear and Network Optimisations.pdf (2 pages).
