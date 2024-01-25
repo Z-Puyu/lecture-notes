@@ -20,6 +20,9 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
 \newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
@@ -38,4 +41,126 @@
 }
 \tableofcontents
 
+\chapter{Vector Spaces}
+\section{Fields, Scalars and Vectors}
+In elementary mathematics, we often refer to a vector as an ordered tuple of numbers with a direction and a magnitude. However, there is a much more abstract aspect to the notion of vectors. In fact, let us first generalise the notion of \textit{scalars}, which are taken as complex constants in an elementary level. 
+
+In general, we have the following algebraic structure:
+\begin{dfnbox}{Field}{field}
+    A {\color{red} \textbf{field}} is a set $\mathcal{F}$ with two binary operations $\mathcal{F}^2 \to \mathcal{F}$, namely addition and multiplication, such that
+    \begin{enumerate}
+        \item $u + v = v + u$ for all $u, v \in \mathcal{F}$;
+        \item $(u + v) + w = u + (v + w)$ for all $u, v, w \in \mathcal{F}$;
+        \item $uv = vu$ for all $u, v \in \mathcal{F}$;
+        \item $(uv)w = u(vw)$ for all $u, v, w \in \mathcal{F}$;
+        \item $u(v + w) = uv + uw$ for all $u, v, w \in \mathcal{F}$;
+        \item there exists $0 \in \mathcal{F}$ such that $u + 0 = u$ for all $u \in \mathcal{F}$;
+        \item there exists $1 \in \mathcal{F}$ such that $1u = u$ for all $u \in \mathcal{F}$;
+        \item for every $u \in \mathcal{F}$, there exists some $v \in \mathcal{F}$ such that $u + v = 0$;
+        \item for every $u \in \mathcal{F}$, there exists some $v \in \mathcal{F}$ such that $uv = 1$.
+    \end{enumerate}
+\end{dfnbox}
+One may check that both $\R$ and $\C$ are fields. It turns out that we can also generalise the concept of vectors as any objects which possess properties similar to that of Euclidean vectors, i.e., we can view a vector as a mathematical quantity which can be added up and multiplied by another quantity called a scalar with some axioms which they follow. Rigorously, we define the notion of a \textit{vector space}.
+\begin{dfnbox}{Vector Space}{vecSpace}
+    A {\color{red} \textbf{vector space}} is a set $V$ over a field $\mathcal{F}$ with two binary operations, namely 
+    \begin{itemize}
+        \item addition $+ \colon V^2 \to V$, and
+        \item scalar multiplication $(\quad)(\quad) \colon \mathcal{F} \times V \to V$,
+    \end{itemize}
+    such that
+    \begin{enumerate}
+        \item $\mathbfit{u + v = v + u}$ for all $\mathbfit{u}, \mathbfit{v} \in V$;
+        \item $\mathbfit{(u + v) + w = u + (v + w)}$ for all $\mathbfit{u, v, w} \in V$;
+        \item $ab\mathbfit{v} = a(b\mathbfit{v})$ for all $a, b \in \mathcal{F}$ and $\mathbfit{v} \in V$;
+        \item there exists an {\color{red} \textbf{additive identity}} or {\color{red} \textbf{zero vector}} $\zero \in V$ such that $\mathbfit{v} + \zero = \mathbfit{v}$ for all $\mathbfit{v} \in V$;
+        \item every $\mathbfit{v} \in V$ has an {\color{red} \textbf{additive inverse}} $\mathbfit{w} \in V$ with $\mathbfit{v + w} = 0$;
+        \item there exists a {\color{red} \textbf{multiplicative identity}} $1 \in \mathcal{F}$ such that $1\mathbfit{v} = \mathbfit{v}$ for all $\mathbfit{v} \in V$;
+        \item $a\mathbfit{(u + v)} = a\mathbfit{u} + a\mathbfit{v}$ and $(a + b)\mathbfit{u} = a\mathbfit{u} + b\mathbfit{u}$ for all $a, b \in \mathcal{F}$ and $\mathbfit{u, v} \in V$.
+    \end{enumerate}
+\end{dfnbox}
+Notice that here, the definitions of addition in scalar multiplication in a vector space imply that any vector space must be \textbf{closed} under these two operations. Notice also that the operations ``addition'' and ``scalar multiplication'' are not necessary the addition and scalar multiplication which we are used to in $\R^n$, but abstract mappings which satisfy the given axioms.
+
+We shall prove a few basic properties regarding vector spaces.
+\begin{thmbox}{Uniqueness of Additive Identity}{unique0}
+    Let $V$ be a vector space with $\zero \in V$ as an additive identity, then $\zero$ is unique.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there exists $\mathbfit{u} \in V$ such that $\mathbfit{v + u = v}$ for all $\mathbfit{v} \in V$. Since $\zero \in V$, we have
+        \begin{equation*}
+            \zero + \mathbfit{u} = \zero.
+        \end{equation*}
+        However, $\zero$ is the additive identity, so 
+        \begin{equation*}
+            \mathbfit{u} = \mathbfit{u} + \zero = \zero + \mathbfit{u} = \zero,
+        \end{equation*}
+        i.e. $\zero$ is unique.
+    \end{proof}
+\end{thmbox}
+Similarly, we can also prove the uniqueness of additive inverse.
+\begin{thmbox}{Uniqueness of Additive Inverse}{unique-1}
+    Let $V$ be a vector space, then every $\mathbfit{v} \in V$ has a unique additive inverse.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there exist $\mathbfit{u, w} \in V$ both being additive inverse of~$\mathbfit{v}$, then $\mathbfit{u + v} = \zero$ and $\mathbfit{w + v} = \zero$. Therefore,
+        \begin{equation*}
+            \mathbfit{u} = \mathbfit{(u + v) + u} = \mathbfit{(w + v) + u} = \mathbfit{w + (u + v)} = \mathbfit{w},
+        \end{equation*}
+        i.e., $\mathbfit{v}$ has a unique additive inverse.
+    \end{proof}
+\end{thmbox}
+Theorem \ref{thm:unique-1} justifies the notation $-\mathbfit{u}$ to denote the additive inverse of $\mathbfit{u}$. However, so far we have not ascertained the fact that $-\mathbfit{u} = (-1)\mathbfit{u}$ (note that the former means the inverse of $\mathbfit{u}$ while the latter means $\mathbfit{u}$ multiplied by the scalar $-1$)! While seemingly innocent, this result is not as easily proven as it looks.
+
+First, we shall justify that $0\mathbfit{u} = \zero$ for all $\mathbfit{u} \in V$. Notice that
+\begin{equation*}
+    0\mathbfit{u} = (0 + 0)\mathbfit{u} = 0\mathbfit{u} + 0\mathbfit{u}.
+\end{equation*}
+Adding $-(0\mathbfit{u})$ to both sides of the equation yields $0\mathbfit{u} = \zero$ as desired. From this result we see that
+\begin{equation*}
+    (-1)\mathbfit{u} + \mathbfit{u} = (-1 + 1)\mathbfit{u} = 0\mathbfit{u} = \zero.
+\end{equation*}
+By uniqueness of additive inverse, we must have $(-1)\mathbfit{u} = -\mathbfit{u}$.
+
+Note that by using a similar technique we can prove that $a\zero = \zero$ for all $a \in \mathcal{F}$, and so~$\zero = -\zero$ as a consequence.
+
+Additionally, note that subtraction is defined as $\mathbf{u - v} = \mathbfit{u} + (-1)\mathbfit{v}$, so the above result allows us to write $\mathbfit{u - v} = \mathbfit{u} + (-\mathbfit{v})$.
+
+\subsection{Subspaces}
+Note that a vector space is extended based on a set of vectors, so we can define \textit{subspaces} similarly to the notion of subsets.
+\begin{dfnbox}{Subspace}{subspace}
+    Let $V$ be a vector space. $U \subseteq V$ is called a {\color{red} \textbf{subspace}} if $U$ is a vector space under addition and scalar multiplication in $V$.
+\end{dfnbox}
+It is easy to see that the intersection of any number of subspaces of a vector space $V$ is still a subspace of $V$, but the union might not be so. In particular, we would like to consider a special construct known as \textit{direct sum}.
+\begin{dfnbox}{Direct Sum}{directSum}
+    Let $V$ be a vector space and $U_1, U_2 \subseteq V$ such that $U_1 \cap U_2 = \{\zero\}$, then their {\color{red} \textbf{direct sum}} is defined as
+    \begin{equation*}
+        U_1 \oplus U_2 \coloneqq \left\{\mathbfit{u}_1 + \mathbfit{u}_2 \colon \mathbfit{u}_1 \in U_1, \mathbfit{u}_2 \in U_2\right\}.
+    \end{equation*}
+\end{dfnbox}
+More generally, we can let $U_1$ and $U_2$ be any subsets of $V$ and define $U_1 + U_2$ in the same manner, which is known as the \textit{sum} of $U_1$ and $U_2$.
+
+It can be easily proven that for any vector space $V$, the direct sum of any two subspaces of $V$ is still a subspace of $V$. A nice property of direct sum can be proven as follows:
+\begin{probox}{Unique Decomposition with Direct Sums}{uniqueDecomp}
+    Let $V = U_1 \oplus U_2$, then every $\mathbfit{v} \in V$ can be uniquely expressed as $\mathbfit{u + w}$ for some $\mathbfit{u} \in U_1$ and $\mathbfit{w} \in U_2$.
+    \tcblower
+    \begin{proof}
+        The existence of $\mathbfit{u}$ and $\mathbfit{w}$ is trivial by Definition \ref{dfn:directSum}. Suppose there exist $\mathbfit{u}' \in U_1$ and $\mathbfit{w}' \in U_2$ such that $\mathbfit{u + w} = \mathbfit{u}' + \mathbfit{w}'$, then we have $\mathbfit{u - u}' = \mathbfit{w}' - \mathbfit{w}$. Note that $\mathbfit{u - u}' \in U_1$ and $\mathbfit{w}' - \mathbfit{w} \in U_2$, so we have $\mathbfit{u - u}', \mathbfit{w}' - \mathbfit{w} \in U_1 \cap U_2 = \{\zero\}$, i.e.,
+        \begin{equation*}
+            \mathbfit{u - u}' = \mathbfit{w}' - \mathbfit{w} = \zero.
+        \end{equation*} 
+        Therefore, $\mathbfit{u} = \mathbfit{u}'$ and $\mathbfit{w} = \mathbfit{w}'$, i.e., $\mathbfit{u}$ and $\mathbfit{w}$ are unique.
+    \end{proof}
+\end{probox}
+In some sense, a direct sum of $V$ can be viewed as a ``partition'' of $V$ into two subsets with a minimal overlap. Note that unlike partition in its real definition, the subspaces $U_1$ and $U_2$ here cannot be disjoint sets as both of them have to contain the zero vector in $V$. More generally, for any subspace $U \subseteq V$, we have $\zero_U = \zero_V$, the proof of which should be trivial enough as an exercise to the reader.
+
+In particular, we would like to consider $\mathcal{F}^n$ for a general field $\mathcal{F}$. We can define the dot product operation over $\mathcal{F}^n$ in the same way as $\R^n$. Take any subspace $U \subseteq \mathcal{F}^n$ and define the set
+\begin{equation*}
+    U_{\perp} \coloneqq \left\{\mathbfit{u} \in \mathcal{F}^n \colon \mathbfit{u \cdot v} = 0 \quad\textrm{for all } \mathbfit{v} \in U\right\},
+\end{equation*}
+then $\mathcal{F}^n = U \oplus U_{\perp}$.
+
+To justify this, we first take any $\mathbfit{v} \in \mathcal{F}^n$. Using some calculus, we can show that there exists 
+\begin{equation*}
+    \mathbfit{u}_0 = \argmin_{\mathbfit{u} \in U}\abs{\mathbfit{u \cdot v}}.
+\end{equation*}
+Let $\mathbfit{w = v - u}_0$, then clearly $\mathbfit{v = w + u}_0$ where $\mathbfit{u}_0 \in U$ and $\mathbfit{w} \in U_{\perp}$. This implies that~$V = U + U_{\perp}$. Note that $\zero$ is the only vector in $\mathcal{F}^n$ which is orthogonal to itself, so we have $U \cap U_{\perp} = \{\zero\}$. It follows that $V = U \oplus U_{\perp}$.
 \end{document}

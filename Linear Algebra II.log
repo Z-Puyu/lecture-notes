@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  15 JAN 2024 08:49
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  25 JAN 2024 14:04
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1181,26 +1181,26 @@ runsystem(del Linear_Algebra_II.aex)...executed.
  (./Linear Algebra II.aux)
 \openout1 = `"Linear Algebra II.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1237,9 +1237,9 @@ LaTeX Font Info:    ... okay on input line 32.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 32.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 32.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 35.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1258,32 +1258,57 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 32.
+Package hyperref Info: Link coloring ON on input line 35.
 (./Linear Algebra II.out) (./Linear Algebra II.out)
 \@outlinefile=\write6
 \openout6 = `"Linear Algebra II.out"'.
 
 \c@lstlisting=\count393
- (./Linear Algebra II.toc)
+ (./Linear Algebra II.toc
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 12.00128pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 8.40088pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 6.60071pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 8.3991pt on input line 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 6.59929pt on input line 2.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
 \tf@toc=\write7
 \openout7 = `"Linear Algebra II.toc"'.
 
  [1
 
 
-] 
+]
+Chapter 1.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 49.
+[2
+
+] [3] [4] [5] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Linear Algebra II.aux)
 Package rerunfilecheck Info: File `"Linear Algebra II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 38766 strings out of 478630
- 815510 string characters out of 5847730
- 1850012 words of memory out of 5000000
- 58276 multiletter control sequences out of 15000+600000
- 513092 words of font info for 53 fonts, out of 8000000 for 9000
+ 38956 strings out of 478630
+ 820556 string characters out of 5847730
+ 1869012 words of memory out of 5000000
+ 58425 multiletter control sequences out of 15000+600000
+ 516159 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,11n,128p,1204b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,12n,128p,1204b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear Algebra II.pdf (1 page).
+Output written on Linear Algebra II.pdf (5 pages).
