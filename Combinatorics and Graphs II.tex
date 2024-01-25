@@ -39,15 +39,288 @@
 \tableofcontents
 
 \chapter{Graph Structures}
+\section{Multigraph}
+\subsection{Terminologies}
+Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
+\begin{dfnbox}{Multigraph}{multigraph}
+    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
+    \\\\
+    In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}.
+    \\\\
+    $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
+\end{dfnbox}
+Note that in a multigraph, by default there can be a plural number of edges between any two vertices. We would define the notion of \textit{simple graph} as a special multigraph.
+\begin{dfnbox}{Simple Graph}{simpleGraph}
+    A multigraph $G$ is said to be {\color{red} \textbf{simple}} if there is at most one edge between any two distinct vertices.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that if $G$ is simple and undirected, then
+        \begin{displaymath}
+            E(G) \subseteq \left\{(v_j, v_i) \colon v_j, v_i \in V(G), j \geq i\right\}.
+        \end{displaymath}
+    \end{remark}
+\end{notebox}
+Notice that if $(v_i, v_i)$ is an edge, it connects a vertex to itself. This is known as a \textit{loop}.
+
+In a graph, it is important to know the layout of the vertices and edges. For this purpose, we define the notion of \textit{adjacency} in a multigraph.
+\begin{dfnbox}{Adjacency and Neighbourhood}{adjacent}
+    Let $v_i, v_j \in V(G)$, we say that they are {\color{red} \textbf{adjacent}} if $v_iv_j \in E(G)$. Alternatively, we say that $v_i$ and $v_j$ are {\color{red} \textbf{neighbours}} to each other. The edge $v_iv_j$ is said to be {\color{red} \textbf{incident}} with~$v_i$ and $v_j$. Two edges $e$ and $f$ are said to be {\color{red} \textbf{adjacent}} if there exists some~$v \in V(G)$ such that both $e$ and $f$ are incident with $v$. 
+    \\\\
+    The set of all neighbours to some $v_i \in V(G)$ is called the {\color{red} \textbf{neighbourhood set}} of $v_i$, denoted by $N_G(v_i)$. In particular, the set $N_G[v_i] \coloneqq N_G(v_i)\cup\{v_i\}$ is known as the {\color{red} \textbf{closed neighbourhood set}} of $v_i$.
+\end{dfnbox}
+Alternatively, one may write $v \sim u$ if $v$ and $u$ are adjacent vertices. We can further add on to the definition by discussing the size of the neighbourhood of a vertex.
+\begin{dfnbox}{Degree}{deg}
+    The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If~$d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. 
+    \\\\
+    In particular, we define
+    \begin{equation*}
+        \Delta(G) = \max_{v \in G}d_G(v), \qquad \delta(G) = \min_{v \in G}d_G(v).
+    \end{equation*}
+\end{dfnbox}
+In particular, we can denote the average degree of a graph $G$ by
+\begin{equation*}
+    \bar{d}(G) = \frac{\sum_{v \in V(G)}d_G(v)}{v(G)}.
+\end{equation*}
+\begin{notebox}
+    \begin{remark}
+        Note that a high maximal degree does not imply a high average degree. A classic counter example is a complete graph plus an isolated vertex.
+    \end{remark}
+\end{notebox}
+With the notion of degree established, we can now define a \textit{regular graph}.
+\begin{dfnbox}{Regular Graph}{regGraph}
+    A {\color{red} \textbf{regular graph}} is a graph in which every vertex has the same degree. In particular, if $d_G(v) = k$ for all $v \in V(G)$, $G$ is known as a {\color{red} \textbf{$k$-regular graph}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A graph $G$ is regular if and only if $\Delta(G) = \delta(G)$.
+    \end{remark}
+\end{notebox}
+Since a graph essentially consists of two sets, it is natural to consider the notion of graph complementation. We now proceed to introducing the notion of \textit{complement}.
+\begin{dfnbox}{Complement}{comp}
+    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\overline{G}$, is the graph of order $n$ where
+    \begin{equation*}
+        V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
+    \end{equation*}
+\end{dfnbox}
+\subsection{Handshaking Lemma}
+In this section, we discuss the following interesting question:
+\begin{quote}
+    $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the number of handshakes made by each student was recorded and it was reported that the sum was $39$. Was this possible?
+\end{quote}
+Note that if we represent each student as a vertex, then we can use $V(G) = \left\{v_1, v_2, \cdots, v_{15}\right\}$ to construct a graph, in which an edge $v_iv_j \in E(G)$ if and only if students $i$ and $j$ shook hands. As such, $d_G(v_i)$ is the number of persons student $i$ shook hands with.
+
+Note that if we sum up $d_G(v_i)$ for all the vertices, every edge will be counted exactly twice! This means that
+\begin{equation*}
+    \sum_{i = 1}^{15}d_G(v_i) = 39
+\end{equation*}
+is impossible since the left-hand side must be even. In fact, by the above reasoning, we see that in any graph, the sum of degrees of its vertices must be even.
+\begin{lembox}{Handshaking Lemma}{handshake}
+    If $G$ is a graph of order $n$ and size $m$, then
+    \begin{equation*}
+        \sum_{i = 1}^{n}d_G(v_i) = 2m.
+    \end{equation*}
+\end{lembox}
+\begin{notebox}
+    \begin{remark}
+        It can be easily deduced from the above lemma that in any graph, the number of vertices with odd degrees must be even.
+    \end{remark}
+\end{notebox}
+Relating to Definition \ref{dfn:deg}, we see that the average degree of a graph $G$ can be computed as
+\begin{equation*}
+    \bar{d}(G) = \frac{2e(G)}{v(G)}.
+\end{equation*}
+As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is obviously $0$, and the maximum size of a simple graph occurs when there is an edge between any two vertices.
+\begin{dfnbox}{Empty and Complete Graphs}{empCom}
+    Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, we have $(u, v) \in E(G)$. 
+\end{dfnbox}
+\subsection{Subgraph}
+Since a multigraph is just two sets, we can define a ``subset'' relation between graphs.
+\begin{dfnbox}{Subgraph}{subgraph}
+    Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, a subgraph $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \neq V(G)$ or $E(H) \neq E(G)$.
+\end{dfnbox}
+Note that we a graph can possibly be reproduced by connecting its vertices correctly, so a subgraph containing all vertices of a graph ``spans'' the original graph.
+\begin{dfnbox}{Spanning Subgraph}{spanSubgraph}
+    Let $H$ be a subgraph of $G$. $H$ is called a {\color{red} \textbf{spanning subgraph}} of $G$ if $V(H) = V(G)$.
+\end{dfnbox}
+Note that by definition, a spanning subgraph retains all vertices of the original graph. Therefore, a way to quickly generate a subgraph of a given graph $G$ is to keep the vertex set and delete some edges from the edge set. We denote such a graph by $H = G - F$ for some $F \subset E(G)$. Observe that 
+\begin{equation*}
+    V(H) = V(G), \qquad E(H) = E(G) - F.
+\end{equation*}
+On the other hand, by deleting some vertices together with edges incident to them, we can produce a subgraph from any given graph.
+\begin{dfnbox}{Induced Subgraph}{induceSubgraph}
+    Let $H$ be a subgraph of $G$. $H$ is called a {\color{red} \textbf{induced subgraph}} of $G$ if
+    \begin{equation*}
+        E(H) = \left\{uv \in E(G) \colon u, v \in V(H)\right\}.
+    \end{equation*}
+    Let $S \subseteq V(G)$, the subgraph of $G$ induced by $S$ is denoted by $[S]$.
+    \\\\
+    Alternatively, let $F \subseteq E(G)$. Define
+    \begin{equation*}
+        V' \coloneqq \bigcup \bigl\{\left\{u, v\right\} \colon uv \in F\bigr\},
+    \end{equation*}
+    then $(V', F)$ is the subgraph of $G$ induced by $F$, denoted by $G[F]$.
+\end{dfnbox}
+Intuitively, an induced subgraph pf $G$ consists of a selected subset of the vertices of $G$ together with all edges in $G$ connecting any vertices in this subset.
+
+Using the idea of deletion, we can quickly generate an induced subgraph $H$ of $G$ as follows: first, set $V(H) = V(G) - A$ for some $A \subseteq V(G)$, i.e., remove some vertices; then, we will remove all edges from $E(G)$ which are incident to some vertices in $A$, i.e., set
+\begin{equation*}
+    E(H) = \left\{e \in E(G) \colon e \textrm{ is not incident to any } v \in A\right\}.
+\end{equation*}
+Then, $H = \bigl(V(H), E(H)\bigr)$ is an induced subgraph of $G$. In fact, we can denote $H$ as
+\begin{equation*}
+    H = G - A = [V(G) - A].
+\end{equation*}
+This leads to the following proposition:
+\begin{probox}{}{}
+    Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of $G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
+\end{probox}
+We would like to consider the relations between the properties of a graph to those of its subgraphs. In particular, it follows from intuition that if a graph has a high average degree, then we can naturally find a subgraph with a high minimal degree.
+
+This seems trivial from intuition, as we can always keep deleting vertices with the minimal degree from a graph until we cannot find any vertex whose degree is less than $\frac{1}{2}\bar{d}(G)$, but there is more to that --- for instance, how do we know if we would not end up deleting all vertices from the original graph? Thus, to prove our claim is essentially asking to prove the correctness of this greedy deletion, which we shall do in the following proposition.
 \begin{probox}{}{}
     Every non-empty graph $G$ has a subgraph $H$ such that $\delta(H) \geq \frac{1}{2} \bar{d}(G)$.
+    \tcblower
+    \begin{proof}
+        Define $H_0 = G$ and $H_{i + 1} = H_i - v_i$ where $v_i$ is a vertex in $H_i$ whose degree is the smallest. Note that we can always find this $v_i$ for any $H_i$ with $V(H_i) \neq \varnothing$ because $V(H_i)$ is a finite well-ordered set. We will repeatedly perform the deletion until we obtain some $H_k$ with $d_{H_k}(v_k) \geq \frac{1}{2}\bar{d}(G)$. We shall proceed to proving that this algorithm always terminates with $V(H_k) \neq \varnothing$.
+        \\\\
+        Suppose on contrary that $V(H_k) = \varnothing$, then we have performed the deletion for $v(G)$ times. Suppose we have deleted $N$ edges in total, then clearly,
+        \begin{equation*}
+            N < v(G)\frac{1}{2}\bar{d}(G) = v(G)\frac{e(G)}{v(G)} = e(G),
+        \end{equation*}
+        which means $e(H_k) = e(G) - N > 0$. However, this is impossible since $v(H_k) = 0$, which is a contradiction.
+    \end{proof}
 \end{probox}
+
+\subsection{Graph Isomorphism}
+Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent question proves to be extremely hard to answer. Two graphs can look drastically different but be structurally identical in reality. For example, we could shift around the vertices of a graph without changing any edge to alter the shape of the graph dramatically. Therefore, to compare the structures of graphs, we require some rigorous definition.
+\begin{dfnbox}{Graph Isomorphism}{graphIsomorph}
+    Two graphs $G$ and $H$ are said to be {\color{red} \textbf{isomorphic}}, denoted by $G \cong H$, if there exists a bijection $f \colon V(G) \to V(H)$ such that
+    \begin{equation*}
+        uv \in E(G) \quad\textrm{ if and only if } f(u)f(v) \in E(H).
+    \end{equation*}
+\end{dfnbox}
+Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$.
+
+It is very hard to determine whether two specific graphs are isomorphic, but there are some considerations in the general case. For example, some trivial conclusions include:
+\begin{itemize}
+    \item Two graphs with different orders cannot be isomorphic.
+    \item Two graphs with different sizes cannot be isomorphic.
+    \item Two graphs with different numbers of components cannot be isomorphic.
+    \item If the numbers of vertices with degree $k$ are different in two graphs, they cannot be isomorphic.
+\end{itemize}
+Notice that by Definition \ref{dfn:graphIsomorph}, we can define a function $g$ such that $uv \notin E(G)$ if and only if $g(u)g(v) \notin E(H)$ and relate this function to the complement graphs of $G$ and $H$. Here we introduce a way to determine isomorphism by considering complement graphs, the proof of which is left to the reader as an exercise.
+\begin{thmbox}{Complementation Preserves Isomorphism}{compIso}
+    Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\overline{G} \cong \overline{H}$.
+\end{thmbox}
+Now let us think the reverse: if it is not easy to prove isomorphism, can we find a way to quickly determine that two graphs are not isomorphic? Here we present the necessary conditions for isomorphism:
+\begin{thmbox}{Necessary Conditions for Isomorphism}{necessaryCondIso}
+    If $G \cong H$, then
+    \begin{enumerate}
+        \item $G$ and $H$ must have the same order and size.
+        \item $\delta(G) = \delta(H)$ and $\Delta(G) = \Delta(H)$.
+        \item The number of vertices with degree $i$ in $G$ and $H$ is the same for all $i \in \N$.
+    \end{enumerate}
+\end{thmbox}
+The first two conditions are easy to observe. For the third condition, we introduce a tool known as \textit{degree sequences}.
+\begin{dfnbox}{Degree Sequence}{degSeq}
+    Let $G$ be a graph of order $n$. If we label its vertices by $v_1, v_2, \cdots, v_n$ such that
+    \begin{equation*}
+        d(v_1) \geq d(v_2) \geq \cdots \geq d(v_n),
+    \end{equation*}
+    then the non-increasing sequence $\bigl(d(v_n)\bigr)$ is known as the {\color{red} \textbf{degree sequence}} of $G$.
+\end{dfnbox}
+Now we consider the following question:
+\begin{quote}
+    Let $(d_n)$ be a non-increasing sequence, is there some graph whose degree sequence is $(d_n)$?
+\end{quote}
+We will make use of the following definition:
+\begin{dfnbox}{Graphic Sequence}{graphicSeq}
+    Let $(d_n)$ be a sequence of non-negative integers at most $n - 1$. $(d_n)$ is said to be {\color{red} \textbf{graphic}} if there exists a graph $G$ whose degree sequence is $(d_n)$.
+\end{dfnbox}
+To determine whether a sequence is graphic by eye power is difficult. Fortunately, we have the following recursive approach:
+\begin{thmbox}{Havel-Hakimi Algorithm}{HavelHakimi}
+    Let $(d_n)$ be a non-increasing sequence of non-negative integers at most $n - 1$. Define
+    \begin{equation*}
+        d^*_m = \begin{cases}
+            d_{m + 1} - 1 & \quad\textrm{if } 1 \leq m \leq d_1 \\
+            d_{m + 1} & \quad\textrm{if } d_1 + 1 \leq m \leq n - 1
+        \end{cases}.
+    \end{equation*}
+    $(d_n)$ is graphic if and only if $\left(d^*_m\right)$ is graphic.
+    \tcblower
+    \begin{proof}
+        Suppose $(d_n)$ is graphic,we consider the following lemma:
+        \begin{lembox}{}{graphicLemma}
+            For any graphic sequence $(d_n)$, there is some graph $G$ of order $n$ with $d_G(v_i) = d_i$ for $i = 1, 2, \cdots, n$ such that $v_1$ is adjacent to $v_j$ for $j = 2, 3, \cdots, d_1 + 1$.
+            \tcblower
+            \begin{proof}
+                Suppose on contrary there is no such a graph $G$, then for any graph $G$ with degree sequence $(d_n)$, $v_1$ is adjacent to at most $d_1 - 1$ vertices in
+                \begin{equation*}
+                    A \coloneqq \left\{v_j \colon j = 2, 3, \cdots, d_1 + 1\right\}.
+                \end{equation*}
+                Thus, there exists some $v_j \in A$ such that $v_1v_j \notin E(G)$. However,~$d_G(v_1) = d_1$, so there exists some $v_k \in V(G) - A$ with $v_k \neq v_1$ such that $v_1v_k \in E(G)$.
+                \\\\
+                Notice that since $v_k \notin A \cup \{v_1\}$, $k > j$ and so $d_G(v_k) = d_k \leq d_j = d_G(v_j)$. Therefore, $v_j$ has at least as many neighbours as $v_k$, which means there must exists some $v_r$ with $v_jv_r \in E(G)$ such that $v_kv_r \notin E(G)$.
+                \\\\
+                Define a graph $G'$ by
+                \begin{equation*}
+                    V(G') = V(G), \qquad E(G') = E(G) - v_jv_r - v_1v_k + v_jv_k + v_1v_j.
+                \end{equation*}
+                Note that $d_{G'}(v_i) = d_G(v_i)$ for all $i = 1, 2, \cdots, n$, so $(d_n)$ is also a degree sequence for $G'$. However, now $v_1$ in $G'$ is adjacent to all vertices in $A$, which is a contradiction.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:graphicLemma}, we can choose some graph $G$ whose degree sequence is $(d_n)$ such that $v_1$ is adjacent to $d_1$ vertices $v_2, v_3, \cdots, v_{d_1 + 1}$. Let $H = G - v_1$, then for any $u_i \in H$,
+        \begin{equation*}
+            d_H(u_i) = \begin{cases}
+                d_G(v_{i + 1}) - 1 & \quad\textrm{if } 1 \leq i \leq d_1 \\
+                d_G(v_{i + 1}) & \quad\textrm{if } d_1 + 1 \leq i \leq n - 1
+            \end{cases}.
+        \end{equation*}
+        Therefore, $\left(d^*_m\right)$ is graphic.
+        \\\\
+        Conversely, suppose $\left(d^*_m\right)$ is graphic, then there is some graph $H$ of order $n - 1$ such that $d_H(u_i) = d^*_i$ for $i = 1, 2, \cdots, d_1$. Construct a graph $G = H + v_1$ such that~$v_i = u_{i - 1}$ for $i = 2, 3, \cdots, n$ and $v_1$ is adjacent to $v_2, v_3, \cdots, v_{d_1 + 1}$. Therefore,
+        \begin{equation*}
+            d_G(v_i) = \begin{cases}
+                d_1 & \quad\textrm{if } i = 1 \\
+                d^*_{i - 1} + 1 & \quad\textrm{if } 2 \leq i \leq d_1 + 1 \\
+                d^*_{i} & \quad\textrm{if } d_1 + 2 \leq i \leq n
+            \end{cases}.
+        \end{equation*}
+        Note that $d_G(v_i) = d_i$, so $(d_n)$ is graphic.
+    \end{proof}
+\end{thmbox}
+By Theorem \ref{thm:HavelHakimi}, we can reduce a sequence recursively until we reach some obvious case. This obvious case is graphic if and only if the original sequence is graphic. We can also build the graph corresponding to the original sequence from a simple graphic sequence.
+
+Alternatively, the following is another algorithmic way to determine whether a sequence is graphic.
 \begin{thmbox}{Erdos-Gallai Algorithm}{ErdosGallai}
     A non-increasing sequence $(d_1, d_2, \cdots, d_n)$ is graphic if and only if $\sum_{i = 1}^n d_i$ is even and for all $k = 1, 2, \cdots, n$,
     \begin{equation*}
         \sum_{i = 1}^{k} d_i \leq k(k - 1) + \sum_{i = k + 1}^{n}\min\{d_i, k\}.
     \end{equation*}
 \end{thmbox}
+
+Lastly, we introduce a special type of graphs known as \textit{self-complementary} graphs.
+\begin{dfnbox}{Self-Complementary Graph}{selfComp}
+    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
+\end{dfnbox}
+It turns out that a self-complementary graph satisfies some special properties.
+\begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
+    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
+    \tcblower
+    \begin{proof}
+        Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
+        \begin{equation*}
+            e(G) + e\left(\overline{G}\right) = \begin{pmatrix}
+                n \\
+                2
+            \end{pmatrix} = \frac{n(n - 1)}{2},
+        \end{equation*}
+        so we have $e(G) = \frac{n(n - 1)}{4}$. Since $e(G) \in \Z^+$, either $n$ or $n - 1$ is divisible by $4$, so~$n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
+    \end{proof}
+\end{probox}
+
+
 \begin{probox}{}{}
     Let $\mathbfit{M}$ and $\mathbfit{A}$ be the incidence matrix and adjacency matrix of a simple graph $G$ respectively, then
     \begin{equation*}
@@ -59,5 +332,25 @@
             0 & 0 & 0 & \cdots & d_n
         \end{bmatrix} + \mathbfit{A}.
     \end{equation*}
+\end{probox}
+\begin{probox}{}{}
+    For every connected graph $G$, $V(G)$ can be labelled as $\left\{v_1, v_2, \cdots, v_n\right\}$ such that the graph~$G_i \coloneqq \bigl[\left\{v_1, v_2, \cdots, v_i\right\}\bigr]$ is connected for every $i = 1, 2, \cdots, n$.
+\end{probox}
+\begin{dfnbox}{Connected Component}{CC}
+    Let $G$ be a graph. A {\color{red} \textbf{connected component}} of $G$ is a subgraph $H \subseteq G$ such that for all $e \in E(G)$, $H + e$ is not connected and for all $v \in V(G) - V(H)$, $\left[V(H) \cup \{v\}\right]$ is not connected.
+\end{dfnbox}
+\begin{dfnbox}{Girth and Circumference}{girthCircumference}
+    Let $G$ be a graph. The {\color{red} \textbf{girth}} of $G$ is the size of the shortest non-trivial cycle in $G$ and the {\color{red} \textbf{circumference}} of $G$ is the size of the longest non-trivial cycle in $G$.
+\end{dfnbox}
+If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumference to be $0$.
+\begin{dfnbox}{Hamiltonian Graph}{Hamiltonian}
+    A graph $G$ is {\color{red} \textbf{Hamiltonian}} if it contains a cycle of size $v(G)$.
+\end{dfnbox}
+\begin{probox}{}{}
+    Every graph $G$ with $\delta(G) \geq 2$ contains a path of length $\delta(G)$ and a cycle of length at least $\delta(G) + 1$.
+    \tcblower
+    \begin{proof}
+        Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that $\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$.
+    \end{proof}
 \end{probox}
 \end{document}
