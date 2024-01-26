@@ -200,8 +200,25 @@ Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent q
         uv \in E(G) \quad\textrm{ if and only if } f(u)f(v) \in E(H).
     \end{equation*}
 \end{dfnbox}
-Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$.
-
+Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$. In particular, it is possible to map a graph to its own complement via an isomorphism.
+\begin{dfnbox}{Self-Complementary Graph}{selfComp}
+    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
+\end{dfnbox}
+It turns out that a self-complementary graph satisfies some special properties.
+\begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
+    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
+    \tcblower
+    \begin{proof}
+        Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
+        \begin{equation*}
+            e(G) + e\left(\overline{G}\right) = \begin{pmatrix}
+                n \\
+                2
+            \end{pmatrix} = \frac{n(n - 1)}{2},
+        \end{equation*}
+        so we have $e(G) = \frac{n(n - 1)}{4}$. Since $e(G) \in \Z^+$, either $n$ or $n - 1$ is divisible by $4$, so~$n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
+    \end{proof}
+\end{probox}
 It is very hard to determine whether two specific graphs are isomorphic, but there are some considerations in the general case. For example, some trivial conclusions include:
 \begin{itemize}
     \item Two graphs with different orders cannot be isomorphic.
@@ -300,25 +317,7 @@ Alternatively, the following is another algorithmic way to determine whether a s
     \end{equation*}
 \end{thmbox}
 
-Lastly, we introduce a special type of graphs known as \textit{self-complementary} graphs.
-\begin{dfnbox}{Self-Complementary Graph}{selfComp}
-    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
-\end{dfnbox}
-It turns out that a self-complementary graph satisfies some special properties.
-\begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
-    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
-    \tcblower
-    \begin{proof}
-        Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
-        \begin{equation*}
-            e(G) + e\left(\overline{G}\right) = \begin{pmatrix}
-                n \\
-                2
-            \end{pmatrix} = \frac{n(n - 1)}{2},
-        \end{equation*}
-        so we have $e(G) = \frac{n(n - 1)}{4}$. Since $e(G) \in \Z^+$, either $n$ or $n - 1$ is divisible by $4$, so~$n = 4k$ or $n = 4k + 1$ for some $k \in \Z^+$.
-    \end{proof}
-\end{probox}
+
 
 
 \begin{probox}{}{}
@@ -333,19 +332,57 @@ It turns out that a self-complementary graph satisfies some special properties.
         \end{bmatrix} + \mathbfit{A}.
     \end{equation*}
 \end{probox}
-\begin{probox}{}{}
-    For every connected graph $G$, $V(G)$ can be labelled as $\left\{v_1, v_2, \cdots, v_n\right\}$ such that the graph~$G_i \coloneqq \bigl[\left\{v_1, v_2, \cdots, v_i\right\}\bigr]$ is connected for every $i = 1, 2, \cdots, n$.
-\end{probox}
-\begin{dfnbox}{Connected Component}{CC}
-    Let $G$ be a graph. A {\color{red} \textbf{connected component}} of $G$ is a subgraph $H \subseteq G$ such that for all $e \in E(G)$, $H + e$ is not connected and for all $v \in V(G) - V(H)$, $\left[V(H) \cup \{v\}\right]$ is not connected.
+
+\section{Graph Traversal}
+\subsection{Paths and Cycles}
+We are often interested in the ``connectedness'' in a graph. In particular, we would wish to study how to traverse a graph from some vertices to others.
+\begin{dfnbox}{Walk, Trail, Path}{wtp}
+    Let $G$ be a graph and $x, y \in V(G)$, then an {\color{red} \textbf{$x$-$y$ walk}} is an alternating sequence
+    \begin{equation*}
+        W \coloneqq v_0e_1v_1e_2v_2\cdots v_{n - 1}e_nv_n
+    \end{equation*}
+    where $v_i \in V(G)$, $e_i = v_{i - 1}v_i \in E(G)$, $x = v_0$ and $y = v_n$. In particular, $W$ is {\color{red} \textbf{open}} if $v_0 \neq v_n$ and {\color{red} \textbf{closed}} otherwise. The {\color{red} \textbf{length}} of a walk is defined as the number of edges in it.
+    \\\\
+    If $e_i \neq e_j$ whenever $i \neq j$, then $W$ is called a {\color{red} \textbf{trail}}. A closed trail is called a {\color{red} \textbf{circuit}}. If $v_i \neq v_j$ whenever $i \neq j$, then $W$ is called a {\color{red} \textbf{path}}. A closed path is called a {\color{red} \textbf{cycle}}.
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        All paths are trails and all trails are walks, but the converses are not true.
+    \end{remark}
+\end{notebox}
+In more informal terms, a trail is a walk with no repeated edge and a path is a trail with no repeated vertex.
+
+Note that a path is essentially a graph. We denote a path of order $n$ by $P_n$ and a cycle of order $n$ by $C_n$. We also have the following relevant definitions with regard to cycles:
 \begin{dfnbox}{Girth and Circumference}{girthCircumference}
     Let $G$ be a graph. The {\color{red} \textbf{girth}} of $G$ is the size of the shortest non-trivial cycle in $G$ and the {\color{red} \textbf{circumference}} of $G$ is the size of the longest non-trivial cycle in $G$.
 \end{dfnbox}
-If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumference to be $0$.
+If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumference to be $0$. In some special graphs, we realise that we can traverse through every vertex and return to the starting point in a single traversal. Such graphs are said to be \textit{Hamiltonian}.
 \begin{dfnbox}{Hamiltonian Graph}{Hamiltonian}
     A graph $G$ is {\color{red} \textbf{Hamiltonian}} if it contains a cycle of size $v(G)$.
 \end{dfnbox}
+
+A common tool in proofs of graph theory is the \textbf{extremal approach}, which can be demonstrated in the proposition below.
+\begin{probox}{}{walkAndPath}
+    If a graph $G$ contains a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
+    \tcblower
+    \begin{proof}
+        Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path.
+        \\\\
+        Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However,~$Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path.
+        \\\\
+        Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
+    \end{proof}
+\end{probox}
+\subsection{Connected Components}
+An important question we are interested in with graphs is the reachability of a vertex, i.e., given two vertices $u$ and $v$, we want to know whether we can reach one vertex from another. Intuitively, we can traverse between two vertices if there is a path between them. From here we define the notion of a \textit{connected graph}.
+\begin{dfnbox}{Connected Graph}{connected}
+    Let $G$ be a graph. Two vertices $u$ and $v$ are {\color{red} \textbf{connected}} if there is a path between them. $G$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in V(G)$, there exists a path from $u$ to $v$. For any $u \in V(G)$, we denote the set of all vertices connected to $u$ (inclusive of $u$) as $c(u)$.
+\end{dfnbox}
+Intuitively, we of course always can find a connected subgraph of a connected graph, but we can in fact produce a much stronger result.
+\begin{probox}{}{}
+    For every connected graph $G$, $V(G)$ can be labelled as $\left\{v_1, v_2, \cdots, v_n\right\}$ such that the graph~$G_i \coloneqq \bigl[\left\{v_1, v_2, \cdots, v_i\right\}\bigr]$ is connected for every $i = 1, 2, \cdots, n$.
+\end{probox}
+Intuitively, if a graph has many edges, we would believe that it is easy to find a long path in it. Note that the notion of ``having many edges'' can be related to the minimal degree of a graph. More formally, the following result is true:
 \begin{probox}{}{}
     Every graph $G$ with $\delta(G) \geq 2$ contains a path of length $\delta(G)$ and a cycle of length at least $\delta(G) + 1$.
     \tcblower
@@ -353,4 +390,133 @@ If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumferen
         Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that $\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$.
     \end{proof}
 \end{probox}
+Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and~$v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
+\begin{dfnbox}{Connected Component}{CC}
+    Let $G$ be a graph and $R$ be a relation such that for any $u, v \in V(G)$, $uRv$ if and only if~$u$ and $v$ are connected. Let
+    \begin{equation*}
+        C \coloneqq V(G)/R
+    \end{equation*}
+    be the quotient set, then any $c(u) \in C$ is known as a (connected) {\color{red} \textbf{component}} of $G$.
+    \\\\
+    The number of components of $G$ is denoted by $\omega(G)$.
+\end{dfnbox}
+Alternatively, a connected component is a maximally connected subgraph, that is, a connected component of $G$ is a subgraph $H \subseteq G$ such that for all $e \in E(G)$, $H + e$ is not connected and for all $v \in V(G) - V(H)$, $\left[V(H) \cup \{v\}\right]$ is not connected.
+
+It can be easily seen that $G$ is connected if and only if $\omega(G) = 1$.
+
+We will now establish a relationship between connectedness and complementation.
+\begin{thmbox}{Connectedness of Complement}{connectedComp}
+    If $G$ is disconnected, then $\overline{G}$ is connected.
+    \tcblower
+    \begin{proof}
+        Let $u, v \in V\left(\overline{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\overline{G}\right)$ and so $u$ and $v$ are connected in $\overline{G}$.
+        \\\\
+        If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that~$uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\overline{G}\right)$. This means that there is a~$u$-$v$ path in $\overline{G}$ and so $u$ and $v$ are connected in $\overline{G}$.
+        \\\\
+        Therefore, $\overline{G}$ is connected.
+    \end{proof}
+\end{thmbox}
+Intuitively, we can transform a connected graph into a disconnected one by deleting some vertices or edges. It can be easily observed that in certain graphs, deleting one particular vertex or edge will immediately disconnect the graph.
+\begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
+    Let $G$ be a non-trivial graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
+\end{dfnbox}
+Note that a graph does not have to be connected to have cut vertices and bridges. Essentially, a cut-vertex (or bridge) is just a vertex (or edge) which disconnects a component upon removal.
+
+Now the next question is how do we identify a cut-vertex or a bridge in a graph? Intuitively, a cut-vertex divides a graph into two portions such that traversal between the two portions has to pass through it.
+\begin{thmbox}{Cut-Vertex Characterisation}{cutVertex}
+    Let $G$ be a graph. $v \in V(G)$ is a cut-vertex if and only if there exists $a, b \in V(G)$ such that $v$ is in every path between $a$ and $b$.
+    \tcblower
+    \begin{proof}
+        Let $v \in V(G)$ be a cut-vertex and consider $H = G - v$, then we can find two non-empty disjoint connected components of $H$, say $H_1$ and $H_2$. Now, take $a \in V(H_1)$ and $b \in V_(H_2)$, then they are disconnected. However, $a$ and $b$ are connected in $G$, which means $v$ is in every $a$-$b$ path.
+        \\\\
+        We will prove the converse by contrapositive. Suppose $v$ is not a cut-vertex of $G$, then $G - v$ is connected. Therefore, for any $u, w \in V(G)$, there is a path between them which does not contain $v$.
+    \end{proof}
+\end{thmbox}
+A similar argument can be established for bridges. Furthermore, since we have to pass through the bridge when traversing between the two portions, it can be easily seen that we have to reuse the bridge in order to traverse back.
+\begin{thmbox}{Bridge Characterisation}{bridge}
+    Let $G$ be a graph. $e \in E(G)$ is a bridge if and only if $e$ is not contained by any cycle in $G$.
+    \tcblower
+    \begin{proof}
+        We will prove the forward direction by contrapositive. Suppose $e = xy$ is contained in some cycle in $G$, then there is some $x$-$y$ path in $G - e$. Suppose $a, b \in V(G)$ are connected in $G$ via a path containing $e$, this implies that there is some $a$-$b$ path in $G - e$ and so $G - e$ is connected, which means that $e$ is not a bridge.
+        \\\\
+        We will prove the converse also by contrapositive. Suppose $e = xy$ is not a bridge, the $G - e$ is connected and so there is some $x$-$y$ path in $G - e$. Let this path be $P$, then $P \cup \{e\}$ is a cycle in $G$.
+    \end{proof}
+\end{thmbox}
+Combining the two characterisations, we can relate cut-vertices to bridges in the following proposition, the proof of which is left to the reader as an exercise:
+\begin{probox}{}{cutVertexNBridge}
+    Let $G$ be a graph. If $uv \in E(G)$ is a bridge and $u$ is not an end vertex, then $u$ is a cut-vertex.
+\end{probox}
+A direct consequence of this is the following corollary:
+\begin{corbox}{}{}
+    If $G$ is a graph with order at least $3$ and $G$ contains a bridge, then $G$ contains a cut-vertex.
+\end{corbox}
+\subsection{Graphs as Metric Spaces}
+Given a graph $G$ with $u$, $v$ being two connected vertices, we are interested in the notion of distance between them. Intuitively, if there are multiple paths between $u$ and $v$, we would take the length of the shortest one to represent their distance.
+\begin{dfnbox}{Distance, Eccentricity, Diameter}{distEDia}
+    Let $G$ be a connected graph and let $u, v \in V(G)$. The {\color{red} \textbf{distance}} between $u$ and $v$, denoted by $d(u, v)$, is the length of the shortest path between $u$ and $v$. The {\color{red} \textbf{eccentricity}} of $u$ is defined to be
+    \begin{equation*}
+        e(u) = \max_{v \in V(G)}\{d(u, v)\}.
+    \end{equation*}
+    The {\color{red} \textbf{diameter}} of $G$ is defined by
+    \begin{equation*}
+        \mathrm{diam}(G) = \max_{u \in V(G)}\{e(u)\}.
+    \end{equation*}
+    The {\color{red} \textbf{radius}} of $G$ is defined by
+    \begin{equation*}
+        \mathrm{rad}(G) = \min_{u \in V(G)}\{e(u)\}.
+    \end{equation*}
+    A vertex $v$ is called a {\color{red} \textbf{central}} vertex if
+    \begin{equation*}
+        e(v) = \mathrm{rad}(v).
+    \end{equation*}
+    The subgraph induced by the set of central vertices of $G$ is known as the {\color{red} \textbf{centre}} of $G$.
+\end{dfnbox}
+This also justifies the use of words ``diameter'' and ``radius'' in a circle. We can view a circle as a graph consisting of a centre and infinitely many vertices in the circumference, with edges of length $r$ connecting the centre to the circumference. Indeed, in this definition, the farthest vertices will be any two on the circumference with a distance of $2r$, and the nearest vertices will be the centre and any vertex on the circumference with a distance of $r$.
+
+Intuitively, having a large diameter means that the graph is sparse, i.e., one has to take a very long path to traverse between two vertices. Now let us consider a connected but sparse graph, the above intuition means that we may expect to find that the cycles in this graph are very large.
+\begin{probox}{}{}
+    Let $G$ be a graph with girth $g(G)$. If $G$ contains a cycle, then $g(G) \leq 2\mathrm{diam}(G) + 1$.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $g(G) \geq 2\mathrm{diam}(G) + 2$. Let $C \subseteq G$ be the shortest cycle in $G$, then we can take $x, y \in V(C)$ such that $d_C(x, y)$ is the greatest. Clearly, we have $d_C(x, y) \geq \mathrm{diam}(G) + 1$.
+        \\\\
+        Note that by Definition \ref{dfn:distEDia}, there exists some path $P$ between $x$ and $y$ with $e(P) \leq \mathrm{diam}(G)$. Let $P' \subseteq C$ be the $x$-$y$ path in $C$, then $e(P) < e(P')$. This means that $Q \coloneqq P \cup P' - P \cap P' \neq \varnothing$.
+        \\\\
+        Take some $q \in Q$. Since $P$ and $P'$ are both $x$-$y$ walks, $\abs{P \cap P'} \geq 2$. Therefore, there are $p_1, p_2 \in P \cap P'$ which are connected to $q$. Since $p_1$ and $p_2$ are connected, by Proposition \ref{pro:walkAndPath}, 
+    \end{proof}
+\end{probox}
+
+For readers with knowledge in real analysis or topology, it is easy to see that an undirected unweighted connected graph is a metric space with distance between vertices as its metric. 
+\begin{thmbox}{Connected Graph as A Metric Space}{graphMetric}
+    If $G$ is connected, then $(V(G), d_G)$ is a metric space.
+    \tcblower   
+    \begin{proof}
+        Clearly, for all $x, y \in V(G)$, $d_G(x, y) \geq 0 \in V(G)$ with $d_G(x, y) = 0$ if and only if $x = y$ and $d_G(x, y) = d_G(y, x)$.
+
+        Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then~$U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
+        \begin{equation*}
+            d(u, v) \leq d(u, w) + d(w, v).
+        \end{equation*}
+        Therefore, $(V(G), d_G)$ is a metric space.
+    \end{proof}
+\end{thmbox}
+An application of Theorem \ref{thm:graphMetric} allows us to establish the following:
+\begin{thmbox}{Boundedness of Diameter}{boundedDiam}
+    If $G$ is connected, then
+    \begin{equation*}
+        \mathrm{rad}(G) \leq \mathrm{diam}(G) \leq 2\mathrm{rad}(G).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        $\mathrm{rad}(G) \leq \mathrm{diam}(G)$ is immediate from Definition \ref{dfn:distEDia}. Take $u, v \in V(G)$ with~$d(u, v) = \mathrm{diam}(G)$ and take $w \in V(G)$ such that $e(w) = \mathrm{rad}(G)$. Notice that this implies
+        \begin{align*}
+            d(u, w) & \leq e(w) = \mathrm{rad}(G) \\
+            d(w, v) & \leq e(w) = \mathrm{rad}(G).
+        \end{align*}
+        By Theorem \ref{thm:triIneq}, 
+        \begin{equation*}
+            \mathrm{diam}(G) = d(u, v) \leq d(u, w) + d(w, v) = 2\mathrm{rad}(G).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 \end{document}

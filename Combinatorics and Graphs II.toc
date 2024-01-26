@@ -4,3 +4,7 @@
 \contentsline {subsection}{\numberline {1.1.2}Handshaking Lemma}{4}{subsection.1.1.2}%
 \contentsline {subsection}{\numberline {1.1.3}Subgraph}{5}{subsection.1.1.3}%
 \contentsline {subsection}{\numberline {1.1.4}Graph Isomorphism}{7}{subsection.1.1.4}%
+\contentsline {section}{\numberline {1.2}Graph Traversal}{11}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Paths and Cycles}{11}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Connected Components}{13}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Graphs as Metric Spaces}{16}{subsection.1.2.3}%

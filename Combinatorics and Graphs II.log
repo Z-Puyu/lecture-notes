@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  23 JAN 2024 16:07
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 JAN 2024 19:09
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1331,26 +1331,85 @@ Underfull \hbox (badness 1038) in paragraph at lines 185--188
 \TU/STIXTwoText(0)/m/n/12 Suppose on contrary that $[][][][][] [] []$, then we have performed the deletion
  []
 
-[6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 261--267
+[6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 278--284
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 261--267
+Underfull \hbox (badness 10000) in paragraph at lines 278--284
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 279--283
+Underfull \hbox (badness 10000) in paragraph at lines 296--300
 
  []
 
-[8] [9]
+[9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 343--347
 
-LaTeX Warning: Reference `thm:HavelHakimi' on page 10 undefined on input line 293.
+ []
 
-[10] [11] [12] 
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 369--374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--374
+
+ []
+
+[12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 398--402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 412--417
+
+ []
+
+
+Underfull \hbox (badness 1210) in paragraph at lines 412--417
+\TU/STIXTwoText(0)/m/n/12 If $[][] [] [][][][]$, since $[]$ is disconnected, there exists some $[] [] [][][][]$ such
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 412--417
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 430--433
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 440--443
+
+ []
+
+[15] [16]
+
+LaTeX Warning: Reference `pro:walkAndPath' on page 17 undefined on input line 485.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 481--486
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 481--486
+
+ []
+
+[17]
+
+LaTeX Warning: Reference `thm:triIneq' on page 18 undefined on input line 516.
+
+[18] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
@@ -1363,12 +1422,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not ch
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39003 strings out of 478630
- 821699 string characters out of 5847730
- 1884012 words of memory out of 5000000
- 58473 multiletter control sequences out of 15000+600000
+ 39035 strings out of 478630
+ 822198 string characters out of 5847730
+ 1877012 words of memory out of 5000000
+ 58505 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,12n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (12 pages).
+Output written on Combinatorics and Graphs II.pdf (18 pages).
