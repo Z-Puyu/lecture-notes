@@ -56,4 +56,54 @@ We can therefore formulate a linear programming problem as
     & \mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j \quad \textrm{for } i = 1, 2, \cdots, m,
 \end{align*}
 where $\mathbfit{c} \in \R^n$ is called the \textit{cost} or \textit{profit} vector, $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x}$ and $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{x}$ are called the \textit{constraints} and~$\mathbfit{x}$ is known as \textit{decision variables}.
+
+In particular, the following is known as the \textit{standard form} of a linear program:
+\begin{align*}
+    \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+    \textrm{s.t. } & \mathbfit{Ax = b} \\
+    & x_i \geq 0, \quad \textrm{for } i = 1, 2, \cdots, m.
+\end{align*}
+One should realise that a linear program in the standard form can be more easily solved by using linear algebra to find the optimal solution. Note that not every optimisation problem is given in the standard form. Fortunately, we can always convert a linear program into the standard form.
+
+For example, consider the constraint $a_ix_i \leq b_i$. Notice that this is essentially equivalent to $a_ix_i + s_i = b_i$ for some $s_i \geq 0$ known as the \textit{slack variable}. Similarly, $a_jx_j \geq b_j$ can be re-written as $a_jx_j - s_j = b_j$ for ome $s_j \geq 0$.
+
+Note that some of the $x_i$'s may be free variables. In this case, we can convert it to $x_i^+ - x_i^-$ for some $x_i^+, x_i^- \geq 0$. For instance, we can take $x_i^+ = 0$ and $x_i^- > 0$ whenever $x_i < 0$ and vice versa for $x_i > 0$. Note that this correspondence is not unique.
+\section{Convex Sets and Functions}
+\begin{probox}{}{}
+    Let $f_1, f_2, \cdots, f_m \colon \R^n \to \R$ be convex functions, then the function
+    \begin{equation*}
+        f(\mathbfit{x}) \coloneqq \max_{i = 1, 2, \cdots, m}f_i(\mathbfit{x})
+    \end{equation*}
+    is convex.
+    \tcblower
+    \begin{proof}
+        Take any $\mathbfit{x} \neq \mathbfit{y} \in \R^n$ and consider $\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}$ for some $\lambda \in [0, 1]$. Note that for each of the $f_i$'s, we have
+        \begin{equation*}
+            f_i\bigl(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\bigr) \leq \lambda f_i(\mathbfit{x}) + (1 - \lambda)f_i(\mathbfit{y}),
+        \end{equation*}
+        and so
+        \begin{equation*}
+            \max_{i = 1, 2, \cdots, m}f_i\bigl(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\bigr) \leq \max_{i = 1, 2, \cdots, m}\left[\lambda f_i(\mathbfit{x}) + (1 - \lambda)f_i(\mathbfit{y})\right].
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            f\bigl(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\bigr) & = \max_{i = 1, 2, \cdots, m}f_i\bigl(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\bigr) \\
+            & \leq \max_{i = 1, 2, \cdots, m}\left[\lambda f_i(\mathbfit{x}) + (1 - \lambda)f_i(\mathbfit{y})\right] \\
+            & = \lambda\max_{i = 1, 2, \cdots, m}f_i(\mathbfit{x}) + (1 - \lambda)\max_{i = 1, 2, \cdots, m}f_i(\mathbfit{y}) \\
+            & = \lambda f(\mathbfit{x}) + (1 + \lambda)f(\mathbfit{y}).
+        \end{align*}
+    \end{proof}
+\end{probox}
+\section{Geometry of Linear Programming}
+\begin{dfnbox}{Polyhedron}{polyhedron}
+    A {\color{red} \textbf{polyhedron}} is defined as the set
+    \begin{equation*}
+        P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax \leq b}\right\}
+    \end{equation*}
+    where $\mathbfit{A} \in \R^{m \times n}$ and $\mathbfit{b} \in \R^m$.
+\end{dfnbox}
+Geometrically, a polyhedral set $P$ can be defined alternatively as a finite intersection of half-planes:
+\begin{equation*}
+    P \coloneqq \bigcap_{i = 1}^m\left\{\mathbfit{x} \in \R^n \colon \mathbfit{a_i}^{\mathrm{T}}\mathbfit{x} \leq b_i\right\}.
+\end{equation*}
 \end{document}
