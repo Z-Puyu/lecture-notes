@@ -1,10 +1,11 @@
 \contentsline {chapter}{\numberline {1}Graph Structures}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Multigraph}{2}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Terminologies}{2}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}Handshaking Lemma}{4}{subsection.1.1.2}%
-\contentsline {subsection}{\numberline {1.1.3}Subgraph}{5}{subsection.1.1.3}%
-\contentsline {subsection}{\numberline {1.1.4}Graph Isomorphism}{7}{subsection.1.1.4}%
-\contentsline {section}{\numberline {1.2}Graph Traversal}{11}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Paths and Cycles}{11}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.1}Multigraphs}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Multigraphs}{2}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Subgraphs}{5}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Graph Isomorphism}{7}{subsection.1.1.3}%
+\contentsline {section}{\numberline {1.2}Graph Traversal}{12}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Paths and Cycles}{12}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Connected Components}{13}{subsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.2.3}Graphs as Metric Spaces}{16}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.3}Graphs as Metric Spaces}{18}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}Bipartite Graphs}{21}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Graphs and Matrices}{23}{section.1.4}%

@@ -39,8 +39,8 @@
 \tableofcontents
 
 \chapter{Graph Structures}
-\section{Multigraph}
-\subsection{Terminologies}
+\section{Multigraphs}
+\subsection{Multigraphs}
 Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
 \begin{dfnbox}{Multigraph}{multigraph}
     A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
@@ -103,8 +103,7 @@ Since a graph essentially consists of two sets, it is natural to consider the no
         V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
     \end{equation*}
 \end{dfnbox}
-\subsection{Handshaking Lemma}
-In this section, we discuss the following interesting question:
+We discuss the following interesting question:
 \begin{quote}
     $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the number of handshakes made by each student was recorded and it was reported that the sum was $39$. Was this possible?
 \end{quote}
@@ -134,7 +133,7 @@ As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is o
 \begin{dfnbox}{Empty and Complete Graphs}{empCom}
     Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, we have $(u, v) \in E(G)$. 
 \end{dfnbox}
-\subsection{Subgraph}
+\subsection{Subgraphs}
 Since a multigraph is just two sets, we can define a ``subset'' relation between graphs.
 \begin{dfnbox}{Subgraph}{subgraph}
     Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, a subgraph $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \neq V(G)$ or $E(H) \neq E(G)$.
@@ -200,6 +199,11 @@ Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent q
         uv \in E(G) \quad\textrm{ if and only if } f(u)f(v) \in E(H).
     \end{equation*}
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        One may check that graph isomorphism is obviously an equivalence relation.
+    \end{remark}
+\end{notebox}
 Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$. In particular, it is possible to map a graph to its own complement via an isomorphism.
 \begin{dfnbox}{Self-Complementary Graph}{selfComp}
     A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
@@ -255,7 +259,7 @@ We will make use of the following definition:
 \begin{dfnbox}{Graphic Sequence}{graphicSeq}
     Let $(d_n)$ be a sequence of non-negative integers at most $n - 1$. $(d_n)$ is said to be {\color{red} \textbf{graphic}} if there exists a graph $G$ whose degree sequence is $(d_n)$.
 \end{dfnbox}
-To determine whether a sequence is graphic by eye power is difficult. Fortunately, we have the following recursive approach:
+To determine whether a sequence is graphic by eye power is difficult. Fortunately, we have the following recursive algorithm:
 \begin{thmbox}{Havel-Hakimi Algorithm}{HavelHakimi}
     Let $(d_n)$ be a non-increasing sequence of non-negative integers at most $n - 1$. Define
     \begin{equation*}
@@ -316,22 +320,28 @@ Alternatively, the following is another algorithmic way to determine whether a s
         \sum_{i = 1}^{k} d_i \leq k(k - 1) + \sum_{i = k + 1}^{n}\min\{d_i, k\}.
     \end{equation*}
 \end{thmbox}
+We will not give the full proof but only briefly justify the ``only if'' direction. Let $G$ be any graph. Define $d_i = d_G(v_i)$ where $v_i \in V(G)$ for $i = 1, 2, \cdots, n$, then $(d_1, d_2, \cdots, d_n)$ is graphic. Note that $\sum_{i = 1}^{n}d_i$ is obviously even by Lemma \ref{lem:handshake}. 
 
+Take some $k \in \Z^+$ with $k \leq n$ and let $S = \left\{v_1, v_2, \cdots, v_k\right\}$, then by Lemma \ref{lem:handshake} again,
+\begin{align*}
+    \sum_{i = 1}^{k}d_i & = 2e(G[S]) + e_G\bigl(S, V(G) - S\bigr) \\
+    & \leq k(k - 1) + e_G\bigl(S, V(G) - S\bigr),
+\end{align*}
+where $e_G\bigl(S, V(G) - S\bigr)$ is the number of edges in $G$ which connect a vertex in $S$ to a vertex in $V(G) - S$. Notice that
+\begin{align*}
+    e_G\bigl(S, V(G) - S\bigr) & = \sum_{i = k + 1}^n\abs{\left\{u \in S \colon uv_i \in E(G)\right\}} \\
+    & \sum_{i = k + 1}^n\leq \min\{k, d_i\},
+\end{align*}
+and so it follows that
+\begin{equation*}
+    \sum_{i = 1}^{k} d_i \leq k(k - 1) + \sum_{i = k + 1}^{n}\min\{d_i, k\}.
+\end{equation*}
+\begin{notebox}
+    \begin{remark}
+        Both Theorems \ref{thm:HavelHakimi} and \ref{thm:ErdosGallai} are $\mathcal{O}(n^2)$ algorithms.
+    \end{remark}
+\end{notebox}
 
-
-
-\begin{probox}{}{}
-    Let $\mathbfit{M}$ and $\mathbfit{A}$ be the incidence matrix and adjacency matrix of a simple graph $G$ respectively, then
-    \begin{equation*}
-        \mathbfit{M}\mathbfit{M}^{\mathrm{T}} = \begin{bmatrix}
-            d_1 & 0 & 0 & \cdots & 0 \\
-            0 & d_2 & 0 & \cdots & 0 \\
-            0 & 0 & d_3 & \cdots & 0 \\
-            \vdots & \vdots & \vdots & \ddots & \vdots \\
-            0 & 0 & 0 & \cdots & d_n
-        \end{bmatrix} + \mathbfit{A}.
-    \end{equation*}
-\end{probox}
 
 \section{Graph Traversal}
 \subsection{Paths and Cycles}
@@ -352,17 +362,10 @@ We are often interested in the ``connectedness'' in a graph. In particular, we w
 \end{notebox}
 In more informal terms, a trail is a walk with no repeated edge and a path is a trail with no repeated vertex.
 
-Note that a path is essentially a graph. We denote a path of order $n$ by $P_n$ and a cycle of order $n$ by $C_n$. We also have the following relevant definitions with regard to cycles:
-\begin{dfnbox}{Girth and Circumference}{girthCircumference}
-    Let $G$ be a graph. The {\color{red} \textbf{girth}} of $G$ is the size of the shortest non-trivial cycle in $G$ and the {\color{red} \textbf{circumference}} of $G$ is the size of the longest non-trivial cycle in $G$.
-\end{dfnbox}
-If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumference to be $0$. In some special graphs, we realise that we can traverse through every vertex and return to the starting point in a single traversal. Such graphs are said to be \textit{Hamiltonian}.
-\begin{dfnbox}{Hamiltonian Graph}{Hamiltonian}
-    A graph $G$ is {\color{red} \textbf{Hamiltonian}} if it contains a cycle of size $v(G)$.
-\end{dfnbox}
+Note that a path is essentially a graph. We denote a path of order $n$ by $P_n$ and a cycle of order $n$ by $C_n$. It is easy to see that all cycles are circuits and all circuits are all closed walks, but the converses are not true. However, if we have a circuit, we can guarantee that this circuit contains at least one cycle.
 
-A common tool in proofs of graph theory is the \textbf{extremal approach}, which can be demonstrated in the proposition below.
-\begin{probox}{}{walkAndPath}
+Intuitively, all walks can be reduced to a path by removing duplicated edges and vertices repeatedly.
+\begin{probox}{Any Walk Contains A Path}{walkAndPath}
     If a graph $G$ contains a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
     \tcblower
     \begin{proof}
@@ -373,21 +376,80 @@ A common tool in proofs of graph theory is the \textbf{extremal approach}, which
         Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
     \end{proof}
 \end{probox}
+
+We also have the following relevant definitions with regard to cycles:
+\begin{dfnbox}{Girth and Circumference}{girthCircumference}
+    Let $G$ be a graph. The {\color{red} \textbf{girth}} of $G$ is the size of the shortest non-trivial cycle in $G$ and the {\color{red} \textbf{circumference}} of $G$ is the size of the longest non-trivial cycle in $G$.
+\end{dfnbox}
+If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumference to be $0$. In some special graphs, we realise that we can traverse through every vertex and return to the starting point in a single traversal. Such graphs are said to be \textit{Hamiltonian}.
+\begin{dfnbox}{Hamiltonian Graph}{Hamiltonian}
+    A graph $G$ is {\color{red} \textbf{Hamiltonian}} if it contains a cycle of size $v(G)$.
+\end{dfnbox}
+
+
 \subsection{Connected Components}
 An important question we are interested in with graphs is the reachability of a vertex, i.e., given two vertices $u$ and $v$, we want to know whether we can reach one vertex from another. Intuitively, we can traverse between two vertices if there is a path between them. From here we define the notion of a \textit{connected graph}.
 \begin{dfnbox}{Connected Graph}{connected}
     Let $G$ be a graph. Two vertices $u$ and $v$ are {\color{red} \textbf{connected}} if there is a path between them. $G$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in V(G)$, there exists a path from $u$ to $v$. For any $u \in V(G)$, we denote the set of all vertices connected to $u$ (inclusive of $u$) as $c(u)$.
 \end{dfnbox}
 Intuitively, we of course always can find a connected subgraph of a connected graph, but we can in fact produce a much stronger result.
-\begin{probox}{}{}
+\begin{probox}{Labelling of Vertices of Connected Graphs}{labelConnected}
     For every connected graph $G$, $V(G)$ can be labelled as $\left\{v_1, v_2, \cdots, v_n\right\}$ such that the graph~$G_i \coloneqq \bigl[\left\{v_1, v_2, \cdots, v_i\right\}\bigr]$ is connected for every $i = 1, 2, \cdots, n$.
+    \tcblower
+    \begin{proof}
+        For $i = 1$, we can pick any vertex in $V(G)$ as $v_1$ and $G_1$ is always trivially connected.
+        \\\\
+        Suppose we have fixed up to $k$ vertices for some $k = 1, 2, \cdots, n - 1$, then $G_1, G_2, \cdots, G_k$ are connected subgraphs of $G$. Note that $v(G) = n > k$, so there exists some $v \in V(G) - V(G_k)$ such that $v$ and $v_1$ are connected by a path $P$. Note that there exists some $u \in V(P)$ such that $u \sim v$ for some $v \in V(G_k)$, so taking $v_{k + 1} = u$ guarantees that $G_{k + 1}$ is connected.
+    \end{proof}
 \end{probox}
 Intuitively, if a graph has many edges, we would believe that it is easy to find a long path in it. Note that the notion of ``having many edges'' can be related to the minimal degree of a graph. More formally, the following result is true:
-\begin{probox}{}{}
+\begin{probox}{Finding Paths and Cycles in Graphs}{pathCycleInGraph}
     Every graph $G$ with $\delta(G) \geq 2$ contains a path of length $\delta(G)$ and a cycle of length at least $\delta(G) + 1$.
     \tcblower
     \begin{proof}
-        Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that $\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$.
+        Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Note that it suffices to prove that~$k \geq \delta(G)$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that~$\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$.
+        \\\\
+        Let $i \in \N$ be such that $x_jx_k \notin E(G)$ for all $0 \leq j < i$. Take $P' = x_ix_{i + 1}\cdots x_k$, then $e(P') \geq \delta(G)$ by the previous argument. However, $x_i \sim x_k$, so $P' + x_ix_k$ is a cycle of length at least $\delta(G) + 1$ in $G$.
+    \end{proof}
+\end{probox}
+A classic problem regarding graph traversal in connected graphs is the K\"{o}nisburg Bridge Problem:
+\begin{quote}
+    Let $A, B, C, D$ be $4$ distinct vertices such that there are $2$ edges between $A$ and $B$, $2$ edges between $A$ and $C$, and $1$ edge between $A$ and $D$, $B$ and $D$, $C$ and $D$. Can all the edges be visited exactly once in a single traversal of the graph produced?
+\end{quote}
+This can be generalised as: given a connected multigraph $G$, does there exist a circuit in $G$ which contains all the edges of $G$? Such multigraphs are said to be \textit{Eulerian}.
+\begin{dfnbox}{Eulerian Circuit}{eulerianCircuit}
+    Let $G$ be a connected multigraph, an {\color{red} \textbf{Eulerian circuit}} in $G$ is a circuit which uses all edges of $G$ exactly once.
+\end{dfnbox}
+Intuitively, if a graph is Eulerian, then following any Eulerian circuit will visit each of its vertices for an even number of times as there are equally many incoming edges as outgoing edges for every vertex in a circuit. This implies that an Eulerian graph will necessarily force all of its vertices to have even degrees. However, it turns out that actually this is also a sufficient condition for the existence of Eulerian circuits!
+\begin{thmbox}{Necessary and Sufficient Condition for Eulerian Graphs}{NSCondEulerian}
+    A connected multigraph $G$ is Eulerian if and only if every vertex in $G$ has an even degree.
+    \tcblower
+    \begin{proof}
+        The necessity is trivial, so we will only prove for sufficiency.
+        \\\\
+        Consider the case where $e(G) = 0$, then the only connected multigraph is the trivial graph consisting of a singleton vertex, which is Eulerian. 
+        \\\\
+        Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleGraph}, there exists a cycle $S \subseteq G$ where $e(S) \geq 3$.
+        \\\\
+        Let $G'$ be the multigraph such that $V(G') = V(G)$ and $E(G') = E(G) - E(S)$, then clearly, $e(G') < m$ and every vertex in $G'$ has an even degree. Therefore, each connected component of $G'$ is Eulerian.
+        \\\\
+        Let $C_1$ be a connected component of $G'$ and let $v_1 \in V(C_1) \cap V(S)$. Note that there exists an Eulerian circuit in $C_1$ which starts and ends with $v_1$. We can traverse along this circuit and then traverse in the clockwise orientation along $S$ until we reach another vertex in $S$ which is in some connected component of $G'$ and repeat the process. Note that $v_1 \in V(S)$, so we will eventually traverse back to $v_1$, which gives an Eulerian circuit in $G$.
+    \end{proof}
+\end{thmbox}
+Intuitively, even if a graph $G$ is not Eulerian, it is possible to traverse all edges in $G$ with finitely many trails. This is known as a decomposition of $G$ into trails.
+\begin{probox}{Minimal Number of Trails to Decompose A Multigraph}{minNumOfTrails}
+    Let $G$ be a graph with $2k$ vertices having odd degrees for some $k \in \N$, then the minimal number of trails needed to decompose $G$ is $\max\{k, 1\}$.
+    \tcblower
+    \begin{proof}
+        The case where $k = 0$ is immediate by Theorem \ref{thm:NSCondEulerian}. For $k \geq 1$, suppose on contrary that $G$ can be decomposed with $k - 1$ trails labelled as $T_1, T_2, \cdots, T_{k - 1}$. Since a trail contains at most $2$ vertices with odd degrees, then
+        \begin{equation*}
+            \abs{\left\{v \in \bigcup_{i = 1}^{k - 1}T_i \colon d_G(v) \textrm{ is odd}\right\}} \leq 2(k - 1) < 2k,
+        \end{equation*}
+        which is a contradiction. Therefore, we need at least $k$ trails to decompose $G$. 
+        \\\\
+        Let $v_1, v_2, \cdots, v_{2k}$ be the vertices in $G$ with odd degrees. Let $G'$ be the graph produced by adding the edges $v_1v_2, v_3v_4, \cdots, v_{2k - 1}v_{2k}$ to $G$, then the vertices in $G'$ all have even degrees. Therefore, there exists an Eulerian circuit in $G'$ by Theorem \ref{thm:NSCondEulerian}.
+        \\\\
+        Note that for all $i = 1, 2, \cdots, k - 1$, $v_{2i - 1}v_{2i}$ and $v_{2i + 1}v_{2i + 2}$ are disjoint, so there exists a $v_{2i}$-$v_{2i + 1}$ trail. Note also that there exists a $v_{2k}$-$v_1$ trail. The union of these trails is exactly $G' - v_1v_2 - v_3v_4 - \cdots - v_{2k - 1}v_{2k} = G$.
     \end{proof}
 \end{probox}
 Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and~$v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
@@ -474,15 +536,24 @@ Given a graph $G$ with $u$, $v$ being two connected vertices, we are interested 
 This also justifies the use of words ``diameter'' and ``radius'' in a circle. We can view a circle as a graph consisting of a centre and infinitely many vertices in the circumference, with edges of length $r$ connecting the centre to the circumference. Indeed, in this definition, the farthest vertices will be any two on the circumference with a distance of $2r$, and the nearest vertices will be the centre and any vertex on the circumference with a distance of $r$.
 
 Intuitively, having a large diameter means that the graph is sparse, i.e., one has to take a very long path to traverse between two vertices. Now let us consider a connected but sparse graph, the above intuition means that we may expect to find that the cycles in this graph are very large.
-\begin{probox}{}{}
+\begin{probox}{Graphs with High Girth Have High Diameter}{highGirthHighDiam}
     Let $G$ be a graph with girth $g(G)$. If $G$ contains a cycle, then $g(G) \leq 2\mathrm{diam}(G) + 1$.
     \tcblower
     \begin{proof}
         Suppose on contrary that $g(G) \geq 2\mathrm{diam}(G) + 2$. Let $C \subseteq G$ be the shortest cycle in $G$, then we can take $x, y \in V(C)$ such that $d_C(x, y)$ is the greatest. Clearly, we have $d_C(x, y) \geq \mathrm{diam}(G) + 1$.
         \\\\
-        Note that by Definition \ref{dfn:distEDia}, there exists some path $P$ between $x$ and $y$ with $e(P) \leq \mathrm{diam}(G)$. Let $P' \subseteq C$ be the $x$-$y$ path in $C$, then $e(P) < e(P')$. This means that $Q \coloneqq P \cup P' - P \cap P' \neq \varnothing$.
+        By Definition \ref{dfn:distEDia}, there exists some path $P$ between $x$ and $y$ with $e(P) \leq \mathrm{diam}(G)$. Let $P' \subseteq C$ be the $x$-$y$ path in $C$, then $e(P) < e(P')$. This means that $P$ and $P'$ are distinct paths and so there is some $q \in V(P') - V(P)$.
         \\\\
-        Take some $q \in Q$. Since $P$ and $P'$ are both $x$-$y$ walks, $\abs{P \cap P'} \geq 2$. Therefore, there are $p_1, p_2 \in P \cap P'$ which are connected to $q$. Since $p_1$ and $p_2$ are connected, by Proposition \ref{pro:walkAndPath}, 
+        Since $P$ and $P'$ are both $x$-$y$ walks, $\abs{P \cap P'} \geq 2$. Therefore, there are $p_1, p_2 \in P \cap P'$ which are connected to $q$, which implies that there is a $p_1$-$p_2$ path in $P'$. Since $p_1$ and~$p_2$ are connected in $P$, we have found $2$ different $p_1$-$p_2$ paths and so there is some cycle $Q \subseteq P \cup P'$. Therefore,
+        \begin{align*}
+            e(Q) & \leq e(P\cup P') \\
+            & \leq e(P) + e(P') \\
+            & \leq \mathrm{diam}(G) + d_C(x, y) \\
+            & \leq 2d_C(x, y) - 1 \\
+            & = 2\left\lfloor\frac{e(C)}{2}\right\rfloor - 1 \\
+            & < e(C),
+        \end{align*}
+        which is a contradiction.
     \end{proof}
 \end{probox}
 
@@ -513,10 +584,133 @@ An application of Theorem \ref{thm:graphMetric} allows us to establish the follo
             d(u, w) & \leq e(w) = \mathrm{rad}(G) \\
             d(w, v) & \leq e(w) = \mathrm{rad}(G).
         \end{align*}
-        By Theorem \ref{thm:triIneq}, 
+        By Theorem \ref{thm:thm:graphMetric}, 
         \begin{equation*}
             \mathrm{diam}(G) = d(u, v) \leq d(u, w) + d(w, v) = 2\mathrm{rad}(G).
         \end{equation*}
     \end{proof}
 \end{thmbox}
+
+\section{Bipartite Graphs}
+\begin{dfnbox}{Bipartite Graph}{bipartite}
+    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and~$V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$. $(V_1, V_2)$ is known as a {\color{red} \textbf{bipartition}} of $G$.
+\end{dfnbox}
+Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is just
+\begin{equation*}
+    e(G) = \sum_{x \in V_1}d_G(x) = \sum_{y \in V_2}d_G(y).
+\end{equation*}
+It can be deduced that the maximal size of a bipartite graph is achieved when every vertex in $V_1$ is connected to every vertex in $V_2$. To define this rigorously, we first introduce the notion of \textit{join}.
+\begin{dfnbox}{Join}{join}
+    Let $G_1$ and $G_2$ be two disjoint graphs of order $n_1$ and $n_2$ respectively. The {\color{red} \textbf{join}} of $G_1$ and $G_2$, deonoted by $G_1 + G_2$ is the graph such that
+    \begin{align*}
+        V(G_1 + G_2) & = V(G_1) \cup V(G_2) \\
+        E(G_1 + G_2) & = E(G_1) \cup E(G_2) \cup \left\{uv \colon u \in V(G_1), v \in V(G_2)\right\}.
+    \end{align*}
+\end{dfnbox}
+Informally, we can describe the join of $G_1$ and $G_2$ as a graph which contains all the vertices from $G_1$ and $G_2$, all existing edges from~$G_1$ and $G_2$, and new edges connecting every vertex in $G_1$ to every vertex in $G_2$. Thus, we can define a complete bipartite graph using a join.
+\begin{dfnbox}{Complete Bipartite Graph}{completeBipartite}
+    A {\color{red} \textbf{complete bipartite graph}} is defined as $K_{p, q} = 0_p + 0_q$.
+\end{dfnbox}
+Consider a $k$-regular bipartite graph. Intuitively, if every vertex in the first partite set must be adjacent to $k > 0$ vertices in the second partite set and vice versa, then it is only natural that the two partite sets have equal cardinalities.
+\begin{probox}{Regular Bipartite Graph}{regBip}
+    For all $k \in \Z^+$, a $k$-regular bipartite graph with bipartition $(U, V)$ is such that $\abs{U} = \abs{V}$.
+    \tcblower
+    \begin{proof}
+        Note that we have
+        \begin{equation*}
+            k\abs{U} = e(G) = k\abs{V}.
+        \end{equation*}
+        Since $k > 0$, this implies $\abs{U} = \abs{V}$.
+    \end{proof}
+\end{probox}
+Sometimes, it is not easy to identify the bipartition in a bipartite graph. Therefore, to quickly determine whether a graph is bipartite, we consider the following theorem:
+\begin{thmbox}{Bipartite Graph Characterisation}{bipartiteIff}
+    A graph is bipartite if and only if it contains no odd cycles.
+    \tcblower
+    \begin{proof}
+        Suppose $G$ is bipartite with bipartition $(U, V)$. If $G$ contains no cycle then we are done. Suppose $G$ contains some cycle. Let $u_i$ be the $i$-th visited vertex from $U$ in the cycle. Note that between $u_i$ and $u_{i + 1}$ there exists one and only one vertex from $V$. Suppose $k$ vertices from $U$ are contained in the cycle, then it is easy to see that there are also $k$ vertices from $V$ contained in the cycle. Therefore, every cycle in $G$ must be even.
+        \\\\
+        Suppose conversely that $G$ contains no odd cycles. Note that it suffices to prove that every component of $G$ is bipartite. Let $C$ be a component of $G$, then $C$ contains no odd cycles. Take some $w \in V(C)$ and define the sets
+        \begin{align*}
+            V_1 & \coloneqq \left\{v \colon d(v, w) \textrm{ is even}\right\} \\
+            V_2 & \coloneqq \left\{v \colon d(v, w) \textrm{ is odd}\right\}.
+        \end{align*}
+        We will prove $(V_1, V_2)$ is a bipartition. Suppose it is not a bipartition, then without loss of generality, let $a, b \in V_1$ be neighbours. Note that there is a path $A$ between $w$ and $a$ of even length and a path $B$ between $w$ and $b$ of even length, so $A \cup B \cup \{ab\}$ is a closed walk of odd length. Consider the following lemma:
+        \begin{lembox}{}{existOddCycle}
+            A closed walk of odd length in a graph contains an odd cycle.
+            \tcblower
+            \begin{proof}
+                Let the walk have a length of $p$. The case where $p = 3$ is trivially true since the only closed walk of length $3$ is $C_3$. 
+                \\\\
+                Suppose any closed walk of odd length less than $p$ contains an odd cycle. Let $P$ be a closed walk of length $p$. If $P$ is a cycle then we are done. If $P$ is not a cycle, then there exist some $w_1 = w_2$ in $P$. Note that $w_1 = w_2$ is a cut-vertex. So there exists two closed walks $Q_1$ and $Q_2$ such that $Q_1 \cap Q_2 = \{w_1\}$. Notice that one of $Q_1$ and $Q_2$ must have an odd length and so contains an odd cycle, so $P$ contains an odd cycle.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:existOddCycle}, $A \cup B \cup \{ab\}$ contains an odd cycle, which is a contradiction. 
+    \end{proof}
+\end{thmbox}
+
+\section{Graphs and Matrices}
+So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and egdes, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
+\begin{dfnbox}{Adjacency Matrix}{adMat}
+    Let $G$ be a multigraph with $v(G) = n$, then the {\color{red} \textbf{adjacency matrix}} denoted by $\mathbfit{A}(G)$ is an $n \times n$ matrix such that $a_{ij}$ is the number of edges incident to both $v_i, v_j \in V(G)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        For an undirected multigraph, $\mathbfit{A}$ is always symmetric.
+    \end{remark}
+\end{notebox}
+Note that an adjacency matrix does not tell us which edges are incident to a particular vertex, so we may consider the following alternative:
+\begin{dfnbox}{Incidence Matrix}{inMat}
+    Let $G$ be a multigraph with $v(G) = n$ and $e(G) = m$, then the {\color{red} \textbf{incidence matrix}} denoted by $\mathbfit{M}(G)$ is an $n \times m$ matrix such that
+    \begin{equation*}
+        m_{ij} = \begin{cases}
+            1, &\textrm{if } e_j \textrm{ is incident with } v_i \\
+            0, &\textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        For an undirected multigraph, consider an arbitrary $k$-th column of $\mathbfit{M}$. Note that any column will have exactly $2$ non-zero entries. Suppose $m_{ik} = m_{jk} = 1$, it means that $e_k = v_iv_j$.
+    \end{remark}
+\end{notebox}
+For readers who have learnt about basic data structures in computer science, an incidence matrix is just an adjacency list with each list of neighbours converted to a (non-compact) boolean array.
+\\\\
+Note that the sum of the $i$-th row for both $\mathbfit{A}$ and $\mathbfit{M}$ is the degree of vertex $i$. 
+\\\\
+Since $\mathbfit{A}$ and $\mathbfit{M}$ carries information about adjacencies between vertices, we can use them to draw some conclusions regarding graph traversal.
+\begin{probox}{Counting the Number of Walks between Two Vertices}{numWalks}
+    Let $G$ be a simple graph of order $n$ with adjacency matrix $\mathbfit{A}$, then the $(i, j)$ entry of $\mathbfit{A}^k$ is the number of $v_i$-$v_j$ walks of length $k$.
+    \tcblower   
+    \begin{proof}
+        The case where $k = 1$ is trivially true since there is a $v_i$-$v_j$ walk of length $1$ if and only if $v_i$ and $v_j$ are neighbours.
+        \\\\
+        Let the $(i, j)$ entry of $\mathbfit{A}^m$ be $m_{ij}$. Suppose $m_{ij}$ is the number of $v_i$-$v_j$ walks of length $m$. Then the $(i, j)$ entry of $\mathbfit{A}^{m + 1}$ is given by
+        \begin{align*}
+            \sum_{r = 1}^{n}m_{ir}a_{rj}.
+        \end{align*}
+        Notice that $m_{ir}$ is the number of $v_i$-$v_r$ walks of length $m$ and $a_{rj}$ is the number of $v_r$-$v_j$ walks of length $1$, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length~$n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
+    \end{proof}
+\end{probox}
+Additionally, we have the following corollary:
+\begin{corbox}{Connectedness Test}{}
+    Let $G$ be a graph with $v(G) \geq 2$ and adjacency matrix $\mathbfit{A}$. Let
+    \begin{equation*}
+        \mathbfit{B} = \sum_{i = 1}^{n - 1}\mathbfit{A}^i,
+    \end{equation*}
+    then $G$ is connected if and only if $b_{ij} \neq 0$ for all $i \neq j$.
+\end{corbox}
+As it turns out, the incidence and adjacency matrices are in fact related by a simple equation.
+\begin{probox}{}{}
+    Let $\mathbfit{M}$ and $\mathbfit{A}$ be the incidence matrix and adjacency matrix of a simple graph $G$ respectively, then
+    \begin{equation*}
+        \mathbfit{M}\mathbfit{M}^{\mathrm{T}} = \begin{bmatrix}
+            d_1 & 0 & 0 & \cdots & 0 \\
+            0 & d_2 & 0 & \cdots & 0 \\
+            0 & 0 & d_3 & \cdots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & \cdots & d_n
+        \end{bmatrix} + \mathbfit{A}.
+    \end{equation*}
+\end{probox}
 \end{document}

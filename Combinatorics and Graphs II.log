@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 JAN 2024 19:09
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  27 JAN 2024 15:37
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1317,117 +1317,182 @@ Underfull \hbox (badness 10000) in paragraph at lines 74--77
  []
 
 [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 155--159
+Underfull \hbox (badness 10000) in paragraph at lines 154--158
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 185--188
+Underfull \hbox (badness 10000) in paragraph at lines 184--187
 
  []
 
 
-Underfull \hbox (badness 1038) in paragraph at lines 185--188
+Underfull \hbox (badness 1038) in paragraph at lines 184--187
 \TU/STIXTwoText(0)/m/n/12 Suppose on contrary that $[][][][][] [] []$, then we have performed the deletion
  []
 
 [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 278--284
+Underfull \hbox (badness 10000) in paragraph at lines 282--288
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--284
+Underfull \hbox (badness 10000) in paragraph at lines 282--288
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 296--300
+Underfull \hbox (badness 10000) in paragraph at lines 300--304
 
  []
 
-[9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 343--347
-
- []
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 369--374
+[9] [10] [11]
+Underfull \hbox (badness 10000) in paragraph at lines 353--357
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 369--374
-
- []
-
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 398--402
+Underfull \hbox (badness 10000) in paragraph at lines 372--377
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 412--417
+Underfull \hbox (badness 10000) in paragraph at lines 372--377
 
  []
 
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 400--403
 
-Underfull \hbox (badness 1210) in paragraph at lines 412--417
-\TU/STIXTwoText(0)/m/n/12 If $[][] [] [][][][]$, since $[]$ is disconnected, there exists some $[] [] [][][][]$ such
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 412--417
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 410--413
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 430--433
+
+LaTeX Warning: Reference `pro:pathCycleGraph' on page 15 undefined on input line 432.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--437
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 440--443
-
- []
-
-[15] [16]
-
-LaTeX Warning: Reference `pro:walkAndPath' on page 17 undefined on input line 485.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 481--486
+Underfull \hbox (badness 10000) in paragraph at lines 428--437
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 481--486
+Underfull \hbox (badness 10000) in paragraph at lines 428--437
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--437
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 447--453
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 447--453
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 460--464
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 474--479
+
+ []
+
+
+Underfull \hbox (badness 1210) in paragraph at lines 474--479
+\TU/STIXTwoText(0)/m/n/12 If $[][] [] [][][][]$, since $[]$ is disconnected, there exists some $[] [] [][][][]$ such
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 474--479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 492--495
 
  []
 
 [17]
+Underfull \hbox (badness 10000) in paragraph at lines 502--505
 
-LaTeX Warning: Reference `thm:triIneq' on page 18 undefined on input line 516.
+ []
 
-[18] 
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 543--548
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 543--548
+
+ []
+
+[19]
+
+LaTeX Warning: Reference `thm:thm:graphMetric' on page 20 undefined on input line 587.
+
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 631--634
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--646
+
+ []
+
+[22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 686--689
+
+ []
+
+
+LaTeX Warning: Reference `thm:MP' on page 24 undefined on input line 692.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 677--694
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 677--694
+
+ []
+
+[24] [25] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39035 strings out of 478630
- 822198 string characters out of 5847730
- 1877012 words of memory out of 5000000
- 58505 multiletter control sequences out of 15000+600000
+ 39068 strings out of 478630
+ 822749 string characters out of 5847730
+ 1878012 words of memory out of 5000000
+ 58538 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,12n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,13n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (18 pages).
+Output written on Combinatorics and Graphs II.pdf (25 pages).
