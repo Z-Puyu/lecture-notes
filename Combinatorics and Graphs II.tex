@@ -429,7 +429,7 @@ Intuitively, if a graph is Eulerian, then following any Eulerian circuit will vi
         \\\\
         Consider the case where $e(G) = 0$, then the only connected multigraph is the trivial graph consisting of a singleton vertex, which is Eulerian. 
         \\\\
-        Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleGraph}, there exists a cycle $S \subseteq G$ where $e(S) \geq 3$.
+        Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleInGraph}, there exists a cycle $S \subseteq G$ where $e(S) \geq 3$.
         \\\\
         Let $G'$ be the multigraph such that $V(G') = V(G)$ and $E(G') = E(G) - E(S)$, then clearly, $e(G') < m$ and every vertex in $G'$ has an even degree. Therefore, each connected component of $G'$ is Eulerian.
         \\\\
@@ -649,8 +649,79 @@ Sometimes, it is not easy to identify the bipartition in a bipartite graph. Ther
     \end{proof}
 \end{thmbox}
 
+\section{Tree}
+\begin{dfnbox}{Tree and Forest}{treeForest}
+    A {\color{red} \textbf{forest}} is an acyclic graph. A {\color{red} \textbf{tree}} is a connected forest.
+\end{dfnbox}
+\begin{dfnbox}{Leaf}{leaf}
+    Let $G$ be a tree. A {\color{red} \textbf{leaf}} of $G$ is a vertex $v \in V(G)$ with $d_G(v) = 1$.
+\end{dfnbox}
+\begin{thmbox}{Equivalent Definitions of a Tree}{equivTreeDef}
+    The followings are equivalent:
+    \begin{enumerate}
+        \item $T$ is a tree.
+        \item For any $u, v \in V(T)$, there exists a unique $u$-$v$ path in $T$.
+        \item $T$ is minimally connected, i.e., $T$ is connected but $T - e$ is disconnected for any $e \in E(T)$.
+        \item $T$ is maximally acyclic, i.e., $T$ is acyclic but $T + xy$ for any $x, y \in V(T)$ with $xy \notin E(T)$ is cyclic.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Let $T$ be a tree. For any $u, v \in V(T)$, there exists a $u$-$v$ path $P \subseteq T$. Suppose $P' \subseteq T$ is also a $u$-$v$ path, then there exists a non-trivial closed walk between $u$ and $v$ which contains a cycle, leading to a contradiction.
+        \\\\
+        Suppose $T$ is such that any $u, v \in V(T)$ are connected by a unique path. Suppose on contrary $T - e$ is connected for some $e = xy \in E(T)$, then there exists some $x$-$y$ path in $T$ which does not contain $xy$. However, $xy$ is a different $x$-$y$ path, which is a contradiction.
+        \\\\
+        Suppose $T$ is minimally connected. Note that if $T$ contains some cycle $C$, then for any $e \in E(C)$, $T - e$ is connected. So $T$ being minimally connected implies that $T$ is acyclic. Take any $x, y \in V(T)$ with $xy \notin E(T)$, then there exists some $x$-$y$ path $P \subseteq T$ which does not contain $xy$. Therefore, $P + xy$ is a cycle, which implies that $T$ is maximally acyclic.
+        \\\\
+        Suppose $T$ is maximally acyclic. Suppose $T$ is not connected, then there exists $u, v \in V(T)$ which are disconnected. Note that $T + uv$ is acyclic because $uv$ is the unique $u$-$v$ path. Therefore, $T$ is not maximally acyclic. The contrapositive shows that $T$ being maximally acyclic implies that $T$ is a tree.
+    \end{proof}
+\end{thmbox}
+\begin{probox}{}{numDeg1}
+    Let $T$ be a tree with $\Delta(T) = k$. Let $n_i$ be the number of vertices in $T$ of degree $i$, then
+    \begin{equation*}
+        n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let the order of $T$ be $n$, then $n = \sum_{i = 1}^{k}n_i$. By Lemma \ref{lem:handshake}, we have
+        \begin{equation*}
+            \sum_{v \in V(T)}d(v) = 2(n - 1).
+        \end{equation*}
+        However, since there are $n_i$ vertices with degree $i$, we have
+        \begin{equation*}
+            \sum_{v \in V(T)}d(v) = \sum_{i = 1}^{k}in_i.
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            2\sum_{i = 1}^{k}n_i - 2 & = \sum_{i = 1}^{k}in_i \\
+            n_1 & = \sum_{i = 3}^{k}in_i \\
+            n_1 & = \sum_{i = 1}^{k - 2}in_{i + 2}.
+        \end{align*}
+    \end{proof}
+\end{probox}
+The following corollary is an immediate consequence of Proposition \ref{pro:numDeg1}:
+\begin{corbox}{}{}
+    A tree of order at least $2$ contains at least $2$ end vertices.
+\end{corbox}
+A tree with exactly $2$ end vertices is a doubly linked list.
+\begin{probox}{Existence of Subgraph Trees}{existTreeSubgraph}
+    Let $T$ be a tree with $k$ vertices. If $G$ is a graph with $\delta(G) \geq k - 1$, then $G$ contains a subgraph which is isomorphic to $T$.
+    \tcblower
+    \begin{proof}
+        Fix an ordering on $V(T)$ such that $v_i$ has a unique neighbour in $v_1, v_2, \cdots, v_{i - 1}$. Take any vertex in $G$ to be $v_1$.
+    \end{proof}
+\end{probox}
+\begin{dfnbox}{$k$-Colourability}{colourable}
+    A graph $G$ is said to be {\color{red} \textbf{$k$-colourable}} if one can colour $V(G)$ with $k$ distinct colours such that every pair of adjacent vertices receive distinct colours.
+\end{dfnbox}
+\begin{dfnbox}{Chromatic Number}{chromaticN}
+    The {\color{red} \textbf{chromatic number}} of a graph $G$ is the smallest positive integer $k$ such that $G$ is $k$-colourable, denoted as $\chi(G)$.
+\end{dfnbox}
+Observe that if $\chi(G) \leq 2$, it is equivalent to saying that we can find a bipartition of $V(G)$, so a bipartite graph can be alternatively defined as a graph $G$ with $\chi(G) \leq 2$.
+\begin{dfnbox}{$r$-partite Graph}{rpartite}
+    A graph $G$ is an {\color{red} \textbf{$r$-partite graph}} if $\chi(G) \leq r$.
+\end{dfnbox}
 \section{Graphs and Matrices}
-So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and egdes, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
+So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and edges, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
 \begin{dfnbox}{Adjacency Matrix}{adMat}
     Let $G$ be a multigraph with $v(G) = n$, then the {\color{red} \textbf{adjacency matrix}} denoted by $\mathbfit{A}(G)$ is an $n \times n$ matrix such that $a_{ij}$ is the number of edges incident to both $v_i, v_j \in V(G)$.
 \end{dfnbox}
@@ -713,4 +784,30 @@ As it turns out, the incidence and adjacency matrices are in fact related by a s
         \end{bmatrix} + \mathbfit{A}.
     \end{equation*}
 \end{probox}
+
+\section{Matching}
+\begin{dfnbox}{Matching}{match}
+    A {\color{red} \textbf{matching}} in a graph $G$ is a set $M \subseteq E(G)$ of vertex-disjoint edges.
+\end{dfnbox}
+The term ``vertex-disjoint edges'' means that for any $e, f \in M$, they are not incident to the same vertex in $G$. Here we define two notions which sound similar:
+\begin{dfnbox}{Maximal and Maximum Matchings}{maxMatch}
+    A {\color{red} \textbf{maximal matching}} is a matching $M \subseteq E(G)$ such that for all $e \in E(G) - M$, $M \cup \{e\}$ is not a matching.
+
+    A {\color{red} \textbf{maximum matching}} is a matching $M \subseteq E(G)$ such that for any matching $N \subseteq E(G)$, $\abs{N} \leq \abs{M}$.
+\end{dfnbox}
+\begin{dfnbox}{Matching Number}{matchN}
+    The {\color{red} \textbf{matching number}} of a graph $G$ is the size of the maximum matching in $G$, denoted as $\nu(G)$.
+\end{dfnbox}
+Clearly, for any graph $G$, $\nu(G) \leq \frac{v(G)}{2}$. 
+\begin{dfnbox}{Perfect Matching}{perfectMatch}
+    Let $G$ be a graph. We say that $G$ has a {\color{red} \textbf{perfect matching}} if $\nu(G) = \frac{v(G)}{2}$.
+\end{dfnbox}
+Intuitively, if $G$ has a perfect matching, then we can find a bipartition $(U, V)$ of $V(G)$ such that there exists a bijection between $U$ and $V$.
+\begin{dfnbox}{Vertex Covering Number}{vtxCoverN}
+    Let $G$ be a graph. The {\color{red} \textbf{vertex covering number}} is defined as 
+    \begin{equation*}
+        \tau(G) \coloneqq \min_{S \subseteq V(G)}\abs{S},
+    \end{equation*}
+    where $S$ is called a {\color{red} \textbf{vertex cover}} of $G$.    
+\end{dfnbox}
 \end{document}
