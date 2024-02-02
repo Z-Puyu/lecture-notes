@@ -810,4 +810,48 @@ Intuitively, if $G$ has a perfect matching, then we can find a bipartition $(U, 
     \end{equation*}
     where $S$ is called a {\color{red} \textbf{vertex cover}} of $G$.    
 \end{dfnbox}
+\begin{probox}{}{}
+    For any graph $G$, $\tau(G) \geq \nu(G)$.
+\end{probox}
+\begin{dfnbox}{Clique}{clique}
+    A {\color{red} \textbf{clique}} in $G$ is a complete subgraph of $G$. The {\color{red} \textbf{clique number}} of $G$ is the order of the largest clique in $G$, denoted as $\omega(G)$.
+\end{dfnbox}
+\begin{dfnbox}{Independent Set}{indSet}
+    The {\color{red} \textbf{independent set}} of $G$ is a subset $I \subseteq V(G)$ such that for all $u, v \in I$, $uv \notin E(G)$. The {\color{red} \textbf{independence number}} of $G$, denoted as $\alpha(G)$, is the size of the largest independent set in $G$.
+\end{dfnbox}
+$\alpha(G) = \omega(\overline(G))$.
+\begin{probox}{}{}
+    For any graph $G$ of order $n$, $\alpha(G) + \tau(G) = n$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove that $S$ is an independent set in $G$ if and only if $V(G) - S$ is a vertex cover of $G$.
+        \\\\
+        Let $S \subseteq V(G)$ be an independent set, then for any edge $e = uv \in E(G)$, at least one of $u$ and $v$ is in $V(G) - S$ for otherwise there exists $u, v \in S$ such that $u \sim v$, which is not possible. Therefore, $V(G) - S$ is a vertex cover.
+        \\\\
+        Suppose conversely that $S \subseteq V(G)$ is such that $V(G) - S$ is a vertex cover.
+    \end{proof}
+\end{probox}
+\begin{dfnbox}{Kneser Graph}{kneser}
+    The {\color{red} \textbf{Kneser graph}} is a graph $KG(n, k)$ such that 
+    \begin{align*}
+        V\bigl(KG(n, k)\bigr) & = \left\{S \in \mathcal{P}([n]) \colon \abs{S} = k\right\}, \\
+        E\bigl(KG(n, k)\bigr) & = \left\{(S, T) \colon S \cap T = \varnothing\right\}.
+    \end{align*}
+\end{dfnbox}
+\begin{thmbox}{Erdos-Ko-Rado Theorem}{ErdosKoRado}
+    Let $n \geq 2k$, then any family
+    \begin{equation*}
+        \mathcal{F} \coloneqq \left\{S \in \mathcal{P}([n]) \colon \abs{S} = k \textrm{ and } S \cap T \neq \varnothing \textrm{ for some } T \in \mathcal{P}([n])\right\}
+    \end{equation*}
+    is such that $\abs{\mathcal{F}} \leq \begin{pmatrix}
+        n - 1 \\
+        k - 1
+    \end{pmatrix}$.
+\end{thmbox}
+\begin{probox}{}{}
+    For any graph $G$, $\nu(G) = \alpha\bigl(L(G)\bigr)$.
+\end{probox}
+\begin{thmbox}{K\"{o}nig Theorem}{Konig}
+    If $G$ is bipartite, then $\nu(G) = \tau(G)$.
+\end{thmbox}
 \end{document}
