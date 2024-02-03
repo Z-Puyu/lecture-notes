@@ -106,4 +106,27 @@ Geometrically, a polyhedral set $P$ can be defined alternatively as a finite int
 \begin{equation*}
     P \coloneqq \bigcap_{i = 1}^m\left\{\mathbfit{x} \in \R^n \colon \mathbfit{a_i}^{\mathrm{T}}\mathbfit{x} \leq b_i\right\}.
 \end{equation*}
+\begin{thmbox}{Basic Solution Characterisation}{basicSolnChar}
+    A vector $\mathbfit{x}^* \in \R^n$ is a basic solution if and only if
+    \begin{itemize}
+        \item $\mathbfit{Ax}^* = \mathbfit{b}$, and
+        \item There exists an index set $B \subseteq \left\{1, 2, \cdots, n\right\}$ such that the set
+        \begin{equation*}
+            \left\{\mathbfit{A}_i \colon i \in B\right\}
+        \end{equation*}
+        is linearly independent and $x^*_j = 0$ for all $j \notin B$.
+    \end{itemize}
+\end{thmbox}
+\begin{thmbox}{\small Equivalent Conditions for the Existence of Basic Feasible Solution}{}
+    Let $\mathbfit{A} \in \R^{m \times n}$ where $m \geq n$ and 
+    \begin{equation*}
+        P = \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax} \geq \mathbfit{b}\right\} \neq \varnothing.
+    \end{equation*}
+    The following statements are equivalent:
+    \begin{enumerate}
+        \item $P$ does not contain any straight line.
+        \item $P$ has a basic feasible solution.
+        \item $P$ has $n$ linearly independent constraints.
+    \end{enumerate}
+\end{thmbox}
 \end{document}
