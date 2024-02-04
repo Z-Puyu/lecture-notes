@@ -165,16 +165,89 @@ To justify this, we first take any $\mathbfit{v} \in \mathcal{F}^n$. Using some 
 Let $\mathbfit{w = v - u}_0$, then clearly $\mathbfit{v = w + u}_0$ where $\mathbfit{u}_0 \in U$ and $\mathbfit{w} \in U_{\perp}$. This implies that~$V = U + U_{\perp}$. Note that $\zero$ is the only vector in $\mathcal{F}^n$ which is orthogonal to itself, so we have $U \cap U_{\perp} = \{\zero\}$. It follows that $V = U \oplus U_{\perp}$.
 
 \section{Isomorphism}
+Since the underlying structure of a vector space is still a set, the notion of a mapping between two vector spaces is well-defined. However, note that a vector space possesses unique algebraic structures and properties, namely that the linear combinations of any members of the space are still in the space, so we would like to focus on mapping which preserves such properties.
 \begin{dfnbox}{Homomorphism}{homomorphic}
     Let $U$ and $V$ be vector spaces, a {\color{red} \textbf{homomorphism}} is a mapping $\phi \colon U \to V$ such that
     \begin{equation*}
-        \phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v}).
+        \phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v})
     \end{equation*}
+    for any $\mathbfit{u}, \mathbfit{v} \in U$.
 \end{dfnbox}
+Note that it suffices to only require $\phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v})$ but not $\phi(c\mathbfit{u}) = c\phi(\mathbfit{u})$. Here, note that a vector space is a connected set, so we can easily prove the above claim with some knowledge in mathematical analysis.
+
+Naturally, if a homomorphism is bijective, then it means that the elements in two vector spaces have a one-to-one correspondence. In practice, this means we can treat them as equivalent spaces in some sense.
 \begin{dfnbox}{Isomorphism}{isomorphic}
     An {\color{red} \textbf{isomorphism}} between vector spaces $U$ and $V$ is a homomorphism between them which is bijective.
 \end{dfnbox}
+An interesting fact here is that an isomorphism between any vector spaces is not unique. To see this, let us first consider an arbitrary vector space $V$. Now, we can always find the trivial isomorphism $\mathrm{id}_V \colon V \to V$. In fact, any mapping $\phi \colon \mathbfit{v} \mapsto c\mathbfit{v}$ where $c$ is a scalar is clearly an isomorphism from $V$ to $V$. This means that there are infinitely many isomorphisms from~$V$ to itself.
+
+Let $U$ be an arbitrary vector space such that there exists some isomorphism $\psi \colon V \to U$. We consider the following theorem:
+\begin{thmbox}{Composition Preserves Isomorphism}{compoPreserveIsomorphic}
+    Let $U, V, W$ be vector spaces. If $\phi \colon U \to V$ and $\psi \colon V \to W$ are isomorphisms, then the composite mapping $\phi \circ \psi \colon U \to W$ is an isomorphism.
+    \tcblower
+    \begin{proof}
+        Since both $\phi$ and $\psi$ are bijective, it is clear that $\psi \circ \phi$ is bijective. Take any $\mathbfit{u}, \mathbfit{v} \in U$, then
+        \begin{align*}
+            \psi\bigl(\phi(\mathbfit{u + v})\bigr) = \psi\bigl(\phi(\mathbfit{u}) + \phi(\mathbfit{v})\bigr) = \psi\bigl(\phi(\mathbfit{u})\bigr) + \psi\bigl(\phi(\mathbfit{v})\bigr)
+        \end{align*}
+        since $\phi(\mathbfit{u}), \phi(\mathbfit{v}) \in V$. Therefore, $\psi \circ \phi$ is an isomorphism.
+    \end{proof}
+\end{thmbox}
+Using Theorem \ref{thm:compoPreserveIsomorphic}, we can immediately see that if $\phi \colon V \to V$ is any isomorphism and $\psi \colon V \to U$ is an isomorphism, then $\psi \circ \phi$ is an isomorphism between $V$ and $U$. Therefore, there are infinitely many isomorphisms between $V$ and $U$.
+\begin{notebox}
+    \begin{remark}
+        If $V$ is isomorphic to $U$, we write $V \cong U$. Clearly, $\cong$ is an equivalence relation.
+    \end{remark}
+\end{notebox}
+
+Now, observe that for any field $\mathcal{F}$, the set $\mathcal{F}^n$ for any $n \in \N$ is a vector space over $\mathcal{F}$.
 \begin{dfnbox}{Finite-Dimensional Vector Space}{finiteDim}
-    A vector space $V$ is said to be {\color{red} \textbf{finite-dimensional}} over a field $\mathcal{F}$ if it it is isomorphic to $\mathcal{F}^n$ for some $n \in \N$.
+    A vector space $V$ is said to be {\color{red} \textbf{finite-dimensional}} over a field $\mathcal{F}$ if it it is isomorphic to $\mathcal{F}^n$ for some $n \in \N$. $n$ is called the {\color{red} \textbf{dimension}} of $V$.
 \end{dfnbox}
+Obviously, a vector space which is not finite-dimensional is called \textit{infinite-dimensional}. For example, the set of all polynomials is a vector space of infinite dimension.
+
+\section{Basis}
+Recall that a \textit{linear combination} of vectors is in the form of
+\begin{equation*}
+    \sum a_i\mathbfit{v}_i = a_1\mathbfit{v}_1 + a_2\mathbfit{v}_2 + \cdots.
+\end{equation*}
+In case where no confusion is caused, this can be abbreviated as $a_i\mathbfit{v}_i$. Recall also that a \textit{span} of a set of vectors is defined as
+\begin{equation*}
+    \mathrm{span}(V) \coloneqq \left\{a_i\mathbfit{v}_i \colon \mathbfit{v}_i \in V\right\},
+\end{equation*}
+where $a_i$'s are scalars. A span of a subset of a vector space $V$ is clearly a subspace of $V$. We also know that a set of vectors $S$ is said to be \textit{linearly independent} if and only if  $a_i\mathbfit{v}_i = \zero$ implies that $a_i = 0$ for all $i = 1, 2, \cdots$. A \textit{basis} of a vector space $V$ is a linearly independent set $S$ such that $\mathrm{span}(S) = V$. One may check that if $S$ is a basis for $V$, then any $\mathbfit{v} \in V$ can be \textbf{uniquely} expressed as a linear combination of the members of $S$, but $S$ itself is not unique. In particular, the coefficients in this linear combination is known as the \textit{components} of $\mathbfit{v}$ relative to $S$.
+
+We will see that the basis is closely related to the dimension of vector spaces. First, let us consider the trivial basis for $\mathcal{F}^n$.
+\begin{dfnbox}{Canonical Basis}{canonicalBasis}
+    The {\color{red} \textbf{canonical basis}} for $\mathcal{F}^n$ is defined as $\left\{\mathbfit{e}_i \colon i = 1, 2, \cdots, n\right\}$, where each $\mathbfit{e}_i$ is a column vector with $1_{\mathcal{F}}$ in its $i$-th row and $0_{\mathcal{F}}$ in the other rows.
+\end{dfnbox}
+It is easy to see that the number of vectors in any basis of a finite-dimensional vector space~$V$ is uniquely equal to its dimension.
+\begin{probox}{Dimension as Cardinality of Basis}{dimIsCardBasis}
+    Let $V$ be a finite-dimensional vector space with dimension $n$ and basis $S$, then $n = \abs{S}$.
+    \tcblower
+    \begin{proof}
+        Note that $V \cong \mathcal{F}^n$. Let $\mathbfit{v} \in V$ be an arbitrary vector, then there is some~$\mathbfit{u} \in \mathcal{F}^n$ and a bijection $\phi \colon \mathcal{F}^n \to V$ such that 
+        \begin{align*}
+            \mathbfit{v} & = \phi(\mathbfit{u}) \\
+            & = \phi\left(\sum_{i = 1}^{n}a_i\mathbfit{e}_i\right) \\
+            & = \sum_{i = 1}^{n}a_i\phi(\mathbfit{e}_i),
+        \end{align*}
+        where $a_i \in \mathcal{F}$ for $i = 1, 2, \cdots, n$. This means that $V$ is spanned by at most $n$ vectors and so its basis is finite. Suppose on contrary that $\abs{S} = m < n$, then for any $\mathbfit{w} \in \mathcal{F}^n$, there is some $\mathbfit{r} \in V$ such that
+        \begin{align*}
+            \mathbfit{w} & = \phi^{-1}(\mathbfit{r}) \\
+            & = \phi^{-1}\left(\sum_{i = 1}^{m}b_i\mathbfit{s}_i\right) \\
+            & = \sum_{i = 1}^{m}b_i\phi^{-1}(\mathbfit{s}_i),
+        \end{align*}
+        where $b_i \in \mathcal{F}$ for $i = 1, 2, \cdots, m$. This means that $\mathcal{F}^n$ is spanned by $m$ vectors, which is a contradiction. Therefore, $\abs{S} = n$.
+    \end{proof}
+\end{probox}
+An immediate corollary from Proposition \ref{pro:dimIsCardBasis} is that a finite-dimensional vector space always has a unique dimension, as otherwise it will have two bases with different cardinalities.
+
+Note that since every vector in a vector space $V$ can be uniquely expressed as a linear combination of a basis $S$ for $V$, this really means that we can view the notion of a basis equivalently as a bijection between $\mathcal{F}^n$ and $V$, i.e., for any $(a_1, a_2, \cdots, a_n) \in \mathcal{F}^n$, we can map the tuple to a vector in $V$ whose components are exactly $a_1, a_2, \cdots, a_n$.
+
+Now, let us denote a basis for $V$ by the mapping $z$. Notice that for any $\mathbfit{c}_1, \mathbfit{c}_2 \in \mathcal{F}^n$, we have 
+\begin{equation*}
+    z(\mathbfit{c}_1 + \mathbfit{c}_2) = z(\mathbfit{c}_1) + z(\mathbfit{c}_2),
+\end{equation*}
+so a basis is nothing more but an isomorphism!
 \end{document}
