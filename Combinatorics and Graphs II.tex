@@ -590,136 +590,6 @@ An application of Theorem \ref{thm:graphMetric} allows us to establish the follo
         \end{equation*}
     \end{proof}
 \end{thmbox}
-
-\section{Bipartite Graphs}
-\begin{dfnbox}{Bipartite Graph}{bipartite}
-    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and~$V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$. $(V_1, V_2)$ is known as a {\color{red} \textbf{bipartition}} of $G$.
-\end{dfnbox}
-Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is just
-\begin{equation*}
-    e(G) = \sum_{x \in V_1}d_G(x) = \sum_{y \in V_2}d_G(y).
-\end{equation*}
-It can be deduced that the maximal size of a bipartite graph is achieved when every vertex in $V_1$ is connected to every vertex in $V_2$. To define this rigorously, we first introduce the notion of \textit{join}.
-\begin{dfnbox}{Join}{join}
-    Let $G_1$ and $G_2$ be two disjoint graphs of order $n_1$ and $n_2$ respectively. The {\color{red} \textbf{join}} of $G_1$ and $G_2$, deonoted by $G_1 + G_2$ is the graph such that
-    \begin{align*}
-        V(G_1 + G_2) & = V(G_1) \cup V(G_2) \\
-        E(G_1 + G_2) & = E(G_1) \cup E(G_2) \cup \left\{uv \colon u \in V(G_1), v \in V(G_2)\right\}.
-    \end{align*}
-\end{dfnbox}
-Informally, we can describe the join of $G_1$ and $G_2$ as a graph which contains all the vertices from $G_1$ and $G_2$, all existing edges from~$G_1$ and $G_2$, and new edges connecting every vertex in $G_1$ to every vertex in $G_2$. Thus, we can define a complete bipartite graph using a join.
-\begin{dfnbox}{Complete Bipartite Graph}{completeBipartite}
-    A {\color{red} \textbf{complete bipartite graph}} is defined as $K_{p, q} = 0_p + 0_q$.
-\end{dfnbox}
-Consider a $k$-regular bipartite graph. Intuitively, if every vertex in the first partite set must be adjacent to $k > 0$ vertices in the second partite set and vice versa, then it is only natural that the two partite sets have equal cardinalities.
-\begin{probox}{Regular Bipartite Graph}{regBip}
-    For all $k \in \Z^+$, a $k$-regular bipartite graph with bipartition $(U, V)$ is such that $\abs{U} = \abs{V}$.
-    \tcblower
-    \begin{proof}
-        Note that we have
-        \begin{equation*}
-            k\abs{U} = e(G) = k\abs{V}.
-        \end{equation*}
-        Since $k > 0$, this implies $\abs{U} = \abs{V}$.
-    \end{proof}
-\end{probox}
-Sometimes, it is not easy to identify the bipartition in a bipartite graph. Therefore, to quickly determine whether a graph is bipartite, we consider the following theorem:
-\begin{thmbox}{Bipartite Graph Characterisation}{bipartiteIff}
-    A graph is bipartite if and only if it contains no odd cycles.
-    \tcblower
-    \begin{proof}
-        Suppose $G$ is bipartite with bipartition $(U, V)$. If $G$ contains no cycle then we are done. Suppose $G$ contains some cycle. Let $u_i$ be the $i$-th visited vertex from $U$ in the cycle. Note that between $u_i$ and $u_{i + 1}$ there exists one and only one vertex from $V$. Suppose $k$ vertices from $U$ are contained in the cycle, then it is easy to see that there are also $k$ vertices from $V$ contained in the cycle. Therefore, every cycle in $G$ must be even.
-        \\\\
-        Suppose conversely that $G$ contains no odd cycles. Note that it suffices to prove that every component of $G$ is bipartite. Let $C$ be a component of $G$, then $C$ contains no odd cycles. Take some $w \in V(C)$ and define the sets
-        \begin{align*}
-            V_1 & \coloneqq \left\{v \colon d(v, w) \textrm{ is even}\right\} \\
-            V_2 & \coloneqq \left\{v \colon d(v, w) \textrm{ is odd}\right\}.
-        \end{align*}
-        We will prove $(V_1, V_2)$ is a bipartition. Suppose it is not a bipartition, then without loss of generality, let $a, b \in V_1$ be neighbours. Note that there is a path $A$ between $w$ and $a$ of even length and a path $B$ between $w$ and $b$ of even length, so $A \cup B \cup \{ab\}$ is a closed walk of odd length. Consider the following lemma:
-        \begin{lembox}{}{existOddCycle}
-            A closed walk of odd length in a graph contains an odd cycle.
-            \tcblower
-            \begin{proof}
-                Let the walk have a length of $p$. The case where $p = 3$ is trivially true since the only closed walk of length $3$ is $C_3$. 
-                \\\\
-                Suppose any closed walk of odd length less than $p$ contains an odd cycle. Let $P$ be a closed walk of length $p$. If $P$ is a cycle then we are done. If $P$ is not a cycle, then there exist some $w_1 = w_2$ in $P$. Note that $w_1 = w_2$ is a cut-vertex. So there exists two closed walks $Q_1$ and $Q_2$ such that $Q_1 \cap Q_2 = \{w_1\}$. Notice that one of $Q_1$ and $Q_2$ must have an odd length and so contains an odd cycle, so $P$ contains an odd cycle.
-            \end{proof}
-        \end{lembox}
-        By Lemma \ref{lem:existOddCycle}, $A \cup B \cup \{ab\}$ contains an odd cycle, which is a contradiction. 
-    \end{proof}
-\end{thmbox}
-
-\section{Tree}
-\begin{dfnbox}{Tree and Forest}{treeForest}
-    A {\color{red} \textbf{forest}} is an acyclic graph. A {\color{red} \textbf{tree}} is a connected forest.
-\end{dfnbox}
-\begin{dfnbox}{Leaf}{leaf}
-    Let $G$ be a tree. A {\color{red} \textbf{leaf}} of $G$ is a vertex $v \in V(G)$ with $d_G(v) = 1$.
-\end{dfnbox}
-\begin{thmbox}{Equivalent Definitions of a Tree}{equivTreeDef}
-    The followings are equivalent:
-    \begin{enumerate}
-        \item $T$ is a tree.
-        \item For any $u, v \in V(T)$, there exists a unique $u$-$v$ path in $T$.
-        \item $T$ is minimally connected, i.e., $T$ is connected but $T - e$ is disconnected for any $e \in E(T)$.
-        \item $T$ is maximally acyclic, i.e., $T$ is acyclic but $T + xy$ for any $x, y \in V(T)$ with $xy \notin E(T)$ is cyclic.
-    \end{enumerate}
-    \tcblower
-    \begin{proof}
-        Let $T$ be a tree. For any $u, v \in V(T)$, there exists a $u$-$v$ path $P \subseteq T$. Suppose $P' \subseteq T$ is also a $u$-$v$ path, then there exists a non-trivial closed walk between $u$ and $v$ which contains a cycle, leading to a contradiction.
-        \\\\
-        Suppose $T$ is such that any $u, v \in V(T)$ are connected by a unique path. Suppose on contrary $T - e$ is connected for some $e = xy \in E(T)$, then there exists some $x$-$y$ path in $T$ which does not contain $xy$. However, $xy$ is a different $x$-$y$ path, which is a contradiction.
-        \\\\
-        Suppose $T$ is minimally connected. Note that if $T$ contains some cycle $C$, then for any $e \in E(C)$, $T - e$ is connected. So $T$ being minimally connected implies that $T$ is acyclic. Take any $x, y \in V(T)$ with $xy \notin E(T)$, then there exists some $x$-$y$ path $P \subseteq T$ which does not contain $xy$. Therefore, $P + xy$ is a cycle, which implies that $T$ is maximally acyclic.
-        \\\\
-        Suppose $T$ is maximally acyclic. Suppose $T$ is not connected, then there exists $u, v \in V(T)$ which are disconnected. Note that $T + uv$ is acyclic because $uv$ is the unique $u$-$v$ path. Therefore, $T$ is not maximally acyclic. The contrapositive shows that $T$ being maximally acyclic implies that $T$ is a tree.
-    \end{proof}
-\end{thmbox}
-\begin{probox}{}{numDeg1}
-    Let $T$ be a tree with $\Delta(T) = k$. Let $n_i$ be the number of vertices in $T$ of degree $i$, then
-    \begin{equation*}
-        n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}.
-    \end{equation*}
-    \tcblower
-    \begin{proof}
-        Let the order of $T$ be $n$, then $n = \sum_{i = 1}^{k}n_i$. By Lemma \ref{lem:handshake}, we have
-        \begin{equation*}
-            \sum_{v \in V(T)}d(v) = 2(n - 1).
-        \end{equation*}
-        However, since there are $n_i$ vertices with degree $i$, we have
-        \begin{equation*}
-            \sum_{v \in V(T)}d(v) = \sum_{i = 1}^{k}in_i.
-        \end{equation*}
-        Therefore,
-        \begin{align*}
-            2\sum_{i = 1}^{k}n_i - 2 & = \sum_{i = 1}^{k}in_i \\
-            n_1 & = \sum_{i = 3}^{k}in_i \\
-            n_1 & = \sum_{i = 1}^{k - 2}in_{i + 2}.
-        \end{align*}
-    \end{proof}
-\end{probox}
-The following corollary is an immediate consequence of Proposition \ref{pro:numDeg1}:
-\begin{corbox}{}{}
-    A tree of order at least $2$ contains at least $2$ end vertices.
-\end{corbox}
-A tree with exactly $2$ end vertices is a doubly linked list.
-\begin{probox}{Existence of Subgraph Trees}{existTreeSubgraph}
-    Let $T$ be a tree with $k$ vertices. If $G$ is a graph with $\delta(G) \geq k - 1$, then $G$ contains a subgraph which is isomorphic to $T$.
-    \tcblower
-    \begin{proof}
-        Fix an ordering on $V(T)$ such that $v_i$ has a unique neighbour in $v_1, v_2, \cdots, v_{i - 1}$. Take any vertex in $G$ to be $v_1$.
-    \end{proof}
-\end{probox}
-\begin{dfnbox}{$k$-Colourability}{colourable}
-    A graph $G$ is said to be {\color{red} \textbf{$k$-colourable}} if one can colour $V(G)$ with $k$ distinct colours such that every pair of adjacent vertices receive distinct colours.
-\end{dfnbox}
-\begin{dfnbox}{Chromatic Number}{chromaticN}
-    The {\color{red} \textbf{chromatic number}} of a graph $G$ is the smallest positive integer $k$ such that $G$ is $k$-colourable, denoted as $\chi(G)$.
-\end{dfnbox}
-Observe that if $\chi(G) \leq 2$, it is equivalent to saying that we can find a bipartition of $V(G)$, so a bipartite graph can be alternatively defined as a graph $G$ with $\chi(G) \leq 2$.
-\begin{dfnbox}{$r$-partite Graph}{rpartite}
-    A graph $G$ is an {\color{red} \textbf{$r$-partite graph}} if $\chi(G) \leq r$.
-\end{dfnbox}
 \section{Graphs and Matrices}
 So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and edges, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
 \begin{dfnbox}{Adjacency Matrix}{adMat}
@@ -785,7 +655,168 @@ As it turns out, the incidence and adjacency matrices are in fact related by a s
     \end{equation*}
 \end{probox}
 
+
+\chapter{Trees and Bipartite Graphs}
+
+\section{Tree}
+In computer science and data science, it is often useful to use a tree diagram. Colloquially, we view a tree as a graph consisting of nodes, each of which has exactly one parent node and some children nodes. Here, we shall introduce the rigorous mathematical definition for a tree.
+\begin{dfnbox}{Tree and Forest}{treeForest}
+    A {\color{red} \textbf{forest}} is an acyclic graph. A {\color{red} \textbf{tree}} is a connected forest.
+\end{dfnbox}
+In other words, a tree is an \textbf{connected acyclic graph}. We also have the following alternative definition for a tree:
+\begin{thmbox}{Equivalent Definitions of a Tree}{equivTreeDef}
+    The followings are equivalent:
+    \begin{enumerate}
+        \item $T$ is a tree.
+        \item For any $u, v \in V(T)$, there exists a unique $u$-$v$ path in $T$.
+        \item $T$ is minimally connected, i.e., $T$ is connected but $T - e$ is disconnected for any $e \in E(T)$.
+        \item $T$ is maximally acyclic, i.e., $T$ is acyclic but $T + xy$ for any $x, y \in V(T)$ with $xy \notin E(T)$ is cyclic.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Let $T$ be a tree. For any $u, v \in V(T)$, there exists a $u$-$v$ path $P \subseteq T$. Suppose $P' \subseteq T$ is also a $u$-$v$ path, then there exists a non-trivial closed walk between $u$ and $v$ which contains a cycle, leading to a contradiction.
+        \\\\
+        Suppose $T$ is such that any $u, v \in V(T)$ are connected by a unique path. Suppose on contrary $T - e$ is connected for some $e = xy \in E(T)$, then there exists some $x$-$y$ path in $T$ which does not contain $xy$. However, $xy$ is a different $x$-$y$ path, which is a contradiction.
+        \\\\
+        Suppose $T$ is minimally connected. Note that if $T$ contains some cycle $C$, then for any $e \in E(C)$, $T - e$ is connected. So $T$ being minimally connected implies that $T$ is acyclic. Take any $x, y \in V(T)$ with $xy \notin E(T)$, then there exists some $x$-$y$ path $P \subseteq T$ which does not contain $xy$. Therefore, $P + xy$ is a cycle, which implies that $T$ is maximally acyclic.
+        \\\\
+        Suppose $T$ is maximally acyclic. Suppose $T$ is not connected, then there exists $u, v \in V(T)$ which are disconnected. Note that $T + uv$ is acyclic because $uv$ is the unique $u$-$v$ path. Therefore, $T$ is not maximally acyclic. The contrapositive shows that $T$ being maximally acyclic implies that $T$ is a tree.
+    \end{proof}
+\end{thmbox}
+We first consider the following proposition:
+\begin{probox}{Degrees of Vertices in a Tree}{numDeg1}
+    Let $T$ be a tree with $\Delta(T) = k$. Let $n_i$ be the number of vertices in $T$ of degree $i$, then
+    \begin{equation*}
+        n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let the order of $T$ be $n$, then $n = \sum_{i = 1}^{k}n_i$. By Lemma \ref{lem:handshake}, we have
+        \begin{equation*}
+            \sum_{v \in V(T)}d(v) = 2(n - 1).
+        \end{equation*}
+        However, since there are $n_i$ vertices with degree $i$, we have
+        \begin{equation*}
+            \sum_{v \in V(T)}d(v) = \sum_{i = 1}^{k}in_i.
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            2\sum_{i = 1}^{k}n_i - 2 & = \sum_{i = 1}^{k}in_i \\
+            n_1 & = \sum_{i = 3}^{k}in_i \\
+            n_1 & = \sum_{i = 1}^{k - 2}in_{i + 2}.
+        \end{align*}
+    \end{proof}
+\end{probox}
+The following corollary is an immediate consequence of Proposition \ref{pro:numDeg1}:
+\begin{corbox}{Number of End Vertices in a Tree}{numEndVtx}
+    A tree of order at least $2$ contains at least $2$ end vertices.
+\end{corbox}
+In particular, a tree with exactly $2$ end vertices is a doubly linked list. We will now give a name to these vertices in a tree whose degree is $1$.
+\begin{dfnbox}{Leaf}{leaf}
+    Let $G$ be a tree. A {\color{red} \textbf{leaf}} of $G$ is a vertex $v \in V(G)$ with $d_G(v) = 1$.
+\end{dfnbox}
+Given any tree, we can fix a vertex as the ``root''. We can carry out depth-first search to traverse the tree's vertices starting from the root. An interesting phenomenon here is that at any point of time, we notice that the vertex which we are currently at is adjacent to exactly one of the vertices which we have visited.
+\begin{probox}{Re-labelling of Vertices in a Tree}{relabelTreeVtx}
+    Let $T$ be a tree with order $n$, then there exists an ordering of $V(T)$ such that for any $v_k \in V(T)$, $v_k$ is adjacent to exactly one of $v_1, v_2, \cdots, v_{k - 1}$.
+    \tcblower
+    \begin{proof}
+        By Corollary \ref{cor:numEndVtx}, $T$ has a leaf vertex. Let this vertex be $v_n$. Note that $T - v_n \subseteq T$, so it is acyclic. Let $T' = T - v_n$, then $v_n$ has a unique neighbour in $V(T')$. Note that $T'$ is also a tree, so we can repeat this process to take $v_{n - 1}$. Continue doing so until we have taken all vertices in $T$, then for any $k = 1, 2, \cdots, n$, $v_k$ has a unique neighbour in $v_1, v_2, \cdots, v_k$.
+    \end{proof}
+\end{probox}
+In fact, such an ordering of the tree is known as a \textit{topological sort}. 
+
+Intuitively, if a connected graph contains cycles, we can always reduce it to a tree by deleting some edges. This leads to the following result:
+\begin{corbox}{Number of Egdes in a Tree}{numEgdesTree}
+    A connected graph $T$ is a tree of order $n$ if and only if $e(T) = n - 1$.
+    \tcblower
+    \begin{proof}
+        If $T$ is a tree, then by Proposition \ref{pro:relabelTreeVtx} we can order $V(T)$ such that for all $i = 2, 3, \cdots, n$, $v_i$ is adjacent to exactly one vertex from $v_1, v_2, \cdots, v_{i - 1}$. Therefore, $e(T) = n - 1$.
+        \\\\
+        If $e(T) = n - 1$, note that $T$ contains a tree $T' \subseteq T$ which has $n$ vertices. Therefore, $e(T') = n - 1 = e(T)$. This implies that $T = T'$, so $T$ is a tree.
+    \end{proof}
+\end{corbox}
+Recall that every graph contains a tree. In fact, this result can be further strengthened.
+\begin{probox}{Existence of Subgraph Trees}{existTreeSubgraph}
+    Let $T$ be a tree with $k$ vertices. If $G$ is a graph with $\delta(G) \geq k - 1$, then $G$ contains a subgraph which is isomorphic to $T$.
+    \tcblower
+    \begin{proof}
+        Fix an ordering on $V(T)$ such that $v_i$ has a unique neighbour in $v_1, v_2, \cdots, v_{i - 1}$. Take any vertex in $G$ to be $v_1$. Suppose we have chosen $v_1, v_2, \cdots, v_i$ in $G$ for some $i < k$, for any $v_j$ among these vertices, at most $(i - 1)$ of $v_j$'s neighbours have been chosen, but
+        \begin{equation*}
+            d_G(v_j) \geq \delta(G) = k - 1 > i - 1.
+        \end{equation*}
+        Therefore, there exists some $u \in N_G(v_j)$ which is not one of $v_1, v_2, \cdots, v_i$. Take $u$ as $v_{i + 1}$ with the edge $uv_j$, then $v_{i + 1}$ is adjacent to exactly one of $v_1, v_2, \cdots, v_i$. This means we can choose all vertices of $T$ from $V(G)$, which means $T \subseteq G$.
+    \end{proof}
+\end{probox}
+
+\section{Bipartite Graphs}
+Consider a tree $T$. Take some $r \in V(T)$ as the root. We define a vertex $v \in V(T)$ to be at depth $k$ from the root if there is a $r$-$v$ path of length $k$. Clearly, if we partition $V(T)$ into vertices of odd depth and even depth, we can easily see that all edges in $T$ joins one vertex from the former to one from the latter.
+
+In fact, there are many graphs which can be bi-partitioned in a similar manner, which are known as \textit{bipartite} graphs.
+\begin{dfnbox}{Bipartite Graph}{bipartite}
+    A graph $G$ is {\color{red} \textbf{bipartite}} if $V(G)$ can be partitioned into two disjointed subsets $V_1$ and~$V_2$ such that every edge of $G$ joins a vertex in $V_1$ to a vertex in $V_2$. $(V_1, V_2)$ is known as a {\color{red} \textbf{bipartition}} of $G$.
+\end{dfnbox}
+Note that the size of a bipartite graph $G$ with partite sets $V_1$ and $V_2$ is just
+\begin{equation*}
+    e(G) = \sum_{x \in V_1}d_G(x) = \sum_{y \in V_2}d_G(y).
+\end{equation*}
+It can be deduced that the maximal size of a bipartite graph is achieved when every vertex in $V_1$ is connected to every vertex in $V_2$. To define this rigorously, we first introduce the notion of \textit{join}.
+\begin{dfnbox}{Join}{join}
+    Let $G_1$ and $G_2$ be two disjoint graphs of order $n_1$ and $n_2$ respectively. The {\color{red} \textbf{join}} of $G_1$ and $G_2$, deonoted by $G_1 + G_2$ is the graph such that
+    \begin{align*}
+        V(G_1 + G_2) & = V(G_1) \cup V(G_2) \\
+        E(G_1 + G_2) & = E(G_1) \cup E(G_2) \cup \left\{uv \colon u \in V(G_1), v \in V(G_2)\right\}.
+    \end{align*}
+\end{dfnbox}
+Informally, we can describe the join of $G_1$ and $G_2$ as a graph which contains all the vertices from $G_1$ and $G_2$, all existing edges from~$G_1$ and $G_2$, and new edges connecting every vertex in $G_1$ to every vertex in $G_2$. Thus, we can define a complete bipartite graph using a join.
+\begin{dfnbox}{Complete Bipartite Graph}{completeBipartite}
+    A {\color{red} \textbf{complete bipartite graph}} is defined as $K_{p, q} = 0_p + 0_q$.
+\end{dfnbox}
+Consider a $k$-regular bipartite graph. Intuitively, if every vertex in the first partite set must be adjacent to $k > 0$ vertices in the second partite set and vice versa, then it is only natural that the two partite sets have equal cardinalities.
+\begin{probox}{Regular Bipartite Graph}{regBip}
+    For all $k \in \Z^+$, a $k$-regular bipartite graph with bipartition $(U, V)$ is such that $\abs{U} = \abs{V}$.
+    \tcblower
+    \begin{proof}
+        Note that we have
+        \begin{equation*}
+            k\abs{U} = e(G) = k\abs{V}.
+        \end{equation*}
+        Since $k > 0$, this implies $\abs{U} = \abs{V}$.
+    \end{proof}
+\end{probox}
+Sometimes, it is not easy to identify the bipartition in a bipartite graph. Therefore, to quickly determine whether a graph is bipartite, we consider the following theorem:
+\subsection{Chromatic Number}
+Suppose $G$ is bipartite with bipartition $(U, V)$, then we can colour the vertices in $G$ such that all vertices in $U$ receives one colour and all those in $V$ receives another.
+\begin{dfnbox}{$k$-Colourability}{colourable}
+    A graph $G$ is said to be {\color{red} \textbf{$k$-colourable}} if one can colour $V(G)$ with $k$ distinct colours such that every pair of adjacent vertices receive distinct colours.
+\end{dfnbox}
+Clearly, if a graph is $k$-colourable, it must be $(k + i)$-colourable for all $i \in \N$. Therefore, we are interested in the smallest possible $k$ such that a graph is $k$-colourable.
+\begin{dfnbox}{Chromatic Number}{chromaticN}
+    The {\color{red} \textbf{chromatic number}} of a graph $G$ is the smallest positive integer $k$ such that $G$ is $k$-colourable, denoted as $\chi(G)$.
+\end{dfnbox}
+Observe that if $\chi(G) \leq 2$, it is equivalent to saying that we can find a bipartition of $V(G)$, so a bipartite graph can be alternatively defined as a graph $G$ with $\chi(G) \leq 2$. 
+
+Furthermore, observe that if $H \subseteq G$, then $\chi(H) \leq \chi(G)$. Consider a cycle $C_{2n + 1}$ for some $n \in \N$. It is clear that $\chi(C_{2n + 1}) = 3$, so if $C_{2n + 1} \subseteq G$, then $G$ cannot be bipartite.
+\begin{thmbox}{Bipartite Graph Characterisation}{bipartiteIff}
+    A graph is bipartite if and only if it contains no odd cycles.
+    \tcblower
+    \begin{proof}
+        The necessity following from the previous argument, so we only prove the sufficiency. Suppose $G$ contains no odd cycles. Note that there exists some spanning tree $T \subseteq G$ with root $u$. For every $v \in V(T)$, $v$ is coloured red if $d_T(u, v)$ is odd, and blue otherwise.
+        \\\\
+        Suppose that there exist some $w_1, w_2 \in V(G)$ such that both receive the same colour but $w_1w_2 \in E(G)$. Note that this means that there exist a $w_1$-$u$ path in $T$ and a $w_2$-$u$ path in $T$ with the same parity. This implies that there exists an closed walk of odd length in $G$, and so $G$ contains an odd cycle, which is a contradiction. Therefore, $G$ is bi-colourable and so is bipartite.
+    \end{proof}
+\end{thmbox}
+Similar to bipartite graphs, we can define the notion of an $r$-partite graph with chromatic numbers.
+\begin{dfnbox}{$r$-partite Graph}{rpartite}
+    A graph $G$ is an {\color{red} \textbf{$r$-partite graph}} if $\chi(G) \leq r$.
+\end{dfnbox}
+
+\chapter{Matchings and Vertex Covers}
 \section{Matching}
+In set theory, we define the notion of a function
+\begin{equation*}
+    f \colon X \to Y
+\end{equation*}
+as a mapping such that every $x \in X$ has a unique image in $Y$. In a graph-theoretical perspective, we can view $X$ and $Y$ as vertex sets and a ``mapping'' in this case can be seen as a set of disjoint edges joining a vertex from $X$ to a vertex from $Y$.
 \begin{dfnbox}{Matching}{match}
     A {\color{red} \textbf{matching}} in a graph $G$ is a set $M \subseteq E(G)$ of vertex-disjoint edges.
 \end{dfnbox}
@@ -795,10 +826,11 @@ The term ``vertex-disjoint edges'' means that for any $e, f \in M$, they are not
 
     A {\color{red} \textbf{maximum matching}} is a matching $M \subseteq E(G)$ such that for any matching $N \subseteq E(G)$, $\abs{N} \leq \abs{M}$.
 \end{dfnbox}
+It is clear that a maximum matching must be maximal but not the other way round.
 \begin{dfnbox}{Matching Number}{matchN}
     The {\color{red} \textbf{matching number}} of a graph $G$ is the size of the maximum matching in $G$, denoted as $\nu(G)$.
 \end{dfnbox}
-Clearly, for any graph $G$, $\nu(G) \leq \frac{v(G)}{2}$. 
+Clearly, for any graph $G$, $\nu(G) \leq \frac{v(G)}{2}$ as the best we can do is to partition $V(G)$ into disjoint pairs of vertices with respect to $E(G)$.
 \begin{dfnbox}{Perfect Matching}{perfectMatch}
     Let $G$ be a graph. We say that $G$ has a {\color{red} \textbf{perfect matching}} if $\nu(G) = \frac{v(G)}{2}$.
 \end{dfnbox}
@@ -810,17 +842,36 @@ Intuitively, if $G$ has a perfect matching, then we can find a bipartition $(U, 
     \end{equation*}
     where $S$ is called a {\color{red} \textbf{vertex cover}} of $G$.    
 \end{dfnbox}
-\begin{probox}{}{}
+Now let us examine some special graphs:
+\begin{itemize}
+    \item Complete graph $K_n$: $\nu(K_n) = \left\lfloor\frac{n}{2}\right\rfloor, \tau(K_n) = n - 1$.
+    \item Cycle $C_n$: $\nu(C_n) = \left\lfloor\frac{n}{2}\right\rfloor, \tau(C_n) = \left\lceil\frac{n}{2}\right\rceil$.
+    \item Path $P_n$: $\nu(P_n) = \left\lfloor\frac{n + 1}{2}\right\rfloor, \tau(P_n) = \left\lceil\frac{n}{2}\right\rceil$.
+    \item Complete bipartite graph $K_{m, n}$: $\nu(K_{m, n}) = \tau(K_{m, n}) = \min\{m, n\}$.
+    \item Hypercube graph $Q^d$: $\nu(Q^d) = \tau(Q^d) = 2^{d - 1}$.
+    \item Petersen graph $P$: $\nu(P) = 5, \tau(P) = 6$.
+\end{itemize}
+We may have guessed based on the above observation that $\tau(G) \geq \nu(G)$ for all graphs.
+\begin{probox}{Vertex Covering Number Is at Most Matching Number}{tauGeqNu}
     For any graph $G$, $\tau(G) \geq \nu(G)$.
+    \tcblower
+    \begin{proof}
+        Fix $M \coloneqq \left\{e_1, e_2, \cdots, e_{\nu(G)}\right\}$ to be a maximum matching in $G$. Let $S \subseteq V(G)$ be any vertex cover of $G$. For any $i = 1, 2, \cdots, \nu(G)$, we have $\abs{e_i \cap S} \geq 1$, otherwise $S$ does not cover $e_i$. Therefore,
+        \begin{equation*}
+            \tau(G) = \abs{S} = \sum_{i = 1}^{\nu(G)}\abs{e_i \cap S} \geq \nu(G).
+        \end{equation*}
+    \end{proof}
 \end{probox}
+\section{Clique and Independent Set}
+Given any graph $G$, then theoretically, the subgraph with the greatest size we can find is a complete graph and that with the smallest size is an empty graph.
 \begin{dfnbox}{Clique}{clique}
     A {\color{red} \textbf{clique}} in $G$ is a complete subgraph of $G$. The {\color{red} \textbf{clique number}} of $G$ is the order of the largest clique in $G$, denoted as $\omega(G)$.
 \end{dfnbox}
 \begin{dfnbox}{Independent Set}{indSet}
     The {\color{red} \textbf{independent set}} of $G$ is a subset $I \subseteq V(G)$ such that for all $u, v \in I$, $uv \notin E(G)$. The {\color{red} \textbf{independence number}} of $G$, denoted as $\alpha(G)$, is the size of the largest independent set in $G$.
 \end{dfnbox}
-$\alpha(G) = \omega(\overline(G))$.
-\begin{probox}{}{}
+Intuitively, if a set $S \subseteq V(G)$ induces an empty subgraph in $G$, it will induce a complete subgraph in $\overline{G}$. Therefore, $\alpha(G) = \omega(\overline{G})$.
+\begin{probox}{Sum of Independent Number and Vertex Covering Number}{Order=Sum}
     For any graph $G$ of order $n$, $\alpha(G) + \tau(G) = n$.
     \tcblower
     \begin{proof}
@@ -831,6 +882,7 @@ $\alpha(G) = \omega(\overline(G))$.
         Suppose conversely that $S \subseteq V(G)$ is such that $V(G) - S$ is a vertex cover.
     \end{proof}
 \end{probox}
+So far we have been talking a lot about the Petersen graph, but it turns out that the Petersen graph can be generalised into a \textit{Kneser graph}.
 \begin{dfnbox}{Kneser Graph}{kneser}
     The {\color{red} \textbf{Kneser graph}} is a graph $KG(n, k)$ such that 
     \begin{align*}
@@ -838,17 +890,28 @@ $\alpha(G) = \omega(\overline(G))$.
         E\bigl(KG(n, k)\bigr) & = \left\{(S, T) \colon S \cap T = \varnothing\right\}.
     \end{align*}
 \end{dfnbox}
+We introduce a theorem closely related to the Kneser graph:
 \begin{thmbox}{Erdos-Ko-Rado Theorem}{ErdosKoRado}
     Let $n \geq 2k$, then any family
     \begin{equation*}
-        \mathcal{F} \coloneqq \left\{S \in \mathcal{P}([n]) \colon \abs{S} = k \textrm{ and } S \cap T \neq \varnothing \textrm{ for some } T \in \mathcal{P}([n])\right\}
+        \mathcal{F} \subseteq \left\{S \in \mathcal{P}([n]) \colon \abs{S} = k\right\}
     \end{equation*}
-    is such that $\abs{\mathcal{F}} \leq \begin{pmatrix}
+    with $S \cap T \neq \varnothing$ for all $S, T \in \mathcal{F}$ is such that $\abs{\mathcal{F}} \leq \begin{pmatrix}
         n - 1 \\
         k - 1
     \end{pmatrix}$.
 \end{thmbox}
-\begin{probox}{}{}
+We can see that $\mathcal{F}$ is in fact a subset of $V(KG(n, k))$, so this is equivalent to saying that the biggest subset of $V(KG(n, k))$ such that no vertices are adjacent is $C^{n - 1}_{k - 1}$, which is just to prove that $\alpha(KG(n, k)) = C^{n - 1}_{k - 1}$.
+
+Another property of the independence number is related to the notion of a \textit{line graph}.
+\begin{dfnbox}{Line Graph}{lineGraph}
+    Let $G$ be a graph. The {\color{red} \textbf{line graph}} of $G$ is defined as $L(G)$ with $V\bigl(L(G)\bigr) = E(G)$ and
+    \begin{equation*}
+        E\bigl(L(G)\bigr) \coloneqq \left\{(e, f) \in E(G)^2 \colon e \neq f, e \cap f \neq \varnothing\right\}.
+    \end{equation*}
+\end{dfnbox}
+In other words, $L(G)$ uses $E(G)$ as the vertex set and two vertices are adjacent if and only if the respective edges share at least $1$ common vertex in $G$.
+\begin{probox}{Independence Number of Line Graphs}{lineGraphAlpha}
     For any graph $G$, $\nu(G) = \alpha\bigl(L(G)\bigr)$.
 \end{probox}
 \begin{thmbox}{K\"{o}nig Theorem}{Konig}
