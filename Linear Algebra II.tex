@@ -250,4 +250,111 @@ Now, let us denote a basis for $V$ by the mapping $z$. Notice that for any $\mat
     z(\mathbfit{c}_1 + \mathbfit{c}_2) = z(\mathbfit{c}_1) + z(\mathbfit{c}_2),
 \end{equation*}
 so a basis is nothing more but an isomorphism!
+
+\chapter{Linear Transformations}
+\section{Linear Transformations}
+\begin{dfnbox}{Linear Transformation}{linearTrans}
+    A {\color{red} \textbf{linear transformation}} is a mapping $T \colon V \to W$, where $V$ and $W$ are vector spaces over $\mathcal{F}$, such that
+    \begin{equation*}
+        T(\mathbfit{v + u}) + T(\mathbfit{v}) + T(\mathbfit{u}), \qquad T(c\mathbfit{v}) = cT(\mathbfit{v})
+    \end{equation*}
+    for all $\mathbfit{v}, \mathbfit{u} \in V$ and all $c \in \mathcal{F}$.
+\end{dfnbox}
+In essence, a linear transformation is a function between vector spaces which preserves the vector structure of its domain. We will see that many notions discussed so far can actually be abstracted into a linear transformation.
+
+Let $V \cong \mathcal{F}^n$ be a finite-dimensional vector space. Recall that a basis for $V$ is essentially a bijective mapping $z \colon \mathcal{F}^n \to V$, so a basis is a linear transformation. In particular, if $y$ is another basis for $V$, then clearly $y \circ z^{-1}$ is a mapping from $V$ to itself. Let $Q = y \circ z^{-1}$, then we have $y = Q \circ z$. This is known as a change of basis.
+
+Now, consider a vector space $V$ over $\mathcal{F}$. Fix some $\mathbfit{v} \in V$ and define a mapping $\Theta_{\mathbfit{v}} \colon \mathcal{F} \to V$ by $\Theta_{\mathbfit{v}}(a) = a\mathbfit{v}$. One may check that $\Theta_{\mathbfit{v}}$ is a linear transformation, but $\Theta_{\mathbfit{v}}$ is essentially $\mathbfit{v}$, so vectors are linear transformations as well.
+\begin{dfnbox}{Range}{range}
+    Let $T \colon V \to W$ be a linear transformation. The {\color{red} \textbf{range}} of $T$ is defined as
+    \begin{equation*}
+        \mathrm{range}(T) \coloneqq \left\{T(\mathbfit{v}) \colon \mathbfit{v} \in V\right\}.
+    \end{equation*}
+    The dimension of $\mathrm{range}(T)$ is called the {\color{red} \textbf{rank}} of $T$.
+\end{dfnbox}
+It is immediate from the definition that $T$ is surjective if and only if $\mathrm{range}(T) = W$. Consider $T(\mathbfit{v}), T(\mathbfit{u}) \in \mathrm{range}(T)$ for some $\mathbfit{v} \neq \mathbfit{u}$ in $V$, then we have
+\begin{equation*}
+    \alpha T(\mathbfit{v}) + T(\mathbfit{u}) = T(\alpha\mathbfit{v} + \mathbfit{u}).
+\end{equation*}
+Clearly, $\alpha\mathbfit{v} + \mathbfit{u} \in V$, so $\alpha T(\mathbfit{v}) + T(\mathbfit{u}) \in \mathrm{range}(T)$ and $\mathrm{range}(T) \subseteq W$ is a vector space.
+\begin{dfnbox}{Kernel}{ker}
+    Let $T \colon V \to W$ be a linear transformation. The {\color{red} \textbf{kernel}} of $T$ is defined as 
+    \begin{equation*}
+        \mathrm{ker}(T) \coloneqq \left\{\mathbfit{v} \in V \colon T(\mathbfit{v}) = \zero_{W}\right\}.
+    \end{equation*}
+    The dimension of $\ker(T)$ is called the {\color{red} \textbf{nullity}} of $T$.
+\end{dfnbox}
+Obviously, $\ker(T)$ is a vector space. We claim that $\mathrm{null}(T)$ is related to the injectivity of $T$ by the following result:
+\begin{probox}{Injectivity Test}{injectTest}
+    A linear transformation $T$ is injective if and only if $\mathrm{null}(T) = 0$.
+    \tcblower
+    \begin{proof}
+        Suppose that $T$ is injective. We shall prove that $\mathrm{null}(T) = 0$ by considering the contrapositive. Suppose that $\mathrm{null}(T) \neq 0$, then there is some non-zero $\mathbfit{v} \in \ker(T)$ with $T(\mathbfit{v}) = \zero$, so $T$ is not injective.
+        \\\\
+        Suppose conversely that $\mathrm{null}(T) = 0$, then $\ker(T) = \{\zero\}$. Let $T(\mathbfit{v}) = T(\mathbfit{u})$, then
+        \begin{equation*}
+            \zero = T(\mathbfit{v}) - T(\mathbfit{u}) = T(\mathbfit{v - u}),
+        \end{equation*}
+        so $\mathbfit{v - u} \in \ker(T)$. This means that $\mathbfit{v - u} = \zero$ so $\mathbfit{v = u}$. Therefore, $T$ is injective.
+    \end{proof}
+\end{probox}
+For any linear transformation $T \colon V \to W$, we have 
+\begin{equation*}
+    T(\zero_V) = T(\zero_V + \zero_V) = 2T(\zero_V).
+\end{equation*}
+Cancelling $T(\zero_V)$ on both sides we have $\zero_W = T(\zero_V)$. Therefore, $\ker(T) - \{\zero_V\}$ consists of all non-zero vectors which are mapped to zero under $T$, i.e., for all $\mathbfit{u} \in U \coloneqq V - (\ker(T) - \{\zero_V\})$, $T(\mathbfit{u}) \neq \zero_W$. 
+\begin{thmbox}{Fundamental Theorem of Linear Transformations}{rankNull}
+    Let $T \colon V \to W$ be a linear transformation, then $\dim(V) = \mathrm{rank}(T) + \mathrm{null}(T)$.
+    \tcblower
+    \begin{proof}
+        Define $U \coloneqq V - (\ker(T) - \{\zero_V\})$, then $V = U \oplus \ker(T)$. Let $S \colon U \to \mathrm{range}(T)$ be defined by $S(\mathbfit{u}) = T(\mathbfit{u})$. Note that for all $\mathbfit{v} \in \mathrm{range}(T)$, there exists some $\mathbfit{u} \in U$ such that $S(\mathbfit{u}) = \mathbfit{v}$, so $S$ is surjective. Suppose there exist vectors $\mathbfit{u}_1, \mathbfit{u}_2 \in U$ such that $S(\mathbfit{u}_1) = S(\mathbfit{u}_2)$, then
+        \begin{equation*}
+            \zero_W = S(\mathbfit{u}_1) - S(\mathbfit{u}_2) = S(\mathbfit{u}_1 - \mathbfit{u}_2).
+        \end{equation*}
+        Therefore, $\mathbfit{u}_1 - \mathbfit{u}_2 = \zero_U$, and so $\mathbfit{u}_1 = \mathbfit{u}_2$, which implies that $S$ is injective. Therefore,~$S$ is a bijection and so $U \cong \mathrm{range}(T)$, which means $\dim(U) = \mathrm{rank}(T)$. Therefore,
+        \begin{equation*}
+            \dim(V) = \dim(U) + \mathrm{null}(T) = \mathrm{rank}(T) + \mathrm{null}(T).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+An interesting application of Theorem \ref{thm:rankNull} gives the following corollary:
+\begin{corbox}{Bijectivity of Reflexive Mappings}{bijectiveReflexiveMap}
+    Let $T \colon V \to V$ be a linear transformation, then $T$ is injective if and only if it is surjective.
+    \tcblower
+    \begin{proof}
+        Suppose that $T$ is injective, then $V \cong \mathrm{range}(T)$ and so $\mathrm{null}(T) = 0$, which implies that $\dim(V) = \mathrm{rank}(T)$. However, $\mathrm{range}(T) \subseteq V$, so $\mathrm{range}(T) = V$. This means that $T$ is surjective.
+        \\\\
+        Suppose that $T$ is surjective, then $\dim(V) = \mathrm{rank}(T)$ and so $\mathrm{null}(T) = 0$. Therefore, $T$ is injective.
+    \end{proof}
+\end{corbox}
+\section{Duality}
+Let $V$ and $W$ be vector spaces and define $\mathcal{L}(V, W)$ to be the set of all linear transformations from $V$ to $W$. One may check that $\mathcal{L}(V, W)$ is a vector space.
+\begin{dfnbox}{Dual Space}{dualSpace}
+    Let $V$ be a vector space over $\mathcal{F}$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\hat{V} \coloneqq \mathcal{L}(V, \mathcal{F})$.
+\end{dfnbox}
+An intuitive example for an element of $\hat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
+\begin{equation*}
+    \mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i
+\end{equation*}
+for $a_1, a_2, \cdots, a_n \in \mathcal{F}$. Now, define a mapping $\zeta^i \colon V \to \mathcal{F}$ as $\zeta^i(\mathbfit{v}) = a_i$, then clearly $\zeta^i \in \hat{V}$ for $i = 1, 2, \cdots, n$.
+\begin{dfnbox}{Dual Vector}{dualVec}
+    Let $V$ be an $n$-dimensional vector space over $\mathcal{F}$. The {\color{red} \textbf{dual vectors}} $\zeta^i \in \hat{V}$ of $V$ with respect to a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ are defined as $\zeta^i(\mathbfit{v}) = a_i$ for each $\mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i$.
+\end{dfnbox}
+In particular, we see that
+\begin{equation*}
+    \zeta^i(\mathbfit{z}_j) = \begin{cases}
+        1 & \textrm{if } i = j \\
+        0 & \textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Intuitively, this means that for each $\mathbfit{v} \in V$, we have $z^{-1}(\mathbfit{v}) = \sum_{i = 1}^{n}a_i\zeta^i(\mathbfit{z}_i)$.
+\begin{dfnbox}{Dual Basis}{dualBasis}
+    Let $V$ be a vector space with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$. The {\color{red} \textbf{dual basis}} of $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is defined as the set of all $\zeta^i \in \hat{V}$ such that 
+    \begin{equation*}
+        \zeta^i(\mathbfit{z}_j) = \begin{cases}
+            1 & \textrm{if } i = j \\
+            0 & \textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+\end{dfnbox}
 \end{document}
