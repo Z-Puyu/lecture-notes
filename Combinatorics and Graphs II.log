@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  4 FEB 2024 21:09
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  6 FEB 2024 14:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1497,16 +1497,19 @@ Chapter 3.
 [30
 
 ] [31]
-Underfull \hbox (badness 10000) in paragraph at lines 878--883
+Underfull \hbox (badness 10000) in paragraph at lines 883--888
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 878--883
+Underfull \hbox (badness 10000) in paragraph at lines 883--888
 
  []
 
-[32] [33] 
+
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 897.
+
+[32] [33] [34] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
@@ -1519,12 +1522,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not ch
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39122 strings out of 478630
- 823575 string characters out of 5847730
+ 39132 strings out of 478630
+ 823734 string characters out of 5847730
  1881012 words of memory out of 5000000
- 58592 multiletter control sequences out of 15000+600000
+ 58602 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (33 pages).
+Output written on Combinatorics and Graphs II.pdf (34 pages).

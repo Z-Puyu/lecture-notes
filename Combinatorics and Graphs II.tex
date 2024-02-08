@@ -834,6 +834,11 @@ Clearly, for any graph $G$, $\nu(G) \leq \frac{v(G)}{2}$ as the best we can do i
 \begin{dfnbox}{Perfect Matching}{perfectMatch}
     Let $G$ be a graph. We say that $G$ has a {\color{red} \textbf{perfect matching}} if $\nu(G) = \frac{v(G)}{2}$.
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, if $G$ is a bipartite graph with partite sets $A$ and $B$, we say that a matching $M \subseteq G$ is perfect to $A$ if for any $a \in A$, $a \in M$.
+    \end{remark}
+\end{notebox}
 Intuitively, if $G$ has a perfect matching, then we can find a bipartition $(U, V)$ of $V(G)$ such that there exists a bijection between $U$ and $V$.
 \begin{dfnbox}{Vertex Covering Number}{vtxCoverN}
     Let $G$ be a graph. The {\color{red} \textbf{vertex covering number}} is defined as 
@@ -916,5 +921,24 @@ In other words, $L(G)$ uses $E(G)$ as the vertex set and two vertices are adjace
 \end{probox}
 \begin{thmbox}{K\"{o}nig Theorem}{Konig}
     If $G$ is bipartite, then $\nu(G) = \tau(G)$.
+\end{thmbox}
+\begin{dfnbox}{Alternating Path}{altPath}
+    Let $G$ be a graph and fix $M \subseteq G$ to be a matching. An {\color{red} \textbf{alternating path}} in $G$ with respect to $M$ is a path $v_1v_2\cdots v_n$ such that $v_1v_2 \in G - M$, $v_kv_{k + 1} \in M$ for all even $k$ and $v_kv_{k + 1} \in G - M$ for all odd $k$.
+\end{dfnbox}
+\begin{dfnbox}{Fractional Vertex Cover}{fracVtxCover}
+    The {\color{red} \textbf{fractional vertex cover}} of a non-negatively weighted graph $G$ is defined as the function
+    \begin{equation*}
+        c \colon V(G) \to \R^+_0
+    \end{equation*}
+    such that $c(v) + c(u) \geq w(uv)$ for all $u, v \in V(G)$.
+\end{dfnbox}
+\begin{thmbox}{Egervay's Theorem}{Egervay}
+    For every bipartite $G$, the minimum weight of a fractional vertex cover equals the weight of the matching with the maximum weight.
+\end{thmbox}
+\begin{thmbox}{Hall's Marriage Theorem}{HallThm}
+    Let $G$ be a bipartite graph $G$ with bipartition $(A, B)$. $G$ contains a matching perfect to $A$ if and only if for every $S \subseteq A$,
+    \begin{equation*}
+        \abs{\bigcup_{v \in S}N_G(v)} \geq \abs{S}.
+    \end{equation*}
 \end{thmbox}
 \end{document}
