@@ -330,16 +330,14 @@ An interesting application of Theorem \ref{thm:rankNull} gives the following cor
 \section{Duality}
 Let $V$ and $W$ be vector spaces and define $\mathcal{L}(V, W)$ to be the set of all linear transformations from $V$ to $W$. One may check that $\mathcal{L}(V, W)$ is a vector space.
 \begin{dfnbox}{Dual Space}{dualSpace}
-    Let $V$ be a vector space over $\mathcal{F}$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\hat{V} \coloneqq \mathcal{L}(V, \mathcal{F})$.
+    Let $V$ be a vector space over $\mathcal{F}$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\hat{V} \coloneqq \mathcal{L}(V, \mathcal{F})$. The elements of $\hat{V}$ are called {\color{red} \textbf{dual vectors}}.
 \end{dfnbox}
 An intuitive example for an element of $\hat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
 \begin{equation*}
     \mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i
 \end{equation*}
 for $a_1, a_2, \cdots, a_n \in \mathcal{F}$. Now, define a mapping $\zeta^i \colon V \to \mathcal{F}$ as $\zeta^i(\mathbfit{v}) = a_i$, then clearly $\zeta^i \in \hat{V}$ for $i = 1, 2, \cdots, n$.
-\begin{dfnbox}{Dual Vector}{dualVec}
-    Let $V$ be an $n$-dimensional vector space over $\mathcal{F}$. The {\color{red} \textbf{dual vectors}} $\zeta^i \in \hat{V}$ of $V$ with respect to a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ are defined as $\zeta^i(\mathbfit{v}) = a_i$ for each $\mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i$.
-\end{dfnbox}
+
 In particular, we see that
 \begin{equation*}
     \zeta^i(\mathbfit{z}_j) = \begin{cases}
@@ -357,4 +355,253 @@ Intuitively, this means that for each $\mathbfit{v} \in V$, we have $z^{-1}(\mat
         \end{cases}.
     \end{equation*}
 \end{dfnbox}
+Let $\zeta$ be a dual basis and $\alpha \in \hat{V}$ be a linear mapping over a finite-dimensional vector space $V$ with $\dim(V) = n$. For any $\mathbfit{v} \in V$ with respect to basis $z$, define a mapping $\beta \colon V \to \mathcal{F}$ by 
+\begin{equation*}
+    \beta(\mathbfit{v}) = \left(\sum_{i = 1}^{n}\alpha(\mathbfit{z}_i)\zeta^i\right)(\mathbfit{v}).
+\end{equation*}
+Clearly, $\beta$ is a linear combination of the elements of $\zeta$. For any $\mathbfit{z}_j \in z$, we have
+\begin{align*}
+    \beta(\mathbfit{z}_j) & = \left(\sum_{i = 1}^{n}\alpha(\mathbfit{z}_i)\zeta^i\right)(\mathbfit{z}_j) \\
+    & = \sum_{i = 1}^{n}\alpha(\mathbfit{z}_i)\zeta^i(\mathbfit{z}_j) \\
+    & = \alpha(\mathbfit{z}_j).
+\end{align*}
+Since $z$ is a basis for $V$, this implies that for any $\mathbfit{v} \in V$, we have $\beta(\mathbfit{v}) = \alpha(\mathbfit{v})$. Therefore, $\alpha \in \mathrm{span}(\zeta)$. 
+
+Consider
+\begin{equation*}
+    \sum_{i = 1}^{n}p_i\zeta^i = 0_{\hat{V}},
+\end{equation*}
+which is the zero mapping from $V$ to $\{0\}$, this means that for any $\mathbfit{v} \in V$, we have
+\begin{align*}
+    0 & = \left(\sum_{i = 1}^{n}p_i\zeta^i\right)(\mathbfit{v}) \\
+    & = \left(\sum_{i = 1}^{n}p_i\zeta^i\right)\left(\sum_{j = 1}^{n}a_j\mathbfit{z}_j\right) \\
+    & = \sum_{i = 1}^{n}\left(p_i\sum_{j = 1}^{n}a_j\zeta^i(\mathbfit{z}_j)\right) \\
+    & = \sum_{i = 1}^{n}p_ia_i.
+\end{align*}
+However, since the $a_i$'s are arbitrary, we have $p_i = 0$ for all $i = 1, 2, \cdots, n$. Therefore, $\zeta$ is linearly independent. This means that $\zeta$ is indeed a basis. Clearly, this also implies that any finite-dimensional vector space has the same dimension as its dual space. 
+\begin{probox}{$\dim(V) = \dim\left(\hat{V}\right)$}{dualHasEqualDim}
+    Let $V$ be any finite-dimensional vector space, then $\dim(V) = \dim\left(\hat{V}\right)$.
+\end{probox}
+Furthermore, note that for any dual vector $\phi = \sum_{i = 1}^{n}p_i\zeta^i$, we have
+\begin{equation*}
+    \phi(\mathbfit{z}_j) = \sum_{i = 1}^{n}p_i\zeta^i(\mathbfit{z}_j) = p_j.
+\end{equation*}
+Therefore, any dual vector with respect to basis $z$ can be written as
+\begin{equation*}
+    \phi = \sum_{i = 1}^{n}\phi(\mathbfit{z}_i)\zeta^i.
+\end{equation*}
+Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical basis of $\mathcal{F}^n$ to be the set of unit vectors with a single non-zero entry. Similarly, we can define the canonical basis for the dual space $\hat{\mathcal{F}^n} \coloneqq \mathcal{L}(\mathcal{F}^n, \mathcal{F})$.
+\begin{dfnbox}{Canonical Dual Basis}{canonicalDualBasis}
+    Write each $\mathbfit{v} \in \mathcal{F}^n$ as
+    \begin{equation*}
+        \mathbfit{v} = \begin{bmatrix}
+            v_1 \\
+            v_2 \\
+            \vdots \\
+            v_n
+        \end{bmatrix}.
+    \end{equation*}
+    The {\color{red} \textbf{canonical dual basis}} of $\mathcal{F}^n$ is defined as $\left\{\epsilon^i \colon i = 1, 2, \cdots, n\right\}$ such that $\epsilon^i(\mathbfit{v}) = v_i$ for all $\mathbfit{v} \in \mathcal{F}^n$.
+\end{dfnbox}
+Consider any $p \in \hat{\mathcal{F}^n}$, then we can write
+\begin{equation*}
+    p = \sum_{i = 1}^{n}q_i\epsilon^i
+\end{equation*} 
+where $q_i \in \mathcal{F}$ for $i = 1, 2, \cdots, n$ and $\epsilon^i$'s are the dual canonical basis. Recall that a basis of an $n$-dimensional vector space $V$ is actually a mapping from $\mathcal{F}^n$ to $V$, so it follows that the dual basis is in fact a mapping $\zeta \colon \hat{\mathcal{F}^n} \to \hat{V}$. We claim that this $\zeta$ is in fact just a mapping that satisfies 
+\begin{equation*}
+    \zeta(p)\bigl(z(\mathbfit{a})\bigr) = p(\mathbfit{a})
+\end{equation*}
+for any $p \in \hat{\mathcal{F}^n}$ and $\mathbfit{a} \in \mathcal{F}^n$. 
+
+To prove that our new definition is consistent with Definition \ref{dfn:dualBasis}, it suffices to show that $\zeta(\epsilon^i) = \zeta^i$. Notice that
+\begin{align*}
+    \zeta(\epsilon^i)\bigl(z(\mathbfit{e}_j)\bigr) & = \epsilon^i(\mathbfit{e}_j) \\
+    & = \begin{cases}
+        1 & \textrm{if } i = j \\
+        0 & \textrm{otherwise}
+    \end{cases}.
+\end{align*}
+However, $z(\mathbfit{e}_j) = \mathbfit{z}_j$, so by Definition \ref{dfn:dualBasis} we have $\zeta(\epsilon^i)(\mathbfit{z}_j) = \zeta^i(\mathbfit{z}_j)$. Let $\mathbfit{v} \in V$ be any vector with
+\begin{equation*}
+    \mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i,
+\end{equation*}
+then 
+\begin{align*}
+    \zeta(\epsilon^i)(\mathbfit{v}) & = \zeta(\epsilon^i)\left(\sum_{j = 1}^{n}a_j\mathbfit{z}_j\right) \\
+    & = \sum_{j = 1}^{n}a_j\zeta(\epsilon^i)(\mathbfit{z}_j) \\
+    & = \sum_{j = 1}^{n}a_j\zeta^i(\mathbfit{z}_j) \\
+    & = a_i \\
+    & = \zeta^i(\mathbfit{v}).
+\end{align*}
+Therefore, $\zeta(\epsilon^i) = \zeta^i$. Let $\phi \in \hat{V}$ be a mapping, then
+\begin{align*}
+    \phi & = \sum_{i = 1}^{n}a_i\zeta^i \\
+    & = \sum_{i = 1}^{n}a_i\zeta(\epsilon^i) \\
+    & = \zeta\left(\sum_{i = 1}^{n}a_i\epsilon^i\right) \\
+    & = \zeta(p)
+\end{align*}
+for some $p \in \hat{\mathcal{F}^n}$. Therefore, $\zeta$ is surjective. One may check that $\zeta$ is injective. Moreover, note that for $p, q \in \hat{\mathcal{F}^n}$,
+\begin{align*}
+    \bigl(m\zeta(p) + n\zeta(q)\bigr)\bigl(z(\mathbfit{a})\bigr) & = m\zeta(p)\bigl(z(\mathbfit{a})\bigr) + n\zeta(q)\bigl(z(\mathbfit{a})\bigr) \\
+    & = mp(\mathbfit{a}) + nq(\mathbfit{a}) \\
+    & = (mp + nq)(\mathbfit{a}) \\
+    & = \zeta(mp + nq)\bigl(z(\mathbfit{a})\bigr).
+\end{align*}
+Therefore, $\zeta$ is a linear mapping and so it is an isomorphism. Indeed, this implies that $\zeta$ is a basis for $\hat{V}$.
+
+Naturally, it feels justified to define a ``dual space of the dual space'' of $V$, namely 
+\begin{equation*}
+    \hat{\hat{V}} \coloneqq \mathcal{L}\left(\hat{V}, \mathcal{F}\right) = \mathcal{L}\bigl(\mathcal{L}(V, \mathcal{F}), \mathcal{F}\bigr).
+\end{equation*}
+We can in fact prove that this space is isomorphic to $V$ itself. Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\hat{V}$ to $\mathcal{F}$. We can verify that $\mathbfit{v}$ is linear, because
+\begin{align*}
+    \mathbfit{v}(m\alpha + n\beta) & = m\alpha(\mathbfit{v}) + n\beta(\mathbfit{v}) \\
+    & = m\mathbfit{v}(\alpha) + n\mathbfit{v}(\beta).
+\end{align*}
+Therefore, we can in some sense view a vector space and its dual space the \textit{dual} of each other. Consider a mapping $T \colon V \to V$ for some vector space $V$, the duality between $V$ and~$\hat{V}$ tempts us to think that there exists some mapping $S \colon \hat{V} \colon \hat{V}$ with a certain correspondence to $T$.
+\begin{dfnbox}{Transpose}{tranpose}
+    Let $T \colon V \to V$ be a linear transformation. The {\color{red} \textbf{transpose}} of $T$ is defined as the mapping~$\hat{T} \colon \hat{V} \to \hat{V}$ such that 
+    \begin{equation*}
+        \hat{T}(\alpha)(\mathbfit{v}) = \alpha\bigl(T(\mathbfit{v})\bigr)
+    \end{equation*}
+    for any $\alpha \in \hat{V}$. 
+\end{dfnbox}
+\section{Tensor Product}
+\begin{dfnbox}{Tensor Product}{tensorProd}
+    Let $V$ be a vector space with the dual space $\hat{V}$. For any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$, their {\color{red} \textbf{tensor product}} is defined as a mapping $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ such that
+    \begin{equation*}
+        (\mathbfit{v} \otimes \alpha)(\mathbfit{u}) = \alpha(\mathbfit{u})\mathbfit{v}.
+    \end{equation*}
+\end{dfnbox}
+We can see that $\mathbfit{v} \otimes \alpha$ is linear with respect to both $\mathbfit{v}$ and $\alpha$, because
+\begin{align*}
+    \bigl((\mathbfit{u + v}) \otimes \alpha\bigr)(\mathbfit{w}) & = \alpha(\mathbfit{w})(\mathbfit{u + v}) = \alpha(\mathbfit{w})\mathbfit{u} + \alpha(\mathbfit{w})\mathbfit{v} = (\mathbfit{u} \otimes \alpha + \mathbfit{v} \otimes \alpha)(\mathbfit{v}), \\
+    \bigl(\mathbfit{v} \otimes (\alpha + \beta)\bigr)(\mathbfit{w}) & = (\alpha + \beta)(\mathbfit{w})\mathbfit{v} = \alpha(\mathbfit{w})\mathbfit{v} + \beta(\mathbfit{w})\mathbfit{v} = (\mathbfit{v} \otimes \alpha + \mathbfit{v} \otimes \beta)(\mathbfit{w}).
+\end{align*}
+In particular, let $\beta \in \hat{V}$, then clearly $\beta \circ (\mathbfit{v} \otimes \alpha) \in \hat{V}$. Define a mapping $T$ over $\hat{V}$ by
+\begin{equation*}
+    T(\beta) = \beta \circ (\mathbfit{v} \otimes \alpha),
+\end{equation*}
+then we can see that $T \in \mathcal{L}\left(\hat{V}, \hat{V}\right)$. In fact, for any $\mathbfit{u} \in V$, consider
+\begin{align*}
+    T(\beta)(\mathbfit{u}) & = \bigl(\beta \circ (\mathbfit{v} \otimes \alpha)\bigr)(\mathbfit{u}) \\
+    & = \beta\bigl((\mathbfit{v} \otimes \alpha)(\mathbfit{u})\bigr).
+\end{align*}
+By Definition \ref{dfn:tranpose}, $T$ is the transpose of $\mathbfit{v} \otimes \alpha$ for any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$. Furthermore, note that $\alpha(\mathbfit{u}) \in \mathcal{F}$, we see that
+\begin{align*}
+    T(\beta)(\mathbfit{u}) & = \beta\bigl((\mathbfit{v} \otimes \alpha)(\mathbfit{u})\bigr) \\
+    & = \beta\bigl(\alpha(\mathbfit{u})\mathbfit{v}\bigr) \\
+    & = \alpha(\mathbfit{u})\beta(\mathbfit{v}) \\
+    & = \bigl(\beta(\mathbfit{v})\alpha\bigr)(\mathbfit{u}).
+\end{align*}
+Therefore, actually $\beta \circ (\mathbfit{v} \otimes \alpha) = \beta(\mathbfit{v})\alpha$.
+\begin{probox}{Tensor Products Form A Basis For $\mathcal{L}(V, V)$}{tenserProdBasis}
+    Let $\zeta$ be the dual basis for $V$ with respect to some basis $z$, then 
+    \begin{equation*}
+        \left\{\mathbfit{z}_i \otimes \zeta^j \colon i, j = 1, 2, \cdots, n\right\}
+    \end{equation*}
+    is a basis for $\mathcal{L}(V, V)$.
+    \tcblower
+    \begin{proof}
+        Let $T \in \mathcal{L}(V, V)$. For each $i = 1, 2, \cdots, n$, we have
+        \begin{equation*}
+            T(\mathbfit{z}_i) = \sum_{j = 1}^{n}a_{ij}\mathbfit{z}_j.
+        \end{equation*}
+        Define a mapping
+        \begin{equation*}
+            S \coloneqq \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}(\mathbfit{z}_j \otimes \zeta^i).
+        \end{equation*}
+        Note that $S \in \mathcal{L}(V, V)$. For any $\mathbfit{z}_k$, we have
+        \begin{align*}
+            S(\mathbfit{z}_k) & = \left(\sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}(\mathbfit{z}_j \otimes \zeta^i)\right)(\mathbfit{z}_k) \\
+            & = \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}\zeta^i(\mathbfit{z}_k)\mathbfit{z}_j \\
+            & = \sum_{j = 1}^{n}a_{kj}\mathbfit{z}_j \\
+            & = T(\mathbfit{z}_k).
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            T = S = \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}(\mathbfit{z}_j \otimes \zeta^i),
+        \end{equation*} 
+        so $\mathcal{L}(V, V) = \mathrm{span}\left\{\mathbfit{z}_i \otimes \zeta^j \colon i, j = 1, 2, \cdots, n\right\}$. Suppose $T = 0_{\mathcal{L}}$ is the zero mapping, then for each $\mathbfit{z}_k$ with $k = 1, 2, \cdots, n$, we have $S(\mathbfit{z}_k) = T(\mathbfit{z}_k) = \zero$. This implies that 
+        \begin{equation*}
+            \sum_{j = 1}^{n}a_{kj}\mathbfit{z}_k = \zero
+        \end{equation*}
+        for each $k = 1, 2, \cdots, n$. Since $z$ is a basis, we have $a_{kj} = 0$ for all $k, j = 1, 2, \cdots, n$. Therefore, the set $\left\{\mathbfit{z}_i \otimes \zeta^j \colon i, j = 1, 2, \cdots, n\right\}$
+        is linearly independent and so is a basis for $\mathcal{L}(V, V)$.
+    \end{proof}
+\end{probox}
+Therefore, we see that for every vector space $V$, if we fix any basis $\left\{\mathbfit{z}_i \colon i = 1, 2, \cdots, n\right\}$, then any $T \in \mathcal{L}(V, V)$ can be expressed as a linear combination of $\mathbfit{z}_i \otimes \zeta^j$ where $\zeta$ is the dual basis with respect to $z$. Proposition \ref{pro:tenserProdBasis} also implies that for any finite-dimensional vector space $V$, we have $\dim\bigl(\mathcal{L}(V, V)\bigr) = \dim(V)^2$.
+
+Let $T \in \mathcal{L}(V, V)$. Fix a basic vector $\mathbfit{z}_j$ of $V$ with dual vector $\zeta^i$, we can ``extract'' the $(i, j)$ component of $T$ by
+\begin{equation*}
+    \zeta^i\bigl(T(\mathbfit{z}_j)\bigr) = \zeta^i\left(\sum_{k = 1}^{n}a_{kj}\mathbfit{z}_k\right) = \sum_{k = 1}^{n}a_{kj}\zeta^i(\mathbfit{z}_k) = a_{ij}.
+\end{equation*}
+\section{Matrix}
+\begin{dfnbox}{Matrix}{matrix}
+    An $n \times m$ {\color{red} \textbf{matrix}} is defined as an $m$-tuple of column vectors in $\mathcal{F}^n$.
+\end{dfnbox}
+Clearly, the set of all $n \times m$ matrices for any $m, n \in \N$ is a vector space. We denote this vector space as $\mathcal{M}_{n \times m}$. However, as compared to other vectors, we can also define the notion of multiplication between some matrices.
+\begin{dfnbox}{Matrix Multiplication}{matMult}
+    Let $\mathbfit{M}$ be an $n \times m$ matrix and $\mathbfit{N}$ be an $m \times p$ matrix, then their product $\mathbfit{P = MN}$ is a matrix whose entries are given by
+    \begin{equation*}
+        P^i_j = \sum_{k = 1}^{m}M^i_kN^k_i.
+    \end{equation*}
+\end{dfnbox}
+Consider the vector space $\mathcal{M}_{n \times n}$ of square matrices. It is easy to see that this space is \textbf{closed under multiplication.} 
+\begin{dfnbox}{Algebra}{algebra}
+    An {\color{red} \textbf{algebra}} is a vector space $V$ with a binary mapping $\times \colon V^2 \to V$ known as multiplication.
+\end{dfnbox}
+It is not difficult to see that from Proposition \ref{pro:tenserProdBasis}, the components of a mapping $T \in \mathcal{L}(V, V)$ can be essentially seen as the entries of a matrix.
+\begin{dfnbox}{Matrix of A Linear Transformation}{linTransMat}
+    Let $T \in \mathcal{L}(V, V)$. If for some basis $z$ of $V$, we have
+    \begin{equation*}
+        T = \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_{ij}\mathbfit{z}_i \otimes \zeta^j,
+    \end{equation*}
+    then the matrix $\mathbfit{T}$ with $T^i_j = a_{ij}$ is called the matrix of $T$ relative to $z$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $T^i_j = \zeta^i\bigl(T(\mathbfit{z}_j)\bigr)$.
+    \end{remark}
+\end{notebox}
+Let $\hat{T}$ be the transpose of $T$, then by Definition \ref{dfn:tranpose} we have
+\begin{equation*}
+    \zeta^i\bigl(T(\mathbfit{z}_j)\bigr) = \hat{T}(\zeta^i)(\mathbfit{z}_j) = z_j\bigl(\hat{T}(\zeta^i)\bigr),
+\end{equation*}
+which we can use to verify that the matrix of $\hat{T}$ is indeed $\mathbfit{T}^{\mathrm{T}}$.
+
+Let $V$ be a finite-dimensional vector space with $\dim(V) = n$ and let $\mathcal{M}_{n \times n}$ be the vector space of all $n \times n$ matrices. Define $M_z \colon \mathcal{L}(V, V) \to \mathcal{M}_{n \times n}$ that maps each $T \in \mathcal{L}(V, V)$ to its matrix representation $\mathbfit{T}$. Intuitively, it is an isomorphism.
+
+\begin{notebox}
+    \begin{remark}
+        Note that actually $\mathcal{M}_{n \times n} \cong \mathcal{F}^{n^2}$ and that a basis for $\mathcal{L}(V, V)$ is just an isomorphism $z \colon \mathcal{F}^{n^2} \to \mathcal{L}(V, V)$, so in some sense $M_z$ is just $z^{-1}$.
+    \end{remark}
+\end{notebox}
+
+Consider $\mathcal{L}(\mathcal{F}^n, \mathcal{F}^n)$, it is clear that every $T \in \mathcal{L}(\mathcal{F}^n, \mathcal{F}^n)$ can be expressed as
+\begin{equation*}
+    T = \sum_{i = 1}^{n}\sum_{j = 1}^{n}M_z(T)_i^j\left(\mathbfit{e}_i \otimes \epsilon^i\right).
+\end{equation*}
+\begin{probox}{Matrices of Composite Mappings}{matComp}
+    Let $S, T \in \mathcal{L}(V, V)$, then for any basis $z$ of $V$, 
+    \begin{equation*}
+        M_z(ST) = M_z(S)M_z(T).
+    \end{equation*}
+\end{probox}
+Suppose $\mathbfit{u} = T(\mathbfit{v})$ and $z(\mathbfit{a}) = \mathbfit{v}$, $z(\mathbfit{b}) = \mathbfit{u}$, then 
+\begin{equation*}
+    \mathbfit{b} = \left(z^{-1} \circ T \circ z\right)(\mathbfit{a}).
+\end{equation*}
+Suppose $\alpha \in \hat{V}$, we define some $\alpha^*_z \in \hat{\mathcal{F}^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$.
+
+Let $z, y$ be bases for some finite-dimensional vector space $V$. Define a mapping
+\begin{equation*}
+    P \coloneqq z^{-1} \circ y \in \mathcal{L}\left(\mathcal{F}^n, \mathcal{F}^n\right),
+\end{equation*}
+then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\mathbfit{b})$, clearly $\mathbfit{a} = P(\mathbfit{b})$. Note that $y = z \circ P$, so
+\begin{align*}
+    y_i & = \epsilon^i(y) \\
+    & = \epsilon^i(z \circ P) \\
+    & = \sum_{k = 1}^{n}\mathbfit{P}^k_iz_k.
+\end{align*} 
 \end{document}
