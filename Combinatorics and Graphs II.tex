@@ -941,4 +941,34 @@ In other words, $L(G)$ uses $E(G)$ as the vertex set and two vertices are adjace
         \abs{\bigcup_{v \in S}N_G(v)} \geq \abs{S}.
     \end{equation*}
 \end{thmbox}
+\begin{thmbox}{Tutte's Theorem}{tutte}
+    A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, the number of connected components with odd orders in $G - U$ is at most $\abs{U}$.
+\end{thmbox}
+\begin{thmbox}{Petersen's Theorem}{petersen}
+    Every connected $3$-regular graph with no cut edge contains a perfect matching.
+    \tcblower
+    \begin{proof}
+        Let $U \subseteq V(G)$ be non-empty and consider $H \coloneqq G - u$. If $H$ contains no odd-order component, then we are done. Otherwise, fix some odd-order component $C \subseteq H$. Consider
+        \begin{equation*}
+            \sum_{v \in V(C)}d_G(v) = 3\abs{C} = 2e(G[V(C)]) + e_G(V(C), U).
+        \end{equation*}
+        Note that the above sum is odd, so $e_G(V(C), U)$ is odd. Since $G$ contains no cut-edge, $e_G(V(C), U) \geq 3$. Let $p$ be the number of odd components in $G - u$ and $M$ be the number of edges between $U$ and $V(G) - U$, then $M \geq 3p$. However, $M \leq 3\abs{U}$ because $G$ is $3$-regular, so $p \leq \abs{U}$. By Theorem \ref{thm:tutte}, $G$ contains a perfect matching.
+    \end{proof}
+\end{thmbox}
+\begin{dfnbox}{Hypergraph}{hypergraph}
+    Let $V$ be a vertex set, a {\color{red} \textbf{hypergraph}} on $V$ is a graph whose edge set is a family
+    \begin{equation*}
+        E \coloneqq \left\{X \colon X \in \mathcal{P}(V)\right\}.
+    \end{equation*}
+    If $\abs{X} = k$ for all $X \in E$, we say that the hypergraph is $k$-uniform.
+\end{dfnbox}
+\chapter{Connectivity}
+\section{Connectivity}
+\begin{dfnbox}{Separating Set}{separateSet}
+    Let $G$ be a connected graph. $S \subseteq V(G)$ is a {\color{red} \textbf{separating set}} (or {\color{red} \textbf{vertex cut}}) of $G$ if $G - S$ is disconnected. If $S = \{s\}$ is a singleton, then $s$ is known as a {\color{red} \textbf{cut vertex}}.
+\end{dfnbox}
+\begin{dfnbox}{Vertex Connectivity}{vtxConnect}
+    The {\color{red} \textbf{vertex connectivity}} of a graph $G$, denoted by $\kappa(G)$ is the cardinality of the smallest subset $S \subseteq V(G)$ such that $G - S$ is either disconnected or a trivial graph. $G$ is said to be {\color{red} \textbf{$k$-connected}} if $\kappa(G) \geq k$.
+\end{dfnbox}
+Intuitively, $\kappa(G) \leq v(G) - 1$ for any graph $G$, and a $k$-connected graph must be $(k - 1)$-connected. Our ``old-fashioned'' notion of a connected graph is simply a $1$-connected graph.
 \end{document}

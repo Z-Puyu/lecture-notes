@@ -15,3 +15,5 @@
 \contentsline {chapter}{\numberline {3}Matchings and Vertex Covers}{30}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Matching}{30}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Clique and Independent Set}{32}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Connectivity}{36}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Connectivity}{36}{section.4.1}%
