@@ -8,3 +8,4 @@
 \contentsline {section}{\numberline {2.2}Duality}{12}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Tensor Product}{17}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Matrix}{19}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Change of Basis}{21}{section.2.5}%

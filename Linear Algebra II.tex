@@ -580,19 +580,65 @@ Let $V$ be a finite-dimensional vector space with $\dim(V) = n$ and let $\mathca
 
 Consider $\mathcal{L}(\mathcal{F}^n, \mathcal{F}^n)$, it is clear that every $T \in \mathcal{L}(\mathcal{F}^n, \mathcal{F}^n)$ can be expressed as
 \begin{equation*}
-    T = \sum_{i = 1}^{n}\sum_{j = 1}^{n}M_z(T)_i^j\left(\mathbfit{e}_i \otimes \epsilon^i\right).
+    T = \sum_{i = 1}^{n}\sum_{j = 1}^{n}M_e(T)_i^j\left(\mathbfit{e}_i \otimes \epsilon^i\right).
 \end{equation*}
+When the context is clear, we can be a bit sloppy and regard $M_z$ just as $\mathbfit{T}$.
+
+We can augment $\mathcal{L}(V, V)$ with the $\circ$ operation. For any $S, T \in \mathcal{L}(V, V)$, clearly $S \circ T \in \mathcal{L}(V, V)$, so $\mathcal{L}(V, V)$ is an algebra. This means that it is justified to write $S \circ T$ as a product $ST$.
+
+Let $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \hat{V}$, for any $\mathbfit{w} \in V$, consider
+\begin{align*}
+    \bigl((\mathbfit{u} \otimes \alpha) \circ (\mathbfit{v} \otimes \beta)\bigr)(\mathbfit{w}) & = (\mathbfit{u} \otimes \alpha)\bigl(\beta(\mathbfit{w})\mathbfit{v}\bigr) \\
+    & = \alpha\bigl(\beta(\mathbfit{w})\mathbfit{v}\bigr)\mathbfit{u} \\
+    & = \beta(\mathbfit{w})\alpha(\mathbfit{v})\mathbfit{u} \\
+    & = \bigl(\alpha(\mathbfit{v})\mathbfit{u} \otimes \beta\bigr)(\mathbfit{w}).
+\end{align*}
+Therefore, $(\mathbfit{u} \otimes \alpha) \circ (\mathbfit{v} \otimes \beta) = \alpha(\mathbfit{v})\mathbfit{u} \otimes \beta$.
+
+Intuitively, the matrix of a composite map can be obtained via matrix multiplication.
 \begin{probox}{Matrices of Composite Mappings}{matComp}
     Let $S, T \in \mathcal{L}(V, V)$, then for any basis $z$ of $V$, 
     \begin{equation*}
         M_z(ST) = M_z(S)M_z(T).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\zeta^i$ be the dual vector of $\mathbfit{z}_h$. By Definition \ref{dfn:linTransMat}, 
+        \begin{equation*}
+            S = \sum_{i = 1}^{n}\sum_{h = 1}^{n}S^h_i(\mathbfit{z}_h \otimes \zeta^i), \qquad T = \sum_{k = 1}^{n}\sum_{j = 1}^{n}T^j_k(\mathbfit{z}_j \otimes \zeta^k).
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            ST & = \left(\sum_{i = 1}^{n}\sum_{h = 1}^{n}S^h_i(\mathbfit{z}_h \otimes \zeta^i)\right)\left(\sum_{k = 1}^{n}\sum_{j = 1}^{n}T^j_k(\mathbfit{z}_j \otimes \zeta^k)\right) \\
+            & = \sum_{i = 1}^{n}\sum_{h = 1}^{n}\sum_{k = 1}^{n}\sum_{j = 1}^{n}S^h_iT^j_k(\mathbfit{z}_h \otimes \zeta^i)(\mathbfit{z}_j \otimes \zeta^k) \\
+            & = \sum_{i = 1}^{n}\sum_{h = 1}^{n}\sum_{k = 1}^{n}\sum_{j = 1}^{n}S^h_iT^j_k\zeta^i(\mathbfit{z}_j)\mathbfit{z}_h \otimes \zeta^k \\
+            & = \sum_{i = 1}^{n}\sum_{h = 1}^{n}\sum_{k = 1}^{n}S^h_iT^i_k\mathbfit{z}_h \otimes \zeta^k \\
+            & = \sum_{h = 1}^{n}\sum_{k = 1}^{n}\bigl(M_z(S)M_z(T)\bigr)^h_k\mathbfit{z}_h \otimes \zeta^k.
+        \end{align*}
+        Therefore, $M_z(ST) = M_z(S)M_z(T)$.
+    \end{proof}
 \end{probox}
-Suppose $\mathbfit{u} = T(\mathbfit{v})$ and $z(\mathbfit{a}) = \mathbfit{v}$, $z(\mathbfit{b}) = \mathbfit{u}$, then 
+\section{Change of Basis}
+Let $z$ be a basis for a vector space $V$. For any $\mathbfit{v} \in V$, define $\mathbfit{v}^*_z \coloneqq z^{-1}(\mathbfit{v})$. Clearly $\mathbfit{v}^*_z \in \mathcal{F}^n$. We can view $\mathbfit{v}^*_z$ as the ``coordinates'' of $\mathbfit{v}$ with respect to $z$.
+
+Suppose $\alpha \in \hat{V}$, we define some $\alpha^*_z \in \hat{\mathcal{F}^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$. In particular, suppose the $i$-th component of $\alpha$ is $\alpha_i$, we notice that
+\begin{equation*}
+    \alpha^*_z(\mathbfit{e}_i) = \alpha\bigl(z(\mathbfit{e}_i)\bigr) = \alpha(\mathbfit{z}_i) = \alpha_i.
+\end{equation*}
+So $\alpha^*_z$ and $\alpha$ can be represented with the same row vector. Similarly, consider $T \in \mathcal{L}(V, V)$. Fix any basis $z$ of $V$. Define $T^*_z \coloneqq z^{-1} \circ T \circ z$. We claim that $M_z(T^*_z) = M_z(T)$, because
+\begin{align*}
+    M_z(T^*_z)^i_j & = \epsilon^i\bigl(T^*_z(\mathbfit{e}_j)\bigr) \\
+    & = \epsilon^i\bigl((z^{-1} \circ T \circ z)(\mathbfit{e}_j)\bigr) \\
+    & = \epsilon^i\Bigl(z^{-1}\bigl(T(\mathbfit{z}_j)\bigr)\Bigr) \\
+    & = \epsilon^i \circ z^{-1}\left(\sum_{k = 1}^{n}T^k_j\mathbfit{z}_k\right) \\
+    & = \epsilon^i\left(\sum_{k = 1}^{n}T^k_j\bigl(z^{-1}(\mathbfit{z}_k)\bigr)\right) \\
+    & = \left(\sum_{k = 1}^{n}T^k_j\epsilon^i(\mathbfit{e}_k)\right) \\
+    & = T^i_j.
+\end{align*}
+Note that if $\mathbfit{u} = T(\mathbfit{v})$ and $z(\mathbfit{a}) = \mathbfit{v}$, $z(\mathbfit{b}) = \mathbfit{u}$, then 
 \begin{equation*}
     \mathbfit{b} = \left(z^{-1} \circ T \circ z\right)(\mathbfit{a}).
 \end{equation*}
-Suppose $\alpha \in \hat{V}$, we define some $\alpha^*_z \in \hat{\mathcal{F}^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$.
 
 Let $z, y$ be bases for some finite-dimensional vector space $V$. Define a mapping
 \begin{equation*}
@@ -602,6 +648,6 @@ then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\m
 \begin{align*}
     y_i & = \epsilon^i(y) \\
     & = \epsilon^i(z \circ P) \\
-    & = \sum_{k = 1}^{n}\mathbfit{P}^k_iz_k.
+    & = \sum_{k = 1}^{n}P^k_iz_k.
 \end{align*} 
 \end{document}
