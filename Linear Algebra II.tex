@@ -169,12 +169,10 @@ Since the underlying structure of a vector space is still a set, the notion of a
 \begin{dfnbox}{Homomorphism}{homomorphic}
     Let $U$ and $V$ be vector spaces, a {\color{red} \textbf{homomorphism}} is a mapping $\phi \colon U \to V$ such that
     \begin{equation*}
-        \phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v})
+        \phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v}), \qquad \phi(c\mathbfit{u}) = c\phi(\mathbfit{u})
     \end{equation*}
-    for any $\mathbfit{u}, \mathbfit{v} \in U$.
+    for any $\mathbfit{u}, \mathbfit{v} \in U$ and $c \in \mathcal{F}$.
 \end{dfnbox}
-Note that it suffices to only require $\phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v})$ but not $\phi(c\mathbfit{u}) = c\phi(\mathbfit{u})$. Here, note that a vector space is a connected set, so we can easily prove the above claim with some knowledge in mathematical analysis.
-
 Naturally, if a homomorphism is bijective, then it means that the elements in two vector spaces have a one-to-one correspondence. In practice, this means we can treat them as equivalent spaces in some sense.
 \begin{dfnbox}{Isomorphism}{isomorphic}
     An {\color{red} \textbf{isomorphism}} between vector spaces $U$ and $V$ is a homomorphism between them which is bijective.

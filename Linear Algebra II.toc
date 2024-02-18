@@ -3,9 +3,9 @@
 \contentsline {subsection}{\numberline {1.1.1}Subspaces}{4}{subsection.1.1.1}%
 \contentsline {section}{\numberline {1.2}Isomorphism}{5}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Basis}{7}{section.1.3}%
-\contentsline {chapter}{\numberline {2}Linear Transformations}{10}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Linear Transformations}{10}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Duality}{12}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Tensor Product}{17}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Matrix}{19}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Change of Basis}{21}{section.2.5}%
+\contentsline {chapter}{\numberline {2}Linear Transformations}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Linear Transformations}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Duality}{11}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Tensor Product}{16}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Matrix}{18}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Change of Basis}{20}{section.2.5}%
