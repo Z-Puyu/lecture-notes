@@ -94,6 +94,8 @@ Note that some of the $x_i$'s may be free variables. In this case, we can conver
         \end{align*}
     \end{proof}
 \end{probox}
+
+\chapter{The Simplex Method}
 \section{Geometry of Linear Programming}
 \begin{dfnbox}{Polyhedron}{polyhedron}
     A {\color{red} \textbf{polyhedron}} is defined as the set
@@ -114,8 +116,64 @@ Geometrically, a polyhedral set $P$ can be defined alternatively as a finite int
         \begin{equation*}
             \left\{\mathbfit{A}_i \colon i \in B\right\}
         \end{equation*}
-        is linearly independent and $x^*_j = 0$ for all $j \notin B$.
+        is linearly independent and $x^*_j = 0$ for all $j \notin B$, where
+        \begin{equation*}
+            \mathbfit{A} = \begin{bmatrix}
+                \mathbfit{A_1} & \mathbfit{A_2} & \cdots & \mathbfit{A_n}
+            \end{bmatrix}.
+        \end{equation*}
     \end{itemize}
+    \tcblower
+    \begin{proof}
+        Suppose $B = \left\{B(1), B(2), \cdots, B(m)\right\}$ and let $N = \{1, 2, \cdots, n\} - B$. For each $i \in N$, since $x^*_i = 0$, we have $\mathbfit{e}^{\mathrm{T}}_i\mathbfit{x}^* = 0$. Therefore, the matrix representation for the active constraints is
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{A} \\
+                \mathbfit{e}^{\mathrm{T}}_{N(1)} \\
+                \mathbfit{e}^{\mathrm{T}}_{N(2)} \\
+                \vdots \\
+                \mathbfit{e}^{\mathrm{T}}_{N(n - m)}
+            \end{bmatrix}.
+        \end{equation*}
+        Re-arranging the columns, the above matrix can be re-written as
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{A}_B & \mathbfit{A}_N \\
+                \mathbf{0} & \mathbfit{I}_N
+            \end{bmatrix}.
+        \end{equation*}
+        Note that the columns of $\mathbfit{A}_B$ is linearly independent, so $\det(\mathbfit{A}_B) \neq 0$. Therefore, 
+        \begin{equation*}
+            \begin{vmatrix}
+                \mathbfit{A}_B & \mathbfit{A}_N \\
+                \mathbf{0} & \mathbfit{I}_N
+            \end{vmatrix} = \det(\mathbfit{A}_B)\det(\mathbfit{I}_N) \neq 0,
+        \end{equation*}
+        and so the matrix is invertible. Therefore, the rows of the matrix are linearly independent. This means that the set 
+        \begin{equation*}
+            \left\{\nabla h_i \colon i = 1, 2, \cdots, n\right\}
+        \end{equation*}
+        is linearly independent. Therefore, $\mathbfit{x}^*$ is a basic feasible solution.
+        \\\\
+        Suppose conversely that $\mathbfit{x}^*$ is a basic feasible solution, then clearly $\mathbfit{Ax}^* = \mathbfit{b}$. Suppose there are $m$ equality constraints, then we must have $(n - m)$ active active inequality constraints at $\mathbfit{x}^*$, indexed by $N = \left\{N(1), N(2), \cdots, N(n - m)\right\}$, such that the constraints are linearly independent. Therefore, the matrix
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{A} \\
+                \mathbfit{e}^{\mathrm{T}}_{N(1)} \\
+                \mathbfit{e}^{\mathrm{T}}_{N(2)} \\
+                \vdots \\
+                \mathbfit{e}^{\mathrm{T}}_{N(n - m)}
+            \end{bmatrix}
+        \end{equation*}
+        is invertible. Let $B \coloneqq \left\{B(1), B(2), \cdots, B(m)\right\} = \{1, 2, \cdots, n\} - N$ be an index set, then the above matrix can be re-arranged as
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{A}_B & \mathbfit{A}_N \\
+                \mathbf{0} & \mathbfit{I}_N
+            \end{bmatrix},
+        \end{equation*}
+        which is invertible. Therefore, $\left\{\mathbfit{A}_{B(1)}, \mathbfit{A}_{B(2)}, \cdots, \mathbfit{A}_{B(m)}\right\}$ is linearly independent. Note that $x^*_i = 0$ for all $i \in N$.
+    \end{proof}
 \end{thmbox}
 \begin{thmbox}{\small Equivalent Conditions for the Existence of Basic Feasible Solution}{}
     Let $\mathbfit{A} \in \R^{m \times n}$ where $m \geq n$ and 
@@ -129,4 +187,9 @@ Geometrically, a polyhedral set $P$ can be defined alternatively as a finite int
         \item $P$ has $n$ linearly independent constraints.
     \end{enumerate}
 \end{thmbox}
+
+\section{The Simplex Method Algorithm}
+\begin{dfnbox}{Feasible Direction}{feasibleDir}
+    Let $P$ be a polyhedron and $\mathbfit{x} \in P$ be a feasible point. A vector $\mathbfit{d}$ is a {\color{red} \textbf{feasible direction}} if $\mathbfit{x} + \lambda\mathbfit{d} \in P$ for some $\lambda > 0$.
+\end{dfnbox}
 \end{document}
