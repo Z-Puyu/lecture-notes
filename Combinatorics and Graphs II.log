@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  16 FEB 2024 15:11
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 FEB 2024 10:06
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1497,21 +1497,73 @@ Chapter 3.
 [30
 
 ] [31]
-Underfull \hbox (badness 10000) in paragraph at lines 883--888
+Underfull \hbox (badness 10000) in paragraph at lines 890--895
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--888
+Underfull \hbox (badness 10000) in paragraph at lines 890--895
+
+ []
+
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 932--935
+
+ []
+
+[33] [34]
+Underfull \hbox (badness 10000) in paragraph at lines 980--984
+
+ []
+
+[35]
+Underfull \hbox (badness 10000) in paragraph at lines 991--1002
 
  []
 
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 897.
+Underfull \hbox (badness 2181) in paragraph at lines 991--1002
+\TU/STIXTwoText(0)/m/n/12 We select a subset of vertices from $[][][][]$ with the following algorithm: for
+ []
 
-[32] [33] [34] [35]
+
+Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+
+ []
+
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
+
+ []
+
+[37] [38] [39]
 Chapter 4.
-[36
+[40
 
 ] 
 enddocument/afterlastpage: lastpage setting LastPage.
@@ -1523,12 +1575,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not ch
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39146 strings out of 478630
- 823955 string characters out of 5847730
- 1882012 words of memory out of 5000000
- 58616 multiletter control sequences out of 15000+600000
+ 39152 strings out of 478630
+ 824052 string characters out of 5847730
+ 1881012 words of memory out of 5000000
+ 58622 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (36 pages).
+Output written on Combinatorics and Graphs II.pdf (40 pages).

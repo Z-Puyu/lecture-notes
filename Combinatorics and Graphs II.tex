@@ -841,11 +841,7 @@ Clearly, for any graph $G$, $\nu(G) \leq \frac{v(G)}{2}$ as the best we can do i
 \end{notebox}
 Intuitively, if $G$ has a perfect matching, then we can find a bipartition $(U, V)$ of $V(G)$ such that there exists a bijection between $U$ and $V$.
 \begin{dfnbox}{Vertex Covering Number}{vtxCoverN}
-    Let $G$ be a graph. The {\color{red} \textbf{vertex covering number}} is defined as 
-    \begin{equation*}
-        \tau(G) \coloneqq \min_{S \subseteq V(G)}\abs{S},
-    \end{equation*}
-    where $S$ is called a {\color{red} \textbf{vertex cover}} of $G$.    
+    Let $G$ be a graph. A {\color{red} \textbf{vertex cover}} of $G$ is defined to be a set $S \subseteq V(G)$ such that for all $e \in E(G)$, there is some $v \in S$ such that $v \in e$. The {\color{red} \textbf{vertex covering number}} is defined as the size of the smallest vertex cover of $G$, denoted as $\tau(G)$.
 \end{dfnbox}
 Now let us examine some special graphs:
 \begin{itemize}
@@ -868,7 +864,7 @@ We may have guessed based on the above observation that $\tau(G) \geq \nu(G)$ fo
     \end{proof}
 \end{probox}
 \section{Clique and Independent Set}
-Given any graph $G$, then theoretically, the subgraph with the greatest size we can find is a complete graph and that with the smallest size is an empty graph.
+Given any graph $G$, then theoretically, if we were to find a subgraph of order $n$, the one with the greatest size is a complete graph and that with the smallest size is an empty graph.
 \begin{dfnbox}{Clique}{clique}
     A {\color{red} \textbf{clique}} in $G$ is a complete subgraph of $G$. The {\color{red} \textbf{clique number}} of $G$ is the order of the largest clique in $G$, denoted as $\omega(G)$.
 \end{dfnbox}
@@ -876,6 +872,17 @@ Given any graph $G$, then theoretically, the subgraph with the greatest size we 
     The {\color{red} \textbf{independent set}} of $G$ is a subset $I \subseteq V(G)$ such that for all $u, v \in I$, $uv \notin E(G)$. The {\color{red} \textbf{independence number}} of $G$, denoted as $\alpha(G)$, is the size of the largest independent set in $G$.
 \end{dfnbox}
 Intuitively, if a set $S \subseteq V(G)$ induces an empty subgraph in $G$, it will induce a complete subgraph in $\overline{G}$. Therefore, $\alpha(G) = \omega(\overline{G})$.
+
+We shall examine the independence numbers of some special graphs.
+\begin{itemize}
+    \item Complete graph $K_n$: $\alpha(K_n) = 1$.
+    \item Cycle $C_n$: $\alpha(C_n) = \left\lfloor\frac{n}{2}\right\rfloor$.
+    \item Path $P_n$: $\alpha(P_n) = \left\lfloor\frac{n + 1}{2}\right\rfloor$.
+    \item Complete bipartite graph $K_{m, n}$: $\alpha(K_{m, n}) = \max\{m, n\}$.
+    \item Hypercube graph $Q^d$: $\alpha(Q^d) = 2^{d - 1}$.
+    \item Petersen graph $P$: $\alpha(P) = 4$.
+\end{itemize}
+The following theorem discusses the numerical relationship between the independence number of vertex covering number:
 \begin{probox}{Sum of Independent Number and Vertex Covering Number}{Order=Sum}
     For any graph $G$ of order $n$, $\alpha(G) + \tau(G) = n$.
     \tcblower
@@ -895,6 +902,8 @@ So far we have been talking a lot about the Petersen graph, but it turns out tha
         E\bigl(KG(n, k)\bigr) & = \left\{(S, T) \colon S \cap T = \varnothing\right\}.
     \end{align*}
 \end{dfnbox}
+The vertex set of a Kneser graph is the set of all $k$-element subsets of $\left\{1, 2, \cdots, n\right\}$ and two vertices are adjacent if and only if their corresponding subsets are disjoint.
+
 We introduce a theorem closely related to the Kneser graph:
 \begin{thmbox}{Erdos-Ko-Rado Theorem}{ErdosKoRado}
     Let $n \geq 2k$, then any family
@@ -918,28 +927,113 @@ Another property of the independence number is related to the notion of a \texti
 In other words, $L(G)$ uses $E(G)$ as the vertex set and two vertices are adjacent if and only if the respective edges share at least $1$ common vertex in $G$.
 \begin{probox}{Independence Number of Line Graphs}{lineGraphAlpha}
     For any graph $G$, $\nu(G) = \alpha\bigl(L(G)\bigr)$.
+    \tcblower
+    \begin{proof}
+        Fix a maximum matching $M \subseteq G$, then for every $e, f \in E(M)$ with $e \neq f$, we have $ef \notin E\bigl(L(G)\bigr)$, therefore, $E(M)$ is an independent set in $L(G)$ and so $\alpha\bigl(L(G)\bigr) \geq \nu(G)$.
+        \\\\
+        Suppose $\alpha\bigl(L(G)\bigr) > \nu(G)$, then there exists some $e_0 \in V\bigl(L(G)\bigr) = E(G)$ such that $e_0$ is vertex-disjoint with all $e \in E(M)$. However, this means that we can find a matching with bigger size in $G$, which is a contradiction. Therefore, 
+        \begin{equation*}
+            \nu(G) = \alpha\bigl(L(G)\bigr).
+        \end{equation*}
+    \end{proof}
 \end{probox}
-\begin{thmbox}{K\"{o}nig Theorem}{Konig}
-    If $G$ is bipartite, then $\nu(G) = \tau(G)$.
-\end{thmbox}
+\section{K\"{o}nig's Theorem}
+Let us take a slight detour and unpack the matching number from a different perspective. Note that while forming a matching in a graph $G$, we actually divide $E(G)$ into two subsets, one of which is included in the matching and the other excluded. Now, let us denote an included edge by letting it have a weight of $1$, and assign $0$ weight to all other edges which are unselected.
+
+For every $e \in E(G)$, let $x_e$ denote its weight. This way, to find a maximum matching is in fact equivalent to finding an optimal solution for the \textit{integer program}
+\begin{align*}
+    \max & \sum_{e \in E(G)}x_e \\
+    \textrm{such that} & \quad x_e \in \{0, 1\}, \\
+    & \quad \sum_{v \in e}x_e \leq 1 \quad\textrm{for all } v \in V(G),
+\end{align*}
+where the optimal value is just $\nu(G)$. Similarly, we can assign $0$-$1$ weights, $y_v$, to every $v \in V(G)$, then a vertex cover is equivalent to an optimal solution for the integer program 
+\begin{align*}
+    \min & \sum_{v \in V(G)}y_v \\
+    \textrm{such that} & \quad y_v \in \{0, 1\}, \\
+    & \quad \sum_{v \in e}y_v \geq 1 \quad \textrm{for all } e \in E(G),
+\end{align*}
+where the optimal value is just $\tau(G)$. We can relax both programs into linear programs and it is clear that the $2$ programs form a pair of primal and dual problems. Let the optimal values for the $2$ linear programs be $\nu^*(G)$ and $\tau^*(G)$ respectively. By considering strong duality of linear programs, we can check that
+\begin{equation*}
+    \nu(G) \leq \nu^*(G) = \tau^*(G) \leq \tau(G).
+\end{equation*}
+Here $\nu^*(G)$ and $\tau^*(G)$ are known as \textit{fractional matching number} and \textit{fractional vertex covering number} respectively.
+
+It turns out that for bipartite graphs, the above inequality can be further strengthened to strict equality. We shall first discuss a few useful concepts.
+
+Fix some matching $M$ in a bipartite graph $G$. Intuitively, we can find some paths in $G$ which consisting of alternating edges from $M$ and $G - M$.
 \begin{dfnbox}{Alternating Path}{altPath}
     Let $G$ be a graph and fix $M \subseteq G$ to be a matching. An {\color{red} \textbf{alternating path}} in $G$ with respect to $M$ is a path $v_1v_2\cdots v_n$ such that $v_1v_2 \in G - M$, $v_kv_{k + 1} \in M$ for all even $k$ and $v_kv_{k + 1} \in G - M$ for all odd $k$.
 \end{dfnbox}
+Intuitively, if an alternating path contains more edges from $G - M$ than from $M$, we can utilise it to extend the matching $M$ by doing a switch of edges.
+\begin{dfnbox}{Augmenting Path}{augPath}
+    An {\color{red} \textbf{augmenting path}} with respect to a matching $M$ in $G$ is an alternating path which ends at some $v \in V(G) - V(M)$
+\end{dfnbox}
+In general, we can characterise a maximum matching by using augmenting paths.
+\begin{thmbox}{Maximum Matching Characterisation}{maxMatchChar}
+    A matching $M \subseteq G$ is maximum if and only if there is no augmenting path in $G$ with respect to $M$.
+    \tcblower
+    \begin{proof}
+        Suppose $M$ is a maximum matching in $G$. We will prove that there is no augmenting path in $G$ with respect to $M$ by considering the contrapositive statement. Suppose we can find some augmenting path $P \coloneqq v_1v_2\cdots v_n$ in $G$ with respect to $M$, then $P$ must contain an odd number of edges. Consider the subgraph
+        \begin{equation*}
+            M' \coloneqq M - \left\{v_iv_{i + 1} \in P \colon i \textrm{ is even }\right\} + \left\{v_jv_{j + 1} \in P 
+            \colon j \textrm{ is odd }\right\}.
+        \end{equation*}
+        Note that $M'$ is clearly a matching and $e(M') = e(M) + 1$, so $M$ is not a maximum matching.
+        \\\\
+        Suppose conversely that there is no augmenting path in $G$ with respect to $M$. We will prove that $M$ is maximum by considering the contrapositive statement. Suppose that $M$ is not maximum, then there exists some matching $M'$ with $e(M') > e(M)$. Consider the subgraph $H \coloneqq M \triangle M'$. Note that $\Delta(H) = 2$ and that every connected component of $H$ is either a path or a cycle whose edges alternate between $E(M)$ and $E(M')$. Note that $H$ is bipartite, so every cycle in $H$ must be even and so contain equal number of edges from $M$ and $M'$. However, since $e(M') > e(M)$, we can find a path in $H$ which begins and ends with edges in $M' - M$ and whose edges alternate between $M$ and $M'$. This path is an augmenting path with respect to $M$.
+    \end{proof}
+\end{thmbox}
+With the above preliminary results established, we are now ready to prove the \textit{K\"{o}nig's Theorem}.
+\begin{thmbox}{K\"{o}nig's Theorem}{Konig}
+    If $G$ is bipartite, then $\nu(G) = \tau(G)$.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:tauGeqNu}, we already know that $\nu(G) \leq \tau(G)$. Therefore, it suffices to prove that $\nu(G) \geq \tau(G)$. Fix $M \subseteq G$ to be a maximum matching. Let $(A, B)$ be a bipartition of $G$, then for every $e \in E(M)$, we have $e = v_Av_B$ for some $v_A \in A$ and $v_B \in B$.
+        \\\\
+        We select a subset of vertices from $V(M)$ with the following algorithm: for each $v_Av_B \in E(M)$, we take $v_B$ if there exists some alternating path starting at a vertex in $A$ ends at $v_B$. Otherwise, we take $v_A$. Let the vertex set produced this way be $U$. We claim that $U$ is a vertex cover for $G$.
+        \\\\
+        Take any edge $ab \in E(G)$. If $ab \in E(M)$, then $a \in U$ or $b \in U$. Otherwise, since $M$ is a maximum matching in $G$ which is bipartite, at least one of $a$ and $b$ is matched.
+        \\\\
+        If $b \in V(M)$, consider $a$. If $a \notin V(M)$, then $ab$ is an alternating path and so $b \in U$. Otherwise, $a \in V(M)$ which reduces the case to the other case.
+        \\\\
+        If $a \in V(M)$ and $a \in U$ then we are done. Otherwise, $a \notin U$. Suppose $ab' \in E(M)$, then $b' \in U$. This means that we can find some alternating path $P$ with respect to $M$ which ends at $b'$. If $b \in P$, then there is some alternating path with respect to $M$ which ends at $b$. Otherwise, note that $a \notin P$ because $a$ is matched, so $P + ab$ is an alternating path which ends at $b$ with respect to $M$. Since $M$ is maximum, by Theorem \ref{thm:maxMatchChar}, this alternating path is not augmenting, which means that $b \in V(M)$. Therefore, $b \in U$. 
+        \\\\
+        Therefore, $U$ is a vertex cover for $G$. Note that $\abs{U} = \nu(G)$, so $\tau(G) \leq \nu(G)$. This means that $\nu(G) = \tau(G)$.
+    \end{proof}
+\end{thmbox}
+We can generalise Theorem \ref{thm:Konig} to \textit{fractional vertex covers}.
 \begin{dfnbox}{Fractional Vertex Cover}{fracVtxCover}
     The {\color{red} \textbf{fractional vertex cover}} of a non-negatively weighted graph $G$ is defined as the function
     \begin{equation*}
         c \colon V(G) \to \R^+_0
     \end{equation*}
-    such that $c(v) + c(u) \geq w(uv)$ for all $u, v \in V(G)$.
+    such that $c(v) + c(u) \geq w(uv)$ for all $u, v \in V(G)$, where $w \colon E(G) \to \R^+_0$ is the weight function.
 \end{dfnbox}
-\begin{thmbox}{Egervay's Theorem}{Egervay}
+We shall state the generalised theorem without proof.
+\begin{thmbox}{Egerv\'{a}ry's Theorem}{Egervary}
     For every bipartite $G$, the minimum weight of a fractional vertex cover equals the weight of the matching with the maximum weight.
 \end{thmbox}
-\begin{thmbox}{Hall's Marriage Theorem}{HallThm}
+\section{Hall's Marriage Theorem}
+Suppose $G$ is a bipartite graph with bipartition $(A, B)$. In the case where $\abs{A} \neq \abs{B}$ we cannot get any matching with size greater than $\min\{\abs{A}, \abs{B}\}$ for the obvious reason. Therefore, the best we can hope is to construct a matching \textbf{perfect to one of the partite sets}.
+
+Suppose $S \subseteq A$ is a set of vertices in $G$. We denote the union of the neighbourhoods of all vertices in $S$ by $N_G(S)$. Apparently, if we can find some $S$ such that $\abs{N_G(S)} < \abs{S}$, it means that we cannot find a matching perfect to $A$ because we simply cannot match every vertex in $S$.
+
+This means that for $G$ to contain a matching perfect to $A$, it necessarily needs to satisfy $\abs{S} \leq \abs{N_G(S)}$ for every $S \subseteq A$. However, it turns out that amazingly, this necessary condition alone is also sufficient to ascertain the existence of a matching perfect to $A$.
+\begin{thmbox}{Hall's Theorem}{Hall}
     Let $G$ be a bipartite graph $G$ with bipartition $(A, B)$. $G$ contains a matching perfect to $A$ if and only if for every $S \subseteq A$,
     \begin{equation*}
         \abs{\bigcup_{v \in S}N_G(v)} \geq \abs{S}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Suppose $M \subseteq G$ is a matching perfect to $A$. Let $S \subseteq A$ be any subset. Clearly, for each $a \in S$, there exists a unique $b \in B$ such that $ab \in E(M)$ and if $ab, a'b' \in E(M)$ for $a \neq a'$, we have $b \neq b'$. Therefore, $\abs{N_G(S)} \geq \abs{S}$.
+        \\\\
+        Suppose that for every $S \subseteq A$, $\abs{N_G(S)} \geq \abs{S}$, we take any matching $M \subseteq G$ such that $A - V(M) \neq \varnothing$. Take $(a_0, b_1, a_1, \cdots)$ to be a finite sequence of pair-wise distinct vertices with greatest length such that $a_0$ is unmatched, $b_i$ is adjacent to some $a_{f(i)} \in \left\{a_0, a_1, \cdots, a_{i - 1}\right\}$ in $G$ and $b_ia_i \in M$ for all $i \geq 1$.
+        \\\\
+        We claim that this sequence does not end in $A$. Suppose on contrary that the sequence ends at some $a_{n - 1} \in A$. Take $T = \left\{a_0, a_1, \cdots, a_{n - 1}\right\}$, then $\abs{N_G(T)} \geq n$. Therefore, there exists some $b_n \in N_G(T) - \left\{b_1, b_2, \cdots, b_{n - 1}\right\}$, which is a contradiction because we can now extend the length of the sequence. 
+        \\\\
+        Let $b_k$ be the end of the sequence, then the path $P \coloneqq a_0b_1a_{f(1)}b_2a_{f(2)}\cdots a_{f(k - 1)}b_k$ is an alternating path. If $b_k$ is matched to some $a \in A \cap V(M)$, we know that $a \notin \left\{a_1, a_2,\cdots, a_{k - 1}\right\}$ because that would imply $b_k = b_i$ for some $i \in \left\{1, 2, \cdots, k - 1\right\}$, which is a contradiction. Since $a_0$ is unmatched, we have find a longer sequence satisfying our construction, which is not possible. Therefore, $b_k$ must be unmatched. This means that $P$ is an augmenting path and so by Theorem \ref{thm:maxMatchChar} $M$ is not a maximum matching. This means that the maximum matching in $G$ must be perfect to $A$.
+    \end{proof}
 \end{thmbox}
 \begin{thmbox}{Tutte's Theorem}{tutte}
     A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, the number of connected components with odd orders in $G - U$ is at most $\abs{U}$.
