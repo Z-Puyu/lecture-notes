@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  16 FEB 2024 21:19
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 FEB 2024 20:12
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1293,31 +1293,52 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 49.
 [2
 
-] [3]
+]
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 81.
+ [3] [4] [5] [6] [7] [8]
 Chapter 2.
+[9
 
-Underfull \hbox (badness 10000) in paragraph at lines 155--159
+] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 339--343
 
  []
 
-[4
+[11] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 401--406
 
-] [5] [6] 
+ []
+
+
+Underfull \hbox (badness 1072) in paragraph at lines 401--406
+\TU/STIXTwoText(0)/m/n/12 Suppose that $[]$ contains a straight line $[]$ for some fixed point
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 401--406
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 424--428
+
+ []
+
+[14] [15] [16] [17] [18] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Linear and Network Optimisations.aux)
 Package rerunfilecheck Info: File `"Linear and Network Optimisations".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 38947 strings out of 478630
- 820911 string characters out of 5847730
- 1871012 words of memory out of 5000000
- 58417 multiletter control sequences out of 15000+600000
+ 38994 strings out of 478630
+ 821649 string characters out of 5847730
+ 1877012 words of memory out of 5000000
+ 58464 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,13n,128p,1219b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,15n,128p,1685b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear and Network Optimisations.pdf (6 pages).
+Output written on Linear and Network Optimisations.pdf (18 pages).

@@ -39,37 +39,169 @@
 \tableofcontents
 
 \chapter{Linear Programming}
-\section{Linear Programming}
 Recall that in general, an optimisation problem can be formulated as
 \begin{align*}
-    \min_{\mathbfit{x} \in \R^n} & f(\mathbfit{x}) \\
-    \textrm{s.t. } & \mathbfit{x} \in P,
+    \min_{\mathbfit{x} \in X} & f(\mathbfit{x}) \\
+    \textrm{s.t. } & g_i(\mathbfit{x}) = 0 \quad \textrm{for } i = 1, 2, \cdots, p \\
+    & h_j(\mathbfit{x}) \leq 0 \quad \textrm{for } j = 1, 2, \cdots, m,
 \end{align*}
-where $P \subseteq \R^n$ is called the \textit{feasible set} (or \textit{feasible region}).
+where $f$ is known as the \textit{objective function}, $g_i$'s are known as \textit{equality constraints} and $h_j$'s are known as \textit{inequality constraints}. The set of all $\mathbfit{x}$ that satisfy all constraints is called the \textit{feasible set}, where each of such $\mathbfit{x}$ is a \textit{feasible solution}. The vector which minimises $f$ is known as the \textit{optimal solution} and is denoted by $\mathbfit{x}^*$, with $f(\mathbfit{x}^*)$ being the \textit{optimal value}.
+
+The concept of a \textit{linear program} is intuitive to understand: it is simply an optimisation problem whose objective function and constraint functions are all linear. In a $2$-dimensional plane, we see that any region bounded by linear functions is a polygon. We will abstract this idea and generalise it for any finite-dimensional space.
+\section{Geometry of Linear Programming}
+In any Euclidean space $\R^n$, a linear function can be written as 
+\begin{equation*}
+    f(x_1, x_2, \cdots, x_n) = a_0 + \sum_{i = 1}^{n}a_ix_i,
+\end{equation*}
+where the $a_i$'s are real coefficients. In matrix notations, this becomes
+\begin{equation*}
+    f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + a_0
+\end{equation*}
+for some $\mathbfit{c} \in \R^n$. Let $f(\mathbfit{x}) = a_0 + b$, then we have $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = b$. Note that this level set equation gives a linear function in $\R^{n - 1}$, because obviously $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = c_nx_n + \mathbfit{\bar{c}}^{\mathrm{T}}\mathbfit{x'}$, so
+\begin{equation*}
+    x_n = \frac{b}{c_n} - \frac{1}{c_n}\mathbfit{\bar{c}}^{\mathrm{T}}\mathbfit{x'}.
+\end{equation*} 
+Apparently, $-\frac{1}{c_n}\mathbfit{\bar{c}} \in \R^{n - 1}$, so $x_n$ is a linear function of $\mathbfit{x}'$. This means every straight line in $\R^n$ is defined by an equation
+\begin{equation*}
+    \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b
+\end{equation*}
+for some $\mathbfit{a} \in \R^n$ and $b \in \R$. Take $\mathbfit{x}_0 \in \R^n$ which is on this line an let $\mathbfit{d} \in \R^n$ be the direction vector of the line, then for every $\mathbfit{x}$ with $\mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b$, we also have 
+\begin{equation*}
+    \mathbfit{x} = \mathbfit{x}_0 + \lambda\mathbfit{d}
+\end{equation*}
+for some $\lambda \in R$. However, this implies that for any such $\mathbfit{x}$, we have
+\begin{equation*}
+    \mathbfit{a}^{\mathrm{T}}(\mathbfit{x}_0 + \lambda\mathbfit{d}) = \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b,
+\end{equation*}
+but $\mathbfit{a}^{\mathrm{T}}\mathbfit{x}_0 = b$, so we have to have $\mathbfit{a}^{\mathrm{T}}\mathbfit{d} = 0$. Therefore, the set
+\begin{equation*}
+    A_{\perp} \coloneqq \left\{\mathbfit{x} \colon \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b\right\}
+\end{equation*}
+in fact is a set of vectors orthogonal to $\mathbfit{a}$ in $\R^n$.
+\begin{dfnbox}{Hyperplane}{hyperplane}
+    Let $\mathbfit{a} \in \R^n$ be a vector. For any $b \in \R$, the set 
+    \begin{equation*}
+        H_b \coloneqq \left\{\mathbfit{x} \colon \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b\right\}
+    \end{equation*}
+    is said to be a {\color{red} \textbf{hyperplane}} with normal vector $\mathbfit{a}$.
+\end{dfnbox}
+It is easy to see that in $\R^2$, a hyperplane is a straight line perpendicular to $\mathbfit{a}$ and in $\R^3$, it is a plane whose normal vector is parallel to $\mathbfit{a}$.
+
+Intuitively, a hyperplane partitions the space $\R^n$ into $2$ halves. Therefore, we refer to the set
+\begin{equation*}
+    \left\{\mathbfit{x} \colon \mathbfit{a}^{\mathrm{T}}\mathbfit{x} \leq b\right\}
+\end{equation*}
+as a \textit{half-space}. Intuitively, if we have $m$ half-spaces, then their intersection is a polyhedron in the space, i.e., we define the set
+\begin{equation*}
+    P \coloneqq \bigcap_{i = 1}^m\left\{\mathbfit{x} \in \R^n \colon \mathbfit{a_i}^{\mathrm{T}}\mathbfit{x} \leq b_i\right\}
+\end{equation*}
+as a \textit{polyhedral set}.
+\begin{notebox}
+    \begin{remark}
+        Note that for $P$ to be a polyhedron, the intersection must be finite. Otherwise, consider the counter example of the bounded set whose boundary is defined by all hyperplanes at a distance $d$ away from a fixed point $Q$, which is a sphere.
+    \end{remark}
+\end{notebox}
+We can let $\mathbfit{a}_i^{\mathrm{T}}$ be the $i$-th row of the matrix $\mathbfit{A}$ and define a column vector $\mathbfit{b}$ whose $i$-th entry is $b_i$, then we can re-write the above intersection using matrix multiplication.
+\begin{dfnbox}{Polyhedron}{polyhedron}
+    A {\color{red} \textbf{polyhedron}} is defined as the set
+    \begin{equation*}
+        P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax \leq b}\right\}
+    \end{equation*}
+    where $\mathbfit{A} \in \R^{m \times n}$ and $\mathbfit{b} \in \R^m$.
+\end{dfnbox}
+\section{Standard Form of Linear Programs}
 \begin{dfnbox}{Linear Programming Problem}{LP}
     A {\color{red} \textbf{linear programming}} (LP) problem is an optimisation problem where the objective function $f$ is linear and the feasible set $P$ is a polyhedron.
 \end{dfnbox}
-We can therefore formulate a linear programming problem as
+Note that each linear constraint corresponds to a half-space, so we can formulate a linear programming problem as
 \begin{align*}
     \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
     \textrm{s.t. } & \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} \leq b_i \quad \textrm{for } i = 1, 2, \cdots, p \\
-    & \mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j \quad \textrm{for } i = 1, 2, \cdots, m,
+    & \mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j \quad \textrm{for } i = 1, 2, \cdots, m, \\
+    & \mathbfit{a}_k^{\mathrm{T}}\mathbfit{x} \neq b_k \quad \textrm{for } i = 1, 2, \cdots, q.
 \end{align*}
-where $\mathbfit{c} \in \R^n$ is called the \textit{cost} or \textit{profit} vector, $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x}$ and $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{x}$ are called the \textit{constraints} and~$\mathbfit{x}$ is known as \textit{decision variables}.
+where $\mathbfit{c} \in \R^n$ is called the \textit{cost} or \textit{profit} vector, $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x}$, $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{x}$ and $\mathbfit{a}_k^{\mathrm{T}}\mathbfit{x}$ are called the \textit{constraints} and~$\mathbfit{x}$ is known as \textit{decision variables}. Note that the number of constraints must be finite, or else we may have a feasible set which is not a polyhedron.
 
-In particular, the following is known as the \textit{standard form} of a linear program:
+Given any linear program, it may present one of the following possibilities:
+\begin{enumerate}
+    \item The program has a unique optimal solution.
+    \item The program has infinitely many optimal solution (but still a unique optimal value).
+    \item The program has no optimal solution.
+    \item The program has no feasible solution.
+\end{enumerate}
+The first $2$ cases are trivial. Suppose a linear program with objective function $f$ has no optimal solution, then it means for every feasible $\mathbfit{x}$, we can find a different feasible $\mathbfit{x}'$ such that $f(\mathbfit{x}') < f(\mathbfit{x})$.
+
+Suppose a linear program with objective function $f$ has no feasible solution, then this means that the feasible set is empty. In this case, we define the optimal value to be $\infty$. The reasoning is as follows.
+
+Suppose $f$ and $g$ are objective functions of $2$ optimisation problems with feasible set $S_1$ and $S_2$ respectively such that $S_1 \subseteq S_2$. Clearly, $\min f(\mathbfit{x}) \geq \min g(\mathbfit{x})$. Note that if $S_1 = \varnothing$, then for every $S_2$, we have the above inequality, which means that
+\begin{equation*}
+    \min_{\mathbfit{x} \in S_1} f(\mathbfit{x}) \geq y
+\end{equation*}
+for all $y \in \R$. Therefore, $\min_{\mathbfit{x} \in S_1} f(\mathbfit{x}) = \infty$.
+
+For each inequality constraint in the form of $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} \leq b_i$, we can introduce a \textit{slack variable} $s_i \geq 0$ such that $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} + s_i = b_i$. For each constraint on $x_i$ in the form of $x_i \leq 0$, we can replace every occurrence of $x_i$ by $-x_i^- = x_i$ such that $x_i^- \geq 0$. For each free variable $x_j$, we can express it as 
+\begin{equation*}
+    x_j = x_j^+ - x_j^- \quad \textrm{for some } x_j^+, x_j^- \geq 0.
+\end{equation*}
+For instance, we can take $x_i^+ = 0$ and $x_i^- > 0$ whenever $x_i < 0$ and vice versa for $x_i > 0$. Note that this correspondence is not unique.
+
+After the above transformations, we see that every constraint is equivalent to either an equality constraint $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} + s_i = b_i$ or an inequality constraint in the form of $x_i \geq 0$. Therefore, we define the following as the \textit{standard form} of a linear program:
 \begin{align*}
     \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
     \textrm{s.t. } & \mathbfit{Ax = b} \\
     & x_i \geq 0, \quad \textrm{for } i = 1, 2, \cdots, m.
 \end{align*}
 One should realise that a linear program in the standard form can be more easily solved by using linear algebra to find the optimal solution. Note that not every optimisation problem is given in the standard form. Fortunately, we can always convert a linear program into the standard form.
-
-For example, consider the constraint $a_ix_i \leq b_i$. Notice that this is essentially equivalent to $a_ix_i + s_i = b_i$ for some $s_i \geq 0$ known as the \textit{slack variable}. Similarly, $a_jx_j \geq b_j$ can be re-written as $a_jx_j - s_j = b_j$ for ome $s_j \geq 0$.
-
-Note that some of the $x_i$'s may be free variables. In this case, we can convert it to $x_i^+ - x_i^-$ for some $x_i^+, x_i^- \geq 0$. For instance, we can take $x_i^+ = 0$ and $x_i^- > 0$ whenever $x_i < 0$ and vice versa for $x_i > 0$. Note that this correspondence is not unique.
 \section{Convex Sets and Functions}
-\begin{probox}{}{}
+Intuitively, we describe two types of shapes in natural languages: the shapes which, if you choose any of its edges, lies in the same side of that edge, and the shapes which span across both sides from some chosen edge of its.
+
+Graphically, this means that some shapes are ``convex'' to all directions, where as some other shapes are ``concave''. We shall define this rigorously as follows:
+\begin{dfnbox}{Convex Set}{convexSet}
+    A set $D \subseteq \R^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    \begin{displaymath}
+        \lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y} \in D.
+    \end{displaymath}
+\end{dfnbox}
+Analogously, we might want to say that a function is convex if, for any $2$ points on its graph, the line segment joining the $2$ points ``lies within'' the graph of the function. We can define convexity over functions as follows:
+\begin{dfnbox}{Convex Function}{convexFunc}
+    A function $f \colon D \to \R^n$ is said to be {\color{red} \textbf{convex}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    \begin{displaymath}
+        f\left(\lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
+    \end{displaymath}
+\end{dfnbox}
+\begin{dfnbox}{Concave Function}{concaveFunc}
+    A function $f \colon D \to \R^n$ is said to be {\color{red} \textbf{concave}} if for all $\mathbfit{x}, \mathbfit{y} \in D$ and for all $\lambda \in [0, 1]$, 
+    \begin{displaymath}
+        f\left(\lambda \mathbfit{x} + (1 - \lambda)\mathbfit{y}\right) \geq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
+    \end{displaymath}
+\end{dfnbox}
+From another perspective, we can see that for any convex function $f$, the tangent plane to the graph of $f$ at any point will lie below the graph.
+\begin{notebox}
+    \begin{remark}
+        A function which is not convex must be concave. However, a function which is convex may not be non-concave (consider $f(x) = x$).
+    \end{remark}
+\end{notebox}
+Therefore, it is easy to see that all functions in the form of $f(\mathbfit{x}) = d + \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$ are both convex and concave. Such functions are said to be \textit{affine} functions. Equivalently, this means that all affine functions are neither strictly convex nor strictly concave.
+
+In the above definitions, the expression $\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}$ for $\lambda \in [0, 1]$ is known as a \textit{convex combination}. This notion can be generalised for any finite number of terms.
+\begin{probox}{Generalised Convex Combination}{convexCombi}
+    Let $k \in \N^+$ and let $f \colon S \to \R$ be a convex function on the convex set $S \subseteq \R^n$ and let $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_k \in S$, then 
+    \begin{equation*}       
+        f\left(\sum_{i = 1}^{k}\lambda_i\mathbfit{x}_i\right) \leq \sum_{i = 1}^{k}\lambda_i f(\mathbfit{x}_i),
+    \end{equation*}     
+    where $\sum_{i = 1}^{k}\lambda_i = 1$ and $\lambda_i \geq 0$ for $i = 1, 2, \cdots, k$.
+\end{probox}
+Using the idea of convex combinations, we can define the notion of a \textit{convex hull}.
+\begin{dfnbox}{Convex Hull}{convexHull}
+    The {\color{red} \textbf{convex hull}} of $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_n$ is defined as the set of all convex combinations of the vectors, denoted by
+    \begin{equation*}
+        \mathrm{conv}(\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_n) \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{x} = \sum_{i = 1}^{n}\lambda_i\mathbfit{x}_i, \lambda_i \in [0, 1], \sum_{i = 1}^{n}\lambda_i = 1\right\}.
+    \end{equation*}
+\end{dfnbox}
+Note that $\mathrm{conv}(\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_n)$ is the smallest convex set containing all of $\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_n$.
+
+Now we consider the following proposition:
+\begin{probox}{Maximum of Convex Functions Is Convex}{convexMax}
     Let $f_1, f_2, \cdots, f_m \colon \R^n \to \R$ be convex functions, then the function
     \begin{equation*}
         f(\mathbfit{x}) \coloneqq \max_{i = 1, 2, \cdots, m}f_i(\mathbfit{x})
@@ -94,22 +226,74 @@ Note that some of the $x_i$'s may be free variables. In this case, we can conver
         \end{align*}
     \end{proof}
 \end{probox}
+An immediate corollary of Proposition \ref{pro:convexMax} allows us to define a piece-wise convex affine function.
+\begin{corbox}{Piece-wise Affine Functions Are Convex}{convexPiecewiseAffine}
+    The piece-wise affine function
+    \begin{equation*}
+        f(\mathbfit{x}) = \max_{i = 1, 2, \cdots, n}\left(\mathbfit{c}_i^{\mathrm{T}}\mathbfit{x} + d_i\right)
+    \end{equation*}
+    is convex.
+\end{corbox}
 
 \chapter{The Simplex Method}
-\section{Geometry of Linear Programming}
-\begin{dfnbox}{Polyhedron}{polyhedron}
-    A {\color{red} \textbf{polyhedron}} is defined as the set
-    \begin{equation*}
-        P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax \leq b}\right\}
-    \end{equation*}
-    where $\mathbfit{A} \in \R^{m \times n}$ and $\mathbfit{b} \in \R^m$.
+\section{Basic Feasible Solutions}
+Recall that given any linear program, its feasible set is a polyhedron $P$. Note that in $\R^n$, the smallest possible number of hyperplanes intersecting at a point is $n$. Intuitively, any polyhedron can be completely defined by all of such ``corner points'' of itself. Here we provide three equivalent definitions.
+\begin{dfnbox}{Extreme Point}{extremePt}
+    Let $P$ be a polyhedron, a point $\mathbfit{x}^* \in P$ is said to be an {\color{red} \textbf{extreme point}} if whenever there are $\mathbfit{y}, \mathbfit{z} \in P$ with $\mathbfit{x}^* = \lambda\mathbfit{y} + (1 - \lambda)\mathbfit{z} = \mathbfit{x}^*$ for some $\lambda \in (0, 1)$, we have $\mathbfit{y = z = x}^*$.
 \end{dfnbox}
-Geometrically, a polyhedral set $P$ can be defined alternatively as a finite intersection of half-planes:
+We can interpret the definition as follows: suppose $\mathbfit{x}^*$ is not a corner point, then there are $2$ possibilities. If $\mathbfit{x}^*$ is an internal point, then there is some $\delta > 0$ such that the neighbourhood $V_\delta(\mathbfit{x}^*) \subseteq P$. Therefore, we can always find $\mathbfit{y}, \mathbfit{z} \in V_\delta(\mathbfit{x}^*)$ with $\mathbfit{y \neq z \neq x}^*$ such that~$\mathbfit{x}^* \in (\mathbfit{y}, \mathbfit{z})$. Otherwise, $\mathbfit{x}^*$ is on the boundary, i.e.,
 \begin{equation*}
-    P \coloneqq \bigcap_{i = 1}^m\left\{\mathbfit{x} \in \R^n \colon \mathbfit{a_i}^{\mathrm{T}}\mathbfit{x} \leq b_i\right\}.
+    \mathbfit{x}^* \in H \coloneqq \left\{\mathbfit{x} \colon \mathbfit{a}^{\mathrm{T}}\mathbfit{x} \leq b\right\}.
 \end{equation*}
+Clearly, we can also find $\mathbfit{y}, \mathbfit{z} \in V_\delta(\mathbfit{x}^*) \cap H$ with $\mathbfit{y \neq z \neq x}^*$ such that $\mathbfit{x}^* \in (\mathbfit{y}, \mathbfit{z})$.
+
+Alternatively, we consider a hyperplane defined by $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = b$ such that $\mathbfit{c}$ is not orthogonal to any of the boundaries of the polyhedron $P$. Clearly, $\mathbfit{c}$ is the gradient vector of the affine function
+\begin{equation*}
+    f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}.
+\end{equation*}
+Therefore, by translating the hyperplane in the direction of $\mathbfit{c}$, we are able to maximise $b$. Note that this hyperplane is not parallel to any boundary of the polyhedron, so when $b$ reaches the maximum, the hyperplane will have a unique intersection with the polyhedron, which must be a corner point.
+\begin{dfnbox}{Vertex}{vtx}
+    Let $P$ be a polyhedron, a point $\mathbfit{x}^* \in P$ is said to be a {\color{red} \textbf{vertex}} if there exists some $\mathbfit{c}$ such that $\mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* > \mathbfit{c}^{\mathbfit{T}}\mathbfit{y}$ for all $\mathbfit{y} \in P - \{\mathbfit{x}^*\}$.
+\end{dfnbox}
+Note that here we require the inequality to be strict, because otherwise $\mathbfit{x}^*$ and $\mathbfit{y}$ may both be internal points of some boundary hyperplane of $P$.
+
+Note that any boundary of a polyhedron $P$ is uniquely determined by a constraint $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} \leq b_i$. Let $\mathbfit{x}^* \in P$, it is clear that $\mathbfit{x}^*$ is ``on the boundary'' if and only if $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} = b_i$ for some $i$. In such cases, we say that the corresponding constraint is \textit{active/binding/tight} at $\mathbfit{x}^*$.
+
+Geometrically, a corner point of a polyhedron $P$ in $\R^n$ is the intersection of $n$ boundary hyperplanes which are pair-wise non-parallel. Let $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} = b_i$ and $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j$ be any of the $n$ hyperplanes, then it is clear that $\mathbfit{a}_i$ and $\mathbfit{a}_j$ must be linearly independent for the two hyperplanes to be non-parallel. This leads to the notion of \textit{basic feasible solutions}.
+\begin{dfnbox}{Basic Feasible Solution}{bfs}
+    Let $P \subseteq \R^n$ be a polyhedron. $\mathbfit{x}^* \in P$ is said to be a {\color{red} \textbf{basic feasible solution}} if there are $n$ linearly independent constraints which are active at $\mathbfit{x}^*$.
+\end{dfnbox}
+We can generalise Definition \ref{dfn:bfs} to deal with even infeasible points. First we introduce some terminologies.
+\begin{dfnbox}{Rank}{rank}
+    Let $P \subseteq \R^n$ be a polyhedron with constraints $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} \leq b_i$ for $i = 1, 2, \cdots, m$. For any $\mathbfit{x} \in \R^n$, the {\color{red} \textbf{rank}} of $\mathbfit{x}$ is defined as 
+    \begin{equation*}
+        \mathrm{rank}(\mathbfit{x}) \coloneqq \dim\left(\mathrm{span}\left\{\mathbfit{a}_j \colon \mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j\right\}\right).
+    \end{equation*}
+\end{dfnbox}
+Clearly, $\mathbfit{x}^* \in \R^n$ is a basic feasible solution if and only if $\mathrm{rank}(\mathbfit{x}^*) = n$ and $\mathbfit{x}^* \in P$. Notice that not all $\mathbfit{x}$ with rank $n$ is feasible, so we might consider the following definition:
+\begin{dfnbox}{Basic Solution}{bs}
+    Let $P \subseteq \R^n$ be a polyhedron. A vector $\mathbfit{x} \in \R^n$ is a {\color{red} \textbf{basic solution}} if $\mathrm{rank}(\mathbfit{x}) = n$.
+\end{dfnbox}
+One important thing to note here is that $\mathrm{rank}(\mathbfit{x}) = n$ does not necessarily imply that there are exactly $n$ constraints active at $\mathbfit{x}$. Intuitively, there can be more than $n$ hyperplanes in $\R^n$ which intersect at a point $\mathbfit{x}$. However, if $\mathrm{rank}(\mathbfit{x}) = n$, then some hyperplanes are ``redundant'', i.e., their normal vectors can be expressed as linear combinations of the gradients of some $n$ linearly independent constraints.
+\begin{dfnbox}{Degeneracy}{degeneracy}
+    A basic solution $\mathbfit{x} \in \R^n$ is said to be {\color{red} \textbf{degenerate}} if there are more than $n$ constraints active at $\mathbfit{x}$.
+\end{dfnbox}
+Let $P \subseteq \R^n$ be a polyhedron defined by $m$ constraints. Clearly, for each basic feasible solution, we require at least $n$ different constraints to be active. Therefore, the number of distinct basic feasible solutions in $P$ is at most $\left(\begin{smallmatrix}
+    m \\
+    n
+\end{smallmatrix}\right)$. This justifies the fact that any polyhedron in $\R^n$ determined by less than $n$ constraints has no basic feasible solution, and any polyhedron in a finite-dimensional space must have finitely many basic feasible solutions.
+
+Suppose we are given a standard linear program, then we can write its feasible set as the polyhedron
+\begin{equation*}
+    P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\},
+\end{equation*}
+where $\mathbfit{A} \in \R^{m \times n}$. Obviously, $P$ has no basic feasible solution if $m < n$. Suppose $m \geq n$, we will devise a way to compute the basic feasible solutions systematically.
 \begin{thmbox}{Basic Solution Characterisation}{basicSolnChar}
-    A vector $\mathbfit{x}^* \in \R^n$ is a basic solution if and only if
+    Let 
+    \begin{equation*}
+        P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\}
+    \end{equation*}
+    be a polyhedron for some $\mathbfit{A} \in \R^{m \times n}$ with $m \geq n$. A vector $\mathbfit{x}^* \in \R^n$ is a basic solution if and only if
     \begin{itemize}
         \item $\mathbfit{Ax}^* = \mathbfit{b}$, and
         \item There exists an index set $B \subseteq \left\{1, 2, \cdots, n\right\}$ such that the set
@@ -125,7 +309,11 @@ Geometrically, a polyhedral set $P$ can be defined alternatively as a finite int
     \end{itemize}
     \tcblower
     \begin{proof}
-        Suppose $B = \left\{B(1), B(2), \cdots, B(m)\right\}$ and let $N = \{1, 2, \cdots, n\} - B$. For each $i \in N$, since $x^*_i = 0$, we have $\mathbfit{e}^{\mathrm{T}}_i\mathbfit{x}^* = 0$. Therefore, the matrix representation for the active constraints is
+        Write $B = \left\{B(1), B(2), \cdots, B(m)\right\}$ and define 
+        \begin{equation*}
+            N = \left\{N(1), N(2), \cdots, N(n - m)\right\} \coloneqq \{1, 2, \cdots, n\} - B.
+        \end{equation*}
+        For each $i \in N$, since $x^*_i = 0$, we have $\mathbfit{e}^{\mathrm{T}}_i\mathbfit{x}^* = 0$. Therefore, the matrix representation for the active constraints is
         \begin{equation*}
             \begin{bmatrix}
                 \mathbfit{A} \\
@@ -133,29 +321,25 @@ Geometrically, a polyhedral set $P$ can be defined alternatively as a finite int
                 \mathbfit{e}^{\mathrm{T}}_{N(2)} \\
                 \vdots \\
                 \mathbfit{e}^{\mathrm{T}}_{N(n - m)}
-            \end{bmatrix}.
+            \end{bmatrix}\mathbfit{x}^* = \mathbf{0}.
         \end{equation*}
         Re-arranging the columns, the above matrix can be re-written as
         \begin{equation*}
             \begin{bmatrix}
                 \mathbfit{A}_B & \mathbfit{A}_N \\
                 \mathbf{0} & \mathbfit{I}_N
-            \end{bmatrix}.
+            \end{bmatrix}\mathbfit{\bar{x}}^* = \mathbf{0},
         \end{equation*}
-        Note that the columns of $\mathbfit{A}_B$ is linearly independent, so $\det(\mathbfit{A}_B) \neq 0$. Therefore, 
+        where $\mathbfit{\bar{x}}^*$ is obtained by re-arranging the rows of $\mathbfit{x}^*$ accordingly. Note that the columns of $\mathbfit{A}_B$ is linearly independent, so $\det(\mathbfit{A}_B) \neq 0$. Therefore, 
         \begin{equation*}
             \begin{vmatrix}
                 \mathbfit{A}_B & \mathbfit{A}_N \\
                 \mathbf{0} & \mathbfit{I}_N
             \end{vmatrix} = \det(\mathbfit{A}_B)\det(\mathbfit{I}_N) \neq 0,
         \end{equation*}
-        and so the matrix is invertible. Therefore, the rows of the matrix are linearly independent. This means that the set 
-        \begin{equation*}
-            \left\{\nabla h_i \colon i = 1, 2, \cdots, n\right\}
-        \end{equation*}
-        is linearly independent. Therefore, $\mathbfit{x}^*$ is a basic feasible solution.
+        and so the matrix is invertible. Therefore, the rows of the matrix are linearly independent. This means that there are $n$ linearly independent constraints active at~$\mathbfit{x}^*$. Therefore, $\mathbfit{x}^*$ is a basic feasible solution.
         \\\\
-        Suppose conversely that $\mathbfit{x}^*$ is a basic feasible solution, then clearly $\mathbfit{Ax}^* = \mathbfit{b}$. Suppose there are $m$ equality constraints, then we must have $(n - m)$ active active inequality constraints at $\mathbfit{x}^*$, indexed by $N = \left\{N(1), N(2), \cdots, N(n - m)\right\}$, such that the constraints are linearly independent. Therefore, the matrix
+        Suppose conversely that $\mathbfit{x}^*$ is a basic feasible solution, then clearly $\mathbfit{Ax}^* = \mathbfit{b}$. Since there are $m$ equality constraints, then we must have $(n - m)$ active active inequality constraints at $\mathbfit{x}^*$, indexed by $N = \left\{N(1), N(2), \cdots, N(n - m)\right\}$, such that the constraints are linearly independent. Therefore, the matrix
         \begin{equation*}
             \begin{bmatrix}
                 \mathbfit{A} \\
@@ -165,31 +349,175 @@ Geometrically, a polyhedral set $P$ can be defined alternatively as a finite int
                 \mathbfit{e}^{\mathrm{T}}_{N(n - m)}
             \end{bmatrix}
         \end{equation*}
-        is invertible. Let $B \coloneqq \left\{B(1), B(2), \cdots, B(m)\right\} = \{1, 2, \cdots, n\} - N$ be an index set, then the above matrix can be re-arranged as
+        is invertible and that for all $i \in N$, $x^*_i = 0$. Let 
+        \begin{equation*}
+            B = \left\{B(1), B(2), \cdots, B(m)\right\} \coloneqq \{1, 2, \cdots, n\} - N
+        \end{equation*}
+        be an index set, then the above matrix can be re-arranged as
         \begin{equation*}
             \begin{bmatrix}
                 \mathbfit{A}_B & \mathbfit{A}_N \\
                 \mathbf{0} & \mathbfit{I}_N
             \end{bmatrix},
         \end{equation*}
-        which is invertible. Therefore, $\left\{\mathbfit{A}_{B(1)}, \mathbfit{A}_{B(2)}, \cdots, \mathbfit{A}_{B(m)}\right\}$ is linearly independent. Note that $x^*_i = 0$ for all $i \in N$.
+        which is invertible. Therefore, $\left\{\mathbfit{A}_{B(1)}, \mathbfit{A}_{B(2)}, \cdots, \mathbfit{A}_{B(m)}\right\}$ is linearly independent.
     \end{proof}
 \end{thmbox}
-\begin{thmbox}{\small Equivalent Conditions for the Existence of Basic Feasible Solution}{}
-    Let $\mathbfit{A} \in \R^{m \times n}$ where $m \geq n$ and 
+Note that according to Theorem \ref{thm:basicSolnChar}, for every $i \in N$, $x_i = 0$. Note that $\mathbfit{A} = \begin{bmatrix}
+    \mathbfit{A}_B & \mathbfit{A}_N
+\end{bmatrix}$, so the linear system  $\mathbfit{Ax = b}$ is equivalent to  $\mathbfit{A}_B\mathbfit{x}_B = \mathbfit{b}$. Therefore, given any standard polyhedron $P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\}$, we can construct a basic solution in $P$ using the following procedures:
+\begin{enumerate}
+    \item Choose $m$ linearly independent columns from $\mathbfit{A}$ with $B$ being the index set for the columns to form the set $\left\{\mathbfit{A}_{B(1)}, \mathbfit{A}_{B(2)}, \cdots, \mathbfit{A}_{B(m)}\right\}$;
+    \item For each $i \in N \coloneqq \left\{1, 2, \cdots, n\right\} - B$, set $x_i = 0$. The vector consisting of all of these zero entries is denoted by $\mathbfit{x}_N$;
+    \item Solve the linear system $\mathbfit{A}_B\mathbfit{x}_B = \mathbfit{b}$ to obtain $\mathbfit{x}_B = \mathbfit{A}_B^{-1}\mathbfit{b}$;
+    \item Let $x_i$ be the $i$-th entry of $\mathbfit{x}$, then 
     \begin{equation*}
-        P = \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax} \geq \mathbfit{b}\right\} \neq \varnothing.
+        x_i = \begin{cases}
+            0, & \quad\textrm{if } i \in N \\
+            (\mathbfit{x}_B)_i & \quad\textrm{if } i \in B
+        \end{cases}.
     \end{equation*}
-    The following statements are equivalent:
+\end{enumerate}
+The $\mathbfit{x}$ obtained this way is alternatively denoted as $\mathbfit{x} \coloneqq (\mathbfit{x}_B, \mathbfit{x}_N)$.
+
+Geometrically, $2$ distinct basic feasible solutions of $P$ are \textit{adjacent} if there is an edge on the boundary joining the $2$ points. Here we give an equivalent definition algebraically.
+\begin{dfnbox}{Adjacency}{adjacency}
+    Let $\mathbfit{x}_1$ and $\mathbfit{x}_2$ be distinct basic solutions with respect to polyhedron $P$. $\mathbfit{x}_1$ and $\mathbfit{x}_2$ are said to be {\color{red} \textbf{adjacent}} if there are exactly $(n - 1)$ linearly independent constraints active at both points, or their corresponding bases only contain $1$ different basic column.
+\end{dfnbox}
+Recall that not all polyhedrons have basic feasible solutions. Informally, we can see that if a polyhedron does not contain any basic feasible solution, it contains at least $2$ ``openings'' which allows us to place a straight line into the polyhedron. This observation is summarised rigorously as follows:
+\begin{thmbox}{Conditions for the Existence of Basic Feasible Solution}{existBFS}
+    Let $\mathbfit{A} \in \R^{m \times n}$ and 
+    \begin{equation*}
+        P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax} \leq \mathbfit{b}\right\} \neq \varnothing,
+    \end{equation*}
+    then the following statements are equivalent:
     \begin{enumerate}
         \item $P$ does not contain any straight line.
         \item $P$ has a basic feasible solution.
         \item $P$ has $n$ linearly independent constraints.
     \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Suppose $P$ has a basic feasible solution $\mathbfit{x}^*$, then there are $n$ linearly independent constraints active at $\mathbfit{x}^*$. Therefore, it is trivial that $P$ must contain at least $n$ linearly independent constraints.
+        \\\\
+        We shall prove that ($3$) implies ($1$) by considering the contrapositive statement. Suppose that $P$ contains a straight line $\left\{\mathbfit{x}_0 + \lambda\mathbfit{d} \colon \lambda \in \R\right\}$ for some fixed point $\mathbfit{x}_0 \in P$ and direction vector $\mathbfit{d} \in \R^n$, then for any $\lambda \in \R$, we have $\mathbfit{A}(\mathbfit{x}_0 + \lambda\mathbfit{d}) \leq \mathbfit{b}$. Notice that $\mathbfit{Ax}_0 \leq \mathbfit{b}$, so $\mathbfit{Ad} = \mathbf{0}$. However, $\mathbfit{d} \neq \mathbf{0}$, so $\mathbfit{A}$ does not contain $n$ independent rows, which implies that $P$ does not have $n$ linearly independent constraints.
+        \\\\
+        Suppose that $P$ does not contain any straight line. Take some $\mathbfit{x} \in P$ and let 
+        \begin{equation*}
+            I(\mathbfit{x}) \coloneqq \left\{\mathbfit{a}_i \colon \mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} = b_i\right\}
+        \end{equation*}
+        be the set of gradient vectors of all active constraints at $\mathbfit{x}$. If $I(\mathbfit{x})$ contains $n$ linearly independent vectors, then we are done. Otherwise, $I(\mathbfit{x})$ does not span $\R^n$, so there is some $\mathbfit{d} \in \R^n$ with $\mathbfit{d} \neq 0$ such that it is normal to $\mathrm{span}\bigl(I(\mathbfit{x})\bigr)$. Since $P$ contains no straight lines, there exists some constraints with gradient vector $\mathbfit{a}_j \notin I(\mathbfit{x})$ such that we can find some $\mu \in \R$ such that $\mathbfit{a}_j^{\mathrm{T}}(\mathbfit{x} + \mu\mathbfit{d}) = b_j$. Set $\mathbfit{x}' = \mathbfit{x} + \mu\mathbfit{d}$. Note that for all $\mathbfit{a}_i \in I(\mathbfit{x})$, we have $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{d} = 0$, and so $\mathbfit{a}_i^{\mathrm{T}}(\mathbfit{x} + \mu\mathbfit{d}) = b_i$. Therefore, $\mathbfit{a}_i \in I(\mathbfit{x}')$, and so we have $I(\mathbfit{x}) \cup \{\mathbfit{a}_j\} \subseteq I(\mathbfit{x}')$. We claim that $\mathbfit{a_j}$ linearly independent with $I(\mathbfit{x})$. Otherwise, $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{d} = 0$, which means that the boundary defined by $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j$ is parallel to $\mathbfit{d}$ and so if the constraint is active at $\mathbfit{x}'$, it must also be active at $\mathbfit{x}$, which is a contradiction. Therefore, $I(\mathbfit{x}')$ has more linearly independent vectors than $I(\mathbfit{x})$. Repeat this process and we will eventually obtain a set of $n$ linearly independent gradient vectors, $I(\mathbfit{x}^*)$, where $\mathbfit{x}^*$ is a basic feasible solution.
+    \end{proof}
 \end{thmbox}
+Consider the level set defined by $f(\mathbfit{x}) = k$ for some affine function $f$. Suppose the level set has an intersection with some polyhedron $P$, then by translating the level set in the direction of $-\nabla f$, it will eventually intersect $P$ at a basic feasible solution such that any further translation will make the intersection empty. Therefore, a reasonable guess is that an optimal solution for any linear program is closely linked to the basic feasible solutions of the feasible set.
+\begin{thmbox}{Optimality of Basic Feasible Solutions}{optBFS}
+    Consider the linear program 
+    \begin{equation*}
+        \min_{\mathbfit{x} \in P} f(\mathbfit{x})
+    \end{equation*}
+    where $f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$ and $P$ is a polyhedron. If $P$ has a basic feasible solution and the linear program has an optimal solution, then there exists a basic feasible solution of $P$ which is an optimal solution to the linear program.
+    \tcblower
+    \begin{proof}
+        Let the optimal value of $f$ be $v^*$, then the set of optimal solutions is
+        \begin{equation*}
+            Q \coloneqq P \cap \left\{\mathbfit{x} \in \R^n \colon \mathbfit{c}^{\mathrm{T}}\mathbfit{x} = v^*\right\}.
+        \end{equation*}
+        Note that $Q$ is a polyhedron. By Theorem \ref{thm:existBFS}, since $P$ contains a basic feasible solution, it does not contain a straight line. Therefore, $Q \subseteq P$ cannot contain a straight line and so it contains a basic feasible solution.
+        \\\\
+        Let $\mathbfit{x}^*$ be any basic feasible solution of $Q$. We claim that $\mathbfit{x}^*$ is a basic feasible solution of $P$. Suppose on contrary that $\mathbfit{x}^*$ is not a basic feasible solution of $P$, then there exists some $\mathbfit{d} \in \R^n$ with $\mathbfit{c}^{\mathrm{T}}\mathbfit{d} = 0$ such that $\mathbfit{x}^* + \lambda\mathbfit{d} \in Q$ is an internal point of $P$ for some $\lambda \in \R$. However, this means that there exists some $\mu > 0$ such that $\mathbfit{x}^* - \mathbfit{c} \in P$. Note that $\mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x}^* - \mathbfit{c}\right) < v*$, which is impossible. Therefore, $\mathbfit{x}^*$ must be a basic feasible solution of $P$.
+    \end{proof}
+\end{thmbox}
+Note that this essentially implies that $Q$ is the convex hull of basic feasible solutions of $P$. Therefore, any optimal solution of the original linear program can be expressed as a convex combination of basic feasible solutions of $P$, and so it suffices to first find all basic feasible solutions if our feasible set contains any.
+\section{The Simplex Method}
+Note that for any linear program, we can convert it to a standard linear program with feasible region
+\begin{equation*}
+    P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\}.
+\end{equation*}
+Let $\left\{\mathbfit{x}_0 + \lambda\mathbfit{d} \colon \lambda \in \R\right\}$ be any straight line, then clearly we can find some $\lambda \in \R$ such that there is some entry $x_i$ of $\mathbfit{x}$ with $x_i < 0$. Therefore, $P$ does not contain any straight line, and so $P$ always contains at least one basic feasible solution if $P \neq \varnothing$. Therefore, as long as a linear program has a finite optimal value, it has optimal solutions which are basic feasible solutions.
 
-\section{The Simplex Method Algorithm}
+Therefore, to find the optimal solution of a linear program, we only need to start at any basic feasible solution and try to reach an adjacent basic feasible solution which can improve our objective value. Continue this search and eventually we will be able to collect all optimal solutions.
+
+Given any basic feasible solution $\mathbfit{x}$, we wish to find a direction $\mathbfit{d}$ such that $\mathbfit{x} + \theta\mathbfit{d}$ is some adjacent basic feasible solution for some $\theta \in \R$. First, we need to ensure that $\mathbfit{x} + \theta\mathbfit{d}$ is still feasible.
 \begin{dfnbox}{Feasible Direction}{feasibleDir}
     Let $P$ be a polyhedron and $\mathbfit{x} \in P$ be a feasible point. A vector $\mathbfit{d}$ is a {\color{red} \textbf{feasible direction}} if $\mathbfit{x} + \lambda\mathbfit{d} \in P$ for some $\lambda > 0$.
 \end{dfnbox}
+Suppose $\mathbfit{d}$ is a feasible direction and $\mathbfit{x}$ is a basic feasible solution. Consider $\mathbfit{x}' = \mathbfit{x} + \theta\mathbfit{d} \in P$ for some $\theta \in \R$. If $\mathbfit{x}'$ is on an edge, then clearly there is exactly one less active constraint at $\mathbfit{x}'$ than at $\mathbfit{x}$.
+\begin{thmbox}{\small Characterisation of A Direction Connecting Basic Feasible Solutions}{bfsDir}
+    Let $\mathbfit{x} = (\mathbfit{x}_B, \mathbfit{x}_N)$ with $\mathbfit{x}_B \geq \mathbf{0}$ and $\mathbfit{x}_N = \mathbf{0}$ be a basic feasible solution, then a direction that connects $\mathbfit{x}$ to an adjacent basic feasible solution is in the form of $\mathbfit{d}^j = \left(\mathbfit{d}^j_B, \mathbfit{d}^j_N\right)$ for some $j \in N$, such that $\mathbfit{d}^j_N = \mathbfit{e}_j$ and $\mathbfit{d}^j_B = -\mathbfit{A}_B^{-1}\mathbfit{A}_j$.
+    \tcblower
+    \begin{proof}
+        Note that for any feasible $\mathbfit{x}' = \mathbfit{x} + \theta\mathbfit{d}^j$ which is not a basic feasible solution, we have $\mathbfit{Ax}'_B = \mathbfit{b}$. This means that all constraints corresponding to $B$ are active along the edge. Therefore, the edge frees one constraint of the form $x_j \geq 0$ for some~$j \in N$. This means that the index set of active constraints along the edge is given by $B \cup N - \{j\}$. Note that 
+        \begin{equation*}
+            \mathbfit{x} + \theta\mathbfit{d}^j = \left(\mathbfit{x}_B + \theta\mathbfit{d}^j_B, \mathbfit{x}_N + \theta\mathbfit{d}^j_N\right).
+        \end{equation*}
+        Notice that $\mathbfit{x}_N = \mathbf{0}$ and $\mathbfit{x}_N + \theta\mathbfit{d}^j_N = \theta\mathbfit{e}_j$, so $\mathbfit{d}^j_N = \mathbfit{e}_j$. Since $\mathbfit{x} + \theta\mathbfit{d}^j$ is feasible, we have
+        \begin{equation*}
+            \mathbfit{A}\left(\mathbfit{x} + \theta\mathbfit{d}^j\right) = \mathbfit{b} = \mathbfit{Ax}.
+        \end{equation*}
+        Therefore, $\mathbfit{Ad}^j = \mathbf{0}$. However, note that
+        \begin{align*}
+            \mathbfit{Ad}^j & = \begin{bmatrix}
+                \mathbfit{A}_B & \mathbfit{A}_N
+            \end{bmatrix}\begin{bmatrix}
+                \mathbfit{d}^j_B \\
+                \mathbfit{d}^j_N
+            \end{bmatrix} \\
+            & = \mathbfit{A}_B\mathbfit{d}^j_B + \mathbfit{A}_N\mathbfit{e}_j \\
+            & = \mathbfit{A}_B\mathbfit{d}^j_B + \mathbfit{A}_j.
+        \end{align*}
+        Since $\mathbfit{A}_B$ has linearly independent columns, it is invertible, so $\mathbfit{d}^j_B = -\mathbfit{A}_B^{-1}\mathbfit{A}_j$.
+    \end{proof}
+\end{thmbox}
+Simply traversing between basic feasible solutions is not very useful, because our ultimate goal is to minimise our objective function, i.e., we wish to find a direction $\mathbfit{d}^j$ such that for some $\theta > 0$,
+\begin{equation*}
+    \mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x} + \theta\mathbfit{d}^j\right) < \mathbfit{c}^{\mathrm{T}}\mathbfit{x}.
+\end{equation*}
+Clearly, we require $\mathbfit{c}^{\mathrm{T}}\mathbfit{d}^j < 0$. Note that
+\begin{align*}
+    \mathbfit{c}^{\mathrm{T}}\mathbfit{d}^j & = \left(\mathbfit{c}_B, \mathbfit{c}_N\right)^{\mathrm{T}}\begin{bmatrix}
+        \mathbfit{d}^j_B \\
+        \mathbfit{d}^j_N
+    \end{bmatrix} \\
+    & = \begin{bmatrix}
+        \mathbfit{c}_B^{\mathrm{T}} & \mathbfit{c}_N^{\mathrm{T}}
+    \end{bmatrix}\begin{bmatrix}
+        -\mathbfit{A}_B^{-1}\mathbfit{A}_j \\
+        \mathbfit{e}_j
+    \end{bmatrix} \\
+    & = -\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j + c_j,
+\end{align*}
+so our target is simply $c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j < 0$.
+\begin{dfnbox}{Reduced Cost}{reducedCost}
+    Let $\mathbfit{x}$ be a basic feasible solution with respect to objective function $f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$. Let~$\mathbfit{c} = \left(\mathbfit{c}_B, \mathbfit{c}_N\right)$. For each $j = 1, 2, \cdots, n$, the {\color{red} \textbf{reduced cost}} of variable $x_j$ is defined as 
+    \begin{equation*}
+        \bar{c_j} = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        For any $j \in B$, note that $\mathbfit{A}_j = \mathbfit{A}_B\mathbfit{e}_j$, we have $\mathbfit{A}_B^{-1}\mathbfit{A}_j = \mathbfit{e}_j$. Therefore, $\bar{c_j} = 0$.
+    \end{remark}
+\end{notebox}
+We say that a direction $\mathbfit{d}^j$ is an \textit{improving direction} if and only if $\bar{c_j} < 0$.
+
+Next, we only need to determine a $\bar{\theta_j} > 0$ such that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ gives us another basic feasible solution. Since we already know that $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$ for all $\bar{\theta_j} > 0$, a natural idea is to take $\bar{\theta_j}$ to be the greatest positive real number such that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j \geq \mathbf{0}$, i.e., we will move in the direction $\mathbfit{d}^j$ until we can barely stay in the feasible polyhedron. Consider
+\begin{align*}
+    \mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j = \left(\mathbfit{x}_B + \bar{\theta_j}\mathbfit{d}^j_B, \mathbfit{x}_N + \bar{\theta_j}\mathbfit{d}^j_N\right).
+\end{align*}
+Note that $\mathbfit{x}_N \geq \mathbf{0}$ and $\bar{\theta_j}\mathbfit{d}^j_N = \bar{\theta_j}\mathbfit{e}_j \geq \mathbf{0}$, so it suffices to check that $\mathbfit{x}_B + \bar{\theta_j}\mathbfit{d}^j_B \geq \mathbf{0}$. This implies that for each $i \in B$, we have $\bar{\theta_j} \geq -\frac{x_i}{d^j_i}$. Therefore, we only need to take
+\begin{equation*}
+    \bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\}.
+\end{equation*}
+Note that here we do not consider those $d^j_i$'s with $d^j_i > 0$ because in such cases $x_i + \bar{\theta_j}d^j_i \geq 0$ for all $\bar{\theta_j} > 0$. Now, we would verify that the new point we reach is indeed another basic feasible solution.
+\begin{probox}{$\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ Is A Basic Feasible Solution}{anotherBFS}
+    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
+    \tcblower
+    \begin{proof}
+        Note that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j\right) = \mathbfit{b}$. Note that by the definition of $\bar{\theta_j}$, we have 
+        \begin{equation*}
+            \bar{\theta_j} = -\frac{x_{\ell}}{d_{\ell}^j}
+        \end{equation*}
+        for some $\ell \in B$. Therefore, we have $\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right)_{\ell} = 0$. Notice that at $\mathbfit{x} \coloneqq \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$, we have~$\ell \in B$ and $j \in N$. Consider $\bar{B} \coloneqq (B - \{\ell\}) \cup \{j\}$ and $\bar{N} \coloneqq (N - \{j\}) \cup \{\ell\}$. One may check that $\bar{B}$ is linearly independent, so by Theorem \ref{thm:basicSolnChar}, $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is a basic feasible solution.
+    \end{proof}
+\end{probox}
 \end{document}
