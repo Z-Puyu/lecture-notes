@@ -441,6 +441,8 @@ Given any basic feasible solution $\mathbfit{x}$, we wish to find a direction $\
 \begin{dfnbox}{Feasible Direction}{feasibleDir}
     Let $P$ be a polyhedron and $\mathbfit{x} \in P$ be a feasible point. A vector $\mathbfit{d}$ is a {\color{red} \textbf{feasible direction}} if $\mathbfit{x} + \lambda\mathbfit{d} \in P$ for some $\lambda > 0$.
 \end{dfnbox}
+Notice that $\mathbfit{x} + \lambda\mathbfit{d}$ is still feasible, so we must have $\mathbfit{A}(\mathbfit{x} + \lambda\mathbfit{d}) = \mathbfit{b}$. However, $\mathbfit{Ax} = \mathbfit{b}$, which implies that $\mathbfit{Ad} = \mathbf{0}$. We can write $\mathbfit{d} = \left(\mathbfit{d}_B, \mathbfit{d}_N\right)$ with respect to $\mathbfit{x} = \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$. We need $\mathbfit{x} + \lambda\mathbfit{d} \geq \mathbf{0}$, but $\mathbfit{x}_N = \mathbf{0}$, so we must also have $\mathbfit{d}_N \geq \mathbf{0}$.
+
 Suppose $\mathbfit{d}$ is a feasible direction and $\mathbfit{x}$ is a basic feasible solution. Consider $\mathbfit{x}' = \mathbfit{x} + \theta\mathbfit{d} \in P$ for some $\theta \in \R$. If $\mathbfit{x}'$ is on an edge, then clearly there is exactly one less active constraint at $\mathbfit{x}'$ than at $\mathbfit{x}$.
 \begin{thmbox}{\small Characterisation of A Direction Connecting Basic Feasible Solutions}{bfsDir}
     Let $\mathbfit{x} = (\mathbfit{x}_B, \mathbfit{x}_N)$ with $\mathbfit{x}_B \geq \mathbf{0}$ and $\mathbfit{x}_N = \mathbf{0}$ be a basic feasible solution, then a direction that connects $\mathbfit{x}$ to an adjacent basic feasible solution is in the form of $\mathbfit{d}^j = \left(\mathbfit{d}^j_B, \mathbfit{d}^j_N\right)$ for some $j \in N$, such that $\mathbfit{d}^j_N = \mathbfit{e}_j$ and $\mathbfit{d}^j_B = -\mathbfit{A}_B^{-1}\mathbfit{A}_j$.
@@ -468,6 +470,29 @@ Suppose $\mathbfit{d}$ is a feasible direction and $\mathbfit{x}$ is a basic fea
         Since $\mathbfit{A}_B$ has linearly independent columns, it is invertible, so $\mathbfit{d}^j_B = -\mathbfit{A}_B^{-1}\mathbfit{A}_j$.
     \end{proof}
 \end{thmbox}
+Recall that the feasible polyhedron is actually the convex hull of all of its basic feasible solutions. Naturally, we may conjure that any feasible direction is a linear combination of all the $\mathbfit{d}^j$'s for $j \in N$.
+\begin{probox}{Feasible Directions as Linear Combinations}{fDirLinCombi}
+    Let $\mathbfit{x} \coloneqq \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$ be a basic feasible solution, then any feasible direction at $\mathbfit{x}$ can be expressed as 
+    \begin{equation*}
+        \mathbfit{d} = \sum_{j \in N}\lambda_j\mathbfit{d}^j
+    \end{equation*}
+    for $\lambda_j \geq 0$.
+    \tcblower
+    \begin{proof}
+        Note that since $\mathbfit{d}$ is a feasible direction, $\mathbfit{Ad} = \mathbf{0}$. Since $\mathbfit{Ad} = \mathbfit{A}_B\mathbfit{d}_B + \mathbfit{A}_N\mathbfit{d}_N$, this implies that 
+        \begin{equation*}
+            \mathbfit{A}_B\mathbfit{d}_B = -\mathbfit{A}_N\mathbfit{d}_N = -\sum_{j \in N}d_j\mathbfit{A}_j.
+        \end{equation*}
+        Note that $\mathbfit{A}_B$ is invertible, so by Theorem \ref{thm:bfsDir}, 
+        \begin{equation*}
+            \mathbfit{d}_B = -\sum_{j \in N}d_j\mathbfit{A}_B^{-1}\mathbfit{A}_j = \sum_{j \in N}d_j\mathbfit{d}_B^j.
+        \end{equation*}
+        Since $\mathbfit{d}_N^j = \mathbfit{e}_j$, we have $\mathbfit{d}_N = \sum_{j \in N}d_j\mathbfit{d}_N^j$. Take $\lambda_j = d_j$, we have
+        \begin{equation*}
+            \mathbfit{d} = \sum_{j \in N}\lambda_j\mathbfit{d}^j.
+        \end{equation*}
+    \end{proof}
+\end{probox}
 Simply traversing between basic feasible solutions is not very useful, because our ultimate goal is to minimise our objective function, i.e., we wish to find a direction $\mathbfit{d}^j$ such that for some $\theta > 0$,
 \begin{equation*}
     \mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x} + \theta\mathbfit{d}^j\right) < \mathbfit{c}^{\mathrm{T}}\mathbfit{x}.
@@ -495,10 +520,17 @@ so our target is simply $c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\ma
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        For any $j \in B$, note that $\mathbfit{A}_j = \mathbfit{A}_B\mathbfit{e}_j$, we have $\mathbfit{A}_B^{-1}\mathbfit{A}_j = \mathbfit{e}_j$. Therefore, $\bar{c_j} = 0$.
+        For any $i \in B$, note that $\mathbfit{A}_i = \mathbfit{A}_B\mathbfit{e}_i$, we have $\mathbfit{A}_B^{-1}\mathbfit{A}_i = \mathbfit{e}_i$. Therefore, $\bar{c_i} = 0$.
     \end{remark}
 \end{notebox}
-We say that a direction $\mathbfit{d}^j$ is an \textit{improving direction} if and only if $\bar{c_j} < 0$.
+We say that a direction $\mathbfit{d}^j$ is an \textit{improving direction} if and only if $\bar{c_j} < 0$. Furthermore, notice that by Theorem \ref{thm:bfsDir}, we have
+\begin{align*}
+    \bar{c_j} & = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j \\
+    & = \mathbfit{c}^{\mathrm{T}}\mathbfit{e}_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j \\
+    & = \mathbfit{c}_N^{\mathrm{T}}\mathbfit{d}_N^j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{d}_B^j \\
+    & = \mathbfit{c}^{\mathrm{T}}\mathbfit{d}^j.
+\end{align*}
+Combining with Proposition \ref{pro:fDirLinCombi}, the above gives us a quicker way to compute the reduced cost given any feasible direction at a point $\mathbfit{x}$.
 
 Next, we only need to determine a $\bar{\theta_j} > 0$ such that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ gives us another basic feasible solution. Since we already know that $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$ for all $\bar{\theta_j} > 0$, a natural idea is to take $\bar{\theta_j}$ to be the greatest positive real number such that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j \geq \mathbf{0}$, i.e., we will move in the direction $\mathbfit{d}^j$ until we can barely stay in the feasible polyhedron. Consider
 \begin{align*}
@@ -509,15 +541,234 @@ Note that $\mathbfit{x}_N \geq \mathbf{0}$ and $\bar{\theta_j}\mathbfit{d}^j_N =
     \bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\}.
 \end{equation*}
 Note that here we do not consider those $d^j_i$'s with $d^j_i > 0$ because in such cases $x_i + \bar{\theta_j}d^j_i \geq 0$ for all $\bar{\theta_j} > 0$. Now, we would verify that the new point we reach is indeed another basic feasible solution.
-\begin{probox}{$\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ Is A Basic Feasible Solution}{anotherBFS}
+\begin{probox}{$\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ Is A Basic Feasible Solution}{anotherBFS}
     If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
     \tcblower
     \begin{proof}
-        Note that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j\right) = \mathbfit{b}$. Note that by the definition of $\bar{\theta_j}$, we have 
+        Note that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$. Note that by the definition of $\bar{\theta_j}$, we have 
         \begin{equation*}
             \bar{\theta_j} = -\frac{x_{\ell}}{d_{\ell}^j}
         \end{equation*}
-        for some $\ell \in B$. Therefore, we have $\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right)_{\ell} = 0$. Notice that at $\mathbfit{x} \coloneqq \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$, we have~$\ell \in B$ and $j \in N$. Consider $\bar{B} \coloneqq (B - \{\ell\}) \cup \{j\}$ and $\bar{N} \coloneqq (N - \{j\}) \cup \{\ell\}$. One may check that $\bar{B}$ is linearly independent, so by Theorem \ref{thm:basicSolnChar}, $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is a basic feasible solution.
+        for some $\ell \in B$. Therefore, we have $\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right)_{\ell} = 0$. Notice that at $\mathbfit{x} \coloneqq \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$, we have~$\ell \in B$ and $j \in N$. Consider $\bar{B} \coloneqq (B - \{\ell\}) \cup \{j\}$ and $\bar{N} \coloneqq (N - \{j\}) \cup \{\ell\}$. One may check that $\bar{B}$ is linearly independent, so by Theorem \ref{thm:basicSolnChar}, $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution.
     \end{proof}
 \end{probox}
+By now, we already have devised a systematic method to reach another basic feasible solution from a given basic feasible solution such that our objective value improves. The next goal is to determine a condition by which we should terminate our search and declare the current basic feasible solution to be optimal.
+
+Before we do that, we need to first deal with an edge case where some basic feasible solution we find might be degenerate. Note that in the standard form, we have exactly $m$ equality constraints represented by $\mathbfit{A}_B\mathbfit{x}_B = \mathbfit{b}$ which are always active, and at least $(n - m)$ active inequality constraints in the form of $\mathbfit{x}_N = \mathbf{0}$. However, note that $\mathbfit{x} \geq \mathbf{0}$ represents $n$ inequality constraints, so in total we actually have $(m + n)$ constraints. An implication here is that if any entry of $\mathbfit{x}_B$ is $0$, then we will have more than $n$ active constraints at $\mathbfit{x}$.
+\begin{dfnbox}{Degeneracy in Standard Form}{standardDegeneracy}
+    Let $\mathbfit{x} = \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$ be a basic feasible solution. We say that $\mathbfit{x}$ is {\color{red} \textbf{degenerate}} if there is some entry of $\mathbfit{x}_B$ being $0$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        This also concludes that $\mathbfit{x}$ is non-degenerate if $\mathbfit{x}_B = \mathbfit{A}_B^{-1}\mathbfit{b} > \mathbf{0}$.
+    \end{remark}
+\end{notebox}
+Recall that along an improving direction $\mathbfit{d}^j$, the reduced cost for $x_j$ is $\bar{c_j} < 0$. A natural observation here is that if we cannot find any improving direction at a point $\mathbfit{x}^*$, then this point must be optimal. Therefore, we are tempted to conclude that $\bar{c_j} \geq 0$ for all $j \in N$.
+\begin{thmbox}{Optimality Conditions for Simplex Method}{simplexOptCond}
+    Let $\mathbfit{x}^* = \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$ be a basic feasible solution to some standard linear program. Let $\mathbfit{\bar{c}}$ be the vector of reduced costs associated with $\mathbfit{x}^*$, then 
+    \begin{enumerate}
+        \item If $\mathbfit{\bar{c}} \geq \mathbf{0}$, then $\mathbfit{x}^*$ is optimal;
+        \item If $\mathbfit{x}^*$ is optimal and non-degenerate, then $\mathbfit{\bar{c}} \geq \mathbf{0}$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Suppose that $\mathbfit{\bar{c}} \geq \mathbf{0}$. Let $\mathbfit{y}$ be any feasible solution, then $\mathbfit{y - x}^*$ is a feasible direction. By Proposition \ref{pro:fDirLinCombi}, 
+        \begin{equation*}
+            \mathbfit{y - x}^* = \sum_{j \in N}\lambda_j\mathbfit{d}^j,
+        \end{equation*}
+        where $\lambda_j \geq 0$ for all $j \in N$. Therefore,
+        \begin{align*}
+            \mathbfit{c}^{\mathrm{T}}\mathbfit{y} & = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \sum_{j \in N}\lambda_j\mathbfit{c}^{\mathrm{T}}\mathbfit{d}^j \\
+            & = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \sum_{j \in N}\lambda_j\bar{c_j} \\
+            & \geq \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^*.
+        \end{align*}
+        Therefore, $\mathbfit{x}^*$ is an optimal solution.
+        \\\\
+        Suppose that $\mathbfit{x}^*$ is a non-degenerate optimal solution. For each $j \in N$, consider the adjacent basic feasible solution $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$. Notice that 
+        \begin{equation*}
+            \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \leq \mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \bar{\theta_j}\bar{c_j}
+        \end{equation*}
+        for all $j \in N$. Therefore, we must have $\bar{\theta_j}\bar{c_j} \geq 0$ for all $j \in N$. Since $\mathbfit{x}$ is non-degenerate, for each $j \in N$ we have 
+        \begin{equation*}
+            \bar{\theta_j} = -\frac{x_{\ell}}{d^j_{\ell}} > 0,
+        \end{equation*}
+        and so $\bar{c_j} \geq 0$. Note that for all $i \in B$, we have $\bar{c_i} = 0$, so $\mathbfit{\bar{c}} \geq \mathbf{0}$.
+    \end{proof}
+\end{thmbox}
+Recall that $\mathbfit{\bar{c}}_B = \mathbf{0}$, so it suffices to check that $\mathbfit{\bar{c}}_N \geq \mathbf{0}$ for the $(n - m)$ inequality constraints to determine whether $\mathbfit{x}^*$ is an optimal solution.
+
+With the above preliminary works done, we are now able to develop the algorithm for simplex method.
+\begin{tecbox}{Simplex Method}{simplex}
+    Let $f \colon \R^n \to \R$ defined by $f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$ be the objective function of a standard linear program with feasible set 
+    \begin{equation*}
+        P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\}.
+    \end{equation*}
+    The simplex method finds the optimal solution using the following procedures:
+    \begin{enumerate}
+        \item Initialise $\mathbfit{x}_0$ to be any basic feasible solution. 
+        \item At the $k$-th iteration, choose an index set $B_k$ such that the columns of $\mathbfit{A}_{B_k}$ are a basis for the column space of $\mathbfit{A}$.
+        \item Let $N_k \coloneqq \left\{1, 2, \cdots, n\right\} - B_k$. For each $j \in N_k$, compute the reduced cost 
+        \begin{equation*}
+            \bar{c_j} = c_j - \mathbfit{c}_{B_k}^{\mathrm{T}}\mathbfit{A}_{B_k}^{-1}\mathbfit{A}_j.
+        \end{equation*}
+        \item If $\bar{c_j} \geq 0$ for all $j \in N_k$:
+        \begin{itemize}
+            \item $\mathbfit{x}_k$ is an optimal solution.
+        \end{itemize}
+        \item Otherwise:
+        \begin{enumerate}
+            \item Take some $j \in N_k$ such that $\bar{c_j} < 0$. $\left(\mathbfit{x}_{k}\right)_j$ is called an {\color{red} \textbf{entering variable}}.
+            \item Compute $\mathbfit{d}^j_{B_k} = -\mathbfit{A}_{B_k}^{-1}\mathbfit{A}_j$.
+            \item If $\mathbfit{d}^j_{B_k} \geq \mathbf{0}$:
+            \begin{itemize}
+                \item the problem is {\color{red} \textbf{unbounded}}.
+            \end{itemize}
+            \item Otherwise:
+            \begin{enumerate}
+                \item Let $\ell \in B_k$ be such that $\bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = \frac{x_{\ell}}{d^j_{\ell}}$. $\left(\mathbfit{x}_{k}\right)_{\ell}$ is called a {\color{red} \textbf{leaving variable}}.
+                \item Update $B_{k + 1} \coloneqq (B - \{\ell\}) \cup \{j\}$.
+                \item Update $\mathbfit{x}_{k + 1}$ by 
+                \begin{equation*}
+                    \left(\mathbfit{x}_{k + 1}\right)_i = \begin{cases}
+                        \left(\mathbfit{x}_{k}\right)_i + \bar{\theta_j}\mathbfit{d}^j_i & \quad\textrm{if } i \in B - \{\ell\} \\
+                        \bar{\theta_j} & \quad\textrm{if } i = j \\
+                        0 & \quad\textrm{otherwise}
+                    \end{cases}
+                \end{equation*} 
+            \end{enumerate}
+        \end{enumerate}
+    \end{enumerate}
+\end{tecbox}
+\section{Tableau Implementation}
+A common way to run simplex method is by tabulating the relevant variables, solutions and reduced costs so that we can keep track of their values conveniently. A generalised tableau looks like the following:
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Basic & $\mathbfit{x}$ & Solution \\
+        \hline
+        $\mathbfit{\bar{c}}$ & $\mathbfit{c}^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        \hline
+        $\mathbfit{x}_B$ & $\mathbfit{A}_B^{-1}\mathbfit{A}$ & $\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+If we expand the tableau with more detailed information, we get the following representation:
+\begin{center}
+    \begin{tabular}{|c|ccc|c|}
+        \hline
+        Basic & $x_1$ & $\cdots$ & $x_n$ & Solution \\
+        \hline
+        $\mathbfit{\bar{c}}$ & $\bar{c_1}$ & $\cdots$ & $\bar{c_n}$ & $-\mathbfit{c}^{\mathrm{T}}\mathbfit{x}_B$ \\
+        \hline
+        $x_{B(1)}$ & & & & \\
+        $\vdots$ & & & & \\
+        $x_{B(i)}$ & $\mathbfit{A}_B^{-1}\mathbfit{A}_1$ & $\cdots$ & $\mathbfit{A}_B^{-1}\mathbfit{A}_n$ & $\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        $\vdots$ & & & & \\
+        $x_{B(m)}$ & & & & \\
+        \hline
+    \end{tabular}
+\end{center}
+Notice that $\mathbfit{A}_B^{-1}\mathbfit{A}_B = \mathbfit{I}$, we may wish to re-arrange the columns of the tableau into the following form:
+\begin{center}
+    \begin{tabular}{|c|cc|c|}
+        \hline
+        Basic & $\mathbfit{x}_B$ & $\mathbfit{x}_N$ & Solution \\
+        \hline
+        $\mathbfit{\bar{c}}$ & $\mathbf{0}$ & $\mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        \hline
+        $\mathbfit{x}_B$ & $\mathbfit{I}$ & $\mathbfit{A}_B^{-1}\mathbfit{A}_N$ & $\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+Note that at each iteration, we need to ``swap'' the $\ell$-th and $j$-th columns to update $B$. Essentially, suppose $\ell = B(i)$, then this is equivalent to performing row operations on the matrix 
+\begin{equation*}
+    \begin{bmatrix}
+        \mathbf{0} & \mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} & -\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b} \\
+        \mathbfit{I} & \mathbfit{A}_B^{-1}\mathbfit{A}_N & \mathbfit{A}_B^{-1}\mathbfit{b}
+    \end{bmatrix}
+\end{equation*}
+such that the $j$-th column becomes $\mathbfit{e}_{i}$. Then, we will swap the row label $\mathbfit{x}_{\ell}$ with the column label $\mathbfit{x}_j$. We repeat this process until $\mathbfit{\bar{c}} \geq \mathbf{0}$, where we will extract $\mathbfit{A}_B^{-1}\mathbfit{b}$ from the table as our $\mathbfit{x}_B$.
+\section{Finding An Initial Basic Feasible Solution}
+Recall that to start the simplex method algorithm, we need to initialise $\mathbfit{x}_0$ to be some basic feasible solution in the feasible region. However, this may not be straight-forward. Consider the standard linear program
+\begin{align*}
+    \min_{\mathbfit{x} \in \R^n} & f(\mathbfit{x}) \\
+    \textrm{s.t. } & \mathbfit{Ax = b} \\
+    & \mathbfit{x} \geq \mathbf{0}
+\end{align*}
+for some $\mathbfit{A} \in \R^{m \times n}$.
+
+We can choose the index set $B$ such that $\mathbfit{A}_B$ is invertible and so $\mathbfit{A}^{-1}\mathbfit{b}$ is a basic solution. However, we might not be so lucky that this basic solution is feasible, i.e., it is not easy to ensure that $\mathbfit{A}^{-1}\mathbfit{b} \geq \mathbf{0}$. To address this issue, we consider an \textit{auxiliary linear program} as follows:
+
+First, note that we can change $\mathbfit{A}$ by multiplying some of its rows by $-1$ so that $\mathbfit{b} \geq \mathbf{0}$. Then, we will introduce a new variable $\mathbfit{y} \in \R^m$ and consider the linear program
+\begin{align*}
+    \min_{\mathbfit{y} \in \R^m} & \sum_{i = 1}^{m}y_i \\
+    \textrm{s.t. } & \mathbfit{Ax + y = b} \\
+    & \mathbfit{x} \geq \mathbf{0} \\
+    & \mathbfit{y} \geq \mathbf{0}.
+\end{align*}
+Now, it is obvious that $\mathbfit{x} = \mathbf{0}$ and $\mathbfit{y} = \mathbfit{b}$ is a basic feasible solution to the problem. Solving this auxiliary minimisation problem will try to force $\mathbfit{y} = \mathbf{0}$. If this is possible, i.e., the optimal value of the auxiliary program is $0$, then it is clear that we have found some~$\mathbfit{x} \geq \mathbf{0}$ such that $\mathbfit{Ax = b}$, which is exactly a basic feasible solution to our original program! 
+\begin{tecbox}{Two-Phase Method}{2Phase}
+    Consider a standard linear program
+    \begin{align*}
+        \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+        \textrm{s.t. } & \mathbfit{Ax = b} \\
+        & \mathbfit{x} \geq \mathbf{0}.
+    \end{align*}
+    The two-phase method solves the linear program with the following procedures:
+    \begin{enumerate}
+        \item Multiplying some rows of $\mathbfit{A}$ by $-1$ wherever necessary such that $\mathbfit{b} \geq \mathbf{0}$.
+        \item Construct the auxiliary linear program
+        \begin{align*}
+            \min_{\mathbfit{y} \in \R^m} & \sum_{i = 1}^{m}y_i \\
+            \textrm{s.t. } & \mathbfit{Ax + y = b} \\
+            & \mathbfit{x} \geq \mathbf{0} \\
+            & \mathbfit{y} \geq \mathbf{0}.
+        \end{align*}
+        \item Run simplex method on the auxiliary linear program to obtain its optimal solution $\left(\mathbfit{y}^*, \mathbfit{x}^*\right)$ and optimal value $v^*$.
+        \item If $v^* > 0$:
+        \begin{itemize}
+            \item The original problem has empty feasible region.
+        \end{itemize}
+        \item Otherwise, $v^* = 0$:
+        \begin{itemize}
+            \item Run simplex method on the original problem with $\mathbfit{x}_0 = \mathbfit{x}^*$.
+        \end{itemize}
+    \end{enumerate} 
+\end{tecbox}  
+Note that in the two-phase method, we need to solve $2$ linear programs. This can be computationally expensive, so we wish to find a way to combine the two phases. Here we use the idea of a penalty term. Consider the linear program
+\begin{align*}
+    \min_{\mathbfit{x} \in \R^n, \mathbfit{y} \in \R^m} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + M\sum_{i = 1}^{m}y_i \\
+    \textrm{s.t. } & \mathbfit{Ax + y = b} \\
+    & \mathbfit{x} \geq \mathbf{0} \\
+    & \mathbfit{y} \geq \mathbf{0}
+\end{align*}
+where $M > 0$ is an arbitrarily large constant. We can see that if this augmented objective function has a finite optimal value, then it will also force $\mathbfit{y} = \mathbf{0}$. The corresponding $\mathbfit{x}$ will be the optimal solution of the original problem.
+\begin{tecbox}{Big-$M$ Method}{bigM}
+    Consider a standard linear program
+    \begin{align*}
+        \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+        \textrm{s.t. } & \mathbfit{Ax = b} \\
+        & \mathbfit{x} \geq \mathbf{0}.
+    \end{align*}
+    The big-$M$ method solves the linear program with the following procedures:
+    \begin{enumerate}
+        \item Multiplying some rows of $\mathbfit{A}$ by $-1$ wherever necessary such that $\mathbfit{b} \geq \mathbf{0}$.
+        \item Augment the original problem with some arbitrarily large constant $M > 0$ into
+        \begin{align*}
+            \min_{\mathbfit{x} \in \R^n, \mathbfit{y} \in \R^m} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + M\sum_{i = 1}^{m}y_i \\
+            \textrm{s.t. } & \mathbfit{Ax + y = b} \\
+            & \mathbfit{x} \geq \mathbf{0} \\
+            & \mathbfit{y} \geq \mathbf{0}.
+        \end{align*}
+        \item Run simplex method on the augmented linear program.
+        \item If an optimal solution $\left(\mathbfit{y}^*, \mathbfit{x}^*\right)$ can be found with $\mathbfit{y}^* = \mathbf{0}$:
+        \begin{itemize}
+            \item $\mathbfit{x}^*$ is an optimal solution to the original problem.
+        \end{itemize}
+        \item Otherwise:
+        \begin{itemize}
+            \item The original problem has empty feasible set or is unbounded.
+        \end{itemize}
+    \end{enumerate} 
+\end{tecbox}
 \end{document}

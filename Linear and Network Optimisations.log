@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 FEB 2024 20:12
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  27 FEB 2024 15:41
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1326,19 +1326,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 424--428
 
  []
 
-[14] [15] [16] [17] [18] 
+[14] [15] [16] [17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 584--588
+
+ []
+
+[19] [20] [21] [22] [23] [24] [25] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Linear and Network Optimisations.aux)
 Package rerunfilecheck Info: File `"Linear and Network Optimisations".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 38994 strings out of 478630
- 821649 string characters out of 5847730
- 1877012 words of memory out of 5000000
- 58464 multiletter control sequences out of 15000+600000
+ 39015 strings out of 478630
+ 822038 string characters out of 5847730
+ 1883012 words of memory out of 5000000
+ 58485 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,15n,128p,1685b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear and Network Optimisations.pdf (18 pages).
+Output written on Linear and Network Optimisations.pdf (25 pages).
