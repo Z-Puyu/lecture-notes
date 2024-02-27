@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 FEB 2024 10:06
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  28 FEB 2024 01:57
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1561,26 +1561,124 @@ Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
 
  []
 
-[37] [38] [39]
-Chapter 4.
-[40
+[37]
+Underfull \hbox (badness 10000) in paragraph at lines 1041--1044
 
-] 
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 1053--1058
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1053--1058
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1060--1064
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1073--1076
+
+ []
+
+[39] [40]
+Underfull \hbox (badness 10000) in paragraph at lines 1118--1130
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+
+ []
+
+
+Underfull \hbox (badness 1019) in paragraph at lines 1131--1142
+\TU/STIXTwoText(0)/m/n/12 Either way, we have reached a contradiction because $[]$ does not contain any
+ []
+
+[41] [42] [43] [44]
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1188--1191
+
+ []
+
+[45
+
+] [46]
+Underfull \hbox (badness 10000) in paragraph at lines 1226--1229
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1231--1235
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1240--1247
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1255
+
+ []
+
+[47] [48] [49]
+Underfull \hbox (badness 10000) in paragraph at lines 1307--1312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1307--1312
+
+ []
+
+[50] [51] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39152 strings out of 478630
- 824052 string characters out of 5847730
- 1881012 words of memory out of 5000000
- 58622 multiletter control sequences out of 15000+600000
+ 39191 strings out of 478630
+ 824794 string characters out of 5847730
+ 1894012 words of memory out of 5000000
+ 58661 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (40 pages).
+Output written on Combinatorics and Graphs II.pdf (51 pages).

@@ -177,7 +177,7 @@ This leads to the following proposition:
 We would like to consider the relations between the properties of a graph to those of its subgraphs. In particular, it follows from intuition that if a graph has a high average degree, then we can naturally find a subgraph with a high minimal degree.
 
 This seems trivial from intuition, as we can always keep deleting vertices with the minimal degree from a graph until we cannot find any vertex whose degree is less than $\frac{1}{2}\bar{d}(G)$, but there is more to that --- for instance, how do we know if we would not end up deleting all vertices from the original graph? Thus, to prove our claim is essentially asking to prove the correctness of this greedy deletion, which we shall do in the following proposition.
-\begin{probox}{}{}
+\begin{probox}{Subgraphs with High Minimum Degree}{highAvgDeg}
     Every non-empty graph $G$ has a subgraph $H$ such that $\delta(H) \geq \frac{1}{2} \bar{d}(G)$.
     \tcblower
     \begin{proof}
@@ -1022,7 +1022,7 @@ This means that for $G$ to contain a matching perfect to $A$, it necessarily nee
 \begin{thmbox}{Hall's Theorem}{Hall}
     Let $G$ be a bipartite graph $G$ with bipartition $(A, B)$. $G$ contains a matching perfect to $A$ if and only if for every $S \subseteq A$,
     \begin{equation*}
-        \abs{\bigcup_{v \in S}N_G(v)} \geq \abs{S}.
+        \abs{N_G(S)} \geq \abs{S}.
     \end{equation*}
     \tcblower
     \begin{proof}
@@ -1035,9 +1035,113 @@ This means that for $G$ to contain a matching perfect to $A$, it necessarily nee
         Let $b_k$ be the end of the sequence, then the path $P \coloneqq a_0b_1a_{f(1)}b_2a_{f(2)}\cdots a_{f(k - 1)}b_k$ is an alternating path. If $b_k$ is matched to some $a \in A \cap V(M)$, we know that $a \notin \left\{a_1, a_2,\cdots, a_{k - 1}\right\}$ because that would imply $b_k = b_i$ for some $i \in \left\{1, 2, \cdots, k - 1\right\}$, which is a contradiction. Since $a_0$ is unmatched, we have find a longer sequence satisfying our construction, which is not possible. Therefore, $b_k$ must be unmatched. This means that $P$ is an augmenting path and so by Theorem \ref{thm:maxMatchChar} $M$ is not a maximum matching. This means that the maximum matching in $G$ must be perfect to $A$.
     \end{proof}
 \end{thmbox}
+Beside the above proof, there are several alternative ways to prove Theorem \ref{thm:Hall}. Here we first present a proof by contradiction using Theorem \ref{thm:Konig}.
+\begin{genbox}{Proof for Hall's Theorem by K\"{o}nig's Theorem}
+    \begin{proof}
+        Observe that it suffices to show that $\nu(G) = \abs{A}$. First, note that since $G$ is bipartite, it is not possible to have $\nu(G) > \abs{A}$ because otherwise there exists an edge between $2$ distinct vertices in $B$. Suppose on contrary that $\nu(G) < \abs{A}$, then by Theorem \ref{thm:Konig}, $\tau(G) = \nu(G) < \abs{A}$. This means that there exists a vertex cover with strictly less vertices than $A$.
+        \\\\
+        Suppose $U = A' \cup B'$ is a vertex cover for $G$ with $A' \subseteq A$ and $B' \subseteq B$, then $\abs{A'} + \abs{B'} < \abs{A}$. Clearly, there is no edge between $A - A'$ and $B - B'$. Take $S \coloneqq A - A'$, then $N_G(S) \subseteq B'$. Therefore,
+        \begin{equation*}
+            \abs{N_G(S)} \leq \abs{B'} < \abs{A} - \abs{A'} = \abs{S},
+        \end{equation*}
+        which is a contradiction.
+    \end{proof}
+\end{genbox}
+Another proof uses an argument by strong induction:
+\begin{genbox}{Proof for Hall's Theorem by Strong Induction}
+    \begin{proof}
+        We shall perform strong induction on $\abs{A}$. The case where $\abs{A} = 1$ is trivial. Suppose that for all $\abs{A} < n$, the theorem holds. Let $G$ be a bipartite graph with bipartition $(A, B)$ such that $\abs{A} = n$. We consider $2$ cases.
+        \\\\
+        Suppose that for any proper subset $S \subset A$, we have $\abs{N_G(S)} \geq \abs{S} + 1$. Consider an edge $ab \in E(G)$ and define $G' \coloneqq G - \{a, b\}$ be the graph with the vertices~$a$ and $b$ removed. Let $(A', B')$ be the bipartition of $G'$. Notice that for any $S' \subseteq A'$, we have $\abs{N_{G'}(S')} \geq \abs{S'}$. By the inductive hypothesis, this means that $G'$ contains a matching $M'$ perfect to $A'$. Clearly, $M' + ab$ is a matching perfect to $A$ in $G$.
+        \\\\
+        Suppose otherwise that there exists some proper subset $A' \subset A$ with $\abs{N_G(A')} = \abs{A'}$. Let $B' \coloneqq N_G(A')$ and define
+        \begin{equation*}
+            G' \coloneqq G[A' \cup B'], \qquad G'' \coloneqq G[(A - A') \cup (B - B')].
+        \end{equation*}
+        Note that for any $S \subseteq A'$, $N_{G}(S) \subseteq B'$, and so $\abs{N_{G'}(S)} = \abs{N_G(S)} \geq \abs{S}$. By the inductive hypothesis, this implies that $G'$ contains a matching $M'$ perfect to $A'$. For any $T \subseteq A - A'$, we claim that $\abs{N_{G''}(T)} \geq \abs{T}$.
+        \\\\
+        Suppose on contrary that $\abs{N_{G''}(T)} < \abs{T}$. Note that $N_G(T \cup A') \subseteq N_{G''}(T) \cup B'$, so
+        \begin{equation*}
+            \abs{N_G(T \cup A')} \leq \abs{N_{G''}(T)} + \abs{B'} < \abs{T} + \abs{A'} = \abs{T \cup A},
+        \end{equation*}
+        which is a contradiction. Therefore, this implies that $G''$ contains a matching $M''$ perfect to $A - A'$. Note that $M' \cup M''$ is a matching in $G$ perfect to $A$.
+    \end{proof}
+\end{genbox}
+The last proof we are going to present stems from the following observation: suppose we have a graph $G$ satisfying the conditions in Hall's Theorem, we wish to delete ``redundant'' edges until we cannot remove any more edge without violating the condition. We claim that the remaining graph is a matching perfect to $A$.
+\begin{genbox}{Proof for Hall's Theorem by Edge-Minimal Subgraph}
+    \begin{proof}
+        Let $H \subseteq G$ be the subgraph with the smallest size such that for every $S \subseteq A$, $\abs{N_H(S)} \geq \abs{S}$. We shall prove that $H$ is a matching perfect to $A$.
+        \\\\
+        First, observe that $d_H(a) \geq 1$ for all $a \in A$. Suppose on contrary that $H$ is not a matching perfect to $A$, then there exists some $a \in A$ which has two distinct neighbours $b_1, b_2 \in B$ in $H$. Define $H_1 \coloneqq H - ab_1$ and $H_2 \coloneqq H - ab_2$, then by the minimality of $H$, there exist subsets $A_1, A_2 \subseteq A$ both containing $a$ such that~$\abs{N_{H_1}(A_1)} < \abs{A_1}$ and $\abs{N_{H_2}(A_2)} < \abs{A_2}$. By our construction of $H_1$ and $H_2$, we know that $b_1 \in N_{H_2}(A_2) - N_{H_1}(A_1)$ and $b_2 \in N_{H_1}(A_1) - N_{H_2}(A_2)$. Consider 
+        \begin{equation*}
+            S \coloneqq A_1 \cap A_2 - \{a\},
+        \end{equation*}
+        then $N_H(S) \subseteq N_{H_1}(A_1) \cap N_{H_2}(A_2)$. Therefore,
+        \begin{align*}
+            \abs{N_H(S)} & \leq \abs{N_{H_1}(A_1) \cap N_{H_2}(A_2)} \\
+            & = \abs{N_{H_1}(A_1)} + \abs{N_{H_2}(A_2)} - \abs{N_{H_1}(A_1) \cup N_{H_2}(A_2)} \\
+            & = \abs{N_{H_1}(A_1)} + \abs{N_{H_2}(A_2)} - \abs{N_{H}(A_1 \cup A_2)} \\
+            & \leq \abs{A_1} - 1 + \abs{A_2} - 1 - \abs{N_{H}(A_1 \cup A_2)} \\
+            & = \abs{A_1 \cap A_2 - \{a\}} - 1,
+        \end{align*}
+        which is a contradiction.
+    \end{proof}
+\end{genbox}
+Here we introduce a famous corollary of Hall's Theorem:
+\begin{corbox}{Regular Bipartite Graphs Have A Perfect Matching}{regBipMatch}
+    If $G$ is a $d$-regular bipartite graph with bipartition $(A, B)$, then $G$ has a perfect matching.
+    \tcblower
+    \begin{proof}
+        It suffices to prove that $G$ contains a matching perfect to $A$. Since $e(G) = d\abs{A} = d\abs{B}$, we have $\abs{A} = \abs{B}$. Take any $X \subseteq A$ and consider the induced subgraph 
+        \begin{equation*}
+            H \coloneqq G[X \cup N_G(X)].
+        \end{equation*}
+        Note that for every $v \in N_G(X)$, $d_H(v) \leq d_G(v) = d$, so $d\abs{N_G(X)} \geq e(H) = d\abs{X}$. Therefore, $\abs{X} \leq \abs{N_G(X)}$ and by Theorem \ref{thm:Hall}, $G$ contains a matching perfect to~$A$.
+    \end{proof}
+\end{corbox}
+The above result immediately leads to the following corollary:
+\begin{corbox}{Decomposition of Regular Bipartite Graphs}{regBipDecomposition}
+    Let $G$ be a $d$-regular bipartite graph, then $E(G)$ can be decomposed into perfect matchings.
+    \tcblower
+    \begin{proof}
+        By Corollary \ref{cor:regBipMatch}, we can find some perfect matching $M_d$ in $G$. Consider the graph $G'$ with $V(G') = V(G)$ and $E(G') = E(G) - E(M_d)$, then $G'$ is a $(d - 1)$-regular bipartite graph and so it contains a perfect matching $M_{d - 1}$. Note that $E(M_{d - 1}) \cap E(M_d) = \varnothing$ and that $M_{d - 1}$ is also a perfect matching in $G$. Repeat this process until we have used all edges in $G$. The set of all perfect matchings obtained this way forms a partition of $E(G)$.
+    \end{proof}
+\end{corbox}
+\section{Tutte's Theorem}
+In the previous section, we have discussed how Hall's Theorem characterises the existence of perfect matchings in bipartite graphs. Can we derive a similar result for any kind of graphs in general?
+
+It turns out that this curious question is closely related to the number of connected components with odd orders in a graph. We denote this quantity by $o(G)$ for any graph $G$.
 \begin{thmbox}{Tutte's Theorem}{tutte}
-    A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, the number of connected components with odd orders in $G - U$ is at most $\abs{U}$.
+    A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, the number of connected components of odd orders in the induced subgraph $G[V(G) - U]$ is at most~$\abs{U}$.
+    \tcblower
+    \begin{proof}
+        Let $M \subseteq G$ be a perfect matching. Take any $U \subseteq V(G)$ and consider the induced subgraph $H \coloneqq G[V(G) - U]$. Let $C \subseteq H$ be a connected component of odd order. Since $M$ is a perfect matching, then clearly there is at least one vertex $v \in C$ which is matched to some vertex $u \in U$ in $M$. Since every $u \in U$ is matched to exactly one vertex in $M$, this implies that $o(H) \leq \abs{U}$.
+        \\\\
+        Suppose conversely that for every $U \subseteq V(G)$, $o\bigl(G[V(G) - U]\bigr) \leq \abs{U}$. We shall prove that $G$ contains a perfect matching by considering the contrapositive statement. Let $v(G) = n$. First, we consider the following lemma:
+        \begin{lembox}{}{badSet}
+            If graphs $G \subseteq G'$ are such that $V(G) = V(G')$ but $E(G) \subseteq E(G')$, then if $U \subseteq V(G')$ is such that $o(G' - U) > \abs{U}$, we have $o(G - U) > \abs{U}$.
+            \tcblower
+            \begin{proof}
+                Note that $G$ is produced by deleting some edges in $G'$. For each edge $e \in E(G') - E(G)$, if $e$ is in an odd component $H_1 \subseteq G'$, then $H_1 - e$ contains at least one odd component in $G$. Otherwise, if $e$ is in an even component $H_2 \subseteq G'$, then $H_2 - e$ may or may not contain any odd component. Therefore, we have
+                \begin{equation*}
+                    o(G - U) \geq o(G' - U) > \abs{U}.
+                \end{equation*}  
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:badSet}, without loss of generality we can take $G$ to be the edge-maximal graph of order $n$ such that $G$ does not contain any perfect matching. 
+        \\\\
+        Consider $U \coloneqq \left\{v \colon v \sim u \textrm{ for all } u \in V(G) - v\right\}$, i.e., $U$ consists of vertices in $G$ which are adjacent to every other vertex in $G$, then $G[U]$ is a clique. We claim that every connected component of $G - U$ is complete. Suppose on contrary that there is some connected component $C_i \subseteq G - U$ which is not complete, then there exists distinct vertices $a, a' \in V(C_i)$ such that $a \not\sim a'$. Therefore, there exists an $a$-$a'$ path in $C_i$ of length at least $2$, and so we can find vertices $a, b, c \in V(C_i)$ such that $a \sim b$, $b \sim c$ but $a \not\sim c$. Note that $b \notin U$, so there exists some $d \in V(G)$ such that $b \not\sim d$.
+        \\\\
+        Define graphs $G_1 \coloneqq G + ac$ and $G_2 \coloneqq G + bd$. By the edge-maximality of $G$, $G_1$ contains a perfect matching $M_1$ and $G_2$ contains a perfect matching $M_2$. Note that $ac \in E(M_1)$, because otherwise $M_1$ is a perfect matching with vertex set $V(G)$ and edge set $E(G)$, which is not possible. Similarly, $bd \in E(M_2)$ Let $P \subseteq G$ be a maximal $d$-$v$ path for some $v \in V(G)$ which is alternating between edges in $M_1$ and $M_2$.
+        \\\\
+        Suppose $P$ ends with an $M_1$-edge, then $v$ must be matched to $d$ in $M_2$ because otherwise we can find a longer $M_1$-$M_2$ alternating path than $P$, which is not possible. Since $bd \in E(M_2)$, this implies that $v = b$. Note that $M_1 \cap P \subseteq G$ is a perfect matching in $P$ and $M_2 - P - bd$ is a perfect matching in $G - P$, then $(M_1 \cap P) \cup (M_2 - P - bd)$ is a perfect matching in $G$.
+        \\\\
+        Similarly, suppose $P$ ends with an $M_2$-edge, then $v$ must be either $a$ or $c$, because otherwise there exists an edge $uv \in E(M_1) \cap E(G)$ that can further extend $P$, which is not possible. Without loss of generality, suppose $v = c$, then it is clear that $a \notin P$. We claim that $b \notin P$. Suppose on contrary that $b \in P$, then there must be an $M_1$ edge in $P$ containing $b$ because there is no $M_2$ edge in $P$ containing $b$. However, this means that $P$ ends with an $M_2$ edge, which is a contradiction. Note that $M_2 \cap P \subseteq G$ is a perfect matching in $P$ and $M_1 - P - ac + ab$ is a perfect matching in $G - P$. Therefore, $(M_2 \cap P) \cup (M_1 - P - ac + ab)$ is a perfect matching in $M$.
+        \\\\
+        Either way, we have reached a contradiction because $M$ does not contain any perfect matching. Therefore, every connected component of $G - U$ is complete. If $U = \varnothing$, then $G - U = G$ is complete. Since $G$ has no perfect matching, $v(G)$ must be odd and so $o(G - U) = 1 > 0 = \abs{U}$. Otherwise, for each connected component $C_i \subseteq G$, if $C_i$ has an even order, it contains a perfect matching. Otherwise, $C_i$ has an odd order. Take some $v_i \in V(C_i)$ and match it to some $u_i \in U$. Note that $C_i - v_i$ is a complete graph of even order and so it contains a perfect matching. Ho
+    \end{proof}
 \end{thmbox}
+Tutte's Theorem has many interesting applications, one of which is related to the concept of an \textit{cut edge} or \textit{cut vertex}.
 \begin{thmbox}{Petersen's Theorem}{petersen}
     Every connected $3$-regular graph with no cut edge contains a perfect matching.
     \tcblower
@@ -1049,6 +1153,7 @@ This means that for $G$ to contain a matching perfect to $A$, it necessarily nee
         Note that the above sum is odd, so $e_G(V(C), U)$ is odd. Since $G$ contains no cut-edge, $e_G(V(C), U) \geq 3$. Let $p$ be the number of odd components in $G - u$ and $M$ be the number of edges between $U$ and $V(G) - U$, then $M \geq 3p$. However, $M \leq 3\abs{U}$ because $G$ is $3$-regular, so $p \leq \abs{U}$. By Theorem \ref{thm:tutte}, $G$ contains a perfect matching.
     \end{proof}
 \end{thmbox}
+Note that a graph $G = (V, E)$ can actually be viewed as a collection of $2$-element subsets of $V$. Therefore, a natural generalisation is to consider a graph defined as the collection of subsets of any size of $V$.
 \begin{dfnbox}{Hypergraph}{hypergraph}
     Let $V$ be a vertex set, a {\color{red} \textbf{hypergraph}} on $V$ is a graph whose edge set is a family
     \begin{equation*}
@@ -1057,12 +1162,177 @@ This means that for $G$ to contain a matching perfect to $A$, it necessarily nee
     If $\abs{X} = k$ for all $X \in E$, we say that the hypergraph is $k$-uniform.
 \end{dfnbox}
 \chapter{Connectivity}
-\section{Connectivity}
+\section{Vertex Connectivity}
+Recall that in previous chapters, we have already defined what a \textit{connected graph} is (Definition \ref{dfn:connected}). However, intuitively, we may feel that graphs may have varying degrees of ``connectedness''. For example, a complete graph seems more connected than a path, since one could easily disconnect a path by deleting $\mathcal{O}(1)$ vertices but needs to delete $\mathcal{O}(n)$ vertices to disconnect $K_n$.
+
+In this chapter, we probe further into the notion of connectivity. In particular, we would like to discuss the strength of connectedness in a graph.
 \begin{dfnbox}{Separating Set}{separateSet}
     Let $G$ be a connected graph. $S \subseteq V(G)$ is a {\color{red} \textbf{separating set}} (or {\color{red} \textbf{vertex cut}}) of $G$ if $G - S$ is disconnected. If $S = \{s\}$ is a singleton, then $s$ is known as a {\color{red} \textbf{cut vertex}}.
 \end{dfnbox}
+Separating set provides an intuitive measure for how connected a graph really is. Obviously, any finite graph must have only finitely many different separating set. Naturally, we could consider the size of the smallest separating set as an indicator for the amount of deletion needed to disconnect the graph.
 \begin{dfnbox}{Vertex Connectivity}{vtxConnect}
     The {\color{red} \textbf{vertex connectivity}} of a graph $G$, denoted by $\kappa(G)$ is the cardinality of the smallest subset $S \subseteq V(G)$ such that $G - S$ is either disconnected or a trivial graph. $G$ is said to be {\color{red} \textbf{$k$-connected}} if $\kappa(G) \geq k$.
 \end{dfnbox}
-Intuitively, $\kappa(G) \leq v(G) - 1$ for any graph $G$, and a $k$-connected graph must be $(k - 1)$-connected. Our ``old-fashioned'' notion of a connected graph is simply a $1$-connected graph.
+Obviously, $\kappa(G) \leq v(G) - 1$ for any graph $G$, and a $k$-connected graph must be $(k - 1)$-connected. Our ``old-fashioned'' notion of a connected graph is simply a $1$-connected graph. As usual, let us examine some special graphs as examples.
+\begin{enumerate}
+    \item Complete graph $K_n$: $\kappa(K_n) = n - 1$.
+    \item Path $P_n$: $\kappa(P_n) = 1$.
+    \item Non-trivial cycle $C_n$: $\kappa(C_n) = 2$.
+    \item Complete bipartite graph $K_{m, n}$: $\kappa(K_{m, n}) = \min\{m, n\}$.
+\end{enumerate}
+We may also wish to consider the hypercube graph $Q^d$. Intuitively, $Q^d$ is $d$-regular, so it suffices to fix any $v \in V\left(Q^d\right)$ and delete all of its $d$ neighbours to isolate the vertex. Therefore, $\kappa\left(Q^d\right) \leq d$. However, can we force the inequality to an equality?
+\begin{probox}{The Hypercube Graph $Q^d$ is $d$-connected}{hypercubeKappa}
+    Every hypercube graph $Q^d$ is $d$-connected.
+    \tcblower
+    \begin{proof}
+        The case where $d = 1$ is trivial. Suppose that for some $d \in \N^+$, $Q^d$ is $d$-connected. Consider $Q^{d + 1}$. Notice that $Q^{d + 1} = Q^+ \cup Q^- \cup M$, where $Q^+$ and $Q^-$ are both $Q^d$ and $M$ is a perfect matching joining vertices in $Q^+$ and those in $Q^-$ with exactly $1$ different digit. Let $S$ be the smallest vertex cut in $Q^{d + 1}$. We consider $2$ cases.
+        \\\\
+        If $Q^+ - S$ and $Q^- - S$ are both connected, then $V(M) \subseteq S$ because otherwise there is an edge between $Q^+ - S$ and $Q^- - S$ in $Q^{d - 1} - S$ and so $Q^{d - 1} - S$ is connected, which is a contradiction. Therefore,
+        \begin{equation*}
+            \kappa\left(Q^{d + 1}\right) = \abs{S} \geq \abs{M} = 2^{d} \geq d + 1.
+        \end{equation*}
+        Otherwise, without loss of generality assume that $Q^+$ is disconnected, then $S \cap Q^+$ is a vertex cut in $Q^+$. By the inductive hypothesis, $\abs{S \cap Q^+} \geq d$. We claim that $\abs{S \cap Q^-} \geq 1$. Suppose on contrary that $\abs{S \cap Q^-} = 0$, then $S \cap V\left(Q^-\right) = \varnothing$. This means that $Q^- - S$ is connected. Note that for every $v \in V\left(Q^+ - S\right)$, there exists some $u \in V\left(Q^- - S\right)$ such that $uv \in E\left(Q^{d + 1} - S\right)$, because otherwise $S \cap V\left(Q^-\right) \neq \varnothing$. Therefore, for any $v_1, v_2 \in V\left(Q^+ - S\right)$, we can find $u_1, u_2 \in V\left(Q^- - S\right)$ such that there is a $v_1$-$v_2$ path in $Q^{d + 1}$ containing $v_1u_1$ and $v_2u_2$. Therefore, $Q^{d + 1} - S$ is connected, which is a contradiction. Therefore, 
+        \begin{equation*}
+            \kappa\left(Q^{d + 1}\right) = \abs{S} = \abs{S \cap Q^+} + \abs{S \cap Q^-} \geq d + 1.
+        \end{equation*}
+        This means that $Q^{d + 1}$ is $(d + 1)$-connected.
+    \end{proof}
+\end{probox}
+Next, we will focus on $2$-connected graph, i.e., graphs which we need to delete at least $2$ vertices to disconnect. We will start with a straight-forward proposition.
+\begin{probox}{$2$-connected Graphs Contain A Cycle}{cycleIn2Connected}
+    Every $2$-connected graph contains a cycle.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there exists a $2$-connected graph $T$ which is acyclic. Note that $T$ is connected, so $T$ must be a tree. By Theorem \ref{thm:equivTreeDef}, $T - uv$ is disconnected for any $uv \in E(T)$. If both $u$ and $v$ are leaves, then $T$ is an edge, which implies that deleting any vertex reduces $T$ to a trivial graph. Otherwise, without loss of generality, assume $u$ is not a leaf, and so $T - u$ is disconnected. Either way, this contradicts with the fact that $\kappa(T) \geq 2$.
+    \end{proof}
+\end{probox}
+It should be taken note of that the converse of Proposition \ref{pro:cycleIn2Connected} is not true in general. Let $C_n$ be a cycle, then adding a vertex $v$ into $C_n$ by joining it with any $u \in V(C_n)$ produces a graph $H$ containing a cycle. However, $H - u$ is disconnected so $\kappa(H) = 1$.
+
+An intuition about connectivity is that, if we were to increase the connectivity of a graph, we should try to make each vertex to have as many incident edges as possible.
+\begin{probox}{High Connectivity Implies High Minimum Degree}{highKappaThenHighDelta}
+    For any graph $G$, $\kappa(G) \leq \delta(G)$.
+    \tcblower
+    \begin{proof}
+        Take some $v \in V(G)$ with $d_G(v) = \delta(G)$, then clearly $N_G(v)$ is a vertex cut because $v$ is an isolated vertex in $G - N_G(v)$, and so $\kappa(G) \leq \abs{N_G(v)} = \delta(G)$.
+    \end{proof}
+\end{probox}
+The above trivial proposition shows that a graph with high connectivity has high minimum degree. However, the converse is clearly not true. Consider the graph $G$ formed by $2$ disjoint copies of $K_n$, then clearly $\delta(G) = n - 1$ but $\kappa(G) = 0$, i.e., $G$ is not even connected.
+
+Recall that in Proposition \ref{pro:highAvgDeg}, while we cannot ensure a graph with a high average degree to have a high minimum degree, we have proved that the graph will contain a subgraph of a high minimum degree. In the same spirit, given a graph with a high minimum degree, we can try to find a subgraph with a high connectivity.
+\begin{thmbox}{Mader's Theorem}{Mader}
+    For every graph $G$, if $\bar{d}(G) \geq 4k$, then $G$ contains a $k$-connected subgraph.
+    \tcblower
+    \begin{proof}
+        For $k = 1$, we have $\bar{d}(G) \geq 4$. This means that $G$ is non-empty and so it contains an edge which is a $1$-connected subgraph.
+        \\\\
+        For $k \geq 2$, we consider the following claims: first, suppose $v(G) < 2k - 1$, then $\bar{d}(G) \leq v(G) - 1 < 2k - 2$. Therefore, if $\bar{d}(G) \geq 4k > 2k - 2$, we have $v(G) \geq 2k - 1$. On the other hand, notice that
+        \begin{equation*}
+            e(G) = \frac{v(G)\bar{d}(G)}{2} \geq (2k - 3)\bigl(v(G) - k + 1\bigr) + 1.
+        \end{equation*}
+        Therefore, it suffices to prove that whenever $k > 2$, if $v(G) \geq 2k - 1$ and $e(G) \geq (2k - 3)\bigl(v(G) - k + 1\bigr) + 1$, then $G$ contains a $k$-connected subgraph.
+        \\\\
+        For $v(G) = 2k - 1$, we have 
+        \begin{equation*}
+            e(G) \geq k(2k - 3) + 1 = (2k - 1)(k - 1) = \begin{pmatrix}
+                2k - 1 \\
+                2
+            \end{pmatrix}.
+        \end{equation*}
+        However, we know that $e(G) \leq \left(\begin{smallmatrix}
+            v(G) \\
+            2
+        \end{smallmatrix}\right)$, so $G \cong K_{2k - 1}$. Therefore, $\kappa(G) = 2k - 2 \geq k$ and so $G$ is $k$-connected.
+        \\\\
+        For $v(G) = n \geq 2k$, suppose that for all $v(G) = m \in [2k - 1, n - 1]$, $G$ contains a $k$-connected subgraph. We consider $2$ cases. If $\delta(G) \leq 2k - 3$, then we can take some $v \in V(G)$ with $d_G(v) = \delta(G)$. Consider
+        \begin{align*}
+            e(G - v) & = e(G) - \delta(G) \\
+            & \geq (2k - 3)(n - k + 1) + 1 - (2k - 3) \\
+            & = (2k - 3)\bigl((n - 1) - k + 1\bigr) + 1.
+        \end{align*}
+        By the inductive hypothesis, $G - v$ contains a $k$-connected subgraph $H$. Since $G - v \subseteq G$, $H \subseteq G$.
+        \\\\
+        If $\delta(G) \geq 2k - 2 > 2k - 3$, we again consider $2$ cases. If $G$ is $k$-connected, then we are done. Otherwise, $G$ contains a vertex cut with size at most $k - 1$. Therefore, we can consider $G_1, G_2 \subseteq G$ such that $G_1 \cup G_2 = G$ and $V(G_1) \cap V(G_2)$ is a vertex cut such that $\abs{V(G_1) \cap V(G_2)} \leq k - 1$. Notice that this implies that there is no edge between $V(G_1) - V(G_2)$ and $V(G_2) - V(G_1)$. Consider any $v \in V(G_1)$. Note that $N_G(v) \subseteq V(G_1)$ and $d_G(v) \geq \delta(G) \geq 2k - 2$, so $\abs{V(G_1)} \geq d_G(v) + 1 = 2k - 1$. Similarly, $\abs{V(G_2)} \geq 2k - 1$. Suppose that 
+        \begin{align*}
+            e(G_1) \leq (2k - 3)\bigl(v(G_1) - k + 1\bigr), \\
+            e(G_2) \leq (2k - 3)\bigl(v(G_2) - k + 1\bigr),
+        \end{align*}
+        then 
+        \begin{align*}
+            e(G) & \leq e(G_1) + e(G_2) \\
+            & \leq (2k - 3)\bigl(v(G_1) + v(G_2) - 2k + 2\bigr) \\
+            & = (2k - 3)\bigl(n + \abs{V(G_1) \cap V(G_2)} - 2k + 2\bigr) \\
+            & \leq (2k - 3)\bigl(n + k - 1 - 2k + 2\bigr) \\
+            & = (2k - 3)(n - k + 1),
+        \end{align*}
+        which is a contradiction. Therefore, without loss of generality, we have 
+        \begin{equation*}
+            e(G_1) \geq (2k - 3)\bigl(v(G_1) - k + 1\bigr) + 1.
+        \end{equation*}
+        Therefore, by the inductive hypothesis, $G_1$ contains a $k$-connected subgraph $H$. Since $G_1 \subseteq G$, $H \subseteq G$. Therefore, any graph $G$ with $\bar{d}(G) \geq 4k$ contains a $k$-connected subgraph.
+    \end{proof}
+\end{thmbox}
+Since a high minimum degree implies a high average average degree, Theorem \ref{thm:Mader} in fact guarantees that a graph with a high minimum degree will have a high connectivity.
+\section{Edge Connectivity}
+Since we can measure connectivity in terms of the minimum number of vertices which need to be deleted to disconnected a graph, it is only natural to consider from the perspective of edges.
+\begin{dfnbox}{Edge Connectivity}{edgeConnectivity}
+    A graph $G$ is said to be {\color{red} \textbf{$\ell$-edge-connected}} if for any $F \subseteq E(G)$ with $\abs{F} < \ell$, $G - F$ is connected. The {\color{red} \textbf{edge connectivity}} of $G$, denoted by $\kappa'(G)$, is defined as the size of the smallest subset $F \subseteq E(G)$ such that $G - F$ is disconnected.
+\end{dfnbox}
+Similar to separating sets, we can analogously define a set of edges which will disconnect the graph when removed.
+\begin{dfnbox}{Disconnecting Set}{disconnectingSet}
+    Let $G$ be a graph, a set $F \subseteq E(G)$ is called a {\color{red} \textbf{disconnecting set}} if $G - F$ is disconnected.
+\end{dfnbox}
+However, as opposed to vertex cuts, the notion of an \textit{edge cut} is slightly different.
+\begin{dfnbox}{Edge Cut}{edgeCut}
+    Let $G$ be a graph and $\left(S, \bar{S}\right)$ be a partition for $V(G)$, an {\color{red} \textbf{edge cut}} in $G$ with respect to $\left(S, \bar{S}\right)$ is defined as 
+    \begin{equation*}
+        E_G\left(S, \bar{S}\right) \coloneqq \left\{xy \in E(G) \colon x \in S, y \in \bar{S}\right\}.
+    \end{equation*}
+    If an edge cut contains only a single edge, that edge is known as a {\color{red} \textbf{cut edge}} or {\color{red} \textbf{bridge}}.
+\end{dfnbox}
+Intuitively, any edge set is a disconnecting set, but not every disconnecting set is an edge cut. However, it turns out that every \textbf{minimal disconnecting set} is an edge cut! Let us do the routine examination on the special graphs.
+\begin{enumerate}
+    \item Complete graph $K_n$: $\kappa'(K_n) = n - 1$.
+    \item Path $P_n$: $\kappa'(P_n) = 1$.
+    \item Non-trivial cycle $C_n$: $\kappa'(C_n) = 2$.
+    \item Complete bipartite graph $K_{m, n}$: $\kappa'(K_{m, n}) = \min\{m, n\}$.
+    \item Hypercube graph $Q^d$: $\kappa'\left(Q^d\right) = d$.
+\end{enumerate}
+Notice that in all of these examples, $\kappa = \kappa'$. If for any graph $G$, $\kappa(G) = \kappa'(G)$, things will not be very interesting. However, this is luckily not the case. Consider a graph formed by $2$ complete graphs of order $n$ with exactly one common vertex. One may check that we only need to remove the shared vertex to disconnect the graph but need to delete at least $(n - 1)$ edges to do the same.
+
+In fact, we can derive the following relation:
+\begin{probox}{Numerical Relationship between Connectivities}{relateConnectivity}
+    For every graph $G$, $\kappa(G) \leq \kappa'(G) \leq \delta(G)$.
+    \tcblower
+    \begin{proof}
+        If $G$ is disconnected, the result is trivial. 
+        \\\\
+        Otherwise, let $v \in V(G)$ be such that $d_G(v) = \delta(G)$. Note that deleting all edges incident to $v$ will isolate the vertex, so $\kappa'(G) \leq \delta(G)$.
+        \\\\
+        Let $E\left(S, \bar{S}\right)$ be an edge cut with $\abs{E\left(S, \bar{S}\right)} = \kappa'(G)$. We consider $2$ cases. If $E\left(S, \bar{S}\right)$ induces a complete graph, then 
+        \begin{align*}
+            \kappa'(G) & = \abs{S}\abs{\bar{S}} \\
+            & = \abs{S}\left(v(G) - \abs{\bar{S}}\right) \\
+            & \geq v(G) - 1 \\
+            & \geq \kappa(G).
+        \end{align*}
+        Otherwise, there exist some $x \in S$ and $y \in \bar{S}$ such that $xy \notin E\left(S, \bar{S}\right)$. Define
+        \begin{equation*}
+            U \coloneqq N_G(x) \cap \bar{S} \cup \left\{v \in S - \{x\} \colon N_G(v) \cap \bar{S} \neq \varnothing\right\}.
+        \end{equation*}
+        Consider $H \coloneqq G - U$. Notice that there is no $x$-$y$ path in $H$ because $E_H\left(S - U, \bar{S}\right) = \varnothing$. Therefore, $H$ is disconnected and so $U$ is a vertex cut. Therefore,
+        \begin{equation*}
+            \kappa(G) \leq \abs{U} \leq \abs{S} \leq \abs{E\left(S, \bar{S}\right)} = \kappa'(G).
+        \end{equation*}
+        Therefore, $\kappa(G) \leq \kappa'(G) \leq \delta(G)$.
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Note that there exists some graph $G$ with $\kappa(G) < \kappa'(G) < \delta(G)$.
+    \end{remark}
+\end{notebox}
+Lastly, we will state the following theorem without proof:
+\begin{thmbox}{Chartrad-Haray Theorem}{ChartradHaray}
+    For all positive integers $a, b, c$ with $a \leq b \leq c$, there exists a graph $G$ with $\kappa(G) = a$, $\kappa'(G) = b$ and $\delta(G) = c$.
+\end{thmbox}
 \end{document}
