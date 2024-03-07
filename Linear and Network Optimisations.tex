@@ -674,7 +674,7 @@ Notice that $\mathbfit{A}_B^{-1}\mathbfit{A}_B = \mathbfit{I}$, we may wish to r
         \hline
         Basic & $\mathbfit{x}_B$ & $\mathbfit{x}_N$ & Solution \\
         \hline
-        $\mathbfit{\bar{c}}$ & $\mathbf{0}$ & $\mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        $\mathbfit{\bar{c}}$ & $\mathbf{0}$ & $\mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_N$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
         \hline
         $\mathbfit{x}_B$ & $\mathbfit{I}$ & $\mathbfit{A}_B^{-1}\mathbfit{A}_N$ & $\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
         \hline
@@ -683,7 +683,7 @@ Notice that $\mathbfit{A}_B^{-1}\mathbfit{A}_B = \mathbfit{I}$, we may wish to r
 Note that at each iteration, we need to ``swap'' the $\ell$-th and $j$-th columns to update $B$. Essentially, suppose $\ell = B(i)$, then this is equivalent to performing row operations on the matrix 
 \begin{equation*}
     \begin{bmatrix}
-        \mathbf{0} & \mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} & -\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b} \\
+        \mathbf{0} & \mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_N & -\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b} \\
         \mathbfit{I} & \mathbfit{A}_B^{-1}\mathbfit{A}_N & \mathbfit{A}_B^{-1}\mathbfit{b}
     \end{bmatrix}
 \end{equation*}
