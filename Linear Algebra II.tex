@@ -648,4 +648,32 @@ then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\m
     & = \epsilon^i(z \circ P) \\
     & = \sum_{k = 1}^{n}P^k_iz_k.
 \end{align*} 
+\chapter{Linear Algebra and Geometry}
+\section{Bilinear Forms}
+\begin{dfnbox}{Dot Product}{dotProd}
+    Let $\mathcal{F}$ be a field, the {\color{red} \textbf{dot product}} is a binary operation $\cdot \colon \mathcal{F}^n \times \mathcal{F}^n \to \mathcal{F}$ such that 
+    \begin{enumerate}
+        \item $\mathbfit{u} \cdot \mathbfit{u} \geq 0$ for all $\mathbfit{u} \in \mathcal{F}^n$;
+        \item $\mathbfit{u} \cdot \mathbfit{u} = 0$ if and only if $\mathbfit{u} = \zero$;
+        \item $\mathbfit{u} \cdot \mathbfit{v} = \mathbfit{v} \cdot \mathbfit{u}$ for all $\mathbfit{u}, \mathbfit{v} \in \mathcal{F}^n$;
+        \item $(\alpha\mathbfit{u}_1 + \beta\mathbfit{u}_2) \cdot \mathbfit{v} = \alpha(\mathbfit{u}_1 \cdot \mathbfit{v}) + \beta(\mathbfit{u}_2 \cdot \mathbfit{v})$ and $\mathbfit{u} \cdot (\alpha\mathbfit{v}_1 + \beta\mathbfit{v}_2) = \alpha(\mathbfit{u} \cdot \mathbfit{v}_1) + \beta(\mathbfit{u} \cdot \mathbfit{v}_1)$ for all $\mathbfit{u}, \mathbfit{v} \in \mathcal{F}^n$ and $\alpha, \beta \in \mathcal{F}$.
+    \end{enumerate}
+\end{dfnbox}
+The dot product is an example of what is known as \textit{bilinear forms}.
+\begin{dfnbox}{Bilinear Form}{bilinear}
+    A {\color{red} \textbf{bilinear form}} on a finite-dimensional space $V$ is defined to be a mapping $b \colon V \times V \to \mathcal{F}$ such that 
+    \begin{align*}
+        b(\alpha\mathbfit{u}_1 + \beta\mathbfit{u}_2, \mathbfit{v}) & = \alpha b(\mathbfit{u}_1, \mathbfit{v}) + \beta b(\mathbfit{u}_2, \mathbfit{v}), \\
+        b(\mathbfit{u}, \alpha\mathbfit{v}_1 + \beta\mathbfit{v}_2) & = \alpha b(\mathbfit{u}, \mathbfit{v}_1) + \beta b(\mathbfit{u}, \mathbfit{v}_1)
+    \end{align*}
+    for all for all $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \mathcal{F}$.
+\end{dfnbox}
+\begin{dfnbox}{Inner Product Space}{innerProd}
+    An {\color{red} \textbf{inner product space}} is a finite-dimensional vector space $V$ with a bilinear form $g \colon V \times V \to \mathcal{F}$, known as an {\color{red} \textbf{inner product}} on $V$, such that
+    \begin{enumerate}
+        \item $g(\mathbfit{u}, \mathbfit{u}) \geq 0$ for all $\mathbfit{u} \in V$;
+        \item $g(\mathbfit{u}, \mathbfit{u}) = 0$ if and only if $\mathbfit{u} = \zero$;
+        \item $g(\mathbfit{u}, \mathbfit{v}) = g(\mathbfit{v}, \mathbfit{u})$ for all $\mathbfit{u}, \mathbfit{v} \in V$.
+    \end{enumerate}
+\end{dfnbox}
 \end{document}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 FEB 2024 21:13
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  7 MAR 2024 09:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1310,19 +1310,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 323--326
 
  []
 
-[11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] 
+[11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21]
+Chapter 3.
+[22
+
+] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Linear Algebra II.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Linear Algebra II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39016 strings out of 478630
- 821546 string characters out of 5847730
+ 39025 strings out of 478630
+ 821679 string characters out of 5847730
  1879012 words of memory out of 5000000
- 58485 multiletter control sequences out of 15000+600000
+ 58494 multiletter control sequences out of 15000+600000
  516159 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,16n,128p,1204b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear Algebra II.pdf (21 pages).
+Output written on Linear Algebra II.pdf (22 pages).
