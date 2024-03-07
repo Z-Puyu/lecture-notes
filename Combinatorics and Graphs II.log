@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  28 FEB 2024 01:57
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  28 FEB 2024 14:08
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1660,25 +1660,47 @@ Underfull \hbox (badness 10000) in paragraph at lines 1307--1312
 
  []
 
-[50] [51] 
+[50] [51]
+Underfull \hbox (badness 10000) in paragraph at lines 1377--1380
+
+ []
+
+[52]
+Underfull \hbox (badness 1210) in paragraph at lines 1393--1400
+[]\TU/STIXTwoText(0)/m/n/12 Suppose that $[]$ is constructed from a cycle by successively augmenting
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1393--1400
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1393--1400
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1393--1400
+
+ []
+
+[53] [54] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39191 strings out of 478630
- 824794 string characters out of 5847730
+ 39211 strings out of 478630
+ 825138 string characters out of 5847730
  1894012 words of memory out of 5000000
- 58661 multiletter control sequences out of 15000+600000
+ 58681 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (51 pages).
+Output written on Combinatorics and Graphs II.pdf (54 pages).

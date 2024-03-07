@@ -21,3 +21,4 @@
 \contentsline {chapter}{\numberline {4}Connectivity}{45}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Vertex Connectivity}{45}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Edge Connectivity}{49}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Blocks}{51}{section.4.3}%

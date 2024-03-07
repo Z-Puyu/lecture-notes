@@ -1112,10 +1112,10 @@ In the previous section, we have discussed how Hall's Theorem characterises the 
 
 It turns out that this curious question is closely related to the number of connected components with odd orders in a graph. We denote this quantity by $o(G)$ for any graph $G$.
 \begin{thmbox}{Tutte's Theorem}{tutte}
-    A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, the number of connected components of odd orders in the induced subgraph $G[V(G) - U]$ is at most~$\abs{U}$.
+    A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, $o(G - U) \leq \abs{U}$.
     \tcblower
     \begin{proof}
-        Let $M \subseteq G$ be a perfect matching. Take any $U \subseteq V(G)$ and consider the induced subgraph $H \coloneqq G[V(G) - U]$. Let $C \subseteq H$ be a connected component of odd order. Since $M$ is a perfect matching, then clearly there is at least one vertex $v \in C$ which is matched to some vertex $u \in U$ in $M$. Since every $u \in U$ is matched to exactly one vertex in $M$, this implies that $o(H) \leq \abs{U}$.
+        Let $M \subseteq G$ be a perfect matching. Take any $U \subseteq V(G)$ and consider the induced subgraph $H \coloneqq G - U$. Let $C \subseteq H$ be a connected component of odd order. Since $M$ is a perfect matching, then clearly there is at least one vertex $v \in C$ which is matched to some vertex $u \in U$ in $M$. Since every $u \in U$ is matched to exactly one vertex in $M$, this implies that $o(H) \leq \abs{U}$.
         \\\\
         Suppose conversely that for every $U \subseteq V(G)$, $o\bigl(G[V(G) - U]\bigr) \leq \abs{U}$. We shall prove that $G$ contains a perfect matching by considering the contrapositive statement. Let $v(G) = n$. First, we consider the following lemma:
         \begin{lembox}{}{badSet}
@@ -1334,5 +1334,75 @@ In fact, we can derive the following relation:
 Lastly, we will state the following theorem without proof:
 \begin{thmbox}{Chartrad-Haray Theorem}{ChartradHaray}
     For all positive integers $a, b, c$ with $a \leq b \leq c$, there exists a graph $G$ with $\kappa(G) = a$, $\kappa'(G) = b$ and $\delta(G) = c$.
+\end{thmbox}
+\section{Blocks}
+We know that every graph can be naturally decomposed into connected components. However, can we actually present a stronger definition? Here, we consider components of a graph that are $2$-connected.
+\begin{dfnbox}{Block}{block}
+    For any graph $G$, a {\color{red} \textbf{block}} in $G$ is defined as a maximal connected subgraph $B \subseteq G$ without any cut vertex.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        We define an edge $K_2$ and a trivial graph both as blocks.
+    \end{remark}
+\end{notebox}
+Let us make some observations regarding the properties of a block.
+
+First, observe that a block is either an isolated vertex, a cut edge or a $2$-connected graph. Next, we shall characterise the vertices of blocks.
+\begin{probox}{Blocks Share at Most One Common Vertex}{blockIntersectOne}
+    Let $B_i$ and $B_j$ be distinct blocks of $G$, then $\abs{V(B_i) \cap V(B_j)} \leq 1$.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $\abs{V(B_i) \cap V(B_j)} \geq 2$. Consider $B \coloneqq B_i \cup B_j$. Note that for any vertex $v \in V(B_i) \triangle V(B_j)$, $v$ is not a cut vertex of $B$. Take any $u_1, u_2 \in V(B_i) \cap V(B_j)$ and consider $B - u_1$. Let $w_1, w_2 \in V(B - u_1)$ be any vertices. If $w_1, w_2 \in V(B_i)$ or $w_1, w_2 \in V(B_j)$, then they are connected in $B - u_1$. Otherwise, without loss of generality, assume $w_1 \in V(B_i) - V(B_j)$ and $w_2 \in V(B_j) - V(B_i)$. Note that there exist a $u_2$-$w_1$ path and a $u_2$-$w_2$ path in $B - u_1$, so $w_1$ and $w_2$ are connected in $B - u_1$. Therefore, $B$ does not have a cut vertex and so is a block, but $B_i, B_j \subset B$, which is a contradiction.
+    \end{proof}
+\end{probox}
+The above result allows us to show the following corollary about the edges in a graph with respect to its blocks:
+\begin{corbox}{Every Edge Is in A Unique Block}{edgeInBlock}
+    Let $G$ be a graph. Every $e \in E(G)$ is in a unique block of $G$.
+    \tcblower
+    \begin{proof}
+        First, notice that every edge is a connected subgraph of $G$ without any cut vertex, so any edge $e \in E(G)$ must be in some block of $G$. Suppose on contrary that there exist distinct blocks $B_i, B_j \subseteq G$ such that $e \in E(B_i) \cap E(B_j)$, then $\abs{V(B_i) \cap V(B_j)} \geq 2$, which contradicts Proposition \ref{pro:blockIntersectOne}.
+    \end{proof}
+\end{corbox}
+By the above corollary, we know that no two different blocks can share common edges.
+
+It is clear that every graph can be decomposed into blocks. We would like to further study block decomposition and hopefully derive a relation between the structure of blocks and that of the graph itself.
+\begin{dfnbox}{Block Graph}{blockGraph}
+    Let $G$ be a graph. Define $\mathcal{A}$ to be the set of cut vertices of $G$ and $\mathcal{B}$ to be the set of blocks in $G$. A {\color{red} \textbf{block graph}} on $G$ is a bipartite graph with bipartition $(\mathcal{A}, \mathcal{B})$ such that a cut vertex $a \in \mathcal{A}$ is adjacent to $B \in \mathcal{B}$ if $a \in V(B)$.
+\end{dfnbox}
+Block graph might be a bit abstract to visualise. To better understand its structure, let us consider the following result:
+\begin{probox}{A Block Graph on A Connected Graph Is A Tree}{blockGraphTree}
+    Let $T$ be a block graph of a connected graph $G$, then $T$ is a tree.
+    \tcblower
+    \begin{proof}
+        Take any $B_1, B_n \in \mathcal{B}$. Note that there exists a sequence $(B_1, B_{2}, \cdots, B_{n - 1}, B_n)$ of blocks in $G$ such that $B_i$ and $B_{i + 1}$ share a common vertex. Denote this vertex as $v_i$, then clearly, $v_i$ is adjacent to $B_i$ and $B_{i + 1}$ in $T$. Therefore, $B_1v_1B_2v_2\cdots B_{n - 1}v_{n - 1}B_n$ is a $B_1$-$B_n$ walk in $T$, and so $B_1$ and $B_n$ are connected. Take any $a \in \mathcal{A}$ and any $B \in \mathcal{B}$. Note that there exists some $B' \in \mathcal{B}$ such that $a \sim B'$. Since $B$ and $B'$ are connected, $a$ and $B$ are connected. Similarly, one can check that any $a, a' \in \mathcal{A}$ are connected in~$T$. Therefore, $T$ is connected.
+        \\\\
+        We will proceed to proving that $T$ is acyclic by contradiction. Suppose on contrary that $T$ contains a cycle. Without loss of generality, we can re-label the vertices such that the cycle is in the form of  $a_1B_1a_2B_2\cdots a_nB_na_{n + 1}$ with $a_1 = a_{n + 1}$. This means that for any integer $k \in [1, n]$, $a_k, a_{k + 1} \in V(B_k)$ and that $V(B_{k - 1}) \cap V(B_k) = a_k$ whenever $k \geq 2$. Consider $B = \bigcup_{i = 1}^{n}B_i$. Notice that $B$ is connected and does not have any cut vertex, so $B$ is a block in $G$. However, for any of the $B_i$'s, $B_i \subset B$, which contradicts the maximality of $B_i$. Therefore, $T$ is acyclic, which implies that $T$ is a tree.
+    \end{proof}
+\end{probox}
+To summarise, we see that for any connected graph $G$, its block graph is a tree such that every $B \in \mathcal{B}$ is either an edge or a $2$-connected graph.
+
+We introduce a useful definition which will help us investigate the structure of $2$-connected graphs later.
+\begin{dfnbox}{$H$-path}{HPath}
+    Let $G$ be a graph with a subgraph $H$. An {\color{red} \textbf{$H$-path}} is a path $P$ in $G$ such that its $2$ ends are the only vertices in $P \cap H$.
+\end{dfnbox}
+Recall that in Proposition \ref{pro:cycleIn2Connected}, we have shown that every $2$-connected graph contains a cycle, but that the converse is not true. However, can we try to extend from this necessary condition somehow to give a more precise characterisation of a $2$-connected graph?
+\begin{thmbox}{Characterisation of $2$-connected Graphs}{2ConnectedGraph}
+    A graph $G$ is $2$-connected if and only if it can be constructed from a cycle by successively augmenting the partially constructed graph $H$ with $H$-paths.
+    \tcblower
+    \begin{proof}
+        Suppose that $G$ is constructed from a cycle by successively augmenting $H$-paths to a partially constructed graph $H$. Note that a cycle is $2$-connected. Assume that there exists some $k \in \N$ such that after $k$ iterations of such augmentation, the resulted graph $H$ is $2$-connected. Consider $H' \coloneqq H \cup P_H$ where $P_H$ is any $H$-path, the clearly $H'$ is also $2$-connected. Therefore, $G$ must be $2$-connected.
+        \\\\
+        Suppose conversely that $G$ is $2$-connected, then by Proposition \ref{pro:cycleIn2Connected} it contains a cycle $C_n$. Therefore, $G$ contains a maximal subgraph $H$ which can be constructed by augmenting $H$-paths successively to a partially constructed graph starting from $C_n$. Note that it suffices to show that $G = H$.
+        \\\\
+        We claim that $H$ must be an induced subgraph of $G$. Suppose on contrary that there exists $u, v \in V(H)$ such that $uv \in E(G)$ but $uv \notin E(H)$, then clearly $uv$ itself is an $H$-path in $G$. Therefore, $H + uv$ is a larger graph constructible from $C_n$ by successively augmenting $H$-paths to the partially constructed graph, which is a contradiction because $H$ is assumed to be maximal.
+        \\\\
+        Suppose on contrary that $G \neq H$, then $V(G) - V(H) \neq \varnothing$. Note that $G$ is connected, so there exist $v \in V(G) - V(H)$ and $w \in V(H)$ such that $vw \in E(G)$. Note that $C_n \subseteq H$, so there exists some $u \in V(H)$ with $u \neq w$. Since $G$ is $2$-connected, we know that $G - w$ is connected. This implies that there is a $v$-$u$ path in $G$ which does not contain $w$. Without loss of generality, let $u'$ be the first vertex in the path which is in $V(H)$, the we have found a $v$-$u'$ path which is an $H$-path. This means we can construct a larger graph $H'$ by augmenting the $H$-path to $H$, which contradicts the maximality of $H$.
+    \end{proof}
+\end{thmbox}
+An $H$-path is vividly termed as an ``ear'' to the graph. Clearly, Theorem \ref{thm:2ConnectedGraph} shows that any $2$-connected graph can be decomposed into a cycle and a series of $H$-paths. This is thus also known as the ``ear-decomposition'' of $G$.
+
+We would like to take one step further and probe into $3$-connected graphs. We will state the following theorem by Tutte without proof:
+\begin{thmbox}{Tutte's Characterisation of $3$-connected Graphs}{Tutte3Connected}
+    A graph $G$ is $3$-connected if and only if there is a sequence $\left(G_0, G_1, \cdots, G_n\right)$ with $G_n \cong G$ such that $G_0 = K_4$ and $G_{i + 1}$ contains an edge $xy$ with $d_{G_{i + 1}}(x), d_{G_{i + 1}}(y) \geq 3$ and $G_i = G_{i + 1} \circ xy$. 
 \end{thmbox}
 \end{document}
