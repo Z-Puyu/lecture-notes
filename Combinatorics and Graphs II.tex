@@ -1405,4 +1405,20 @@ We would like to take one step further and probe into $3$-connected graphs. We w
 \begin{thmbox}{Tutte's Characterisation of $3$-connected Graphs}{Tutte3Connected}
     A graph $G$ is $3$-connected if and only if there is a sequence $\left(G_0, G_1, \cdots, G_n\right)$ with $G_n \cong G$ such that $G_0 = K_4$ and $G_{i + 1}$ contains an edge $xy$ with $d_{G_{i + 1}}(x), d_{G_{i + 1}}(y) \geq 3$ and $G_i = G_{i + 1} \circ xy$. 
 \end{thmbox}
+\chapter{Graph Colouring}
+\section{Chromatic Number}
+\begin{thmbox}{Brooks' Theorem}{Brooks}
+    Let $G$ be a connected graph not isomorphic to a complete graph or an odd cycle, then $\chi(G) \leq \Delta(G)$.
+\end{thmbox}
+\begin{dfnbox}{Edge Contraction}{edgeContraction}
+    Let $G$ be a graph. For any $e = xy \in E(G)$, the {\color{red} \textbf{edge contraction}} of $G$ at $e$, denoted by $G/e$, is a graph produced by deleting $e$ and merging $x$ and $y$ such that $N_{G/e}(xy) = N_G(x) \cup N_G(y)$.
+\end{dfnbox}
+\begin{dfnbox}{$k$-constructible Graph}{kConstruct}
+    A {\color{red} \textbf{$k$-constructible graph}} $G$ for some $k \in \Z^+$ is such that 
+    \begin{enumerate}
+        \item $G \cong K_k$;
+        \item there is some $k$-constructible graph $H$ with $x, y \in V(H)$ and $xy \in E(H)$ such that $G \cong (H + xy)/xy$;
+        \item there are $k$-constructible graphs $H_1$, $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$ such that $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$.
+    \end{enumerate}
+\end{dfnbox}
 \end{document}
