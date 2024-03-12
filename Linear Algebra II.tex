@@ -648,6 +648,117 @@ then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\m
     & = \epsilon^i(z \circ P) \\
     & = \sum_{k = 1}^{n}P^k_iz_k.
 \end{align*} 
+\section{Classifying Linear Transformations}
+Since there are infinitely many linear transformations between two vectors spaces, it is not of much help to study each one of them individually. Instead, it is useful to consider categorising all linear transformations into different families according to some well-defined properties.
+\begin{dfnbox}{Operator}{operator}
+    A linear transformation $T \colon V \to V$ is called an {\color{red} \textbf{operator}} on $V$.
+\end{dfnbox}
+Let us recall the notion of eigenvectors. In the old-fashioned way, we define a non-zero vector $\mathbfit{v}$ to be an eigenvector if there is some scalar $\lambda$ such that $\mathbfit{Av} = \lambda\mathbfit{v}$. We can see that the left-multiplication by $\mathbfit{A}$ actually corresponds to a linear transformation from a vector space to itself, so we can re-write this definition in terms of linear transformations.
+\begin{dfnbox}{Eigenvector and Eigenvalue}{eigenvec}
+    Let $T \colon V \to V$ be an operator on a finite-dimensional vector space $V$ over $\mathcal{F}$. A vector~$\mathbfit{v} \in V$ is called an {\color{red} \textbf{eigenvector}} of $T$ if $T(\mathbfit{v}) = \lambda\mathbfit{v}$ for some $\lambda \in \mathcal{F}$, which is known as the {\color{red} \textbf{eigenvalue}} associated with $\mathbfit{v}$.
+\end{dfnbox}
+Note that the operator $T$ is a well-defined function, so for every eigenvector, its associated eigenvalue is unique. The uniqueness of eigenvalues guarantees the following contrapositive statement:
+\begin{probox}{Uniqueness of Eigenvalue}{uniqueEigenval}
+    If $\mathbfit{u}, \mathbfit{v}$ are eigenvectors of an operator $T \colon V \to V$ associated to eigenvalues~$\lambda \neq \mu$ respectively, then $\mathbfit{u}$ and $\mathbfit{v}$ are linearly independent.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive statement. Suppose conversely that $\mathbfit{u}$ and $\mathbfit{v}$ are linearly dependent, then there exists some scalar $\alpha$ such that $\mathbfit{v} = \alpha\mathbfit{u}$. Note that 
+        \begin{equation*}
+            \mu\mathbfit{v} = T(\mathbfit{v}) = T(\alpha\mathbfit{u}) = \alpha\lambda\mathbfit{u} = \lambda\mathbfit{v},
+        \end{equation*}
+        so $\mu = \lambda$.
+    \end{proof}
+\end{probox}
+However, the converse is not true, because if $T(\mathbfit{v}) = \lambda\mathbfit{v}$, then $T(\mu\mathbfit{v}) = \lambda(\mu\mathbfit{v})$ for all $\mu \in \mathcal{F}$. In fact, two linearly independent vectors can have the same eigenvalue. A silly example: for any finite-dimensional space $V$, consider the identity operator $\mathrm{id}_V$. Clearly, every vector in $V$ is an eigenvector with the associated eigenvalue of~$1$.
+\begin{dfnbox}{Eigenspace}{eigenspace}
+    Let $T$ be an operator on a finite-dimensional vector space $V$ over $\mathcal{F}$. For every eigenvalue $\lambda \in \mathcal{F}$ associated to some vector in $V$, the {\color{red} \textbf{eigenspace}} associated with $\lambda$ is 
+    \begin{equation*}
+        E_\lambda \coloneqq \left\{\mathbfit{v} \in V \colon T(\mathbfit{v}) = \lambda\mathbfit{v}\right\}.
+    \end{equation*}
+\end{dfnbox}
+One can easily verify that every eigenspace is a subspace. Intuitively, eigenspaces associated to different eigenvalues should be different. To see this more clearly, consider the following proposition, which is a generalisation of Proposition \ref{pro:uniqueEigenval}:
+\begin{probox}{Linear Independence between Eigenspaces}{liEigenspace}
+    Let $T \colon V \to V$ be an operator with distinct eigenvalues $\lambda_1, \lambda_2, \cdots, \lambda_k$ associated with eigenvectors $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_k$ respectively, then $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_k$ are linearly independent.
+    \tcblower
+    \begin{proof}
+        The case where $k = 2$ is exactly Proposition \ref{pro:uniqueEigenval}. Suppose that there is some $m \in \Z^+$ with $m \geq 2$ such that eigenvectors $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_m$ associated with distinct eigenvalues $\lambda_1, \lambda_2, \cdots, \lambda_m$ respectively are linearly independent. Let $\lambda_{m + 1}$ be an eigenvalue associated to $\mathbfit{v}_{m + 1}$, we shall prove that $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{m + 1}$ are linearly independent by considering the contrapositive statement. Suppose conversely that $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{m + 1}$ are linearly dependent vectors. Since $\mathbfit{v}_{m + 1} \neq \zero$, there exist scalars $\alpha_1, \alpha_2, \cdots, \alpha_m$ not all zero such that 
+        \begin{equation*}
+            \mathbfit{v}_1 = \sum_{i = 1}^{m}\alpha_i\mathbfit{v}_i.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            T(\mathbfit{v}_{m + 1}) & = T\left(\sum_{i = 1}^{m}\alpha_i\mathbfit{v}_i\right) \\
+            & = \sum_{i = 1}^{m}\alpha_iT(\mathbfit{v}_i) \\
+            & = \sum_{i = 1}^{m}\alpha_i\lambda_i\mathbfit{v}_i,
+        \end{align*}
+        but $T(\mathbfit{v}_{m + 1}) = \lambda_{m + 1}\mathbfit{v}_{m + 1} = \lambda_{m + 1}\sum_{i = 1}^{m}\alpha_i\mathbfit{v}_i$, so
+        \begin{equation*}
+            \sum_{i = 1}^m\alpha_i(\lambda_i - \lambda_{m + 1})\mathbfit{v}_i = \zero.
+        \end{equation*}
+        Since $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{m}$ are linearly independent, this implies that $\alpha_i(\lambda_i - \lambda_{m + 1}) = 0$ for all $i = 1, 2, \cdots, m$. Note that there exists some integer $j \in [1, m]$ such that $\alpha_j \neq 0$, so $\lambda_j = \lambda_{m + 1}$, which means that $\lambda_1, \lambda_2, \cdots, \lambda_{m + 1}$ are not distinct eigenvalues.
+    \end{proof}
+\end{probox}
+Proposition \ref{pro:liEigenspace} reveals an important fact that any finite-dimensional vector space has finitely many eigenvalues. In fact, for any $V \cong \mathcal{F}^n$, any linearly independent set contains at most $n$ distinct vectors, so it means that $V$ can have at most $\dim(V)$ different eigenvalues.
+
+The next natural question is: given any operator on a finite-dimensional vector space, does the operator always has an eigenvector? By instinct, one may answer ``no'' because it seems that the rotation transformation in $\R^2$, namely
+\begin{equation*}
+    (x, y) \mapsto (x\cos\theta - y\sin\theta, x\sin\theta + y\cos\theta),
+\end{equation*}
+does not have any eigenvector because there is no vector in $\R^2$ being mapped to a parallel image. However, we notice something interesting when we extend the domain of the rotation transformation to $\C^2$, because
+\begin{equation*}
+    \begin{bmatrix}
+        \cos\theta & -\sin\theta \\
+        \sin\theta & \cos\theta
+    \end{bmatrix}\begin{bmatrix}
+        1 \\
+        -i
+    \end{bmatrix} = \begin{bmatrix}
+        \cos\theta + i\sin\theta \\
+        -i(\cos\theta + i\sin\theta)
+    \end{bmatrix} = \begin{bmatrix}
+        \mathrm{e}^{i\theta} \\
+        -i\mathrm{e}^{i\theta}
+    \end{bmatrix} = \mathrm{e}^{i\theta}\begin{bmatrix}
+        1 \\
+        -i
+    \end{bmatrix}.
+\end{equation*}
+Therefore, it is important to note that the eigenvalues and eigenvectors of a real vector space might not be real! The following proposition states this result rigorously:
+\begin{probox}{Existence of Eigenvalue}{eigenvalExists}
+    Every operator on a finite-dimensional vector space over $\C$ has at least one eigenvalue.
+    \tcblower
+    \begin{proof}
+        Let $V$ be an $n$-dimensional vector space over $\C$ and let $T \colon V \to V$ be an operator. Take any non-zero vector $\mathbfit{v} \in V$, then $\mathbfit{v}, T(\mathbfit{v}), T^2(\mathbfit{v}), \cdots, T^n(\mathbfit{v})$ are $(n + 1)$ vectors in $V$ which must be linearly dependent. Therefore, there exists $c_0, c_1, \cdots, c_n \in \C$ not all zero such that 
+        \begin{equation*}
+            \sum_{i = 0}^{n}c_iT^i(\mathbfit{v}) = \zero.
+        \end{equation*}
+        This implies that $\sum_{i = 0}^{n}c_iT^i$ is the zero transformation, i.e., $\sum_{i = 0}^{n}c_iT^i = 0$. Note that this is a polynomial equation with complex coefficients, so it has exactly $(n + 1)$ roots. Therefore, 
+        \begin{equation*}
+            \sum_{i = 0}^{n}c_iT^i(\mathbfit{v}) = a_0\left(\prod_{i = 1}^{n}(T - a_i\mathrm{id}_V)\right)(\mathbfit{v}) = \zero
+        \end{equation*}
+        for some $a_0, a_1, \cdots, a_n \in \C$. Note that not all of the $(T - a_i\mathrm{id}_V)$'s are injective, because otherwise $\mathbfit{v} = \zero$ by Proposition \ref{pro:injectTest}. Therefore, there is some $T - a_j\mathrm{id}_V$ which is not injective. This means that there exists a non-zero vector $\mathbfit{w} \in V$ such that $(T - a_j\mathrm{id}_V)(\mathbfit{w}) = \zero$, but this implies that $T(\mathbfit{w}) = a_j\mathbfit{w}$, so $a_j$ is an eigenvalue of $T$ associated with $\mathbfit{w}$.
+    \end{proof}
+\end{probox}
+\section{Triangularisation}
+To better classify operators, we consider a special type of matrices known as \textit{triangular matrices}.
+\begin{dfnbox}{Upper Triangular Matrix}{upTri}
+    A matrix $\mathbfit{M}$ is called {\color{red} \textbf{upper triangular}} if $M^i_j = 0$ whenever $i > j$.
+\end{dfnbox}
+We consider the following nice operator on a finite-dimensional vector space $V$: the operator $T \colon V \to V$ is such that there exists a basis $t$ of $V$ such that $T(\mathbfit{t}_i)$ can be expressed as a linear combination of the $\mathbfit{t}_j$'s for all $j \leq i$. Intuitively, if such an operator exists, then its matrix representation with respect to $t$ must be upper-triangular. We will introduce several useful preliminary results.
+\begin{dfnbox}{Similar Matrices}{similar}
+    Matrices $\mathbfit{A}$ and $\mathbfit{B}$ are {\color{red} \textbf{similar}} if there exists a matrix $\mathbfit{P}$ such that $\mathbfit{A} = \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}$.
+\end{dfnbox}
+Let $\lambda$ be an eigenvalue of $\mathbfit{A}$, then there is some vector $\mathbfit{x} \neq \zero$ such that $\mathbfit{Ax} = \lambda\mathbfit{x}$. If $\mathbfit{A} = \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}$, this means that 
+\begin{equation*}
+    \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}\mathbfit{x} = \lambda\mathbfit{x},
+\end{equation*}
+and so 
+\begin{equation*}
+    \mathbfit{B}(\mathbfit{Px}) = \lambda\mathbfit{Px}.
+\end{equation*}
+Therefore, $\lambda$ is also an eigenvalue of $\mathbfit{B}$ with associated eigenvector $\mathbfit{Px} \neq \zero$ (because $\mathbfit{P} \neq \zero$). This implies that similar matrices always have the same eigenvalues.
+
+Now, let $T$ be any operator on $V$ and $z \colon \mathcal{F}^n \to V$ be a basis, then we know that the operator $T^*_z \coloneqq z^{-1} \circ T \circ z$ on $\mathcal{F}^n$ has the same eigenvalues as $T$.
 \chapter{Linear Algebra and Geometry}
 \section{Bilinear Forms}
 \begin{dfnbox}{Dot Product}{dotProd}
@@ -668,6 +779,15 @@ The dot product is an example of what is known as \textit{bilinear forms}.
     \end{align*}
     for all for all $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \mathcal{F}$.
 \end{dfnbox}
+Let $\mathbb{B}(V)$ denote the set of all bilinear forms over a finite-dimensional vector space $V$, then $\mathbb{B}(V)$ itself is also a vector space with the usual definitions of addition and scalar multiplication over mappings.
+\begin{dfnbox}{Tensor Product between Dual Vectors}{dualVecTensor}
+    Let $V$ be a finite-dimensional vector space. For any $\alpha, \beta \in \hat{V}$, their {\color{red} \textbf{tensor product}} is defined as the mapping 
+    \begin{equation*}
+        \alpha \otimes \beta \colon V \times V \to \mathcal{F}
+    \end{equation*}
+    such that $(\alpha \otimes \beta)(\mathbfit{u}, \mathbfit{v}) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$.
+\end{dfnbox}
+It is easy to see that for any basic vectors $\zeta^i, \zeta^j$ for $\hat{V}$, the mapping $\zeta^i \otimes \zeta^j$ is a bilinear form over $V$.
 \begin{dfnbox}{Inner Product Space}{innerProd}
     An {\color{red} \textbf{inner product space}} is a finite-dimensional vector space $V$ with a bilinear form $g \colon V \times V \to \mathcal{F}$, known as an {\color{red} \textbf{inner product}} on $V$, such that
     \begin{enumerate}
@@ -676,4 +796,20 @@ The dot product is an example of what is known as \textit{bilinear forms}.
         \item $g(\mathbfit{u}, \mathbfit{v}) = g(\mathbfit{v}, \mathbfit{u})$ for all $\mathbfit{u}, \mathbfit{v} \in V$.
     \end{enumerate}
 \end{dfnbox}
+\section{Geometry in Vector Spaces}
+\begin{dfnbox}{Length}{len}
+    Let $(V, g)$ be an inner product space, then for any $\mathbfit{v} \in V$, its {\color{red} \textbf{length}} is defined as 
+    \begin{equation*}
+        \abs{\mathbfit{v}} = \sqrt{g(\mathbfit{v}, \mathbfit{v})}.
+    \end{equation*}
+\end{dfnbox}
+\begin{dfnbox}{Orthogonality}{ortho}
+    Let $(V, g)$ be an inner product space. $\mathbfit{u}, \mathbfit{v} \in V$ are {\color{red} \textbf{orthogonal}} if $g(\mathbfit{u}, \mathbfit{v}) = 0$.
+\end{dfnbox}
+\begin{thmbox}{Cauchy-Schwarz Inequality}{CauchySchwarz}
+    Let $(V, g)$ be an inner product space, then $g(\mathbfit{u}, \mathbfit{v}) \leq \abs{\mathbfit{u}}\abs{\mathbfit{v}}$ for any $\mathbfit{u}, \mathbfit{v} \in V$.
+\end{thmbox}
+\begin{corbox}{Triangle Inequality}{triIneq}
+    Let $V$ be a finite-dimensional vector space, then for any $\mathbfit{u}, \mathbfit{v} \in V$, $\abs{\mathbfit{u + v}} \leq \abs{\mathbfit{u}} + \abs{\mathbfit{v}}$. 
+\end{corbox}
 \end{document}

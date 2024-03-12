@@ -9,5 +9,8 @@
 \contentsline {section}{\numberline {2.3}Tensor Product}{16}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Matrix}{18}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Change of Basis}{20}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Linear Algebra and Geometry}{22}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Bilinear Forms}{22}{section.3.1}%
+\contentsline {section}{\numberline {2.6}Classifying Linear Transformations}{21}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Triangularisation}{24}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Linear Algebra and Geometry}{26}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Bilinear Forms}{26}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Geometry in Vector Spaces}{27}{section.3.2}%
