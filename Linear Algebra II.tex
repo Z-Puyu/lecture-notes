@@ -616,7 +616,7 @@ Intuitively, the matrix of a composite map can be obtained via matrix multiplica
         Therefore, $M_z(ST) = M_z(S)M_z(T)$.
     \end{proof}
 \end{probox}
-\section{Change of Basis}
+\section{Change of Basis}\label{sectionChangeBasis}
 Let $z$ be a basis for a vector space $V$. For any $\mathbfit{v} \in V$, define $\mathbfit{v}^*_z \coloneqq z^{-1}(\mathbfit{v})$. Clearly $\mathbfit{v}^*_z \in \mathcal{F}^n$. We can view $\mathbfit{v}^*_z$ as the ``coordinates'' of $\mathbfit{v}$ with respect to $z$.
 
 Suppose $\alpha \in \hat{V}$, we define some $\alpha^*_z \in \hat{\mathcal{F}^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$. In particular, suppose the $i$-th component of $\alpha$ is $\alpha_i$, we notice that
@@ -644,10 +644,24 @@ Let $z, y$ be bases for some finite-dimensional vector space $V$. Define a mappi
 \end{equation*}
 then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\mathbfit{b})$, clearly $\mathbfit{a} = P(\mathbfit{b})$. Note that $y = z \circ P$, so
 \begin{align*}
-    y_i & = \epsilon^i(y) \\
-    & = \epsilon^i(z \circ P) \\
-    & = \sum_{k = 1}^{n}P^k_iz_k.
+    \mathbfit{y}_i & = y(\mathbfit{e}_i) \\
+    & = z\bigl(P(\mathbfit{e}_i)\bigr) \\
+    & = \sum_{k = 1}^{n}M_z(P)^k_i\mathbfit{z}_k.
 \end{align*} 
+This means that we can obtain the $i$-th column of $M_z(P)$ by expressing $\mathbfit{y}_i$ in terms of the $\mathbfit{z}_k$'s and fill the coefficients into the column.
+
+Let $\mathbfit{v} \in V$ be a vector with coordinate vector $\mathbfit{v}_y^* \in \mathcal{F}^n$ such that $y(\mathbfit{v}_y^*) = \mathbfit{v}$, then 
+\begin{equation*}
+    \mathbfit{v}^*_y = y^{-1}(\mathbfit{v}) = \left(y^{-1} \circ z\right)\left(z^{-1}(\mathbfit{v})\right) = P^{-1}\left(\mathbfit{v}^*_z\right).
+\end{equation*}
+Combining everything, we have 
+\begin{dfnbox}{Change of Basis Matrix}{changeBasis}
+    Let $\mathbfit{T}_z^*$ be the matrix of a linear transformation $T \colon V \to V$ with respect to the basis $z$ and let $\mathbfit{P}$ be the matrix of the mapping $z^{-1} \circ y$ for some basis $y$ for $V$, then the matrix of $T$ with respect to $y$ is 
+    \begin{equation*}
+        \mathbfit{T}^*_y \coloneqq \mathbfit{P}^{-1}\mathbfit{T}_z^*\mathbfit{P}.
+    \end{equation*}
+    $\mathbfit{P}$ is called a {\color{red} \textbf{change of basis matrix}}.
+\end{dfnbox}
 \section{Classifying Linear Transformations}
 Since there are infinitely many linear transformations between two vectors spaces, it is not of much help to study each one of them individually. Instead, it is useful to consider categorising all linear transformations into different families according to some well-defined properties.
 \begin{dfnbox}{Operator}{operator}
@@ -748,7 +762,7 @@ We consider the following nice operator on a finite-dimensional vector space $V$
 \begin{dfnbox}{Similar Matrices}{similar}
     Matrices $\mathbfit{A}$ and $\mathbfit{B}$ are {\color{red} \textbf{similar}} if there exists a matrix $\mathbfit{P}$ such that $\mathbfit{A} = \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}$.
 \end{dfnbox}
-Let $\lambda$ be an eigenvalue of $\mathbfit{A}$, then there is some vector $\mathbfit{x} \neq \zero$ such that $\mathbfit{Ax} = \lambda\mathbfit{x}$. If $\mathbfit{A} = \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}$, this means that 
+Let $\lambda$ be an eigenvalue of $\mathbfit{A}$, then there exists some non-zero vector $\mathbfit{x}$ such that $\mathbfit{Ax} = \lambda\mathbfit{x}$. If $\mathbfit{A} = \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}$, this means that 
 \begin{equation*}
     \mathbfit{P}^{-1}\mathbfit{B}\mathbfit{P}\mathbfit{x} = \lambda\mathbfit{x},
 \end{equation*}
@@ -758,7 +772,168 @@ and so
 \end{equation*}
 Therefore, $\lambda$ is also an eigenvalue of $\mathbfit{B}$ with associated eigenvector $\mathbfit{Px} \neq \zero$ (because $\mathbfit{P} \neq \zero$). This implies that similar matrices always have the same eigenvalues.
 
-Now, let $T$ be any operator on $V$ and $z \colon \mathcal{F}^n \to V$ be a basis, then we know that the operator $T^*_z \coloneqq z^{-1} \circ T \circ z$ on $\mathcal{F}^n$ has the same eigenvalues as $T$.
+Now, let $T$ be any operator on $V$ and $z \colon \mathcal{F}^n \to V$ be a basis, then we know that the operator $T^*_z \coloneqq z^{-1} \circ T \circ z$ on $\mathcal{F}^n$ has the same eigenvalues as $T$. Notice also that if $T$ satisfies the property that $T(\mathbfit{t}_i)$ can be expressed as a linear combination of the $\mathbfit{t}_j$'s for all $j \leq i$, then so does $T^*_t$. However, as we have discussed before, the matrix representation of $T^*_t$ is upper-triangular. Therefore, we might want to conclude that the matrix representation of any operator on $V$ is similar to some upper-triangular matrix.
+\begin{thmbox}{Triangularisability}{triable}
+    For every operator $T \colon V \to V$ where $V$ is a finite-dimensional vector space over $\C$, there exists a basis $t$ of $V$ such that $T(\mathbfit{t}_i)$ can be expressed as a linear combination of the $\mathbfit{t}_j$'s for all $j \leq i$.
+    \tcblower
+    \begin{proof}
+        Let $\dim(V) = n$, then it suffices to prove that every complex-valued $n \times n$ matrix is similar to some upper-triangular matrix. 
+        \\\\
+        The case where $n = 1$ is trivial because every $1 \times 1$ matrix is upper-triangular. Suppose that there is some $k \in \Z^+$ such that every complex-valued $k \times k$ matrix is similar to some upper-triangular matrix. Let $\mathbfit{M}$ be any $(k + 1) \times (k + 1)$ complex-valued matrix. By Proposition \ref{pro:eigenvalExists}, there is some $\lambda \in \C$ which is an eigenvalue of $\mathbfit{M}$ associated to some non-zero $\mathbfit{v} \in \C^{k + 1}$. Note that we can find $\mathbfit{u}_1, \cdots, \mathbfit{u}_k \in \C^{k + 1}$ such that the columns of 
+        \begin{equation*}
+            \mathbfit{N} = \begin{bmatrix}
+                \mathbfit{v} & \mathbfit{u}_1 & \cdots & \mathbfit{u}_k
+            \end{bmatrix}
+        \end{equation*}
+        is linearly independent. Note that $\mathbfit{Mv} = \lambda\mathbfit{v}$, so
+        \begin{equation*}
+            \mathbfit{N}^{-1}\mathbfit{MN} = \begin{bmatrix}
+                \lambda & \mathbfit{\alpha} \\
+                \zero & \mathbfit{P}
+            \end{bmatrix},
+        \end{equation*}
+        where $\mathbfit{P}$ is a $k \times k$ complex-valued matrix. By the inductive hypothesis, there exists a matrix $\mathbfit{Q}$ and an upper-triangular matrix $\mathbfit{R}$ such that $\mathbfit{Q}^{-1}\mathbfit{PQ} = \mathbfit{R}$. Consider
+        \begin{align*}
+            \begin{bmatrix}
+                1 & \zero \\
+                \zero & \mathbfit{Q}^{-1}
+            \end{bmatrix}\begin{bmatrix}
+                1 & \zero \\
+                \zero & \mathbfit{Q}
+            \end{bmatrix} & = \begin{bmatrix}
+                1 & \zero \\
+                \zero & \mathbfit{I}
+            \end{bmatrix},
+        \end{align*}
+        so $\left[\begin{smallmatrix}
+            1 & \zero \\
+                \zero & \mathbfit{Q}^{-1}
+        \end{smallmatrix}\right] = \left[\begin{smallmatrix}
+            1 & \zero \\
+                \zero & \mathbfit{Q}
+        \end{smallmatrix}\right]^{-1}$. Therefore,
+        \begin{align*}
+            \begin{bmatrix}
+                1 & \zero \\
+                \zero & \mathbfit{Q}
+            \end{bmatrix}^{-1}\begin{bmatrix}
+                \lambda & \mathbfit{\alpha} \\
+                \zero & \mathbfit{P}
+            \end{bmatrix}\begin{bmatrix}
+                1 & \zero \\
+                \zero & \mathbfit{Q}
+            \end{bmatrix} & = \begin{bmatrix}
+                \lambda & \mathbfit{\alpha}\mathbfit{Q}\\
+                \zero & \mathbfit{Q}^{-1}\mathbfit{PQ}
+            \end{bmatrix} = \begin{bmatrix}
+                \lambda & \mathbfit{\alpha}\mathbfit{Q}\\
+                \zero & \mathbfit{R}
+            \end{bmatrix},
+        \end{align*}
+        which is upper-triangular. This means that $\mathbfit{M}$ is similar to an upper-triangular matrix.
+    \end{proof}
+\end{thmbox}
+Note that the matrix $\mathbfit{N}$ in the proof for Theorem \ref{thm:triable} is basically the matrix representation of some basis mapping $z$. Let $T$ be an operator with matrix representation $\mathbfit{M}$, then $z^{-1} \circ T \circ z$ is an operator whose matrix representation is upper-triangular. However, in Section \ref{sectionChangeBasis}, we have shown that any operator $T \colon V \to V$ with respect to any basis $z$ has the same matrix representation as the operator $T^*_z \coloneqq z^{-1} \circ T \circ z$ on the coordinate vectors of $V$. Therefore, we can indeed write the matrix representation of any operator as an upper-triangular matrix by choosing an appropriate basis $z$.
+
+Interestingly, we realise that if $T$ is made to have an upper-triangular matrix representation by the method described in Theorem \ref{thm:triable}, then the $(1, 1)$ entry of that matrix will be an eigenvalue of $T$. The following result is trivial:
+\begin{probox}{Invertibility of Upper Triangular Matrices}{invUpTri}
+    An upper-triangular matrix is invertible if and only if every entry along its diagonal is non-zero.
+\end{probox}
+To characterise triangularised mapping, we consider the following proposition:
+\begin{probox}{Eigenvalues of Upper Triangular Matrices}{upTriEigen}
+    Let $\mathbfit{N}$ be an upper-triangular matrix, then the diagonal entries of $\mathbfit{N}$ are its eigenvalues.
+    \tcblower
+    \begin{proof}
+        Let $\lambda$ be any of the diagonal entries of $\mathbfit{N}$ and consider $\mathbfit{N} - \lambda\mathbfit{I}$ which is also upper-triangular. Note that by Proposition \ref{pro:invUpTri}, $\mathbfit{N} - \lambda\mathbfit{I}$ is not invertible, and so there exists some $\mathbfit{v} \neq \zero$ such that $(\mathbfit{N} - \lambda\mathbfit{I})\mathbfit{v} = \zero$. Therefore, $\mathbfit{Nv} = \lambda\mathbfit{v}$ and so $\lambda$ is an eigenvalue of $\mathbfit{N}$.
+    \end{proof}
+\end{probox}
+\section{Diagonalisation}
+We have seen in the previous section that every operator has an upper-triangular matrix representation, but can we improve this further?
+\begin{dfnbox}{Diagonalisability}{diagable}
+    An operator $T$ is said to be {\color{red} \textbf{diagonalisable}} if there is a basis $z$ such that $M_z\left(T\right)$ is diagonal.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Another way of stating the definition is that a matrix is diagonalisable if it is similar to a diagonal matrix.
+    \end{remark}
+\end{notebox}
+By Proposition \ref{pro:upTriEigen}, since a diagonal matrix is upper-triangular, its diagonal entries must be the eigenvalues. Denote the $(i, i)$ entry of the matrix by $\lambda_i$, then there is some basic vector $\mathbfit{u}_i$ such that $T(\mathbfit{u}_i) = \lambda_i\mathbfit{u}_i$. Therefore, it is clear that an operator is diagonalisable if and only if there exists a basis consisting of its eigenvectors.
+
+An easy conclusion is that if a vector space $V$ has $\dim(V)$ distinct eigenvalues, then it has $\dim(V)$ linearly independent eigenvectors which form a basis, so any $V$ with $\dim(V)$ distinct eigenvalues is diagonalisable.
+
+Of course, we know that it is not possible for every operator to be diagonalisable, i.e., not all operators have some basis $z$ such that the operator under $z$ maps every basic vector to a multiple of itself. Hence, we attempt to make a compromise here: that is, can we always find a basis for every operator such that the operator, under this basis, maps every basic vector to a linear combination of at most $2$ distinct basic vectors?
+\begin{dfnbox}{Jordan Block}{jordan}
+    Let $\mathbfit{J}$ be an $m \times m$ matrix such that 
+    \begin{equation*}
+        \mathbfit{J}^i_j = \begin{cases}
+            1 & \textrm{if } i = j - 1 \\
+            0 & \textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+    A {\color{red} \textbf{Jordan block}} of size $m$ is the matrix $\lambda\mathbfit{I} + \mathbfit{J}$ for any $\lambda \in \C$.
+\end{dfnbox}
+The reason that we consider the Jordan block is that any Jordan block has only one eigenspace which is one-dimensional.
+\begin{probox}{Eigenspace of Jordan Block}{jordanEigen}
+    Let $\lambda\mathbfit{I} + \mathbfit{J}$ be a Jordan block, then it has a unique eigenspace which is one-dimensional.
+    \tcblower
+    \begin{proof}
+        By Propositions \ref{pro:invUpTri} and \ref{pro:upTriEigen}, we know that $\lambda$ is the only eigenvalue, so $\lambda\mathbfit{I} + \mathbfit{J}$ has only one eigenspace. Let the eigenspace be $E_\lambda$ and take any eigenvector 
+        \begin{equation*}
+            \mathbfit{v} = \begin{bmatrix}
+                x_1 & x_2 & \cdots & x_m
+            \end{bmatrix}^{\mathrm{T}} \in E_\lambda.
+        \end{equation*}
+        Note that 
+        \begin{equation*}
+            (\lambda\mathbfit{I} + \mathbfit{J})\mathbfit{v} = \begin{bmatrix}
+                \lambda x_1 + x_2 \\
+                \lambda x_2 + x_3 \\
+                \vdots \\
+                \lambda x_{m - 1} + x_m \\
+                \lambda x_m
+            \end{bmatrix} = \lambda\begin{bmatrix}
+                \lambda x_1 \\
+                \lambda x_2 \\
+                \vdots \\
+                \lambda x_{m - 1} \\
+                \lambda x_m
+            \end{bmatrix},
+        \end{equation*}
+        so clearly $x_2 = x_3 = \cdots = x_m = 0$. Therefore, $E_\lambda$ is spanned by $\mathbfit{e}_1$ and so is one-dimensional.
+    \end{proof}
+\end{probox}
+We can build up an upper-triangular matrix using Jordan blocks, which by triangularisability gives the following result:
+\begin{dfnbox}{Jordan Basis}{jordanBasis}
+    Let $T \colon V \to V$ be an operator. A {\color{red} \textbf{Jordan basis}} of $V$ is a basis $z$ such that 
+    \begin{equation*}
+        M_z(T) = \begin{bmatrix}
+            \mathbfit{J}_1 & \zero & \cdots & \zero \\
+            \zero & \mathbfit{J}_2 & \cdots & \zero \\
+            \vdots & \vdots & \ddots & \vdots \\
+            \zero & \zero & \cdots & \mathbfit{J}_m
+        \end{bmatrix},
+    \end{equation*}
+    where $\mathbfit{J}_1, \cdots, \mathbfit{J}_m$ are Jordan blocks.
+\end{dfnbox}
+It can be shown that every matrix is similar to some Jordan matrix, and so every operator can be represented by a Jordan basis.
+\begin{dfnbox}{Jordan Canonical Form}{jordanCanonical}
+    Let $j$ be a Jordan basis for some operator $T$, then $M_j(T)$ is called the {\color{red} \textbf{Jordan canonical form}} of $T$.
+\end{dfnbox}
+Jordan matrices have a few interesting applications. We can relate them to the eigenvalues of a matrix by considering the following definition:
+\begin{dfnbox}{Multiplicity}{multiplicity}
+    Let $\mathbfit{J}$ be the Jordan form of a matrix $\mathbfit{A}$. For any eigenvalue $\lambda$ of $\mathbfit{A}$, the {\color{red} \textbf{multiplicity}} of $\lambda$ is defined as the sum of the sizes of Jordan blocks corresponding to $\lambda$.
+\end{dfnbox}
+In other words, we can interpret the multiplicity of $\lambda$ as the number of occurrences of it along the diagonal of the Jordan form. Recall that previously we define the \textit{characteristic polynomial} of a matrix $\mathbfit{A}$ to be $\det(\mathbfit{A} - \lambda\mathbfit{I})$. Now we propose another definition using the Jordan form.
+\begin{dfnbox}{Characteristic Polynomial}{charP}
+    Let $T$ be a linear operator with eigenvalues $\lambda_1, \lambda_2, \cdots, \lambda_p$, each with multiplicity $m_1, m_2, \cdots, m_p$ respectively, then the {\color{red} \textbf{characteristic polynomial}} of $T$ is defined as 
+    \begin{equation*}
+        \chi_T(x) = \prod_{i = 1}^{p}(x - \lambda_i)^{m_i}.
+    \end{equation*}
+\end{dfnbox}
+Obviously, $\chi_T(\lambda_i) = 0$ for all $i = 1, 2, \cdots, p$, which leads us to the famous theorem below:
+\begin{thmbox}{Cayley-Hamilton Theorem}{CayleyHamilton}
+    For any linear operator $T$ with characteristic polynomial $\chi_T$, we have $\chi_T(T) = 0$.
+\end{thmbox}
 \chapter{Linear Algebra and Geometry}
 \section{Bilinear Forms}
 \begin{dfnbox}{Dot Product}{dotProd}
