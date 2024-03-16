@@ -7,3 +7,9 @@
 \contentsline {section}{\numberline {2.2}The Simplex Method}{15}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Tableau Implementation}{21}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Finding An Initial Basic Feasible Solution}{22}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Special Cases}{25}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Duality Theory}{27}{chapter.3}%
+\contentsline {section}{\numberline {3.1}The Dual Problem}{27}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Duality Theorems}{29}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Sensitivity Analysis}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Sensitivity}{31}{section.4.1}%

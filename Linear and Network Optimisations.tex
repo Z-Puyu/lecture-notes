@@ -542,7 +542,7 @@ Note that $\mathbfit{x}_N \geq \mathbf{0}$ and $\bar{\theta_j}\mathbfit{d}^j_N =
 \end{equation*}
 Note that here we do not consider those $d^j_i$'s with $d^j_i > 0$ because in such cases $x_i + \bar{\theta_j}d^j_i \geq 0$ for all $\bar{\theta_j} > 0$. Now, we would verify that the new point we reach is indeed another basic feasible solution.
 \begin{probox}{$\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ Is A Basic Feasible Solution}{anotherBFS}
-    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}_j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
+    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
     \tcblower
     \begin{proof}
         Note that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$. Note that by the definition of $\bar{\theta_j}$, we have 
@@ -688,7 +688,7 @@ Note that at each iteration, we need to ``swap'' the $\ell$-th and $j$-th column
     \end{bmatrix}
 \end{equation*}
 such that the $j$-th column becomes $\mathbfit{e}_{i}$. Then, we will swap the row label $\mathbfit{x}_{\ell}$ with the column label $\mathbfit{x}_j$. We repeat this process until $\mathbfit{\bar{c}} \geq \mathbf{0}$, where we will extract $\mathbfit{A}_B^{-1}\mathbfit{b}$ from the table as our $\mathbfit{x}_B$.
-\section{Finding An Initial Basic Feasible Solution}
+\section{Finding An Initial Basic Feasible Solution} \label{twoPhaseBigM}
 Recall that to start the simplex method algorithm, we need to initialise $\mathbfit{x}_0$ to be some basic feasible solution in the feasible region. However, this may not be straight-forward. Consider the standard linear program
 \begin{align*}
     \min_{\mathbfit{x} \in \R^n} & f(\mathbfit{x}) \\
@@ -771,4 +771,180 @@ where $M > 0$ is an arbitrarily large constant. We can see that if this augmente
         \end{itemize}
     \end{enumerate} 
 \end{tecbox}
+\section{Special Cases}
+Next, we discuss a few special cases when using the simplex method. First, recall that in Definition \ref{dfn:degeneracy}, we know that a feasible basic solution $\mathbfit{x}$ is degenerate if there is some redundant active constraint. However, note that this implies that more than one basic variables can leave. Algebraically, this means that there are different $\ell_1, \ell_2 \in B$ such that 
+\begin{equation*}
+    \bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = -\frac{x_{\ell_1}}{d^j_{\ell_1}} = -\frac{x_{\ell_2}}{d^j_{\ell_2}}.
+\end{equation*}
+Without loss of generality, suppose we take $x_{\ell_1}$ as the leaving variable and try to update $x_{\ell_2}$ to $x_{\ell_2}'$. By Proposition \ref{pro:anotherBFS}, we have 
+\begin{equation*}
+    x_{\ell_2}' = x_{\ell_2} + \bar{\theta_j}d^j_{\ell_2} = x_{\ell_2} - \frac{x_{\ell_1}}{d^j_{\ell_1}}d^j_{\ell_2} = x_{\ell_2} - \frac{x_{\ell_2}}{d^j_{\ell_2}}d^j_{\ell_2} = 0,
+\end{equation*}
+so $x_{\ell_2}$ is indeed degenerate by Definition \ref{dfn:standardDegeneracy}.
+
+Note also that in some cases, we may have more than one optimal solution for the linear program. Intuitively, this occurs when at an optimal basic feasible solution, we can still find some feasible direction along which the objective value does not deteriorate. Therefore, \textbf{an alternative optimal solution can be found if and only if some reduced cost} $\bar{c_j} = 0$ at an optimal solution. There are $2$ specific cases:
+\begin{enumerate}
+    \item If we can find optimal solutions $\mathbfit{x}^1, \mathbfit{x}^2, \cdots, \mathbfit{x}^k$, then the set of optimal solutions is bounded and can be constructed as 
+    \begin{equation*}
+        \mathrm{conv}\left\{\mathbfit{x}^1, \mathbfit{x}^2, \cdots, \mathbfit{x}^k\right\}.
+    \end{equation*}
+    \item If at an optimal solution $\mathbfit{x}^*$, there is $\bar{c_j} = 0$ but $\mathbfit{d}^j \geq \mathbf{0}$, it means that $\mathbfit{x}^* + \theta\mathbfit{d}^j \geq \mathbf{0}$ is feasible for any $\theta \geq 0$, so the set of optimal solutions given by 
+    \begin{equation*}
+        \left\{\mathbfit{x}^* + \theta\mathbfit{d}^j \colon \theta \geq 0\right\}
+    \end{equation*}
+    is unbounded.
+\end{enumerate}
+Similar to case $2$ above, if at any basic feasible solution $\mathbfit{x}^*$, there is some $j \in N$ such that $\bar{c_j} < 0$ and $\mathbfit{d}^j \geq \mathbf{0}$, then any $\mathbfit{x}^* + \theta\mathbfit{d}^j$ where $\theta > 0$ is feasible and improves the objective value. This implies that the optimal value can be \textbf{improved indefinitely} and so the program is unbounded.
+
+Lastly, suppose we have some linear program with an empty feasible set. We have seen in Section \ref{twoPhaseBigM} that we can use either the two-phase method or the big-$M$ method to detect this, because if the feasible set were to be empty, we will not be able to find an optimal solution for the auxiliary problem such that $\mathbfit{y}^* = \mathbf{0}$.
+\chapter{Duality Theory}
+\section{The Dual Problem}
+A \textit{dual problem} can be seen as an alternative formulation of some linear program which is known as the \textit{primal problem}. The motivation for the dual problem comes from the following observation: suppose we have a well-ordered set $S$ and we wish to find $\inf S$. If it is difficult to minimise $S$ directly, we may first consider a ``relaxed'' lower bound $t$, i.e., fix some $t$ such that $t \leq s$ for all $s \in S$.
+
+Then, by collecting all such lower bounds $t$ into a set denoted as $T$, we know that for all $t \in T$, $t \leq s$ for all $s \in S$. Now, by \textbf{maximising} $t$, we obtain a \textbf{greatest possible lower bound} for $S$. If we can formulate the set $T$ such that $S \cap T \neq \varnothing$, i.e., there is no $x$ such that $\sup T < x < \inf S$, then this greatest lower bound is exactly $\inf S$.
+Consider the linear program
+\begin{align*}
+    \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+    \textrm{s.t. } & \mathbfit{Ax} = \mathbfit{b} \\
+    & \mathbfit{x} \geq \mathbf{0}.
+\end{align*}
+The constraint $\mathbfit{Ax} = \mathbfit{b}$ can be re-written as $\mathbfit{b - Ax} = \mathbf{0}$. Now, we augment a ``penalty'' term $\mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax})$ to the original objective function for some $\mathbfit{p} \in \R^m$.
+\begin{probox}{Lower Bound for Optimal Value}{optValLowerBound}
+    Let $\mathbfit{x}^*$ be an optimal solution to the linear program
+    \begin{align*}
+        \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+        \textrm{s.t. } & \mathbfit{Ax} = \mathbfit{b} \\
+        & \mathbfit{x} \geq \mathbf{0}.
+    \end{align*}
+    Define 
+    \begin{equation*}
+        g(\mathbfit{p}) \coloneqq \min_{\mathbfit{x} \geq \mathbf{0}}\mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax}),
+    \end{equation*}
+    then $g(\mathbfit{p}) \leq \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^*$.
+    \tcblower
+    \begin{proof}
+        Since $\mathbfit{x}^* \geq \mathbf{0}$, we have 
+        \begin{equation*}
+            g(\mathbfit{p}) = \min_{\mathbfit{x} \geq \mathbf{0}}\left(\mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax})\right) \leq \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax}^*).
+        \end{equation*}
+        Notice that $\mathbfit{x}^*$ is feasible to the original problem, so $\mathbfit{b - Ax}^* = \mathbf{0}$. Therefore, 
+        \begin{equation*}
+            g(\mathbfit{p}) \leq \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax}^*) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^*.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Proposition \ref{pro:optValLowerBound} demonstrates a construction for a function $g$ with respect to every linear program $(P)$ such that $g$ always bounds the objective value of $(P)$ below. 
+\begin{dfnbox}{Dual Problem}{dualProb}
+    For any linear program 
+    \begin{align*}
+        (P) \quad \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+        \textrm{s.t. } & \mathbfit{Ax} = \mathbfit{b} \\
+        & \mathbfit{x} \geq \mathbf{0},
+    \end{align*}
+    its {\color{red} \textbf{dual problem}} is defined as 
+    \begin{align*}
+        (D) \quad \max_{\mathbfit{p} \in \R^m}\min_{\mathbfit{x} \geq \mathbf{0}}\left(\mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax})\right),
+    \end{align*}
+    and $(P)$ is known as the {\color{red} \textbf{primal problem}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        We know that $g(\mathbfit{p}) \coloneqq \min_{\mathbfit{x} \geq \mathbf{0}}\left(\mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \mathbfit{p}^{\mathrm{T}}(\mathbfit{b - Ax})\right)$ is an lower bound for the objective value of $(P)$, so $(D)$ will try to search for the greatest lower bound of the optimal value of $(P)$.
+    \end{remark}
+\end{notebox}
+Let us study this lower bound function $g(\mathbfit{p})$ more closely. Observe that 
+\begin{equation*}
+    g(\mathbfit{p}) = \mathbfit{p}^{\mathrm{T}}\mathbfit{b} + \min_{\mathbfit{x} \geq \mathbf{0}}\left(\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A}\right)\mathbfit{x}.
+\end{equation*}
+Now we consider $2$ cases. If $\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A} \geq \mathbf{0}$, then it is clear that $\min_{\mathbfit{x} \geq \mathbf{0}}\left(\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A}\right)\mathbfit{x} = \mathbf{0}$ by taking $\mathbfit{x} = \mathbf{0}$. Otherwise, $(\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A})_j < 0$ for some $j \in \Z^+$, then $\left(\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A}\right)\mathbfit{x}$ is unbounded because clearly for any feasible $\mathbfit{x}$, we have $\left(\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A}\right)\left(\mathbfit{x} + \mathbfit{e}_j\right) < \left(\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A}\right)\mathbfit{x}$ and $\mathbfit{x} + \mathbfit{e}_j$ is obviously still feasible. 
+
+Therefore, we can essentially reduce $g(\mathbfit{p})$ to 
+\begin{equation*}
+    g(\mathbfit{p}) = \begin{cases}
+        \mathbfit{p}^{\mathrm{T}}\mathbfit{b} & \textrm{if } \mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A} \geq \mathbf{0} \\
+        -\infty & \textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Clearly, in order for us to be able to maximise $g(\mathbfit{p})$, we need $\mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\mathbfit{A} \geq \mathbf{0}$ to be satisfied by the dual problem. This means that we can have the following systematic construction for the dual problem:
+\begin{tecbox}{Formulation of the Dual Problem}{formulateDual}
+    
+\end{tecbox}
+Intuitively, if we try to formulate the dual problem of the dual problem, then we should just return to the primal problem.
+\begin{probox}{Dual of the Dual Is the Primal}{dualDual}
+    Let $(P)$ be a primal problem with the dual problem $(D)$. If $(D')$ is the dual problem of $(D)$, then $(D')$ is equivalent to $(D)$.
+\end{probox}
+\section{Duality Theorems}
+We see that a valid dual problem is such that $\mathbfit{p}^{\mathrm{T}}\mathbfit{A} \leq \mathbfit{c}^{\mathrm{T}}$.
+\begin{thmbox}{Weak Duality}{weakDuality}
+    Let 
+    \begin{align*}
+        \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+        \textrm{s.t. } & \mathbfit{Ax} = \mathbfit{b} \\
+        & \mathbfit{x} \geq \mathbf{0}
+    \end{align*}
+    be a primal problem and consider its dual
+    \begin{align*}
+        \max_{\mathbfit{p} \in \R^m} & \mathbfit{p}^{\mathrm{T}}\mathbfit{b} \\
+        \textrm{s.t. } & \mathbfit{p}^{\mathrm{T}}\mathbfit{A} \leq \mathbfit{c}^{\mathrm{T}},
+    \end{align*}
+    then 
+    \begin{equation*}
+        \sup \mathbfit{p}^{\mathrm{T}}\mathbfit{b} \leq \inf \mathbfit{c}^{\mathrm{T}}\mathbfit{x}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\mathbfit{p}$ and $\mathbfit{x}$ be feasible, then $\mathbfit{p}^{\mathrm{T}}\mathbfit{b} = \mathbfit{p}^{\mathrm{T}}\mathbfit{Ax} \leq \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$, so $\sup \mathbfit{p}^{\mathrm{T}}\mathbfit{b} \leq \inf \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$.
+    \end{proof}
+\end{thmbox}
+The above theorem justifies that the maximum of the dual objective is indeed an lower bound for the primal optimal value. We wish the primal and the dual problems to have an equal optimal value, so that solving one problem is equivalent to the other.
+\begin{corbox}{Necessary Condition for Equal Optimal Values}{necessaryEqualOpt}
+    Let $\mathbfit{x}^*$ and $\mathbfit{p}^*$ be feasible solutions to a primal problem $(P)$ and its dual problem $(D)$. If~$\mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* = \left(\mathbfit{p}^*\right)^{\mathrm{T}}\mathbfit{b}$, then $\mathbfit{x}^*$ and $\mathbfit{p}^*$ are the optimal solutions.
+\end{corbox}
+Another corollary helps us determine the boundedness and feasibility of a problem.
+\begin{corbox}{Primal Is Unbounded If and Only If Dual Is Infeasible}{primalUnbounded}
+    A primal problem $(P)$ is unbounded if and only if its dual problem $(D)$ is infeasible.
+\end{corbox}
+The opposite statement of the above corollary also holds, i.e., the primal is infeasible if and only if its dual is unbounded.
+
+In fact, all linear programs also gets for free \textit{strong duality}.
+\begin{thmbox}{Strong Duality}{strongDuality}
+    If an linear program has an optimal solution, then so does its dual. Both the primal and the dual problems have the same optimal value.
+\end{thmbox}
+
+\chapter{Sensitivity Analysis}
+\section{Sensitivity}
+Suppose that we have found an optimal solution $\mathbfit{x}^*$ for some linear program, we are interested to know if the original problem is altered, how far away will $\mathbfit{x}^*$ become from the new optimal solution. Specifically, we want to examine the sensitivity of 
+\begin{enumerate}
+    \item feasibility $\mathbfit{A}_B^{-1}\mathbfit{b} \geq \mathbf{0}$, and 
+    \item optimality $\mathbfit{c}^{\mathrm{T}} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} \geq \mathbf{0}$.
+\end{enumerate}
+Suppose $\mathbfit{b}$ is changed to $\mathbfit{b} + \delta\mathbfit{e}_i$. Note that the optimality condition is independent of $\mathbfit{b}$ and so is unaffected. If $\mathbfit{x}^*$ were still to be feasible, we must have 
+\begin{equation*}
+    \mathbf{0} \leq \mathbfit{A}_B^{-1}(\mathbfit{b} + \delta\mathbfit{e}_i) = \mathbfit{x}_B^* + \delta\left(\mathbfit{A}_B^{-1}\mathbfit{e}_i\right).
+\end{equation*}
+The above inequality yields a range of values for $\delta$ such that $\mathbfit{x}^*$ remains optimal and feasible in the altered problem. The optimal value in the altered problem is given by 
+\begin{align*}
+    \mathbfit{c}^{\mathrm{T}}_B\mathbfit{A}_B^{-1}\left(\mathbfit{b} + \delta\mathbfit{e}_i\right) & = \mathbfit{c}^{\mathrm{T}}_B\mathbfit{A}_B^{-1}\mathbfit{b} + \delta\mathbfit{c}^{\mathrm{T}}_B\mathbfit{A}_B^{-1}\mathbfit{e}_i \\
+    & = \mathbfit{c}^{\mathrm{T}}_B\mathbfit{A}_B^{-1}\mathbfit{b} + \delta\left(\mathbfit{p}^*\right)^{\mathrm{T}}\mathbfit{e}_i \\
+    & = \mathbfit{c}^{\mathrm{T}}_B\mathbfit{A}_B^{-1}\mathbfit{b} + \delta p^*_i.
+\end{align*}
+We see that the change in objective value is closely tied to the dual optimal solution, such that a small change of $\delta$ in $b_i$ results in a change of $\delta p^*_i$ in the optimal value.
+\begin{dfnbox}{Marginal Cost}{marginal}
+    Let $(P)$ be a primal problem with dual problem $(D)$. If the dual problem has an optimal solution $\mathbfit{p}*$, then $p^*$ is called the {\color{red} \textbf{marginal cost}} or {\color{red} \textbf{shadow cost}} of $b_i$ for minimisation $(P)$, and the {\color{red} \textbf{marginal profit}} or {\color{red} \textbf{shadow price}} of $b_i$ for maximisation $(P)$.
+\end{dfnbox}
+Suppose that $\mathbfit{c}$ is changed to $\mathbfit{c} + \delta\mathbfit{e}_j$ for some $j$. Note that 
+the feasibility condition is independent of $\mathbfit{c}$. If $x_j$ is non-basic, the altered reduced cost is 
+\begin{equation*}
+    \bar{c_j}' = c_j + \delta - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} = \bar{c_j} + \delta.
+\end{equation*}
+Clearly, optimality remains if and only if $\delta \geq -\bar{c_j}$. If $x_j$ is basic, then for each $i \in N$, we need 
+\begin{align*}
+    c_i - \left(\mathbfit{c}_B + \delta\mathbfit{e}_j\right)^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i & = c_i - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i - \delta\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i \\
+    & = \bar{c_j} - \delta\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i \\
+    & \geq 0.
+\end{align*}
+If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i > 0$, we have $\delta \leq \frac{\bar{c_j}}{\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i}$. If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i < 0$, we have $\delta \geq \frac{\bar{c_j}}{\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i}$. If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i = 0$, it is clear that $\bar{c_j}$ is unchanged. Therefore, let $\bar{a}_{i, j} = \mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i$, we have
+\begin{equation*}
+    \max_{\bar{a}_{i, j} < 0} \frac{\bar{c_j}}{\bar{a}_{i, j}} \leq \delta \leq \min_{\bar{a}_{i, j} > 0} \frac{\bar{c_j}}{\bar{a}_{i, j}}.
+\end{equation*}
 \end{document}
