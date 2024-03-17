@@ -5,6 +5,8 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
+\DeclareMathAccent{\widehat}{\mathord}{yhlargesymbols}{"F3}
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -245,10 +247,31 @@ Note that since every vector in a vector space $V$ can be uniquely expressed as 
 
 Now, let us denote a basis for $V$ by the mapping $z$. Notice that for any $\mathbfit{c}_1, \mathbfit{c}_2 \in \mathcal{F}^n$, we have 
 \begin{equation*}
-    z(\mathbfit{c}_1 + \mathbfit{c}_2) = z(\mathbfit{c}_1) + z(\mathbfit{c}_2),
+    z(\alpha\mathbfit{c}_1 + \mathbfit{c}_2) = \alpha z(\mathbfit{c}_1) + z(\mathbfit{c}_2),
 \end{equation*}
-so a basis is nothing more but an isomorphism!
+so a basis is nothing more but an isomorphism! In fact, we could derive our old definition for a basis using this novel definition.
+\begin{dfnbox}{Basis}{basis}
+    Let $V$ be an $n$-dimensional vector space and $z \colon \mathcal{F}^n \to V$ be any isomorphism, then the set 
+    \begin{equation*}
+        \left\{z\left(\mathbfit{e}_i\right) \colon i = 1, 2, \cdots, n\right\}
+    \end{equation*}
+    is known as a {\color{red} \textbf{basis}} for $V$.
+\end{dfnbox}
+Let us do the verification. First, take any $\mathbfit{v} \in V$, then $z^{-1}(\mathbfit{v}) \in \mathcal{F}^n$ is the coordinate vector of $\mathbfit{v}$. Note that there are scalars $a_1, a_2, \cdots, a_n$ such that 
+\begin{equation*}
+    z^{-1} = \sum_{i = 1}^{n}a_i\mathbfit{e}_i.
+\end{equation*}
+Therefore,
+\begin{equation*}
+    \mathbfit{v} = z\bigl(z^-1(\mathbfit{v})\bigr) = z\left(\sum_{i = 1}^{n}a_i\mathbfit{e}_i\right) = \sum_{i = 1}^{n}a_iz(\mathbfit{e}_i).
+\end{equation*}
+This implies that $V = \mathrm{span}\left\{z\left(\mathbfit{e}_i\right) \colon i = 1, 2, \cdots, n\right\}$. Let $\sum_{i = 1}^{n}a_iz(\mathbfit{e}_i) = \zero$, then since $z^{-1}$ is bijective, we have 
+\begin{equation*}
+    z^{-1}\left(\sum_{i = 1}^{n}a_iz(\mathbfit{e}_i)\right) = \sum_{i = 1}^{n}a_i\mathbfit{e}_i = \zero.
+\end{equation*}
+Since the $\mathbfit{e}_i$'s are linearly independent, we have $a_i = 0$ for all $i = 1, 2, \cdots, n$, and so $\left\{z\left(\mathbfit{e}_i\right) \colon i = 1, 2, \cdots, n\right\}$ is a linearly independent set and is therefore a basis for $V$.
 
+Therefore, every isomorphism $z \colon \mathcal{F}^n \to V$ defines a basis for $V$.
 \chapter{Linear Transformations}
 \section{Linear Transformations}
 \begin{dfnbox}{Linear Transformation}{linearTrans}
@@ -317,12 +340,20 @@ Cancelling $T(\zero_V)$ on both sides we have $\zero_W = T(\zero_V)$. Therefore,
 \end{thmbox}
 An interesting application of Theorem \ref{thm:rankNull} gives the following corollary:
 \begin{corbox}{Bijectivity of Reflexive Mappings}{bijectiveReflexiveMap}
-    Let $T \colon V \to V$ be a linear transformation, then $T$ is injective if and only if it is surjective.
+    Let $T \colon V \to W$ be a linear transformation, where $\dim(V) = \dim(W)$, then $T$ is injective if and only if it is surjective.
     \tcblower
     \begin{proof}
-        Suppose that $T$ is injective, then $V \cong \mathrm{range}(T)$ and so $\mathrm{null}(T) = 0$, which implies that $\dim(V) = \mathrm{rank}(T)$. However, $\mathrm{range}(T) \subseteq V$, so $\mathrm{range}(T) = V$. This means that $T$ is surjective.
+        Suppose that $T$ is injective, then $\mathrm{null}(T) = 0$. By Theorem \ref{thm:rankNull}, we have 
+        \begin{equation*}
+            \mathrm{rank}(T) = \dim(V) - \mathrm{null}(T) = \dim(W).
+        \end{equation*} 
+        Let $z_1 \colon \mathcal{F}^n \to W$ be an isomorphism for some $n \in \Z^+$. Note that there exists an isomorphism $z_2 \colon \mathcal{F}^n \to \mathrm{range}(T)$. Therefore, the mapping $z_1 \circ z_2^{-1} \colon \mathrm{range}(T) \to W$ is an isomorphism. However, $\mathrm{range}(T) \subseteq W$, which implies that $\mathrm{range}(T) = W$. This means that $T$ is surjective.
         \\\\
-        Suppose that $T$ is surjective, then $\dim(V) = \mathrm{rank}(T)$ and so $\mathrm{null}(T) = 0$. Therefore, $T$ is injective.
+        Suppose that $T$ is surjective, then $W = \mathrm{range}(T)$ and so $\mathrm{rank}(T) = \dim(W)$. Therefore, by Theorem \ref{thm:rankNull}, 
+        \begin{equation*}
+            \mathrm{null}(T) = \dim(V) - \mathrm{rank}(T) = \dim(W) - \mathrm{rank}(T) = 0.
+        \end{equation*}
+        By Proposition \ref{pro:injectTest}, $T$ is injective.
     \end{proof}
 \end{corbox}
 \section{Duality}
@@ -451,7 +482,30 @@ Naturally, it feels justified to define a ``dual space of the dual space'' of $V
 \begin{equation*}
     \hat{\hat{V}} \coloneqq \mathcal{L}\left(\hat{V}, \mathcal{F}\right) = \mathcal{L}\bigl(\mathcal{L}(V, \mathcal{F}), \mathcal{F}\bigr).
 \end{equation*}
-We can in fact prove that this space is isomorphic to $V$ itself. Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\hat{V}$ to $\mathcal{F}$. We can verify that $\mathbfit{v}$ is linear, because
+We can in fact prove that this space is isomorphic to $V$ itself. 
+\begin{probox}{$\hat{\hat{V}} \cong V$}{doubleDual}
+    Let $V$ be a finite-dimensional vector space, then the double-dual space 
+    \begin{equation*}
+        \hat{\hat{V}} \coloneqq \mathcal{L}\left(\hat{V}, \mathcal{F}\right) = \mathcal{L}\bigl(\mathcal{L}(V, \mathcal{F}), \mathcal{F}\bigr)
+    \end{equation*}
+    is isomorphic to $V$.
+    \tcblower
+    \begin{proof}
+        Define a mapping $K \colon V \to \hat{\hat{V}}$ by $K(\mathbfit{v}) = f$ where $f \colon \hat{V} \to V$ is such that $f(\alpha) = \alpha(\mathbfit{v})$. It suffices to prove that $K$ is an isomorphism. First, note that for any $\mathbfit{u}, \mathbfit{v} \in V$ and any $c \in \mathcal{F}$,
+        \begin{align*}
+            K(c\mathbfit{v} + \mathbfit{u})(\alpha) & = \alpha(c\mathbfit{v} + \mathbfit{u}) \\
+            & = c\alpha(\mathbfit{v}) + \alpha(\mathbfit{u}) \\
+            & = cK(\mathbfit{v})(\alpha) + K(\mathbfit{u})(\alpha) \\
+            & = \bigl(cK(\mathbfit{v}) + K(\mathbfit{u})\bigr)(\alpha)
+        \end{align*}
+        for all $\alpha \in \hat{V}$. Therefore, $K$ is a homomorphism. Let $K(\mathbfit{v}) = 0_{\hat{V} \to V}$ be the zero mapping, then 
+        \begin{equation*}
+            K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v}) = 0
+        \end{equation*}
+        for all $\alpha \in \hat{V}$. This implies that $\mathbfit{v} = \zero$, and so $\mathrm{null}(K) = 0$ since $V$ is finite-dimensional. By Proposition \ref{pro:injectTest}, $K$ is injective, and so by Corollary \ref{cor:bijectiveReflexiveMap}, $K$ is bijective. Therefore, $K$ is an isomorphism and so $\hat{\hat{V}} \cong V$.
+    \end{proof}
+\end{probox}
+Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\hat{V}$ to $\mathcal{F}$. We can verify that $\mathbfit{v}$ is linear, because
 \begin{align*}
     \mathbfit{v}(m\alpha + n\beta) & = m\alpha(\mathbfit{v}) + n\beta(\mathbfit{v}) \\
     & = m\mathbfit{v}(\alpha) + n\mathbfit{v}(\beta).
@@ -464,6 +518,32 @@ Therefore, we can in some sense view a vector space and its dual space the \text
     \end{equation*}
     for any $\alpha \in \hat{V}$. 
 \end{dfnbox}
+We can verify that the transpose is still linear, because for any $\alpha, \beta \in \hat{V}$ and any $c \in \mathcal{F}$, we have 
+\begin{align*}
+    \hat{T}(c\alpha + \beta)(\mathbfit{v}) & = (c\alpha + \beta)\bigl(T(\mathbfit{v})\bigr) \\
+    & = c\alpha\bigl(T(\mathbfit{v})\bigr) + \beta\bigl(T(\mathbfit{v})\bigr) \\
+    & = c\hat{T}(\alpha)(\mathbfit{v}) + \hat{T}(\beta)(\mathbfit{v}) \\
+    & = \left(c\hat{T}(\alpha) + \hat{T}(\beta)\right)(\mathbfit{v})
+\end{align*}
+for all $\mathbfit{v} \in V$, which implies that $\hat{T}(c\alpha + \beta) = c\hat{T}(\alpha) + \hat{T}(\beta)$.
+
+In fact, the very action of taking the transpose is a linear transformation!
+\begin{probox}{Linearity of Transposition}{linearTranspose}
+    Let $\tau$ be a mapping over $\mathcal{L}(V, V)$ for some finite-dimensional vector space $V$ such that $\tau(T) = \hat{T}$, then $\tau$ is a linear transformation.
+    \tcblower
+    \begin{proof}
+        Take any $\alpha, \beta \in \mathcal{V, V}$ and any $c \in \mathcal{F}$. For any $\gamma \in \mathcal{L}(V, V)$ and any $\mathbfit{v} \in V$, consider 
+        \begin{align*}
+            \tau(c\alpha + \beta)(\gamma)(\mathbfit{v}) & = \left(\widehat{c\alpha + \beta}\right)(\gamma)(\mathbfit{v}) \\
+            & = \gamma\bigl((c\alpha + \beta)(\mathbfit{v})\bigr) \\
+            & = c\gamma\bigl(\alpha(\mathbfit{v})\bigr) + \gamma\bigl(\beta(\mathbfit{v})\bigr) \\
+            & = c\hat{\alpha}(\gamma)(\mathbfit{v}) + \hat{\beta}(\gamma)(\mathbfit{v}) \\
+            & = c\tau(\alpha)(\gamma)(\mathbfit{v}) + \tau(\beta)(\gamma)(\mathbfit{v}).
+        \end{align*}
+        Since $\mathbfit{v}$ is arbitrary, this means that $\tau(c\alpha + \beta)(\gamma) = c\tau(\alpha)(\gamma) + \tau(\beta)(\gamma)$ for all $\gamma \in \mathcal{L}(V, V)$, and so $\tau(c\alpha + \beta) = c\tau(\alpha) + \tau(\beta)$. Therefore, $\tau$ is a linear transformation.
+    \end{proof}
+\end{probox}
+The above is essentially saying that the transpose of a linear combination equals the linear combination of the transposes of each terms.
 \section{Tensor Product}
 \begin{dfnbox}{Tensor Product}{tensorProd}
     Let $V$ be a vector space with the dual space $\hat{V}$. For any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$, their {\color{red} \textbf{tensor product}} is defined as a mapping $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ such that
@@ -562,12 +642,51 @@ It is not difficult to see that from Proposition \ref{pro:tenserProdBasis}, the 
         Note that $T^i_j = \zeta^i\bigl(T(\mathbfit{z}_j)\bigr)$.
     \end{remark}
 \end{notebox}
-Let $\hat{T}$ be the transpose of $T$, then by Definition \ref{dfn:tranpose} we have
-\begin{equation*}
-    \zeta^i\bigl(T(\mathbfit{z}_j)\bigr) = \hat{T}(\zeta^i)(\mathbfit{z}_j) = z_j\bigl(\hat{T}(\zeta^i)\bigr),
-\end{equation*}
-which we can use to verify that the matrix of $\hat{T}$ is indeed $\mathbfit{T}^{\mathrm{T}}$.
-
+Recall that we have defined transpose without using matrices. Now let us verify that our definition stays consistent with the elementary definition of matrix transposition.
+\begin{probox}{Matrix Representation of Transpose Mappings}{matrixTranspose}
+    Let $T \colon V \to V$ be a linear mapping with matrix representation $\mathbfit{T}$. Let $\hat{T}$ be the transpose of $T$, then the matrix representation of $\hat{T}$ is such that $\hat{T}^{i}_j = T^j_i$.
+    \tcblower
+    \begin{proof}
+        Define $K \colon V \to \hat{\hat{V}}$ by $K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v})$, then $K(\mathbfit{v}) = \alpha \mapsto \alpha(\mathbfit{v})$. Consider the following lemma:
+        \begin{lembox}{Transpose of Tensor Products}{tensorTrans}
+            Let $V$ be a finite-dimensional space. For any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$, we have 
+            \begin{equation*}
+                \widehat{\mathbfit{v} \otimes \alpha} = \alpha \otimes K(\mathbfit{v}).
+            \end{equation*}
+            \tcblower
+            \begin{proof}
+                Let $f \colon \mathbfit{v} \otimes \alpha$, for any $\beta \in \hat{V}$ and any $\mathbfit{w} \in V$, consider 
+                \begin{align*}
+                    \hat{f}(\beta)(\mathbfit{w}) & = \beta\bigl(f(\mathbfit{w})\bigr) \\
+                    & = \beta\bigl(\alpha(\mathbfit{w})\mathbfit{v}\bigr) \\
+                    & = \alpha(\mathbfit{w})\beta(\mathbfit{v}), \\
+                    \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)(\mathbfit{w}) & = \bigl(K(\mathbfit{v})(\beta)\alpha\bigr)(\mathbfit{w}) \\
+                    & = \alpha(\mathbfit{w})\beta(\mathbfit{v}).
+                \end{align*}     
+                Therefore, $\hat{f}(\beta) =  \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)$ for all $\beta \in \hat{V}$, which implies that 
+                \begin{equation*}
+                    \mathbfit{v} \otimes \alpha = \hat{f} = \alpha \otimes K(\mathbfit{v}).
+                \end{equation*}
+            \end{proof}
+        \end{lembox}
+        Let $\mathbfit{z}_1, \cdots, \mathbfit{z}_n$ be a basis for $V$, then 
+        \begin{equation*}
+            K(\mathbfit{z}_i)\left(\zeta^j\right) = \zeta^j(\mathbfit{z}_i) = \begin{cases}
+                1 & \textrm{if } i = j \\
+                0 & \textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        Therefore, all of the $K(\mathbfit{z}_i)$'s forms a dual basis for $\hat{V}$. By Proposition \ref{pro:tenserProdBasis} and Definition \ref{dfn:linTransMat}, we know that 
+        \begin{equation*}
+            \hat{T} = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\hat{T}^i_j\left(\zeta^i \otimes K(\mathbfit{z}_j)\right), \qquad T = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\mathbfit{z}_j \otimes \zeta^i\right).
+        \end{equation*}
+        By Proposition \ref{pro:linearTranspose}, we know that 
+        \begin{equation*}
+            \hat{T} = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\widehat{\mathbfit{z}_j \otimes \zeta^i}\right).
+        \end{equation*}
+        By Lemma \ref{lem:tensorTrans}, $\widehat{\mathbfit{z}_j \otimes \zeta^i} = \zeta^i \otimes K(\mathbfit{z}_j)$, so $\hat{T}^i_j = T^j_i$. 
+    \end{proof}
+\end{probox}
 Let $V$ be a finite-dimensional vector space with $\dim(V) = n$ and let $\mathcal{M}_{n \times n}$ be the vector space of all $n \times n$ matrices. Define $M_z \colon \mathcal{L}(V, V) \to \mathcal{M}_{n \times n}$ that maps each $T \in \mathcal{L}(V, V)$ to its matrix representation $\mathbfit{T}$. Intuitively, it is an isomorphism.
 
 \begin{notebox}
@@ -891,7 +1010,7 @@ The reason that we consider the Jordan block is that any Jordan block has only o
                 \vdots \\
                 \lambda x_{m - 1} + x_m \\
                 \lambda x_m
-            \end{bmatrix} = \lambda\begin{bmatrix}
+            \end{bmatrix} = \begin{bmatrix}
                 \lambda x_1 \\
                 \lambda x_2 \\
                 \vdots \\
