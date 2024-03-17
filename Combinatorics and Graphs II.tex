@@ -1386,7 +1386,7 @@ We introduce a useful definition which will help us investigate the structure of
     Let $G$ be a graph with a subgraph $H$. An {\color{red} \textbf{$H$-path}} is a path $P$ in $G$ such that its $2$ ends are the only vertices in $P \cap H$.
 \end{dfnbox}
 Recall that in Proposition \ref{pro:cycleIn2Connected}, we have shown that every $2$-connected graph contains a cycle, but that the converse is not true. However, can we try to extend from this necessary condition somehow to give a more precise characterisation of a $2$-connected graph?
-\begin{thmbox}{Characterisation of $2$-connected Graphs}{2ConnectedGraph}
+\begin{thmbox}{Ear-Decomposition}{2ConnectedGraph}
     A graph $G$ is $2$-connected if and only if it can be constructed from a cycle by successively augmenting the partially constructed graph $H$ with $H$-paths.
     \tcblower
     \begin{proof}
@@ -1405,8 +1405,56 @@ We would like to take one step further and probe into $3$-connected graphs. We w
 \begin{thmbox}{Tutte's Characterisation of $3$-connected Graphs}{Tutte3Connected}
     A graph $G$ is $3$-connected if and only if there is a sequence $\left(G_0, G_1, \cdots, G_n\right)$ with $G_n \cong G$ such that $G_0 = K_4$ and $G_{i + 1}$ contains an edge $xy$ with $d_{G_{i + 1}}(x), d_{G_{i + 1}}(y) \geq 3$ and $G_i = G_{i + 1} \circ xy$. 
 \end{thmbox}
+Ear-decomposition is a fairly nice construction for a $2$-connected graph. However, as a characterisation it is not very intuitive, in a sense that one still needs to work towards the graph from a cycle to actually verify $2$-connectivity. Can we do better and propose a more direct characterisation?
+\begin{thmbox}{Whitney's Characterisation of $2$-connected Graphs}{Whitney}
+    A graph $G$ is $2$-connected if and only if for every $u, v \in V(G)$, there exist $2$ internally disjoint $u$-$v$ paths in $G$.
+\end{thmbox}
+Here, ``internally disjoint'' paths means that the paths share no other vertices except $u$ and $v$. More generally, we define the following:
+\begin{dfnbox}{$A$-$B$ Path}{ABPath}
+    Let $G$ be a graph with $A, B \subseteq V(G)$. An {\color{red} \textbf{$A$-$B$ path}} is a path in $G$ which contains exactly one vertex in $A$ and one vertex in $B$.
+\end{dfnbox} 
+Note that in the above definition, we do not require $A$ and $B$ to be disjoint. Clearly, if $A \cap B \neq \varnothing$, then every vertex in $A \cap B$ is a trivial $A$-$B$ path. Intuitively, to disconnect $G$, we necessarily need to disconnect $A$ and $B$, i.e., we need to make sure that there is no $A$-$B$ path in $G$.
+\begin{dfnbox}{Separating Set for $(A, B)$}{ABSeparate}
+    Let $G$ be a graph with $A, B \subseteq V(G)$. A {\color{red} \textbf{separating set}} for $(A, B)$ is a set $X$ consisting of both edges and vertices such that there is no $A$-$B$ path in $G - X$.
+\end{dfnbox}
+Notice that we have not given the proof for Theorem \ref{thm:Whitney} yet. One may choose to use ear-decomposition to prove the theorem, but we can also see it as a corollary of another theorem. However, before proving the actual theorem, we first consider the following lemma:
+\begin{lembox}{$A$-$B$ Paths Extension}{moreABPaths}
+    Let $G$ be a graph with $A, B \subseteq V(G)$ such that the minimum separating set for $(A, B)$ has size $k$, then for any set $P$ of less than $k$ vertex-disjoint $A$-$B$ paths in $G$, there is a set $Q$ of vertex-disjoint $A$-$B$ paths in $G$ whose set of end vertices contains the set of end vertices in $P$ as a proper subset.
+    \tcblower
+    \begin{proof}
+        Fix any $A \subseteq V(G)$. We will perform induction on $\abs{V(G)} - \abs{B}$. Note that when $\abs{V(G)} - \abs{B} = 0$, we have $B = V(G)$ and so $k = \abs{A}$. If $\abs{P} < k$, then there is at least one vertex $a \in A$ which is not contained by any path in $P$. Take $Q \coloneqq P \cup \{a\}$ then $Q$ is a set of $\abs{P} + 1$ vertex disjoint $A$-$B$ paths in $G$ whose set of end vertices contains the end vertices in $P$ as a proper subset.
+        \\\\
+        Take any $A, B \subseteq V(G)$ and fix $P \coloneqq \left\{P_1, P_2, \cdots, P_n\right\}$ to be a set of $n < k$ vertex-disjoint $A$-$B$ paths. We denote the set of end vertices in $P$ by $P_A \coloneqq \left\{a_1, a_2, \cdots, a_n\right\}$ and $P_B \coloneqq \left\{b_1, b_2, \cdots, b_n\right\}$. Clearly, $P_B$ is not a separating set for $(A, B)$, so there is some $A$-$B$ path which does not contain any vertex from $P_B$. Let this path be $R$ with end vertex $b_R \in B$. If $R$ is vertex-disjoint to every $P_i \in P$, then we are done.
+        \\\\
+        Otherwise, $R \cap P_j \neq \varnothing$ for some $P_j \in P$. Without loss of generality, let $x \in V(R)$ be the vertex such that the $x$-$b_R$ path in $R$ contains no vertex from $P$, i.e., $x$ is the last intersection between $R$ and the paths in $P$. Without loss of generality, we can re-label the paths in $P$ such that $x \in P_n$. Denote by $xR$ the $x$-$b_R$ path in $R$ and by $xP_n$ the $x$-$b_n$ path in $P_n$. Define $B' \coloneqq B \cup V(xR) \cup V(xP_n)$, then $B \subsetneqq B'$ and so $\abs{V(G)} - \abs{B'} < \abs{V(G)} - \abs{B}$. Let $P' \coloneqq \left\{P_1, P_2, \cdots, P_{n - 1}, P_nx\right\}$, then $P'$ is a set of $n$ vertex-disjoint $A$-$B'$ paths in $G$. Now, take any $X$ to be a minimum separating set for $(A, B')$, then clearly $X$ separates $(A, B)$, so $\abs{X} \geq k > n$. By the inductive hypothesis, we can find a set $Q'$ of vertex-disjoint $A$-$B'$ paths in $G$ such that the set of end vertices of $Q'$ contains the end vertices of $P$ as a proper subset.
+        \\\\
+        Let $P'_{B'} \coloneqq \left\{b_1, b_2, \cdots, b_{n - 1}, x\right\}$ be the set of end vertices in $B'$ for paths in $P'$. Let $Q' \coloneqq \left\{Q'_1, Q'_2, \cdots, Q'_{n + 1}\right\}$ and denote the end vertex of $Q'_i$ in $B$ by $B(Q'_i)$, then without loss of generality, we can re-label the vertices such that 
+        \begin{equation*}
+            B(Q'_i) = \begin{cases}
+                b_i & \textrm{if } i = 1, 2, \cdots, n - 1 \\
+                x & \textrm{if } i = n \\
+                y & \textrm{if } i = n + 1
+            \end{cases},
+        \end{equation*}
+        where $y \notin P'_{B'}$. Note that $Q'_1, Q'_2, \cdots, Q'_{n - 1}$ are already vertex-disjoint $A$-$B$ paths. We will try to extend $Q'$ to obtain $Q$. We consider $2$ cases on $y$.
+        \\\\
+        If $y \in xP_n$, then every vertex in $V(xR) - \{x\}$ is unused by all paths in $Q'$, and so we can extend $Q'_n$ by $xR$ to obtain an $A$-$B$ path, and extend $Q'_{n + 1}$ by $yP_n$ to obtain another $A$-$B$ path. Note that $xR$ and $yP_n$ are vertex-disjoint, so we have obtained a set $Q$ of $(n + 1)$ vertex-disjoint $A$-$B$ paths as desired.
+        \\\\
+        If $y \notin xP_n$, then we can extend $Q'_n$ by $xP_n$ to connect $b_n$. Note that either $y \in yR$ or $y \in B$, but either way we can extend $Q'_{n + 1}$ to a new vertex in $B$, so we still can obtain $Q$ as desired.
+    \end{proof}
+\end{lembox}
+Now we are ready to state the following theorem:
+\begin{thmbox}{Menger's Theorem}{Menger}
+    Let $G$ be a graph with $A, B \subseteq V(G)$, then the minimum size of separating sets for $(A, B)$ equals the maximum number of vertex-disjoint $A$-$B$ paths in $G$.
+    \tcblower
+    \begin{proof}
+        Let $X$ to be a minimum separating set for $(A, B)$ and $k$ to be the number of vertex-disjoint $A$-$B$ paths in $G$. Clearly, to disconnect $A$ and $B$, we need to at least delete either one edge or one vertex from each of the $k$ $A$-$B$ paths. Therefore, $\abs{X} \geq k$.
+        \\\\
+        Take any $n < \abs{X}$ disjoint $A$-$B$ paths, then by Lemma \ref{lem:moreABPaths}, we can extend this set of paths by another vertex-disjoint $A$-$B$ paths until $n = \abs{X}$. Therefore, $k \geq \abs{X}$, which implies that $k = \abs{X}$ as desired.
+    \end{proof}
+\end{thmbox}
 \chapter{Graph Colouring}
-\section{Chromatic Number}
+\section{Vertex Colouring}
 \begin{thmbox}{Brooks' Theorem}{Brooks}
     Let $G$ be a connected graph not isomorphic to a complete graph or an odd cycle, then $\chi(G) \leq \Delta(G)$.
 \end{thmbox}
