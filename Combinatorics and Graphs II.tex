@@ -1453,8 +1453,69 @@ Now we are ready to state the following theorem:
         Take any $n < \abs{X}$ disjoint $A$-$B$ paths, then by Lemma \ref{lem:moreABPaths}, we can extend this set of paths by another vertex-disjoint $A$-$B$ paths until $n = \abs{X}$. Therefore, $k \geq \abs{X}$, which implies that $k = \abs{X}$ as desired.
     \end{proof}
 \end{thmbox}
+By taking both sets of vertices as singletons, we obtain a corollary of Theorem \ref{thm:Menger} at a ``local'' level.
+\begin{corbox}{Local Version of Menger's Theorem}{localMenger}
+    Let $G$ be a graph. If $a, b \in V(G)$ are not adjacent, then 
+    \begin{enumerate}
+        \item the minimum number of vertices which separate $a$ and $b$ when removed equals the maximum number of internally vertex-disjoint $a$-$b$ paths in $G$;
+        \item the minimum number of edges which separate $a$ and $b$ when removed equals the maximum number of edge-disjoint $a$-$b$ paths in $G$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Note that the minimum number of vertices that separate $a$ and $b$ when removed is just the minimum number of vertices that separate $N_G(a)$ and $N_G(b)$ when removed. By Theorem \ref{thm:Menger}, this quantity is just the maximum number of vertex-disjoint $N_G(a)$-$N_G(b)$ paths in $G$, which are internally vertex-disjoint $a$-$b$ paths.
+        \\\\
+        Let $L(G)$ be the line graph of $G$ and let $A$ and $B$ be the sets of edges containing $a$ and $b$ respectively. Then, the minimum number of edges to separate $a$ and $b$ when removed is equal to the minimum number of vertices to separate $A$ and $B$ when removed in $L(G)$. By Theorem \ref{thm:Menger}, this quantity is just the number of vertex-disjoint $A$-$B$ paths in $L(G)$, which correspond to edge-disjoint $a$-$b$ paths in $G$.
+    \end{proof}
+\end{corbox}
+Correspondingly, the following ``global'' version of Menger's Theorem characterises a $k$-connected graph, to which Theorem \ref{thm:Whitney} is an immediate corollary.
+\begin{corbox}{Global Version of Menger's Theorem}{globalMenger}
+    A graph $G$ is $k$-connected if and only if for any $u, v \in V(G)$, there are $k$ internally vertex-disjoint $u$-$v$ paths in $G$. A graph $G$ is $k$-edge-connected if and only if for any $u, v \in V(G)$, there are $k$ edge-disjoint $u$-$v$ paths in $G$. 
+    \tcblower
+    \begin{proof}
+        Suppose the for any $u, v \in V(G)$, there exist $k$ internally vertex-disjoint $u$-$v$ paths in $G$. Let $S$ be a set of less than $k$ vertices in $G$ and consider $G - S$. For any $u, v \in V(G) - S$, we know that there is at least one $u$-$v$ path in $G - S$, so $G - S$ is connected and so $G$ is $k$-connected.
+        \\\\
+        Suppose conversely that $G$ is $k$-connected and suppose on contrary that there exist $a, b \in V(G)$ such that $a, b$ are connected by fewer than $k$ internally vertex-disjoint $a$-$b$ paths in $G$. By Corollary \ref{cor:localMenger}, $ab \in E(G)$ because otherwise we can disconnected $a$ and $b$ by deleting fewer than $k$ vertices, which is impossible because $G$ is $k$-connected. Let $H \coloneqq G - ab$, then there are at most $(k - 2)$ internally vertex-disjoint $a$-$b$ paths in $H$. By Corollary \ref{cor:localMenger}, there exists a set $X \subseteq V(H)$ with $\abs{X} \leq k - 2$ which separates $a$ and $b$ in $H$. Note that there exists some $w \in V(H) - X - \{a, b\}$ such that $X$ separates $w$ from either $a$ or $b$ in $H$, because otherwise $a$ and $b$ are connected in $H - X$. Without loss of generality, let $X$ separates $w$ from $a$. 
+        \\\\
+        Note that $a$ and $w$ are connected in $G - X$ because $G$ is $k$-connected, so there exists at least one $a$-$w$ path in $G$ which does not contain any vertex in $X$. Notice that every such path must contain the edge $ab$ because otherwise $a$ and $w$ are connected in $H - X$. Therefore, $w$ and $a$ are disconnected in $G - X - \{b\}$, which means $G$ is $(k - 1)$-connected, which is a contradiction.
+    \end{proof}
+\end{corbox}
+With Menger's Theorem, we can prove Theorem \ref{thm:Konig} as a corollary. Consider a bipartite graph $G$ with bipartition $(A, B)$. Add vertices $a, b$ to $G$ to form a new graph $H$ such that $N_H(a) = A$ and $N_H(b) = B$.
+
+Clearly, $\nu(G)$ is the maximum number of internally vertex-disjoint $a$-$b$ paths in $H$. By Corollary \ref{cor:localMenger}, this is just the minimum number of vertices which separate $a$ and $b$ in $H$ when removed. Let $X \subseteq V(G)$ be the minimal set of vertices to disconnect $a$ and $b$ when removed, then every $a$-$b$ path in $H$ must contain a vertex in $X$. Suppose there is an edge $uv \in E(G)$ such that $u \notin X$ and $v \notin X$, then $auvb$ is an $a$-$b$ path in $H - X$. Therefore, $X$ is a vertex cover for $G$ and so $\nu(G) = \abs{X} = \tau(G)$.
 \chapter{Graph Colouring}
+Graph colouring stems from the following simple motivation:
+\begin{quote}
+    Any map of countries on a plane can be coloured by $4$ distinct colours such that no two countries sharing at least one border have the same colour.
+\end{quote}
+The above is summarised as the $4$ Colour Theorem. To study such problems, we introduce to notion of graph colouring.
 \section{Vertex Colouring}
+\begin{dfnbox}{Proper Colouring}{colouring}
+    A {\color{red} \textbf{proper $k$-colouring}} of a graph $G$ is a mapping 
+    \begin{equation*}
+        c \colon V(G) \to \left\{1, 2, \cdots, k\right\}
+    \end{equation*}
+    such that $c(v) \neq c(u)$ whenever $uv \in E(G)$.
+\end{dfnbox}
+Given a graph $G$ with a proper $k$-colouring $c$, denote with $V_i \coloneqq \left\{v \colon c(v) = i\right\}$ the set of all vertices with colour $i$. Clearly, every $V_i$ is an independent set in $G$.
+
+Note that if a graph has a proper $k$-colouring, then it must also have a proper $(k + 1)$-colouring. Therefore, we are interested to know the least number of colours to properly colour a graph.
+\begin{dfnbox}{Chromatic Number}{chromaticNum}
+    The {\color{red} \textbf{chromatic number}} of a graph $G$, denoted by $\chi(G)$, is the smallest integer $k$ such that $G$ has a proper $k$-colouring.
+\end{dfnbox}
+Let us examine some special graphs to see their chromatic numbers:
+\begin{itemize}
+    \item Complete graph $K_n$: $\chi(K_n) = n$.
+    \item Cycle $C_n$: 
+    \begin{equation*}
+        \chi(C_n) = \begin{cases}
+            2 & \textrm{if } 2 \mid n \\
+            3 & \textrm{if } 2 \not\mid n
+        \end{cases}.
+    \end{equation*}
+    \item Empty graph $\overline{K_n}$: $\chi\left(\overline{K_n}\right) = 1$.
+    \item Petersen graph $P$: $\chi(P) = 3$.
+\end{itemize}
+Recall the Kneser graph $KG(n, k)$ from Definition \ref{dfn:kneser}.
 \begin{thmbox}{Brooks' Theorem}{Brooks}
     Let $G$ be a connected graph not isomorphic to a complete graph or an odd cycle, then $\chi(G) \leq \Delta(G)$.
 \end{thmbox}
