@@ -655,9 +655,6 @@ As it turns out, the incidence and adjacency matrices are in fact related by a s
     \end{equation*}
 \end{probox}
 
-
-\chapter{Trees and Bipartite Graphs}
-
 \section{Tree}
 In computer science and data science, it is often useful to use a tree diagram. Colloquially, we view a tree as a graph consisting of nodes, each of which has exactly one parent node and some children nodes. Here, we shall introduce the rigorous mathematical definition for a tree.
 \begin{dfnbox}{Tree and Forest}{treeForest}
@@ -783,19 +780,7 @@ Consider a $k$-regular bipartite graph. Intuitively, if every vertex in the firs
         Since $k > 0$, this implies $\abs{U} = \abs{V}$.
     \end{proof}
 \end{probox}
-Sometimes, it is not easy to identify the bipartition in a bipartite graph. Therefore, to quickly determine whether a graph is bipartite, we consider the following theorem:
-\subsection{Chromatic Number}
-Suppose $G$ is bipartite with bipartition $(U, V)$, then we can colour the vertices in $G$ such that all vertices in $U$ receives one colour and all those in $V$ receives another.
-\begin{dfnbox}{$k$-Colourability}{colourable}
-    A graph $G$ is said to be {\color{red} \textbf{$k$-colourable}} if one can colour $V(G)$ with $k$ distinct colours such that every pair of adjacent vertices receive distinct colours.
-\end{dfnbox}
-Clearly, if a graph is $k$-colourable, it must be $(k + i)$-colourable for all $i \in \N$. Therefore, we are interested in the smallest possible $k$ such that a graph is $k$-colourable.
-\begin{dfnbox}{Chromatic Number}{chromaticN}
-    The {\color{red} \textbf{chromatic number}} of a graph $G$ is the smallest positive integer $k$ such that $G$ is $k$-colourable, denoted as $\chi(G)$.
-\end{dfnbox}
-Observe that if $\chi(G) \leq 2$, it is equivalent to saying that we can find a bipartition of $V(G)$, so a bipartite graph can be alternatively defined as a graph $G$ with $\chi(G) \leq 2$. 
-
-Furthermore, observe that if $H \subseteq G$, then $\chi(H) \leq \chi(G)$. Consider a cycle $C_{2n + 1}$ for some $n \in \N$. It is clear that $\chi(C_{2n + 1}) = 3$, so if $C_{2n + 1} \subseteq G$, then $G$ cannot be bipartite.
+It is not easy to see whether a graph is bipartite by observation alone, so we consider the following characterisation:
 \begin{thmbox}{Bipartite Graph Characterisation}{bipartiteIff}
     A graph is bipartite if and only if it contains no odd cycles.
     \tcblower
@@ -805,10 +790,6 @@ Furthermore, observe that if $H \subseteq G$, then $\chi(H) \leq \chi(G)$. Consi
         Suppose that there exist some $w_1, w_2 \in V(G)$ such that both receive the same colour but $w_1w_2 \in E(G)$. Note that this means that there exist a $w_1$-$u$ path in $T$ and a $w_2$-$u$ path in $T$ with the same parity. This implies that there exists an closed walk of odd length in $G$, and so $G$ contains an odd cycle, which is a contradiction. Therefore, $G$ is bi-colourable and so is bipartite.
     \end{proof}
 \end{thmbox}
-Similar to bipartite graphs, we can define the notion of an $r$-partite graph with chromatic numbers.
-\begin{dfnbox}{$r$-partite Graph}{rpartite}
-    A graph $G$ is an {\color{red} \textbf{$r$-partite graph}} if $\chi(G) \leq r$.
-\end{dfnbox}
 
 \chapter{Matchings and Vertex Covers}
 \section{Matching}
@@ -937,7 +918,7 @@ In other words, $L(G)$ uses $E(G)$ as the vertex set and two vertices are adjace
         \end{equation*}
     \end{proof}
 \end{probox}
-\section{K\"{o}nig's Theorem}
+\section{Matchings in Bipartite Graphs}
 Let us take a slight detour and unpack the matching number from a different perspective. Note that while forming a matching in a graph $G$, we actually divide $E(G)$ into two subsets, one of which is included in the matching and the other excluded. Now, let us denote an included edge by letting it have a weight of $1$, and assign $0$ weight to all other edges which are unselected.
 
 For every $e \in E(G)$, let $x_e$ denote its weight. This way, to find a maximum matching is in fact equivalent to finding an optimal solution for the \textit{integer program}
@@ -983,7 +964,7 @@ In general, we can characterise a maximum matching by using augmenting paths.
         Suppose conversely that there is no augmenting path in $G$ with respect to $M$. We will prove that $M$ is maximum by considering the contrapositive statement. Suppose that $M$ is not maximum, then there exists some matching $M'$ with $e(M') > e(M)$. Consider the subgraph $H \coloneqq M \triangle M'$. Note that $\Delta(H) = 2$ and that every connected component of $H$ is either a path or a cycle whose edges alternate between $E(M)$ and $E(M')$. Note that $H$ is bipartite, so every cycle in $H$ must be even and so contain equal number of edges from $M$ and $M'$. However, since $e(M') > e(M)$, we can find a path in $H$ which begins and ends with edges in $M' - M$ and whose edges alternate between $M$ and $M'$. This path is an augmenting path with respect to $M$.
     \end{proof}
 \end{thmbox}
-With the above preliminary results established, we are now ready to prove the \textit{K\"{o}nig's Theorem}.
+With these preliminary results established, we are now ready to prove \textit{K\"{o}nig's Theorem}.
 \begin{thmbox}{K\"{o}nig's Theorem}{Konig}
     If $G$ is bipartite, then $\nu(G) = \tau(G)$.
     \tcblower
@@ -1013,10 +994,9 @@ We shall state the generalised theorem without proof.
 \begin{thmbox}{Egerv\'{a}ry's Theorem}{Egervary}
     For every bipartite $G$, the minimum weight of a fractional vertex cover equals the weight of the matching with the maximum weight.
 \end{thmbox}
-\section{Hall's Marriage Theorem}
 Suppose $G$ is a bipartite graph with bipartition $(A, B)$. In the case where $\abs{A} \neq \abs{B}$ we cannot get any matching with size greater than $\min\{\abs{A}, \abs{B}\}$ for the obvious reason. Therefore, the best we can hope is to construct a matching \textbf{perfect to one of the partite sets}.
 
-Suppose $S \subseteq A$ is a set of vertices in $G$. We denote the union of the neighbourhoods of all vertices in $S$ by $N_G(S)$. Apparently, if we can find some $S$ such that $\abs{N_G(S)} < \abs{S}$, it means that we cannot find a matching perfect to $A$ because we simply cannot match every vertex in $S$.
+Suppose $S \subseteq A$ is a set of vertices in $G$. We denote the union of the neighbourhoods of all vertices in $S$ by $N_G(S)$. Apparently, if we can find some $S$ such that $\abs{N_G(S)} < \abs{S}$, it means that we cannot find a matching perfect to $A$ because we cannot match every vertex in $S$.
 
 This means that for $G$ to contain a matching perfect to $A$, it necessarily needs to satisfy $\abs{S} \leq \abs{N_G(S)}$ for every $S \subseteq A$. However, it turns out that amazingly, this necessary condition alone is also sufficient to ascertain the existence of a matching perfect to $A$.
 \begin{thmbox}{Hall's Theorem}{Hall}
@@ -1107,10 +1087,7 @@ The above result immediately leads to the following corollary:
         By Corollary \ref{cor:regBipMatch}, we can find some perfect matching $M_d$ in $G$. Consider the graph $G'$ with $V(G') = V(G)$ and $E(G') = E(G) - E(M_d)$, then $G'$ is a $(d - 1)$-regular bipartite graph and so it contains a perfect matching $M_{d - 1}$. Note that $E(M_{d - 1}) \cap E(M_d) = \varnothing$ and that $M_{d - 1}$ is also a perfect matching in $G$. Repeat this process until we have used all edges in $G$. The set of all perfect matchings obtained this way forms a partition of $E(G)$.
     \end{proof}
 \end{corbox}
-\section{Tutte's Theorem}
-In the previous section, we have discussed how Hall's Theorem characterises the existence of perfect matchings in bipartite graphs. Can we derive a similar result for any kind of graphs in general?
-
-It turns out that this curious question is closely related to the number of connected components with odd orders in a graph. We denote this quantity by $o(G)$ for any graph $G$.
+Can we derive a similar result for any kind of graphs in general? It turns out that this curious question is closely related to the number of connected components with odd orders in a graph. We denote this quantity by $o(G)$ for any graph $G$.
 \begin{thmbox}{Tutte's Theorem}{tutte}
     A graph $G$ has a perfect matching if and only if for every $U \subseteq V(G)$, $o(G - U) \leq \abs{U}$.
     \tcblower
@@ -1498,9 +1475,19 @@ The above is summarised as the $4$ Colour Theorem. To study such problems, we in
 \end{dfnbox}
 Given a graph $G$ with a proper $k$-colouring $c$, denote with $V_i \coloneqq \left\{v \colon c(v) = i\right\}$ the set of all vertices with colour $i$. Clearly, every $V_i$ is an independent set in $G$.
 
-Note that if a graph has a proper $k$-colouring, then it must also have a proper $(k + 1)$-colouring. Therefore, we are interested to know the least number of colours to properly colour a graph.
-\begin{dfnbox}{Chromatic Number}{chromaticNum}
-    The {\color{red} \textbf{chromatic number}} of a graph $G$, denoted by $\chi(G)$, is the smallest integer $k$ such that $G$ has a proper $k$-colouring.
+Suppose $G$ is bipartite with bipartition $(U, V)$, then we can colour the vertices in $G$ such that all vertices in $U$ receives one colour and all those in $V$ receives another.
+
+Clearly, if a graph has a proper $k$-colouring, then it must also have a proper $(k + 1)$-colouring. Therefore, we are interested to know the least number of colours to properly colour a graph.
+\begin{dfnbox}{Chromatic Number}{chromaticN}
+    The {\color{red} \textbf{chromatic number}} of a graph $G$, denoted as $\chi(G)$, is the smallest positive integer $k$ such that $G$ has a proper $k$-colouring.
+\end{dfnbox}
+Observe that if $\chi(G) \leq 2$, it is equivalent to saying that we can find a bipartition of $V(G)$, so a bipartite graph can be alternatively defined as a graph $G$ with $\chi(G) \leq 2$. 
+
+Furthermore, observe that if $H \subseteq G$, then $\chi(H) \leq \chi(G)$. Consider a cycle $C_{2n + 1}$ for some $n \in \N$. It is clear that $\chi(C_{2n + 1}) = 3$, so if $C_{2n + 1} \subseteq G$, then $G$ cannot be bipartite.
+
+Similar to bipartite graphs, we can define the notion of an $r$-partite graph with chromatic numbers.
+\begin{dfnbox}{$r$-partite Graph}{rpartite}
+    A graph $G$ is an {\color{red} \textbf{$r$-partite graph}} if $\chi(G) \leq r$.
 \end{dfnbox}
 Let us examine some special graphs to see their chromatic numbers:
 \begin{itemize}
@@ -1515,19 +1502,171 @@ Let us examine some special graphs to see their chromatic numbers:
     \item Empty graph $\overline{K_n}$: $\chi\left(\overline{K_n}\right) = 1$.
     \item Petersen graph $P$: $\chi(P) = 3$.
 \end{itemize}
-Recall the Kneser graph $KG(n, k)$ from Definition \ref{dfn:kneser}.
+Recall the Kneser graph $KG(n, k)$ from Definition \ref{dfn:kneser}. For $i = 2k, 2k + 1, \cdots, n$, let $V_i$ be all $k$-element subsets whose greatest element is $i$. Note that for any $S, T \in V_i$, we have $i \in S \cap T$ and so $ST \notin E\bigl(KG(n, k)\bigr)$. Therefore, we can colour each $V_i$ using a distinct colour $c_i$. Notice that in doing so, $(n - 2k + 1)$ colours are used. For any $U$ not in any of the $V_i$'s, its elements must be from $\left\{1, 2, \cdots, k - 1\right\}$. By Pigeonhole Principle, this means that the remaining subsets are pair-wise intersecting, and so we can assign an extra colour for all of them. Therefore, $\chi\bigl(KG(n, k)\bigr) \leq n - 2k + 2$. However, the other direction is not trivial and requires some knowledge of the Borsuk-Ulam Theorem in Topology.
+
+Intuitively, one only needs to construct a proper colouring to establish an upper bound for $\chi(G)$, but to establish the lower bound is not so easy and we often need to do some estimation using other parameters.
+\begin{probox}{Lower Bound of Chromatic Number}{lowerBoundChi}
+    For any graph $G$, $\chi(G) \geq \omega(G)$ and $\chi(G) \geq \frac{\abs{V(G)}}{\alpha(G)}$.
+    \tcblower
+    \begin{proof}
+        $\chi(G) \geq \omega(G)$ is trivial and is left to the reader as an exercise.
+        \\\\
+        Fix any proper $\chi(G)$-colouring for $G$. For every colour $i$, the set of vertices coloured in $i$, $V_i$, is an independent set, so $\abs{V_i} \leq \alpha(G)$. Therefore,
+        \begin{equation*}
+            \abs{V(G)} = \sum_{i = 1}^{\chi(G)}\abs{V_i} \leq \chi(G)\alpha(G),
+        \end{equation*}
+        and so $\chi(G) \geq \frac{\abs{V(G)}}{\alpha(G)}$.
+    \end{proof}
+\end{probox}
+An interesting question to ponder is that: do there exist infinitely many pairs of positive integers $(k, \ell)$ such that $k = \omega(G) < \chi(G) = \ell$? In fact, Lov\'{a}sz proposed a theorem stating that by considering $KG(3k - 1, k)$, one can find a triangle-free graph with arbitrarily high chromatic number.
+
+The chromatic number of a graph can be upper-bounded in multiple ways.
+\begin{probox}{Upper Bound of Chromatic Number}{upperBoundChi}
+    For every graph $G$, $\chi(G) \leq \frac{1}{2} + \sqrt{2\abs{E(G)} + \frac{1}{4}}$.
+    \tcblower
+    \begin{proof}
+        Fix a proper $\chi(G)$-colouring in $G$. Let $V_i$ and $V_j$ be $2$ sets of vertices with colours $i$ and $j$ respectively. Note that there is at least one edge between $V_i$ and $V_j$, otherwise we can obtain a $(\chi(G) - 1)$-colouring in $G$, which is not possible. Therefore, 
+        \begin{equation*}
+            \abs{E(G)} \geq \begin{pmatrix}
+                \chi(G) \\
+                2
+            \end{pmatrix}.
+        \end{equation*}
+        Solving the inequality gives $\chi(G) \leq \frac{1}{2} + \sqrt{2\abs{E(G)} + \frac{1}{4}}$.
+    \end{proof}
+\end{probox}
+This bound is sharp for complete graphs. However, we can use a greedy algorithm to obtain a better bound for many other graphs.
+\begin{probox}{Upper Bound of Chromatic Number by Greedy Algorithm}{greedyUpperBoundChi}
+    For any graph $G$, $\chi(G) \leq \Delta(G) - 1$.
+    \tcblower
+    \begin{proof}
+        We can label the vertices in $G$ as $v_1, v_2, \cdots, v_n$ and colour them in this order. Fix any colour for $v_1$. For any $v_i$, colour each of its neighbours with the first available colours. If all existing colours are unavailable, we introduce a new colour. Note that for every vertex $v \in V(G)$, its neighbours use at most $d_G(v) \leq \Delta(G)$ distinct colours, so $\chi(G) \leq \Delta(G) - 1$.
+    \end{proof}
+\end{probox}
+We can further improve this bound by considering the following definition:
+\begin{dfnbox}{$k$-critical Graph}{kCrit}
+    A graph $G$ is said to be {\color{red} \textbf{$k$-critical}} if $\chi(G) = k$ and $\chi(G - e) < k$, $\chi(G - v) < k$ for any $e \in E(G)$ and any $v \in V(G)$.
+\end{dfnbox}
+An easy example here is that any odd cycle is $3$-critical. In fact, every $3$-critical graph must be an odd cycle, which can be proven by a later theorem.
+
+We first examine some properties of $k$-critical graphs.
+\begin{probox}{Lower Bound of Degrees of $k$-critical Graphs}{lowerBoundKCritDeg}
+    For any $k$-critical graph $G$, $\delta(G) \geq k - 1$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove that $d_G(x) \geq k - 1$ for every $x \in V(G)$. Suppose on contrary that there exists some $v \in V(G)$ such that $d_G(v) < k - 1$. Since $G$ is $k$-critical, $\chi(G - v) \leq k - 1$ and so there exists a proper $(k - 1)$-colouring of $G - v$. Note that this means that we can find some colour among these $(k - 1)$ distinct colours to colour $v$ in $G$ such that $v$ does not share the colour with any of its neighbours, which is a contradiction because $\chi(G) = k$.
+    \end{proof}
+\end{probox}
+We can establish a better upper bound for chromatic number by using a $k$-critical graph as follows:
+\begin{probox}{Upper Bound of Chromatic Number By $k$-critical Subgraph}{upperBoundChiKCrit}
+    For every graph $G$, $\chi(G) \leq 1 + \max_{H \subseteq G}\delta(H)$.
+    \tcblower
+    \begin{proof}
+        Note that we can delete vertices and edges from $G$ to obtain a graph $G'$ such that $\chi(G') < \chi(G)$. Therefore, there exists $H \subseteq G$ such that $H$ is $\chi(G)$-critical. By Proposition \ref{pro:lowerBoundKCritDeg}, this implies that
+        \begin{equation*}
+            \chi(G) = \chi(H) \leq \delta(H) + 1 \leq 1 + \max_{H \subseteq G}\delta(H).
+        \end{equation*}
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Note that $1 + \max_{H \subseteq G}\delta(H) \leq 1 + \max_{H \subseteq G}\Delta(H) = 1 + \Delta(G)$, so this upper bound is stronger than Proposition \ref{pro:greedyUpperBoundChi}.
+    \end{remark}
+\end{notebox}
+Consider any tree $T$. Note that $T$ is bipartite and $2$-colourable. By Proposition \ref{pro:upperBoundChiKCrit}, since any subgraph of $T$ is a forest with a minimum degree of $1$, $\chi(G) \leq 2$ is a sharp bound. However, $\Delta(T)$ can be arbitrarily large, which means the bound given by \ref{pro:greedyUpperBoundChi} can be very loose. In fact, we can prove that unless $G$ is a complete graph or an odd cycle, the bound given by \ref{pro:greedyUpperBoundChi} is always loose.
 \begin{thmbox}{Brooks' Theorem}{Brooks}
     Let $G$ be a connected graph not isomorphic to a complete graph or an odd cycle, then $\chi(G) \leq \Delta(G)$.
+    \tcblower
+    \begin{proof}
+        We shall perform strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then clearly $\chi(G) = 1 = \Delta(G)$. Suppose there is some $n \in \Z^+$ with $n > 1$ such that for any integer $m \in [1, n - 1]$, any graph $G$ with order $m$ is such that $\chi(G) \leq \Delta(G)$.
+        \\\\
+        Suppose on contrary that there exists a graph $G'$ of order $n$ such that $\chi(G') > \Delta(G')$. Take any vertex $v \in V(G')$ and consider $H \coloneqq G' - v$. Let $H'$ be any connected component of $H$, then $\Delta(H') \leq \Delta(G')$. If $H'$ is not a complete graph nor an odd cycle, by the inductive hypothesis, $\chi(H') \leq \Delta(H') \leq \Delta(G')$. Otherwise, note that $H'$ will be $\Delta(H')$-regular. Since at least one vertex in $H'$ is adjacent to $v$ in $G'$, we have $\chi(H') = \Delta(H') + 1 \leq \Delta(G')$. Therefore, $\chi(H) \leq \Delta(G')$.
+        \\\\
+        Fix a $\Delta(G')$-colouring on $H$. Note that $N_{G'}(v) \subseteq V(H)$. We claim that $N_{G'}(v)$ used all $\Delta(G')$ colours, because otherwise we can use one of the $\Delta(G')$ colours to colour $v$ in $G'$ and obtain a $\Delta(G')$-colouring in $G'$, which is not possible. Therefore, $d_{G'}(v) = \Delta(G')$, and so every vertex in $N_{G'}(v)$ has a colour distinct to the other neighbours. Let $v_i$ be the neighbour of $v$ coloured in $i$, and let $H_{ij}$ be the subgraph spanned by all $i$- and $j$-vertices in $H$. We claim that whenever $i \neq j$, $v_i$ and $v_j$ must be in the same connected component $C_{ij}$ of $H_{ij}$, otherwise, we can interchange all $i$- and $j$-vertices in the connected component containing $v_i$ and colour $v$ in $i$.
+        \\\\
+        Let $P$ be a $v_i$-$v_j$ path in $C_{ij}$. Note that $d_H(v_i) = d_{G'}(v_i) - 1 \leq \Delta(G') - 1$. We claim that the neighbours of $v_i$ use exactly $(\Delta(G') - 1)$ distinct colours, otherwise we can re-colour $v_i$ in a different colour and colour $v$ with one of the $\Delta(G')$ colours, which is not possible. This implies that $v_i$ has only one neighbour with colour $j$, and so the neighbour of $v_i$ in $P$ is its only neighbour in $C_{ij}$. 
+        \\\\
+        We claim that $P = C_{ij}$. Otherwise, take $u \in V(C_{ij})$ to be the vertex closest to $v_i$ such that $u$ is adjacent to at least $3$ distinct vertices. Notice that this means that there is a unique $v_i$-$u$ path in $C_{ij}$. Note that $u$ has at most $\Delta(G')$ neighbours in $H$ and at least $3$ of them are of the same colour. Therefore, the neighbours of $u$ in $H$ are coloured by at most $(\Delta(G') - 2)$ colours. Therefore, we can change $u$ to some other colour such that $v_i$ and $v_j$ belong to different connected components in $H_{ij}$, which is not possible.
+        \\\\
+        Let $i, j, k$ be distinct colours. We claim that $V(C_{ij}) \cap V(C_{ik}) = \{v_i\}$. Otherwise, let $w \neq v_i$ and $w \in V(C_{ij}) \cap V(C_{ik})$. Note that $d_{C_{ij}}(w) = d_{C_{ik}} = 2$, so the neighbours of $w$ uses at most $(\Delta(G') - 2)$ colours. Similar to the previous claim, this means we can re-colour $w$ such that $v_i$ and $v_j$ are in different connected components, which is not possible.
+        \\\\
+        If $v, v_1, v_2, \cdots, v_{\Delta(G')}$ are pair-wise adjacent, then $G'$ must be complete because each $C_{ij}$ is just an edge, which is not possible. Without loss of generality, let $v_1 \not\sim v_2$ in $G'$. Consider $C_{12}$ and $C_{13}$. We first switch all $1$-vertices and $3$-vertices in $C_{13}$, and switch all $1$-vertices and $2$-vertices in $C_{12} - v_1$. Note that the resultant colouring is still proper in $H$, and now $v_2$ and $v_3$ both have colour $1$. Therefore, we can colour $v$ in colour $2$ to obtain a proper $\Delta(G')$-colouring of $G'$, which is a contradiction.
+    \end{proof}
 \end{thmbox}
+Previously in Proposition \ref{pro:greedyUpperBoundChi}, we have used a greedy approach to establish that a graph with large chromatic number must have high maximum degree. Intuitively, if a graph contains a clique, its chromatic number is naturally high. However, this is not necessary. In fact, there exists graphs with high girth but also high chromatic number. Moreover, notice that $K_{m, n}$ is $2$-colourable, so in fact none of the other graph parameters we have learnt so far can successfully ``force'' a high chromatic number in a graph.
+
+Here, we devise a construction for a graph with high chromatic number.
 \begin{dfnbox}{Edge Contraction}{edgeContraction}
     Let $G$ be a graph. For any $e = xy \in E(G)$, the {\color{red} \textbf{edge contraction}} of $G$ at $e$, denoted by $G/e$, is a graph produced by deleting $e$ and merging $x$ and $y$ such that $N_{G/e}(xy) = N_G(x) \cup N_G(y)$.
 \end{dfnbox}
+We define the notion of a $k$-\textit{constructible graph} recursively.
 \begin{dfnbox}{$k$-constructible Graph}{kConstruct}
     A {\color{red} \textbf{$k$-constructible graph}} $G$ for some $k \in \Z^+$ is such that 
     \begin{enumerate}
         \item $G \cong K_k$;
-        \item there is some $k$-constructible graph $H$ with $x, y \in V(H)$ and $xy \in E(H)$ such that $G \cong (H + xy)/xy$;
+        \item there is some $k$-constructible graph $H$ with $x, y \in V(H)$ and $xy \notin E(H)$ such that $G \cong (H + xy)/xy$;
         \item there are $k$-constructible graphs $H_1$, $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$ such that $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$.
     \end{enumerate}
 \end{dfnbox}
+We can easily derive a lower bound for the chromatic number of $k$-constructible graphs.
+\begin{probox}{Chromatic Number of $k$-constructible Graphs}{lowerBoundChiKCons}
+    If $G$ is a $k$-constructible graph, then $\chi(G) \geq k$.
+    \tcblower
+    \begin{proof}
+        If $G \cong K_k$, then $\chi(G) = k \geq k$ is trivial. 
+        \\\\
+        Suppose $G \cong (H + xy)/xy$ for some $k$-constructible graph $H$ with $\chi(H) \geq k$, we shall prove that $\chi(G) \geq k$ by considering the contrapositive statement. Suppose that $\chi(G) \leq k - 1$, then we can fix a $(k - 1)$-colouring in $G$. Suppose that $x$ and $y$ are contracted into $z$ in $G$, then we can just colour $x$ and $y$ in $H$ both using the colour of $z$ in $G$ while keep all other vertices the same colour. Since $N_H(x) \cup N_H(y) = N_G(z)$, this colouring is proper in $H$ and so $\chi(H) \leq k - 1$. 
+        \\\\
+        Suppose $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$ for some $k$-constructible graphs $H_1$ and $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$. We shall prove that if $\chi(H_1) \geq k$ and $\chi(H_2) \geq k$, then $\chi(G) \geq k$ by considering the contrapositive. Suppose that $\chi(G) \leq k - 1$, then we can fix a $(k - 1)$-colouring in $G$. Note that $y_1y_2 \in E(G)$, so $y_1$ and $y_2$ must have different colours. This means at least one of $y_1$ and $y_2$ has a colour distinct from the colour of $x$. Without loss of generality, assume that $x$ and $y_1$ have different colours. This means that the colouring of $G$ is still proper in $H_1$, and so $\chi(H_1) \leq k - 1$. Therefore, we have proved that any $k$-constructible graph $G$ is such that $\chi(G) \geq k$.
+    \end{proof}
+\end{probox}
+Remarkably, we can use $k$-constructible graphs to characterise all graphs with a certain chromatic number.
+\begin{thmbox}{Haj\'{o}s's Theorem}{Hajos}
+    For any graph $G$, $\chi(G) \geq k$ if and only if $G$ has a $k$-constructible subgraph.
+    \tcblower
+    \begin{proof}
+        Suppose $G$ has $k$-constructible subgraph $H$. By Proposition \ref{pro:lowerBoundChiKCons}, $\chi(H) \geq k$, and so $\chi(G) \geq \chi(H) \geq k$.
+        \\\\
+        Suppose $\chi(G) \geq k$. The case where $k = 1$ is trivial. If $k = 2$, then $\chi(G) \geq 2$ implies that $G$ contains a $K_2$ which is $2$-constructible. For $k \geq 3$, take $G$ to be the edge-maximal graph with $\chi(G) \geq k$ such that $G$ contains not $k$-constructible subgraph. If $G$ is a complete multi-partite graph, then it contains at least $k$ partite sets. Fix $k$ partite sets in $G$ and take one vertex from each set, then clearly these vertices induce a $K_k \subseteq G$ which is $k$-constructible.
+        \\\\
+        If $G$ is not complete multi-partite, consider the following lemma:
+        \begin{lembox}{Complete Multi-partite Graph Characterisation}{completeMultPartite}
+            Define a graph $H$ with $V(H) = \{x, y, z\}$ and $E(H) = \{yz\}$. A graph $G$ is complete multi-partite if it contains no induced subgraph isomorphic to $H$.
+            \tcblower
+            \begin{proof}
+                If $G$ contains no induced subgraph isomorphic to $H$, then $\overline{G}$ contains no induced subgraph isomorphic to $\overline{H}$. Let $G' \subseteq \overline{G}$ be a connected component. Notice that if there are vertices $u, v, w \in V(G')$ such that $u \sim v$ and $v \sim w$, then $u \sim w$ because otherwise $\{u, v, w\}$ induces a $P_2 \cong \overline{H}$ in $G'$. Therefore, adjacency is a transitive relation on $V(G')$. For any $x, y \in V(G')$, there exists an $x$-$y$ path in $G'$. By transitivity, this means that $x \sim y$ in $G'$. Therefore, $G'$ is a clique. This means that $\overline{G}$ is the union of disjoint cliques, and so $G$ must be complete multi-partite.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:completeMultPartite}, we know that $G$ must contain some subgraph of order $3$ with vertex set $\{x, y_1, y_2\}$ and edge set $\{y_1y_2\}$. For $i = 1, 2$, let $G_i \coloneqq G + xy_i$. Since $G$ is edge-maximal with respect to not having $k$-constructible subgraphs, $G_i$ must contain a $k$-constructible subgraph $H_i$. We claim that $xy_i \in E(H_i)$, because otherwise $H_i \subseteq G$, which is not possible. Let $H_1'$ and $H_2'$ be copies of $H_1$ and $H_2$ and define a graph $H \coloneqq H_1' \cup H_2'$. For every vertex $z \in V(H_1) \cap V(H_2)$ with $z \neq x$, let $z_1$, $z_2$ be its copy in $H_1'$ and $H_2'$ respectively, then $z_1z_2 \notin E(H)$. Therefore, $V(H_1') \cap V(H_2') = \{x\}$ and $xy_1 \in E(H_1')$, $xy_2 \in E(H_2')$. Therefore, $H' \coloneqq H - xy_1 - xy_2 + y_1y_2$ is $k$-constructible. Note that for every pair $(z_1, z_2) \in V(H')^2$, $z_1z_2 \notin E(H')$, and so $(H + z_1z_2)/z_1z_2$ is $k$-constructible. After contracting all $(z_1, z_2)$'s, we have restored the graph $H_1 \cup H_2 \subseteq G$, which is $k$-constructible.
+    \end{proof}
+\end{thmbox}
+Theorem \ref{thm:Hajos} leads to an important property of $k$-critical graphs.
+\begin{corbox}{$k$-critical Graphs Are $k$-constructible}{characteriseKCrit}
+    A graph $G$ is $k$-constructible if it is $k$-critical. 
+    \tcblower
+    \begin{proof}
+        Let $H \subseteq G$ be the maximal $k$-constructible subgraph of $G$. It suffices to prove that $H = G$. Suppose on contrary that $H \neq G$, then there exists either an edge $e$ or a vertex $v$ in $G - H$. Therefore, $H \subseteq G - e$ and $H \subseteq G - v$, which implies that $\chi(G - e) = \chi(G - v) = k$ by Theorem \ref{thm:Hajos}, which is a contradiction because $G$ is $k$-critical.
+    \end{proof}
+\end{corbox}
+\section{Edge Colouring}
+Just like vertices, we can also colour the edges of a graph. 
+\begin{dfnbox}{Edge Colouring}{edgeColour}
+    Let $G$ be a graph. A {\color{red} \textbf{proper $k$-edge-colouring}} on $G$ is a map $c \colon E(G) \to \left\{1, 2, \cdots, k\right\}$ such that if $\abs{e \cap f} \geq 1$, then $c(e) \neq c(f)$. The minimum $k$ such that $G$ has a proper $k$-edge-colouring is known as the {\color{red} \textbf{edge chromatic number}} of $G$, denoted by $\chi'(G)$.
+\end{dfnbox}
+Intuitively, colouring the edges in a graph is equivalent to colouring the vertices in its line graph, so the following proposition is intuitive:
+\begin{probox}{Chromatic Number of Line Graphs}{lineGraphChi}
+    For any graph $G$, $\chi'(G) = \chi\bigl(L(G)\bigr)$.
+\end{probox}
+Fix any proper edge-colouring in a graph $G$, then intuitively, the set of all edges in the same colour forms a matching in $G$, so one may choose to view $\chi'(G)$ as the minimum number of matchings to decompose $G$. For example, for a complete graph $K_n$, we know that $\nu(K_n) = \left\lfloor\frac{n}{2}\right\rfloor$, so 
+\begin{equation*}
+    \chi'(K_n) \geq \frac{C^n_2}{\left\lfloor\frac{n}{2}\right\rfloor} = \frac{n(n - 1)}{2\left\lfloor\frac{n}{2}\right\rfloor} = \begin{cases}
+        n - 1 & \textrm{if } n \textrm{ is even} \\
+        n & \textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Obviously, if $d_G(v) = \Delta(G)$ for some vertex in a graph $G$, then all edges incident to $v$ in $G$ induce a clique of order $\Delta(G)$ in $L(G)$. By Proposition \ref{pro:lineGraphChi}, this means that 
+\begin{equation*}
+    \chi'(G) = \chi\bigl(L(G)\bigr) \geq \Delta(G).
+\end{equation*}
+Recall that according to Corollary \ref{cor:regBipDecomposition}, every $d$-regular bipartite graph $G$ can be decomposed into $d$ perfect matchings. If we assign each of these perfect matchings a colour, we essentially obtain a proper edge colouring in $G$. Clearly, in this case $\chi'(G) = d = \Delta(G)$. In fact, this equality can be extended to any bipartite graph.
 \end{document}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 MAR 2024 21:29
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 MAR 2024 23:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1463,283 +1463,339 @@ Underfull \hbox (badness 10000) in paragraph at lines 618--635
 
  []
 
-[22] [23]
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 674--681
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 674--681
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 674--681
+
+ []
+
+[23] [24]
+Underfull \hbox (badness 10000) in paragraph at lines 730--733
+
+ []
+
+[25] [26]
+Underfull \hbox (badness 10000) in paragraph at lines 788--791
+
+ []
+
+[27] [28]
 Chapter 2.
+[29
 
-Underfull \hbox (badness 10000) in paragraph at lines 677--684
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 677--684
+] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 871--876
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 677--684
+Underfull \hbox (badness 10000) in paragraph at lines 871--876
 
  []
 
-[24
-
-] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 733--736
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 913--916
 
  []
 
-[26] [27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 803--806
+[32] [33]
+Underfull \hbox (badness 10000) in paragraph at lines 961--965
 
  []
 
-[29]
-Chapter 3.
-[30
-
-] [31]
-Underfull \hbox (badness 10000) in paragraph at lines 890--895
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 972--983
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 890--895
-
- []
-
-[32]
-Underfull \hbox (badness 10000) in paragraph at lines 932--935
-
- []
-
-[33] [34]
-Underfull \hbox (badness 10000) in paragraph at lines 980--984
-
- []
-
-[35]
-Underfull \hbox (badness 10000) in paragraph at lines 991--1002
-
- []
-
-
-Underfull \hbox (badness 2181) in paragraph at lines 991--1002
+Underfull \hbox (badness 2181) in paragraph at lines 972--983
 \TU/STIXTwoText(0)/m/n/12 We select a subset of vertices from $[][][][]$ with the following algorithm: for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+Underfull \hbox (badness 10000) in paragraph at lines 972--983
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+Underfull \hbox (badness 10000) in paragraph at lines 972--983
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+Underfull \hbox (badness 10000) in paragraph at lines 972--983
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 991--1002
+Underfull \hbox (badness 10000) in paragraph at lines 972--983
+
+ []
+
+[35]
+Underfull \hbox (badness 10000) in paragraph at lines 1009--1016
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1009--1016
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1009--1016
 
  []
 
 [36]
-Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1029--1036
+Underfull \hbox (badness 10000) in paragraph at lines 1021--1024
 
  []
 
 [37]
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1044
-
- []
-
-[38]
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1058
+Underfull \hbox (badness 10000) in paragraph at lines 1033--1038
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1058
+Underfull \hbox (badness 10000) in paragraph at lines 1033--1038
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1060--1064
+Underfull \hbox (badness 10000) in paragraph at lines 1040--1044
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1073--1076
+Underfull \hbox (badness 10000) in paragraph at lines 1053--1056
 
  []
 
-[39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 1118--1130
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+[38] [39]
+Underfull \hbox (badness 10000) in paragraph at lines 1095--1107
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1131--1142
+Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
 
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 1131--1142
+Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
+
+ []
+
+
+Underfull \hbox (badness 1019) in paragraph at lines 1108--1119
 \TU/STIXTwoText(0)/m/n/12 Either way, we have reached a contradiction because $[]$ does not contain any
  []
 
-[41] [42] [43] [44]
-Chapter 4.
+[40] [41] [42]
+Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1188--1191
-
- []
-
-[45
-
-] [46]
-Underfull \hbox (badness 10000) in paragraph at lines 1226--1229
+Underfull \hbox (badness 10000) in paragraph at lines 1165--1168
 
  []
 
+[43
 
-Underfull \hbox (badness 10000) in paragraph at lines 1231--1235
+] [44]
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1206
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1240--1247
+Underfull \hbox (badness 10000) in paragraph at lines 1208--1212
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1251--1255
-
- []
-
-[47] [48] [49]
-Underfull \hbox (badness 10000) in paragraph at lines 1307--1312
+Underfull \hbox (badness 10000) in paragraph at lines 1217--1224
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1307--1312
+Underfull \hbox (badness 10000) in paragraph at lines 1228--1232
 
  []
 
-[50] [51]
-Underfull \hbox (badness 10000) in paragraph at lines 1377--1380
+[45] [46] [47]
+Underfull \hbox (badness 10000) in paragraph at lines 1284--1289
 
  []
 
-[52]
-Underfull \hbox (badness 1210) in paragraph at lines 1393--1400
+
+Underfull \hbox (badness 10000) in paragraph at lines 1284--1289
+
+ []
+
+[48] [49]
+Underfull \hbox (badness 10000) in paragraph at lines 1354--1357
+
+ []
+
+[50]
+Underfull \hbox (badness 1210) in paragraph at lines 1370--1377
 []\TU/STIXTwoText(0)/m/n/12 Suppose that $[]$ is constructed from a cycle by successively augmenting
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1393--1400
+Underfull \hbox (badness 10000) in paragraph at lines 1370--1377
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1393--1400
+Underfull \hbox (badness 10000) in paragraph at lines 1370--1377
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1393--1400
+Underfull \hbox (badness 10000) in paragraph at lines 1370--1377
 
  []
 
-[53] [54]
-Underfull \hbox (badness 10000) in paragraph at lines 1425--1432
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1425--1432
+[51] [52]
+Underfull \hbox (badness 10000) in paragraph at lines 1402--1409
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1425--1432
+Underfull \hbox (badness 10000) in paragraph at lines 1402--1409
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1438--1444
+Underfull \hbox (badness 10000) in paragraph at lines 1402--1409
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1438--1444
-
- []
-
-[55]
-Underfull \hbox (badness 10000) in paragraph at lines 1451--1454
-
- []
-
-[56]
-Underfull \hbox (badness 10000) in paragraph at lines 1465--1468
+Underfull \hbox (badness 10000) in paragraph at lines 1415--1421
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1475--1480
+Underfull \hbox (badness 10000) in paragraph at lines 1415--1421
+
+ []
+
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 1428--1431
+
+ []
+
+[54]
+Underfull \hbox (badness 10000) in paragraph at lines 1442--1445
 
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 1475--1480
+Underfull \hbox (badness 10000) in paragraph at lines 1452--1457
+
+ []
+
+
+Underfull \hbox (badness 1242) in paragraph at lines 1452--1457
 \TU/STIXTwoText(0)/m/n/12 Suppose conversely that $[]$ is $[]$-connected and suppose on contrary that there
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1475--1480
+Underfull \hbox (badness 10000) in paragraph at lines 1452--1457
 
  []
 
-[57] [58]
-Chapter 5.
-[59
+[55] [56]
+Chapter 4.
+[57
 
-] [60] 
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1515
+
+ []
+
+
+Underfull \hbox (badness 1496) in paragraph at lines 1512--1515
+\TU/STIXTwoText(0)/m/n/12 Fix any proper $[][][][]$-colouring for $[]$. For every colour $[]$, the set of vertices
+ []
+
+[58] [59]
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+[60] [61]
+Underfull \hbox (badness 10000) in paragraph at lines 1616--1621
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1616--1621
+
+ []
+
+[62]
+Underfull \hbox (badness 10000) in paragraph at lines 1628--1639
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1628--1639
+
+ []
+
+[63] [64] [65] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
@@ -1749,12 +1805,12 @@ Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not ch
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39241 strings out of 478630
- 825625 string characters out of 5847730
- 1894012 words of memory out of 5000000
- 58711 multiletter control sequences out of 15000+600000
+ 39264 strings out of 478630
+ 826061 string characters out of 5847730
+ 1899012 words of memory out of 5000000
+ 58734 multiletter control sequences out of 15000+600000
  516151 words of font info for 85 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (60 pages).
+Output written on Combinatorics and Graphs II.pdf (65 pages).
