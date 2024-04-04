@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 MAR 2024 23:47
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  4 APR 2024 21:53
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1081,22 +1081,60 @@ LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> TU/STIXTwoMath-Regular.otf(3)/b/n on input line 75.
 
-Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(4)' created for
-(fontspec)             font 'STIXTwoMath-Regular.otf' with options
-(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=STIXTwoMath-Regular.otf,Style=MathScript},{Size=-7.5,Font=STIXTwoMath-Regular.otf,Style=MathScriptScript}},StylisticSet={01}].
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Info: Font family 'texgyretermes-math.otf(0)' created for
+(fontspec)             font 'texgyretermes-math.otf' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=texgyretermes-math.otf,Style=MathScript},{Size=-7.5,Font=texgyretermes-math.otf,Style=MathScriptScript}},StylisticSet={01}].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <10.2->"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;"<7.5-10.2>"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=0;"<-7.5>"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=1;"
+(fontspec)             <10.2->"[texgyretermes-math.otf]/OT:script=math;language=dflt;"<7.5-10.2>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.5>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 \sym__um_fam1=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
-(Font)                  TU/STIXTwoMath-Regular.otf(4)/m/n --> TU/STIXTwoMath-Regular.otf(4)/m/n on input line 76.
+(Font)                  TU/texgyretermes-math.otf(0)/m/n --> TU/texgyretermes-math.otf(0)/m/n on input line 76.
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
-(Font)                  TU/STIXTwoMath-Regular.otf(4)/m/n --> TU/STIXTwoMath-Regular.otf(4)/b/n on input line 76.
+(Font)                  TU/texgyretermes-math.otf(0)/m/n --> TU/texgyretermes-math.otf(0)/b/n on input line 76.
+
+Package fontspec Info: Font family 'texgyretermes-math.otf(1)' created for
+(fontspec)             font 'texgyretermes-math.otf' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=texgyretermes-math.otf,Style=MathScript},{Size=-7.5,Font=texgyretermes-math.otf,Style=MathScriptScript}}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->"[texgyretermes-math.otf]/OT:script=math;language=dflt;"<7.5-10.2>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.5>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+\sym__um_fam2=\mathgroup5
+LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `normal'
+(Font)                  TU/texgyretermes-math.otf(1)/m/n --> TU/texgyretermes-math.otf(1)/m/n on input line 77.
+LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `bold'
+(Font)                  TU/texgyretermes-math.otf(1)/m/n --> TU/texgyretermes-math.otf(1)/b/n on input line 77.
 
 Package fontspec Info: Could not resolve font "JetBrainsMonoNL-Regular/BI" (it
 (fontspec)             probably doesn't exist).
@@ -1150,10 +1188,10 @@ Package fontspec Info: Font family 'JetBrainsMonoNL-Regular(1)' created for
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/m/n on input line 78.
+(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/m/n on input line 79.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/b/n on input line 78.
-Package hyperref Info: Option `colorlinks' set `true' on input line 107.
+(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/b/n on input line 79.
+Package hyperref Info: Option `colorlinks' set `true' on input line 108.
 \c@amzboxcounter=\count391
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
@@ -1165,8 +1203,8 @@ Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
 ) (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\symAMSa=\mathgroup5
-\symAMSb=\mathgroup6
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
 LaTeX Font Info:    Redeclaring math delimiter \ulcorner on input line 74.
 LaTeX Font Info:    Redeclaring math delimiter \urcorner on input line 75.
 LaTeX Font Info:    Redeclaring math delimiter \llcorner on input line 76.
@@ -1174,6 +1212,7 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count392
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 31.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Combinatorics_and_Graphs_II.aex <nul: /p x=^%~$PATH:i>> Combinatorics_and_Graphs_II.aex)...executed.
 
 runsystem(del Combinatorics_and_Graphs_II.aex)...executed.
@@ -1181,26 +1220,26 @@ runsystem(del Combinatorics_and_Graphs_II.aex)...executed.
  (./Combinatorics and Graphs II.aux)
 \openout1 = `"Combinatorics and Graphs II.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1237,9 +1276,9 @@ LaTeX Font Info:    ... okay on input line 32.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 32.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 33.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 32.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 33.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1258,7 +1297,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 32.
+Package hyperref Info: Link coloring ON on input line 33.
 (./Combinatorics and Graphs II.out) (./Combinatorics and Graphs II.out)
 \@outlinefile=\write6
 \openout6 = `"Combinatorics and Graphs II.out"'.
@@ -1293,441 +1332,441 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 45.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 46.
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--51
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 46--51
+Underfull \hbox (badness 10000) in paragraph at lines 47--52
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--71
+Underfull \hbox (badness 10000) in paragraph at lines 47--52
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--72
 
  []
 
 [2
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 74--77
+Underfull \hbox (badness 10000) in paragraph at lines 75--78
 
  []
 
 [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 154--158
+Underfull \hbox (badness 10000) in paragraph at lines 155--159
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 184--187
+Underfull \hbox (badness 10000) in paragraph at lines 185--188
 
  []
 
 
-Underfull \hbox (badness 1038) in paragraph at lines 184--187
+Underfull \hbox (badness 1038) in paragraph at lines 185--188
 \TU/STIXTwoText(0)/m/n/12 Suppose on contrary that $[][][][][] [] []$, then we have performed the deletion
  []
 
 [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 282--288
+Underfull \hbox (badness 10000) in paragraph at lines 283--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 282--288
+Underfull \hbox (badness 10000) in paragraph at lines 283--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 300--304
+Underfull \hbox (badness 10000) in paragraph at lines 301--305
 
  []
 
 [9] [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 353--357
+Underfull \hbox (badness 10000) in paragraph at lines 354--358
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 372--377
+Underfull \hbox (badness 10000) in paragraph at lines 373--378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 372--377
+Underfull \hbox (badness 10000) in paragraph at lines 373--378
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 400--403
+Underfull \hbox (badness 10000) in paragraph at lines 401--404
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 410--413
+Underfull \hbox (badness 10000) in paragraph at lines 411--414
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 428--437
+Underfull \hbox (badness 10000) in paragraph at lines 429--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--437
+Underfull \hbox (badness 10000) in paragraph at lines 429--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--437
+Underfull \hbox (badness 10000) in paragraph at lines 429--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--437
+Underfull \hbox (badness 10000) in paragraph at lines 429--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 447--453
+Underfull \hbox (badness 10000) in paragraph at lines 448--454
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 447--453
+Underfull \hbox (badness 10000) in paragraph at lines 448--454
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 460--464
+Underfull \hbox (badness 10000) in paragraph at lines 461--465
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 474--479
+Underfull \hbox (badness 10000) in paragraph at lines 475--480
 
  []
 
 
-Underfull \hbox (badness 1210) in paragraph at lines 474--479
+Underfull \hbox (badness 1210) in paragraph at lines 475--480
 \TU/STIXTwoText(0)/m/n/12 If $[][] [] [][][][]$, since $[]$ is disconnected, there exists some $[] [] [][][][]$ such
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 474--479
+Underfull \hbox (badness 10000) in paragraph at lines 475--480
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 492--495
+Underfull \hbox (badness 10000) in paragraph at lines 493--496
 
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 502--505
+Underfull \hbox (badness 10000) in paragraph at lines 503--506
 
  []
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 543--548
+Underfull \hbox (badness 10000) in paragraph at lines 544--549
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 543--548
+Underfull \hbox (badness 10000) in paragraph at lines 544--549
 
  []
 
 [19]
 
-LaTeX Warning: Reference `thm:thm:graphMetric' on page 20 undefined on input line 587.
+LaTeX Warning: Reference `thm:thm:graphMetric' on page 20 undefined on input line 588.
 
 [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 627--630
+Underfull \hbox (badness 10000) in paragraph at lines 628--631
 
  []
 
 
-LaTeX Warning: Reference `thm:MP' on page 22 undefined on input line 633.
+LaTeX Warning: Reference `thm:MP' on page 22 undefined on input line 634.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 618--635
+Underfull \hbox (badness 10000) in paragraph at lines 619--636
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 618--635
+Underfull \hbox (badness 10000) in paragraph at lines 619--636
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 674--681
+Underfull \hbox (badness 10000) in paragraph at lines 675--682
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 674--681
+Underfull \hbox (badness 10000) in paragraph at lines 675--682
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 674--681
+Underfull \hbox (badness 10000) in paragraph at lines 675--682
 
  []
 
 [23] [24]
-Underfull \hbox (badness 10000) in paragraph at lines 730--733
+Underfull \hbox (badness 10000) in paragraph at lines 731--734
 
  []
 
-[25] [26]
-Underfull \hbox (badness 10000) in paragraph at lines 788--791
+[25] [26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 789--792
 
  []
 
-[27] [28]
+[28]
 Chapter 2.
 [29
 
 ] [30]
-Underfull \hbox (badness 10000) in paragraph at lines 871--876
+Underfull \hbox (badness 10000) in paragraph at lines 872--877
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--876
+Underfull \hbox (badness 10000) in paragraph at lines 872--877
 
  []
 
 [31]
-Underfull \hbox (badness 10000) in paragraph at lines 913--916
+Underfull \hbox (badness 10000) in paragraph at lines 914--917
 
  []
 
 [32] [33]
-Underfull \hbox (badness 10000) in paragraph at lines 961--965
+Underfull \hbox (badness 10000) in paragraph at lines 962--966
 
  []
 
 [34]
-Underfull \hbox (badness 10000) in paragraph at lines 972--983
+Underfull \hbox (badness 10000) in paragraph at lines 973--984
 
  []
 
 
-Underfull \hbox (badness 2181) in paragraph at lines 972--983
+Underfull \hbox (badness 2181) in paragraph at lines 973--984
 \TU/STIXTwoText(0)/m/n/12 We select a subset of vertices from $[][][][]$ with the following algorithm: for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 972--983
+Underfull \hbox (badness 10000) in paragraph at lines 973--984
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 972--983
+Underfull \hbox (badness 10000) in paragraph at lines 973--984
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 972--983
+Underfull \hbox (badness 10000) in paragraph at lines 973--984
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 972--983
+Underfull \hbox (badness 10000) in paragraph at lines 973--984
 
  []
 
 [35]
-Underfull \hbox (badness 10000) in paragraph at lines 1009--1016
+Underfull \hbox (badness 10000) in paragraph at lines 1010--1017
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1009--1016
+Underfull \hbox (badness 10000) in paragraph at lines 1010--1017
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1009--1016
+Underfull \hbox (badness 10000) in paragraph at lines 1010--1017
 
  []
 
 [36]
-Underfull \hbox (badness 10000) in paragraph at lines 1021--1024
+Underfull \hbox (badness 10000) in paragraph at lines 1022--1025
 
  []
 
 [37]
-Underfull \hbox (badness 10000) in paragraph at lines 1033--1038
+Underfull \hbox (badness 10000) in paragraph at lines 1034--1039
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1033--1038
+Underfull \hbox (badness 10000) in paragraph at lines 1034--1039
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1040--1044
+Underfull \hbox (badness 10000) in paragraph at lines 1041--1045
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1056
+Underfull \hbox (badness 10000) in paragraph at lines 1054--1057
 
  []
 
 [38] [39]
-Underfull \hbox (badness 10000) in paragraph at lines 1095--1107
+Underfull \hbox (badness 10000) in paragraph at lines 1096--1108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1108--1119
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1120
 
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 1108--1119
+Underfull \hbox (badness 1019) in paragraph at lines 1109--1120
 \TU/STIXTwoText(0)/m/n/12 Either way, we have reached a contradiction because $[]$ does not contain any
  []
 
 [40] [41] [42]
 Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1165--1168
+Underfull \hbox (badness 10000) in paragraph at lines 1166--1169
 
  []
 
 [43
 
 ] [44]
-Underfull \hbox (badness 10000) in paragraph at lines 1203--1206
+Underfull \hbox (badness 10000) in paragraph at lines 1204--1207
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1208--1212
+Underfull \hbox (badness 10000) in paragraph at lines 1209--1213
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1217--1224
+Underfull \hbox (badness 10000) in paragraph at lines 1218--1225
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1228--1232
+Underfull \hbox (badness 10000) in paragraph at lines 1229--1233
 
  []
 
 [45] [46] [47]
-Underfull \hbox (badness 10000) in paragraph at lines 1284--1289
+Underfull \hbox (badness 10000) in paragraph at lines 1285--1290
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1284--1289
+Underfull \hbox (badness 10000) in paragraph at lines 1285--1290
 
  []
 
 [48] [49]
-Underfull \hbox (badness 10000) in paragraph at lines 1354--1357
+Underfull \hbox (badness 10000) in paragraph at lines 1355--1358
 
  []
 
 [50]
-Underfull \hbox (badness 1210) in paragraph at lines 1370--1377
+Underfull \hbox (badness 1210) in paragraph at lines 1371--1378
 []\TU/STIXTwoText(0)/m/n/12 Suppose that $[]$ is constructed from a cycle by successively augmenting
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1370--1377
+Underfull \hbox (badness 10000) in paragraph at lines 1371--1378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1370--1377
+Underfull \hbox (badness 10000) in paragraph at lines 1371--1378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1370--1377
+Underfull \hbox (badness 10000) in paragraph at lines 1371--1378
 
  []
 
 [51] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 1402--1409
+Underfull \hbox (badness 10000) in paragraph at lines 1403--1410
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1402--1409
+Underfull \hbox (badness 10000) in paragraph at lines 1403--1410
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1402--1409
+Underfull \hbox (badness 10000) in paragraph at lines 1403--1410
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1415--1421
+Underfull \hbox (badness 10000) in paragraph at lines 1416--1422
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1415--1421
+Underfull \hbox (badness 10000) in paragraph at lines 1416--1422
 
  []
 
 [53]
-Underfull \hbox (badness 10000) in paragraph at lines 1428--1431
+Underfull \hbox (badness 10000) in paragraph at lines 1429--1432
 
  []
 
 [54]
-Underfull \hbox (badness 10000) in paragraph at lines 1442--1445
+Underfull \hbox (badness 10000) in paragraph at lines 1443--1446
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1452--1457
+Underfull \hbox (badness 10000) in paragraph at lines 1453--1458
 
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 1452--1457
+Underfull \hbox (badness 1242) in paragraph at lines 1453--1458
 \TU/STIXTwoText(0)/m/n/12 Suppose conversely that $[]$ is $[]$-connected and suppose on contrary that there
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1452--1457
+Underfull \hbox (badness 10000) in paragraph at lines 1453--1458
 
  []
 
@@ -1736,81 +1775,94 @@ Chapter 4.
 [57
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1512--1515
+Underfull \hbox (badness 10000) in paragraph at lines 1513--1516
 
  []
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 1512--1515
+Underfull \hbox (badness 1496) in paragraph at lines 1513--1516
 \TU/STIXTwoText(0)/m/n/12 Fix any proper $[][][][]$-colouring for $[]$. For every colour $[]$, the set of vertices
  []
 
 [58] [59]
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1595
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1595
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1595
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1595
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1595
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1595
 
  []
 
 [60] [61]
-Underfull \hbox (badness 10000) in paragraph at lines 1616--1621
+Underfull \hbox (badness 10000) in paragraph at lines 1617--1622
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1616--1621
+Underfull \hbox (badness 10000) in paragraph at lines 1617--1622
 
  []
 
 [62]
-Underfull \hbox (badness 10000) in paragraph at lines 1628--1639
+Underfull \hbox (badness 10000) in paragraph at lines 1629--1640
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1628--1639
+Underfull \hbox (badness 10000) in paragraph at lines 1629--1640
 
  []
 
-[63] [64] [65] 
+[63] [64] [65] [66]
+Underfull \hbox (badness 1019) in paragraph at lines 1737--1740
+[]\TU/STIXTwoText(0)/m/n/12 We shall apply strong induction on $[]$. If $[] [] []$, then
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1737--1740
+
+ []
+
+[67] [68] [69] [70] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39264 strings out of 478630
- 826061 string characters out of 5847730
- 1899012 words of memory out of 5000000
- 58734 multiletter control sequences out of 15000+600000
- 516151 words of font info for 85 fonts, out of 8000000 for 9000
+ 39306 strings out of 478630
+ 826835 string characters out of 5847730
+ 1914012 words of memory out of 5000000
+ 58773 multiletter control sequences out of 15000+600000
+ 517114 words of font info for 91 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,14n,128p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,14n,131p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (65 pages).
+Output written on Combinatorics and Graphs II.pdf (70 pages).

@@ -28,6 +28,7 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 \fancyhead[L]{
@@ -1669,4 +1670,125 @@ Obviously, if $d_G(v) = \Delta(G)$ for some vertex in a graph $G$, then all edge
     \chi'(G) = \chi\bigl(L(G)\bigr) \geq \Delta(G).
 \end{equation*}
 Recall that according to Corollary \ref{cor:regBipDecomposition}, every $d$-regular bipartite graph $G$ can be decomposed into $d$ perfect matchings. If we assign each of these perfect matchings a colour, we essentially obtain a proper edge colouring in $G$. Clearly, in this case $\chi'(G) = d = \Delta(G)$. In fact, this equality can be extended to any bipartite graph.
+\begin{thmbox}{K\"{o}nig's Edge Colouring Theorem}{konig2}
+    If $G$ is a bipartite graph, then $\chi'(G) = \Delta(G)$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove that $\chi'(G) \leq \Delta(G)$. We shall perform induction on $\abs{E(G)}$. The case where $\abs{E(G)} = 1$ is trivial. For $\abs{E(G)} = m$, take any $xy \in E(G)$ and consider $H \coloneqq G - xy$. Note that $\abs{E(H)} = m - 1$, so by the inductive hypothesis we have 
+        \begin{equation*}
+            \chi'(H) = \Delta(H) \leq \Delta(G).
+        \end{equation*}
+        Therefore, there exists a $\Delta(G)$-edge-colouring on $H$. Notice that $d_H(x) \leq \Delta(G) - 1$ and $d_H(y) \leq \Delta(G) - 1$, but there are $\Delta(G)$ colours. Without loss of generality, assume that $x$ is not incident to any $\alpha$-edge and $y$ is not incident to any $\beta$-edge. If $x$ is not incident to any $\beta$-edge, we can colour $xy$ with $\beta$ in $G$ and obtain a $\Delta(G)$-edge-colouring in $G$. Otherwise, take a maximal $\alpha$-$\beta$ alternating path starting from $x$ and ending at $x'$. Note that there is no $\alpha$-edge between $x$ and $x'$, so switching the $\alpha$- and $\beta$-edges along the path retains the proper colouring in $H$. However, notice that now $x$ is no longer incident to any $\beta$-edge in $H$, and so we can colour $xy$ as $\beta$ in $G$ to obtain a proper $\Delta(G)$-edge-colouring.
+    \end{proof}
+\end{thmbox}
+It turns out that for general graphs, we need at most one more colour to obtain a proper edge-colouring as compared to a bipartite graph.
+\begin{thmbox}{Vizing's Theorem}{Vizing}
+    For every graph $G$, we have $\Delta(G) \leq \chi'(G) \leq \Delta(G) + 1$.
+\end{thmbox}
+We can generalise Vizing's result to multigraphs.
+\begin{corbox}{Vizing's Theorem for Multigraphs}{VizingMult}
+    For every loopless multigraph $G$, we have $\Delta(G) \leq \chi'(G) \leq \Delta(G) + \mu(G)$, where $\mu(G)$ is the greatest multiplicity of edges in $G$.
+\end{corbox}
+\section{Perfect Graphs}
+In Proposition \ref{pro:lowerBoundChi}, we see that $\chi(G) \geq \omega(G)$. This motivates us to define a special type of graphs, the colouring of which is closely tied to the largest clique in them.
+\begin{dfnbox}{Perfect Graph}{perfectGraph}
+    A graph $G$ is {\color{red} \textbf{perfect}} if for every induced subgraph $H \subseteq G$, we have $\chi(H) = \omega(H)$.
+\end{dfnbox}
+Clearly, $K_n$ is a simple example for a perfect graph as every induced subgraph of $K_n$ is also complete. Correspondingly, one can easily check that the empty graph $\overline{K_n}$ is also perfect. A non-empty bipartite graph $G$ contains an edge as its maximum clique and so $\chi(G) = \omega(G) = 2$, which means $G$ is also perfect. We can also prove that the complement of any bipartite graph must also be perfect.
+\begin{probox}{Complement of a Bipartite Graph Is Perfect}{bipCompPerfect}
+    Let $G$ be a bipartite graph, then $\overline{G}$ is perfect.
+    \tcblower
+    \begin{proof}
+        Let $\overline{H} \subseteq \overline{G}$ be an induced subgraph, then $\abs{V\left(\overline{H}\right)}$ induces a subgraph $H \subseteq G$ which is the complement of $\overline{H}$. Note that every clique in $\overline{H}$ is induced by an independent set of $H$, so $\omega\left(\overline{H}\right) = \alpha(H) = \abs{V(H)} - \tau(H)$ by Proposition \ref{pro:Order=Sum}. Observe that $\chi\left(\overline{H}\right)$ is the smallest number of independent sets to partition $V\left(\overline{H}\right)$, but since $H$ is bipartite, each of these independent sets induces either a clique, i.e., an edge, or an empty graph in $H$. Therefore, $\chi\left(\overline{H}\right) + \nu(H) = \abs{V(H)}$. By Theorem \ref{thm:Konig}, we have 
+        \begin{equation*}
+            \chi\left(\overline{H}\right) = \abs{V(H)} - \nu(H) = \abs{V(H)} - \tau(H) = \omega\left(\overline{H}\right),
+        \end{equation*}
+        and so $\overline{G}$ is perfect.
+    \end{proof}
+\end{probox}
+We can prove that the line graph of bipartite graphs are also perfect.
+\begin{probox}{Line Graphs of Bipartite Graphs Are Perfect}{lineGraphPerfect}
+    Let $G$ be a bipartite graph, then $L(G)$ is perfect.
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:konig2}, it suffices to prove that $\omega\bigl(L(G)\bigr) = \Delta(G)$. Let $H \subseteq L(G)$ be a clique, then $H$ consists of edges of $G$ which pair-wise share an incident vertex, so clearly $\omega\bigl(L(G)\bigr) = \Delta(G)$.
+    \end{proof}
+\end{probox}
+There are many other families of perfect graphs, such as \textit{comparability graphs}
+(undirected graph of a poset), \textit{interval graphs} (intersection graph of intervals on the real
+line), \textit{chordal graphs} (each cycle of length at least $4$ has a chord), etc.
+
+Perfect graphs have many nice properties, one of which is that given an $n$-vertex perfect graph, many graph parameters such as $\alpha$, $\omega$ and $\chi$ can be computed with an $\mathcal{O}(n)$ algorithm. 
+
+Now, let us devise a way to characterise perfect graphs.
+\begin{thmbox}{Weak Perfect Graph Theorem}{weakPerfect}
+    A graph is perfect if and only if its complement is perfect.
+    \tcblower
+    \begin{proof}
+        It suffices to prove that if $G$ is perfect, then $\overline{G}$ is perfect. We shall apply strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then clearly both $G$ and $\overline{G}$ are perfect. Suppose that there is some integer $n > 1$ such that whenever $\abs{V(G)} < n$, $G$ being perfect implies that $\overline{G}$ is perfect. Let $\abs{V(G)} = n$ and take $\overline{H} \subseteq \overline{G}$ to be an induced subgraph. If $\abs{V\left(\overline{H}\right)} < n$, then by the inductive hypothesis $\overline{H}$ is perfect, and so $\chi\left(\overline{H}\right) = \omega\left(\overline{H}\right)$. Otherwise, $\overline{H} = \overline{G}$, so it suffices to prove $\chi\left(\overline{G}\right) = \omega\left(\overline{G}\right)$. Consider the following lemma:
+        \begin{lembox}{Vertex Expansion Preserves Perfectness}{vtxExpand}
+            Let $G$ be a perfect graph and define $G'$ by 
+            \begin{equation*}
+                V(G') \coloneqq V(G) \cup \{x'\}, \qquad E(G') \coloneqq E(G) \cup \left\{x'y \colon y \sim x\right\} \cup \{xx'\},
+            \end{equation*}
+            then $G'$ is perfect.
+            \tcblower
+            \begin{proof}
+                We shall apply strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then $G' \cong K_2$ which is perfect. Suppose that there exists $n > 1$ such that whenever $\abs{V(G)} < n$, $G'$ is perfect. Let $\abs{V(G)} = n$ and $H \subseteq G'$ be an induced subgraph with $H \neq G'$. If at most one of $x'$ and $x$ is contained in $H$, then $H$ is isomorphic to an induced subgraph in $G$. Otherwise, $H$ can be obtained by extending $x$ on some induced subgraph $H'$ of $G$.  Either case, by our inductive hypothesis we have $\omega(H) = \chi(H)$. Therefore, it suffices to prove that $\omega(G') \geq \chi(G')$.
+                \\\\
+                Note that $\omega(G') \in \{\omega(G), \omega(G) + 1\}$, so we consider $2$ cases. If $\omega(G') = \omega(G) + 1$, since $G$ is perfect, we have $\omega(G') = \chi(G) + 1$, and so $\chi(G') \leq \chi(G) + 1 = \omega(G')$. Otherwise, $\omega(G') = \omega(G) = \chi(G)$. Fix a proper $\omega(G)$-colouring on $G$ and take any maximal clique $K \cong K_{\omega(G)}$ in $G$. Notice that $x \notin K$ because otherwise $V(K) \cup \{x'\}$ induces a clique of size $\omega(G) + 1$ in $G'$, which is not possible. Suppose $x \in U$ where $U$ is some colour class in $G$, then clearly $K$ contains some vertex in $U$. Therefore, $G - (U - \{x\})$ contains no $K_{\omega(G)}$. Since $G$ is perfect,
+                \begin{equation*}
+                    \chi\bigl(G - (U - \{x\})\bigr) = \omega\bigl(G - (U - \{x\})\bigr) < \omega(G).
+                \end{equation*}
+                Note that in $U - \{x\}$, there is no vertex adjacent to $x$, and so $(U - \{x\}) \cup \{x'\}$ is an independent set in $G'$. Therefore, we can assign a new colour to $(U - \{x\}) \cup \{x'\}$. Together with an $\bigl(\omega(G) - 1\bigr)$-colouring of $\bigl(G - (U - \{x\})\bigr)$, this gives an $\omega(G)$-colouring in $G'$, and so 
+                \begin{equation*}
+                    \omega(G') = \omega(G) \geq \chi(G').
+                \end{equation*}
+            \end{proof}
+        \end{lembox}
+        Let $\mathcal{K}$ be the family of cliques and $\mathcal{A}$ be the family of maximal independent sets in $G$. We claim that there exists some $K \in \mathcal{K}$ such that $K \cap A \neq \varnothing$ for all $A \in \mathcal{A}$. Suppose on contrary that for every $K \in \mathcal{K}$, there is some $A_K \in \mathcal{A}$ such that $K \cap A = \varnothing$. For every vertex $x \in V(G)$, define 
+        \begin{equation*}
+            k(x) \coloneqq \abs{\left\{K \in \mathcal{K} \colon x \in A_K\right\}}.
+        \end{equation*}
+        Let $G_x \cong K_{k(x)}$ be a clique. We construct a graph $G'$ by 
+        \begin{align*}
+            V(G') & \coloneqq \left\{G_x \colon x \in V(G)\right\}, \\
+            E(G') & \coloneqq \bigcup_{xy \in E(G)}\bigl(V(G_x) \times V(G_y)\bigr),
+        \end{align*}
+        i.e., $V(G_x) \cup V(G_y)$ induces a clique in $G'$ if and only if $x \sim y$ in $G$. Notice that every $G_x \subseteq G'$ corresponds to some unique $x \in V(G)$, so we can construct $G'$ by repeatedly expanding on vertices of $G$. Since $G$ is perfect, by Lemma \ref{lem:vtxExpand} we know that $G'$ is perfect and so $\chi(G') \leq \omega(G')$. Notice that if $\bigcup_{i = 1}^{m}V\left(G_{x_i}\right)$ induces a maximal clique $K'$ in $G'$, then $\left\{x_1, x_2, \cdots, x_m\right\}$ must also induce a maximal clique $X \in \mathcal{K}$ in $G$. Note that 
+        \begin{align*}
+            \abs{V(K')} & = \sum_{x \in V(X)}k(x) \\
+            & = \sum_{x \in V(X)}\abs{\left\{K \in \mathcal{K}\colon x \in A_K\right\}} \\
+            & = \sum_{K \in \mathcal{K}}\abs{\left\{X \cap A_K\right\}}
+        \end{align*}
+        Since $X$ is a clique, $\abs{X \cap A_K} \leq 1$. Notice that there exists $A_X \in \mathcal{A}$ with $X \cap A_X = \varnothing$, so $\omega(G') = \abs{V(K')} \leq \abs{\mathcal{K}} - 1$. However,
+        \begin{align*}
+            \abs{V(G')} & = \sum_{x \in V(G)}k(x) \\
+            & = \sum_{K \in \mathcal{K}}\abs{A_K} \\
+            & = \alpha(G)\abs{\mathcal{K}}.
+        \end{align*}
+        Take any independent set $A \subseteq V(G')$, then for any $a, b \in A$, $a, b$ are in different cliques. Suppose $a \in G_x$ and $b \in G_y$, then $xy \notin E(G)$ because otherwise $V(G_x) \cup V(G_y)$ induces a clique in $G'$, which is not possible. Therefore, there exists an independent set in $G$ which has the same size as $A$, and so $\alpha(G') \leq \alpha(G)$. Therefore,
+        \begin{equation*}
+            \chi(G') \geq \frac{\abs{V(G')}}{\alpha(G')} \geq \frac{\alpha(G)\abs{\mathcal{K}}}{\alpha(G)} = \abs{\mathcal{K}},
+        \end{equation*}
+        which is a contradiction. Therefore, we can take some $K \in \mathcal{K}$ such that $K \cap A \neq \varnothing$ for all $A \in \mathcal{A}$, and so 
+        \begin{align*}
+            \omega\left(\overline{G} - K\right) & = \alpha(G - K) < \alpha(G) = \omega\left(\overline{G}\right). 
+        \end{align*}
+        By the inductive hypothesis, $\overline{G} - K$ is perfect, and so $\chi\left(\overline{G} - K\right) = \omega\left(\overline{G} - K\right)$. Fixing a $\chi\left(\overline{G} - K\right)$-colouring in $\overline{G} - K$ and colouring $V(K)$ with a new colour yields a proper colouring in $\overline{G}$ because $V(K)$ is an independent set in $\overline{G}$. Therefore,
+        \begin{align*}
+            \chi\left(\overline{G}\right) & \leq \chi\left(\overline{G} - K\right) + 1 \\
+            & = \omega\left(\overline{G} - K\right) + 1 \\
+            & \leq \omega\left(\overline{G}\right).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+There is a stronger characterisation of perfect graphs, which has remained an unsolved conjecture until 2006. We first define the following structure:
+\begin{dfnbox}{Odd Hole}{oddHole}
+    An induced odd cycle of length at least $5$ is called an {\color{red} \textbf{odd hole}} in a graph. The complement of an odd hole is said to be an {\color{red} \textbf{odd anti-hole}}.
+\end{dfnbox}
+The characterisation states the following:
+\begin{thmbox}{Strong Perfect Graph Theorem}{strongPerfect}
+    A graph $G$ is perfect if and only if it contains no odd hole or odd anti-hole.
+\end{thmbox}
 \end{document}
