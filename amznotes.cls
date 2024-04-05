@@ -73,7 +73,8 @@
   BoldItalicFont = *-SemiBoldItalic,
 ]
 \setmathfont{STIXTwoMath-Regular.otf}[math-style = ISO]
-\setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
+\setmathfont{texgyretermes-math.otf}[range={scr,bfscr},StylisticSet=01]
+\setmathfont{texgyretermes-math.otf}[range={bb}]
 \setmonofont{JetBrainsMonoNL-Regular}
 
 % ------------------------------------------------------------

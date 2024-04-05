@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  22 MAR 2024 21:36
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 APR 2024 21:39
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1081,22 +1081,60 @@ LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> TU/STIXTwoMath-Regular.otf(3)/b/n on input line 75.
 
-Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(4)' created for
-(fontspec)             font 'STIXTwoMath-Regular.otf' with options
-(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=STIXTwoMath-Regular.otf,Style=MathScript},{Size=-7.5,Font=STIXTwoMath-Regular.otf,Style=MathScriptScript}},StylisticSet={01}].
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Info: Font family 'texgyretermes-math.otf(0)' created for
+(fontspec)             font 'texgyretermes-math.otf' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=texgyretermes-math.otf,Style=MathScript},{Size=-7.5,Font=texgyretermes-math.otf,Style=MathScriptScript}},StylisticSet={01}].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <10.2->"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;"<7.5-10.2>"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=0;"<-7.5>"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=1;"
+(fontspec)             <10.2->"[texgyretermes-math.otf]/OT:script=math;language=dflt;"<7.5-10.2>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.5>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 \sym__um_fam1=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
-(Font)                  TU/STIXTwoMath-Regular.otf(4)/m/n --> TU/STIXTwoMath-Regular.otf(4)/m/n on input line 76.
+(Font)                  TU/texgyretermes-math.otf(0)/m/n --> TU/texgyretermes-math.otf(0)/m/n on input line 76.
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
-(Font)                  TU/STIXTwoMath-Regular.otf(4)/m/n --> TU/STIXTwoMath-Regular.otf(4)/b/n on input line 76.
+(Font)                  TU/texgyretermes-math.otf(0)/m/n --> TU/texgyretermes-math.otf(0)/b/n on input line 76.
+
+Package fontspec Info: Font family 'texgyretermes-math.otf(1)' created for
+(fontspec)             font 'texgyretermes-math.otf' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=texgyretermes-math.otf,Style=MathScript},{Size=-7.5,Font=texgyretermes-math.otf,Style=MathScriptScript}}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->"[texgyretermes-math.otf]/OT:script=math;language=dflt;"<7.5-10.2>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.5>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+\sym__um_fam2=\mathgroup5
+LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `normal'
+(Font)                  TU/texgyretermes-math.otf(1)/m/n --> TU/texgyretermes-math.otf(1)/m/n on input line 77.
+LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `bold'
+(Font)                  TU/texgyretermes-math.otf(1)/m/n --> TU/texgyretermes-math.otf(1)/b/n on input line 77.
 
 Package fontspec Info: Could not resolve font "JetBrainsMonoNL-Regular/BI" (it
 (fontspec)             probably doesn't exist).
@@ -1150,10 +1188,10 @@ Package fontspec Info: Font family 'JetBrainsMonoNL-Regular(1)' created for
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/m/n on input line 78.
+(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/m/n on input line 79.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/b/n on input line 78.
-Package hyperref Info: Option `colorlinks' set `true' on input line 107.
+(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/b/n on input line 79.
+Package hyperref Info: Option `colorlinks' set `true' on input line 108.
 \c@amzboxcounter=\count391
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
@@ -1165,8 +1203,8 @@ Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
 ) (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\symAMSa=\mathgroup5
-\symAMSb=\mathgroup6
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
 LaTeX Font Info:    Redeclaring math delimiter \ulcorner on input line 74.
 LaTeX Font Info:    Redeclaring math delimiter \urcorner on input line 75.
 LaTeX Font Info:    Redeclaring math delimiter \llcorner on input line 76.
@@ -1174,6 +1212,7 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
 \c@case=\count392
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 31.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Linear_and_Network_Optimisations.aex <nul: /p x=^%~$PATH:i>> Linear_and_Network_Optimisations.aex)...executed.
 
 runsystem(del Linear_and_Network_Optimisations.aex)...executed.
@@ -1181,26 +1220,26 @@ runsystem(del Linear_and_Network_Optimisations.aex)...executed.
  (./Linear and Network Optimisations.aux)
 \openout1 = `"Linear and Network Optimisations.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1237,9 +1276,9 @@ LaTeX Font Info:    ... okay on input line 32.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 32.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 33.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 32.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 33.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1258,7 +1297,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 32.
+Package hyperref Info: Link coloring ON on input line 33.
 (./Linear and Network Optimisations.out) (./Linear and Network Optimisations.out)
 \@outlinefile=\write6
 \openout6 = `"Linear and Network Optimisations.out"'.
@@ -1296,38 +1335,33 @@ Chapter 1.
 [2
 
 ]
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 81.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 82.
  [3] [4] [5] [6] [7] [8]
 Chapter 2.
 [9
 
 ] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 339--343
+Underfull \hbox (badness 10000) in paragraph at lines 340--344
 
  []
 
 [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 401--406
+Underfull \hbox (badness 10000) in paragraph at lines 402--407
 
  []
 
 
-Underfull \hbox (badness 1072) in paragraph at lines 401--406
-\TU/STIXTwoText(0)/m/n/12 Suppose that $[]$ contains a straight line $[]$ for some fixed point
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 401--406
+Underfull \hbox (badness 10000) in paragraph at lines 402--407
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 424--428
+Underfull \hbox (badness 10000) in paragraph at lines 425--429
 
  []
 
 [14] [15] [16] [17] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 584--588
+Underfull \hbox (badness 10000) in paragraph at lines 585--589
 
  []
 
@@ -1343,22 +1377,19 @@ Chapter 4.
 Chapter 5.
 [37
 
-] [38] 
+] [38] [39] [40] [41] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Linear and Network Optimisations.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Linear and Network Optimisations".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39060 strings out of 478630
- 822899 string characters out of 5847730
+ 39097 strings out of 478630
+ 823690 string characters out of 5847730
  1884012 words of memory out of 5000000
- 58528 multiletter control sequences out of 15000+600000
- 516167 words of font info for 87 fonts, out of 8000000 for 9000
+ 58560 multiletter control sequences out of 15000+600000
+ 517146 words of font info for 95 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,15n,128p,1685b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,18n,131p,1685b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear and Network Optimisations.pdf (38 pages).
+Output written on Linear and Network Optimisations.pdf (41 pages).

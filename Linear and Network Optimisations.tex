@@ -26,8 +26,9 @@
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
 %\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
 
-\DeclareMathOperator*{\argmax}{argmax}
-\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{\mathrm{argmax}}
+\DeclareMathOperator*{\argmin}{\mathrm{argmin}}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 \fancyhead[L]{
@@ -1065,6 +1066,15 @@ Suppose we add $x_{n + 1}$ as a new basic variable. Since $\mathbfit{x}^*$ is in
 
 \chapter{Network Optimisation}
 \section{Network Flow Problems}
+In network flow problems, we study directed movement of resources between nodes. It is easy to see that such problems can be easily modelled with \textit{directed graphs}.
+\begin{dfnbox}{Directed Graph}{dirGraph}
+    A {\color{red} \textbf{directed graph}} $G = (V, E)$ consists of a vertex set $V(G)$ and an edge set $E(G)$, where $E(G)$ consists of ordered pairs of vertices in $V(G)$.
+\end{dfnbox}
+Every directed graph $G$ induces an underlying undirected graph $G'$ by defining 
+\begin{equation*}
+    V(G') \coloneqq V(G), \qquad E(G') \coloneqq \bigl\{uv \colon \left\{(u, v), (u, v)\right\} \cap E(G) \neq \varnothing\bigr\}.
+\end{equation*}
+We say that $G$ is \textit{connected} if and only if $G'$ is connected.
 \begin{dfnbox}{Network}{network}
     A {\color{red} \textbf{network}} is a directed graph $G$ with a mapping $x \colon E(G) \to \R^+_0$ known as the {\color{red} \textbf{flow}}, a mapping $c \colon E(G) \to \R^+_0$, known as the {\color{red} \textbf{cost}}, and a mapping $b \colon V(G) \to \R$, known as the {\color{red} \textbf{external supply/demand}}.
 \end{dfnbox}
@@ -1076,11 +1086,13 @@ If $x_{ij} = x(u_iu_j) \leq u_{ij}$ for some \textit{upper bound} $u_{ij}$, we s
 \end{itemize}
 We also denote $b(v) = b_v$.
 
+Note that the above construction can be easily applied to directed multigraphs by merging all edges $(u, v)$ and consider the aggregate flow between the vertices.
+
 In network optimisation, we wish to maintain \textit{flow balance}, i.e., whatever flows out of a node (total flow out plus external demand) must equal the sum of total flow in and external supply.
 \begin{dfnbox}{Flow Balance Constraint}{flowBalance}
     Let $G$ be a network. For each $v \in V(G)$, denote 
     \begin{equation*}
-        O(v) \coloneqq \left\{u \colon (v, u) \in E(G)\right\}, \qquad I(v) \coloneqq \left\{u \coloneqq (u, v) \in E(G)\right\},
+        O(v) \coloneqq \left\{u \in V(G) \colon (v, u) \in E(G)\right\}, \qquad I(v) \coloneqq \left\{u \in V(G) \colon (u, v) \in E(G)\right\},
     \end{equation*}
     then the {\color{red} \textbf{flow balance constraint}} is formulated as 
     \begin{equation*}
@@ -1092,4 +1104,121 @@ We say that a network has a feasible flow if it satisfies the flow balance const
 \begin{equation*}
     \sum_{v \in V(G)}b_v = 0.
 \end{equation*}
+We can prove this equality more rigorously by considering the following representation:
+\begin{dfnbox}{Node-Arc Incidence Matrix}{inMat}
+    Let $G$ be a simple directed graph. Label the vertices 
+    \begin{equation*}
+        V(G) = \left\{v_1, v_2, \cdots, v_n\right\}
+    \end{equation*}
+    and edges 
+    \begin{equation*}
+        E(G) = \left\{e_j = (u_j, w_j) \colon j = 1, 2, \cdots, m\right\}.
+    \end{equation*}
+    The matrix $\mathbfit{A}$ defined by 
+    \begin{equation*}
+        a_{ij} = \begin{cases}
+            1 & \textrm{if } v_i = u_j \\
+            -1 & \textrm{if } v_i = w_j \\
+            0 & \textrm{otherwise}
+        \end{cases}
+    \end{equation*}
+    is said to be the {\color{red} \textbf{node-arc incidence matrix}} of $G$.
+\end{dfnbox}
+Clearly, the flow for every $e_j \in E(G)$ is just $x_{u_jw_j}$. Collect the flows on all edges into a $1 \times m$ column vector 
+\begin{equation*}
+    \mathbfit{x} = \begin{bmatrix}
+        x_{u_1w_1} & x_{u_2w_2} & \cdots & x_{u_mw_m}
+    \end{bmatrix}^{\mathrm{T}},
+\end{equation*}
+then $b_{v_i} = \left(\mathbfit{A}^{\mathrm{T}}\right)_{i}\mathbfit{x}$, where $\left(\mathbfit{A}^{\mathrm{T}}\right)_{i}$ is the $i$-th row of $\mathbfit{A}$. Observe that the column sum of $\mathbfit{A}$ is~$\mathbf{0}$, which naturally implies that 
+\begin{equation*}
+    \sum_{v \in V(G)}b_v = \left(\sum_{i = 1}^n\left(\mathbfit{A}^{\mathrm{T}}\right)_{i}\right)\mathbfit{x} = 0.
+\end{equation*}
+Notice that by using the node-arc incidence matrix, we can actually formulate a network flow problem as the linear program 
+\begin{align*}
+    \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+    \textrm{s.t. } & \mathbfit{Ax = b} \\
+    & \mathbf{0 \leq x \leq u},
+\end{align*}
+where $\mathbfit{x}$ is the flow vector, $\mathbfit{c}$ is the cost, $\mathbfit{b}$ is the external supply vector, $\mathbfit{A}$ is the node-arc incidence matrix and $\mathbfit{u}$ is the upper bound for flow.
+\subsection{Single-Source Shortest Path Problem}
+In graph theory, the \textit{single-source shortest path problem} (SSSP) is a classic and easy-to-solve optimisation problem. The problem statement is as follows:
+\begin{quote}
+    Let $G$ be a directed graph and $w \colon E(G) \to \R$ be a weight mapping on edges. Fix a source vertex $s$. For any destination vertex $t \in V(G)$, find an (or all) $s$-$t$ path(s) $P_{st}$ in $G$ such that 
+    \begin{equation*}
+        \sum_{v \in V(P_{st})}w(v)
+    \end{equation*}
+    is minimised.
+\end{quote}
+In programming, an SSSP can be easily solved by deploying one of many greedy graph traversal algorithms, such as Bellman-Ford Algorithm, Dijkstra's Algorithm and A$^*$ Algorithm, provided that the graph does not contain any negatively weighted cycle, where the problem is unsolvable.
+
+How to formulate an SSSP as a linear program? Suppose $s$ is our source and $t$ is our destination, the shortest $s$-$t$ path is essentially such that \textbf{the sum of flow costs over the edges in the path is minimised}. Therefore, it suffices to send \textbf{a unit flow from $s$ to $t$} and minimise the total cost $\mathbfit{c}^{\mathrm{T}}\mathbfit{x}$.
+\begin{probox}{SSSP as a Linear Program}{sssp}
+    Let $G$ be a network with source and destination vertices $s$ and $t$ respectively. Let $\mathbfit{x}^*$ be an optimal solution to the linear program 
+    \begin{align*}
+        \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+        \textrm{s.t. } & \sum_{u \in O(v)}x_{vu} - \sum_{u \in I(v)}x_{uv} = \begin{cases}
+            1 & \textrm{if } v = s \\
+            -1 & \textrm{if } v = t \\
+            0 & \textrm{otherwise}
+        \end{cases} \\
+        & \mathbfit{x} \geq \mathbf{0}.
+    \end{align*}
+    such that $x^*_i \in \left\{0, 1\right\}$, then the shortest $s$-$t$ path is induced by $\left\{e_i \in E(G) \colon x^*_i = 1\right\}$.
+    \tcblower
+    \begin{proof}
+        The case where $s = t$ is trivial. Assume $s \neq t$. Let $P$ be the subgraph of $G$ induced by $E(P) \coloneqq \left\{e_i \in E(G) \colon x^*_i = 1\right\}$. We first prove that $P$ is an $s$-$t$ walk in $G$. It is easy to see that $t \in V(P)$, because otherwise 
+        \begin{equation*}
+            \sum_{u \in O(t)}x_{tu} - \sum_{u \in I(t)}x_{ut} = 0. 
+        \end{equation*}
+        Similarly, $s \in V(P)$. We claim that $s$ and $t$ are the only end vertices in $P$. Suppose on contrary that there exists some $r \in V(P)$ with $r \neq s, t$ and either $O(r) = \varnothing$ or $I(r) = \varnothing$. However, 
+        \begin{equation*}
+            \sum_{u \in O(r)}x_{ru} - \sum_{u \in I(r)}x_{ur} = 0 \neq -1,
+        \end{equation*}
+        so $r$ must be an isolated vertex in $P$, which is a contradiction because $P$ is induced on a subset of $E(G)$, meaning that every connected component of $P$ must contain an edge. Therefore, $P$ is an $s$-$t$ walk. Suppose on contrary that $P$ is not a shortest $s$-$t$ path, then there exists a shorter $s$-$t$ path $P'$ in $G$. Consider $\mathbfit{x}^{**}$ defined by 
+        \begin{equation*}
+            x^{**}_i = \begin{cases}
+                1 & \textrm{if } e_i \in E(P') \\
+                0 & \textrm{otherwise}
+            \end{cases},
+        \end{equation*}
+        then $\mathbfit{c}^{\mathrm{T}}\mathbfit{x}^{**} < \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^{*}$, which contradicts the optimality of $\mathbfit{x}^*$. Therefore, $P$ is a shortest $s$-$t$ path in $G$. 
+    \end{proof}
+\end{probox}
+An alternative perspective to view Proposition \ref{pro:sssp} is as follows: label the edge set 
+\begin{equation*}
+    E(G) \coloneqq \left\{e_1, e_2, \cdots, e_m\right\}.
+\end{equation*}
+Define a mapping $E(G) \mapsto \mathcal{B}$, where $\mathcal{B}$ is the family of all boolean arrays of length $m$, as follows: for every edge $e_i \in E(G)$, mark it as ``taken'' by mapping it to $1$ and ``not taken'' by mapping it to $0$. The corresponding boolean array $\mathbfit{x}$ optimal to the minimisation problem essentially indicates all edges included in the shortest $s$-$t$ path in $G$.
+\subsection{Maximum Flow Problem}
+The maximum flow problem has the following statement:
+\begin{quote}
+    Let $G$ be a capacitated network with $u_{ij}$ as the upper bound for the flow on edge $(i, j)$. For a fixed source vertex $s$ and a fixed destination vertex $t$, find the maximum external supply $b_s$ at $s$ such that we can transport $b_s$ units of flow from $s$ to $t$.
+\end{quote}
+Suppose $b_s = b$, then the maximum flow problem can be formulated as the linear program 
+\begin{align*}
+    \min_{b \geq 0} & b \\
+    \textrm{s.t. } & \sum_{u \in O(v)}x_{vu} - \sum_{u \in I(v)}x_{uv} = \begin{cases}
+        b & \textrm{if } v = s \\
+        -b & \textrm{if } v = t \\
+        0 & \textrm{otherwise}
+    \end{cases} \\
+    & \mathbf{0} \leq \mathbfit{x} \leq \mathbfit{u}. 
+\end{align*}
+A problem closely related to the maximum flow problem is the \textit{minimum cut problem}, which states the following:
+\begin{quote}
+    Let $G$ be a directed graph with $w \colon E(G) \to \R^+_0$ as a weight map over the edges. For two fixed vertices $s, t \in V(G)$, find an edge cut $X \subseteq E(G)$ with minimum total weight such that $s$ and $t$ are in different connected components in $G - X$.
+\end{quote}
+We introduce a few relevant definitions to the minimum cut problem.
+\begin{dfnbox}{$s$-$t$ Cut}{cut}
+    Let $G$ be a graph and $s, t \in V(G)$. An {\color{red} \textbf{$s$-$t$ cut}} in $G$ is a bipartition $\{S_1, S_2\}$ of $V(G)$ such that $s \in G[S_1]$ and $t \in G[S_2]$. The cut is minimal if $\abs{E(S_1, S_2)}$ is minimised.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Clearly, the total capacity of the minimal $s$-$t$ cut in $G$ upper bounds the maximum flow from $s$ to $t$ in $G$.
+    \end{remark}
+\end{notebox}
+\begin{probox}{Maximum Flow Problem and Minimum Cut Problem}{dualMFP=MCP}
+    Let (P) be a maximum flow problem on a network $G$ with flow capacity $u \colon E(G) \to \R^+_0$, then the dual of (P), (D), is the minimum cut problem on $G$ with $u$ as the edge weight.
+\end{probox}
 \end{document}
