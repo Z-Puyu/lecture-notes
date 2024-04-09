@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 APR 2024 09:52
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  9 APR 2024 15:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1844,22 +1844,68 @@ Underfull \hbox (badness 10000) in paragraph at lines 1737--1740
 
  []
 
-[67] [68] [69] [70] 
+[67] [68] [69] [70]
+Chapter 5.
+[71
+
+] [72] [73] [74]
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1930--1935
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1930--1935
+
+ []
+
+[75] [76] [77]
+Underfull \hbox (badness 10000) in paragraph at lines 1959--1962
+
+ []
+
+
+Underfull \hbox (badness 1264) in paragraph at lines 1959--1962
+\TU/STIXTwoText(0)/m/n/12 Suppose conversely that $[][]$ is a minimal edge cut in $[][]$, then $[][] [] [][]$ con-
+ []
+
+[78] [79]
+
+LaTeX Warning: Reference `5colour' on page 80 undefined on input line 1993.
+
+[80] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Combinatorics and Graphs II.aux)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39306 strings out of 478630
- 826835 string characters out of 5847730
+ 39367 strings out of 478630
+ 827815 string characters out of 5847730
  1914012 words of memory out of 5000000
- 58773 multiletter control sequences out of 15000+600000
+ 58834 multiletter control sequences out of 15000+600000
  517114 words of font info for 91 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,14n,131p,1214b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,14n,131p,1607b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Combinatorics and Graphs II.pdf (70 pages).
+Output written on Combinatorics and Graphs II.pdf (80 pages).

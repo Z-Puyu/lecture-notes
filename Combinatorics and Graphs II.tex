@@ -1791,4 +1791,211 @@ The characterisation states the following:
 \begin{thmbox}{Strong Perfect Graph Theorem}{strongPerfect}
     A graph $G$ is perfect if and only if it contains no odd hole or odd anti-hole.
 \end{thmbox}
+\chapter{Planarity}
+\section{Planar Graph}
+\textbf{Four-Colour Problem} is a famous problem is graph theory, which states that \textbf{any map drawn on a plane can be coloured with $4$ distinct colours such that no neighbouring regions share the same colour.} It is clear that we can model such a map by taking every enclosed region as a vertex and join any vertices whose corresponding regions share a border. Intuitively, in such a graph, the edges never cross each other.
+\begin{dfnbox}{Planar Graph}{planarGraph}
+    A {\color{red} \textbf{planar graph}} is a graph which can be embedded in a plane such that its edges only intersect at end points. Given a planar representation of a graph $G$, an intersection between edges of $G$ which is not an end point is known as a {\color{red} \textbf{crossing}}.
+\end{dfnbox}
+An intuition here is that if a graph contains many edges, i.e., its edges are dense, then it is more difficult to avoid crossings. We will state the following simple proposition first:
+\begin{probox}{$K_5$ and $K_{3, 3}$ Are not Planar}{K5K33NotPlanar}
+    $K_5$ and $K_{3, 3}$ are not planar graphs.
+\end{probox}
+Clearly, any plane drawing of any graph is isomorphic to the graph itself. To distinguish between a ``planar graph'' and a ``planar drawing of a graph'', we introduce the following definition:
+\begin{dfnbox}{Plane Graph}{planeGraph}
+    A {\color{red} \textbf{plane graph}} is a valid plane drawing of a planar graph $G$, such that there exists some disc $D \subseteq \R^2$ with $G \subseteq D$. For any space $S$ enclosed by the edges of $G$, we say that $S$ is an {\color{red} \textbf{outer face}} if $S \subseteq D$ and an {\color{red} \textbf{inner face}} otherwise.
+\end{dfnbox}
+Euler once developed a formula that handles the relationship between the numbers of faces, edges and vertices of a plane graph.
+\begin{thmbox}{Euler's Formula}{eulerFormula}
+    Let $G$ be a connected plane graph with $n$ vertices, $m$ edges and $\ell$ faces, then 
+    \begin{equation*}
+        n - m + \ell = 2.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        For every $n \in \Z^+$, we shall apply induction on $m$. Note that $m \geq n - 1$ for $G$ to be connected. If $m = n - 1$, then $G$ is a tree and $\ell = 1$, so 
+        \begin{equation*}
+            n - m + \ell = n - (n - 1) + 1 = 2.
+        \end{equation*}
+        For $m \geq n$, $G$ must contain some cycle. Take a cycle $C \subseteq G$, then for any $e \in E(C)$, $e$ lies on the boundary between exactly $2$ faces. Therefore, $G' \coloneqq G - e$ is a connected plane graph with $n$ vertices, $(m - 1)$ edges and $(\ell - 1)$ faces, and by the inductive hypothesis we have 
+        \begin{equation*}
+            n - (m - 1) + (\ell - 1) = n - m + \ell = 2.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+An immediate corollary of Theorem \ref{thm:eulerFormula} allows us to determine the number of edges in certain planar graphs.
+\begin{corbox}{Number of Edges in a Planar Graph}{numEPlanar}
+    Any planar graph $G$ with order at least $3$ contains at most $\bigl(3v(G) - 6\bigr)$ edges.
+    \tcblower
+    \begin{proof}
+        It suffices to prove for the case where $G$ is connected. If $G$ has only one face, then $G$ must be a tree, and so 
+        \begin{equation*}
+            e(G) = v(G) - 1 \leq 3v(G) - 6.
+        \end{equation*}
+        Otherwise, every face of $G$ is bounded by at least $3$ edges. Let $G$ contain $m'$ edges which are not part of any cycle, then any of these $m'$ edges lies on the boundary of the outer face only. Suppose $G$ contains $\ell$ faces, then every face contains at least $3$ edges, each of which must be part of some cycle. Let $e_i$ be the number of edges forming the boundary of the $i$-th face and are part of some cycle, then 
+        \begin{equation*}
+            m = m' + \frac{\sum_{i = 1}^{\ell}e_i}{2} \geq m' + \frac{3\ell}{2}.
+        \end{equation*}
+        By Theorem \ref{thm:eulerFormula}, 
+        \begin{equation*}
+            2 = v(G) - m + \ell \leq v(G) - m + \frac{2}{3}\left(m - m'\right) = v(G) - \frac{1}{3}m - \frac{2}{3}m'.
+        \end{equation*}
+        Therefore, $m \leq 3\left(v(G) - \frac{2}{3}m' - 2\right) \leq 3v(G) - 6$.
+    \end{proof}
+\end{corbox}
+\begin{notebox}
+    \begin{remark}
+        In fact, we can further prove that every maximal planar graph $G$, i.e., $G + uv$ for any $u, v \in V(G)$ is not planar,  with~$v(G) \geq 3$ must have a plane drawing which is a triangulation, i.e., every face is a triangle, and so~$e(G) = 3v(G) - 6$.
+    \end{remark}
+\end{notebox}
+Note that in the formal definition, we only require that the plane drawing of a planar graph uses curves to represent each edge. However, it turns out that using straight lines already suffices.
+\begin{thmbox}{F\'{a}ry's Theorem}{Fary}
+    Any planar graph $G$ can be draw with straight edges in a plane.
+    \tcblower
+    \begin{proof}
+        It suffices to prove for the case where $G$ is maximally planar, i.e., $e(G) = 3v(G) - 6$. We shall apply induction on $v(G)$. The case where $v(G) = 3$ is trivial. Suppose that there exists some integer $k \geq 3$ such that any $k$-vertex maximally planar graph has a straight-line plane drawing. Let $G$ be a $(k + 1)$-vertex maximally planar graph and let $A, B, C$ be the vertices on the boundary of the outer face of $G$. We claim that there exists some $v \in V(G) - \{A, B, C\}$ such that $d_G(v) \leq 5$, because otherwise 
+        \begin{equation*}
+            2e(G) > \sum_{v \in V(G)}6(k + 1 - 3) + 3 \times 2 = 6(k + 1) - 12,
+        \end{equation*}
+        which is not possible. Consider $G' \coloneqq G - v$, then $G'$ is isomorphic to some subgraph of a $k$-vertex maximally planar graph, and so by the inductive hypothesis we can embed $G'$ in a plane with straight edges. Consider the face in $G'$ which contains $v$ in $G$. Notice that this face is a polygon $P$ with at most $5$ edges. Since $v$ is in the interior of $P$, $P + v$ is a $6$-vertex planar graph. One may check that $v$ can be joined to the vertices of $P$ using only straight lines, and so $G$ can be embedded in a plane with only straight edges.
+    \end{proof}
+\end{thmbox}
+For non-planar graphs, we may still wish to embed them into a plane using the most optimal drawing possible.
+\begin{dfnbox}{Crossing Number}{crossing}
+    For any graph $G$, the {\color{red} \textbf{crossing number}} of $G$ is the minimum number of crossings between edges to embed $G$ into a plane.
+\end{dfnbox}
+Now, we make an attempt to characterise the structure of planar graphs. We first introduce $2$ important definitions.
+\begin{dfnbox}{Subdivision}{subdiv}
+    A {\color{red} \textbf{subdivision}} of a graph $G$ is obtained by replace the edges of $G$ with internally vertex-disjoint paths of length at least $2$.
+\end{dfnbox}
+\begin{dfnbox}{Topological Minor}{topoMinor}
+    A graph $H$ is called a {\color{red} \textbf{topological minor}} of a graph $G$ if $G$ contains a subgraph which is isomorphic to a subdivision of $H$.
+\end{dfnbox}
+In Proposition \ref{pro:K5K33NotPlanar}, we state that $K_5$ and $K_{3, 3}$ are non-planar. Now we will see how this fact can be used to determine the planarity of general graphs.
+\begin{probox}{Sufficient Condition for Non-planarity}{nonplanar}
+    A graph $G$ is not planar if it contains a subgraph which is a subdivision of $K_5$ or $K_{3, 3}$.
+    \tcblower
+    \begin{proof}
+        It suffices to show that any subdivision of $K_5$ and $K_{3, 3}$ are non-planar. Suppose on contrary that there exists some subdivision $H$ of $K_5$ which is planar. Note that for any $u_1u_2, v_1v_2 \in E(K_5)$, the corresponding $u_1$-$u_2$ path and $v_1$-$v_2$ path in $H$ are internally vertex-disjoint. Therefore, replacing these $2$ paths in a plane drawing of $H$ with singleton edges does not produce crossing edges. Apply this replacement repeatedly and we will eventually obtain a plane drawing of $K_5$, which is a contradiction. Similarly, we can also prove the any subdivision of $K_{3, 3}$ cannot be planar.
+    \end{proof}
+\end{probox}
+In fact, we can extend the above proposition to a sufficient and necessary condition for planarity. However, before we prove the theory properly, let us first examine a few preliminary results.
+\begin{dfnbox}{Minor}{minor}
+    A graph $H$ is called a {\color{red} \textbf{minor}} of a graph $G$ if it can be obtained by deleting edges, deleting vertices or contracting edges from $G$.
+\end{dfnbox}
+Intuitively, minor is a transitive relation. Note that any subgraph of $G$ must be a minor of $G$, but the converse is not true. One can also easily check that any topological minor of $G$ must also be a minor of $G$ (and so the name ``topological minor''). 
+\begin{probox}{Topological Minor Is a Minor}{topoMinorIsMinor}
+    If $H$ is a topological minor of $G$, then $H$ is a minor of $G$.
+    \tcblower
+    \begin{proof}
+        By Definition \ref{dfn:topoMinor}, $G$ contains a subdivision of $H$. Denote this subdivision as $K$, then it is clear that we can obtain $H$ by contracting the edges of $K$ repeatedly until we restore $E(H)$. Therefore, $H$ is a minor of $K$ and so it must be a minor of $H$.
+    \end{proof}
+\end{probox}
+Note that the converse of the above proposition is not true in general. However, we can impose an additional restriction to make the converse work.
+\begin{probox}{A Minor Can Be a Topological Minor}{minorIsTopo}
+    Every minor $H$ of $G$ with $\Delta(H) \geq 3$ is a topological minor of $G$.
+\end{probox}
+Additionally, we can view a minor in terms of \textit{branching sets}.
+\begin{dfnbox}{Branching Set}{branchingSet}
+    Let $G$ be a graph. A partition $\mathcal{V} \coloneqq \{V_1, V_2, \cdots, V_n\}$ is called {\color{red} \textbf{branching sets}} of $G$ if for every $V_x \in \mathcal{V}$,
+    \begin{enumerate}
+        \item $x \in V(G)$,
+        \item $G[V_x]$ is connected, and
+        \item there exists some $V_y \in \mathcal{V} - \{V_x\}$ such that there exists at least one edge $uv \in E(G)$ with $u \in V_x$ and $v \in V_y$.
+    \end{enumerate}
+\end{dfnbox}
+It is clear that if we contract all edges in a branching set, the set will be reduce to a vertex in some minor of $G$. 
+
+We use the notation ``$G$ is $MH$'' to indicate that $G$ contains $H$ as a minor, and ``$G$ is $TH$'' to indicate that $G$ contains $H$ as a topological minor.
+
+We shall consider the following theorem which is important for deriving a characterisation for planar graphs:
+\begin{thmbox}{Wagner's Theorem}{Wagner}
+    A graph is planar if and only if it contains neither $K_5$ nor $K_{3, 3}$ as a minor.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:K5K33NotPlanar}, it suffices to prove sufficiency. We first consider $3$-connected graphs.
+        \begin{lembox}{Characterisation of $3$-conencted Planar Graphs}{3ConnectedPlanar}
+            If a $3$-connected graph $G$ contains neither $K_5$ nor $K_{3, 3}$ as a minor, then $G$ is planar.
+            \tcblower
+            \begin{proof}
+                We shall apply induction on $\abs{V(G)}$. For $\abs{V(G)} = 1$, it is trivial that $G$ is planar. Suppose that there exists some $k \in \Z^+$ such that any graph of order $k$ containing neither $K_5$ nor $K_{3, 3}$ as a minor is planar. Let $G$ be a $3$-connected graph with $\abs{V(G)} = k + 1$. By Theorem \ref{thm:Tutte3Connected}, there exists some $xy \in E(G)$ such that $d_G(x), d_G(y) \geq 3$ and $G' \coloneqq G/xy$ is $3$-connected. Clearly, $G'$ does not contain either $K_5$ or $K_{3, 3}$ as a minor, so by the inductive hypothesis, $G'$ is planar. Fix a plane drawing $\tilde{G}$ of $G'$. Suppose $xy$ is contracted to $v_{xy} \in G'$ and let $F$ be a face in $\tilde{G} - v_{xy}$ such that $v_{xy} \in F$. Consider $X \coloneqq N_G(x) - \{y\}$ and $Y \coloneqq N_G(y) - \{x\}$, then clearly $X \cup Y$ is contained by the boundary of $F$, because otherwise there will be crossings in $\tilde{G}$. This means $\tilde{G}$ is a plane drawing of $G - y$ by replacing $v_{xy}$ with $x$.
+                \\\\ 
+                Since $\tilde{G}$ is $3$-connected, $\tilde{G} - v_{xy}$ must be $2$-connected. We claim that the boundary of $F$, denoted as $C$, must be a cycle, because otherwise $\tilde{G} - v_{xy}$ is a tree and cannot be $2$-connected. Re-label $X \cap V(C) = \left\{x_1, x_2, \cdots, x_n\right\}$ such that the $x_i$'s are placed in clockwise order. Define $P_i$ to be the clockwise $x_i$-$x_{i + 1}$ path in $C$ (for simplicity, we define $x_{n + 1} = x_1$). We consider $2$ cases.
+                \\\\
+                If $Y \subseteq X$, we claim that $\abs{Y} \leq 2$. Suppose on contrary that $\abs{Y} \geq 3$, then any $3$ vertices from $Y$ together with $x$ and $y$ induces a subdivision of $K_5$ in $G$, which is a contradiction. However, recall that $d_G(y) \geq 3$, so $\abs{Y} \geq 2$ and so $\abs{Y} = 2$. Let $Y = \left\{x_m, x_{\ell}\right\}$ with $\ell > m$. If there is some $x_1 \in V(P_m)$ and $x_2 \in V(C) - V(P_m)$, then we can find a subdivision of $K_{3, 3}$ with partite sets $\{y, x_1, x_2\}$ and $\{x, x_m, x_{\ell}\}$, which is not possible. Therefore, $x_m$ and $x_{\ell}$ are consecutive, which means that we can simply place $y$ in the face containing $x$, $x_m$ and $x_{\ell}$.
+                \\\\
+                Otherwise, there is some $y_1 \in V(P_i) - \{x_i, x_{i + 1}\}$ for some $P_i$. We claim that $Y \subseteq V(P_i)$ Suppose on contrary that there is some $y_2 \in Y - V(P_i)$, then one may check that there is a subdivision of $K_{3, 3}$ on $\{y, x_i, x_{i + 1}\}$ and $\{x, y_1, y_2\}$, which is a contradiction. Therefore, we can place $y$ in the face containing $x$, $x_i$ and $x_{i + 1}$. Therefore, $G$ is planar.
+            \end{proof}
+        \end{lembox}
+        Let $G$ be a graph that is neither $MK_5$ nor $MK_{3, 3}$. If $G$ is $3$-connected, then by Lemma \ref{lem:3ConnectedPlanar} we are done. Otherwise, suppose on contrary that $G$ is non-planar. Note that $G$ must not be $TK_5$ nor $TK_{3, 3}$. Without loss of generality, we can take $G$ as the smallest non-planar graph with said property. By minimality of $G$, it must be connected, because otherwise any connected component of $G$ is a smaller non-planar graph which is neither $TK_5$ nor $TK_{3, 3}$. We claim that $G$ does not have a cut vertex. Suppose on contrary that $x \in V(G)$ is a cut vertex. Take $H$ to be a connected component of $G$ and define $H_1 \coloneqq G[V(H) \cup \{x\}]$ and $H_2 \coloneqq G - H$. Notice that both $H_1$ and $H_2$ are planar because neither is either $TK_5$ or $TK_{3, 3}$, and so we can find their respective plane drawings such that $x$ is on the outer face. By identifying $x$, we obtain a plane drawing of $G$, which is not possible. Therefore, $\kappa(G) = 2$. 
+        \\\\
+        Take $\{x, y\}$ to be a vertex cut of $G$. Let $H$ be a connected component in $G - \{x, y\}$ and let $V_1 \coloneqq V(H) \cup \{x, y\}$, $V_2 \coloneqq V(G) - V(H)$. Notice that both $G[V_1]$ and $G[V_2]$ are planar, and so we claim that $xy \notin E(G)$ because otherwise we can find the plane drawings for $G[V_1]$ and $G[V_2]$ respectively such that $xy$ is in the outer face in both drawings, from which we can construct a plane drawing for $G$. 
+        \\\\
+        Define $G_i \coloneqq G[V_i] + xy$ for $i = 1, 2$. If both $G_1$ and $G_2$ are planar, by repeating the previous argument we obtain a contradiction. Without loss of generality, assume that $G_1$ is not planar, then by the minimality of $G$ we know that $G_1$ is either $TK_5$ or $TK_{3, 3}$. Let $S \subseteq G_1$ be a subdivision of either $K_5$ or $K_{3, 3}$, then $S$ must contain the edge $xy$ because otherwise $S \subseteq G$, which is not possible. However, notice that there exists a vertex $v \in V_2$ such that $v \in N_G(x) \cap N_G(y)$ because otherwise $\{x, y\}$ is not a minimum vertex cut. Let $P_2$ be the path induced by $\{x, y, v\}$, then $(S - xy) \cup P_2$ is a subdivision of either $K_5$ or $K_{3, 3}$ in $G$, which is a contradiction. Therefore, $G$ must be planar.
+    \end{proof}
+\end{thmbox}
+Clearly, if a graph is not $TK_5$ nor $TK_{3, 3}$, we can immediately use Theorem \ref{thm:Wagner} to prove that it is planar. With the above results, we can easily prove \textit{Kuratowski's Theorem}.
+\begin{thmbox}{Kuratowski's Theorem}{Kuratowski}
+    A graph is planar if and only if it contains no subdivision of $K_5$ or $K_{3, 3}$.
+\end{thmbox}
+There is also an equivalent definition for planar graphs. However, we shall state the theorem without proof as the proof is highly non-trivial.
+\begin{thmbox}{Hanani-Tutte Theorem}{HananiTutte}
+    A graph is planar if and only if it has a drawing in which every pair of disjoint edges crosses an even number of times.
+\end{thmbox}
+\section{Dual Graph}
+Recall the Four-Colour Problem. In modelling the problem as a graph, we can either take each country as a vertex and define bordering using edges. Equivalently, we could have used edges to represent each border first and define vertices as the intersection of borders, where the countries become faces in a planar graph. This motivates us to define the notion of \textit{dual graphs}. We start with a definition that is easier to visualise.
+\begin{dfnbox}{Geometric Dual}{geoDual}
+    Let $G$ be a planar graph with plane drawing $\tilde{G}$. Let $\mathcal{F}(G)$ be the family of faces in $\tilde{G}$. The {\color{red} \textbf{geometric dual}} of $G$ is a graph $G^*$ such that $V(G^*) \coloneqq \mathcal{F}(G)$ and every $e^* \in E(G^*)$ is induced by an edge $e \in E(G)$ on the boundary between $2$ faces.
+\end{dfnbox}
+Note that in the above definition, even for a simple planar graph $G$, its dual $G^*$ might be a multi-graph because there could be faces in $G$ whose boundary consists of multiple edges. Intuitively, the dual of a planar graph is always planar and 
+\begin{equation*}
+    \abs{V(G^*)} = \abs{\mathcal{F}(G)}, \qquad \abs{E(G^*)} = \abs{E(G)}, \qquad \abs{\mathcal{F}(G^*)} = \abs{V(G)}.
+\end{equation*}
+The above identities can be proved by applying Theorem \ref{thm:eulerFormula}. One may also verify that $G^{**} \cong G$, which also aligns with our intuition. Correspondingly, we have the following proposition:
+\begin{probox}{Cycles Induce Edge Cuts in the Dual}{cycleCut}
+    Let $G$ be a connected plane multi-graph. For any $S \subseteq E(G)$, $S$ induces a cycle in $G$ if and only if $S^* \coloneqq \left\{e^* \colon e \in S\right\}$ is a minimal edge cut in $G^*$.
+    \tcblower
+    \begin{proof}
+        Suppose that $S$ induces a cycle in $G$. For every $e \in S$, let $I_e$ and $O_e$ be the faces in the interior and exterior of the cycle respectively with $e$ on their boundary. Clearly, for every $I_e \in V(G^* - S^*)$, $I_e$ is not adjacent to any face in the exterior of the cycle. Therefore, $S^*$ is an edge cut. Clearly, $S^*$ is minimal because removing any fewer number of edges cause some $I_eO_e$ to remain in the resultant graph, but all interior faces to the cycle induces a connected graph in $G^*$.
+        \\\\
+        Suppose conversely that $S^*$ is a minimal edge cut in $G^*$, then $G^* - S^*$ contains exactly $2$ connected components. Let the connected components by $H_1$ and $H_2$, then $V(H_1)$ and $V(H_2)$ form a bipartition of $\mathcal{F}(G)$. Clearly, the boundary between $V(H_1)$ and $V(H_2)$ in $G$ must contain a cycle, and by minimality of $S^*$, this boundary is the cycle itself. 
+    \end{proof}
+\end{probox}
+Proposition \ref{pro:cycleCut} motivates us to define the notion of an \textit{abstract dual} without knowing first an explicit drawing of the planar graph.
+\begin{dfnbox}{Abstract Dual}{absDual}
+    Let $G$ be a multigraph. A graph $G^*$ is said to be an {\color{red} \textbf{abstract dual}} of $G$ if there exists a bijection $f \colon E(G) \to E(G^*)$ such that for every $S \subseteq E(G)$, $S$ induces a cycle in $G$ if and only if $S^* \coloneqq f(S)$ is a minimal edge cut in $G^*$.
+\end{dfnbox}
+With a smart guess, we are able to align our intuition with the following characterisation, which also answers the question about the existence of abstract dual for each graph:
+\begin{thmbox}{Whitney's Abstract Dual Theorem}{whitneyDual}
+    A graph is planar if and only if it has an abstract dual.
+\end{thmbox}
+\section{Four Colour Theorem}
+Now to answer the Four-Colour Problem posed at the beginning of the chapter, we start with a much weaker result.
+\begin{thmbox}{Six Colour Theorem}{6colours}
+    For every planar graph $G$, $\chi(G) \leq 6$.
+    \tcblower
+    \begin{proof}
+        The case where $v(G) \leq 2$ is trivial. If $v(G) \geq 3$, by Corollary \ref{cor:numEPlanar}, we have $e(G) \leq 3v(G) - 6$. This immediately implies that 
+        \begin{equation*}
+            \delta(G) \leq \frac{2e(G)}{v(G)} \leq 6 - \frac{12}{v(G)} < 6.
+        \end{equation*}
+        For any planar graph $G$, we can find a $\chi(G)$-critical subgraph $H \subseteq G$. By Proposition \ref{pro:lowerBoundKCritDeg}, $\delta(H) \geq \chi(G) - 1$. However, $\delta(H) \leq \delta(G) \leq 5$, so $\chi(G) - 1 \leq 5$, which implies that $\chi(G) \leq 6$.
+    \end{proof}
+\end{thmbox}
+We can improve this proof to reduce the upper bound to $5$.
+\begin{thmbox}{Five Colour Theorem}{5colour}
+    For every planar graph $G$, $\chi(G) \leq 5$.
+    \tcblower
+    \begin{proof}
+        We shall apply induction on $v(G)$. The case where $v(G) = 1$ is trivial. Suppose that there exists some $k \in \Z^+$ such that any planar graph of degree $k$ is $5$-colourable, consider $G$ to be a planar graph of degree $k + 1$. Note that we can take some $v \in V(G)$ with $d_G(v) \leq 5$ since $\delta(G) \leq 5$. Define $G' \coloneqq G - v$ and by the inductive hypothesis, we can fix a proper $5$-colouring on $G'$. If $d_G(v) \leq 4$, then we are done. Otherwise, $d_G(v) = 5$ and denote $N_G(v) \coloneqq \left\{v_1, v_2, v_3, v_4, v_5\right\}$ in clockwise order. If any two vertices in $N_G(v)$ share the same colour, we are done. Otherwise, suppose $v_i$ is in colour $i$ for $i = 1, 2, 3, 4, 5$. Let $G_{i, j}$ be the subgraph of $G'$ induced by colour classes associated to $i$ and $j$. If there is a $v_1$-$v_3$ path in $G_{1, 3}$ and a $v_2$-$v_4$ path in $G_{2, 4}$, we claim that these two paths must intersect at some vertex, because otherwise there is some edge in one of the path which either crosses with some edge in the other path or one of $\{vv_1, vv_2, vv_3, vv_4, vv_5\}$. However, this implies that there exists one vertex which is in two distinct colour classes, which is not possible. Therefore, without loss of generality, assume that $v_1$ and $v_3$ are in different connected components in $G_{1, 3}$. This means we can switch the colours $1$ and $3$ in the connected component of $G_{1, 3}$ containing $v_1$ and colour $v$ in $1$ to obtain a proper $5$-colouring of $G$, which implies that $\chi(G) \leq 5$.
+    \end{proof}
+\end{thmbox}
+However, note that we cannot easily replicate the proof for Theorem \ref{5colour} to the $4$-colour case because we may not be able to find a vertex of degree at most $4$. 
+\begin{thmbox}{Four Colour Theorem}{4colour}
+    For every planar graph $G$, $\chi(G) \leq 4$.
+\end{thmbox}
+If the graph has some additional special properties, we can further improve the bound.
+\begin{thmbox}{Gr\"{o}tzsch's Theorem}{Grotzsch}
+    Every triangle-free planar graph is $3$-colourable.
+\end{thmbox}
 \end{document}

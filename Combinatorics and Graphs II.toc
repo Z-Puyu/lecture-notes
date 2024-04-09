@@ -22,3 +22,7 @@
 \contentsline {section}{\numberline {4.1}Vertex Colouring}{57}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Edge Colouring}{65}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Perfect Graphs}{66}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Planarity}{71}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Planar Graph}{71}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Dual Graph}{78}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Four Colour Theorem}{79}{section.5.3}%
