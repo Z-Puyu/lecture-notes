@@ -1000,7 +1000,6 @@ Conversely, by maintaining $\bar{\mathbfit{c}} \geq \mathbf{0}$, we only need to
         \item Terminate the search when we have obtained $\mathbfit{x}_B \geq \mathbf{0}$.   
     \end{enumerate}
 \end{tecbox}
-\chapter{Sensitivity Analysis}
 \section{Sensitivity Analysis}
 Suppose that we have found an optimal solution $\mathbfit{x}^*$ for some linear program, we are interested to know if the original problem is altered, how far away will $\mathbfit{x}^*$ become from the new optimal solution. Specifically, we want to examine the sensitivity of 
 \begin{enumerate}
@@ -1221,4 +1220,60 @@ We introduce a few relevant definitions to the minimum cut problem.
 \begin{probox}{Maximum Flow Problem and Minimum Cut Problem}{dualMFP=MCP}
     Let (P) be a maximum flow problem on a network $G$ with flow capacity $u \colon E(G) \to \R^+_0$, then the dual of (P), (D), is the minimum cut problem on $G$ with $u$ as the edge weight.
 \end{probox}
+\section{Network Simplex Method}
+Consider an uncapacitated minimum cost flow problem formulated as
+\begin{align*}
+    \min_{\mathbfit{x} \in \R^m} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+    \textrm{s.t. } & \mathbfit{Ax = b} \\
+    & \mathbfit{x} \geq \mathbf{0}.
+\end{align*}
+Note that here, $\mathbfit{A}$ is a node-arc incidence matrix. By Definition \ref{dfn:inMat}, we see that $\mathbfit{A}$ has a very nice structure, which makes such network problems to be solvable very efficiently. We will modify the simplex method to solve such problems.
+\\\\
+We first characterise basic feasible solutions in the problem. Take any index set $B$. Notice that the row sum of $\mathbfit{A}_B$ is always $\mathbfit{0}$, so any $\mathbfit{A}_B$ is never invertible. Therefore, we can never find a basis for the network problem and thus cannot compute the basic solution using $\mathbfit{x}_B = \mathbfit{A}_B^{-1}\mathbfit{b}$.
+\begin{dfnbox}{Truncated Node-Arc Incidence Matrix}{truncatedInMat}
+    Let $\mathbfit{A}$ be a node-arc incidence matrix, the {\color{red} \textbf{truncated node-arc incidence matrix}} $\tilde{\mathbfit{A}}$ is obtained by deleting any row from $\mathbfit{A}$.
+\end{dfnbox}
+It is easy to check that the rows of $\tilde{\mathbfit{A}}$ are always linearly independent, provided that the underlying directed graph has no isolated vertex. Correspondingly, we can obtain a truncated constraint $\tilde{\mathbfit{A}}\mathbfit{x} = \tilde{\mathbfit{b}}$. Now, for any network $G$, we consider its spanning trees.
+\begin{dfnbox}{Tree Solution}{TreeSoln}
+    Let $G$ be a network with node-arc incidence matrix $\mathbfit{A}$. A flow vector $\mathbfit{x} \in \R^{e(G)}$ is a {\color{red} \textbf{tree solution}} if $\tilde{\mathbfit{A}}\mathbfit{x} = \tilde{\mathbfit{b}}$ and there exists some spanning tree $T$ of $G$ such that $x_i = 0$ for all $e_i \notin E(T)$. A {\color{red} \textbf{feasible tree solution}} is a tree solution $\mathbfit{x}$ with $\mathbfit{x} \geq \mathbf{0}$.
+\end{dfnbox}
+\begin{probox}{Spanning Tree Induces Basis on $\tilde{\mathbfit{A}}$}{spanBasis}
+    Let $\mathbfit{A}$ be the node-arc incidence matrix for a network $G$. An index set $B$ is a basis of $\tilde{A}$ if and only if the set $E_B \coloneqq \left\{e_i \in E(G) \colon i \in B\right\}$ induces a spanning tree of $G$.
+    \tcblower
+    \begin{proof}
+        Without loss of generality, suppose $\tilde{\mathbfit{A}}$ is the first $(n - 1)$ rows of $\mathbfit{A}$. Suppose $E_B$ induces a spanning tree of $G$, then it suffices to prove that $\tilde{\mathbfit{A}}_B$ is invertible. We shall prove this by showing that the rows of $\tilde{\mathbfit{A}}$ are linearly independent. Suppose $\mathbfit{w} \in \R^{n - 1}$ is such that $\mathbfit{w}^{\mathrm{T}}\tilde{\mathbfit{A}}_B = \mathbf{0}$, then $\mathbfit{w}^{\mathrm{T}}\tilde{\mathbfit{A}}_i = 0$ for all $i \in B$. Let $e_i = (v_k, v_h)$. Observe that if $v_n \notin e_i$, then $w_k = w_h$. If $v_k = v_n$, then $w_h = 0$ and vice versa. Since $E_B$ induces a spanning tree $T$, there is some $j \in B$ such that $e_j$ is incident to $v_n$, and so there is some $w_r = 0$. Note that for all neighbours $v_m$ connected to $v_r$ in $T$, $w_m = 0$. This means $\mathbfit{w} = 0$.
+    \end{proof}
+\end{probox}
+Now, we consider the reduced cost. Recall that $\mathbfit{p}$ such that $\mathbfit{p}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}}_B\tilde{\mathbfit{A}}_B^{-1}$ is an optimal solution to the dual problem. Therefore, the reduced costs are 
+\begin{equation*}
+    \bar{\mathbfit{c}}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\tilde{\mathbfit{A}}.
+\end{equation*}
+Since the $n$-th row of $\mathbfit{A}$ is removed in the truncated matrix, we have 
+\begin{equation*}
+    \bar{c}_{(i, j)} = \begin{cases}
+        c_{(i, j)} - (p_i - p_j) & \textrm{if } i, j \neq n \\
+        c_{(i, j)} - p_i & \textrm{if } j = n \\
+        c_{(i, j)} + p_j & \textrm{if } i = n
+    \end{cases}.
+\end{equation*}
+By defining $p_n = 0$, we obtain $\bar{c}_{(i, j)} = c_{(i, j)} - (p_i - p_j)$ for all $(i, j) \in E(G)$. Let $B$ be a basis inducing a spanning tree $T$ on the network $G$. Note that if $(i, j) \in B$, we must have $\bar{c}_{(i, j)} = 0$, so we have 
+\begin{align*}
+    p_i - p_j & = c_{(i, j)} \quad \textrm{for all } (v_i, v_j) \in E(T), \\
+    p_n = 0.
+\end{align*}
+Note that $V(T) = V(G)$, so solving the above system of equations gives the values of the $p_i$'s for all $i = 1, 2, \cdots, n$, which then allows us to compute $\bar{\mathbfit{c}}$.
+\\\\
+Suppose we take a basis $B$ corresponding to the spanning tree $T$ of a network $G$. If there is some $(i, j) \notin B$ such that $\bar{c}_{(i, j)} < 0$, it means the edge $(v_i, v_j)$ should be added to improve the flow. Note that there is an undirected $v_i$-$v_j$ path in $T$, so $T + (v_i, v_j)$ contains a cycle $C$ containing $v_i$ and $v_j$. We define the direction of $(v_i, v_j)$ as the forward direction and let $E_f$ and $E_b$ be the sets of forward and backward edges in $C$ respectively. 
+\\\\
+To improve the cost, we need to increase the flow in $(v_i, v_j)$ as much as possible. Suppose we set $x_{(i, j)} = \theta^*$, then the amount of forward flow in every $e_f \in E_f$ increases by $\theta^*$, which means we need to reduce the backward flow in every $e_b \in E_b$ by $\theta^*$ as well. Intuitively, we can take 
+\begin{equation*}
+    \theta^* = \min_{(v_k, v_{\ell}) \in C_b}x_{k\ell}.
+\end{equation*}
+In particular, if $C_b = \varnothing$, $\theta^* = \infty$ and the optimal cost is $-\infty$. Otherwise, if $x_{pq} = \theta^*$, we will choose $(p, q)$ to leave the basis.
+\begin{tecbox}{Network Simplex Method}{networkSimplex}
+    Consider an uncapacitated minimum cost flow problem on a network $G$ with node-arc incidence matrix $\mathbfit{A}$. The network simplex method finds the optimal flow vector $\mathbfit{x}^*$ by the following procedures:
+    \begin{enumerate}
+        \item Take a spanning tree $T \subseteq G$ and find a basis $B$ from $E(T)$ and a feasible tree solution $\mathbfit{x}_0$.
+    \end{enumerate}
+\end{tecbox}
 \end{document}

@@ -12,9 +12,9 @@
 \contentsline {section}{\numberline {3.1}The Dual Problem}{27}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Duality Theorems}{29}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Dual Simplex Method}{32}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Sensitivity Analysis}{34}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Sensitivity Analysis}{34}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Network Optimisation}{37}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Network Flow Problems}{37}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Single-Source Shortest Path Problem}{39}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Maximum Flow Problem}{41}{subsection.5.1.2}%
+\contentsline {section}{\numberline {3.4}Sensitivity Analysis}{33}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Network Optimisation}{36}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Network Flow Problems}{36}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Single-Source Shortest Path Problem}{38}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Maximum Flow Problem}{40}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Network Simplex Method}{41}{section.4.2}%
