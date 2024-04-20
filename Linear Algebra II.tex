@@ -43,8 +43,8 @@
 }
 \tableofcontents
 
-\chapter{Vector Spaces}
-\section{Fields, Scalars and Vectors}
+\chapter{Vector Space}
+\section{Vector Space}
 In elementary mathematics, we often refer to a vector as an ordered tuple of numbers with a direction and a magnitude. However, there is a much more abstract aspect to the notion of vectors. In fact, let us first generalise the notion of \textit{scalars}, which are taken as complex constants in an elementary level. 
 
 In general, we have the following algebraic structure:
@@ -126,7 +126,6 @@ Note that by using a similar technique we can prove that $a\zero = \zero$ for al
 
 Additionally, note that subtraction is defined as $\mathbf{u - v} = \mathbfit{u} + (-1)\mathbfit{v}$, so the above result allows us to write $\mathbfit{u - v} = \mathbfit{u} + (-\mathbfit{v})$.
 
-\subsection{Subspaces}
 Note that a vector space is extended based on a set of vectors, so we can define \textit{subspaces} similarly to the notion of subsets.
 \begin{dfnbox}{Subspace}{subspace}
     Let $V$ be a vector space. $U \subseteq V$ is called a {\color{red} \textbf{subspace}} if $U$ is a vector space under addition and scalar multiplication in $V$.
@@ -781,7 +780,7 @@ Combining everything, we have
     \end{equation*}
     $\mathbfit{P}$ is called a {\color{red} \textbf{change of basis matrix}}.
 \end{dfnbox}
-\section{Classifying Linear Transformations}
+\section{Jordan Matrix}
 Since there are infinitely many linear transformations between two vectors spaces, it is not of much help to study each one of them individually. Instead, it is useful to consider categorising all linear transformations into different families according to some well-defined properties.
 \begin{dfnbox}{Operator}{operator}
     A linear transformation $T \colon V \to V$ is called an {\color{red} \textbf{operator}} on $V$.
@@ -872,7 +871,6 @@ Therefore, it is important to note that the eigenvalues and eigenvectors of a re
         for some $a_0, a_1, \cdots, a_n \in \C$. Note that not all of the $(T - a_i\mathrm{id}_V)$'s are injective, because otherwise $\mathbfit{v} = \zero$ by Proposition \ref{pro:injectTest}. Therefore, there is some $T - a_j\mathrm{id}_V$ which is not injective. This means that there exists a non-zero vector $\mathbfit{w} \in V$ such that $(T - a_j\mathrm{id}_V)(\mathbfit{w}) = \zero$, but this implies that $T(\mathbfit{w}) = a_j\mathbfit{w}$, so $a_j$ is an eigenvalue of $T$ associated with $\mathbfit{w}$.
     \end{proof}
 \end{probox}
-\section{Triangularisation}
 To better classify operators, we consider a special type of matrices known as \textit{triangular matrices}.
 \begin{dfnbox}{Upper Triangular Matrix}{upTri}
     A matrix $\mathbfit{M}$ is called {\color{red} \textbf{upper triangular}} if $M^i_j = 0$ whenever $i > j$.
@@ -966,7 +964,6 @@ To characterise triangularised mapping, we consider the following proposition:
         Let $\lambda$ be any of the diagonal entries of $\mathbfit{N}$ and consider $\mathbfit{N} - \lambda\mathbfit{I}$ which is also upper-triangular. Note that by Proposition \ref{pro:invUpTri}, $\mathbfit{N} - \lambda\mathbfit{I}$ is not invertible, and so there exists some $\mathbfit{v} \neq \zero$ such that $(\mathbfit{N} - \lambda\mathbfit{I})\mathbfit{v} = \zero$. Therefore, $\mathbfit{Nv} = \lambda\mathbfit{v}$ and so $\lambda$ is an eigenvalue of $\mathbfit{N}$.
     \end{proof}
 \end{probox}
-\section{Diagonalisation}
 We have seen in the previous section that every operator has an upper-triangular matrix representation, but can we improve this further?
 \begin{dfnbox}{Diagonalisability}{diagable}
     An operator $T$ is said to be {\color{red} \textbf{diagonalisable}} if there is a basis $z$ such that $M_z\left(T\right)$ is diagonal.
@@ -1052,7 +1049,39 @@ In other words, we can interpret the multiplicity of $\lambda$ as the number of 
 Obviously, $\chi_T(\lambda_i) = 0$ for all $i = 1, 2, \cdots, p$, which leads us to the famous theorem below:
 \begin{thmbox}{Cayley-Hamilton Theorem}{CayleyHamilton}
     For any linear operator $T$ with characteristic polynomial $\chi_T$, we have $\chi_T(T) = 0$.
+    \tcblower
+    \begin{proof}
+        Let $T \colon V \to V$ for some vector space $V$. Notice that 
+        \begin{equation*}
+            \chi_T(T) = \prod_{i = 1}^{p}(T - \lambda_i\mathrm{id}_V)^{m_i}
+        \end{equation*}
+        where $\lambda_1, \lambda_2, \cdots, \lambda_p$ are the eigenvalues of $T$ with multiplicity $m_1, m_2, \cdots, m_p$ respectively. Note that under a Jordan basis $z$, 
+        \begin{equation*}
+            M_z(T - \lambda_i\mathrm{id}_V) = \begin{bmatrix}
+                0 & 1 & 0 & 0 & \cdots & 0 & 0 \\
+                0 & 0 & 1 & 0 & \cdots & 0 & 0 \\
+                0 & 0 & 0 & 1 & \cdots & 0 & 0 \\
+                0 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+                \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+                0 & 0 & 0 & 0 & \cdots & 0 & 1 \\
+                0 & 0 & 0 & 0 & \cdots & 0 & 0
+            \end{bmatrix}.
+        \end{equation*}
+        By direct calculation, one may check that $M_z(T - \lambda_i\mathrm{id}_V)^{m_i} = \zero$, and so $(T - \lambda_i\mathrm{id}_V)^{m_i}$ is the zero transformation for all $i = 1, 2, \cdots, p$. Therefore, $\chi_T(T) = 0$.
+    \end{proof}
 \end{thmbox}
+An important implication of Theorem \ref{thm:CayleyHamilton} is that the operator obtained from composing some operator $T$ on $V$ with itself for $n$ times can be ``generated'' with lower powers of $T$. Essentially, we have 
+\begin{equation*}
+    \chi_T(T) = \sum_{i = 0}^{k}c_iT^i = 0,
+\end{equation*}
+where $T^0$ is just the identity transformation $\mathrm{id}_V$ and $c_i$'s are constants. However, this means that 
+\begin{equation*}
+    T^k = -\frac{1}{c_k}\sum_{i = 0}^{k - 1}c_iT^i.
+\end{equation*}
+Clearly, from now on, for any integer $n \geq k$, we can express $T^n$ as a linear combination of the transformations in $\left\{\mathrm{id}_V, T, T^2, \cdots, T^{k - 1}\right\}$. In fact, we can work out $T^n$ for all $n \in \Z^-$ as well because 
+\begin{equation*}
+    T^{-1} = T^{-1} \circ \mathrm{id}_V = T^{-1} \circ \left(-\frac{1}{c_0}\sum_{i = 1}^{k}c_iT^i\right).
+\end{equation*}
 \chapter{Linear Algebra and Geometry}
 \section{Bilinear Forms}
 \begin{dfnbox}{Dot Product}{dotProd}

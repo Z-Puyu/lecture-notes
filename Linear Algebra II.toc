@@ -1,6 +1,5 @@
-\contentsline {chapter}{\numberline {1}Vector Spaces}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Fields, Scalars and Vectors}{2}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Subspaces}{4}{subsection.1.1.1}%
+\contentsline {chapter}{\numberline {1}Vector Space}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Vector Space}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Isomorphism}{5}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Basis}{7}{section.1.3}%
 \contentsline {chapter}{\numberline {2}Linear Transformations}{10}{chapter.2}%
@@ -9,9 +8,7 @@
 \contentsline {section}{\numberline {2.3}Tensor Product}{19}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Matrix}{21}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Change of Basis}{24}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Classifying Linear Transformations}{26}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Triangularisation}{29}{section.2.7}%
-\contentsline {section}{\numberline {2.8}Diagonalisation}{32}{section.2.8}%
-\contentsline {chapter}{\numberline {3}Linear Algebra and Geometry}{35}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Bilinear Forms}{35}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Geometry in Vector Spaces}{36}{section.3.2}%
+\contentsline {section}{\numberline {2.6}Jordan Matrix}{26}{section.2.6}%
+\contentsline {chapter}{\numberline {3}Linear Algebra and Geometry}{36}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Bilinear Forms}{36}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Geometry in Vector Spaces}{37}{section.3.2}%
