@@ -33,6 +33,7 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 \fancyhead[L]{
@@ -43,7 +44,7 @@
 }
 \tableofcontents
 
-\chapter{Vector Space}
+\chapter{Vector Spaces}
 \section{Vector Space}
 In elementary mathematics, we often refer to a vector as an ordered tuple of numbers with a direction and a magnitude. However, there is a much more abstract aspect to the notion of vectors. In fact, let us first generalise the notion of \textit{scalars}, which are taken as complex constants in an elementary level. 
 
@@ -62,7 +63,11 @@ In general, we have the following algebraic structure:
         \item for every $u \in \mathcal{F}$, there exists some $v \in \mathcal{F}$ such that $uv = 1$.
     \end{enumerate}
 \end{dfnbox}
-One may check that both $\R$ and $\C$ are fields. It turns out that we can also generalise the concept of vectors as any objects which possess properties similar to that of Euclidean vectors, i.e., we can view a vector as a mathematical quantity which can be added up and multiplied by another quantity called a scalar with some axioms which they follow. Rigorously, we define the notion of a \textit{vector space}.
+One may check that both $\R$ and $\C$ are fields. 
+
+Now, in an elementary level, we say that a \textit{vector} is ``a quantity which has both a magnitude and a direction''. However, \textbf{that is not a real definition}! In the first place, we have not defined ``magnitude'' and ``direction'' yet, and it is also extremely unclear what the term ``quantity'' is supposed to mean. 
+
+Let us take the usual approach: instead of saying \textbf{what they are}, we shall focus on \textbf{what they do}. It turns out that we can also generalise the concept of vectors as any objects which possess properties similar to that of Euclidean vectors, i.e., we can view a vector as a mathematical quantity which can be added up and multiplied by another quantity called a scalar with some axioms which they follow. Rigorously, we define the notion of a \textit{vector space}.
 \begin{dfnbox}{Vector Space}{vecSpace}
     A {\color{red} \textbf{vector space}} is a set $V$ over a field $\mathcal{F}$ with two binary operations, namely 
     \begin{itemize}
@@ -81,6 +86,10 @@ One may check that both $\R$ and $\C$ are fields. It turns out that we can also 
     \end{enumerate}
 \end{dfnbox}
 Notice that here, the definitions of addition in scalar multiplication in a vector space imply that any vector space must be \textbf{closed} under these two operations. Notice also that the operations ``addition'' and ``scalar multiplication'' are not necessary the addition and scalar multiplication which we are used to in $\R^n$, but abstract mappings which satisfy the given axioms.
+
+Now, it is very easy to state what a vector really is: \textbf{any element in a certain vector space is a vector!} In fact, one can easily check that any field $\mathcal{F}$ is a vector space over itself, so every scalar is a vector (if this sentence is confusing to you, read the previous paragraphs again).
+
+Furthermore, $\R$ with addition defined as real number addition and scalar multiplication defined as real number multiplication is a vector space over $\R$ itself, but not the other way round, i.e., if I define addition as real number multiplication and scalar multiplication as real number addition, then $\R$ is no longer a vector space over itself (check which axiom it violates).
 
 We shall prove a few basic properties regarding vector spaces.
 \begin{thmbox}{Uniqueness of Additive Identity}{unique0}
@@ -210,7 +219,7 @@ Recall that a \textit{linear combination} of vectors is in the form of
 \begin{equation*}
     \sum a_i\mathbfit{v}_i = a_1\mathbfit{v}_1 + a_2\mathbfit{v}_2 + \cdots.
 \end{equation*}
-In case where no confusion is caused, this can be abbreviated as $a_i\mathbfit{v}_i$. Recall also that a \textit{span} of a set of vectors is defined as
+In case where no confusion is caused, this can be abbreviated as $a_i\mathbfit{v}_i$. Recall also that the \textit{span} of a set of vectors is defined as
 \begin{equation*}
     \mathrm{span}(V) \coloneqq \left\{a_i\mathbfit{v}_i \colon \mathbfit{v}_i \in V\right\},
 \end{equation*}
@@ -240,7 +249,7 @@ It is easy to see that the number of vectors in any basis of a finite-dimensiona
         where $b_i \in \mathcal{F}$ for $i = 1, 2, \cdots, m$. This means that $\mathcal{F}^n$ is spanned by $m$ vectors, which is a contradiction. Therefore, $\abs{S} = n$.
     \end{proof}
 \end{probox}
-An immediate corollary from Proposition \ref{pro:dimIsCardBasis} is that a finite-dimensional vector space always has a unique dimension, as otherwise it will have two bases with different cardinalities.
+An immediate corollary from Proposition \ref{pro:dimIsCardBasis} is that a finite-dimensional vector space always has a unique dimension, as otherwise it will have bases with different cardinalities.
 
 Note that since every vector in a vector space $V$ can be uniquely expressed as a linear combination of a basis $S$ for $V$, this really means that we can view the notion of a basis equivalently as a bijection between $\mathcal{F}^n$ and $V$, i.e., for any $(a_1, a_2, \cdots, a_n) \in \mathcal{F}^n$, we can map the tuple to a vector in $V$ whose components are exactly $a_1, a_2, \cdots, a_n$.
 
@@ -272,7 +281,8 @@ Since the $\mathbfit{e}_i$'s are linearly independent, we have $a_i = 0$ for all
 
 Therefore, every isomorphism $z \colon \mathcal{F}^n \to V$ defines a basis for $V$.
 \chapter{Linear Transformations}
-\section{Linear Transformations}
+\section{Linear Transformation}
+A common misconception is that linear algebra is a study of matrices --- it is not. The real subject studied in linear algebra is \textbf{mappings} between vector spaces which preserves linearity.
 \begin{dfnbox}{Linear Transformation}{linearTrans}
     A {\color{red} \textbf{linear transformation}} is a mapping $T \colon V \to W$, where $V$ and $W$ are vector spaces over $\mathcal{F}$, such that
     \begin{equation*}
@@ -284,7 +294,9 @@ In essence, a linear transformation is a function between vector spaces which pr
 
 Let $V \cong \mathcal{F}^n$ be a finite-dimensional vector space. Recall that a basis for $V$ is essentially a bijective mapping $z \colon \mathcal{F}^n \to V$, so a basis is a linear transformation. In particular, if $y$ is another basis for $V$, then clearly $y \circ z^{-1}$ is a mapping from $V$ to itself. Let $Q = y \circ z^{-1}$, then we have $y = Q \circ z$. This is known as a change of basis.
 
-Now, consider a vector space $V$ over $\mathcal{F}$. Fix some $\mathbfit{v} \in V$ and define a mapping $\Theta_{\mathbfit{v}} \colon \mathcal{F} \to V$ by $\Theta_{\mathbfit{v}}(a) = a\mathbfit{v}$. One may check that $\Theta_{\mathbfit{v}}$ is a linear transformation, but $\Theta_{\mathbfit{v}}$ is essentially $\mathbfit{v}$, so vectors are linear transformations as well.
+Now, consider a vector space $V$ over $\mathcal{F}$. Fix some $\mathbfit{v} \in V$ and define a mapping $\Theta_{\mathbfit{v}} \colon \mathcal{F} \to V$ by $\Theta_{\mathbfit{v}}(a) = a\mathbfit{v}$. One may check that $\Theta_{\mathbfit{v}}$ is a linear transformation, but it can be easily verified that $\mathbfit{v} \mapsto \Theta_{\mathbfit{v}}$ is an isomorphism between $V$ and $\left\{\Theta_{\mathbfit{v}} \colon \mathbfit{v} \in V\right\}$. Therefore, $\Theta_{\mathbfit{v}}$ is essentially $\mathbfit{v}$, so vectors are linear transformations as well.
+
+Now, notice that given a linear transformation $T \colon A \to B$, it is guaranteed that every $\mathbfit{a} \in A$ as an image $f(\mathbfit{a}) \in B$, but not the other way round, i.e., there could be some $\mathbfit{b} \in B$ without a pre-image in $A$. Obviously, what we care more are those elements in $B$ which actually have pre-images in $A$.
 \begin{dfnbox}{Range}{range}
     Let $T \colon V \to W$ be a linear transformation. The {\color{red} \textbf{range}} of $T$ is defined as
     \begin{equation*}
@@ -311,7 +323,7 @@ Obviously, $\ker(T)$ is a vector space. We claim that $\mathrm{null}(T)$ is rela
     \begin{proof}
         Suppose that $T$ is injective. We shall prove that $\mathrm{null}(T) = 0$ by considering the contrapositive. Suppose that $\mathrm{null}(T) \neq 0$, then there is some non-zero $\mathbfit{v} \in \ker(T)$ with $T(\mathbfit{v}) = \zero$, so $T$ is not injective.
         \\\\
-        Suppose conversely that $\mathrm{null}(T) = 0$, then $\ker(T) = \{\zero\}$. Let $T(\mathbfit{v}) = T(\mathbfit{u})$, then
+        Suppose conversely that $\mathrm{null}(T) = 0$, then $\ker(T) = \{\zero\}$. Let $T(\mathbfit{v}) = T(\mathbfit{u})$,~then
         \begin{equation*}
             \zero = T(\mathbfit{v}) - T(\mathbfit{u}) = T(\mathbfit{v - u}),
         \end{equation*}
@@ -322,7 +334,7 @@ For any linear transformation $T \colon V \to W$, we have
 \begin{equation*}
     T(\zero_V) = T(\zero_V + \zero_V) = 2T(\zero_V).
 \end{equation*}
-Cancelling $T(\zero_V)$ on both sides we have $\zero_W = T(\zero_V)$. Therefore, $\ker(T) - \{\zero_V\}$ consists of all non-zero vectors which are mapped to zero under $T$, i.e., for all $\mathbfit{u} \in U \coloneqq V - (\ker(T) - \{\zero_V\})$, $T(\mathbfit{u}) \neq \zero_W$. 
+Cancelling $T(\zero_V)$ on both sides yields $\zero_W = T(\zero_V)$. Therefore, $\ker(T) - \{\zero_V\}$ consists of all non-zero vectors which are mapped to zero under $T$, i.e., for all $\mathbfit{u} \in U \coloneqq V - (\ker(T) - \{\zero_V\})$, we know that $T(\mathbfit{u}) \neq \zero_W$. 
 \begin{thmbox}{Fundamental Theorem of Linear Transformations}{rankNull}
     Let $T \colon V \to W$ be a linear transformation, then $\dim(V) = \mathrm{rank}(T) + \mathrm{null}(T)$.
     \tcblower
@@ -331,7 +343,7 @@ Cancelling $T(\zero_V)$ on both sides we have $\zero_W = T(\zero_V)$. Therefore,
         \begin{equation*}
             \zero_W = S(\mathbfit{u}_1) - S(\mathbfit{u}_2) = S(\mathbfit{u}_1 - \mathbfit{u}_2).
         \end{equation*}
-        Therefore, $\mathbfit{u}_1 - \mathbfit{u}_2 = \zero_U$, and so $\mathbfit{u}_1 = \mathbfit{u}_2$, which implies that $S$ is injective. Therefore,~$S$ is a bijection and so $U \cong \mathrm{range}(T)$, which means $\dim(U) = \mathrm{rank}(T)$. Therefore,
+        This means that $\mathbfit{u}_1 - \mathbfit{u}_2 = \zero_U$, and so $\mathbfit{u}_1 = \mathbfit{u}_2$, which implies that $S$ is injective. Therefore,~$S$ is a bijection and so $U \cong \mathrm{range}(T)$, which means $\dim(U) = \mathrm{rank}(T)$. Therefore,
         \begin{equation*}
             \dim(V) = \dim(U) + \mathrm{null}(T) = \mathrm{rank}(T) + \mathrm{null}(T).
         \end{equation*}
@@ -348,7 +360,7 @@ An interesting application of Theorem \ref{thm:rankNull} gives the following cor
         \end{equation*} 
         Let $z_1 \colon \mathcal{F}^n \to W$ be an isomorphism for some $n \in \Z^+$. Note that there exists an isomorphism $z_2 \colon \mathcal{F}^n \to \mathrm{range}(T)$. Therefore, the mapping $z_1 \circ z_2^{-1} \colon \mathrm{range}(T) \to W$ is an isomorphism. However, $\mathrm{range}(T) \subseteq W$, which implies that $\mathrm{range}(T) = W$. This means that $T$ is surjective.
         \\\\
-        Suppose that $T$ is surjective, then $W = \mathrm{range}(T)$ and so $\mathrm{rank}(T) = \dim(W)$. Therefore, by Theorem \ref{thm:rankNull}, 
+        Suppose conversely that $T$ is surjective, then we must have $W = \mathrm{range}(T)$ and so $\mathrm{rank}(T) = \dim(W)$. Therefore, by Theorem \ref{thm:rankNull}, 
         \begin{equation*}
             \mathrm{null}(T) = \dim(V) - \mathrm{rank}(T) = \dim(W) - \mathrm{rank}(T) = 0.
         \end{equation*}
@@ -360,6 +372,9 @@ Let $V$ and $W$ be vector spaces and define $\mathcal{L}(V, W)$ to be the set of
 \begin{dfnbox}{Dual Space}{dualSpace}
     Let $V$ be a vector space over $\mathcal{F}$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\hat{V} \coloneqq \mathcal{L}(V, \mathcal{F})$. The elements of $\hat{V}$ are called {\color{red} \textbf{dual vectors}}.
 \end{dfnbox}
+\begin{notebox}
+    \textbf{Author's Note}: in almost all fields of mathematics, the conventional notation for the dual space of $V$ is $V^*$, but somehow the lecturer of this course decides (yet again) to use a confusing syntax by writing it as $\hat{V}$.
+\end{notebox}
 An intuitive example for an element of $\hat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
 \begin{equation*}
     \mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i
