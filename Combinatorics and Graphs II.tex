@@ -41,14 +41,9 @@
 
 \chapter{Graph Structures}
 \section{Multigraphs}
-\subsection{Multigraphs}
 Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
 \begin{dfnbox}{Multigraph}{multigraph}
-    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
-    \\\\
-    In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}.
-    \\\\
-    $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
+    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$. In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}. $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
 \end{dfnbox}
 Note that in a multigraph, by default there can be a plural number of edges between any two vertices. We would define the notion of \textit{simple graph} as a special multigraph.
 \begin{dfnbox}{Simple Graph}{simpleGraph}
@@ -72,9 +67,7 @@ In a graph, it is important to know the layout of the vertices and edges. For th
 \end{dfnbox}
 Alternatively, one may write $v \sim u$ if $v$ and $u$ are adjacent vertices. We can further add on to the definition by discussing the size of the neighbourhood of a vertex.
 \begin{dfnbox}{Degree}{deg}
-    The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If~$d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. 
-    \\\\
-    In particular, we define
+    The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If~$d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. In particular, we define
     \begin{equation*}
         \Delta(G) = \max_{v \in G}d_G(v), \qquad \delta(G) = \min_{v \in G}d_G(v).
     \end{equation*}
@@ -106,15 +99,11 @@ Since a graph essentially consists of two sets, it is natural to consider the no
 \end{dfnbox}
 We discuss the following interesting question:
 \begin{quote}
-    $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the number of handshakes made by each student was recorded and it was reported that the sum was $39$. Was this possible?
+    $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the total number of handshakes made by all student was to be $39$. Was this possible?
 \end{quote}
 Note that if we represent each student as a vertex, then we can use $V(G) = \left\{v_1, v_2, \cdots, v_{15}\right\}$ to construct a graph, in which an edge $v_iv_j \in E(G)$ if and only if students $i$ and $j$ shook hands. As such, $d_G(v_i)$ is the number of persons student $i$ shook hands with.
 
-Note that if we sum up $d_G(v_i)$ for all the vertices, every edge will be counted exactly twice! This means that
-\begin{equation*}
-    \sum_{i = 1}^{15}d_G(v_i) = 39
-\end{equation*}
-is impossible since the left-hand side must be even. In fact, by the above reasoning, we see that in any graph, the sum of degrees of its vertices must be even.
+Note that if we sum up $d_G(v_i)$ for all the vertices, every edge will be counted exactly twice! This means that $\sum_{i = 1}^{15}d_G(v_i) = 39$ is impossible since the left-hand side must be even. In fact, we see that in any graph, the sum of degrees of its vertices must be even.
 \begin{lembox}{Handshaking Lemma}{handshake}
     If $G$ is a graph of order $n$ and size $m$, then
     \begin{equation*}
@@ -126,7 +115,7 @@ is impossible since the left-hand side must be even. In fact, by the above reaso
         It can be easily deduced from the above lemma that in any graph, the number of vertices with odd degrees must be even.
     \end{remark}
 \end{notebox}
-Relating to Definition \ref{dfn:deg}, we see that the average degree of a graph $G$ can be computed as
+Observing Definition \ref{dfn:deg}, we see that the average degree of a graph $G$ can be computed as
 \begin{equation*}
     \bar{d}(G) = \frac{2e(G)}{v(G)}.
 \end{equation*}
@@ -134,7 +123,6 @@ As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is o
 \begin{dfnbox}{Empty and Complete Graphs}{empCom}
     Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, we have $(u, v) \in E(G)$. 
 \end{dfnbox}
-\subsection{Subgraphs}
 Since a multigraph is just two sets, we can define a ``subset'' relation between graphs.
 \begin{dfnbox}{Subgraph}{subgraph}
     Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, a subgraph $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \neq V(G)$ or $E(H) \neq E(G)$.
@@ -172,7 +160,7 @@ Then, $H = \bigl(V(H), E(H)\bigr)$ is an induced subgraph of $G$. In fact, we ca
     H = G - A = [V(G) - A].
 \end{equation*}
 This leads to the following proposition:
-\begin{probox}{}{}
+\begin{probox}{Altenative Definition of Induced Subgraph}{}
     Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of $G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
 \end{probox}
 We would like to consider the relations between the properties of a graph to those of its subgraphs. In particular, it follows from intuition that if a graph has a high average degree, then we can naturally find a subgraph with a high minimal degree.
@@ -191,8 +179,6 @@ This seems trivial from intuition, as we can always keep deleting vertices with 
         which means $e(H_k) = e(G) - N > 0$. However, this is impossible since $v(H_k) = 0$, which is a contradiction.
     \end{proof}
 \end{probox}
-
-\subsection{Graph Isomorphism}
 Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent question proves to be extremely hard to answer. Two graphs can look drastically different but be structurally identical in reality. For example, we could shift around the vertices of a graph without changing any edge to alter the shape of the graph dramatically. Therefore, to compare the structures of graphs, we require some rigorous definition.
 \begin{dfnbox}{Graph Isomorphism}{graphIsomorph}
     Two graphs $G$ and $H$ are said to be {\color{red} \textbf{isomorphic}}, denoted by $G \cong H$, if there exists a bijection $f \colon V(G) \to V(H)$ such that
@@ -202,7 +188,7 @@ Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent q
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        One may check that graph isomorphism is obviously an equivalence relation.
+        Graph isomorphism is obviously an equivalence relation.
     \end{remark}
 \end{notebox}
 Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$. In particular, it is possible to map a graph to its own complement via an isomorphism.
@@ -211,7 +197,7 @@ Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v
 \end{dfnbox}
 It turns out that a self-complementary graph satisfies some special properties.
 \begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
-    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
+    If $G$ is a self-complementary graph of order $n$, then either $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
     \tcblower
     \begin{proof}
         Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
@@ -345,7 +331,6 @@ and so it follows that
 
 
 \section{Graph Traversal}
-\subsection{Paths and Cycles}
 We are often interested in the ``connectedness'' in a graph. In particular, we would wish to study how to traverse a graph from some vertices to others.
 \begin{dfnbox}{Walk, Trail, Path}{wtp}
     Let $G$ be a graph and $x, y \in V(G)$, then an {\color{red} \textbf{$x$-$y$ walk}} is an alternating sequence
@@ -383,12 +368,7 @@ We also have the following relevant definitions with regard to cycles:
     Let $G$ be a graph. The {\color{red} \textbf{girth}} of $G$ is the size of the shortest non-trivial cycle in $G$ and the {\color{red} \textbf{circumference}} of $G$ is the size of the longest non-trivial cycle in $G$.
 \end{dfnbox}
 If $G$ is acyclic, we define the girth of $G$ to be $\infty$ and the circumference to be $0$. In some special graphs, we realise that we can traverse through every vertex and return to the starting point in a single traversal. Such graphs are said to be \textit{Hamiltonian}.
-\begin{dfnbox}{Hamiltonian Graph}{Hamiltonian}
-    A graph $G$ is {\color{red} \textbf{Hamiltonian}} if it contains a cycle of size $v(G)$.
-\end{dfnbox}
 
-
-\subsection{Connected Components}
 An important question we are interested in with graphs is the reachability of a vertex, i.e., given two vertices $u$ and $v$, we want to know whether we can reach one vertex from another. Intuitively, we can traverse between two vertices if there is a path between them. From here we define the notion of a \textit{connected graph}.
 \begin{dfnbox}{Connected Graph}{connected}
     Let $G$ be a graph. Two vertices $u$ and $v$ are {\color{red} \textbf{connected}} if there is a path between them. $G$ is said to be {\color{red} \textbf{connected}} if for any $u, v \in V(G)$, there exists a path from $u$ to $v$. For any $u \in V(G)$, we denote the set of all vertices connected to $u$ (inclusive of $u$) as $c(u)$.
@@ -411,46 +391,6 @@ Intuitively, if a graph has many edges, we would believe that it is easy to find
         Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Note that it suffices to prove that~$k \geq \delta(G)$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that~$\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$.
         \\\\
         Let $i \in \N$ be such that $x_jx_k \notin E(G)$ for all $0 \leq j < i$. Take $P' = x_ix_{i + 1}\cdots x_k$, then $e(P') \geq \delta(G)$ by the previous argument. However, $x_i \sim x_k$, so $P' + x_ix_k$ is a cycle of length at least $\delta(G) + 1$ in $G$.
-    \end{proof}
-\end{probox}
-A classic problem regarding graph traversal in connected graphs is the K\"{o}nisburg Bridge Problem:
-\begin{quote}
-    Let $A, B, C, D$ be $4$ distinct vertices such that there are $2$ edges between $A$ and $B$, $2$ edges between $A$ and $C$, and $1$ edge between $A$ and $D$, $B$ and $D$, $C$ and $D$. Can all the edges be visited exactly once in a single traversal of the graph produced?
-\end{quote}
-This can be generalised as: given a connected multigraph $G$, does there exist a circuit in $G$ which contains all the edges of $G$? Such multigraphs are said to be \textit{Eulerian}.
-\begin{dfnbox}{Eulerian Circuit}{eulerianCircuit}
-    Let $G$ be a connected multigraph, an {\color{red} \textbf{Eulerian circuit}} in $G$ is a circuit which uses all edges of $G$ exactly once.
-\end{dfnbox}
-Intuitively, if a graph is Eulerian, then following any Eulerian circuit will visit each of its vertices for an even number of times as there are equally many incoming edges as outgoing edges for every vertex in a circuit. This implies that an Eulerian graph will necessarily force all of its vertices to have even degrees. However, it turns out that actually this is also a sufficient condition for the existence of Eulerian circuits!
-\begin{thmbox}{Necessary and Sufficient Condition for Eulerian Graphs}{NSCondEulerian}
-    A connected multigraph $G$ is Eulerian if and only if every vertex in $G$ has an even degree.
-    \tcblower
-    \begin{proof}
-        The necessity is trivial, so we will only prove for sufficiency.
-        \\\\
-        Consider the case where $e(G) = 0$, then the only connected multigraph is the trivial graph consisting of a singleton vertex, which is Eulerian. 
-        \\\\
-        Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleInGraph}, there exists a cycle $S \subseteq G$ where $e(S) \geq 3$.
-        \\\\
-        Let $G'$ be the multigraph such that $V(G') = V(G)$ and $E(G') = E(G) - E(S)$, then clearly, $e(G') < m$ and every vertex in $G'$ has an even degree. Therefore, each connected component of $G'$ is Eulerian.
-        \\\\
-        Let $C_1$ be a connected component of $G'$ and let $v_1 \in V(C_1) \cap V(S)$. Note that there exists an Eulerian circuit in $C_1$ which starts and ends with $v_1$. We can traverse along this circuit and then traverse in the clockwise orientation along $S$ until we reach another vertex in $S$ which is in some connected component of $G'$ and repeat the process. Note that $v_1 \in V(S)$, so we will eventually traverse back to $v_1$, which gives an Eulerian circuit in $G$.
-    \end{proof}
-\end{thmbox}
-Intuitively, even if a graph $G$ is not Eulerian, it is possible to traverse all edges in $G$ with finitely many trails. This is known as a decomposition of $G$ into trails.
-\begin{probox}{Minimal Number of Trails to Decompose A Multigraph}{minNumOfTrails}
-    Let $G$ be a graph with $2k$ vertices having odd degrees for some $k \in \N$, then the minimal number of trails needed to decompose $G$ is $\max\{k, 1\}$.
-    \tcblower
-    \begin{proof}
-        The case where $k = 0$ is immediate by Theorem \ref{thm:NSCondEulerian}. For $k \geq 1$, suppose on contrary that $G$ can be decomposed with $k - 1$ trails labelled as $T_1, T_2, \cdots, T_{k - 1}$. Since a trail contains at most $2$ vertices with odd degrees, then
-        \begin{equation*}
-            \abs{\left\{v \in \bigcup_{i = 1}^{k - 1}T_i \colon d_G(v) \textrm{ is odd}\right\}} \leq 2(k - 1) < 2k,
-        \end{equation*}
-        which is a contradiction. Therefore, we need at least $k$ trails to decompose $G$. 
-        \\\\
-        Let $v_1, v_2, \cdots, v_{2k}$ be the vertices in $G$ with odd degrees. Let $G'$ be the graph produced by adding the edges $v_1v_2, v_3v_4, \cdots, v_{2k - 1}v_{2k}$ to $G$, then the vertices in $G'$ all have even degrees. Therefore, there exists an Eulerian circuit in $G'$ by Theorem \ref{thm:NSCondEulerian}.
-        \\\\
-        Note that for all $i = 1, 2, \cdots, k - 1$, $v_{2i - 1}v_{2i}$ and $v_{2i + 1}v_{2i + 2}$ are disjoint, so there exists a $v_{2i}$-$v_{2i + 1}$ trail. Note also that there exists a $v_{2k}$-$v_1$ trail. The union of these trails is exactly $G' - v_1v_2 - v_3v_4 - \cdots - v_{2k - 1}v_{2k} = G$.
     \end{proof}
 \end{probox}
 Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and~$v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
@@ -513,7 +453,6 @@ A direct consequence of this is the following corollary:
 \begin{corbox}{}{}
     If $G$ is a graph with order at least $3$ and $G$ contains a bridge, then $G$ contains a cut-vertex.
 \end{corbox}
-\subsection{Graphs as Metric Spaces}
 Given a graph $G$ with $u$, $v$ being two connected vertices, we are interested in the notion of distance between them. Intuitively, if there are multiple paths between $u$ and $v$, we would take the length of the shortest one to represent their distance.
 \begin{dfnbox}{Distance, Eccentricity, Diameter}{distEDia}
     Let $G$ be a connected graph and let $u, v \in V(G)$. The {\color{red} \textbf{distance}} between $u$ and $v$, denoted by $d(u, v)$, is the length of the shortest path between $u$ and $v$. The {\color{red} \textbf{eccentricity}} of $u$ is defined to be
@@ -642,7 +581,7 @@ Additionally, we have the following corollary:
     \end{equation*}
     then $G$ is connected if and only if $b_{ij} \neq 0$ for all $i \neq j$.
 \end{corbox}
-As it turns out, the incidence and adjacency matrices are in fact related by a simple equation.
+As it turns out, the incidence and adjacency matrices are related by a simple equation.
 \begin{probox}{}{}
     Let $\mathbfit{M}$ and $\mathbfit{A}$ be the incidence matrix and adjacency matrix of a simple graph $G$ respectively, then
     \begin{equation*}
@@ -1997,5 +1936,425 @@ However, note that we cannot easily replicate the proof for Theorem \ref{5colour
 If the graph has some additional special properties, we can further improve the bound.
 \begin{thmbox}{Gr\"{o}tzsch's Theorem}{Grotzsch}
     Every triangle-free planar graph is $3$-colourable.
+\end{thmbox}
+\chapter{Hamiltonian Graph}
+\section{Eulerian Graph}
+A classic problem regarding graph traversal in connected graphs is the K\"{o}nisburg Bridge Problem:
+\begin{quote}
+    Let $A, B, C, D$ be $4$ distinct vertices such that there are $2$ edges between $A$ and $B$, $2$ edges between $A$ and $C$, and $1$ edge between $A$ and $D$, $B$ and $D$, $C$ and $D$. Can all the edges be visited exactly once in a single traversal of the graph produced?
+\end{quote}
+This can be generalised as: given a connected multigraph $G$, does there exist a circuit in $G$ which contains all the edges of $G$? Such multigraphs are said to be \textit{Eulerian}.
+\begin{dfnbox}{Eulerian Circuit}{eulerianCircuit}
+    Let $G$ be a connected multigraph, an {\color{red} \textbf{Eulerian circuit}} in $G$ is a circuit which uses all edges of $G$ exactly once.
+\end{dfnbox}
+Intuitively, if a graph is Eulerian, then following any Eulerian circuit will visit each of its vertices for an even number of times as there are equally many incoming edges as outgoing edges for every vertex in a circuit. This implies that an Eulerian graph will necessarily force all of its vertices to have even degrees. However, it turns out that actually this is also a sufficient condition for the existence of Eulerian circuits!
+\begin{thmbox}{Necessary and Sufficient Condition for Eulerian Graphs}{NSCondEulerian}
+    A connected multigraph $G$ is Eulerian if and only if every vertex in $G$ has an even degree.
+    \tcblower
+    \begin{proof}
+        The necessity is trivial, so we will only prove for sufficiency.
+        \\\\
+        Consider the case where $e(G) = 0$, then the only connected multigraph is the trivial graph consisting of a singleton vertex, which is Eulerian. 
+        \\\\
+        Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleInGraph}, there exists a cycle $S \subseteq G$ where $e(S) \geq 3$.
+        \\\\
+        Let $G'$ be the multigraph such that $V(G') = V(G)$ and $E(G') = E(G) - E(S)$, then clearly, $e(G') < m$ and every vertex in $G'$ has an even degree. Therefore, each connected component of $G'$ is Eulerian.
+        \\\\
+        Let $C_1$ be a connected component of $G'$ and let $v_1 \in V(C_1) \cap V(S)$. Note that there exists an Eulerian circuit in $C_1$ which starts and ends with $v_1$. We can traverse along this circuit and then traverse in the clockwise orientation along $S$ until we reach another vertex in $S$ which is in some connected component of $G'$ and repeat the process. Note that $v_1 \in V(S)$, so we will eventually traverse back to $v_1$, which gives an Eulerian circuit in $G$.
+    \end{proof}
+\end{thmbox}
+Intuitively, even if a graph $G$ is not Eulerian, it is possible to traverse all edges in $G$ with finitely many trails. This is known as a decomposition of $G$ into trails.
+\begin{probox}{Minimal Number of Trails to Decompose A Multigraph}{minNumOfTrails}
+    Let $G$ be a graph with $2k$ vertices having odd degrees for some $k \in \N$, then the minimal number of trails needed to decompose $G$ is $\max\{k, 1\}$.
+    \tcblower
+    \begin{proof}
+        The case where $k = 0$ is immediate by Theorem \ref{thm:NSCondEulerian}. For $k \geq 1$, suppose on contrary that $G$ can be decomposed with $k - 1$ trails labelled as $T_1, T_2, \cdots, T_{k - 1}$. Since a trail contains at most $2$ vertices with odd degrees, then
+        \begin{equation*}
+            \abs{\left\{v \in \bigcup_{i = 1}^{k - 1}T_i \colon d_G(v) \textrm{ is odd}\right\}} \leq 2(k - 1) < 2k,
+        \end{equation*}
+        which is a contradiction. Therefore, we need at least $k$ trails to decompose $G$. 
+        \\\\
+        Let $v_1, v_2, \cdots, v_{2k}$ be the vertices in $G$ with odd degrees. Let $G'$ be the graph produced by adding the edges $v_1v_2, v_3v_4, \cdots, v_{2k - 1}v_{2k}$ to $G$, then the vertices in $G'$ all have even degrees. Therefore, there exists an Eulerian circuit in $G'$ by Theorem \ref{thm:NSCondEulerian}.
+        \\\\
+        Note that for all $i = 1, 2, \cdots, k - 1$, $v_{2i - 1}v_{2i}$ and $v_{2i + 1}v_{2i + 2}$ are disjoint, so there exists a $v_{2i}$-$v_{2i + 1}$ trail. Note also that there exists a $v_{2k}$-$v_1$ trail. The union of these trails is exactly $G' - v_1v_2 - v_3v_4 - \cdots - v_{2k - 1}v_{2k} = G$.
+    \end{proof}
+\end{probox}
+\section{Hamiltonian Graph}
+Recall that in Definition \ref{dfn:eulerianCircuit}, we define a way to traverse a graph without using repeated edges. Now, we would like to further strengthen this notion, i.e., we would like to know whether we can traverse a graph by visiting each vertex exactly once.
+\begin{dfnbox}{Hamiltonian Graph}{hamiltonian}
+    A graph $G$ is {\color{red} \textbf{Hamiltonian}} if it contains a cycle which uses every vertex in $G$. Such a cycle is known as a {\color{red} \textbf{Hamiltonian cycle}}. A path containing every vertex in a graph is called a {\color{red} \textbf{Hamiltonian path}}.
+\end{dfnbox}
+Clearly, $K_n$ and $K_{m, n}$ are Hamiltonian. We can also verify that tetrahedral graph, octahedral graph, cubical graph, icosahedral graph and dodecahedral graph are all Hamiltonian. In fact, the hypercube graph can be easily proven to be Hamiltonian.
+\begin{probox}{Hypercube Is Hamiltonian}{hypercubeHam}
+    The $n$-dimensional hypercube graph $Q^n$ is Hamiltonian.
+    \tcblower
+    \begin{proof}
+        We shall apply induction on $n$. The case where $n = 1$ is trivial. For any integer $n > 1$, $Q^n$ consists of $2$ identical copies of $Q^{n - 1}
+        $ plus a perfect matching between their vertex sets. Fix $2$ Hamiltonian cycles $v_1v_2\cdots v_{2^{n - 1}}$ and $u_1u_2\cdots u_{2^{n - 1}}$ in the $2$ copies of $Q^{n - 1}$ respectively. Then clearly, $v_1v_2\cdots v_{2^{n - 1}}u_{2^{n - 1}}u_{2^{n - 1} - 1}\cdots u_1$ is a Hamiltonian cycle in $Q^n$.
+    \end{proof}
+\end{probox}
+As with many other graph properties, the Petersen graph is yet again a counter example for Hamiltonian graphs.
+\begin{probox}{The Petersen Graph Is not Hamiltonian}{petersenNotHam}
+    The Petersen graph $P$ is not Hamiltonian.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there is a Hamiltonian cycle $C_{10} \subseteq P$, then there are $5$ edges in $P$ which are not in $C_{10}$. We claim that at least one of these edges do not join vertices at distance $5$ apart along $C_{10}$, because otherwise we can find a $C_4 \subseteq P$, which is not possible because the girth of $P$ is $5$. Similarly, there is no edge joining vertices at distance at most $3$ apart along $C_{10}$. Therefore, there exists at least one edge $uv \in E(P) - E(C_{10})$ such that $d_{C_{10}}(u, v) = 4$. Let $u'$ be a vertex at distance $5$ away from $v$ in $C_{10}$, then there is no edge incident to $u'$, which is a contradiction.
+    \end{proof}
+\end{probox}
+In fact, the Petersen graph is the smallest \textit{hypo-Hamiltonian graph}.
+\begin{dfnbox}{Hypo-Hamiltonian Graph}{hypoHam}
+    A graph $G$ is {\color{red} \textbf{hypo-Hamiltonian}} if $G$ is not Hamiltonian but $G - v$ is Hamiltonian for any $v \in V(G)$.
+\end{dfnbox}
+Now let us find some useful conditions to determine a graph as non-Hamiltonian. 
+\begin{probox}{Easy Necessary Condition for Hamiltonian Graphs}{easyHamCond}
+    For any $n$-vertex Hamiltonian graph $G$, the number of connected components in $G - X$ for any $X \subseteq V(G)$ is at most $\abs{X}$.
+    \tcblower
+    \begin{proof}
+        Let $C_n \subseteq G$ be a Hamiltonian cycle. Note that $\kappa(G) \geq \kappa(C_n)$, so it suffices to prove the statement for $C_n$. Note that $C_n - v$ for any $v \in V(C_n)$ has $1$ connected component, and every time we remove one more vertex, the number of connected components increases by at most $1$. Therefore, for any $X \subseteq V(C_n)$, the number of connected components in $C_n - X$ is at most $\abs{X}$.
+    \end{proof}
+\end{probox}
+Therefore, if there is some $X \subseteq V(G)$ such that the number of connected components in $G - X$ is more than $\abs{X}$, then we can conclude that $G$ is not Hamiltonian. 
+\begin{notebox}
+    \begin{remark}
+        This condition is not necessary for non-Hamiltonicity. For example, the Petersen graph $G_P$ is not Hamiltonian but $G_P - X$ has at most $\abs{X}$ connected components for every $X \subseteq V(G_P)$.
+    \end{remark}
+\end{notebox}
+So far, there has not been any good characterisation for Hamiltonian graphs. However, we can still obtain some sufficient conditions for a graph to be Hamiltonian.
+
+First, note that having a lot of edges does not guarantee Hamiltonicity (consider the graph $K_{n - 1} \cup K_1$). Locally, it is easy to see that $\delta(G) \geq 2$ must be satisfied for $G$ to be Hamiltonian, but our counter example demonstrates that we need the graph to be very close to a complete graph to guarantee this.
+
+Intuitively, we might wish to propose a lower bound for $\delta(G)$ such that when $\delta(G)$ is large enough, Hamiltonicity is guaranteed. Clearly, we need the graph to first be connected. However, notice that if we take a disjoint union of $2$ $K_n$'s, then $\delta(G) = n - 1$ but the graph is not even connected. In fact, we can have an even higher minimum degree without a Hamiltonian cycle. Consider complete bipartite graphs $K_{n - 1, n + 1}$ and $K_{m, m + 1}$. Clearly, there is no Hamiltonian cycle but the minimum degrees are $n - 1$ and $m$ respectively.
+
+However, by an argument using Pigeonhole Principle, one can easily see that it is impossible to avoid a Hamiltonian cycle if any vertex is incident to at least half of the vertices.
+\begin{thmbox}{Dirac's Theorem}{Dirac}
+    Every graph $G$ with at least $3$ vertices and $\delta(G) \geq \frac{n}{2}$ has a Hamiltonian cycle.
+    \tcblower
+    \begin{proof}
+        First, notice that $G$ must be connected because otherwise any vertex in the smallest connected component of $G$ has at most $\left(\frac{n}{2} - 1\right)$ neighbours. Let 
+        \begin{equation*}
+            P \coloneqq v_0v_1\cdots v_k
+        \end{equation*}
+        be the longest path in $G$. Note that $N_G(v_k), N_G(v_0) \subseteq V(P)$, so at least $\frac{n}{2}$ integers $i \in \left\{0, 1, 2, \cdots k - 1\right\}$ satisfy $v_i \sim v_k$ and at least $\frac{n}{2}$ integers $i \in \left\{0, 1, 2, \cdots k - 1\right\}$ satisfy $v_{i + 1} \sim v_0$. However, $k \leq n - 1$, so by Pigeonhole Principle, there exists some $i \in \left\{0, 1, 2, \cdots, k - 1\right\}$ such that $v_i \sim v_k$ and $v_{i + 1} \sim v_0$. Consider the cycle $C \coloneqq v_0v_{i + 1}v_{i + 2}\cdots v_kv_iv_{i - 1}\cdots v_1$. We claim that this cycle must be Hamiltonian, because otherwise there exists some $u \in V(G) - V(C)$ such that $u \sim v_i$ for some $v_i \in V(C)$, which gives us a path in $G$ longer than $P$. This is a contradiction.
+    \end{proof}
+\end{thmbox}
+An easy corollary of Dirac's Theorem states the following result on the length of paths in a Hamiltonian graph:
+\begin{corbox}{Length of Paths in Hamiltonian Graphs}{hamGraphPath}
+    Every $n$-vertex Hamiltonian graph contains a path of length at least $\min\{n - 1, 2\delta(G)\}$.
+\end{corbox}
+The proof of the corollary is trivial and is left to the reader as an exercise. An immediate result of the corollary states the following:
+\begin{corbox}{Upper Bound of the Size of a Graph Using Path Length}{upperBoundSizePath}
+    If $G$ is an $n$-vertex graph without any path of length $k$, where $k \in \Z^+$, then 
+    \begin{equation*}
+        e(G) \leq \frac{k - 1}{2}n.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        We shall apply induction on $n$. The case where $n \leq k$ is trivial because
+        \begin{equation*}
+            e(G) \leq \begin{pmatrix}
+                n \\
+                2
+            \end{pmatrix} \leq \frac{n(k - 1)}{2}.
+        \end{equation*}
+        Suppose there is some integer $m \geq k$ such that all $P_k$-free graph with $m$ vertices have at most $\frac{k - 1}{2}n$ edges. Let $G$ be an $(m + 1)$-vertex graph. Without loss of generality, assume that $G$ is connected, otherwise we apply the same argument to each connected component of $G$. Take $v \in V(G)$ with $d_G(v) = \delta(G)$. We claim that $\delta(G) < \frac{k}{2}$ because otherwise by Corollary \ref{cor:hamGraphPath}, we can find a $P_k \subseteq G$. This means that $d_G(v) \leq \frac{k - 1}{2}$. Define $G' \coloneqq G - v$, then by the inductive hypothesis, 
+        \begin{equation*}
+            e(G') \leq \frac{(k - 1)}{2}(n - 1),
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            e(G) \leq e(G) + \frac{k - 1}{2} = \frac{(k - 1)}{2}n.
+        \end{equation*}
+    \end{proof}
+\end{corbox}
+We can generalise Theorem \ref{thm:Dirac} into the following:
+\begin{thmbox}{Ore's Theorem} {Ore}
+    A graph $G$ on at least $3$ vertices is Hamiltonian if for all $u, v \in V(G)$ with $u \not\sim v$, we have $d_G(u) + d_G(v) \geq n$.
+    \tcblower
+    We first prove that $G$ is connected. Suppose on contrary that $G$ is not connected. Let $H$ be the smallest connected component in $G$, then $\abs{V(H)} \leq \frac{n}{2}$. Notice that $H$ must be a clique, because otherwise there exist $u_1, u_2 \in V(H)$ with $u_1 \not\sim u_2$ and
+    \begin{equation*}
+        d_G(u_1) + d_G(u_2) = d_H(u_1) + d_H(u_2) < n,
+    \end{equation*}
+    which is not possible. We claim that Take any vertex $u \in V(H)$ and for any $u' \in V(G) - V(H)$, we have 
+    \begin{equation*}
+        d_G(u) + d_G(u') \leq \abs{V(H)} - 1 + \left(n - \abs{V(H)} - 1\right) < n,
+    \end{equation*}
+    which is a contradiction. We shall prove $G$ contains a Hamiltonian cycle by contradiction. Suppose on contrary that $G$ contains no Hamiltonian cycle. Without loss of generality, let $G$ be an edge-maximal non-Hamiltonian graph such that $d_G(u) + d_G(v) \geq n$ for any non-adjacent $u, v \in V(G)$. We claim that $G$ must contain a Hamiltonian path, because otherwise we can continue adding edges to join new vertices to the longest path in $G$ without violating the condition on the sum of degrees. Let $P \coloneqq v_1v_2\cdots v_n$ be a Hamiltonian path in $G$, then $v_1 \not\sim v_n$. Since $d_G(v_1) + d_G(v_n) \geq n$, by Pigeonhole Principle there are $v_i, v_{i + 1} \in V(P) - \{v_1, v_n\}$ such that $v_{i + 1} \sim v_1$ and $v_i \sim v_n$, and so we can obtain a Hamiltonian cycle.
+\end{thmbox}
+We can prove a bit more based on the previous results. First, we introduce the notion of a \textit{Hamiltonian closure}.
+\begin{dfnbox}{Hamiltonian Closure}{hamClose}
+    For any graph $G$, the {\color{red} \textbf{Hamiltonian closure}} of $G$, denoted by $\mathrm{Cl}(G)$, is the graph with
+    \begin{equation*}
+        V\bigl(\mathrm{Cl}(G)\bigr) \coloneqq V(G), \qquad E\bigl(\mathrm{Cl}(G)\bigr) \coloneqq E(G) \cup \left\{uv \notin E(G) \colon d_G(u) + d_G(v) \geq v(G)\right\}.
+    \end{equation*}
+\end{dfnbox}
+Note that $\mathrm{Cl}(G)$ is obtained by repeatedly joining vertices in $G$ with degree sum at least the order of $G$ until no more edge can be added. The following result establish a connection between Hamiltonicity of a graph and its closure.
+\begin{probox}{Characterisation of Hamiltonian Graph with Closure}{closureHam}
+    A graph $G$ is Hamiltonian if and only if $\mathrm{Cl}(G)$ is Hamiltonian.
+    \tcblower
+    \begin{proof}
+        If $G$ is Hamiltonian, then it is trivial that $\mathrm{Cl}(G)$ is Hamiltonian. Suppose conversely that $\mathrm{Cl}(G)$ is Hamiltonian and suppose on contrary that $G$ is not Hamiltonian, then there exists some graph $H$ with $V(H) = V(G)$ and $E(G) \subseteq E(H)$ such that $H$ is not Hamiltonian but $H + uv$ is Hamiltonian for some $u \not\sim v$ with $d_H(u) + d_H(v) \geq v(H)$ in $H$. Notice that the Hamiltonian cycle in $H + uv$ must contain the edge $uv$ because otherwise $H$ is also Hamiltonian, and so $H$ must contain a Hamiltonian $u$-$v$ path. However, this implies that we can find a Hamiltonian cycle in $H$ containing $u$ and $v$, which is a contradiction. Therefore $G$ must be Hamiltonian.
+    \end{proof}
+\end{probox}
+Recall that if a graph $G$ has low independence number, $\chi(G) \geq \frac{v(G)}{\alpha(G)}$ is large. By Proposition \ref{pro:lowerBoundKCritDeg}, this means that $G$ contains a $\chi(G)$-critical graph with high minimum degree. If this minimum degree is large enough, we get a large cycle in the subgraph. Suppose we additionally ensure that the graph is connected, then a Hamiltonian cycle is expected.
+\begin{thmbox}{Chv\'{a}tal-Erd\"{o}s Theorem}{Chvatal-Erdos}
+    A graph $G$ with at least $3$ vertices is Hamiltonian if $\kappa(G) \geq \alpha(G)$.
+    \tcblower
+    \begin{proof}
+        Let $C \coloneqq v_1v_2\cdots v_n$ be the longest cycle in $G$. We claim that $C$ is Hamiltonian. Suppose on contrary that $C$ is not Hamiltonian, then there exists some vertex $v \in V(G) - V(C)$. Define $\mathcal{F}$ to be the maximal set of vertex-disjoint paths from $v$ to the vertices in $C$. By Theorem \ref{thm:Menger}, $\abs{\mathcal{F}} = \min\{\kappa(G), n\}$. For every $v_i \in V(C)$ such that there is a $v$-$v_i$ path in $\mathcal{F}$, notice that there is no $v_{i + 1}$-$v$ path in $\mathcal{F}$ because otherwise we can obtain a larger cycle including $v$. Therefore, $\abs{\mathcal{F}} < n$ and so $\abs{\mathcal{F}} \geq \kappa(G) \geq \alpha(G)$. For any $v_i, v_j \in V(C)$ with $i < j$ such that $\mathcal{F}$ contains a $v$-$v_i$ path $P_i$ and a $v$-$v_j$ path $P_j$, we claim that $v_{i + i} \not\sim v_{j + 1}$ because otherwise 
+        \begin{equation*}
+            \left(C - v_iv_{i + 1} - v_jv_{j + 1} + v_{i + 1}v_{j + 1}\right) \cup P_i \cup P_j
+        \end{equation*}
+        is a larger cycle. Let $I$ be an index set such that $\left\{v_{I(1)}, v_{I(2)}, \cdots, v_{I(k)}\right\}$ are $k$ vertices such that there is a $v_{I(i)}$-$v$ path in $\mathcal{F}$, then $\left\{v_{I(1) + 1}, v_{I(2) + 1}, \cdots, v_{I(k) + 1}\right\}$ are $k$ pair-wise non-adjacent vertices in $C$. Note that none of these vertices is adjacent to $v$ and $k \geq \alpha(G)$, so 
+        \begin{equation*}
+            \left\{v_{I(1) + 1}, v_{I(2) + 1}, \cdots, v_{I(k) + 1}\right\} \cup \{v\}
+        \end{equation*}
+        is an independent set with at least $\bigl(\alpha(G) + 1\bigr)$ vertices, which is a contradiction.
+    \end{proof}
+\end{thmbox}
+There are a few other interesting properties of a graph to make it Hamiltonian. For instance, we have the following characterisation of regular Hamiltonian graphs:
+\begin{probox}{Sufficient Condition for Regular Graphs to Be Hamiltonian}{sufficientCondRegHam}
+    Every $2$-connected $k$-regular graph of order at most $3k$ is Hamiltonian.
+\end{probox}
+Actually, people have studied $k$-regular graphs intensively to discover that there are infinitely many $k$-regular Hamiltonian graphs --- actually the proportion of regular Hamiltonian graphs is so high that almost all regular graphs are Hamiltonian if we take a very large sample of regular graphs.
+\begin{thmbox}{Robinson-Wormald Theorem}{RobinsonWormald}
+    Let $k \geq 3$ be an integer. For any $n$ $k$-regular graphs, let $h(n)$ denote the number of Hamiltonian graphs in them, then 
+    \begin{equation*}
+        \lim_{n \to \infty}\frac{h(n)}{n} = 1.
+    \end{equation*}
+\end{thmbox}
+A nice related result to this is that almost all $k$-regular bipartite graphs are Hamiltonian and $k$-colourable. For regular graphs with odd degrees, there is a stronger result to characterise their structures.
+\begin{thmbox}{Smith's Theorem}{Smith}
+    If $G$ is a $d$-regular graph where $d$ is odd, then for any $e \in E(G)$, there is an even number of Hamiltonian cycles in $G$ containing $e$.
+    \tcblower
+    \begin{proof}
+        If there is no Hamiltonian cycle in $G$ which contains $e$, then the statement is obviously true. Otherwise, Let $v \in e$ be a vertex to which $e$ is incident, then there must be some Hamiltonian path in $G$ that ends at $v$ and contains $e$. Let $\mathcal{H}$ be a graph such that $V(\mathcal{H})$ is the set of all Hamiltonian paths in $G$ which end at $v$ and contains $e$. For each $P \in V(\mathcal{H})$, write $P \coloneqq vu_1u_2\cdots u_k$. If there is some $u_i \in V(P) - \{u_k, u_{k - 1}, v\}$ such that $u_iu_k \in E(G)$, then $Q \coloneqq vu_1u_2\cdots u_iu_ku_{k - 1}\cdots u_{i + 1}$ is a unique Hamiltonian path different from $P$ in $P + u_iu_k$. Clearly, $Q \in V(\mathcal{H})$ and we define $PQ \in E(\mathcal{H})$. Notice that 
+        \begin{equation*}
+            d_{\mathcal{H}}(P) = \begin{cases}
+                d_G(u_k) - 2 & \textrm{if } u_kv \in E(G) \\
+                d_G(u_k) - 1 & \textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        Let $C \subseteq G$ be a Hamiltonian cycle in $G$ containing $e$ and let $uv \in E(C) - \{e\}$, then clearly $C - uv$ is a vertex in $\mathcal{H}$ such that $d_{\mathcal{H}}(C - uv) = d_G(u) - 2$, which is odd. However, by Lemma \ref{lem:handshake}, the number of vertices in $\mathcal{H}$ with odd degrees must be even, so there must be an even number of Hamiltonian cycles in $G$ containing $e$.
+    \end{proof}
+\end{thmbox}
+A very interesting corollary of Theorem \ref{thm:Smith} states that every Hamiltonian $3$-regular graph contains at least $3$ Hamiltonian cycles.
+\begin{corbox}{Property of Hamiltonian Cubic Graphs}{hamCubic}
+    Every cubic Hamiltonian graph contains at least $3$ Hamiltonian cycles.
+    \tcblower
+    \begin{proof}
+        Let $G$ be a Hamiltonian $3$-regular graphs. Fix a Hamiltonian cycle $C_1 \subseteq G$ and take any $e \in E(C_1)$. By Theorem \ref{thm:Smith}, there is a distinct Hamiltonian cycle $C_2 \subseteq G$ such that $e \in E(C_2)$. Notice that $E(C_1) - E(C_2) \neq \varnothing$ because $C_1 \neq C_2$, so there exists at least one $e' \in E(C_1)$ with $e' \neq e$. Since $e' \notin E(C_2)$, by Theorem \ref{thm:Smith}, there exists at least one Hamiltonian cycle $C_3 \neq C_2, C_1$ such that $e' \in E(C_3)$. Therefore, $G$ contains at least $3$ Hamiltonian cycles.
+    \end{proof}
+\end{corbox}
+Recall that in Definition \ref{dfn:degSeq}, we discuss the properties of an integer sequence for it to be the degree sequence of some graph. Now, we introduce a stronger definition.
+\begin{dfnbox}{Hamiltonian Sequence}{hamSeq}
+    A sequence $(a_1, a_2, \cdots, a_n)$ with $a_i \leq a_j$ for all $i \leq j$ is said to be a {\color{red} \textbf{Hamiltonian sequence}} if every graph with degree sequence $(d_1, d_2, \cdots d_n)$ such that $d_i \geq a_i$ for all $i = 1, 2, \cdots, n$ is Hamiltonian.
+\end{dfnbox}
+Clearly by Theorem \ref{thm:Dirac}, the sequence $\left(\frac{n}{2}, \frac{n}{2}, \cdots, \frac{n}{2}\right)$ of length $n$ is Hamiltonian for every integer $n > 2$. The following theorem, however, allows us to characterise all Hamiltonian sequences:
+\begin{thmbox}{Chv\'{a}tal's Hamiltonian Sequence Theorem}{Chvatal}
+    For $n \geq 3$, an integer sequence $(a_1, a_2, \cdots, a_n)$ with $a_i \leq a_j$ for all $i \leq j$ is Hamiltonian if and only if for every $i < \frac{n}{2}$, $a_i \leq i$ implies $a_{n - i} \geq n - i$.
+    \tcblower
+    \begin{proof}
+        Suppose that $(a_1, a_2, \cdots, a_n)$ is an integer sequence with $a_i \leq a_j$ for all $i \leq j$ such that $a_i \leq i$ implies $a_{n - i} \geq n - i$. We claim that for any graph $G$ with degree sequence $\left(d_1, d_2, \cdots, d_n\right)$ such that $d_i \geq a_i$ for all $i = 1, 2, \cdots, n$, $\mathrm{Cl}(G)$ is complete. Suppose on contrary that there exists some graph $G$ satisfying the degree condition but $\mathrm{Cl}(G)$ is not complete. Without loss of generality, take $G$ to be the edge-maximal graph such that this occurs. Notice that $G = \mathrm{Cl(G)}$, because otherwise $\mathrm{Cl}(G)$ is a graph with strictly more edges than $G$ satisfying the conditions, but $\mathrm{Cl}\bigl(\mathrm{Cl}(G)\bigr) = \mathrm{Cl}(G)$ is not complete, which is not possible by maximality of $G$. Therefore, for every $u, v \in V(G)$ with $u \not\sim v$, we must have $d_G(u) + d_G(v) \leq n - 1$. Without loss of generality, take $u, v$ such that $d_G(u) + d_G(v)$ is maximised and $d_G(u) \leq d_G(v)$. Notice that $d_G(u) < \frac{n}{2}$. Define $i \coloneqq d_G(u)$, then $d_G(v) \leq n - i - 1$. Define 
+        \begin{equation*}
+            \overline{V} \coloneqq V(G) - N_G(v),
+        \end{equation*}
+        then $\abs{\overline{V}} \geq i$ and for every $w \in \abs{\overline{V}}$, 
+        \begin{equation*}
+            d_G(w) \leq d_G(u) < \frac{n}{2}
+        \end{equation*}
+        because otherwise $d_G(u) + d_G(v)$ is not maximised. This implies that at least $i$ vertices have degrees at most $i$ in $G$, and so $d_i \leq i$, which means that $a_i \leq d_i \leq i$. Similarly, there are exactly $(n - i - 1)$ vertices in $G$ which are non-adjacent to $u$ and each of them has a degree of at most $n - i - 1$. Note that $d_G(u) \leq n - i - 1$, so there are at least $(n - i)$ vertices in $G$ with degrees at most $n - i - 1$, and so $d_{n - i} \leq n - i - 1$. However, 
+        \begin{equation*}
+            d_{n - i} \geq a_{n - i} \geq n - i > n - i - 1,
+        \end{equation*}
+        which is a contradiction. Therefore, $\mathrm{Cl}(G)$ is complete and thus Hamiltonian, which implies that $G$ is also Hamiltonian by Proposition \ref{pro:closureHam}.
+        \\\\
+        Suppose conversely that a non-decreasing integer sequence $(a_1, a_2, \cdots, a_n)$ is Hamiltonian, then we shall prove that $i < \frac{n}{2}$ implies that $a_{n - i} \geq n - i$ by considering the contrapositive statement. Suppose that there is some $i < \frac{n}{2}$ such that $a_i \leq i$ but $a_{n - i} < n - i$. Notice that this means that $a_j \leq i$ for all $j \leq i$, $i \leq a_j \leq n - i - 1$ for all $i < j \leq n - i$. Construct a graph $G$ as follows: take a complete graph $K_{n - i}$ and fix any set of $i$ vertices from $K_{n - i}$, denoted as $V$. Let $U$ be a copy and $V$ and construct a complete bipartite graph $K_{i, i}$ on $U$ and $V$. Notice that $G$ has degree sequence $\left\{d_j\right\}_{j = 1}^{n}$ such that 
+        \begin{equation*}
+            d_j = \begin{cases}
+                i & \textrm{if } 1 \leq j \leq i \\
+                n - i - 1 & \textrm{if } i + 1 \leq j \leq n - i \\
+                n - 1 & \textrm{if } n - i + 1 \leq j \leq n
+            \end{cases}.
+        \end{equation*}
+        Notice that $d_j \geq a_j$ for all $j = 1, 2, \cdots, n$, but $G - V$ has $(\abs{V} + 1)$ connected components, so $G$ is not Hamiltonian by Proposition \ref{pro:easyHamCond}. Therefore, $(a_1, a_2, \cdots, a_n)$ is not a Hamiltonian sequence.
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}      
+        Note that Theorem \ref{thm:Chvatal} only provides a sufficient condition to construct the degree sequence of a Hamiltonian graph, but the degree sequence of a Hamiltonian itself might not be a Hamiltonian sequence!  
+    \end{remark}        
+\end{notebox}\
+Using a similar approach, one can prove the following result:
+\begin{thmbox}{Condition of a Path-Hamiltonian Sequence}{pathHamSeq}
+    An integer sequence $\{a_i\}_{i = 1}^n \coloneqq (a_1, a_2, \cdots, a_n)$ is such that every graph with a degree sequence element-wise greater than or equal to $\{a_i\}_{i = 1}^n$ contains a Hamiltonian path if and only if for every $i \leq \frac{n}{2}$, $a_i < i$ implies $a_{n + 1 - i} \geq n - i$.
+\end{thmbox}
+\section{Vertex-Transitive Graph}
+Some well-known conjectures regarding Hamiltonian graphs relate Hamiltonicity to the symmetry of a graph. Here we first define a way to describe the symmetric-ness of a graph.
+\begin{dfnbox}{Vertex-Transitive Graph}{vtxTrans}
+    A graph $G$ is said to be {\color{red} \textbf{vertex-transitive}} if for every $v_1, v_2 \in V(G)$, there exists some isomorphism $f \colon V(G) \to V(G)$ such that $f(v_1) = v_2$.
+\end{dfnbox}
+Despite many conjectures, there have not been many easy results proved in the study of Hamiltonicity of vertex-transitive graphs. However, in a weaker area, one can try to bound the size of the longest cycle in a vertex-transitive graph.
+\begin{thmbox}{Babai's Theorem}{Babai}
+    Every connected vertex-transitive graph $G$ contains a cycle of length at least $\sqrt{3n}$.
+\end{thmbox}
+This bound has been improved to $\bigl(1 - o(1)\bigr)n^{\frac{3}{5}}$ in 2023.
+\chapter{Directed Graph}
+In previous chapters, we have been dealing with undirected graphs mainly. However, there are many scenarios where a directed graph is more useful. One such example is the study of network flow problems where the flow is directed between a pair of nodes.
+\section{Directed Graph}
+\begin{dfnbox}{Directed Graph}{digraph}
+    A {\color{red} \textbf{directed graph}} $D$, or {\color{red} \textbf{digraph}} for short, consists of a vertex set $V(D)$ and an edge set $E(D)$ defined as a set of ordered pairs $(u, v)$ for some $u, v \in V(D)$.
+\end{dfnbox}
+Usually, we denote a directed edge as $u \to v$ to indicate the edge's orientation. We say that $u$ is a \textit{predecessor} of $v$ and $v$ is a \textit{successor} of $u$. Note that an undirected graph is then equivalent to a digraph where each pair of vertices have a pair of bi-directional edges. A special type of digraphs require that no bi-directional edges can exist.
+\begin{dfnbox}{Oriented Graph}{orientedGraph}
+    An {\color{red} \textbf{oriented graph}} $D$ is a digraph such that for every $u \to v \in E(D)$, $v \to u \notin E(D)$.
+\end{dfnbox}
+We now introduce some terminologies. First, for a \textit{directed cycle} of size $n$, we denote such a cycle as $\overrightarrow{C}_n$. An edge $u \to v$ is known as an \textit{in-edge} at $u$ and \textit{out-edge} at $v$. The numbers of in-edges and out-edges at a vertex $v$ are known as the \textit{in-degree} and \textit{out-degree} of $v$, denoted by $d^+(v)$ and $d^-(v)$ respectively. In particular, denote 
+\begin{equation*}
+    N^+(v) \coloneqq \left\{u \in V(D) \colon vu \in E(D)\right\}, \qquad N^-(v) \coloneqq \left\{u \in V(D) \colon uv \in E(D)\right\}.
+\end{equation*}
+Intuitively, the sum of in-degrees in a digraph must equal the sum of out-degrees over all vertices, so we have the following proposition equivalent to the Handshaking Lemma:
+\begin{probox}{Sum of Degrees in Digraphs}{sumDegDigraph}
+    Let $D$ be a digraph, then 
+    \begin{equation*}
+        \sum_{v \in V(D)}d^+(v) = \sum_{v \in V(D)}d^-(v) = e(D).
+    \end{equation*}
+\end{probox}
+Many results in undirected graphs can be generalised to directed cases. For example, in Theorem \ref{thm:NSCondEulerian}, we states that a connected undirected graph is Eulerian if and only if every vertex has an even degree. However, in the directed case, it is easy to see that in order to use every edge in a digraph, for any vertex $v$, every time we visit $v$ via an in-edge, we have to leave $v$ via an unvisited out-edge. Therefore, the fact that having even degrees for all vertices guarantees a Eulerian graph is a direct result of the following statement:
+\begin{probox}{Necessary and Sufficient Condition for Eulerian Digraphs}{NSCondEulerianDi}
+    A digraph $D$ is Eulerian if and only if for every $v \in V(D)$, we have $d^+(v) = d^-(v)$.
+\end{probox}
+Next, let us see how we can define connectivity in the directed case. For simplicity, let us define the underlying undirected graph of a digraph $D$ as a graph $G$ with $V(G) = V(D)$ and $E(G)$ obtained by joining every pair of vertices that are connected via any one directed edge in $D$. If $G$ is connected, then $D$ is ``connected'' in a sense that no vertex is isolated.
+\begin{dfnbox}{Weak Connectivity}{weekConnect}
+    A digraph $D$ is {\color{red} \textbf{weakly connected}} if its underlying undirected graph is connected.
+\end{dfnbox}
+However, note that in a weakly connected digraph $D$, having no isolated vertex does not guarantee that there is always a path from any $u \in V(D)$ to any $v \in V(D)$. Consider a directed $u$-$v$ path, then it is clearly weakly connected but we can only traverse from $u$ to $v$ but not the other way around. Therefore, the ``complete'' connectivity is a much stronger property in digraphs.
+\begin{dfnbox}{Strong Connectivity}{strongConnect}
+    A digraph $D$ is {\color{red} \textbf{strongly connected}} if for every $u, v \in V(D)$, there is a directed $u$-$v$ path in $D$. A maximal strongly connected subgraph of $D$ is known as a {\color{red} \textbf{strongly connected component}} of $D$.
+\end{dfnbox}
+Recall that in undirected graphs, we define an independent set to be a subset of vertices that induces no edges. A similar structure can be defined on digraphs.
+\begin{dfnbox}{Kernel}{ker}
+    Let $D$ be a digraph. A {\color{red} \textbf{kernel}} of $D$ is a set $S \subseteq V(D)$ such that for any $u, v \in S$, $uv, vu \notin E(D)$ and for any $w \in V(D) - S$, there is some $w' \in S$ with $ww' \in E(D)$.
+\end{dfnbox}
+It might be useful to view a kernel as the ``core'' of a digraph such that every vertex outside of it points to something in it. Note that unlike independent set, not every digraph has a kernel. The easiest example is $\overrightarrow{C}_3$. In fact, with some observations we can prove the following result:
+\begin{probox}{Odd Directed Cycles Have No Kernel}{oddCycleNoKer}
+    Any directed cycle $\overrightarrow{C}_{2k + 1}$ for $k \in \Z^+$ has no kernel.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there is some $k \in \Z^+$ such that $K \subseteq V\left(\overrightarrow{C}_{2k + 1}\right)$ is a kernel. Clearly, $\abs{K} \leq \alpha\left(C_{2k + 1}\right) = k$. Define $\overline{K} \coloneqq V\left(\overrightarrow{C}_{2k - 1}\right) - K$, then 
+        \begin{equation*}
+            \abs{\overline{K}} \geq 2k + 1 - k = k + 1 > \abs{K}.
+        \end{equation*}
+        However, every $v \in \overline{K}$ must have a distinct out-neighbour $u \in K$, which is a contradiction.
+    \end{proof}
+\end{probox}
+The above proposition turns out to be important for characterisation of kernel-free digraphs.
+\begin{thmbox}{Richardson's Theorem}{Richardson}
+    If a digraph $D$ does not contain any directed odd cycle, then $D$ has a kernel.
+    \tcblower
+    \begin{proof}
+        If $D$ is strongly connected, we can a vertex $y \in D$ and for every $v \in V(D) - \{y\}$, there is a directed $v$-$y$ path in $D$. Define 
+        \begin{equation*}
+            S \coloneqq \left\{v \in V(D) \colon d_{D}(v, y) \textrm{ is even}\right\}.
+        \end{equation*}
+        We claim that $S$ induces no edge in $D$. Suppose on contrary that there is some edge $uv \in V(D)$ with $u, v \in S$. Note that there is some even $u$-$y$ path $P$ and some even $v$-$y$ path $P'$ in $D$, so $uv + P'$ is an odd path and so $uv + P' \neq P$. Since $D$ is strongly connected, there is some $y$-$u$ path $Q$ in $D$. Notice that now, $P' \cup Q \cup \{uv\}$ and $P \cup Q$ are two distinct closed walks in $D$ with lengths $e(P') + e(Q) + 1$ and $e(P) + e(Q)$ respectively. Note that $e(P')$ and $e(P)$ are even, so the sizes of the two closed walks have different parity. Therefore, at least one of them is an odd closed walk and so contains a directed odd cycle, which is a contradiction.
+        \\\\
+        For every $u \in V(D) - S$, we know that there is a $u$-$y$ path with odd length. Let $w$ be the successor of $u$ along the path, then $d_D(w, y)$ is even and so $w \in S$. Since $uw \in E(D)$, this implies that $S$ is a kernel of $D$.
+        \\\\
+        If $D$ is not strongly connected, we shall apply strong induction on $v(D)$. The case where $D$ is of order $2$ is trivial. Now, suppose that any digraph containing no directed odd cycle with orders less than $D$ has a kernel. Take $D'$ to be a strongly connected component in $D$. By the previous argument, $D'$ has a kernel $S'$. If for all $v \in D - D'$, $v$ is a successor to some vertex in $S'$, then $S'$ is a kernel of $D$. Otherwise, let $D''$ be a subgraph of $D - D'$ obtained by deleting all successors to vertices in $S'$. $D''$ has a kernel $S''$ by the inductive hypothesis. Clearly, $S' \cup S''$ is a kernel in $D$.
+    \end{proof}
+\end{thmbox}
+\section{Tournament}
+A special type of digraphs is \textit{tournament}, which is the counterpart of complete graphs in digraphs.
+\begin{dfnbox}{Tournament}{tournament}
+    A {\color{red} \textbf{tournament}} $T$ is a digraph such that the graph $G$ defined by 
+    \begin{align*}
+        V(G) \coloneqq V(T), \qquad E(G) \coloneqq \left\{uv \colon u \to v \in E(T) \textrm{ or } v \to u \in E(T)\right\}
+    \end{align*}
+    is complete.
+\end{dfnbox}
+Although it may sound counter-intuitive, we can actually prove that any tournament contains a Hamiltonian path.
+\begin{probox}{Existence of Hamiltonian Paths in Tournaments}{existHamPathInT}
+    Any tournament contains a Hamiltonian path.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there exists some tournament $T$ without any Hamiltonian path. Take $P \coloneqq v_1v_2\cdots v_n$ to be a longest path in $T$. Since $P$ is not Hamiltonian, there exists some $u \in V(T) - V(P)$. Notice that $v_n \to u, u \to v_1 \notin E(T)$, so $u \to v_n, v_1 \to u \in E(T)$. Therefore, it is clear that there must exists some integer $i \in [1, n - 1]$ such that $v_i \to u, u \to v_{i + 1} \in E(T)$. However, this means that $v_1\cdots v_iuv_{i + 1}\cdots v_n$ is a longer path in $T$, which is a contradiction.
+    \end{proof}
+\end{probox}
+Just like undirected graphs, we say that a tournament $T_n$ is \textit{acyclic} if it contains no directed cycle. Alternatively, we also call it a \textit{transitive} tournament.
+\begin{probox}{Characterisation of Transitive Tournaments}{transTour}
+    A tournament $T$ is transitive if and only if there exists a labelling of its vertices into $v_1, v_2, \cdots, v_n$ such that $v_i \to v_j \in E(T)$ for every $i < j$.
+    \tcblower
+    \begin{proof}
+        If there exists such a labelling, then clearly every path in $T$ is in the form of $v_{I(1)}v_{I(2)}\cdots v_{I(k)}$ for some index set $I \subseteq \left\{1, 2, \cdots, n\right\}$ such that $I(i) < I(j)$ for every $i < j$. Note that $v_{I(k)} \to v_{I(1)} \notin E(T)$, so $T$ does not contain any cycle.
+        \\\\
+        Suppose conversely that $T$ is transitive. Consider the following lemma:
+        \begin{lembox}{Acyclic Graphs Contain Vertices without Incoming Edges}{noIncome}
+            For any acyclic digraph $G$, there exists some vertex $v \in V(G)$ such that $d^-_G(v) = 0$.
+            \tcblower
+            \begin{proof}
+                We shall prove the contrapositive statement. Suppose that for every $v \in V(G)$, we have $d^-(v) \geq 1$. Fix some $v_1 \in V(G)$, then there exists some $v_2 \in V(G)$ such that $v_2 \to v_1 \in E(G)$. Continuing taking vertices this way, since the graph is finite, we will eventually reach a vertex $v_k \in V(G)$ such that for all $v_i \in N_G^-(v_k)$, we have $i < k$. Take any $v_i$ with $v_i \to v_k \in E(G)$, then since $v_kv_{k - 1}\cdots v_i$ is a path, we have obtained a directed cycle in $G$.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:noIncome}, there exists some $v_1 \in V(T)$ with no incoming edge, so no matter how the other vertices are labelled, $v_1 \to v_i \in E(T)$ for all $i > 1$. Now, suppose we have fixed the labelling up to $v_k$, then $T - \{v_1, v_2, \cdots, v_k\}$ is still an acyclic tournament and so there exists some $v_{k + 1}$ with no incoming edge. Therefore, we can eventually reach a labelling where $v_i \to v_j$ is an edge for every $i < j$.
+    \end{proof}
+\end{probox}
+In fact, such labelling can be generalised to any acyclic directed graph.
+\begin{dfnbox}{Topological Ordering}{topoSort}
+    Let $G$ be a directed graph, a {\color{red} \textbf{topological ordering}} is a map 
+    \begin{equation*}
+        f \colon V(G) \to \left\{1, 2, \cdots, v(G)\right\}
+    \end{equation*}
+    such that if $u \to v \in E(G)$, then $f(u) < f(v)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A digraph has a topological ordering if and only if it is acyclic.
+    \end{remark}
+\end{notebox}
+Using some easy constructions, it is easy to show that Hamiltonian paths in a tournament might not be unique. However, the following result states a condition for such Hamiltonian path to be unique:
+\begin{probox}{Transitive Tournament Has a Unique Hamiltonian Path}{uniqueHamPath}
+    A tournament contains a unique Hamiltonian path if and only if it is transitive.
+    \tcblower
+    \begin{proof}
+        Let $T$ be a transitive tournament. By Proposition \ref{pro:existHamPathInT}, the existence is guaranteed. By Proposition \ref{pro:transTour}, fix a topological ordering $v_1, v_2, \cdots, v_n$ in $T$. Since $v_i \to v_j$ is an edge only when $i < j$, then only possible Hamiltonian path is $v_1v_2\cdots v_n$.
+        \\\\
+        Suppose conversely that a tournament $T$ contains a unique Hamiltonian path. Denote the path by $v_1v_2\cdots v_n$. We claim that this path induces a topological ordering in $T$. Suppose on contrary that there is some $v_p \in V(T)$ such that $v_k \to v_p \in E(T)$ for some $k > p$ and let $v_q$ be the last vertex such that $v_q \to v_p \in E(T)$. Without loss of generality, let $v_p$ be the first such vertex. If $p \neq 1$ and $q \neq n$, then $v_{p - 1} \to v_{p + 1} \in E(T)$. By the maximality of $q$, we have $v_mv_{q + 1} \in E(T)$, which implies that $v_1v_2\cdots v_{p - 1}v_{p + 1}v_{p + 2}\cdots v_qv_pv_{q + 1}v_{q + 2}\cdots v_n$ is a different Hamiltonian path. One may check that for the cases where $p = 1$ or $q = n$, we can also find a different Hamiltonian path in $T$, which is a contradiction.
+    \end{proof}
+\end{probox}
+In another direction, we can also characterise the structure of a non-transitive tournament.
+\begin{probox}{Non-transitive Tournaments Contain Directed Triangles}{dirTri}
+    Any tournament which is not transitive contains some directed triangle.
+    \tcblower
+    \begin{proof}
+        Let $T$ be a tournament which is not transitive and let $\overrightarrow{C}_k \coloneqq v_1v_2\cdots v_kv_1$ be the shortest directed cycle in $T$. If $k = 3$, then we are done. Otherwise, $k > 3$. Notice that $v_{k - 1} \to v_1 \notin E(T)$ because otherwise there is a shorter directed cycle. Therefore, $v_1 \to v_{k - 1} \in E(T)$, and so $v_1v_{k - 1}v_kv_1$ is a directed triangle.
+    \end{proof}
+\end{probox}
+Note that the existence of Hamiltonian paths in tournaments guarantees that there is always a vertex which is reachable from any other vertex in a tournament. However, to reach this ``end'' vertex, it might not give the shortest path along the Hamiltonian path. Thus, we might wish to further strengthen this result.
+\begin{dfnbox}{King}{king}
+    Let $T$ be a tournament, a vertex $k \in T$ is said to be a {\color{red} \textbf{king}} of $T$ if for every $v \in V(T)$, there is a directed $v$-$k$ path of length at most $2$.
+\end{dfnbox}
+Surprisingly, we always get a king in any tournament for free.
+\begin{thmbox}{Landau's Theorem}{Landau}
+    Every tournament has a king.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there exists some tournament $T$ which does not contain a king. Take $v \in V(T)$ to be the vertex with the largest in-degree. Since $v$ is not a king, there must exists some $u \in V(T)$ such that there is no directed $u$-$v$ path of length at most $2$ in $T$. Therefore, $v \to u \in E(T)$ and for every $w \in N_T^-(v)$, we must have $w \to u \in E(T)$. This means that $N_T^-(u) \subseteq N_T^-(v) \cup \{v \}$, and so $d_T^-(u) > d_T^-(v)$, which is a contradiction.
+    \end{proof}
+\end{thmbox}
+Note that although the existence of a king is guaranteed in any tournament, the uniqueness is not. The following definition generalises the concept of a king:
+\begin{dfnbox}{Quasi-kernel}{quasiKer}
+    Let $D$ be a digraph. A {\color{red} \textbf{quasi-kernel}} of $D$ is a set $S \subseteq V(D)$ such that for every $u \in V(D) - S$, there is a directed $u$-$v$ path for some $v \in S$ of length at most $2$.
+\end{dfnbox}
+Clearly, a king in a tournament is always a vertex in the quasi-kernel. However, the existence of a quasi-kernel is also guaranteed for any digraph.
+\begin{thmbox}{Chv\'{a}tal-Lov\'{a}sz Quasi-kernel Existence Theorem}{Chvatal-Lovasz}
+    Every digraph $D$ has a quasi-kernel.
+    \tcblower
+    \begin{proof}
+        We shall apply strong induction on $\abs{V(D)}$. The case where $\abs{V(D)} = 1$ is trivial because $D$ is its own quasi-kernel. Suppose that there exists some integer $n \geq 1$ such that any digraph with order less than $n$ has a quasi-kernel. Take any $v \in V(D)$. If $\{v\} \cup N_D^-(v) = V(D)$, then $\{v\}$ is a quasi-kernel. Otherwise, define 
+        \begin{equation*}
+            D' \coloneqq D - \bigl(\{v\} \cup N_D^-(v)\bigr).
+        \end{equation*}
+        By the inductive hypothesis, $D'$ has a quasi-kernel $S$. If $S \cap N_D^+(v) = \varnothing$, then $S \cup \{v\}$ is a quasi-kernel in $D$. Otherwise, there is some $s \in S$ such that $v \to s \in E(D)$. This means that $S$ is a quasi-kernel in $D$ because every $u \in N_D^-(v)$ has a directed path of length $2$ to $s$. Therefore, any digraph always has a quasi-kernel.
+    \end{proof}
 \end{thmbox}
 \end{document}

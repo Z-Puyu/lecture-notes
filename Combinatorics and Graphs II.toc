@@ -1,28 +1,29 @@
 \contentsline {chapter}{\numberline {1}Graph Structures}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Multigraphs}{2}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Multigraphs}{2}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}Subgraphs}{5}{subsection.1.1.2}%
-\contentsline {subsection}{\numberline {1.1.3}Graph Isomorphism}{7}{subsection.1.1.3}%
-\contentsline {section}{\numberline {1.2}Graph Traversal}{12}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Paths and Cycles}{12}{subsection.1.2.1}%
-\contentsline {subsection}{\numberline {1.2.2}Connected Components}{13}{subsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.2.3}Graphs as Metric Spaces}{18}{subsection.1.2.3}%
-\contentsline {section}{\numberline {1.3}Graphs and Matrices}{21}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Tree}{23}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Bipartite Graphs}{26}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Matchings and Vertex Covers}{29}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Matching}{29}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Clique and Independent Set}{31}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Matchings in Bipartite Graphs}{33}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Connectivity}{43}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Vertex Connectivity}{43}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Edge Connectivity}{47}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Blocks}{49}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Graph Colouring}{57}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Vertex Colouring}{57}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Edge Colouring}{65}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Perfect Graphs}{66}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Planarity}{71}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Planar Graph}{71}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Dual Graph}{78}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Four Colour Theorem}{79}{section.5.3}%
+\contentsline {section}{\numberline {1.2}Graph Traversal}{11}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Graphs and Matrices}{18}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Tree}{20}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Bipartite Graphs}{23}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Matchings and Vertex Covers}{26}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Matching}{26}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Clique and Independent Set}{28}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Matchings in Bipartite Graphs}{30}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Connectivity}{40}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Vertex Connectivity}{40}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Edge Connectivity}{44}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Blocks}{46}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Graph Colouring}{54}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Vertex Colouring}{54}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Edge Colouring}{62}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Perfect Graphs}{63}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Planarity}{68}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Planar Graph}{68}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Dual Graph}{75}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Four Colour Theorem}{76}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Hamiltonian Graph}{78}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Eulerian Graph}{78}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Hamiltonian Graph}{80}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Vertex-Transitive Graph}{88}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Directed Graph}{89}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Directed Graph}{89}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Tournament}{92}{section.7.2}%
