@@ -2,11 +2,79 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
-\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
-\DeclareMathAccent{\widehat}{\mathord}{yhlargesymbols}{"F3}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead (see below):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -25,6 +93,8 @@
 \newcommand{\zero}{\mathbf{0}}
 \newcommand{\one}{\mathbf{1}}
 \newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\im}{\mathrm{i}}
 \newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
@@ -50,17 +120,17 @@ In elementary mathematics, we often refer to a vector as an ordered tuple of num
 
 In general, we have the following algebraic structure:
 \begin{dfnbox}{Field}{field}
-    A {\color{red} \textbf{field}} is a set $\mathcal{F}$ with two binary operations $\mathcal{F}^2 \to \mathcal{F}$, namely addition and multiplication, such that
+    A {\color{red} \textbf{field}} is a set $\F$ with two binary operations $\F^2 \to \F$, namely addition and multiplication, such that
     \begin{enumerate}
-        \item $u + v = v + u$ for all $u, v \in \mathcal{F}$;
-        \item $(u + v) + w = u + (v + w)$ for all $u, v, w \in \mathcal{F}$;
-        \item $uv = vu$ for all $u, v \in \mathcal{F}$;
-        \item $(uv)w = u(vw)$ for all $u, v, w \in \mathcal{F}$;
-        \item $u(v + w) = uv + uw$ for all $u, v, w \in \mathcal{F}$;
-        \item there exists $0 \in \mathcal{F}$ such that $u + 0 = u$ for all $u \in \mathcal{F}$;
-        \item there exists $1 \in \mathcal{F}$ such that $1u = u$ for all $u \in \mathcal{F}$;
-        \item for every $u \in \mathcal{F}$, there exists some $v \in \mathcal{F}$ such that $u + v = 0$;
-        \item for every $u \in \mathcal{F}$, there exists some $v \in \mathcal{F}$ such that $uv = 1$.
+        \item $u + v = v + u$ for all $u, v \in \F$;
+        \item $(u + v) + w = u + (v + w)$ for all $u, v, w \in \F$;
+        \item $uv = vu$ for all $u, v \in \F$;
+        \item $(uv)w = u(vw)$ for all $u, v, w \in \F$;
+        \item $u(v + w) = uv + uw$ for all $u, v, w \in \F$;
+        \item there exists $0 \in \F$ such that $u + 0 = u$ for all $u \in \F$;
+        \item there exists $1 \in \F$ such that $1u = u$ for all $u \in \F$;
+        \item for every $u \in \F$, there exists some $v \in \F$ such that $u + v = 0$;
+        \item for every $u \in \F$, there exists some $v \in \F$ such that $uv = 1$.
     \end{enumerate}
 \end{dfnbox}
 One may check that both $\R$ and $\C$ are fields. 
@@ -69,25 +139,25 @@ Now, in an elementary level, we say that a \textit{vector} is ``a quantity which
 
 Let us take the usual approach: instead of saying \textbf{what they are}, we shall focus on \textbf{what they do}. It turns out that we can also generalise the concept of vectors as any objects which possess properties similar to that of Euclidean vectors, i.e., we can view a vector as a mathematical quantity which can be added up and multiplied by another quantity called a scalar with some axioms which they follow. Rigorously, we define the notion of a \textit{vector space}.
 \begin{dfnbox}{Vector Space}{vecSpace}
-    A {\color{red} \textbf{vector space}} is a set $V$ over a field $\mathcal{F}$ with two binary operations, namely 
+    A {\color{red} \textbf{vector space}} is a set $V$ over a field $\F$ with two binary operations, namely 
     \begin{itemize}
         \item addition $+ \colon V^2 \to V$, and
-        \item scalar multiplication $(\quad)(\quad) \colon \mathcal{F} \times V \to V$,
+        \item scalar multiplication $(\quad)(\quad) \colon \F \times V \to V$,
     \end{itemize}
     such that
     \begin{enumerate}
         \item $\mathbfit{u + v = v + u}$ for all $\mathbfit{u}, \mathbfit{v} \in V$;
         \item $\mathbfit{(u + v) + w = u + (v + w)}$ for all $\mathbfit{u, v, w} \in V$;
-        \item $ab\mathbfit{v} = a(b\mathbfit{v})$ for all $a, b \in \mathcal{F}$ and $\mathbfit{v} \in V$;
+        \item $ab\mathbfit{v} = a(b\mathbfit{v})$ for all $a, b \in \F$ and $\mathbfit{v} \in V$;
         \item there exists an {\color{red} \textbf{additive identity}} or {\color{red} \textbf{zero vector}} $\zero \in V$ such that $\mathbfit{v} + \zero = \mathbfit{v}$ for all $\mathbfit{v} \in V$;
         \item every $\mathbfit{v} \in V$ has an {\color{red} \textbf{additive inverse}} $\mathbfit{w} \in V$ with $\mathbfit{v + w} = 0$;
-        \item there exists a {\color{red} \textbf{multiplicative identity}} $1 \in \mathcal{F}$ such that $1\mathbfit{v} = \mathbfit{v}$ for all $\mathbfit{v} \in V$;
-        \item $a\mathbfit{(u + v)} = a\mathbfit{u} + a\mathbfit{v}$ and $(a + b)\mathbfit{u} = a\mathbfit{u} + b\mathbfit{u}$ for all $a, b \in \mathcal{F}$ and $\mathbfit{u, v} \in V$.
+        \item there exists a {\color{red} \textbf{multiplicative identity}} $1 \in \F$ such that $1\mathbfit{v} = \mathbfit{v}$ for all $\mathbfit{v} \in V$;
+        \item $a\mathbfit{(u + v)} = a\mathbfit{u} + a\mathbfit{v}$ and $(a + b)\mathbfit{u} = a\mathbfit{u} + b\mathbfit{u}$ for all $a, b \in \F$ and $\mathbfit{u, v} \in V$.
     \end{enumerate}
 \end{dfnbox}
 Notice that here, the definitions of addition in scalar multiplication in a vector space imply that any vector space must be \textbf{closed} under these two operations. Notice also that the operations ``addition'' and ``scalar multiplication'' are not necessary the addition and scalar multiplication which we are used to in $\R^n$, but abstract mappings which satisfy the given axioms.
 
-Now, it is very easy to state what a vector really is: \textbf{any element in a certain vector space is a vector!} In fact, one can easily check that any field $\mathcal{F}$ is a vector space over itself, so every scalar is a vector (if this sentence is confusing to you, read the previous paragraphs again).
+Now, it is very easy to state what a vector really is: \textbf{any element in a certain vector space is a vector!} In fact, one can easily check that any field $\F$ is a vector space over itself, so every scalar is a vector (if this sentence is confusing to you, read the previous paragraphs again).
 
 Furthermore, $\R$ with addition defined as real number addition and scalar multiplication defined as real number multiplication is a vector space over $\R$ itself, but not the other way round, i.e., if I define addition as real number multiplication and scalar multiplication as real number addition, then $\R$ is no longer a vector space over itself (check which axiom it violates).
 
@@ -131,7 +201,7 @@ Adding $-(0\mathbfit{u})$ to both sides of the equation yields $0\mathbfit{u} = 
 \end{equation*}
 By uniqueness of additive inverse, we must have $(-1)\mathbfit{u} = -\mathbfit{u}$.
 
-Note that by using a similar technique we can prove that $a\zero = \zero$ for all $a \in \mathcal{F}$, and so~$\zero = -\zero$ as a consequence.
+Note that by using a similar technique we can prove that $a\zero = \zero$ for all $a \in \F$, and so~$\zero = -\zero$ as a consequence.
 
 Additionally, note that subtraction is defined as $\mathbf{u - v} = \mathbfit{u} + (-1)\mathbfit{v}$, so the above result allows us to write $\mathbfit{u - v} = \mathbfit{u} + (-\mathbfit{v})$.
 
@@ -162,17 +232,17 @@ It can be easily proven that for any vector space $V$, the direct sum of any two
 \end{probox}
 In some sense, a direct sum of $V$ can be viewed as a ``partition'' of $V$ into two subsets with a minimal overlap. Note that unlike partition in its real definition, the subspaces $U_1$ and $U_2$ here cannot be disjoint sets as both of them have to contain the zero vector in $V$. More generally, for any subspace $U \subseteq V$, we have $\zero_U = \zero_V$, the proof of which should be trivial enough as an exercise to the reader.
 
-In particular, we would like to consider $\mathcal{F}^n$ for a general field $\mathcal{F}$. We can define the dot product operation over $\mathcal{F}^n$ in the same way as $\R^n$. Take any subspace $U \subseteq \mathcal{F}^n$ and define the set
+In particular, we would like to consider $\F^n$ for a general field $\F$. We can define the dot product operation over $\F^n$ in the same way as $\R^n$. Take any subspace $U \subseteq \F^n$ and define the set
 \begin{equation*}
-    U_{\perp} \coloneqq \left\{\mathbfit{u} \in \mathcal{F}^n \colon \mathbfit{u \cdot v} = 0 \quad\textrm{for all } \mathbfit{v} \in U\right\},
+    U_{\perp} \coloneqq \left\{\mathbfit{u} \in \F^n \colon \mathbfit{u \cdot v} = 0 \quad\textrm{for all } \mathbfit{v} \in U\right\},
 \end{equation*}
-then $\mathcal{F}^n = U \oplus U_{\perp}$.
+then $\F^n = U \oplus U_{\perp}$.
 
-To justify this, we first take any $\mathbfit{v} \in \mathcal{F}^n$. Using some calculus, we can show that there exists 
+To justify this, we first take any $\mathbfit{v} \in \F^n$. Using some calculus, we can show that there exists 
 \begin{equation*}
     \mathbfit{u}_0 = \argmin_{\mathbfit{u} \in U}\abs{\mathbfit{u \cdot v}}.
 \end{equation*}
-Let $\mathbfit{w = v - u}_0$, then clearly $\mathbfit{v = w + u}_0$ where $\mathbfit{u}_0 \in U$ and $\mathbfit{w} \in U_{\perp}$. This implies that~$V = U + U_{\perp}$. Note that $\zero$ is the only vector in $\mathcal{F}^n$ which is orthogonal to itself, so we have $U \cap U_{\perp} = \{\zero\}$. It follows that $V = U \oplus U_{\perp}$.
+Let $\mathbfit{w = v - u}_0$, then clearly $\mathbfit{v = w + u}_0$ where $\mathbfit{u}_0 \in U$ and $\mathbfit{w} \in U_{\perp}$. This implies that~$V = U + U_{\perp}$. Note that $\zero$ is the only vector in $\F^n$ which is orthogonal to itself, so we have $U \cap U_{\perp} = \{\zero\}$. It follows that $V = U \oplus U_{\perp}$.
 
 \section{Isomorphism}
 Since the underlying structure of a vector space is still a set, the notion of a mapping between two vector spaces is well-defined. However, note that a vector space possesses unique algebraic structures and properties, namely that the linear combinations of any members of the space are still in the space, so we would like to focus on mapping which preserves such properties.
@@ -181,7 +251,7 @@ Since the underlying structure of a vector space is still a set, the notion of a
     \begin{equation*}
         \phi(\mathbfit{u + v}) = \phi(\mathbfit{u}) + \phi(\mathbfit{v}), \qquad \phi(c\mathbfit{u}) = c\phi(\mathbfit{u})
     \end{equation*}
-    for any $\mathbfit{u}, \mathbfit{v} \in U$ and $c \in \mathcal{F}$.
+    for any $\mathbfit{u}, \mathbfit{v} \in U$ and $c \in \F$.
 \end{dfnbox}
 Naturally, if a homomorphism is bijective, then it means that the elements in two vector spaces have a one-to-one correspondence. In practice, this means we can treat them as equivalent spaces in some sense.
 \begin{dfnbox}{Isomorphism}{isomorphic}
@@ -208,9 +278,9 @@ Using Theorem \ref{thm:compoPreserveIsomorphic}, we can immediately see that if 
     \end{remark}
 \end{notebox}
 
-Now, observe that for any field $\mathcal{F}$, the set $\mathcal{F}^n$ for any $n \in \N$ is a vector space over $\mathcal{F}$.
+Now, observe that for any field $\F$, the set $\F^n$ for any $n \in \N$ is a vector space over $\F$.
 \begin{dfnbox}{Finite-Dimensional Vector Space}{finiteDim}
-    A vector space $V$ is said to be {\color{red} \textbf{finite-dimensional}} over a field $\mathcal{F}$ if it it is isomorphic to $\mathcal{F}^n$ for some $n \in \N$. $n$ is called the {\color{red} \textbf{dimension}} of $V$.
+    A vector space $V$ is said to be {\color{red} \textbf{finite-dimensional}} over a field $\F$ if it it is isomorphic to $\F^n$ for some $n \in \N$. $n$ is called the {\color{red} \textbf{dimension}} of $V$.
 \end{dfnbox}
 Obviously, a vector space which is not finite-dimensional is called \textit{infinite-dimensional}. For example, the set of all polynomials is a vector space of infinite dimension.
 
@@ -225,47 +295,47 @@ In case where no confusion is caused, this can be abbreviated as $a_i\mathbfit{v
 \end{equation*}
 where $a_i$'s are scalars. A span of a subset of a vector space $V$ is clearly a subspace of $V$. We also know that a set of vectors $S$ is said to be \textit{linearly independent} if and only if  $a_i\mathbfit{v}_i = \zero$ implies that $a_i = 0$ for all $i = 1, 2, \cdots$. A \textit{basis} of a vector space $V$ is a linearly independent set $S$ such that $\mathrm{span}(S) = V$. One may check that if $S$ is a basis for $V$, then any $\mathbfit{v} \in V$ can be \textbf{uniquely} expressed as a linear combination of the members of $S$, but $S$ itself is not unique. In particular, the coefficients in this linear combination is known as the \textit{components} of $\mathbfit{v}$ relative to $S$.
 
-We will see that the basis is closely related to the dimension of vector spaces. First, let us consider the trivial basis for $\mathcal{F}^n$.
+We will see that the basis is closely related to the dimension of vector spaces. First, let us consider the trivial basis for $\F^n$.
 \begin{dfnbox}{Canonical Basis}{canonicalBasis}
-    The {\color{red} \textbf{canonical basis}} for $\mathcal{F}^n$ is defined as $\left\{\mathbfit{e}_i \colon i = 1, 2, \cdots, n\right\}$, where each $\mathbfit{e}_i$ is a column vector with $1_{\mathcal{F}}$ in its $i$-th row and $0_{\mathcal{F}}$ in the other rows.
+    The {\color{red} \textbf{canonical basis}} for $\F^n$ is defined as $\left\{\mathbfit{e}_i \colon i = 1, 2, \cdots, n\right\}$, where each $\mathbfit{e}_i$ is a column vector with $1_{\F}$ in its $i$-th row and $0_{\F}$ in the other rows.
 \end{dfnbox}
 It is easy to see that the number of vectors in any basis of a finite-dimensional vector space~$V$ is uniquely equal to its dimension.
 \begin{probox}{Dimension as Cardinality of Basis}{dimIsCardBasis}
     Let $V$ be a finite-dimensional vector space with dimension $n$ and basis $S$, then $n = \abs{S}$.
     \tcblower
     \begin{proof}
-        Note that $V \cong \mathcal{F}^n$. Let $\mathbfit{v} \in V$ be an arbitrary vector, then there is some~$\mathbfit{u} \in \mathcal{F}^n$ and a bijection $\phi \colon \mathcal{F}^n \to V$ such that 
+        Note that $V \cong \F^n$. Let $\mathbfit{v} \in V$ be an arbitrary vector, then there is some~$\mathbfit{u} \in \F^n$ and a bijection $\phi \colon \F^n \to V$ such that 
         \begin{align*}
             \mathbfit{v} & = \phi(\mathbfit{u}) \\
             & = \phi\left(\sum_{i = 1}^{n}a_i\mathbfit{e}_i\right) \\
             & = \sum_{i = 1}^{n}a_i\phi(\mathbfit{e}_i),
         \end{align*}
-        where $a_i \in \mathcal{F}$ for $i = 1, 2, \cdots, n$. This means that $V$ is spanned by at most $n$ vectors and so its basis is finite. Suppose on contrary that $\abs{S} = m < n$, then for any $\mathbfit{w} \in \mathcal{F}^n$, there is some $\mathbfit{r} \in V$ such that
+        where $a_i \in \F$ for $i = 1, 2, \cdots, n$. This means that $V$ is spanned by at most $n$ vectors and so its basis is finite. Suppose on contrary that $\abs{S} = m < n$, then for any $\mathbfit{w} \in \F^n$, there is some $\mathbfit{r} \in V$ such that
         \begin{align*}
             \mathbfit{w} & = \phi^{-1}(\mathbfit{r}) \\
             & = \phi^{-1}\left(\sum_{i = 1}^{m}b_i\mathbfit{s}_i\right) \\
             & = \sum_{i = 1}^{m}b_i\phi^{-1}(\mathbfit{s}_i),
         \end{align*}
-        where $b_i \in \mathcal{F}$ for $i = 1, 2, \cdots, m$. This means that $\mathcal{F}^n$ is spanned by $m$ vectors, which is a contradiction. Therefore, $\abs{S} = n$.
+        where $b_i \in \F$ for $i = 1, 2, \cdots, m$. This means that $\F^n$ is spanned by $m$ vectors, which is a contradiction. Therefore, $\abs{S} = n$.
     \end{proof}
 \end{probox}
 An immediate corollary from Proposition \ref{pro:dimIsCardBasis} is that a finite-dimensional vector space always has a unique dimension, as otherwise it will have bases with different cardinalities.
 
-Note that since every vector in a vector space $V$ can be uniquely expressed as a linear combination of a basis $S$ for $V$, this really means that we can view the notion of a basis equivalently as a bijection between $\mathcal{F}^n$ and $V$, i.e., for any $(a_1, a_2, \cdots, a_n) \in \mathcal{F}^n$, we can map the tuple to a vector in $V$ whose components are exactly $a_1, a_2, \cdots, a_n$.
+Note that since every vector in a vector space $V$ can be uniquely expressed as a linear combination of a basis $S$ for $V$, this really means that we can view the notion of a basis equivalently as a bijection between $\F^n$ and $V$, i.e., for any $(a_1, a_2, \cdots, a_n) \in \F^n$, we can map the tuple to a vector in $V$ whose components are exactly $a_1, a_2, \cdots, a_n$.
 
-Now, let us denote a basis for $V$ by the mapping $z$. Notice that for any $\mathbfit{c}_1, \mathbfit{c}_2 \in \mathcal{F}^n$, we have 
+Now, let us denote a basis for $V$ by the mapping $z$. Notice that for any $\mathbfit{c}_1, \mathbfit{c}_2 \in \F^n$, we have 
 \begin{equation*}
     z(\alpha\mathbfit{c}_1 + \mathbfit{c}_2) = \alpha z(\mathbfit{c}_1) + z(\mathbfit{c}_2),
 \end{equation*}
 so a basis is nothing more but an isomorphism! In fact, we could derive our old definition for a basis using this novel definition.
 \begin{dfnbox}{Basis}{basis}
-    Let $V$ be an $n$-dimensional vector space and $z \colon \mathcal{F}^n \to V$ be any isomorphism, then the set 
+    Let $V$ be an $n$-dimensional vector space and $z \colon \F^n \to V$ be any isomorphism, then the set 
     \begin{equation*}
         \left\{z\left(\mathbfit{e}_i\right) \colon i = 1, 2, \cdots, n\right\}
     \end{equation*}
     is known as a {\color{red} \textbf{basis}} for $V$.
 \end{dfnbox}
-Let us do the verification. First, take any $\mathbfit{v} \in V$, then $z^{-1}(\mathbfit{v}) \in \mathcal{F}^n$ is the coordinate vector of $\mathbfit{v}$. Note that there are scalars $a_1, a_2, \cdots, a_n$ such that 
+Let us do the verification. First, take any $\mathbfit{v} \in V$, then $z^{-1}(\mathbfit{v}) \in \F^n$ is the coordinate vector of $\mathbfit{v}$. Note that there are scalars $a_1, a_2, \cdots, a_n$ such that 
 \begin{equation*}
     z^{-1} = \sum_{i = 1}^{n}a_i\mathbfit{e}_i.
 \end{equation*}
@@ -279,22 +349,22 @@ This implies that $V = \mathrm{span}\left\{z\left(\mathbfit{e}_i\right) \colon i
 \end{equation*}
 Since the $\mathbfit{e}_i$'s are linearly independent, we have $a_i = 0$ for all $i = 1, 2, \cdots, n$, and so $\left\{z\left(\mathbfit{e}_i\right) \colon i = 1, 2, \cdots, n\right\}$ is a linearly independent set and is therefore a basis for $V$.
 
-Therefore, every isomorphism $z \colon \mathcal{F}^n \to V$ defines a basis for $V$.
+Therefore, every isomorphism $z \colon \F^n \to V$ defines a basis for $V$.
 \chapter{Linear Transformations}
-\section{Linear Transformation}
+\section{Linear Transformations}
 A common misconception is that linear algebra is a study of matrices --- it is not. The real subject studied in linear algebra is \textbf{mappings} between vector spaces which preserves linearity.
 \begin{dfnbox}{Linear Transformation}{linearTrans}
-    A {\color{red} \textbf{linear transformation}} is a mapping $T \colon V \to W$, where $V$ and $W$ are vector spaces over $\mathcal{F}$, such that
+    A {\color{red} \textbf{linear transformation}} is a mapping $T \colon V \to W$, where $V$ and $W$ are vector spaces over $\F$, such that
     \begin{equation*}
         T(\mathbfit{v + u}) + T(\mathbfit{v}) + T(\mathbfit{u}), \qquad T(c\mathbfit{v}) = cT(\mathbfit{v})
     \end{equation*}
-    for all $\mathbfit{v}, \mathbfit{u} \in V$ and all $c \in \mathcal{F}$.
+    for all $\mathbfit{v}, \mathbfit{u} \in V$ and all $c \in \F$.
 \end{dfnbox}
 In essence, a linear transformation is a function between vector spaces which preserves the vector structure of its domain. We will see that many notions discussed so far can actually be abstracted into a linear transformation.
 
-Let $V \cong \mathcal{F}^n$ be a finite-dimensional vector space. Recall that a basis for $V$ is essentially a bijective mapping $z \colon \mathcal{F}^n \to V$, so a basis is a linear transformation. In particular, if $y$ is another basis for $V$, then clearly $y \circ z^{-1}$ is a mapping from $V$ to itself. Let $Q = y \circ z^{-1}$, then we have $y = Q \circ z$. This is known as a change of basis.
+Let $V \cong \F^n$ be a finite-dimensional vector space. Recall that a basis for $V$ is essentially a bijective mapping $z \colon \F^n \to V$, so a basis is a linear transformation. In particular, if $y$ is another basis for $V$, then clearly $y \circ z^{-1}$ is a mapping from $V$ to itself. Let $Q = y \circ z^{-1}$, then we have $y = Q \circ z$. This is known as a change of basis.
 
-Now, consider a vector space $V$ over $\mathcal{F}$. Fix some $\mathbfit{v} \in V$ and define a mapping $\Theta_{\mathbfit{v}} \colon \mathcal{F} \to V$ by $\Theta_{\mathbfit{v}}(a) = a\mathbfit{v}$. One may check that $\Theta_{\mathbfit{v}}$ is a linear transformation, but it can be easily verified that $\mathbfit{v} \mapsto \Theta_{\mathbfit{v}}$ is an isomorphism between $V$ and $\left\{\Theta_{\mathbfit{v}} \colon \mathbfit{v} \in V\right\}$. Therefore, $\Theta_{\mathbfit{v}}$ is essentially $\mathbfit{v}$, so vectors are linear transformations as well.
+Now, consider a vector space $V$ over $\F$. Fix some $\mathbfit{v} \in V$ and define a mapping $\Theta_{\mathbfit{v}} \colon \F \to V$ by $\Theta_{\mathbfit{v}}(a) = a\mathbfit{v}$. One may check that $\Theta_{\mathbfit{v}}$ is a linear transformation, but it can be easily verified that $\mathbfit{v} \mapsto \Theta_{\mathbfit{v}}$ is an isomorphism between $V$ and $\left\{\Theta_{\mathbfit{v}} \colon \mathbfit{v} \in V\right\}$. Therefore, $\Theta_{\mathbfit{v}}$ is essentially $\mathbfit{v}$, so vectors are linear transformations as well.
 
 Now, notice that given a linear transformation $T \colon A \to B$, it is guaranteed that every $\mathbfit{a} \in A$ as an image $f(\mathbfit{a}) \in B$, but not the other way round, i.e., there could be some $\mathbfit{b} \in B$ without a pre-image in $A$. Obviously, what we care more are those elements in $B$ which actually have pre-images in $A$.
 \begin{dfnbox}{Range}{range}
@@ -358,7 +428,7 @@ An interesting application of Theorem \ref{thm:rankNull} gives the following cor
         \begin{equation*}
             \mathrm{rank}(T) = \dim(V) - \mathrm{null}(T) = \dim(W).
         \end{equation*} 
-        Let $z_1 \colon \mathcal{F}^n \to W$ be an isomorphism for some $n \in \Z^+$. Note that there exists an isomorphism $z_2 \colon \mathcal{F}^n \to \mathrm{range}(T)$. Therefore, the mapping $z_1 \circ z_2^{-1} \colon \mathrm{range}(T) \to W$ is an isomorphism. However, $\mathrm{range}(T) \subseteq W$, which implies that $\mathrm{range}(T) = W$. This means that $T$ is surjective.
+        Let $z_1 \colon \F^n \to W$ be an isomorphism for some $n \in \Z^+$. Note that there exists an isomorphism $z_2 \colon \F^n \to \mathrm{range}(T)$. Therefore, the mapping $z_1 \circ z_2^{-1} \colon \mathrm{range}(T) \to W$ is an isomorphism. However, $\mathrm{range}(T) \subseteq W$, which implies that $\mathrm{range}(T) = W$. This means that $T$ is surjective.
         \\\\
         Suppose conversely that $T$ is surjective, then we must have $W = \mathrm{range}(T)$ and so $\mathrm{rank}(T) = \dim(W)$. Therefore, by Theorem \ref{thm:rankNull}, 
         \begin{equation*}
@@ -370,16 +440,16 @@ An interesting application of Theorem \ref{thm:rankNull} gives the following cor
 \section{Duality}
 Let $V$ and $W$ be vector spaces and define $\mathcal{L}(V, W)$ to be the set of all linear transformations from $V$ to $W$. One may check that $\mathcal{L}(V, W)$ is a vector space.
 \begin{dfnbox}{Dual Space}{dualSpace}
-    Let $V$ be a vector space over $\mathcal{F}$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\hat{V} \coloneqq \mathcal{L}(V, \mathcal{F})$. The elements of $\hat{V}$ are called {\color{red} \textbf{dual vectors}}.
+    Let $V$ be a vector space over $\F$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\widehat{V} \coloneqq \mathcal{L}(V, \F)$. The elements of $\widehat{V}$ are called {\color{red} \textbf{dual vectors}}.
 \end{dfnbox}
 \begin{notebox}
-    \textbf{Author's Note}: in almost all fields of mathematics, the conventional notation for the dual space of $V$ is $V^*$, but somehow the lecturer of this course decides (yet again) to use a confusing syntax by writing it as $\hat{V}$.
+    \textbf{Author's Note}: in almost all fields of mathematics, the conventional notation for the dual space of $V$ is $V^*$, but somehow the lecturer of this course decides (yet again) to use a confusing syntax by writing it as $\widehat{V}$.
 \end{notebox}
-An intuitive example for an element of $\hat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
+An intuitive example for an element of $\widehat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
 \begin{equation*}
     \mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i
 \end{equation*}
-for $a_1, a_2, \cdots, a_n \in \mathcal{F}$. Now, define a mapping $\zeta^i \colon V \to \mathcal{F}$ as $\zeta^i(\mathbfit{v}) = a_i$, then clearly $\zeta^i \in \hat{V}$ for $i = 1, 2, \cdots, n$.
+for $a_1, a_2, \cdots, a_n \in \F$. Now, define a mapping $\zeta^i \colon V \to \F$ as $\zeta^i(\mathbfit{v}) = a_i$, then clearly $\zeta^i \in \widehat{V}$ for $i = 1, 2, \cdots, n$.
 
 In particular, we see that
 \begin{equation*}
@@ -390,7 +460,7 @@ In particular, we see that
 \end{equation*}
 Intuitively, this means that for each $\mathbfit{v} \in V$, we have $z^{-1}(\mathbfit{v}) = \sum_{i = 1}^{n}a_i\zeta^i(\mathbfit{z}_i)$.
 \begin{dfnbox}{Dual Basis}{dualBasis}
-    Let $V$ be a vector space with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$. The {\color{red} \textbf{dual basis}} of $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is defined as the set of all $\zeta^i \in \hat{V}$ such that 
+    Let $V$ be a vector space with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$. The {\color{red} \textbf{dual basis}} of $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is defined as the set of all $\zeta^i \in \widehat{V}$ such that 
     \begin{equation*}
         \zeta^i(\mathbfit{z}_j) = \begin{cases}
             1 & \textrm{if } i = j \\
@@ -398,7 +468,7 @@ Intuitively, this means that for each $\mathbfit{v} \in V$, we have $z^{-1}(\mat
         \end{cases}.
     \end{equation*}
 \end{dfnbox}
-Let $\zeta$ be a dual basis and $\alpha \in \hat{V}$ be a linear mapping over a finite-dimensional vector space $V$ with $\dim(V) = n$. For any $\mathbfit{v} \in V$ with respect to basis $z$, define a mapping $\beta \colon V \to \mathcal{F}$ by 
+Let $\zeta$ be a dual basis and $\alpha \in \widehat{V}$ be a linear mapping over a finite-dimensional vector space $V$ with $\dim(V) = n$. For any $\mathbfit{v} \in V$ with respect to basis $z$, define a mapping $\beta \colon V \to \F$ by 
 \begin{equation*}
     \beta(\mathbfit{v}) = \left(\sum_{i = 1}^{n}\alpha(\mathbfit{z}_i)\zeta^i\right)(\mathbfit{v}).
 \end{equation*}
@@ -412,7 +482,7 @@ Since $z$ is a basis for $V$, this implies that for any $\mathbfit{v} \in V$, we
 
 Consider
 \begin{equation*}
-    \sum_{i = 1}^{n}p_i\zeta^i = 0_{\hat{V}},
+    \sum_{i = 1}^{n}p_i\zeta^i = 0_{\widehat{V}},
 \end{equation*}
 which is the zero mapping from $V$ to $\{0\}$, this means that for any $\mathbfit{v} \in V$, we have
 \begin{align*}
@@ -422,8 +492,8 @@ which is the zero mapping from $V$ to $\{0\}$, this means that for any $\mathbfi
     & = \sum_{i = 1}^{n}p_ia_i.
 \end{align*}
 However, since the $a_i$'s are arbitrary, we have $p_i = 0$ for all $i = 1, 2, \cdots, n$. Therefore, $\zeta$ is linearly independent. This means that $\zeta$ is indeed a basis. Clearly, this also implies that any finite-dimensional vector space has the same dimension as its dual space. 
-\begin{probox}{$\dim(V) = \dim\left(\hat{V}\right)$}{dualHasEqualDim}
-    Let $V$ be any finite-dimensional vector space, then $\dim(V) = \dim\left(\hat{V}\right)$.
+\begin{probox}{Dimension of Dual Space}{dualHasEqualDim}
+    Let $V$ be any finite-dimensional vector space, then $\dim(V) = \dim\left(\widehat{V}\right)$.
 \end{probox}
 Furthermore, note that for any dual vector $\phi = \sum_{i = 1}^{n}p_i\zeta^i$, we have
 \begin{equation*}
@@ -433,9 +503,9 @@ Therefore, any dual vector with respect to basis $z$ can be written as
 \begin{equation*}
     \phi = \sum_{i = 1}^{n}\phi(\mathbfit{z}_i)\zeta^i.
 \end{equation*}
-Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical basis of $\mathcal{F}^n$ to be the set of unit vectors with a single non-zero entry. Similarly, we can define the canonical basis for the dual space $\hat{\mathcal{F}^n} \coloneqq \mathcal{L}(\mathcal{F}^n, \mathcal{F})$.
+Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical basis of $\F^n$ to be the set of unit vectors with a single non-zero entry. Similarly, we can define the canonical basis for the dual space $\widehat{\F^n} \coloneqq \mathcal{L}(\F^n, \F)$.
 \begin{dfnbox}{Canonical Dual Basis}{canonicalDualBasis}
-    Write each $\mathbfit{v} \in \mathcal{F}^n$ as
+    Write each $\mathbfit{v} \in \F^n$ as
     \begin{equation*}
         \mathbfit{v} = \begin{bmatrix}
             v_1 \\
@@ -444,17 +514,17 @@ Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical bas
             v_n
         \end{bmatrix}.
     \end{equation*}
-    The {\color{red} \textbf{canonical dual basis}} of $\mathcal{F}^n$ is defined as $\left\{\epsilon^i \colon i = 1, 2, \cdots, n\right\}$ such that $\epsilon^i(\mathbfit{v}) = v_i$ for all $\mathbfit{v} \in \mathcal{F}^n$.
+    The {\color{red} \textbf{canonical dual basis}} of $\F^n$ is defined as $\left\{\epsilon^i \colon i = 1, 2, \cdots, n\right\}$ such that $\epsilon^i(\mathbfit{v}) = v_i$ for all $\mathbfit{v} \in \F^n$.
 \end{dfnbox}
-Consider any $p \in \hat{\mathcal{F}^n}$, then we can write
+Consider any $p \in \widehat{\F^n}$, then we can write
 \begin{equation*}
     p = \sum_{i = 1}^{n}q_i\epsilon^i
 \end{equation*} 
-where $q_i \in \mathcal{F}$ for $i = 1, 2, \cdots, n$ and $\epsilon^i$'s are the dual canonical basis. Recall that a basis of an $n$-dimensional vector space $V$ is actually a mapping from $\mathcal{F}^n$ to $V$, so it follows that the dual basis is in fact a mapping $\zeta \colon \hat{\mathcal{F}^n} \to \hat{V}$. We claim that this $\zeta$ is in fact just a mapping that satisfies 
+where $q_i \in \F$ for $i = 1, 2, \cdots, n$ and $\epsilon^i$'s are the dual canonical basis. Recall that a basis of an $n$-dimensional vector space $V$ is actually a mapping from $\F^n$ to $V$, so it follows that the dual basis is in fact a mapping $\zeta \colon \widehat{\F^n} \to \widehat{V}$. We claim that this $\zeta$ is in fact just a mapping that satisfies 
 \begin{equation*}
     \zeta(p)\bigl(z(\mathbfit{a})\bigr) = p(\mathbfit{a})
 \end{equation*}
-for any $p \in \hat{\mathcal{F}^n}$ and $\mathbfit{a} \in \mathcal{F}^n$. 
+for any $p \in \widehat{\F^n}$ and $\mathbfit{a} \in \F^n$. 
 
 To prove that our new definition is consistent with Definition \ref{dfn:dualBasis}, it suffices to show that $\zeta(\epsilon^i) = \zeta^i$. Notice that
 \begin{align*}
@@ -476,82 +546,82 @@ then
     & = a_i \\
     & = \zeta^i(\mathbfit{v}).
 \end{align*}
-Therefore, $\zeta(\epsilon^i) = \zeta^i$. Let $\phi \in \hat{V}$ be a mapping, then
+Therefore, $\zeta(\epsilon^i) = \zeta^i$. Let $\phi \in \widehat{V}$ be a mapping, then
 \begin{align*}
     \phi & = \sum_{i = 1}^{n}a_i\zeta^i \\
     & = \sum_{i = 1}^{n}a_i\zeta(\epsilon^i) \\
     & = \zeta\left(\sum_{i = 1}^{n}a_i\epsilon^i\right) \\
     & = \zeta(p)
 \end{align*}
-for some $p \in \hat{\mathcal{F}^n}$. Therefore, $\zeta$ is surjective. One may check that $\zeta$ is injective. Moreover, note that for $p, q \in \hat{\mathcal{F}^n}$,
+for some $p \in \widehat{\F^n}$. Therefore, $\zeta$ is surjective. One may check that $\zeta$ is injective. Moreover, note that for $p, q \in \widehat{\F^n}$,
 \begin{align*}
     \bigl(m\zeta(p) + n\zeta(q)\bigr)\bigl(z(\mathbfit{a})\bigr) & = m\zeta(p)\bigl(z(\mathbfit{a})\bigr) + n\zeta(q)\bigl(z(\mathbfit{a})\bigr) \\
     & = mp(\mathbfit{a}) + nq(\mathbfit{a}) \\
     & = (mp + nq)(\mathbfit{a}) \\
     & = \zeta(mp + nq)\bigl(z(\mathbfit{a})\bigr).
 \end{align*}
-Therefore, $\zeta$ is a linear mapping and so it is an isomorphism. Indeed, this implies that $\zeta$ is a basis for $\hat{V}$.
+Therefore, $\zeta$ is a linear mapping and so it is an isomorphism. Indeed, this implies that $\zeta$ is a basis for $\widehat{V}$.
 
 Naturally, it feels justified to define a ``dual space of the dual space'' of $V$, namely 
 \begin{equation*}
-    \hat{\hat{V}} \coloneqq \mathcal{L}\left(\hat{V}, \mathcal{F}\right) = \mathcal{L}\bigl(\mathcal{L}(V, \mathcal{F}), \mathcal{F}\bigr).
+    \widehat{\widehat{V}} \coloneqq \mathcal{L}\left(\widehat{V}, \F\right) = \mathcal{L}\bigl(\mathcal{L}(V, \F), \F\bigr).
 \end{equation*}
 We can in fact prove that this space is isomorphic to $V$ itself. 
-\begin{probox}{$\hat{\hat{V}} \cong V$}{doubleDual}
+\begin{probox}{Double Dual Space}{doubleDual}
     Let $V$ be a finite-dimensional vector space, then the double-dual space 
     \begin{equation*}
-        \hat{\hat{V}} \coloneqq \mathcal{L}\left(\hat{V}, \mathcal{F}\right) = \mathcal{L}\bigl(\mathcal{L}(V, \mathcal{F}), \mathcal{F}\bigr)
+        \widehat{\widehat{V}} \coloneqq \mathcal{L}\left(\widehat{V}, \F\right) = \mathcal{L}\bigl(\mathcal{L}(V, \F), \F\bigr)
     \end{equation*}
     is isomorphic to $V$.
     \tcblower
     \begin{proof}
-        Define a mapping $K \colon V \to \hat{\hat{V}}$ by $K(\mathbfit{v}) = f$ where $f \colon \hat{V} \to V$ is such that $f(\alpha) = \alpha(\mathbfit{v})$. It suffices to prove that $K$ is an isomorphism. First, note that for any $\mathbfit{u}, \mathbfit{v} \in V$ and any $c \in \mathcal{F}$,
+        Define a mapping $K \colon V \to \widehat{\widehat{V}}$ by $K(\mathbfit{v}) = f$ where $f \colon \widehat{V} \to V$ is such that $f(\alpha) = \alpha(\mathbfit{v})$. It suffices to prove that $K$ is an isomorphism. First, note that for any $\mathbfit{u}, \mathbfit{v} \in V$ and any $c \in \F$,
         \begin{align*}
             K(c\mathbfit{v} + \mathbfit{u})(\alpha) & = \alpha(c\mathbfit{v} + \mathbfit{u}) \\
             & = c\alpha(\mathbfit{v}) + \alpha(\mathbfit{u}) \\
             & = cK(\mathbfit{v})(\alpha) + K(\mathbfit{u})(\alpha) \\
             & = \bigl(cK(\mathbfit{v}) + K(\mathbfit{u})\bigr)(\alpha)
         \end{align*}
-        for all $\alpha \in \hat{V}$. Therefore, $K$ is a homomorphism. Let $K(\mathbfit{v}) = 0_{\hat{V} \to V}$ be the zero mapping, then 
+        for all $\alpha \in \widehat{V}$. Therefore, $K$ is a homomorphism. Let $K(\mathbfit{v}) = 0_{\widehat{V} \to V}$ be the zero mapping, then 
         \begin{equation*}
             K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v}) = 0
         \end{equation*}
-        for all $\alpha \in \hat{V}$. This implies that $\mathbfit{v} = \zero$, and so $\mathrm{null}(K) = 0$ since $V$ is finite-dimensional. By Proposition \ref{pro:injectTest}, $K$ is injective, and so by Corollary \ref{cor:bijectiveReflexiveMap}, $K$ is bijective. Therefore, $K$ is an isomorphism and so $\hat{\hat{V}} \cong V$.
+        for all $\alpha \in \widehat{V}$. This implies that $\mathbfit{v} = \zero$, and so $\mathrm{null}(K) = 0$ since $V$ is finite-dimensional. By Proposition \ref{pro:injectTest}, $K$ is injective, and so by Corollary \ref{cor:bijectiveReflexiveMap}, $K$ is bijective. Therefore, $K$ is an isomorphism and so $\widehat{\widehat{V}} \cong V$.
     \end{proof}
 \end{probox}
-Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\hat{V}$ to $\mathcal{F}$. We can verify that $\mathbfit{v}$ is linear, because
+Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\widehat{V}$ to $\F$. We can verify that $\mathbfit{v}$ is linear, because
 \begin{align*}
     \mathbfit{v}(m\alpha + n\beta) & = m\alpha(\mathbfit{v}) + n\beta(\mathbfit{v}) \\
     & = m\mathbfit{v}(\alpha) + n\mathbfit{v}(\beta).
 \end{align*}
-Therefore, we can in some sense view a vector space and its dual space the \textit{dual} of each other. Consider a mapping $T \colon V \to V$ for some vector space $V$, the duality between $V$ and~$\hat{V}$ tempts us to think that there exists some mapping $S \colon \hat{V} \colon \hat{V}$ with a certain correspondence to $T$.
+Therefore, we can in some sense view a vector space and its dual space the \textit{dual} of each other. Consider a mapping $T \colon V \to V$ for some vector space $V$, the duality between $V$ and~$\widehat{V}$ tempts us to think that there exists some mapping $S \colon \widehat{V} \colon \widehat{V}$ with a certain correspondence to $T$.
 \begin{dfnbox}{Transpose}{tranpose}
-    Let $T \colon V \to V$ be a linear transformation. The {\color{red} \textbf{transpose}} of $T$ is defined as the mapping~$\hat{T} \colon \hat{V} \to \hat{V}$ such that 
+    Let $T \colon V \to V$ be a linear transformation. The {\color{red} \textbf{transpose}} of $T$ is defined as the mapping~$\widehat{T} \colon \widehat{V} \to \widehat{V}$ such that 
     \begin{equation*}
-        \hat{T}(\alpha)(\mathbfit{v}) = \alpha\bigl(T(\mathbfit{v})\bigr)
+        \widehat{T}(\alpha)(\mathbfit{v}) = \alpha\bigl(T(\mathbfit{v})\bigr)
     \end{equation*}
-    for any $\alpha \in \hat{V}$. 
+    for any $\alpha \in \widehat{V}$. 
 \end{dfnbox}
-We can verify that the transpose is still linear, because for any $\alpha, \beta \in \hat{V}$ and any $c \in \mathcal{F}$, we have 
+We can verify that the transpose is still linear, because for any $\alpha, \beta \in \widehat{V}$ and any $c \in \F$, we have 
 \begin{align*}
-    \hat{T}(c\alpha + \beta)(\mathbfit{v}) & = (c\alpha + \beta)\bigl(T(\mathbfit{v})\bigr) \\
+    \widehat{T}(c\alpha + \beta)(\mathbfit{v}) & = (c\alpha + \beta)\bigl(T(\mathbfit{v})\bigr) \\
     & = c\alpha\bigl(T(\mathbfit{v})\bigr) + \beta\bigl(T(\mathbfit{v})\bigr) \\
-    & = c\hat{T}(\alpha)(\mathbfit{v}) + \hat{T}(\beta)(\mathbfit{v}) \\
-    & = \left(c\hat{T}(\alpha) + \hat{T}(\beta)\right)(\mathbfit{v})
+    & = c\widehat{T}(\alpha)(\mathbfit{v}) + \widehat{T}(\beta)(\mathbfit{v}) \\
+    & = \left(c\widehat{T}(\alpha) + \widehat{T}(\beta)\right)(\mathbfit{v})
 \end{align*}
-for all $\mathbfit{v} \in V$, which implies that $\hat{T}(c\alpha + \beta) = c\hat{T}(\alpha) + \hat{T}(\beta)$.
+for all $\mathbfit{v} \in V$, which implies that $\widehat{T}(c\alpha + \beta) = c\widehat{T}(\alpha) + \widehat{T}(\beta)$.
 
 In fact, the very action of taking the transpose is a linear transformation!
 \begin{probox}{Linearity of Transposition}{linearTranspose}
-    Let $\tau$ be a mapping over $\mathcal{L}(V, V)$ for some finite-dimensional vector space $V$ such that $\tau(T) = \hat{T}$, then $\tau$ is a linear transformation.
+    Let $\tau$ be a mapping over $\mathcal{L}(V, V)$ for some finite-dimensional vector space $V$ such that $\tau(T) = \widehat{T}$, then $\tau$ is a linear transformation.
     \tcblower
     \begin{proof}
-        Take any $\alpha, \beta \in \mathcal{V, V}$ and any $c \in \mathcal{F}$. For any $\gamma \in \mathcal{L}(V, V)$ and any $\mathbfit{v} \in V$, consider 
+        Take any $\alpha, \beta \in \mathcal{V, V}$ and any $c \in \F$. For any $\gamma \in \mathcal{L}(V, V)$ and any $\mathbfit{v} \in V$, consider 
         \begin{align*}
             \tau(c\alpha + \beta)(\gamma)(\mathbfit{v}) & = \left(\widehat{c\alpha + \beta}\right)(\gamma)(\mathbfit{v}) \\
             & = \gamma\bigl((c\alpha + \beta)(\mathbfit{v})\bigr) \\
             & = c\gamma\bigl(\alpha(\mathbfit{v})\bigr) + \gamma\bigl(\beta(\mathbfit{v})\bigr) \\
-            & = c\hat{\alpha}(\gamma)(\mathbfit{v}) + \hat{\beta}(\gamma)(\mathbfit{v}) \\
+            & = c\widehat{\alpha}(\gamma)(\mathbfit{v}) + \widehat{\beta}(\gamma)(\mathbfit{v}) \\
             & = c\tau(\alpha)(\gamma)(\mathbfit{v}) + \tau(\beta)(\gamma)(\mathbfit{v}).
         \end{align*}
         Since $\mathbfit{v}$ is arbitrary, this means that $\tau(c\alpha + \beta)(\gamma) = c\tau(\alpha)(\gamma) + \tau(\beta)(\gamma)$ for all $\gamma \in \mathcal{L}(V, V)$, and so $\tau(c\alpha + \beta) = c\tau(\alpha) + \tau(\beta)$. Therefore, $\tau$ is a linear transformation.
@@ -559,8 +629,9 @@ In fact, the very action of taking the transpose is a linear transformation!
 \end{probox}
 The above is essentially saying that the transpose of a linear combination equals the linear combination of the transposes of each terms.
 \section{Tensor Product}
-\begin{dfnbox}{Tensor Product}{tensorProd}
-    Let $V$ be a vector space with the dual space $\hat{V}$. For any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$, their {\color{red} \textbf{tensor product}} is defined as a mapping $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ such that
+An important concept related to dual spaces is the \textit{tensor product}. It is sometimes referred to as an operation and other times as a space itself.
+\begin{dfnbox}{Tensor Product between Vector Spaces and Their Dual}{tensorProd}
+    Let $V$ be a vector space with the dual space $\widehat{V}$. For any $\mathbfit{v} \in V$ and $\alpha \in \widehat{V}$, their {\color{red} \textbf{tensor product}} is defined as a mapping $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ such that
     \begin{equation*}
         (\mathbfit{v} \otimes \alpha)(\mathbfit{u}) = \alpha(\mathbfit{u})\mathbfit{v}.
     \end{equation*}
@@ -570,16 +641,16 @@ We can see that $\mathbfit{v} \otimes \alpha$ is linear with respect to both $\m
     \bigl((\mathbfit{u + v}) \otimes \alpha\bigr)(\mathbfit{w}) & = \alpha(\mathbfit{w})(\mathbfit{u + v}) = \alpha(\mathbfit{w})\mathbfit{u} + \alpha(\mathbfit{w})\mathbfit{v} = (\mathbfit{u} \otimes \alpha + \mathbfit{v} \otimes \alpha)(\mathbfit{v}), \\
     \bigl(\mathbfit{v} \otimes (\alpha + \beta)\bigr)(\mathbfit{w}) & = (\alpha + \beta)(\mathbfit{w})\mathbfit{v} = \alpha(\mathbfit{w})\mathbfit{v} + \beta(\mathbfit{w})\mathbfit{v} = (\mathbfit{v} \otimes \alpha + \mathbfit{v} \otimes \beta)(\mathbfit{w}).
 \end{align*}
-In particular, let $\beta \in \hat{V}$, then clearly $\beta \circ (\mathbfit{v} \otimes \alpha) \in \hat{V}$. Define a mapping $T$ over $\hat{V}$ by
+In particular, let $\beta \in \widehat{V}$, then clearly $\beta \circ (\mathbfit{v} \otimes \alpha) \in \widehat{V}$. Define a mapping $T$ over $\widehat{V}$ by
 \begin{equation*}
     T(\beta) = \beta \circ (\mathbfit{v} \otimes \alpha),
 \end{equation*}
-then we can see that $T \in \mathcal{L}\left(\hat{V}, \hat{V}\right)$. In fact, for any $\mathbfit{u} \in V$, consider
+then we can see that $T \in \mathcal{L}\left(\widehat{V}, \widehat{V}\right)$. In fact, for any $\mathbfit{u} \in V$, consider
 \begin{align*}
     T(\beta)(\mathbfit{u}) & = \bigl(\beta \circ (\mathbfit{v} \otimes \alpha)\bigr)(\mathbfit{u}) \\
     & = \beta\bigl((\mathbfit{v} \otimes \alpha)(\mathbfit{u})\bigr).
 \end{align*}
-By Definition \ref{dfn:tranpose}, $T$ is the transpose of $\mathbfit{v} \otimes \alpha$ for any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$. Furthermore, note that $\alpha(\mathbfit{u}) \in \mathcal{F}$, we see that
+By Definition \ref{dfn:tranpose}, $T$ is the transpose of $\mathbfit{v} \otimes \alpha$ for any $\mathbfit{v} \in V$ and $\alpha \in \widehat{V}$. Furthermore, note that $\alpha(\mathbfit{u}) \in \F$, we see that
 \begin{align*}
     T(\beta)(\mathbfit{u}) & = \beta\bigl((\mathbfit{v} \otimes \alpha)(\mathbfit{u})\bigr) \\
     & = \beta\bigl(\alpha(\mathbfit{u})\mathbfit{v}\bigr) \\
@@ -630,7 +701,7 @@ Let $T \in \mathcal{L}(V, V)$. Fix a basic vector $\mathbfit{z}_j$ of $V$ with d
 \end{equation*}
 \section{Matrix}
 \begin{dfnbox}{Matrix}{matrix}
-    An $n \times m$ {\color{red} \textbf{matrix}} is defined as an $m$-tuple of column vectors in $\mathcal{F}^n$.
+    An $n \times m$ {\color{red} \textbf{matrix}} is defined as an $m$-tuple of column vectors in $\F^n$.
 \end{dfnbox}
 Clearly, the set of all $n \times m$ matrices for any $m, n \in \N$ is a vector space. We denote this vector space as $\mathcal{M}_{n \times m}$. However, as compared to other vectors, we can also define the notion of multiplication between some matrices.
 \begin{dfnbox}{Matrix Multiplication}{matMult}
@@ -658,28 +729,28 @@ It is not difficult to see that from Proposition \ref{pro:tenserProdBasis}, the 
 \end{notebox}
 Recall that we have defined transpose without using matrices. Now let us verify that our definition stays consistent with the elementary definition of matrix transposition.
 \begin{probox}{Matrix Representation of Transpose Mappings}{matrixTranspose}
-    Let $T \colon V \to V$ be a linear mapping with matrix representation $\mathbfit{T}$. Let $\hat{T}$ be the transpose of $T$, then the matrix representation of $\hat{T}$ is such that $\hat{T}^{i}_j = T^j_i$.
+    Let $T \colon V \to V$ be a linear mapping with matrix representation $\mathbfit{T}$. Let $\widehat{T}$ be the transpose of $T$, then the matrix representation of $\widehat{T}$ is such that $\widehat{T}^{i}_j = T^j_i$.
     \tcblower
     \begin{proof}
-        Define $K \colon V \to \hat{\hat{V}}$ by $K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v})$, then $K(\mathbfit{v}) = \alpha \mapsto \alpha(\mathbfit{v})$. Consider the following lemma:
+        Define $K \colon V \to \widehat{\widehat{V}}$ by $K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v})$, then $K(\mathbfit{v}) = \alpha \mapsto \alpha(\mathbfit{v})$. Consider the following lemma:
         \begin{lembox}{Transpose of Tensor Products}{tensorTrans}
-            Let $V$ be a finite-dimensional space. For any $\mathbfit{v} \in V$ and $\alpha \in \hat{V}$, we have 
+            Let $V$ be a finite-dimensional space. For any $\mathbfit{v} \in V$ and $\alpha \in \widehat{V}$, we have 
             \begin{equation*}
                 \widehat{\mathbfit{v} \otimes \alpha} = \alpha \otimes K(\mathbfit{v}).
             \end{equation*}
             \tcblower
             \begin{proof}
-                Let $f \colon \mathbfit{v} \otimes \alpha$, for any $\beta \in \hat{V}$ and any $\mathbfit{w} \in V$, consider 
+                Let $f \colon \mathbfit{v} \otimes \alpha$, for any $\beta \in \widehat{V}$ and any $\mathbfit{w} \in V$, consider 
                 \begin{align*}
-                    \hat{f}(\beta)(\mathbfit{w}) & = \beta\bigl(f(\mathbfit{w})\bigr) \\
+                    \widehat{f}(\beta)(\mathbfit{w}) & = \beta\bigl(f(\mathbfit{w})\bigr) \\
                     & = \beta\bigl(\alpha(\mathbfit{w})\mathbfit{v}\bigr) \\
                     & = \alpha(\mathbfit{w})\beta(\mathbfit{v}), \\
                     \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)(\mathbfit{w}) & = \bigl(K(\mathbfit{v})(\beta)\alpha\bigr)(\mathbfit{w}) \\
                     & = \alpha(\mathbfit{w})\beta(\mathbfit{v}).
                 \end{align*}     
-                Therefore, $\hat{f}(\beta) =  \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)$ for all $\beta \in \hat{V}$, which implies that 
+                Therefore, $\widehat{f}(\beta) =  \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)$ for all $\beta \in \widehat{V}$, which implies that 
                 \begin{equation*}
-                    \mathbfit{v} \otimes \alpha = \hat{f} = \alpha \otimes K(\mathbfit{v}).
+                    \mathbfit{v} \otimes \alpha = \widehat{f} = \alpha \otimes K(\mathbfit{v}).
                 \end{equation*}
             \end{proof}
         \end{lembox}
@@ -690,26 +761,26 @@ Recall that we have defined transpose without using matrices. Now let us verify 
                 0 & \textrm{otherwise}
             \end{cases}.
         \end{equation*}
-        Therefore, all of the $K(\mathbfit{z}_i)$'s forms a dual basis for $\hat{V}$. By Proposition \ref{pro:tenserProdBasis} and Definition \ref{dfn:linTransMat}, we know that 
+        Therefore, all of the $K(\mathbfit{z}_i)$'s forms a dual basis for $\widehat{V}$. By Proposition \ref{pro:tenserProdBasis} and Definition \ref{dfn:linTransMat}, we know that 
         \begin{equation*}
-            \hat{T} = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\hat{T}^i_j\left(\zeta^i \otimes K(\mathbfit{z}_j)\right), \qquad T = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\mathbfit{z}_j \otimes \zeta^i\right).
+            \widehat{T} = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\widehat{T}^i_j\left(\zeta^i \otimes K(\mathbfit{z}_j)\right), \qquad T = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\mathbfit{z}_j \otimes \zeta^i\right).
         \end{equation*}
         By Proposition \ref{pro:linearTranspose}, we know that 
         \begin{equation*}
-            \hat{T} = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\widehat{\mathbfit{z}_j \otimes \zeta^i}\right).
+            \widehat{T} = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\widehat{\mathbfit{z}_j \otimes \zeta^i}\right).
         \end{equation*}
-        By Lemma \ref{lem:tensorTrans}, $\widehat{\mathbfit{z}_j \otimes \zeta^i} = \zeta^i \otimes K(\mathbfit{z}_j)$, so $\hat{T}^i_j = T^j_i$. 
+        By Lemma \ref{lem:tensorTrans}, $\widehat{\mathbfit{z}_j \otimes \zeta^i} = \zeta^i \otimes K(\mathbfit{z}_j)$, so $\widehat{T}^i_j = T^j_i$. 
     \end{proof}
 \end{probox}
 Let $V$ be a finite-dimensional vector space with $\dim(V) = n$ and let $\mathcal{M}_{n \times n}$ be the vector space of all $n \times n$ matrices. Define $M_z \colon \mathcal{L}(V, V) \to \mathcal{M}_{n \times n}$ that maps each $T \in \mathcal{L}(V, V)$ to its matrix representation $\mathbfit{T}$. Intuitively, it is an isomorphism.
 
 \begin{notebox}
     \begin{remark}
-        Note that actually $\mathcal{M}_{n \times n} \cong \mathcal{F}^{n^2}$ and that a basis for $\mathcal{L}(V, V)$ is just an isomorphism $z \colon \mathcal{F}^{n^2} \to \mathcal{L}(V, V)$, so in some sense $M_z$ is just $z^{-1}$.
+        Note that actually $\mathcal{M}_{n \times n} \cong \F^{n^2}$ and that a basis for $\mathcal{L}(V, V)$ is just an isomorphism $z \colon \F^{n^2} \to \mathcal{L}(V, V)$, so in some sense $M_z$ is just $z^{-1}$.
     \end{remark}
 \end{notebox}
 
-Consider $\mathcal{L}(\mathcal{F}^n, \mathcal{F}^n)$, it is clear that every $T \in \mathcal{L}(\mathcal{F}^n, \mathcal{F}^n)$ can be expressed as
+Consider $\mathcal{L}(\F^n, \F^n)$, it is clear that every $T \in \mathcal{L}(\F^n, \F^n)$ can be expressed as
 \begin{equation*}
     T = \sum_{i = 1}^{n}\sum_{j = 1}^{n}M_e(T)_i^j\left(\mathbfit{e}_i \otimes \epsilon^i\right).
 \end{equation*}
@@ -717,7 +788,7 @@ When the context is clear, we can be a bit sloppy and regard $M_z$ just as $\mat
 
 We can augment $\mathcal{L}(V, V)$ with the $\circ$ operation. For any $S, T \in \mathcal{L}(V, V)$, clearly $S \circ T \in \mathcal{L}(V, V)$, so $\mathcal{L}(V, V)$ is an algebra. This means that it is justified to write $S \circ T$ as a product $ST$.
 
-Let $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \hat{V}$, for any $\mathbfit{w} \in V$, consider
+Let $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \widehat{V}$, for any $\mathbfit{w} \in V$, consider
 \begin{align*}
     \bigl((\mathbfit{u} \otimes \alpha) \circ (\mathbfit{v} \otimes \beta)\bigr)(\mathbfit{w}) & = (\mathbfit{u} \otimes \alpha)\bigl(\beta(\mathbfit{w})\mathbfit{v}\bigr) \\
     & = \alpha\bigl(\beta(\mathbfit{w})\mathbfit{v}\bigr)\mathbfit{u} \\
@@ -750,9 +821,7 @@ Intuitively, the matrix of a composite map can be obtained via matrix multiplica
     \end{proof}
 \end{probox}
 \section{Change of Basis}\label{sectionChangeBasis}
-Let $z$ be a basis for a vector space $V$. For any $\mathbfit{v} \in V$, define $\mathbfit{v}^*_z \coloneqq z^{-1}(\mathbfit{v})$. Clearly $\mathbfit{v}^*_z \in \mathcal{F}^n$. We can view $\mathbfit{v}^*_z$ as the ``coordinates'' of $\mathbfit{v}$ with respect to $z$.
-
-Suppose $\alpha \in \hat{V}$, we define some $\alpha^*_z \in \hat{\mathcal{F}^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$. In particular, suppose the $i$-th component of $\alpha$ is $\alpha_i$, we notice that
+Let $z$ be a basis for a vector space $V$. For any $\mathbfit{v} \in V$, define $\mathbfit{v}^*_z \coloneqq z^{-1}(\mathbfit{v})$. Clearly $\mathbfit{v}^*_z \in \F^n$. We can view $\mathbfit{v}^*_z$ as the ``coordinates'' of $\mathbfit{v}$ with respect to $z$. Suppose $\alpha \in \widehat{V}$, we define some $\alpha^*_z \in \widehat{\F^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$. In particular, suppose the $i$-th component of $\alpha$ is $\alpha_i$, we notice that
 \begin{equation*}
     \alpha^*_z(\mathbfit{e}_i) = \alpha\bigl(z(\mathbfit{e}_i)\bigr) = \alpha(\mathbfit{z}_i) = \alpha_i.
 \end{equation*}
@@ -773,7 +842,7 @@ Note that if $\mathbfit{u} = T(\mathbfit{v})$ and $z(\mathbfit{a}) = \mathbfit{v
 
 Let $z, y$ be bases for some finite-dimensional vector space $V$. Define a mapping
 \begin{equation*}
-    P \coloneqq z^{-1} \circ y \in \mathcal{L}\left(\mathcal{F}^n, \mathcal{F}^n\right),
+    P \coloneqq z^{-1} \circ y \in \mathcal{L}\left(\F^n, \F^n\right),
 \end{equation*}
 then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\mathbfit{b})$, clearly $\mathbfit{a} = P(\mathbfit{b})$. Note that $y = z \circ P$, so
 \begin{align*}
@@ -781,9 +850,75 @@ then if $\mathbfit{v} \in V$ is such that $\mathbfit{v} = z(\mathbfit{a}) = y(\m
     & = z\bigl(P(\mathbfit{e}_i)\bigr) \\
     & = \sum_{k = 1}^{n}M_z(P)^k_i\mathbfit{z}_k.
 \end{align*} 
-This means that we can obtain the $i$-th column of $M_z(P)$ by expressing $\mathbfit{y}_i$ in terms of the $\mathbfit{z}_k$'s and fill the coefficients into the column.
-
-Let $\mathbfit{v} \in V$ be a vector with coordinate vector $\mathbfit{v}_y^* \in \mathcal{F}^n$ such that $y(\mathbfit{v}_y^*) = \mathbfit{v}$, then 
+This means that we can obtain the $i$-th column of $M_z(P)$ by expressing $\mathbfit{y}_i$ in terms of the $\mathbfit{z}_k$'s and fill the coefficients into the column. In fact, this can be summarised into the following:
+\begin{probox}{Conversion between Different Bases}{convertBasis}
+    Let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for some vector space $V$, then the set $\left\{\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right\}$ is a basis for $V$ if and only if there exists some non-singular matrix $\mathbfit{P}$ such that 
+    \begin{equation*}
+        \begin{bmatrix}
+            \mathbfit{y}_1 & \mathbfit{y}_2 & \cdots & \mathbfit{y}_n
+        \end{bmatrix} = \begin{bmatrix}
+            \mathbfit{z}_1 & \mathbfit{z}_2 & \cdots & \mathbfit{z}_n
+        \end{bmatrix}\mathbfit{P}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\left\{\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right\}$ be a basis for $V$. Since $\mathbfit{y}_i \in V$, we have 
+        \begin{equation*}
+            \mathbfit{y}_i = \sum_{i = 1}^{n}P^{i}_{j}\mathbfit{z}_i.
+        \end{equation*}
+        Define 
+        \begin{equation*}
+            \mathbfit{p}_j \coloneqq \begin{bmatrix}
+                P^1_j \\
+                P^2_j \\
+                \vdots \\
+                P^n_j
+            \end{bmatrix}, \qquad \mathbfit{P} \coloneqq \begin{bmatrix}
+                \mathbfit{p}_1 & \mathbfit{p}_2 & \cdots & \mathbfit{p}_n
+            \end{bmatrix}
+        \end{equation*}
+        then clearly, 
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{y}_1 & \mathbfit{y}_2 & \cdots & \mathbfit{y}_n
+            \end{bmatrix} = \begin{bmatrix}
+                \mathbfit{z}_1 & \mathbfit{z}_2 & \cdots & \mathbfit{z}_n
+            \end{bmatrix}\mathbfit{P}.
+        \end{equation*}
+        Similarly, since $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is also a basis, we can find some matrix $\mathbfit{Q}$ such that 
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{z}_1 & \mathbfit{z}_2 & \cdots & \mathbfit{z}_n
+            \end{bmatrix} = \begin{bmatrix}
+                \mathbfit{y}_1 & \mathbfit{y}_2 & \cdots & \mathbfit{y}_n
+            \end{bmatrix}\mathbfit{Q}.
+        \end{equation*}
+        However, this means that 
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{y}_1 & \mathbfit{y}_2 & \cdots & \mathbfit{y}_n
+            \end{bmatrix} = \begin{bmatrix}
+                \mathbfit{y}_1 & \mathbfit{y}_2 & \cdots & \mathbfit{y}_n
+            \end{bmatrix}\mathbfit{QP},
+        \end{equation*}
+        so clearly $\mathbfit{P}$ has an inverse $\mathbfit{Q}$.
+        \\\\
+        Suppose conversely that there is some non-singular matrix $\mathbfit{P}$ such that 
+        \begin{equation*}
+            \begin{bmatrix}
+                \mathbfit{y}_1 & \mathbfit{y}_2 & \cdots & \mathbfit{y}_n
+            \end{bmatrix} = \begin{bmatrix}
+                \mathbfit{z}_1 & \mathbfit{z}_2 & \cdots & \mathbfit{z}_n
+            \end{bmatrix}\mathbfit{P}.
+        \end{equation*}
+        Let $a_1, a_2, \cdots, a_n$ be scalars such that $\sum_{i = 1}^{n}a_i\mathbfit{y}_i = \zero$, then 
+        \begin{equation*}
+            \sum_{i = 1}^{n}\sum_{j = 1}^{n}a_iP^j_i\mathbfit{z}_j = \zero.
+        \end{equation*}
+        Therefore, $a_iP^j_i = 0$ for every $i, j$. However, $\mathbfit{P}$ is non-singular, so for any fixed $i$, not all $P^j_i$'s are zero. Therefore, $a_i = 0$ for all $i = 1, 2, \cdots, n$. This implies that $\left\{\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right\}$ is a set of $n$ linearly independent vectors and so it must be a basis for $V$.
+    \end{proof}
+\end{probox}
+Let $\mathbfit{v} \in V$ be a vector with coordinate vector $\mathbfit{v}_y^* \in \F^n$ such that $y(\mathbfit{v}_y^*) = \mathbfit{v}$, then 
 \begin{equation*}
     \mathbfit{v}^*_y = y^{-1}(\mathbfit{v}) = \left(y^{-1} \circ z\right)\left(z^{-1}(\mathbfit{v})\right) = P^{-1}\left(\mathbfit{v}^*_z\right).
 \end{equation*}
@@ -795,14 +930,15 @@ Combining everything, we have
     \end{equation*}
     $\mathbfit{P}$ is called a {\color{red} \textbf{change of basis matrix}}.
 \end{dfnbox}
-\section{Jordan Matrix}
+\chapter{Operators}
+\section{Eigenspaces}
 Since there are infinitely many linear transformations between two vectors spaces, it is not of much help to study each one of them individually. Instead, it is useful to consider categorising all linear transformations into different families according to some well-defined properties.
 \begin{dfnbox}{Operator}{operator}
     A linear transformation $T \colon V \to V$ is called an {\color{red} \textbf{operator}} on $V$.
 \end{dfnbox}
 Let us recall the notion of eigenvectors. In the old-fashioned way, we define a non-zero vector $\mathbfit{v}$ to be an eigenvector if there is some scalar $\lambda$ such that $\mathbfit{Av} = \lambda\mathbfit{v}$. We can see that the left-multiplication by $\mathbfit{A}$ actually corresponds to a linear transformation from a vector space to itself, so we can re-write this definition in terms of linear transformations.
 \begin{dfnbox}{Eigenvector and Eigenvalue}{eigenvec}
-    Let $T \colon V \to V$ be an operator on a finite-dimensional vector space $V$ over $\mathcal{F}$. A vector~$\mathbfit{v} \in V$ is called an {\color{red} \textbf{eigenvector}} of $T$ if $T(\mathbfit{v}) = \lambda\mathbfit{v}$ for some $\lambda \in \mathcal{F}$, which is known as the {\color{red} \textbf{eigenvalue}} associated with $\mathbfit{v}$.
+    Let $T \colon V \to V$ be an operator on a finite-dimensional vector space $V$ over $\F$. A vector~$\mathbfit{v} \in V$ is called an {\color{red} \textbf{eigenvector}} of $T$ if $T(\mathbfit{v}) = \lambda\mathbfit{v}$ for some $\lambda \in \F$, which is known as the {\color{red} \textbf{eigenvalue}} associated with $\mathbfit{v}$.
 \end{dfnbox}
 Note that the operator $T$ is a well-defined function, so for every eigenvector, its associated eigenvalue is unique. The uniqueness of eigenvalues guarantees the following contrapositive statement:
 \begin{probox}{Uniqueness of Eigenvalue}{uniqueEigenval}
@@ -816,9 +952,9 @@ Note that the operator $T$ is a well-defined function, so for every eigenvector,
         so $\mu = \lambda$.
     \end{proof}
 \end{probox}
-However, the converse is not true, because if $T(\mathbfit{v}) = \lambda\mathbfit{v}$, then $T(\mu\mathbfit{v}) = \lambda(\mu\mathbfit{v})$ for all $\mu \in \mathcal{F}$. In fact, two linearly independent vectors can have the same eigenvalue. A silly example: for any finite-dimensional space $V$, consider the identity operator $\mathrm{id}_V$. Clearly, every vector in $V$ is an eigenvector with the associated eigenvalue of~$1$.
+However, the converse is not true, because if $T(\mathbfit{v}) = \lambda\mathbfit{v}$, then $T(\mu\mathbfit{v}) = \lambda(\mu\mathbfit{v})$ for all $\mu \in \F$. In fact, two linearly independent vectors can have the same eigenvalue. A silly example: for any finite-dimensional space $V$, consider the identity operator $\mathrm{id}_V$. Clearly, every vector in $V$ is an eigenvector with the associated eigenvalue of~$1$.
 \begin{dfnbox}{Eigenspace}{eigenspace}
-    Let $T$ be an operator on a finite-dimensional vector space $V$ over $\mathcal{F}$. For every eigenvalue $\lambda \in \mathcal{F}$ associated to some vector in $V$, the {\color{red} \textbf{eigenspace}} associated with $\lambda$ is 
+    Let $T$ be an operator on a finite-dimensional vector space $V$ over $\F$. For every eigenvalue $\lambda \in \F$ associated to some vector in $V$, the {\color{red} \textbf{eigenspace}} associated with $\lambda$ is 
     \begin{equation*}
         E_\lambda \coloneqq \left\{\mathbfit{v} \in V \colon T(\mathbfit{v}) = \lambda\mathbfit{v}\right\}.
     \end{equation*}
@@ -845,7 +981,7 @@ One can easily verify that every eigenspace is a subspace. Intuitively, eigenspa
         Since $\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{m}$ are linearly independent, this implies that $\alpha_i(\lambda_i - \lambda_{m + 1}) = 0$ for all $i = 1, 2, \cdots, m$. Note that there exists some integer $j \in [1, m]$ such that $\alpha_j \neq 0$, so $\lambda_j = \lambda_{m + 1}$, which means that $\lambda_1, \lambda_2, \cdots, \lambda_{m + 1}$ are not distinct eigenvalues.
     \end{proof}
 \end{probox}
-Proposition \ref{pro:liEigenspace} reveals an important fact that any finite-dimensional vector space has finitely many eigenvalues. In fact, for any $V \cong \mathcal{F}^n$, any linearly independent set contains at most $n$ distinct vectors, so it means that $V$ can have at most $\dim(V)$ different eigenvalues.
+Proposition \ref{pro:liEigenspace} reveals an important fact that any finite-dimensional vector space has finitely many eigenvalues. In fact, for any $V \cong \F^n$, any linearly independent set contains at most $n$ distinct vectors, so it means that $V$ can have at most $\dim(V)$ different eigenvalues.
 
 The next natural question is: given any operator on a finite-dimensional vector space, does the operator always has an eigenvector? By instinct, one may answer ``no'' because it seems that the rotation transformation in $\R^2$, namely
 \begin{equation*}
@@ -858,16 +994,16 @@ does not have any eigenvector because there is no vector in $\R^2$ being mapped 
         \sin\theta & \cos\theta
     \end{bmatrix}\begin{bmatrix}
         1 \\
-        -i
+        -\im
     \end{bmatrix} = \begin{bmatrix}
-        \cos\theta + i\sin\theta \\
-        -i(\cos\theta + i\sin\theta)
+        \cos\theta + \im\sin\theta \\
+        -\im(\cos\theta + \im\sin\theta)
     \end{bmatrix} = \begin{bmatrix}
-        \mathrm{e}^{i\theta} \\
-        -i\mathrm{e}^{i\theta}
-    \end{bmatrix} = \mathrm{e}^{i\theta}\begin{bmatrix}
+        \mathrm{e}^{\im\theta} \\
+        -\im\mathrm{e}^{\im\theta}
+    \end{bmatrix} = \mathrm{e}^{\im\theta}\begin{bmatrix}
         1 \\
-        -i
+        -\im
     \end{bmatrix}.
 \end{equation*}
 Therefore, it is important to note that the eigenvalues and eigenvectors of a real vector space might not be real! The following proposition states this result rigorously:
@@ -886,6 +1022,7 @@ Therefore, it is important to note that the eigenvalues and eigenvectors of a re
         for some $a_0, a_1, \cdots, a_n \in \C$. Note that not all of the $(T - a_i\mathrm{id}_V)$'s are injective, because otherwise $\mathbfit{v} = \zero$ by Proposition \ref{pro:injectTest}. Therefore, there is some $T - a_j\mathrm{id}_V$ which is not injective. This means that there exists a non-zero vector $\mathbfit{w} \in V$ such that $(T - a_j\mathrm{id}_V)(\mathbfit{w}) = \zero$, but this implies that $T(\mathbfit{w}) = a_j\mathbfit{w}$, so $a_j$ is an eigenvalue of $T$ associated with $\mathbfit{w}$.
     \end{proof}
 \end{probox}
+\section{Diagonalisation}
 To better classify operators, we consider a special type of matrices known as \textit{triangular matrices}.
 \begin{dfnbox}{Upper Triangular Matrix}{upTri}
     A matrix $\mathbfit{M}$ is called {\color{red} \textbf{upper triangular}} if $M^i_j = 0$ whenever $i > j$.
@@ -904,7 +1041,7 @@ and so
 \end{equation*}
 Therefore, $\lambda$ is also an eigenvalue of $\mathbfit{B}$ with associated eigenvector $\mathbfit{Px} \neq \zero$ (because $\mathbfit{P} \neq \zero$). This implies that similar matrices always have the same eigenvalues.
 
-Now, let $T$ be any operator on $V$ and $z \colon \mathcal{F}^n \to V$ be a basis, then we know that the operator $T^*_z \coloneqq z^{-1} \circ T \circ z$ on $\mathcal{F}^n$ has the same eigenvalues as $T$. Notice also that if $T$ satisfies the property that $T(\mathbfit{t}_i)$ can be expressed as a linear combination of the $\mathbfit{t}_j$'s for all $j \leq i$, then so does $T^*_t$. However, as we have discussed before, the matrix representation of $T^*_t$ is upper-triangular. Therefore, we might want to conclude that the matrix representation of any operator on $V$ is similar to some upper-triangular matrix.
+Now, let $T$ be any operator on $V$ and $z \colon \F^n \to V$ be a basis, then we know that the operator $T^*_z \coloneqq z^{-1} \circ T \circ z$ on $\F^n$ has the same eigenvalues as $T$. Notice also that if $T$ satisfies the property that $T(\mathbfit{t}_i)$ can be expressed as a linear combination of the $\mathbfit{t}_j$'s for all $j \leq i$, then so does $T^*_t$. However, as we have discussed before, the matrix representation of $T^*_t$ is upper-triangular. Therefore, we might want to conclude that the matrix representation of any operator on $V$ is similar to some upper-triangular matrix.
 \begin{thmbox}{Triangularisability}{triable}
     For every operator $T \colon V \to V$ where $V$ is a finite-dimensional vector space over $\C$, there exists a basis $t$ of $V$ such that $T(\mathbfit{t}_i)$ can be expressed as a linear combination of the $\mathbfit{t}_j$'s for all $j \leq i$.
     \tcblower
@@ -991,7 +1128,7 @@ We have seen in the previous section that every operator has an upper-triangular
 By Proposition \ref{pro:upTriEigen}, since a diagonal matrix is upper-triangular, its diagonal entries must be the eigenvalues. Denote the $(i, i)$ entry of the matrix by $\lambda_i$, then there is some basic vector $\mathbfit{u}_i$ such that $T(\mathbfit{u}_i) = \lambda_i\mathbfit{u}_i$. Therefore, it is clear that an operator is diagonalisable if and only if there exists a basis consisting of its eigenvectors.
 
 An easy conclusion is that if a vector space $V$ has $\dim(V)$ distinct eigenvalues, then it has $\dim(V)$ linearly independent eigenvectors which form a basis, so any $V$ with $\dim(V)$ distinct eigenvalues is diagonalisable.
-
+\section{Jordan Matrix}
 Of course, we know that it is not possible for every operator to be diagonalisable, i.e., not all operators have some basis $z$ such that the operator under $z$ maps every basic vector to a multiple of itself. Hence, we attempt to make a compromise here: that is, can we always find a basis for every operator such that the operator, under this basis, maps every basic vector to a linear combination of at most $2$ distinct basic vectors?
 \begin{dfnbox}{Jordan Block}{jordan}
     Let $\mathbfit{J}$ be an $m \times m$ matrix such that 
@@ -1097,57 +1234,947 @@ Clearly, from now on, for any integer $n \geq k$, we can express $T^n$ as a line
 \begin{equation*}
     T^{-1} = T^{-1} \circ \mathrm{id}_V = T^{-1} \circ \left(-\frac{1}{c_0}\sum_{i = 1}^{k}c_iT^i\right).
 \end{equation*}
-\chapter{Linear Algebra and Geometry}
+\section{Operators in Euclidean Spaces}
+Let $T \colon \R^n \to \R^n$ be an operator in some Euclidean space. If $T$ is diagonalisable, then it has a basis $\left\{\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_n\right\}$ consisting of distinct eigenvectors. Let $\lambda_i$ be the eigenvalue associated to $\mathbfit{v}_i$, then for any $\mathbfit{u} \in \R^n$, we have 
+\begin{align*}
+    T(\mathbfit{u}) & = T\left(\sum_{i = 1}^{n}c_i\mathbfit{v}_i\right) \\
+    & = \sum_{i = 1}^{n}c_i\lambda_i\mathbfit{v}_i.
+\end{align*}
+If the $\lambda_i$'s are all real, then for each $\lambda_i \neq 0$, $T$ will stretch $\mathbfit{u}$ by a factor of $\lambda_i$ in the component $\mathbfit{v}_i$. If some $\lambda_j = 0$, then the component $\mathbfit{v}_j$ is annihilated, i.e., the image of $\mathbfit{u}$ will lose one dimension in the component of $\mathbfit{v}_j$. We call such transformations as a \textit{crushing} transformation.
+
+Before we discuss the other cases, first let us examine the following property of eigenvalues:
+\begin{probox}{Eigenvalues Are in Conjugate Pairs}{conjEigen}
+    If $\lambda \in \C$ is an eigenvalue of some operator $T \colon \R^n \to \R^n$, then the complex conjugate $\widebar{\lambda}$ is also an eigenvalue of $T$.
+\end{probox}
+The proof of the proposition is immediate by considering the trace of the matrix representation for $T$, and is left to the reader as an exercise. Suppose that the operator $T$ has all non-real eigenvalues $\lambda_1, \widebar{\lambda}_1, \lambda_2, \widebar{\lambda}_2, \cdots, \lambda_k, \widebar{\lambda}_k$, where $\lambda_i$ and $\widebar{\lambda}_i$ are conjugate pairs. Write $\lambda_i = r_i\mathrm{e}^{\im\theta_i}$. Define 
+\begin{equation*}
+    \mathbfit{R}_i \coloneqq \begin{bmatrix}
+        \cos\theta_i & -\sin\theta_i \\
+        \sin\theta_i & \cos\theta_i
+    \end{bmatrix}, \qquad \mathbfit{\Lambda} \coloneqq \begin{bmatrix}
+        1 & -1 \\
+        -\im & -\im
+    \end{bmatrix}
+\end{equation*}
+to be the matrix representation of the rotation transformation and its eigenvector matrix. Denote 
+\begin{equation*}
+    M_z(T) = \begin{bmatrix}
+        \lambda_1 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+        0 & \widebar{\lambda}_1 & 0 & 0 & \cdots & 0 & 0 \\
+        0 & 0 & \lambda_2 & 0 & \cdots & 0 & 0 \\
+        0 & 0 & 0 & \widebar{\lambda}_k & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & 0 & \cdots & \lambda_k & 0 \\
+        0 & 0 & 0 & 0 & \cdots & 0 & \widebar{\lambda}_k
+    \end{bmatrix},
+\end{equation*}
+then clearly, 
+\begin{align*}
+    M_z(T) & = \begin{bmatrix}
+        r_1 & 0 & \cdots & 0 \\
+        0 & r_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & r_k
+    \end{bmatrix}\begin{bmatrix}
+        \mathbfit{\Lambda} & 0 & \cdots & 0 \\
+        0 & \mathbfit{\Lambda} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{\Lambda}
+    \end{bmatrix}\begin{bmatrix}
+        \mathbfit{R}_1 & 0 & \cdots & 0 \\
+        0 & \mathbfit{R}_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{R}_k
+    \end{bmatrix}\begin{bmatrix}
+        \mathbfit{\Lambda} & 0 & \cdots & 0 \\
+        0 & \mathbfit{\Lambda} & \cdots & 0 \\  
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{\Lambda}
+    \end{bmatrix}^{-1} \\
+    & = \begin{bmatrix}
+        \mathbfit{\Lambda} & 0 & \cdots & 0 \\
+        0 & \mathbfit{\Lambda} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{\Lambda}
+    \end{bmatrix}\begin{bmatrix}
+        r_1 & 0 & \cdots & 0 \\
+        0 & r_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & r_k
+    \end{bmatrix}\begin{bmatrix}
+        \mathbfit{R}_1 & 0 & \cdots & 0 \\
+        0 & \mathbfit{R}_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{R}_k
+    \end{bmatrix}\begin{bmatrix}
+        \mathbfit{\Lambda} & 0 & \cdots & 0 \\
+        0 & \mathbfit{\Lambda} & \cdots & 0 \\  
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{\Lambda}
+    \end{bmatrix}^{-1}.
+\end{align*}
+Therefore, there exists some basis such that the matrix representation of $T$ is 
+\begin{equation*}
+    \begin{bmatrix}
+        r_1 & 0 & \cdots & 0 \\
+        0 & r_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & r_k
+    \end{bmatrix}\begin{bmatrix}
+        \mathbfit{R}_1 & 0 & \cdots & 0 \\
+        0 & \mathbfit{R}_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mathbfit{R}_k
+    \end{bmatrix}.
+\end{equation*}
+Therefore, for a vector $(a_1, a_2, \cdots, a_n)^{\mathrm{T}}$, its image under $T$ is equivalent to rotating the vector in its $i$- and $(i + 1)$-th dimensions by $\mathbfit{R}_i$, and stretching the $i$-th component by a factor of $r_1$ (or crushing the component if $r_i = 0$).
+
+However, if $T$ is not diagonalisable, we need to consider its Jordan canonical form. Let $\lambda_i$ be any eigenvalue of $T$ and consider its corresponding Jordan block
+\begin{equation*}
+    \mathbfit{J}_i \coloneqq \begin{bmatrix}
+        \lambda_i & 1 & 0 & \cdots & 0 & 0 \\
+        0 & \lambda_i & 1 & \cdots & 0 & 0 \\
+        0 & 0 & \lambda_1 & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & \lambda_i & 1 \\
+        0 & 0 & 0 & \cdots & 0 & \lambda_i
+    \end{bmatrix} = \begin{bmatrix}
+        \lambda_i & 0 & 0 & \cdots & 0 & 0 \\
+        0 & \lambda_i & 0 & \cdots & 0 & 0 \\
+        0 & 0 & \lambda_i & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & \lambda_i & 0 \\
+        0 & 0 & 0 & \cdots & 0 & \lambda_i
+    \end{bmatrix}\begin{bmatrix}
+        1 & \frac{1}{\lambda_i} & 0 & \cdots & 0 & 0 \\
+        0 & 1 & \frac{1}{\lambda_i} & \cdots & 0 & 0 \\
+        0 & 0 & 1 & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & 1 & \frac{1}{\lambda_i} \\
+        0 & 0 & 0 & \cdots & 0 & 1
+    \end{bmatrix}.
+\end{equation*}
+Notice that we can set $\frac{1}{\lambda_i} = \tan(\phi_i)$ for some $\phi \in \C$. In the case where $\lambda_i \in \R$, we impose a further condition requiring $\phi \in [-\frac{\pi}{2}, \frac{\pi}{2}]$. It is not hard to see that each Jordan block corresponds to a transformation obtained by shearing in every two adjacent components, followed by a combination of rotations and stretching or crushing as in the previous case.
+
+To summarise, any operator $T \colon \R^n \to \R^n$ is 
+\begin{itemize}
+    \item a series of stretching and/or crushing transformations if it has $n$ distinct real eigenvalues;
+    \item a series of rotations followed by a series of stretching and/or crushing transformations if it has $n$ distinct eigenvalues not all real;
+    \item a series of shearing transformations followed by a series of stretching and/or crushing transformations if it has less than $n$ distinct real eigenvalues;
+    \item a series of shearing transformations, followed by a series of rotations, and then followed by another series of stretching and/or crushing transformations if it has less than $n$ distinct eigenvalues not all real.
+\end{itemize}
+\chapter{Inner Product Spaces}
 \section{Bilinear Forms}
+In the previous chapter, we has made an attempt to classify all operators over the Euclidean spaces. In this chapter, we further discuss geometric properties of operators. Now, this task would be quite trivial if we restrict our scope to the Euclidean spaces only, because we already have many well-defined notions such as length, area, angle, volume, etc., in Euclidean geometry. However, our ultimate aim is to generalise such geometry to any kind of vector spaces. We will first take the \textit{dot product} as an example to see how we can apply an axiomatic approach to abstract Euclidean geometry for general vector spaces.
 \begin{dfnbox}{Dot Product}{dotProd}
-    Let $\mathcal{F}$ be a field, the {\color{red} \textbf{dot product}} is a binary operation $\cdot \colon \mathcal{F}^n \times \mathcal{F}^n \to \mathcal{F}$ such that 
+    Let $\F$ be a field, the {\color{red} \textbf{dot product}} is a binary operation $\cdot \colon \F^n \times \F^n \to \F$ such that 
     \begin{enumerate}
-        \item $\mathbfit{u} \cdot \mathbfit{u} \geq 0$ for all $\mathbfit{u} \in \mathcal{F}^n$;
+        \item $\mathbfit{u} \cdot \mathbfit{u} \geq 0$ for all $\mathbfit{u} \in \F^n$;
         \item $\mathbfit{u} \cdot \mathbfit{u} = 0$ if and only if $\mathbfit{u} = \zero$;
-        \item $\mathbfit{u} \cdot \mathbfit{v} = \mathbfit{v} \cdot \mathbfit{u}$ for all $\mathbfit{u}, \mathbfit{v} \in \mathcal{F}^n$;
-        \item $(\alpha\mathbfit{u}_1 + \beta\mathbfit{u}_2) \cdot \mathbfit{v} = \alpha(\mathbfit{u}_1 \cdot \mathbfit{v}) + \beta(\mathbfit{u}_2 \cdot \mathbfit{v})$ and $\mathbfit{u} \cdot (\alpha\mathbfit{v}_1 + \beta\mathbfit{v}_2) = \alpha(\mathbfit{u} \cdot \mathbfit{v}_1) + \beta(\mathbfit{u} \cdot \mathbfit{v}_1)$ for all $\mathbfit{u}, \mathbfit{v} \in \mathcal{F}^n$ and $\alpha, \beta \in \mathcal{F}$.
+        \item $\mathbfit{u} \cdot \mathbfit{v} = \mathbfit{v} \cdot \mathbfit{u}$ for all $\mathbfit{u}, \mathbfit{v} \in \F^n$;
+        \item $(\alpha\mathbfit{u}_1 + \beta\mathbfit{u}_2) \cdot \mathbfit{v} = \alpha(\mathbfit{u}_1 \cdot \mathbfit{v}) + \beta(\mathbfit{u}_2 \cdot \mathbfit{v})$ and $\mathbfit{u} \cdot (\alpha\mathbfit{v}_1 + \beta\mathbfit{v}_2) = \alpha(\mathbfit{u} \cdot \mathbfit{v}_1) + \beta(\mathbfit{u} \cdot \mathbfit{v}_1)$ for all $\mathbfit{u}, \mathbfit{v} \in \F^n$ and $\alpha, \beta \in \F$.
     \end{enumerate}
 \end{dfnbox}
-The dot product is an example of what is known as \textit{bilinear forms}.
-\begin{dfnbox}{Bilinear Form}{bilinear}
-    A {\color{red} \textbf{bilinear form}} on a finite-dimensional space $V$ is defined to be a mapping $b \colon V \times V \to \mathcal{F}$ such that 
+The dot product is an example of what is known as \textit{bilinear maps}. 
+\begin{dfnbox}{Bilinear Map}
+    A {\color{red} \textbf{bilinear map}} is a mapping
+    \begin{equation*}
+        b \colon U \times V \to U
+    \end{equation*}   
+    where $U, V, W$ are vector spaces over $\F$ such that
     \begin{align*}
         b(\alpha\mathbfit{u}_1 + \beta\mathbfit{u}_2, \mathbfit{v}) & = \alpha b(\mathbfit{u}_1, \mathbfit{v}) + \beta b(\mathbfit{u}_2, \mathbfit{v}), \\
         b(\mathbfit{u}, \alpha\mathbfit{v}_1 + \beta\mathbfit{v}_2) & = \alpha b(\mathbfit{u}, \mathbfit{v}_1) + \beta b(\mathbfit{u}, \mathbfit{v}_1)
     \end{align*}
-    for all for all $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \mathcal{F}$.
+    for all for all $\mathbfit{u} \in U, \mathbfit{v} \in V$ and $\alpha, \beta \in \F$.
 \end{dfnbox}
-Let $\mathbb{B}(V)$ denote the set of all bilinear forms over a finite-dimensional vector space $V$, then $\mathbb{B}(V)$ itself is also a vector space with the usual definitions of addition and scalar multiplication over mappings.
-\begin{dfnbox}{Tensor Product between Dual Vectors}{dualVecTensor}
-    Let $V$ be a finite-dimensional vector space. For any $\alpha, \beta \in \hat{V}$, their {\color{red} \textbf{tensor product}} is defined as the mapping 
+In fact, the dot product is a special type of bilinear maps as its domain is the cartesian product of a vector space with itself, and its co-domain is a field. Such maps are known as \textit{bilinear forms}.
+\begin{dfnbox}{Bilinear Form}{bilinear}
+    A {\color{red} \textbf{bilinear form}} on a finite-dimensional space $V$ over $\F$ is a bilinear map 
     \begin{equation*}
-        \alpha \otimes \beta \colon V \times V \to \mathcal{F}
+        b \colon V \times V \to \F
+    \end{equation*}   
+\end{dfnbox}
+Let $\mathbb{B}(V)$ denote the set of all bilinear forms over a finite-dimensional vector space $V$, then $\mathbb{B}(V)$ itself is also a vector space with the usual definitions of addition and scalar multiplication over mappings. 
+
+Using bilinear maps, we shall state the real definition of tensor products.
+\begin{dfnbox}{Tensor Product}{tensor}
+    Let $V$ and $W$ be vector spaces. The {\color{red} \textbf{tensor product}} of $V$ and $W$ is a vector space $V \otimes W$ with a bilinear map $\otimes \colon V \times W \to V \otimes W$ such that for every bilinear map $h \colon V \times W \to Z$, there is a unique map $\widetilde{h} \colon V \otimes W \to Z$ with $h = \widetilde{h} \circ \otimes$.
+\end{dfnbox}
+Now looking back at our Definition \ref{dfn:tensorProd}, we consider the vector space $V \otimes \widehat{V}$. For every $\mathbfit{u} \in V$, define $h_{\mathbfit{u}} \colon V \times \widehat{V} \to V$ to be a bilinear map such that $h_{\mathbfit{u}}(\mathbfit{v}, \alpha) = \alpha(\mathbfit{v})\mathbfit{u}$. By Definition \ref{dfn:tensor}, there is a unique map $\widetilde{h}_{\mathbfit{u}} \colon V \otimes \widehat{V} \to V$ such that 
+\begin{equation*}
+    \widetilde{h}_{\mathbfit{u}}(\mathbfit{v} \otimes \alpha) = h_{\mathbfit{u}}(\mathbfit{v}, \alpha) = \alpha(\mathbfit{v})\mathbfit{u}.
+\end{equation*}
+Clearly, by taking $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ and define $\widetilde{h}_{\mathbfit{u}}(\mathbfit{v} \otimes \alpha) = (\mathbfit{v} \otimes \alpha)(\mathbfit{u})$, the only possible way for the definition to stay consistent is $(\mathbfit{v} \otimes \alpha)(\mathbfit{u}) = \alpha(\mathbfit{v})\mathbfit{u}$.
+\begin{dfnbox}{Tensor Product between Dual Vectors}{dualVecTensor}
+    Let $V$ be a finite-dimensional vector space. For any $\alpha, \beta \in \widehat{V}$, their {\color{red} \textbf{tensor product}} is defined as the mapping 
+    \begin{equation*}
+        \alpha \otimes \beta \colon V \times V \to \F
     \end{equation*}
     such that $(\alpha \otimes \beta)(\mathbfit{u}, \mathbfit{v}) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$.
 \end{dfnbox}
-It is easy to see that for any basic vectors $\zeta^i, \zeta^j$ for $\hat{V}$, the mapping $\zeta^i \otimes \zeta^j$ is a bilinear form over $V$.
+We shall also check that this definition stays consistent with the universal property in Definition \ref{dfn:tensor}. For each $\mathbfit{u}, \mathbfit{v} \in V$, define $h_{\mathbfit{u}, \mathbfit{v}} \colon \widehat{V} \times \widehat{V} \to \F$ by $h_{\mathbfit{u}, \mathbfit{v}}(\alpha, \beta) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$. Now, there is a unique map $\widetilde{h}_{\alpha, \beta} \colon \widehat{V} \otimes \widehat{V} \to \F$ such that 
+\begin{equation*}
+    \widetilde{h}_{\mathbfit{u}, \mathbfit{v}}(\alpha \otimes \beta) = h_{\mathbfit{u}, \mathbfit{v}}(\alpha, \beta) = \alpha(\mathbfit{u})\beta(\mathbfit{v}).
+\end{equation*}
+If we take $\otimes \colon \widehat{V} \times \widehat{V} \to \mathcal{L}\left(V^2, \F\right)$, clearly $\widetilde{h}_{\mathbfit{u}, \mathbfit{v}}(\alpha \otimes \beta) = (\alpha \otimes \beta)(\mathbfit{u}, \mathbfit{v}) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$.
+
+It is easy to see that for any basic vectors $\zeta^i, \zeta^j$ for $\widehat{V}$, the mapping $\zeta^i \otimes \zeta^j$ is a bilinear form over $V$.
+\begin{probox}{Basis of the Bilinear Form Space}{bilBasis}
+    Let $\mathbb{B}(V)$ be the set of all bilinear forms over a vector space $V$ with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ and a dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$, then the set 
+    \begin{equation*}
+        \left\{\zeta^i \otimes \zeta^j \colon i \neq j \right\}
+    \end{equation*}
+    is a basis for $\mathbb{B}(V)$.
+    \tcblower
+    \begin{proof}
+        Take any $b \in \mathbb{B}(V)$. For any $\mathbfit{u}, \mathbfit{v} \in V$, we have 
+        \begin{align*}
+            b(\mathbfit{u}, \mathbfit{v}) & = b\left(\sum_{i = 1}^{n}u_i\mathbfit{z}_i, \sum_{i = 1}^{n}v_i\mathbfit{z}_i\right) \\
+            & = \sum_{i = 1}^{n}u_ib\left(\mathbfit{z}_i, \sum_{j = 1}^{n}v_j\mathbfit{z}_j\right) \\
+            & = \sum_{i = 1}^{n}\sum_{j = 1}^{n}u_iv_jb\left(\mathbfit{z}_i, \mathbfit{z}_j\right).
+        \end{align*}
+        Let $b\left(\mathbfit{z}_i, \mathbfit{z}_j\right) = b_{ij}$ and define 
+        \begin{equation*}
+            h = \sum_{i = 1}^{n}\sum_{j = 1}^{n}b_{ij}\zeta^i \otimes \zeta^j
+        \end{equation*}
+        to be a bilinear form. Notice that 
+        \begin{align*}
+            h\left(\mathbfit{z}_p, \mathbfit{z}_q\right) & = \sum_{i = 1}^{n}\sum_{j = 1}^{n}b_{ij}\zeta^i\left(\mathbfit{z}_p\right)\zeta^j\left(\mathbfit{z}_q\right) = b_{pq} = b\left(\mathbfit{z}_p, \mathbfit{z}_q\right),
+        \end{align*}
+        for any $\mathbfit{z}_p, \mathbfit{z}_q$, so $h = b$, which implies that $\mathbb{B}(V) = \mathrm{span}\left\{\zeta^i \otimes \zeta^j \colon i \neq j \right\}$. One may easily check that $h$ is the zero mapping if and only if $b_{ij} = 0$ for all $i, j$, so $\left\{\zeta^i \otimes \zeta^j \colon i \neq j \right\}$ is a basis for $\mathbb{B}(V)$.
+    \end{proof}
+\end{probox}
+In this sense, $\mathbb{B}(V) = \mathcal{L}(V^2, \F)$. However, intuitively for each mapping $(\mathbfit{u}, \mathbfit{v}) \mapsto c$, this is equivalent to finding some $T_{\mathbfit{u}} \in \widehat{V}$ for each $\mathbfit{u} \in V$ and apply the mapping to $\mathbfit{v}$.
+\begin{probox}{Every Bilinear Maps to a Unique Dual Vector}{BisLVV*}
+    For any finite-dimensional vector space $V$, we have $\mathbb{B}(V) \cong \mathcal{L}\left(V, \widehat{V}\right)$.
+    \tcblower
+    \begin{proof}
+        Take any $b \in \mathbb{B}(V)$. Define a mapping $f \colon \mathbb{B}(V) \to  \mathcal{L}\left(V, \widehat{V}\right)$ by $f(b) = b^{\#}$, where $b^{\#}(\mathbfit{v})(\mathbfit{u}) = b(\mathbfit{u}, \mathbfit{v})$. Suppose there are $b_1, b_2 \in \mathbb{B}(V)$ with $b_1 \neq b_2$, then there exists $\mathbfit{u}, \mathbfit{v} \in V$ such that 
+        \begin{equation*}
+            b_1^{\#}(\mathbfit{v})(\mathbfit{u}) = b_1(\mathbfit{u}, \mathbfit{v}) \neq b_2(\mathbfit{u}, \mathbfit{v}) = b_2^{\#}(\mathbfit{v})(\mathbfit{u}),
+        \end{equation*}
+        which implies that $b_1^{\#}(\mathbfit{v}) \neq b_2^{\#}(\mathbfit{v})$, and so $b_1^{\#} \neq b_2^{\#}$. Therefore, the $f$ is injective. Now, take any $b^{\#} \in \mathcal{L}\left(V, \widehat{V}\right)$, let $b$ be a bilinear form with $b(\mathbfit{u}, \mathbfit{v}) = b^{\#}(\mathbfit{v})(\mathbfit{u})$, then by definition clearly $f(b) = b^{\#}$. Therefore, $f$ is surjective, and so $\mathbb{B}(V) \cong \mathcal{L}\left(V, \widehat{V}\right)$.
+    \end{proof}
+\end{probox}
+We can write 
+\begin{equation*}
+    b^{\#}(\mathbfit{v}) = \alpha = \sum_{i = 1}^{n}p_i\zeta^i
+\end{equation*}
+in the above proof where the $\zeta^i$'s are the dual basis. Then, we know that 
+\begin{equation*}
+    p_i = \alpha\left(\mathbfit{z}_i\right) = b\left(\mathbfit{z}_i, \mathbfit{v}\right) = \sum_{j = 1}^{n}b_{ij}v_j
+\end{equation*}
+where $\mathbfit{v} = \sum_{j = 1}^{n}v_j\mathbfit{z}_j$. This means that we can use the bilinear form $b$ to transform the components of $\mathbfit{v}$ into the components of $b^{\#}(\mathbfit{v})$.
+
+Let $b$ be any bilinear form, then just like unary transformations, $b$ has a matrix representation which we can transform by a change of basis. Let $\left\{\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right\}$ and $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be $2$ different bases, then by Proposition \ref{pro:convertBasis}, there exists a non-singular matrix $\mathbfit{P}$ such that~$\mathbfit{y}_i = \sum_{j = 1}^{n}P^j_i\mathbfit{z}_j$ for every $i = 1, 2, \cdots, n$. Therefore, 
+\begin{align*}
+    M_y(b)^i_j & = b\left(\mathbfit{y}_i, \mathbfit{y}_j\right) \\
+    & = b\left(\sum_{p = 1}^{n}P^p_i\mathbfit{z}_p, \sum_{q = 1}^{n}P^q_j\mathbfit{z}_q\right) \\
+    & = \sum_{p = 1}^{n}\sum_{q = 1}^{n}P^p_ib\left(\mathbfit{z}_p, \mathbfit{z}_q\right)P^q_j \\
+    & = \sum_{p = 1}^{n}\sum_{q = 1}^{n}P^p_iM_z(b)^p_qP^q_j.
+\end{align*}
+The above formula translates to $M_y(b) = \mathbfit{P}^{\mathrm{T}}M_z(b)\mathbfit{P}$.
+\section{Geometry in Vector Spaces}
+Observe that the structure of a bilinear form over some vector space $V$ matches exactly that of a ``distance'' between points in a space --- it sends a pair of vectors to some scalar. This motivates us to generalise the dot product into the following form:
 \begin{dfnbox}{Inner Product Space}{innerProd}
-    An {\color{red} \textbf{inner product space}} is a finite-dimensional vector space $V$ with a bilinear form $g \colon V \times V \to \mathcal{F}$, known as an {\color{red} \textbf{inner product}} on $V$, such that
+    An {\color{red} \textbf{inner product space}} is a finite-dimensional vector space $V$ over $\F$, where $\F$ is a well-ordered field, augmented with a bilinear form $g \colon V \times V \to \F$, known as an {\color{red} \textbf{inner product}} on $V$, such that
     \begin{enumerate}
         \item $g(\mathbfit{u}, \mathbfit{u}) \geq 0$ for all $\mathbfit{u} \in V$;
         \item $g(\mathbfit{u}, \mathbfit{u}) = 0$ if and only if $\mathbfit{u} = \zero$;
         \item $g(\mathbfit{u}, \mathbfit{v}) = g(\mathbfit{v}, \mathbfit{u})$ for all $\mathbfit{u}, \mathbfit{v} \in V$.
     \end{enumerate}
 \end{dfnbox}
-\section{Geometry in Vector Spaces}
+\begin{notebox}
+    \begin{remark}
+        The inner product is not unique because any positive multiple of an inner product is still an inner product.
+    \end{remark}
+\end{notebox}
+Obviously, the set of all inner products over some vector space $V$ is not a subspace because the zero bilinear form is not an inner product.
+
+The matrix representation of an inner product is said to be \textit{symmetric}, \textit{positive} and \textit{definite}. Indeed, we can easily check that it is a positive definite matrix which is symmetric.
+
+Recall that in $\R^n$, we define the \textit{length} of a vector $\mathbfit{x}$ by $\norm{\mathbfit{x}} = \sqrt{\mathbfit{x} \cdot \mathbfit{x}}$. With Definition \ref{dfn:innerProd}, we are able to generalise length to any vector space where an inner product is defined.
 \begin{dfnbox}{Length}{len}
     Let $(V, g)$ be an inner product space, then for any $\mathbfit{v} \in V$, its {\color{red} \textbf{length}} is defined as 
     \begin{equation*}
         \abs{\mathbfit{v}} = \sqrt{g(\mathbfit{v}, \mathbfit{v})}.
     \end{equation*}
 \end{dfnbox}
+Similarly, we can generalise orthogonality in Euclidean spaces to general vector spaces.
 \begin{dfnbox}{Orthogonality}{ortho}
     Let $(V, g)$ be an inner product space. $\mathbfit{u}, \mathbfit{v} \in V$ are {\color{red} \textbf{orthogonal}} if $g(\mathbfit{u}, \mathbfit{v}) = 0$.
 \end{dfnbox}
-\begin{thmbox}{Cauchy-Schwarz Inequality}{CauchySchwarz}
-    Let $(V, g)$ be an inner product space, then $g(\mathbfit{u}, \mathbfit{v}) \leq \abs{\mathbfit{u}}\abs{\mathbfit{v}}$ for any $\mathbfit{u}, \mathbfit{v} \in V$.
+$\zero$ is apparently the only vector orthogonal to itself. Furthermore, 
+\begin{equation*}
+    \abs{\mathbfit{u} + \mathbfit{v}}^2 = g(\mathbfit{u} + \mathbfit{v}, \mathbfit{u} + \mathbfit{v}) = g(\mathbfit{u}, \mathbfit{u}) + g(\mathbfit{u}, \mathbfit{v}) + g(\mathbfit{v}, \mathbfit{u}) + g(\mathbfit{v}, \mathbfit{v}),
+\end{equation*} 
+so of course $\abs{\mathbfit{u} + \mathbfit{v}}^2 = \abs{\mathbfit{u}}^2 + \abs{\mathbfit{v}}^2$ if and only if $\mathbfit{u}$ and $\mathbfit{v}$ are orthogonal. Obviously this is a generalisation of the famous Pythagoras' Theorem. Both of the facts above align with the case in Euclidean spaces. Additionally, we can do \textit{orthogonal decomposition} just like in Euclidean spaces as well!
+\begin{thmbox}{Orthogonal Decomposition}{orthoDecomp}
+    Let $(V, g)$ be an inner product space and $\mathbfit{v} \in V$ be non-zero, then for any vector $\mathbfit{u} \in V$, there exist some $\mathbfit{w}_1, \mathbfit{w}_2 \in V$ with $\mathbfit{w}_1 \parallel \mathbfit{v}$ and $\mathbfit{w}_2 \perp \mathbfit{v}$ such that $\mathbfit{u} = \mathbfit{w}_1 + \mathbfit{w}_2$.
+    \tcblower
+    \begin{proof}
+        Take 
+        \begin{equation*}
+            \mathbfit{w}_1 = \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}, \qquad \mathbfit{w}_2 = \mathbfit{u} - \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}.
+        \end{equation*}
+        Clearly, $\mathbfit{w}_1 \parallel \mathbfit{v}$ and $\mathbfit{u} = \mathbfit{w}_1 + \mathbfit{w}_2$. Observe that 
+        \begin{align*}
+            g\left(\mathbfit{u} - \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}, \mathbfit{v}\right) & = g(\mathbfit{u}, \mathbfit{v}) - \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}g(\mathbfit{v}, \mathbfit{v}) = 0,
+        \end{align*}
+        so $\mathbfit{w}_2 \perp \mathbfit{v}$.
+    \end{proof}
 \end{thmbox}
+We can also make use of an inner product to prove some interesting results, e.g., the \textit{Cauchy-Schwarz inequality}.
+\begin{thmbox}{Cauchy-Schwarz Inequality}{CauchySchwarz}
+    Let $(V, g)$ be an inner product space, then $g(\mathbfit{u}, \mathbfit{v}) \leq \abs{\mathbfit{u}}\abs{\mathbfit{v}}$ for any $\mathbfit{u}, \mathbfit{v} \in V$, where the equality is attained if and only if $\mathbfit{u} = \lambda\mathbfit{v}$ for some $\lambda \in \F$.
+    \tcblower
+    \begin{proof}
+        Notice that $g(\mathbfit{u}, \zero) = 2g(\mathbfit{u}, \zero)$, so it suffices to prove for $\mathbfit{v} \neq \zero$. By Theorem \ref{thm:orthoDecomp}, we have 
+        \begin{align*}
+            \abs{\mathbfit{u}}^2 & = \left(\frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}\right)^2 + \left(\mathbfit{u} - \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}\right)^2 \\
+            & \geq \left(\frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}\right)^2 \\
+            & = g\left(\frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}, \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}\right) \\
+            & = \left(\frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\right)^2g(\mathbfit{v}, \mathbfit{v}) \\
+            & = \frac{g(\mathbfit{u}, \mathbfit{v})^2}{\abs{\mathbfit{v}}^2}.
+        \end{align*}
+        Taking square root on both sides yields $g(\mathbfit{u}, \mathbfit{v}) \leq \abs{\mathbfit{u}}\abs{\mathbfit{v}}$. Note that the equality is attained if and only if 
+        \begin{equation*}
+            \left(\mathbfit{u} - \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{v}}^2}\mathbfit{v}\right)^2 = 0,
+        \end{equation*}
+        which implies that $\mathbfit{u} \parallel \mathbfit{v}$.
+    \end{proof}
+\end{thmbox}
+Notice that if a metric space is also a vector space, then we get an inner product space for free by using the metric as an inner product. The metric satisfies something known as the \textit{triangle inequality}, which can be proved as an immediate consequence of Theorem \ref{thm:CauchySchwarz}.
 \begin{corbox}{Triangle Inequality}{triIneq}
     Let $V$ be a finite-dimensional vector space, then for any $\mathbfit{u}, \mathbfit{v} \in V$, $\abs{\mathbfit{u + v}} \leq \abs{\mathbfit{u}} + \abs{\mathbfit{v}}$. 
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{align*}
+            \abs{\mathbfit{u} + \mathbfit{v}}^2 & = g(\mathbfit{u} + \mathbfit{v}, \mathbfit{u} + \mathbfit{v}) \\
+            & = g(\mathbfit{u}, \mathbfit{u}) + g(\mathbfit{u}, \mathbfit{v}) + g(\mathbfit{v}, \mathbfit{u}) + g(\mathbfit{v}, \mathbfit{v}) \\
+            & = \abs{\mathbfit{u}}^2 + 2g(\mathbfit{u}, \mathbfit{v}) + \abs{\mathbfit{v}}^2.
+        \end{align*}
+        By Theorem \ref{thm:CauchySchwarz}, $g(\mathbfit{u}, \mathbfit{v}) \leq \abs{\mathbfit{u}}\abs{\mathbfit{v}}$, so $\abs{\mathbfit{u} + \mathbfit{v}}^2 \leq \abs{\mathbfit{u}}^2 + 2\abs{\mathbfit{u}}\abs{\mathbfit{v}} + \abs{\mathbfit{v}}^2$. Taking square root on both sides yields $\abs{\mathbfit{u + v}} \leq \abs{\mathbfit{u}} + \abs{\mathbfit{v}}$.
+    \end{proof}
 \end{corbox}
+\begin{notebox}
+    \begin{remark}
+        Clearly, equality is attained in the triangle inequality if and only if $\mathbfit{u} \parallel \mathbfit{v}$ as well due to the use of Cauchy-Schwarz inequality.
+    \end{remark}
+\end{notebox}
+
+Recall that in the Euclidean space, a point is located by an origin, an angle and a distance from the origin. In general inner product spaces, we can easily take the zero vector as the origin, and define the distance of a vector $\mathbfit{x}$ to the origin as $\abs{\mathbfit{x}}$. The only thing remaining to be defined is the notion of an \textit{angle}.
+\begin{dfnbox}{Angle}{angle}
+    Let $(V, g)$ be an inner product space and $\mathbfit{u}, \mathbfit{v} \in V$ be any vectors. The {\color{red} \textbf{angle}} between $\mathbfit{u}$ and $\mathbfit{v}$ is defined as a scalar $\theta \in [0, \pi]$ such that 
+    \begin{equation*}
+        \cos\theta = \frac{g(\mathbfit{u}, \mathbfit{v})}{\abs{\mathbfit{u}}\abs{\mathbfit{v}}}.
+    \end{equation*}
+\end{dfnbox}
+Note that this definition is only solid with Theorem \ref{thm:CauchySchwarz} established, which ensures that $\cos\theta \in [-1, 1]$ here.
+\section{Orthogonalisation}
+Recall that in $\R^n$, one can construct a coordinate system using a set of $n$ pair-wise orthogonal unit vectors as a basis. The following definition helps generalise this to any vector space:
+\begin{dfnbox}{Orthonormal Basis}{orthonormal}
+    Let $(V, g)$ be an inner product space. A basis $z$ of $V$ is said to be an {\color{red} \textbf{orthonormal basis}} if for any $\mathbfit{u}, \mathbfit{v} \in V$, we have $g(\mathbfit{u}, \mathbfit{v}) = z^{-1}(\mathbfit{u}) \cdot z^{-1}(\mathbfit{v})$. $z$ is said to be an {\color{red} \textbf{isometry}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In general, for any inner product spaces $(V, g)$ and $(U, h)$, an isometry is a vector space isomorphism $f \colon V \to U$ that preserves the inner product, i.e., 
+        \begin{equation*}
+            h\bigl(f(\mathbfit{x}), f(\mathbfit{y})\bigr) = g(\mathbfit{x}, \mathbfit{y})
+        \end{equation*}
+        for all $\mathbfit{x}, \mathbfit{y} \in V$. 
+    \end{remark}
+\end{notebox}
+    We can easily observe that an orthonormal basis $z$ preserves the inner product between the inner product space $(V, g)$ and $(\F^n, \cdot)$, so lengths and angles between any vectors in $V$ are the same as the lengths and angles between their respective coordinate vectors in $\F^n$. Clearly, there are always infinitely many orthonormal bases for any inner product space.
+
+    Observe that by writing the basis $z$ as $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$, we have 
+    \begin{equation*}
+        g\left(\mathbfit{z}_i, \mathbfit{z}_j\right) = \mathbfit{e}_i \cdot \mathbfit{e}_j = \begin{cases}
+            1 & \textrm{if } i = j \\
+            0 & \textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+    This justifies that the basic vectors in an orthonormal basis are indeed pair-wise orthogonal unit vectors. Using Proposition \ref{pro:bilBasis}, it is easy to check that under any orthonormal basis, the matrix representation of the inner product is the identity matrix. Therefore, if $\mathbfit{P}$ is a change-of-basis matrix between any orthonormal bases,
+    \begin{equation*}
+        \mathbfit{P}^{\mathrm{T}}\mathbfit{P} = \mathbfit{P}^{\mathrm{T}}\I\mathbfit{P} = \I,
+    \end{equation*}
+    which means that $\mathbfit{P}^{-1} = \mathbfit{P}^{\mathrm{T}}$.
+    \begin{dfnbox}{Orthogonal Matrix}{orthoMat}
+        A matrix $\mathbfit{P}$ is said to be an {\color{red} \textbf{orthogonal matrix}} if $\mathbfit{P}^{\mathrm{T}}\mathbfit{P} = \I$.
+    \end{dfnbox}
+    The name ``orthogonal'' is appropriately chosen because if we let $\mathbfit{p}_i$ to be the $i$-th column of an orthogonal matrix $\mathbfit{P}$, Definition \ref{dfn:orthoMat} implies that 
+    \begin{equation*}
+        \mathbfit{p}_i^{\mathrm{T}}\mathbfit{p}_j = \begin{cases}
+            1 & \textrm{if } i = j \\
+            0 & \textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+    Therefore, the columns of $\mathbfit{P}$ are pair-wise orthonormal. However, this clearly means that the columns of every orthogonal matrix form an orthonormal basis on their own! By such change of basis, it is also obvious that the product of orthogonal matrices is still an orthogonal matrix, which we can verify algebraically easily. An advantage of an orthonormal basis is obvious:
+    \begin{probox}{Components under Orthonormal Bases}{orthoComp}
+        If $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is an orthonormal basis for an inner product space $V$, then for any vector $\mathbfit{v} \coloneqq \sum_{i = 1}^{n}a_i\mathbfit{z}_i \in V$, 
+        \begin{equation*}
+            \abs{\mathbfit{v}}^2 = \sum_{i = 1}^{n}a_i^2.
+        \end{equation*}
+    \end{probox}
+    The above is immediate from Pythagoras' Theorem. A trivial corollary is:
+    \begin{corbox}{Linear Independence of Orthonormal Vectors}{orthoLi}
+        Any set of pair-wise orthonormal vectors is linearly independent.
+    \end{corbox}
+    Of course, this implies that we can construct an orthonormal basis from an orthonormal spanning set easily because we get linear independence for free.
+    \begin{corbox}{Construction of Orthonormal Bases}{constructOrthoBasis}
+        For any inner product space $V$, any orthonormal set of $\dim(V)$ vectors in $V$ is an orthonormal basis for $V$.
+    \end{corbox}
+    While any orthonormal spanning set is automatically an orthonormal basis, things are not so easy when we do not have an orthonormal set in the first place. In such situations, we make the following attempt to convert a non-orthonormal basis to an orthonormal one: first, let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be any basis for an inner product space $(V, g)$. Consider
+    \begin{equation*}
+        \mathbfit{z}_1^+ \coloneqq \frac{\mathbfit{z}_1}{\abs{\mathbfit{z}_1}},
+    \end{equation*}
+    which is a unit vector. Notice that by applying Theorem \ref{thm:orthoDecomp}, we can decompose $\mathbfit{z}_2$ into 
+    \begin{equation*}
+        \mathbfit{z}_2 = \frac{g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)}{\abs{\mathbfit{z}_1^+}^2}\mathbfit{z}_1^+ + \left(\mathbfit{z}_2 - \frac{g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)}{\abs{\mathbfit{z}_1^+}^2}\mathbfit{z}_1^+\right) = g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)\mathbfit{z}_1^+ + \Bigl(\mathbfit{z}_2 - g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)\mathbfit{z}_1^+\Bigr).
+    \end{equation*}
+    Since $\mathbfit{z}_2 \perp \mathbfit{z}_1$, the component $\mathbfit{z}_2 - g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)\mathbfit{z}_1^+$ orthogonal to $\mathbfit{z}_1^+$ is non-zero, and so we can normalise it by 
+    \begin{equation*}
+        \mathbfit{z}_2^+ \coloneqq \frac{\mathbfit{z}_2 - g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)\mathbfit{z}_1^+}{\abs{\mathbfit{z}_2 - g\left(\mathbfit{z}_2, \mathbfit{z}_1^+\right)\mathbfit{z}_1^+}}
+    \end{equation*}
+    to obtain a unit vector orthogonal to $\mathbfit{z}_1^+$. Applying the above steps repeatedly will convert all $n$ vectors in the original basis into $n$ pair-wise orthogonal unit vectors. This is justified because we can recursively applying orthogonal decomposition to remove the components in $\mathbfit{z}_k$ parallel to each of $\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_{k - 1}$ and obtain 
+    \begin{equation*}
+        \mathbfit{z}_k^+ \coloneqq \frac{\mathbfit{z}_k - \sum_{i = 1}^{k - 1}g\left(\mathbfit{z}_k, \mathbfit{z}_i^+\right)\mathbfit{z}_i^+}{\abs{\mathbfit{z}_k - \sum_{i = 1}^{k - 1}g\left(\mathbfit{z}_k, \mathbfit{z}_i^+\right)\mathbfit{z}_i^+}}.
+    \end{equation*}
+    \begin{tecbox}{Gram-Schmidt Orthogonalisation}{Gram-Schmidt}
+        For any inner product space $(V, g)$ with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$, an orthonormal basis~$\left\{\mathbfit{z}_1^+, \mathbfit{z}_2^+, \cdots, \mathbfit{z}_n^+\right\}$ can be produced by 
+        \begin{equation*}
+            \mathbfit{z}_1^+ = \mathbfit{z}_1, \qquad \mathbfit{z}_k^+ \coloneqq \frac{\mathbfit{z}_k - \sum_{i = 1}^{k - 1}g\left(\mathbfit{z}_k, \mathbfit{z}_i^+\right)\mathbfit{z}_i^+}{\abs{\mathbfit{z}_k - \sum_{i = 1}^{k - 1}g\left(\mathbfit{z}_k, \mathbfit{z}_i^+\right)\mathbfit{z}_i^+}}.
+        \end{equation*}
+        Such a basis is known as a {\color{red} \textbf{Gram-Schmidt basis}}. 
+    \end{tecbox}
+    In fact, let $\mathcal{B}(V)$ be the set of all bases and $\mathcal{B}_{\perp}(V)$ be the set of all orthonormal bases of some inner product space $(V, g)$, we can view Gram-Schmidt orthogonalisation process as a mapping $g \colon \mathcal{B}(V) \to \mathcal{B}_{\perp}(V)$ defined by
+    \begin{equation*}
+        g\left(\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}\right) = \left\{\mathbfit{z}_k^+ \in V \colon \mathbfit{z}_k^+ \coloneqq \frac{\mathbfit{z}_k - \sum_{i = 1}^{k - 1}g\left(\mathbfit{z}_k, \mathbfit{z}_i^+\right)\mathbfit{z}_i^+}{\abs{\mathbfit{z}_k - \sum_{i = 1}^{k - 1}g\left(\mathbfit{z}_k, \mathbfit{z}_i^+\right)\mathbfit{z}_i^+}}, k = 1, 2, \cdots, n\right\}.
+    \end{equation*}
+    Observe that a Gram-Schmidt basis is such that $\mathbfit{z}_k^+$ is a linear combination of $\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_{k - 1}$, so by Theorem \ref{thm:triable}, this clearly means that the change-of-basis matrix for the Gram-Schmidt process is upper-triangular. Moreover, this implies that Technique \ref{tec:Gram-Schmidt} always yields a valid output for any inner product space because every vector space has a basis.
+    \begin{probox}{Existence of Orthonormal Bases}{orthoBasisExists}
+        Every inner product space has an orthonormal basis.
+    \end{probox}
+    \section{Riesz Representation}
+    Recall that in Proposition \ref{pro:BisLVV*}, we have demonstrated that every bilinear form over a vector space $V$ defines a mapping from $V$ to $\widehat{V}$. This mapping becomes very special if we construct it with respect to an inner product.
+    \begin{thmbox}{Riesz Representation Theorem}{Riesz}
+        For any inner product space $(V, g)$, let the mapping $\Gamma \colon V \to \widehat{V}$ be such that
+        \begin{equation*}
+            \Gamma(\mathbfit{u})(\mathbfit{v}) = g(\mathbfit{v}, \mathbfit{u}),
+        \end{equation*}
+        then for every $\alpha \in \widehat{V}$, there is a unique $\mathbfit{u}_{\alpha} \in V$ such that $\alpha = \Gamma\left(\mathbfit{u}_{\alpha}\right)$.
+        \tcblower
+        \begin{proof}
+            $\Gamma$ is clearly a homomorphism, so this is equivalent to proving that $\Gamma$ is an isomorphism. Let $\Gamma(\mathbfit{u}_0) = 0$, then $g(\mathbfit{v}, \mathbfit{u}_0) = 0$ for all $\mathbfit{v} \in V$. Therefore, $g(\zero, \mathbfit{u}_0) = 0$, which implies that $\mathbfit{u}_0 = \zero$. This means that $\mathrm{null}(\Gamma) = 0$ and so $\Gamma$ is injective. By Theorem \ref{thm:rankNull}, 
+            \begin{equation*}
+                \mathrm{rank}(\Gamma) = \dim(V) = \dim\left(\widehat{V}\right),
+            \end{equation*}
+            and so $\mathrm{range}(\Gamma) = \widehat{V}$, which means that $\Gamma$ is surjective. Therefore, $\Gamma$ is an isomorphism.
+        \end{proof}
+    \end{thmbox}
+    The above theorem essentially says that in any inner product space $(V, g)$, the dual vectors can be expressed in terms of the vectors in $V$ through $g$. Immediately, we see that if $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is an orthonormal basis, then the corresponding dual basis can be expressed as $\zeta^i = \Gamma\left(\mathbfit{z}_i\right)$ because 
+    \begin{equation*}
+        \Gamma\left(\mathbfit{z}_i\right)\left(\mathbfit{z}_j\right) = g\left(\mathbfit{z}_i, \mathbfit{z}_j\right) = \begin{cases}
+            1 & \textrm{if } i = j \\
+            0 & \textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+    Recall that in $\R^n$, we can extract the $i$-th component of a vector by computing the dot product between the $i$-th vector in the orthonormal basis and the vector. Using Theorem \ref{thm:Riesz}, this gets generalised to any vector space because 
+    \begin{equation*}
+        \Gamma(\mathbfit{z}_i)(\mathbfit{v}) = \Gamma(\mathbfit{z}_i)\left(\sum_{j = 1}^{n}a_j\mathbfit{z}_j\right) = \zeta^i\left(\sum_{j = 1}^{n}a_j\mathbfit{z}_j\right) = a_i.
+    \end{equation*}
+    Note that $\Gamma(\mathbfit{v})$ is a dual vector, so it has a matrix representation. Notice that by definition, the $i$-th component of $\Gamma(\mathbfit{v})$ is just 
+    \begin{equation*}
+        \Gamma(\mathbfit{v})(\mathbfit{z}_i) = g\left(\mathbfit{z}_i, \sum_{j = 1}^{n}a_j\mathbfit{z}_j\right) = \sum_{j = 1}^{n}G^i_ja_j,
+    \end{equation*}
+    where $G^i_j$ is the $(i, j)$ entry of the matrix representation of $g$. Therefore,
+    \begin{equation*}
+        \Gamma(\mathbfit{v}) = \sum_{i = 1}^{n}\sum_{j = 1}^{n}G^i_ja_j\zeta^i.
+    \end{equation*}
+    One important application of Theorem \ref{thm:Riesz} is to convert an operator to a bilinear form over an inner product space.
+    \begin{probox}{Conversion from Operators to Bilinear Forms}{convertOpToBil}
+        Let $T$ be an operator on an inner product space $(V, g)$, then $\Gamma \circ T$ defines a bilinear form over $V$, where $\Gamma$ is the Riesz isomorphism. 
+        \tcblower
+        \begin{proof}
+            By Proposition \ref{pro:BisLVV*}, since $\Gamma \circ T \in \mathcal{L}\left(V, \widehat{V}\right)$, there is a unique bilinear form $b_T \colon V \times V \to V$ defined by 
+            \begin{equation*}
+                b_T(\mathbfit{u}, \mathbfit{v}) = (\Gamma \circ T)(\mathbfit{v})(\mathbfit{u}) = \Gamma\bigl(T(\mathbfit{v})\bigr)(\mathbfit{u}) = g\bigl(\mathbfit{u}, T(\mathbfit{v})\bigr).
+            \end{equation*}
+            Conversely, for any bilinear form $b \in \mathbb{B}(V)$, we can similarly construct $b^{\#}_T \colon V \to \widehat{V}$ by $b^{\#}_T(\mathbfit{v})(\mathbfit{u}) = b(\mathbfit{u}, \mathbfit{v})$. Therefore, $\Gamma^{-1} \circ b^{\#}_T \in \mathcal{L}(V, V)$ is an operator over $V$. 
+        \end{proof}
+    \end{probox}
+    In fact, for any operator $T$ over an inner product space $(V, g)$, we can write down the components of $b_T$ explicitly. Fix a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ for $V$, then 
+    \begin{align*}
+        M_z\left(b_T\right)^i_j & = b_T\left(\mathbfit{z}_i, \mathbfit{z}_j\right) \\
+        & = g\Bigl(\mathbfit{z}_i, T\left(\mathbfit{z}_j\right)\Bigr) \\
+        & = g\left(\mathbfit{z}_i, \sum_{k = 1}^{n}M_z(T)^k_j\mathbfit{z}_k\right) \\
+        & = \sum_{k = 1}^{n}M_z(T)^k_jg\left(\mathbfit{z}_i, \mathbfit{z}_k\right) \\
+        & = \sum_{k = 1}^{n}M_z(g)^i_kM_z(T)^k_j.
+    \end{align*}
+    Therefore, $M_z\left(b_T\right) = M_z(g)M_z(T)$. Since $g$ is an inner product, $M_z(g)$ is invertible, which means $M_z(T) = M_z\left(b_T\right)M_z(g)^{-1}$. So here we obtain another way to convert between operators and bilinear forms via the inner product using matrix multiplication.
+    \begin{dfnbox}{Riesz Equivalence}{RieszEquiv}
+        Let $(V, g)$ be any inner product space with Riesz isomorphism $\Gamma$. An operator $T$ over~$V$ and a bilinear form $b \in \mathbb{B}(V)$ are said to be {\color{red} \textbf{Riesz-equivalent}} if 
+        \begin{equation*}
+            b(\mathbfit{u}, \mathbfit{v}) = (\Gamma \circ T)(\mathbfit{v})(\mathbfit{u}) \quad \textrm{or} \quad b(\mathbfit{u}, \mathbfit{v}) = g\bigl(\mathbfit{u}, T(\mathbfit{v})\bigr).
+        \end{equation*} 
+    \end{dfnbox}
+    Notice that $M_z(g) = \I$ if $z$ is an orthonormal basis for the inner product space $(V, g)$, so it is easy to check the following proposition holds:
+    \begin{probox}{Matrix Representation of Riesz-Equivalent Maps}{sameMatRiesz}
+        If $\tau$ is a bilinear form that is Riesz-equivalent to an operator $T$, then $\tau$ and $T$ have the same matrix representation under an orthonormal basis.
+    \end{probox}
+    \section{Sesquilinear Forms}
+    A peculiar case to take special care is vector spaces over $\C$. Note that $\C$ is not a well-order, so some of the definitions from previous sections might need to get tweaked in order to stay consistent in the complex case.
+    \begin{dfnbox}{Dot Product over $\C^n$}{scalarProd}
+        The {\color{red} \textbf{dot product}} or {\color{red} \textbf{scalar product}} between any $\mathbfit{x}, \mathbfit{y} \in \C^n$ is defined as $\mathbfit{x} \cdot \mathbfit{y} = \mathbfit{x}^{\mathrm{T}}\widebar{\mathbfit{y}}$.
+    \end{dfnbox}
+    However, we immediately realise that following this new definition, the dot product is no longer commutative nor associative under scalar multiplication, because 
+    \begin{equation*}
+        \mathbfit{u} \cdot \mathbfit{v} = \widebar{\mathbfit{v} \cdot \mathbfit{u}}, \qquad \mathbfit{u} \cdot c\mathbfit{v} = \widebar{c}\mathbfit{u} \cdot \mathbfit{v}.
+    \end{equation*}
+    Therefore, we need to re-define an equivalent notion of bilinear forms for complex-valued fields and vector spaces.
+    \begin{dfnbox}{Sesquilinear Form}{sesquilinear}
+        Let $V$ be a vector space over $\C$. A {\color{red} \textbf{sesquilinear form}} is a binary map $s \colon V \times V \to \C$ such that 
+        \begin{align*}
+            s(\alpha\mathbfit{u}_1 + \beta\mathbfit{u}_2, \mathbfit{v}) & = \alpha s(\mathbfit{u}_1, \mathbfit{v}) + \beta s(\mathbfit{u}_2, \mathbfit{v}), \\
+            s(\mathbfit{u}, \alpha\mathbfit{v}_1 + \beta\mathbfit{v}_2) & = \widebar{\alpha} s(\mathbfit{u}, \mathbfit{v}_1) + \widebar{\beta} s(\mathbfit{u}, \mathbfit{v}_1)
+        \end{align*}
+        for all $\alpha, \beta \in \C$.
+    \end{dfnbox}
+    If we denote the set of all sesquilinear forms over a vector space $V$ as $\mathbb{S}(V)$, then just like Proposition \ref{pro:BisLVV*}, $\mathbb{S}(V) \cong \mathrm{Maps}\left(V, \widehat{V}\right)$. This is because for every $s \in \mathbb{S}(V)$, we can also define some $s^{\#} \in \mathrm{Maps}\left(V, \widehat{V}\right)$ such that $s^{\#}(\mathbfit{v})(\mathbfit{u}) = s(\mathbfit{u}, \mathbfit{v})$. However, notice that now, $s^{\#}$ is no longer linear. Instead, it is said to be \textit{conjugate-linear}.
+    \begin{dfnbox}{Conjugate-Linear Map}{conjLin}
+        Let $V$ and $W$ be vector spaces over $\C$, then a map $f \colon V \to W$ is said to be {\color{red} \textbf{conjugate-linear}} if 
+        \begin{equation*}
+            f(a\mathbfit{v} + b\mathbfit{w}) = \widebar{a}f(\mathbfit{v}) + \widebar{b}f(\mathbfit{w})
+        \end{equation*}
+        for all $a, b \in \C$ and all.
+    \end{dfnbox}
+    Therefore, every sesquilinear map over a complex vector space $V$ defines a unique conjugate-linear map from $V$ to $\widehat{V}$. In the other direction, given any conjugate-linear map $s^{\#} \colon V \to \widehat{V}$, we can define some sesquilinear form $s \colon V \times V \to \C$ by $s(\mathbfit{u}, \mathbfit{v}) = s^{\#}(\mathbfit{v})(\mathbfit{u})$.
+
+    Luckily, the matrix representation of a sesquilinear form can be computed in the exact same way as a bilinear form by taking $s\left(\mathbfit{z}_i, \mathbfit{z}_j\right)$ as the $(i, j)$ entry. However, under a change of basis by $\mathbfit{y}_i = \sum_{j = 1}^{n}P^j_i\mathbfit{z}_j$, the new components are given by 
+    \begin{align*}
+        s\left(\mathbfit{y}_i, \mathbfit{y}_j\right) & = s\left(\sum_{k = 1}^{n}P^k_i\mathbfit{z}_k, \sum_{k = 1}^{n}P^k_j\mathbfit{z}_k\right) \\
+        & = \sum_{p = 1}^{n}\sum_{q = 1}^{n}P^p_is\left(\mathbfit{z}_i, \mathbfit{z}_j\right)\widebar{P^q_j}.
+    \end{align*}
+    Therefore, the change-of-basis procedure in the complex case is given by 
+    \begin{equation*}
+        M_y(s) = \mathbfit{P}^{\mathrm{T}}M_z(s)\widebar{\mathbfit{P}}.
+    \end{equation*}
+    We now construct the inner product in the complex case. However, we need to re-define symmetric-ness here because otherwise it would conflict with the properties of sesquilinear maps. A natural choice here is to just replace symmetric-ness with conjugate-symmetric-ness, i.e., $s(\mathbfit{u}, \mathbfit{v}) = \widebar{s(\mathbfit{v}, \mathbfit{u})}$. A nice consequence of this is that $s(\mathbfit{u}, \mathbfit{u})$ is always real.
+    \begin{dfnbox}{Complex Inner Product Space}{complexInnerProd}
+        A {\color{red} \textbf{complex inner product space}} is a vector space $V$ over $\C$ augmented with a sesquilinear form $g$ such that 
+        \begin{enumerate}
+            \item $g(\mathbfit{u}, \mathbfit{u}) \in \R^+_0$ for all $\mathbfit{u} \in V$;
+            \item $g(\mathbfit{u}, \mathbfit{u}) = 0$ if and only if $\mathbfit{u} = \zero$;
+            \item $g(\mathbfit{u}, \mathbfit{v}) = \widebar{g(\mathbfit{v}, \mathbfit{u})}$ for all $\mathbfit{u}, \mathbfit{v} \in V$.
+        \end{enumerate}
+    \end{dfnbox}
+    The use of conjugate-symmetric-ness ensures consistency with sesquilinear form because 
+    \begin{align*}
+        g(\mathbfit{u}, c\mathbfit{v}) & = \widebar{g(c\mathbfit{v}, \mathbfit{u})} = \widebar{cg(\mathbfit{v}, \mathbfit{u})} = \widebar{c}\widebar{g(\mathbfit{v}, \mathbfit{u})} = \widebar{c}g(\mathbfit{u}, \mathbfit{v}).
+    \end{align*}
+    In terms of the matrix representation, a conjugate-symmetric matrix means that $\mathbfit{M}^{\mathrm{T}} = \widebar{\mathbfit{M}}$.
+
+    Now, most of the definitions can work similarly in the complex vector spaces with the modified definitions. The only remaining modification here is that when changing between orthonormal bases, we need to choose a \textit{unitary} matrix instead of an orthogonal one.
+    \begin{dfnbox}{Unitary Matrix}{uniMat}
+        A matrix $\mathbfit{P}$ is said to be a {\color{red} \textbf{unitary matrix}} if $\widebar{\mathbfit{P}^{\mathrm{T}}}\mathbfit{P} = \I$.
+    \end{dfnbox}
+    Similar to $s^{\#} \in \mathrm{Maps}\left(V, \widehat{V}\right)$ defined uniquely by each sesquilinear form $s$ over $V$, the Riesz isomorphism $\Gamma \colon V \to \widehat{V}$ is now a conjugate-linear map instead of a linear one. In fact, we say that it is now a \textit{conjugate isomorphism}. However, note that unlike in a well-ordered field, now $\Gamma(\mathbfit{u})(\mathbfit{v}) = \widebar{\Gamma(\mathbfit{v})(\mathbfit{u})}$ due to conjugate-symmetric-ness. Similarly, we can convert an operator $T$ to a sesquilinear form $s_T$ over a complex vector space, but now the matrix representation is given by 
+    \begin{equation*}
+        M_z\left(s_T\right)^i_j = \sum_{k = 1}^{n}M_z(g)^i_k\widebar{M_z(T)^k_j}.
+    \end{equation*}
+    We are now ready to state a bigger theorem.
+    \begin{thmbox}{Schur's Triangularisation Theorem}{Schur}
+        Let $T$ be an operator on a finite-dimensional complex inner product space, then there exists an orthonormal basis $z$ such $M_z(T)$ is upper-triangular.
+        \tcblower
+        \begin{proof}
+            Let $(V, g)$ be a finite-dimensional complex inner product space with a basis $y$ and let $T$ be an operator on $V$. By Technique \ref{tec:Gram-Schmidt}, we can obtain an orthonormal basis $y^+$ such that $M_{y^+}(T) = \mathbfit{G}^{-1}M_y(T)\mathbfit{G}$, where $\mathbfit{G}$ is an upper-triangular unitary matrix. By Theorem \ref{thm:triable}, there exists some change-of-basis matrix $\mathbfit{M}$ such that
+            \begin{equation*}
+                \mathbfit{N} \coloneqq \mathbfit{M}^{-1}\mathbfit{G}^{-1}M_y(T)\mathbfit{G}\mathbfit{M}
+            \end{equation*}
+            is upper-triangular. Using Gram-Schmidt process again gives an orthogonal matrix 
+            \begin{equation*}
+                \mathbfit{Q} = \mathbfit{G}^{-1}\mathbfit{N}\mathbfit{G},
+            \end{equation*}
+            which is an upper-triangular matrix of $T$ under some orthonormal basis.
+        \end{proof}
+    \end{thmbox}
+    \begin{notebox}
+        \begin{remark}
+            An alternative way to state Schur's Triangularisation Theorem is that every square complex-valued matrix $\mathbfit{Q}$ can be expressed as $\mathbfit{G}^{-1}\mathbfit{N}\mathbfit{G}$ for some upper-triangular matrix $\mathbfit{N}$ and unitary matrix $\mathbfit{G}$.
+        \end{remark}
+    \end{notebox}
+    In Theorem \ref{thm:Schur}, if our initial basis $y$ is already orthonormal, then it is clear that $\mathbfit{Q} = \mathbfit{G}^{-1}\mathbfit{M}^{-1}M_y(T)\mathbfit{M}\mathbfit{G}$, and so $\mathbfit{M}\mathbfit{G}$ is unitary.
+
+    This theorem also has a version specialised for sesquilinear forms.
+    \begin{corbox}{Schur's Triangularisation Theorem for Sesquilinear Forms}{sesquilinearSchur}
+        Let $\tau$ be a sesquilinear form on a finite-dimensional complex inner product space, then there exists an orthonormal basis $z$ such $M_z(\tau)$ is upper-triangular.
+        \tcblower
+        \begin{proof}
+            Let $V$ be a finite-dimensional complex inner product space. Take $T \colon V \to V$ to be a Riesz-equivalent operator to $\tau$. By Theorem \ref{thm:Schur}, there exists some orthonormal basis $z$ for $T$ such that $M_z(T)$ is upper-triangular. By Proposition \ref{pro:sameMatRiesz}, we know that~$M_z(\tau) = \widebar{M_z(T)}$, so $M_z(\tau)$ is upper triangular.
+        \end{proof}
+    \end{corbox}
+    \begin{notebox}
+        \begin{remark}
+            Another consequence of Corollary \ref{cor:sesquilinearSchur} is that the eigenvalues of $\tau$ is exactly the conjugates of the eigenvalues of $T$.
+        \end{remark}
+    \end{notebox}
+    Recall that every square matrix can be expressed as a sum of symmetric and anti-symmetric matrices. We have defined the analogue of symmetric matrix as \textit{conjugate-symmetric} in complex vector spaces. Now let us discuss the counterpart of anti-symmetric matrices.
+    \begin{dfnbox}{Hermitianity}{Hermitian}
+        A sesquilinear form $s \colon V \times V \to \C$ is said to be {\color{red} \textbf{Hermitian}} if it is conjugate-symmetric, i.e., $s(\mathbfit{u}, \mathbfit{v}) = \widebar{s(\mathbfit{v}, \mathbfit{u})}$, and {\color{red} \textbf{anti-Hermitian}} if $s(\mathbfit{u}, \mathbfit{v}) = -\widebar{s(\mathbfit{v}, \mathbfit{u})}$.
+    \end{dfnbox}
+    It is clear that all inner products in complex vector spaces are Hermitian. The following result is easy to verify:
+    \begin{probox}{Hermitianity of Riesz-Equivalent Sesquilinear Forms}{RieszHermitian}
+        Let $\tau$ be the Riesz-equivalent sesquilinear form to an operator $T$ in some complex inner product space $(V, g)$, then $\tau$ is Hermitian if and only if $g\bigl(\mathbfit{u}, T(\mathbfit{v})\bigr) = g\bigl(T(\mathbfit{u}), \mathbfit{v}\bigr)$.
+    \end{probox}
+    \begin{notebox}
+        \begin{remark}
+            Sometimes we say that an operator is Hermitian if it is Riesz-equivalent to a Hermitian sesquilinear form.
+        \end{remark}
+    \end{notebox}
+    In terms of matrices, if $\mathbfit{S}$ is the matrix representation for $s$, then $S^i_j = \widebar{S^j_i}$ if $s$ is Hermitian and $S^i_j = -\widebar{S^j_i}$ if $s$ is anti-Hermitian, which leads to the following definition:
+    \begin{dfnbox}{Hermitain Matrix}{HermitianMat}
+        A complex-valued matrix $\mathbfit{M}$ is said to be a {\color{red} \textbf{Hermitian matrix}} if $\mathbfit{M}^{\mathrm{T}} = \widebar{\mathbfit{M}}$, and an {\color{red} \textbf{anti-Hermitian matrix}} if $\mathbfit{M}^{\mathrm{T}} = -\widebar{\mathbfit{M}}$.
+    \end{dfnbox}
+    Combining Definitions \ref{dfn:Hermitian} and \ref{dfn:HermitianMat} leads to the following result:
+    \begin{thmbox}{Spectral Theorem}{spectral}
+        Every Hermitian sesquilinear form over a complex inner product space has a real diagonal matrix representation under some orthonormal basis.
+        \tcblower
+        \begin{proof}
+            Without loss of generality, let $\mathbfit{M}$ be the matrix representation of the sesquilinear form under an orthonormal basis. By Corollary \ref{cor:sesquilinearSchur}, there exists some unitary matrix $\mathbfit{P}$ such that $\mathbfit{U} \coloneqq \mathbfit{P}^{\mathrm{T}}\mathbfit{M}\widebar{\mathbfit{P}}$ is upper-triangular. Since $\mathbfit{M}$ is Hermitian, 
+            \begin{equation*}
+                \widebar{\mathbfit{U}^{\mathrm{T}}} = \widebar{\left(\mathbfit{P}^{\mathrm{T}}\mathbfit{M}\widebar{\mathbfit{P}}\right)^{\mathrm{T}}} = \mathbfit{P}^{\mathrm{T}}\mathbfit{M}\widebar{\mathbfit{P}} = \mathbfit{U}.
+            \end{equation*}
+            Therefore, $\mathbfit{U}$ is Hermitian. However, this means that $\mathbfit{U}$ is both upper- and lower-triangular, which means that $\mathbfit{U}$ is diagonal. Notice that $U^i_i = \widebar{U^i_i}$, so $\mathbfit{U}$ must be a real matrix.
+        \end{proof}
+    \end{thmbox}
+    Using Riesz-equivalence, we can easily translate this theorem to implications in terms of operators.
+    \begin{corbox}{Hermitian Operators Have Real Eigenvalues}{realEigenHermitian}
+        Let $T$ be a Riesz-equivalent operator to a Hermitian sesquilinear form $s$, then all eigenvalues of $T$ are real.
+        \tcblower
+        \begin{proof}
+            By Theorem \ref{thm:spectral}, there exists some basis $z$ such that $M_z(s)$ is real and diagonal. By Proposition \ref{pro:sameMatRiesz}, $M_z(T) = M_z(s)$ is also real and diagonal, whose diagonal entries are exactly the eigenvalues of $T$.
+        \end{proof}
+    \end{corbox}
+    Of course, symmetric bilinear forms are just a special case of Hermitian sesquilinear forms, so we can extend Theorem \ref{thm:spectral} to the non-complex case.
+    \begin{corbox}{Spectral Theorem in Non-complex Spaces}{realSpectral}
+        Every symmetric bilinear form $b$ over a real inner product space $V$ has a real diagonal matrix representation under some orthonormal basis such that there is a real eigenvector associated to each eigenvalue.
+        \tcblower
+        \begin{proof}
+            By Theorem \ref{thm:spectral}, it is clear that there is an orthonormal basis $z$ such that the matrix $M_z(b)$ is real and diagonal, so it suffices to prove that every eigenvalue of~$M_z(b)$ is associated to at least one real eigenvector. Let $\lambda$ be any eigenvalue of $M_z(b)$, then there is some $\mathbfit{v} \neq \zero$ such that $M_z(b)\mathbfit{v} = \lambda\mathbfit{v}$. Therefore, 
+            \begin{equation*}
+                M_z(b)\widebar{\mathbfit{v}} = \widebar{M_z(b)\mathbfit{v}} = \widebar{\lambda\mathbfit{v}} = \lambda\widebar{\mathbfit{v}}
+            \end{equation*}
+            because both $M_z(b)$ and $\lambda$ are real, and so $\widebar{\mathbfit{v}}$ is also an eigenvector associated to $\lambda$. Clearly, 
+            \begin{equation*}
+                M_z(b)\left(\mathbfit{v} + \widebar{\mathbfit{v}}\right) = \lambda\left(\mathbfit{v} + \widebar{\mathbfit{v}}\right), \qquad M_z(b)\im\left(\mathbfit{v} - \widebar{\mathbfit{v}}\right) = \lambda\im\left(\mathbfit{v} - \widebar{\mathbfit{v}}\right),
+            \end{equation*}
+            which implies that $\mathbfit{v} + \widebar{\mathbfit{v}}, \im\left(\mathbfit{v} - \widebar{\mathbfit{v}}\right) \in V$ are both real. Since $\mathbfit{v} \neq \zero$, they are not both zero, so at least one of them is a real eigenvector associated to $\lambda$.
+        \end{proof}
+    \end{corbox}
+    Notice that all of our discussion so far requires us to start with some sesquilinear form or operator over some well-defined inner product space. However, in practice it is possible to work with solely matrices. For example, if $\mathbfit{M}$ is an $n \times n$ symmetric real matrix, it is of course the matrix representation for the bilinear form 
+    \begin{equation*}
+        \sum_{i = 1}^{n}\sum_{j = 1}^{n}M^i_j\epsilon^i \otimes \epsilon^j.
+    \end{equation*}
+\chapter{Determinant}
+In the previous chapter, we briefly discuss the notions of lengths and angles generalised to any vector space with the aid of an inner product. Now, we will continue our discussion to introduce the notion of \textit{volume} in the generalised sense (clearly, area is just a volume in $2$-dimensional spaces).
+\section{$m$-Forms}
+We would like to generalise the notion of bilinear forms.
+\begin{dfnbox}{Multilinear Form}{multLinForm}
+    Let $V$ be a vector space over $\F$. A {\color{red} \textbf{multilinear form}} over $V$ is a map $T \colon V^k \to \F$ such that $T$ is linear in each of its $k$ arguments. $k$ is known as the {\color{red} \textbf{degree}} of $T$.
+\end{dfnbox}
+Obviously, the set of all multilinear form of degree $k$ over $V$ is a vector space itself. Bilinear forms are just multilinear forms of degree $2$. 
+\begin{dfnbox}{Two-Form}{2form}
+    A bilinear form $\Psi$ over a finite-dimensional vector space $V$ is said to be a {\color{red} \textbf{two-form}} if it is anti-symmetric, i.e., $\Psi(\mathbfit{u}, \mathbfit{v}) = -\Psi(\mathbfit{v}, \mathbfit{u})$ for all $\mathbfit{u}, \mathbfit{v} \in V$.
+\end{dfnbox}
+Again, the set of all two-forms over a vector space $V$ is a vector space itself. Recall that the inner product is just a special type of symmetric bilinear forms. Correspondingly here, the two-form is related to something called the \textit{exterior product}.
+\begin{dfnbox}{Wedge Product}{wedge}
+    Let $V$ be a finite-dimensional vector space. For every $\alpha, \beta \in \widehat{V}$, their {\color{red} \textbf{wedge product}} or {\color{red} \textbf{exterior product}} is defined as 
+    \begin{equation*}
+        \alpha \wedge \beta \coloneqq \alpha \otimes \beta - \beta \otimes \alpha.
+    \end{equation*}
+\end{dfnbox}
+Notice that $\beta \wedge \alpha = -\alpha \wedge \beta$, so the wedge product is clearly a two-form. Apparently, this implies that $\alpha \wedge \alpha$ is just the zero mapping. Using the wedge product, we can derive the dimension of the space containing all two-forms over a vector space.
+\begin{probox}{Dimension of the Two-Form Space}{dim2Form}
+    Let $\mathcal{F}_2(V)$ be the set of all two-forms over a finite-dimensional vector space $V$, then 
+    \begin{equation*}
+        \dim\bigl(\mathcal{F}_2(V)\bigr) = \begin{pmatrix}
+            \dim(V) \\ 
+            2
+        \end{pmatrix}
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$ with dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$. For any two-form $\Psi \in \mathcal{F}_2(V)$, define
+        \begin{equation*}
+            \Phi \coloneqq \frac{1}{2}\sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ij}\zeta^i\wedge\zeta^j
+        \end{equation*}
+        where $\psi_{ij} = \Psi\left(\mathbfit{z}_i, \mathbfit{z}_j\right)$. Note that $\psi_{ji} = -\psi_{ij}$. Therefore, 
+        \begin{align*}
+            \Phi\left(\mathbfit{z}_p, \mathbfit{z}_q\right) & = \frac{1}{2}\left(\sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ij}\zeta^i\wedge\zeta^j\right)\left(\mathbfit{z}_p, \mathbfit{z}_q\right) \\
+            & = \frac{1}{2}\sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ij}\left(\zeta^i\otimes\zeta^j - \zeta^j\otimes\zeta^i\right)\left(\mathbfit{z}_p, \mathbfit{z}_q\right) \\
+            & = \frac{1}{2}\sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ij}\left(\zeta^i\otimes\zeta^j\right)\left(\mathbfit{z}_p, \mathbfit{z}_q\right) + \frac{1}{2}\sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ji}\left(\zeta^j\otimes\zeta^i\right)\left(\mathbfit{z}_p, \mathbfit{z}_q\right) \\
+            & = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ij}\left(\zeta^i\otimes\zeta^j\right)\left(\mathbfit{z}_p, \mathbfit{z}_q\right).
+        \end{align*}
+        By Proposition \ref{pro:bilBasis}, we know that 
+        \begin{equation*}
+            \Psi = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\Psi\left(\mathbfit{z}_i, \mathbfit{z}_j\right)\left(\zeta^i\otimes\zeta^j\right) = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\psi_{ij}\left(\zeta^i\otimes\zeta^j\right) = \Phi.
+        \end{equation*}
+        Therefore, $\left\{\zeta^i \wedge \zeta^j \colon i \neq j\right\}$ is a spanning set of $\mathcal{F}_2(V)$. Since $\zeta^i\wedge\zeta^j = -\zeta^i\wedge\zeta^j$, this implies that 
+        \begin{equation*}
+            \mathcal{F}_2(V) = \mathrm{span}\left\{\zeta^i \wedge \zeta^j \colon i < j\right\}.
+        \end{equation*}
+        Notice that this spanning set is minimal, so it is a basis for $\mathcal{F}_2(V)$. Therefore, 
+        \begin{equation*}
+            \dim\bigl(\mathcal{F}_2(V)\bigr) = \abs{\left\{\zeta^i \wedge \zeta^j \colon i < j\right\}} = \begin{pmatrix}
+                \dim(V) \\ 
+                2
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+We can easily generalise two-forms to $m$-forms.
+\begin{dfnbox}{$m$-Form}{mForm}
+    An {\color{red} \textbf{$m$-form}} in a finite-dimensional vector space $V$ over $F$ is an anti-symmetric multilinear form $\Psi \colon V^m \to \F$, i.e.,
+    \begin{equation*}
+        \Psi\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_i, \cdots, \mathbfit{v}_j, \cdots, \mathbfit{v}_m\right) = -\Psi\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_j, \cdots, \mathbfit{v}_i, \cdots, \mathbfit{v}_m\right)
+    \end{equation*}
+    for any $i \neq j$.
+\end{dfnbox}
+Similarly, the wedge product between $m$ dual vectors can be written as 
+\begin{equation*}
+    \bigwedge_{i = 1}^m\alpha_i \coloneqq \sum_{i = 1}^{m!}\mathrm{sgn}\left(\pi_i\right)\bigotimes_{j = 1}^m\alpha_{\pi_i(j)}
+\end{equation*}
+where each $\pi_i$ is a distinct permutation of the $\alpha_i$'s and
+\begin{equation*}
+    \mathrm{sgn}\left(\pi_i\right) = \begin{cases}
+        1 & \textrm{if an even number of swaps occur} \\
+        -1 & \textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Intuitively, we can extend Proposition \ref{pro:dim2Form} to general $m$-forms.
+\begin{probox}{Dimension of the $m$-Form Space}{dimMForms}
+    Let $\mathcal{F}_m(V)$ be the space of all $m$-forms over $V$, then 
+    \begin{equation*}
+        \dim\bigl(\mathcal{F}_m(V)\bigr) = \begin{pmatrix}
+            \dim(V) \\
+            m
+        \end{pmatrix}
+    \end{equation*}
+    and if  $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$ with dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$, each $\Psi \in \mathcal{F}_m(V)$ can be written as 
+    \begin{equation*}
+        \Psi = \frac{1}{m!}\sum_{1 \leq i_1 < i_2 < \cdots < i_m \leq \dim(V)}\Psi\left(\mathbfit{z}_{i_1}, \mathbfit{z}_{i_2}, \cdots, \mathbfit{z}_{i_m}\right)\bigwedge_{j = 1}^m\zeta^{i_j}
+    \end{equation*}
+\end{probox}
+Two results are immediate from the above proposition:
+\begin{enumerate}
+    \item For an $m$-form to be well-defined over an $n$-dimensional vector space, we require $0 < m \leq n$.
+    \item The space of $n$-forms over an $n$-dimensional vector space is $1$-dimensional.
+\end{enumerate}
+Furthermore, the space of $n$-forms over an $n$-dimensional vector space $V$ can be explicitly written as 
+\begin{equation*}
+    \mathcal{F}_n(V) \coloneqq \left\{\lambda\bigwedge_{i = 1}^n\zeta^i \colon \lambda \in \F\right\}
+\end{equation*}
+for some dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$.
+
+Recall that in Definition \ref{dfn:tranpose}, we defined the transposition of linear transformations. Applying this to $m$-forms, we can similarly define, for each linear operator $T$ on $V$, an operator $\widehat{T}$ on the space of $m$-forms over $V$ by
+\begin{equation*}
+    \widehat{T}(\Psi)\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_m\right) = \Psi\bigl(T(\mathbfit{v}_1), T(\mathbfit{v}_2), \cdots, T(\mathbfit{v}_m)\bigr).
+\end{equation*}
+Now, if $V$ happens to be $m$-dimensional, then $\widehat{T}(\Psi)$ has to be some scalar multiple of $\Psi$ because the space of $m$-forms now becomes one-dimensional.
+\section{Determinant}
+\begin{dfnbox}{Determinant}{determinant}
+    For each operator $T$ on a finite-dimensional vector space $V$, we define the {\color{red} \textbf{determinant}} of $T$ to be a scalar $\Delta(T)$ such that 
+    \begin{equation*}
+        \widehat{T}(\Omega) = \Delta(T)\Omega
+    \end{equation*}
+    for every $n$-form $\Omega$ over $V$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Clearly, $\Delta(T)$ is the unique eigenvalue of $\widehat{T}$.
+    \end{remark}
+\end{notebox}
+Now we propose the following way to compute $\Delta(T)$ for any operator:
+\begin{probox}{Computing Determinant of Operators}{computeDet}
+    For each operator $T$ with eigenvalues $\lambda_1, \lambda_2, \cdots, \lambda_k$ on an $n$-dimensional vector space $V$, where $m_i$ is the multiplicity of $\lambda_i$, we have 
+    \begin{equation*}
+        \Delta(T) = \prod_{i = 1}^{k}\lambda_i^{m_i}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:triable} and Proposition \ref{pro:upTriEigen}, there exists a basis $\left\{\mathbfit{t}_1, \mathbfit{t}_2, \cdots, \mathbfit{t}_n\right\}$ for $V$ such that 
+        \begin{equation*}
+            T\left(\mathbfit{t}_i\right) = \lambda_{I(i)}\mathbfit{t}_i + \sum_{j = 1}^{i - 1}a_j\mathbfit{t}_j
+        \end{equation*}
+        for each $i = 1, 2, \cdots, n$ where $a_1, a_2, \cdots, a_{i - 1}$ are constants and $I(i)$ is the index of the eigenvalue associated to $\mathbfit{t}_i$. Take any $n$-form $\Omega$ over $V$ and consider 
+        \begin{align*}
+            \Delta(T)\Omega & = \widehat{T}(\Omega)\left(\mathbfit{t}_1, \mathbfit{t}_2, \cdots, \mathbfit{t}_n\right) \\
+            & = \Omega\bigl(T(\mathbfit{t}_1), T(\mathbfit{t}_2), \cdots, T(\mathbfit{t}_n)\bigr) \\
+            & = \Omega\left(\lambda_{I(1)}\mathbfit{t}_1, \lambda_{I(2)}\mathbfit{t}_2, \cdots, \lambda_{I(n)}\mathbfit{t}_n\right) \\
+            & = \prod_{i = 1}^k\lambda_i^{m_i}\Omega\left(\mathbfit{t}_1, \mathbfit{t}_2, \cdots, \mathbfit{t}_n\right).
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            \Delta(T) = \prod_{i = 1}^{k}\lambda_i^{m_i}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Combining with previous results, the followings are trivial:
+\begin{enumerate}
+    \item If $T$ is Hermitian, then $\Delta(T) \in \R$.
+    \item If $T$ is a linear transformation on $V \cong \F^n$ with a basis $z$, then the coordinate transformation $T^*_z$ is such that $\Delta(T) = \Delta\left(T^*_z\right)$.
+    \item For a square matrix $\mathbfit{M}$, define $\Delta(\mathbfit{M}) = \Delta(T)$ if $\mathbfit{M}$ is the matrix representation of $T$ under some basis, then for any matrix $\mathbfit{N}$ similar to $\mathbfit{M}$, we have $\Delta(\mathbfit{N}) = \Delta(\mathbfit{M})$.
+\end{enumerate}
+We can show that the determinant stays consistent under operator composition.
+\begin{probox}{Operator Composition Preserves Determinant}{detComp}
+    For any operators $S, T$ over $V$, we have $\Delta(TS) = \Delta(T)\Delta(S)$.
+    \tcblower
+    \begin{proof}
+        Let $\Omega$ be any $\dim(V)$-form on $V$. Notice that 
+        \begin{align*}
+            \Delta(TS)\Omega\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\right) & = \widehat{TS}(\Omega)\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\right) \\
+            & = \Omega\Bigl(TS(\mathbfit{v}_1), TS(\mathbfit{v}_2), \cdots, TS\bigl(\mathbfit{v}_{\dim(V)}\bigr)\Bigr) \\
+            & = \widehat{T}(\Omega)\Bigl(S(\mathbfit{v}_1), S(\mathbfit{v}_2), \cdots, S\bigl(\mathbfit{v}_{\dim(V)}\bigr)\Bigr) \\
+            & = \Delta(T)\widehat{S}(\Omega)\bigl(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\bigr) \\
+            & = \Delta(T)\Delta(S)(\Omega)\bigl(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\bigr).
+        \end{align*}
+        Therefore, $\Delta(TS) = \Delta(T)\Delta(S)$.
+    \end{proof}
+\end{probox}
+Now we have a better justification for $\Delta(\mathbfit{N}) = \Delta(\mathbfit{M})$ if $\mathbfit{N}$ and $\mathbfit{M}$ are similar, because 
+\begin{equation*}
+    \Delta(\mathbfit{N}) = \Delta\left(\mathbfit{P}^{-1}\mathbfit{M}\mathbfit{P}\right) = \Delta\left(\mathbfit{P}^{-1}\mathbfit{P}\right)\Delta(\mathbfit{M}) = \Delta(\mathbfit{M}).
+\end{equation*}
+A clever application of the determinant allows us to determine if an operator is bijective.
+\begin{probox}{Bijectivity Test with Determinant}{testBij}
+    An operator $T$ is bijective if and only if $\Delta(T) \neq 0$.
+    \tcblower
+    \begin{proof}
+        If $T$ is bijective, the for every $\mathbfit{v} \neq \zero$, we have $T(\mathbfit{v}) \neq \zero$. Therefore, all eigenvalues of $T$ are non-zero. By Proposition \ref{pro:computeDet}, this means that $\Delta(T) \neq 0$.
+        \\\\
+        Conversely, if $\Delta(T) \neq 0$, we shall prove that $T$ is bijective by considering the contrapositive statement. If $T$ is not a bijection, then by Corollary \ref{cor:bijectiveReflexiveMap}, $T$ is not injective and so there exists some $\mathbfit{v} \neq \zero$ such that $T(\mathbfit{v}) = \zero$. This implies that $0$ is an eigenvalue of $T$ and so by Proposition \ref{pro:computeDet}, $\Delta(T) = 0$.
+    \end{proof}
+\end{probox}
+The proof of the above proposition motivates the following:
+\begin{corbox}{Determinant of $T - \lambda\mathrm{id}$}{eigenDet}
+    If $\lambda$ is an eigenvalue of an operator $T$, then $\Delta(T - \lambda\mathrm{id}) = 0$.
+    \tcblower
+    \begin{proof}
+        Let $\mathbfit{v}$ be an eigenvector associated to $\lambda$, then $\mathbfit{v} \neq \zero$ and
+        \begin{equation*}
+            (T - \lambda\mathrm{id})(\mathbfit{v}) = \zero,
+        \end{equation*}
+        so $T - \lambda\mathrm{id}$ is not bijective. By Proposition \ref{pro:testBij}, $\Delta(T - \lambda\mathrm{id}) = 0$.
+    \end{proof}
+\end{corbox}
+\section{Volume}
+Recall that the determinant of an operator reflects the scaling factor of the volume for a unit hypercube under the transformation. Therefore, we can abstract the notion of volume by using the determinant.
+\begin{dfnbox}{Volume}{vol}
+    Let $P$ be a parallelotope spanned by $\left\{\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right\}$ in an $n$-dimensional inner product space over a well-ordered field $\F$. The {\color{red} \textbf{volume}} of $P$ is defined as a mapping 
+    \begin{equation*}
+        \Theta \colon V^n \to \F
+    \end{equation*}
+    such that 
+    \begin{enumerate}
+        \item $\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) \geq 0$;
+        \item $\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) \neq 0$ if and only if $\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n$ are linearly independent;
+        \item $\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, c\mathbfit{u}_i, \cdots \mathbfit{u}_n\right) = c\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right)$ for any $c \in \F$;
+        \item $\Theta\bigl(\mathbfit{u}_1, \mathbfit{u}_2 \cdots, \mathbfit{u}_i, \cdots, \mathbfit{u}_j + c\mathbfit{u}_i, \cdots \mathbfit{u}_n\bigr) = \Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right)$ for any $c \in \F$;
+        \item $\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) = 1$ whenever $\left\{\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right\}$ is an orthonormal basis.
+    \end{enumerate}
+\end{dfnbox}
+We can easily check that volume is multilinear. Take any basis $\left\{\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right\}$ for $V$, then for any vectors $\mathbfit{s}, \mathbfit{t} \in V$, we can write 
+\begin{equation*}
+    \mathbfit{s} = s_1\mathbfit{u}_1 + \sum_{i = 2}^{n}s_i\mathbfit{u}_i, \qquad \mathbfit{t} = t_1\mathbfit{u}_1 + \sum_{i = 2}^{n}t_i\mathbfit{u}_i.
+\end{equation*}
+Therefore, 
+\begin{align*}
+    \Theta(\mathbfit{s} + \mathbfit{t}, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n) & = \Theta\left(s_1\mathbfit{u}_1 + \sum_{i = 2}^{n}s_i\mathbfit{u}_i + t_1\mathbfit{u}_1 + \sum_{i = 2}^{n}t_i\mathbfit{u}_i, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) \\
+    & = \Theta\left(s_1\mathbfit{u}_1 + t_1\mathbfit{u}_1, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) \\
+    & = s_1\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) + t_1\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) \\
+    & = \Theta\left(s_1\mathbfit{u}_1, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) + \Theta\left(t_1\mathbfit{u}_1, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) \\
+    & = \Theta\left(s_1\mathbfit{u}_1 + \sum_{i = 2}^{n}s_i\mathbfit{u}_i, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) + \Theta\left(t_1\mathbfit{u}_1 + \sum_{i = 2}^{n}t_i\mathbfit{u}_i, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) \\
+    & =  \Theta\left(\mathbfit{s}, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right) +  \Theta\left(\mathbfit{t}, \mathbfit{u}_2, \mathbfit{u}_3, \cdots, \mathbfit{u}_n\right).
+\end{align*}
+We can apply this trick to each argument of $\Theta$ and eventually realise that $\Theta$ is linear in every single slot. Furthermore, in the $2$-dimensional case, we have 
+\begin{align*}
+    0 & = \Theta\left(\mathbfit{x} + \mathbfit{y}, \mathbfit{x} + \mathbfit{y}\right) - \Theta\left(\mathbfit{x}, \mathbfit{x}\right) - \Theta\left(\mathbfit{y}, \mathbfit{y}\right) \\
+    & = \Theta\left(\mathbfit{x}, \mathbfit{y}\right) + \Theta\left(\mathbfit{y}, \mathbfit{x}\right).
+\end{align*}
+This shows that $\Theta$ is anti-symmetric and is therefore an \textbf{$n$-form} (the verification for the $n$-dimensional general case is left to the reader as an exercise).
+
+Now we make the following attempt to construct this volume map explicitly:
+\begin{dfnbox}{Volume Form}{volForm}
+    Let $V$ be an $n$-dimensional inner product space over a well-ordered field $\F$. Take any orthonormal basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ with dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$. The {\color{red} \textbf{volume form}} of $V$ is defined as 
+    \begin{equation*}
+        \Theta \coloneqq \abs{\omega_z} = \abs{\bigwedge_{i = 1}^n\zeta^i}.
+    \end{equation*}
+\end{dfnbox}
+We shall verify that the volume form truly produces the volume. It is trivial that $\abs{\omega_z} \geq 0$. Since $\Theta$ defined this way is also multilinear, it satisfies axioms $3$ and $4$ in Definition \ref{dfn:vol}. It is also clear that $\Theta\left(\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right) = 1$. Let $y$ be any different orthonormal basis, then there exists a transformation such that $\mathbfit{y}_i = Q\left(\mathbfit{z}_i\right)$ for each $i = 1, 2, \cdots, n$. Therefore, since $\omega_z$ is an $n$-form,
+\begin{equation*}
+    \omega_z\left(\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right) = \omega_z\bigl(Q\left(\mathbfit{z}_1\right), Q\left(\mathbfit{z}_2\right), \cdots, Q\left(\mathbfit{z}_n\right)\bigr) = \Delta(Q)\left(\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right) = \Delta(Q).
+\end{equation*}
+Let $\mathbfit{Q}$ be the matrix representation of $Q$, then $\mathbfit{Q}$ is orthogonal. Therefore, 
+\begin{equation*}
+    \Delta(Q)^2 = \Delta\left(\mathbfit{Q}^{\mathrm{T}}\right)\Delta\left(\mathbfit{Q}\right) = \Delta\left(\mathbfit{Q}^{\mathrm{T}}\mathbfit{Q}\right) = \Delta\left(\I\right) = 1
+\end{equation*}
+Therefore, $\Theta\left(\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right) = \abs{\Delta(Q)} = 1$.
+
+Let $\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n$ be any $n$ vectors in $V$. We first check that if the vectors are linearly dependent, then $\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) = 0$. Note that it suffices to check that the volume form evaluates to zero whenever the arguments are repeated. Consider 
+\begin{align*}
+    \Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) & = \abs{\left(\bigwedge_{i = 1}^n\zeta^i\right)\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right)} \\
+    & = \abs{\sum_{i = 1}^{m!}\mathrm{sgn}\left(\pi_i\right)\left(\bigotimes_{j = 1}^m\zeta^{\pi_i(j)}\right)\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right)}.
+\end{align*}
+If there are some $\mathbfit{u}_p = \mathbfit{u}_q$, then it is clear that one of $\zeta^{\pi_i(p)}\left(\mathbfit{u}_p\right)$ and $\zeta^{\pi_i(q)}\left(\mathbfit{u}_q\right)$ is zero for every $i$, so $\Theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) = 0$ as desired. Conversely, if $\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n$ are linearly independent, then there exists some operator $Q$ such that $\mathbfit{u}_i = Q\left(\mathbfit{z}_i\right)$ for each $i$ because the vectors form a basis. Therefore, 
+\begin{align*}
+    \omega_z\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right) = \Delta(Q)\omega_z\left(\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right) = \Delta(Q).
+\end{align*}
+$Q$ is clearly invertible, so $\Delta(Q) \neq 0$. Therefore, indeed the volume form computes the volume. It is obvious that the volume form is not unique and depends on our choice of the orthonormal basis $z$.
+\begin{dfnbox}{Orientation}{orient}
+    An {\color{red} \textbf{oriented inner product space}} $(V, g, \omega_z)$ is an inner product space $(V, g)$ augmented with a mapping 
+    \begin{equation*}
+        \omega_z \coloneqq \bigwedge_{i = 1}^n\zeta^i
+    \end{equation*}
+    where $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$ is the dual basis with respect to $z$ such that $\Theta \coloneqq \abs{\omega_z}$ is a volume in $(V, g)$. $\omega_z$ is said to be an {\color{red} \textbf{orientation}}. A basis $x$ is said to be {\color{red} \textbf{positively oriented}} if $\omega_z\left(\mathbfit{x}_1, \mathbfit{x}_2, \cdots, \mathbfit{x}_n\right) > 0$, and {\color{red} \textbf{negatively oriented}} otherwise.
+\end{dfnbox}
+By convention, we use the positively oriented canonical basis in $\R^n$ to construct 
+\begin{equation*}
+    \omega_{\epsilon} \coloneqq \bigwedge_{i = 1}^n\epsilon^i.
+\end{equation*}
+Correspondingly, the standard canonical basis is also called \textit{right-handed}, and the negatively oriented basis $\left\{-\mathbfit{e}_1, -\mathbfit{e}_2, \cdots, -\mathbfit{e}_n\right\}$ is said to be \textit{left-handed}. With a little bit of computation, one can verify that 
+\begin{equation*}
+    \Theta\left(\mathbfit{u}, \mathbfit{v}, \mathbfit{w}\right) = \abs{\mathbfit{u} \cdot \mathbfit{v} \times \mathbfit{w}}
+\end{equation*}
+under the right-handed basis. Lastly, take any linear operator $T$ over an oriented inner product space $V$, we have 
+\begin{align*}
+    \theta\bigl(T(\mathbfit{u}_1), T(\mathbfit{u}_2), \cdots, T(\mathbfit{u}_n)\bigr) = \abs{\Delta(T)}\theta\left(\mathbfit{u}_1, \mathbfit{u}_2, \cdots, \mathbfit{u}_n\right).
+\end{align*}
+Therefore, indeed the determinant of an operator represents the scaling factor in volume. Note that so far we have been working with orthonormal bases in computing the volume, but in general it may not be the case.
+\begin{probox}{Volume Form under Non-orthonormal Bases}{nonOrthoVolForm}
+    Let $(V, g, \omega_z)$ be an oriented inner product space where $z$ is an orthonormal basis with dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$. Under any dual basis $\left\{\eta^1, \eta^2, \cdots, \eta^n\right\}$, the volume form of $V$ is 
+    \begin{equation*}
+        \Theta = \sqrt{\Delta(g)}\abs{\bigwedge_{i = 1}^n\eta^i}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\left\{\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right\}$ be the basis corresponding to the $\eta^i$'s, then there exists an operator $Q \colon V \to V$ such that $\mathbfit{y}_i = Q\left(\mathbfit{z}_i\right)$. Therefore, 
+        \begin{equation*}
+            \Theta\left(\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right) = \Delta(Q)\Theta\left(\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right) = \Delta(Q).
+        \end{equation*}
+        Note that $M_z(g) = \I$ because $z$ is an orthonormal basis, so we have 
+        \begin{equation*}
+            M_y(g) = M_z(Q)^{\mathrm{T}}\I M_z(Q) = M_z(Q)^{\mathrm{T}}M_z(Q)
+        \end{equation*}
+        Therefore, $\Delta\bigl(M_z(Q)\bigr)^2 = \Delta\bigl(M_y(g)\bigr) = \Delta(g)$, and so 
+        \begin{equation*}
+            \Theta\left(\mathbfit{y}_1, \mathbfit{y}_2, \cdots, \mathbfit{y}_n\right) = \sqrt{\Delta(g)}.
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            \Theta = \sqrt{\Delta(g)}\abs{\bigwedge_{i = 1}^n\eta^i}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
 \end{document}
