@@ -774,7 +774,7 @@ Now let us examine some special graphs:
     \item Petersen graph $P$: $\nu(P) = 5, \tau(P) = 6$.
 \end{itemize}
 We may have guessed based on the above observation that $\tau(G) \geq \nu(G)$ for all graphs.
-\begin{probox}{Vertex Covering Number Is at Most Matching Number}{tauGeqNu}
+\begin{probox}{Vertex Covering Number Is at Least Matching Number}{tauGeqNu}
     For any graph $G$, $\tau(G) \geq \nu(G)$.
     \tcblower
     \begin{proof}
@@ -2208,7 +2208,7 @@ Usually, we denote a directed edge as $u \to v$ to indicate the edge's orientati
 \begin{dfnbox}{Oriented Graph}{orientedGraph}
     An {\color{red} \textbf{oriented graph}} $D$ is a digraph such that for every $u \to v \in E(D)$, $v \to u \notin E(D)$.
 \end{dfnbox}
-We now introduce some terminologies. First, for a \textit{directed cycle} of size $n$, we denote such a cycle as $\overrightarrow{C}_n$. An edge $u \to v$ is known as an \textit{in-edge} at $u$ and \textit{out-edge} at $v$. The numbers of in-edges and out-edges at a vertex $v$ are known as the \textit{in-degree} and \textit{out-degree} of $v$, denoted by $d^+(v)$ and $d^-(v)$ respectively. In particular, denote 
+We now introduce some terminologies. First, for a \textit{directed cycle} of size $n$, we denote such a cycle as $\overrightarrow{C}_n$. An edge $u \to v$ is known as an \textit{in-edge} at $u$ and \textit{out-edge} at $v$. The numbers of in-edges and out-edges at a vertex $v$ are known as the \textit{in-degree} and \textit{out-degree} of $v$, denoted by $d^-(v)$ and $d^+(v)$ respectively. In particular, denote 
 \begin{equation*}
     N^+(v) \coloneqq \left\{u \in V(D) \colon vu \in E(D)\right\}, \qquad N^-(v) \coloneqq \left\{u \in V(D) \colon uv \in E(D)\right\}.
 \end{equation*}

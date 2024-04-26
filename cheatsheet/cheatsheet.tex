@@ -1,0 +1,126 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.25cm,landscape]{geometry}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+    \begin{multicols*}{3}
+        \begin{itemize}
+            \item $G$ non-empty $\implies \exists H \subseteq G$ with $\delta(H) \geq \frac{1}{2} \bar{d}(G)$.
+            \item \textbf{Havel-Hakimi:} $(d_1, d_2, \cdots, d_n)$ is graphic iff $(d_2 - 1, \cdots, d_{d_1 + 1} - 1, d_{d_1 + 2}, \cdots, d_n)$ is graphic.
+            \item \textbf{Erdos-Gallai:} non-increasing sequence $(d_1, d_2, \cdots, d_n)$ is graphic iff $\sum_{i = 1}^n d_i$ is even and $\sum_{i = 1}^{k} d_i \leq k(k - 1) + \sum_{i = k + 1}^{n}\min\{d_i, k\}$ for all $k$.
+            \item $G$ contains a cycle $\implies 2\mathrm{diam}(G) + 1 \geq \mathrm{girth}(G)$.
+            \item $\delta(G) \geq k - 1 \implies G$ contains a subgraph isomorphic to any order-$k$ tree.
+            \item \textbf{Matching:} $\nu(G) \leq \frac{\abs{V(G)}}{2}$; \textbf{Vtx cover:} $\tau(G) \geq \nu(G)$.
+            \item \textbf{Clique:} $\omega(G)$; \textbf{Independence:} $\alpha(G) = \abs{V(G)} - \tau(G)$.
+            \item \textbf{Kneser graph:} $KG(n, k)$, vertices are $\mathcal{P}([n])$ and edges exist between disjoint subsets.
+            \item \# pairwise intersecting subsets in $KG(n, k) \leq C^{n - 1}_{k - 1}$.
+            \item Matching is maximum iff no augmenting path.
+            \item \textbf{K\"{o}nig's Thm:} $\tau(G) = \nu(G)$ for bipartite $G$.
+            \item \textbf{Hall's Thm:} bipartite $G$ contains a matching perfect to $A$ iff $\forall S \subseteq A$, $\abs{N_G(S)} \geq \abs{S}$.
+            \item $d$-regular bipartite graphs can be decomposed into $d$ perfect matchings.
+            \item $\alpha\bigl(L(G)\bigr) = \nu(G)$.        
+            \item \textbf{Tutte's Thm:} $G$ has a perfect matching iff $\forall U \subseteq V(G)$, $o(G - U) \leq \abs{U}$. 
+            \item \textbf{Petersen's Thm:} connected $3$-regular graph with no cut edge contains a perfect matching.  
+            \item \textbf{Connectivity:} $\kappa(G) \leq \kappa'(G) \leq \delta(G)$.
+            \item $\kappa(G) \geq 2 \implies G$ contains a cycle. 
+            \item \textbf{Mader's Thm:} $\bar{d}(G) \geq 4k \implies G$ contains a $k$-connected subgraph.
+            \item \textbf{Block:} maximal connected cut-vertex-free subgraph. Distinct blocks share at most $1$ vertex and no edge is in different blocks.
+            \item \textbf{Block graph:} bipartite on cut vertices and blocks and tree for connected $G$.
+            \item \textbf{Ear decomposition:} $G$ is $2$-connected iff it can be constructed by appending $H$-paths to a cycle.
+            \item \textbf{Menger's Thm:} min size of separating sets for $(A, B) =$ max \# of vertex-disjoint $A$-$B$ paths.
+            \begin{enumerate}
+                \item Local: min \# vtxs separating $a, b =$  max \# internally vertex-disjoint $a$-$b$ paths; min \# edges separating $a, b =$ max \# edge-disjoint $a$-$b$.
+                \item Global: $k$-connected iff $\forall u, v$, $\exists k$ internally vertex-disjoint $u$-$v$ paths. $k$-edge-connected iff $\forall u, v$, $\exists k$ edge-disjoint $u$-$v$ paths.
+            \end{enumerate}
+            \item \textbf{Colour:} $\omega(G), \frac{v(G)}{\alpha(G)} \leq \chi(G) \leq \frac{1}{2} + \sqrt{2e(G) + \frac{1}{4}}, \Delta(G) - 1, \delta(H) + 1 \leq 1 + \max_{H \subseteq G}\delta(H)$; $\chi'(G) = \chi\bigl(L(G)\bigr)$.
+            \item $k$-critical $\implies \delta(G) \geq k - 1$.
+            \item \textbf{Brook's Thm}:  connected graph not isomorphic to $K_n$ or odd cycle: $\chi(G) \leq \Delta(G)$.
+            \item \textbf{$k$-constructible}: $G \cong K_k$; $\exists k$-constructible $H$ with $x, y \in V(H)$ and $xy \notin E(H)$ s.t. $G \cong (H + xy)/xy$; $\exists k$-constructible $H_1$, $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$ s.t. $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$.
+            \item \textbf{Haj\'{o}s's Thm:} $\chi(G) \geq k$ iff $\exists k$-constructible subgraph.
+            \item $k$-critical $\implies k$-constructible.
+            \item $\chi'(K_n) \geq \begin{cases}
+                n - 1 & \textrm{if } n \textrm{ even} \\
+                n & \textrm{otherwise}
+            \end{cases}, \Delta(G)$. 
+            \item $\chi'(G) \geq \Delta(G)$, bipartite $\chi'(G) = \Delta(G)$ (K\"{o}nig).
+            \item \textbf{Vizing's Thm:} (I)$\Delta(G) \leq \chi'(G) \leq \Delta(G) + 1$ (II). 
+            \item \textbf{Perfect graph:} $\chi = \omega$ for all induced subgraphs. E.g. $K_n, \overline{K_n}$, (for bip) non-empty $G$, $\overline{G}$, $L(G)$.
+            \item \textbf{Weak perfect graph:} perfect iff complement is perfect.
+            \item \textbf{Strong perfect graph:} perfect iff no odd hole nor anti-hole.
+            \item \textbf{Euler's Formula:} $n - m + \ell = 2$.
+            \item Planar graph of order $\geq 3$ has $\leq \bigl(3v(G) - 6\bigr)$ edges.
+            \item \textbf{F\'{a}ry's Thm:} planar $G$ can be draw with straight lines.
+            \item $H$ \textbf{topological minor} of $G$ if $G$ has a subdivision of $H$.
+            \item $H$ is \textbf{minor} of $G$ if it can be obtained by deleting edges, deleting vertices or contracting edges.
+            \item Minor with $\Delta \geq 3$ is topological minor.
+            \item \textbf{Branching sets:} partition $\mathcal{V} \coloneqq \{V_1, V_2, \cdots, V_n\}$ s.t. $\forall V_x \in \mathcal{V}$,
+            \begin{enumerate}
+                \item $x \in V(G)$,
+                \item $G[V_x]$ is connected, and
+                \item $\exists V_y \in \mathcal{V} - \{V_x\}$ s.t. $\exists uv \in E(G)$ with $u \in V_x$ and $v \in V_y$.
+            \end{enumerate}
+            \item \textbf{Wagner's Thm:} planar iff $K_5$ and $K_{3, 3}$ are not minor.
+            \item \textbf{Kuratowski's Thm:} planar iff contain no subdivision of $K_5$ nor $K_{3, 3}$.
+            \item \textbf{Hanani-Tutte Thm:} planar iff has drawing where all pairs of edges cross even number of times.
+            \item \textbf{Geometric dual:} $\abs{V(G^*)} = \abs{\mathcal{F}(G)}, \abs{E(G^*)} = \abs{E(G)}, \abs{\mathcal{F}(G^*)} = \abs{V(G)}$.
+            \item $S \subseteq E(G)$ induces a cycle iff $S^*$ induces a min edge cut.
+            \item \textbf{Abstract dual:} $\exists \textrm{bijection } f \colon E(G) \to E(G^*)$ s.t. $\forall S \subseteq E(G)$, $S$ induces a cycle iff $S^* \coloneqq f(S)$ is a min edge cut.
+            \item \textbf{Whitney's Thm:} A graph is planar if and only if it has an abstract dual.
+            \item \textbf{Four-colour Thm:} planar $\chi \leq 4$.
+            \item \textbf{Gr\"{o}tzsch's Thm:} triangle-free planar $\chi \leq 3$.
+            \item \textbf{Eulerian circuit:} uses all edges exactly once.
+            \item Connected multigraph is Eulerian iff every vtx has an even degree.
+            \item $2k$ vertices with odd degrees $\implies$ min \# trails to decompose $G$ is $\max\{k, 1\}$.
+            \item $K_n$, $K_{m, n}$, $Q^d$ and platonic graphs are Hamiltonian. Petersen is not, but is hypo-Hamiltonian.
+            \item $G$ is Hamiltonian $\implies$ \# CCs in $G - X \leq \abs{X}$.
+            \item \textbf{Dirac's Thm:} $G$ with order $\geq 3$ and $\delta(G) \geq \frac{n}{2}$ is Ham.
+            \item $n$-vertex Hamiltonian graph contains a path of length $\geq \min\{n - 1, 2\delta(G)\}$.
+            \item graph without any path of length $k$, then $e(G) \leq \frac{k - 1}{2}n$.
+            \item \textbf{Ore's Thm:} graph of order $\geq 3$ is Hamiltonian if $\forall u \not\sim v$, $d_G(u) + d_G(v) \geq n$.
+            \item \textbf{Hamiltonian closure:} connect all non-adjacent vertices with degree sum $\geq n$.
+            \item Hamiltonian iff closure is Hamiltonian.
+            \item \textbf{Chv\'{a}tal-Erd\"{o}s Thm:} $G$ with order $\geq 3$ is Hamiltonian if $\kappa(G) \geq \alpha(G)$.
+            \item $2$-connected $k$-regular graphs of order $\leq 3k$ are Ham.
+            \item \textbf{Robinson-Wormald Thm:} almost all regular graphs are Hamiltonian.
+            \item \textbf{Smith's Thm:} $d$-regular graph where $d$ is odd, $\forall e$, $\exists$ even \# Hamiltonian cycles containing $e$.
+            \item Every cubic Hamiltonian graph contains at least $3$ Hamiltonian cycles.
+            \item \textbf{Hamiltonian sequence:} all degree sequences element-wise at least $\bm{a}$ produce Hamiltonian graphs.
+            \item \textbf{Chv\'{a}tal's Thm:} if $n \geq 3$, a non-decreasing integer sequence $(a_1, a_2, \cdots, a_n)$ is Hamiltonian iff $\forall i < \frac{n}{2}$, $a_i \leq i \implies a_{n - i} \geq n - i$.
+            \item An integer sequence $\{a_i\}_{i = 1}^n \coloneqq (a_1, a_2, \cdots, a_n)$ is path-Hamiltonian iff for every $i \leq \frac{n}{2}$, $a_i < i$ implies $a_{n + 1 - i} \geq n - i$.
+            \item \textbf{Vertex-transitive graph:} $\forall v_1, v_2 \in V(G)$, $\exists$ isomorphism $f \colon V(G) \to V(G)$ s.t. $f(v_1) = v_2$.
+            \item \textbf{Babai's Thm:} Every connected vertex-transitive graph $G$ contains a cycle of length at least $\sqrt{3n}$.
+            \item \textbf{Oriented graph:} digraph with no bi-directional edges.
+            \item $\sum_{v \in V(D)}d^+(v) = \sum_{v \in V(D)}d^-(v) = e(D)$
+            \item Eulerian iff $d^+(v) =d^-(v)$ for all $v$.
+            \item \textbf{Kernel:} $S \subseteq V(D)$ s.t. $\forall u, v \in S$, $uv, vu \notin E(D)$ and $\forall w \in V(D) - S$, $\exists w' \in S$ with $ww' \in E(D)$.
+            \item Directed odd cycles have no kernel.
+            \item \textbf{Richardson's Thm:} directed-odd-cycle-free graph has a kernel.
+            \item Every tournament has a Hamiltonian path. Acyclic tournament is called transitive.
+            \item A digraph is acyclic iff it has a topological ordering.
+            \item A tournament contains a unique Hamiltonian path iff it's transitive.
+            \item A non-transitive tournament contains a directed triangle.
+            \item \textbf{King:} a vertex in a tournament s.t. every other vertex can reach it by a path of length at most $2$.
+            \item \textbf{Landau's Thm:} Every tournament has a king.
+            \item \textbf{Quasi-kernel:} a set of ``king''s.
+            \item \textbf{Chv\'{a}tal-Lov\'{a}sz Thm:} Every digraph has a quasi-kernel.
+            \item $K_n$: $\nu = \left\lfloor\frac{n}{2}\right\rfloor, \tau = n - 1, \alpha = 1, \kappa = \kappa' = n - 1, \chi = n$.
+            \item $C_n$: $\nu = \alpha = \left\lfloor\frac{n}{2}\right\rfloor, \tau = \left\lceil\frac{n}{2}\right\rceil, \kappa = \kappa' = 2, \chi = 2 \textrm{ if } n | 2 \textrm{ else } 3$.
+            \item $P_n$: $\nu = \alpha = \left\lfloor\frac{n + 1}{2}\right\rfloor, \tau = \left\lceil\frac{n}{2}\right\rceil, \kappa = \kappa' = 1$.
+            \item $K_{m, n}$: $\nu = \tau = \kappa = \kappa' = \min\{m, n\}, \alpha = \max\{m, n\}$.
+            \item $Q^d$: $\nu = \tau = 2^{d - 1}, \alpha = 2^{d - 1}, \kappa = \kappa' = d$.
+            \item Petersen graph: $\nu = 5, \tau = 6, \alpha = 4, \chi = 3$.
+        \end{itemize}
+    \end{multicols*}
+\end{document}
