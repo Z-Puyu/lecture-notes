@@ -24,9 +24,11 @@
             \item $\delta(G) \geq k - 1 \implies G$ contains a subgraph isomorphic to any order-$k$ tree.
             \item \textbf{Matching:} $\nu(G) \leq \frac{\abs{V(G)}}{2}$; \textbf{Vtx cover:} $\tau(G) \geq \nu(G)$.
             \item \textbf{Clique:} $\omega(G)$; \textbf{Independence:} $\alpha(G) = \abs{V(G)} - \tau(G)$.
+            \item $\alpha(G) \geq \frac{\abs{V(G)}}{\Delta(G) + 1}$.
             \item \textbf{Kneser graph:} $KG(n, k)$, vertices are $\mathcal{P}([n])$ and edges exist between disjoint subsets.
             \item \# pairwise intersecting subsets in $KG(n, k) \leq C^{n - 1}_{k - 1}$.
             \item Matching is maximum iff no augmenting path.
+            \item If $G$ has no isolated vertex, then $\nu(G) \geq \frac{\abs{V(G)}}{\Delta(G) + 1}$.
             \item \textbf{K\"{o}nig's Thm:} $\tau(G) = \nu(G)$ for bipartite $G$.
             \item \textbf{Hall's Thm:} bipartite $G$ contains a matching perfect to $A$ iff $\forall S \subseteq A$, $\abs{N_G(S)} \geq \abs{S}$.
             \item $d$-regular bipartite graphs can be decomposed into $d$ perfect matchings.
@@ -35,6 +37,7 @@
             \item \textbf{Petersen's Thm:} connected $3$-regular graph with no cut edge contains a perfect matching.  
             \item \textbf{Connectivity:} $\kappa(G) \leq \kappa'(G) \leq \delta(G)$.
             \item $\kappa(G) \geq 2 \implies G$ contains a cycle. 
+            \item Every connected $k$-regular bipartite graph for $k \geq 2$ is $2$-connected.
             \item \textbf{Mader's Thm:} $\bar{d}(G) \geq 4k \implies G$ contains a $k$-connected subgraph.
             \item \textbf{Block:} maximal connected cut-vertex-free subgraph. Distinct blocks share at most $1$ vertex and no edge is in different blocks.
             \item \textbf{Block graph:} bipartite on cut vertices and blocks and tree for connected $G$.
