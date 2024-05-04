@@ -1,0 +1,251 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.25cm,landscape]{geometry}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+    \begin{multicols*}{3}
+        \begin{itemize}
+            \item Half-space: $H = \{\bm{x} \in \R^n \colon \bm{a}^{\mathrm{T}}\bm{x} \leq b\}$.
+            \item Polyhedral set: \textbf{finite} union of half-spaces.
+            \item Convert to standard form:
+            \begin{enumerate}
+                \item $\bm{a_i}^{\mathrm{T}}\bm{x} \leq b_i \longrightarrow \bm{a_i}^{\mathrm{T}}\bm{x} + s_i = b_i$ for $s_i \geq 0$.
+                \item $x_i \leq 0 \longrightarrow -x_i^- = x_i$ s.t. $-x_i^- \geq 0$.
+                \item Free variable $x_i = x_i^+ - x_i^-$ for $x_i^+, x_i^- \geq 0$.
+            \end{enumerate}
+            \item $\max f_i(\bm{x})$ is convex if $f_i$'s are convex. 
+            \item \textbf{Extreme Point:} A point $\bm{x}^* \in P$ is said to be an \textbf{extreme point} if whenever there are $\bm{y}, \bm{z} \in P$ with $\bm{x}^* = \lambda\bm{y} + (1 - \lambda)\bm{z} = \bm{x}^*$ for some $\lambda \in (0, 1)$, we have $\bm{y = z = x}^*$.
+            \item \textbf{Vertex:} A point $\bm{x}^* \in P$ is said to be a \textbf{vertex} if there exists some $\bm{c}$ such that $\bm{c}^{\mathrm{T}}\bm{x}^* > \bm{c}^{\bm{T}}\bm{y}$ for all $\bm{y} \in P - \{\bm{x}^*\}$.
+            \item \textbf{BFS:} $\bm{x}^* \in P$ is said to be a BFS if there are $n$ linearly independent constraints which are active at $\bm{x}^*$. The number of linearly independent active constraints at $\bm{x}^*$ is called the \textbf{rank} of $\bm{x}^*$.
+            \item \textbf{Basic solution:} $\bm{x}^* \in \R^n$ is a basic solution iff
+            \begin{itemize}
+                \item $\bm{Ax}^* = \bm{b}$, and
+                \item There exists an index set $B \subseteq \left\{1, 2, \cdots, n\right\}$ such that the set $\left\{\bm{A}_i \colon i \in B\right\}$ is linearly independent and $x^*_j = 0$ for all $j \notin B$.
+            \end{itemize}
+            \item For non-empty polyhedron $P$, the followings are equivalent:
+            \begin{enumerate}
+                \item $P$ does not contain any straight line.
+                \item $P$ has a basic feasible solution.
+                \item $P$ has $n$ linearly independent constraints.
+            \end{enumerate}
+            \item For every BFS, $\bm{x}_N = \mathbf{0}$. If $\bm{x}_B$ contains zero entries, then $\bm{x}$ is degenerate.
+            \item Feasible direction to adjacent BFS: $\bm{d}^j = \left(\bm{d}^j_B, \bm{d}^j_N\right)$ for some $j \in N$, such that $\bm{d}^j_N = \bm{e}_j$ and $\bm{d}^j_B = -\bm{A}_B^{-1}\bm{A}_j$.
+            \item Every feasible direction can be expressed as a linear combination of $\bm{d}^j$'s.
+            \item \textbf{Reduced cost:} $\bar{c}_j = c_j - \bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}_j$.
+            \item Step size to adjacent BFS: $\bar{\theta}_j = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\}$.
+            \item If $\bm{\bar{c}} \geq \mathbf{0}$, then $\bm{x}^*$ is optimal; if $\bm{x}^*$ is optimal and non-degenerate, then $\bm{\bar{c}} \geq \mathbf{0}$.
+            \item \textbf{Simplex method:}
+            \begin{enumerate}
+                \item $\bm{x}_0$: any basic feasible solution. 
+                \item At the $k$-th iteration, choose a basis $B_k$.
+                \item Let $N_k \coloneqq \left\{1, 2, \cdots, n\right\} - B_k$. For each $j \in N_k$, compute the reduced cost 
+                \begin{equation*}
+                    \bar{c}_j = c_j - \bm{c}_{B_k}^{\mathrm{T}}\bm{A}_{B_k}^{-1}\bm{A}_j.
+                \end{equation*}
+                \item If $\bar{c}_j \geq 0$ for all $j \in N_k$, $\bm{x}_k$ is an optimal solution.
+                \item Otherwise:
+                \begin{enumerate}
+                    \item Take some $j \in N_k$ such that $\bar{c}_j < 0$. $\left(\bm{x}_{k}\right)_j$ is called an \textbf{entering variable}.
+                    \item Compute $\bm{d}^j_{B_k} = -\bm{A}_{B_k}^{-1}\bm{A}_j$.
+                    \item If $\bm{d}^j_{B_k} \geq \mathbf{0}$, the problem is \textbf{unbounded}.
+                    \item Otherwise:
+                    \begin{enumerate}
+                        \item Take $\bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = \frac{x_{\ell}}{d^j_{\ell}}$. $\left(\bm{x}_{k}\right)_{\ell}$ is called a \textbf{leaving variable}.
+                        \item Update $B_{k + 1} \coloneqq (B - \{\ell\}) \cup \{j\}$.
+                        \item Update $\bm{x}_{k + 1}$ by 
+                        \begin{equation*}
+                            \left(\bm{x}_{k + 1}\right)_i = \begin{cases}
+                                \left(\bm{x}_{k}\right)_i + \bar{\theta_j}\bm{d}^j_i & \quad\textrm{if } i \in B - \{\ell\} \\
+                                \bar{\theta_j} & \quad\textrm{if } i = j \\
+                                0 & \quad\textrm{otherwise}
+                            \end{cases}
+                        \end{equation*} 
+                    \end{enumerate}
+                \end{enumerate}
+            \end{enumerate}
+            \item \textbf{Tableau implementation:} 
+            \begin{center}
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    Basic & $\bm{x}$ & Solution \\
+                    \hline
+                    $\bm{\bar{c}}$ & $\bm{c}^{T} - \bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}$ & $-\bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{b}$ \\
+                    \hline
+                    $\bm{x}_B$ & $\bm{A}_B^{-1}\bm{A}$ & $\bm{A}_B^{-1}\bm{b}$ \\
+                    \hline
+                \end{tabular}
+                \begin{tabular}{|c|ccc|c|}
+                    \hline
+                    Basic & $x_1$ & $\cdots$ & $x_n$ & Solution \\
+                    \hline
+                    $\bm{\bar{c}}$ & $\bar{c_1}$ & $\cdots$ & $\bar{c}_n$ & $-\bm{c}^{\mathrm{T}}\bm{x}_B$ \\
+                    \hline
+                    $x_{B(1)}$ & & & & \\
+                    $\vdots$ & $\bm{A}_B^{-1}\bm{A}_1$ & $\cdots$ & $\bm{A}_B^{-1}\bm{A}_n$ & $\bm{A}_B^{-1}\bm{b}$ \\
+                    $x_{B(m)}$ & & & & \\
+                    \hline
+                \end{tabular}
+                \begin{tabular}{|c|cc|c|}
+                    \hline
+                    Basic & $\bm{x}_B$ & $\bm{x}_N$ & Solution \\
+                    \hline
+                    $\bm{\bar{c}}$ & $\mathbf{0}$ & $\bm{c}_N^{T} - \bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}_N$ & $-\bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{b}$ \\
+                    \hline
+                    $\bm{x}_B$ & $\bm{I}$ & $\bm{A}_B^{-1}\bm{A}_N$ & $\bm{A}_B^{-1}\bm{b}$ \\
+                    \hline
+                \end{tabular}
+            \end{center}
+            At every iteration, swap entering with leaving variables, normalise the pivot row, and do EROs to restore $\bm{I}$.
+            \item \textbf{Two-Phase method:} 
+            \begin{enumerate}
+                \item Manipulate constraint s.t. $\bm{b} \geq \mathbf{0}$.
+                \item Construct the auxiliary linear program
+                \begin{align*}
+                    \min_{\bm{y} \in \R^m} & \sum_{i = 1}^{m}y_i \quad\textrm{s.t. } \bm{Ax + y = b}, \bm{x}, \bm{y} \geq \mathbf{0}.
+                \end{align*}
+                \item Run simplex method with $(\mathbf{0}, \bm{b})$ to obtain its optimal solution $\left(\bm{y}^*, \bm{x}^*\right)$ and optimal value $v^*$.
+                \item If $v^* > 0$, the original feasible region is $\varnothing$.
+                \item Otherwise, $v^* = 0$, $\bm{x}^*$ is an initial BFS.
+            \end{enumerate} 
+            \item \textbf{Big-$M$ method:}
+            \begin{enumerate}
+                \item Manipulate constraint s.t. $\bm{b} \geq \mathbf{0}$.
+                \item Augment the problem:
+                \begin{align*}
+                    \min \bm{c}^{\mathrm{T}}\bm{x} + M\sum_{i = 1}^{m}y_i \quad \textrm{s.t. } \bm{Ax + y = b}, \bm{x}, \bm{y} \geq \mathbf{0}.
+                \end{align*}
+                \item Run simplex method with $(\mathbf{0}, \bm{b})$.
+                \item If an optimal solution $\left(\bm{y}^*, \bm{x}^*\right)$ exists with $\bm{y}^* = \mathbf{0}$, $\bm{x}^*$ is an optimal solution.
+                \item Otherwise, the original problem has empty feasible set or is unbounded.
+            \end{enumerate}
+            \item Special cases:
+            \begin{enumerate}
+                \item Multiple leaving variables: degenerate BFS.
+                \item Multiple optimal solutions iff $\bar{c}_j = 0$ at an optimum.
+                \begin{enumerate}
+                    \item If $\bar{c}_j = 0$ but $\bm{d}^j \geq \mathbf{0}$, the optimal set is $\left\{\bm{x}^* + \theta\bm{d}^j \colon \theta \geq 0\right\}$.
+                    \item If multiple optimal BFSs exist, the optimal set is $\mathrm{conv}\left\{\bm{x}^1, \bm{x}^2, \cdots, \bm{x}^k\right\}$.
+                \end{enumerate}
+                \item $\bar{c}_j < 0$ but $\bm{d}^j \geq \mathbf{0}$: unbounded.
+                \item Empty feasible set: detect with two-phase method or Big-$M$ method.
+                \item \textbf{Dual problem:} $\max_{\bm{p} \in \mathbb{R}^n} \bm{p}^{\mathrm{T}}\bm{b} \quad \textrm{s.t. } \bm{p}^{\mathrm{T}}\bm{A} \leq \bm{c}^{\mathrm{T}}$.
+                \item Dual of the dual is the primal.
+                \item \textbf{Weak duality:} $\sup \bm{p}^{\mathrm{T}}\bm{b} \leq \inf \bm{c}^{\mathrm{T}}\bm{x}$.
+                \item If $(\bm{p}^*)^{\mathrm{T}}\bm{b} = \bm{c}^{\mathrm{T}}\bm{x}^*$, then both are optimal solutions.
+                \item ($P$) is unbounded iff ($D$) is infeasible. ($P$) is infeasible iff ($D$) is unbounded.
+                \item \textbf{Strong duality:} If primal and dual are feasible, then $(\bm{p}^*)^{\mathrm{T}}\bm{b} = \inf \bm{c}^{\mathrm{T}}\bm{x}^*$. The dual optimal solution $\bm{p}^* = \bm{c}^{\mathrm{T}}_B\bm{A}_B$.
+                \item \textbf{Complementary slackness:} Let $(P)$ be a primal linear program with constraints $\bm{a}_i^{\mathrm{T}}\bm{x} \leq b_i$, $\bm{a}_i^{\mathrm{T}}\bm{x} \geq b_i$ or $\bm{a}_i^{\mathrm{T}}\bm{x} = b_i$. Let $\bm{x}$ and $\bm{p}$ be feasible solutions to $(P)$ and the dual problem $(D)$ respectively, then $\bm{x}$ and $\bm{p}$ are optimal iff 
+                \begin{equation*}
+                    p_i\left(\bm{a}_i^{\mathrm{T}}\bm{x} - b_i\right) = 0, \qquad \left(c_j - \bm{p}^{\mathrm{T}}\bm{A}_j\right)x_j = 0
+                \end{equation*}
+                for all $i, j$. A feasible $\bm{x}$ is optimal iff there is a feasible dual solution $\bm{p}$ satisfying complementary slackness conditions.
+            \end{enumerate} 
+            \item \textbf{Dual simplex method:}
+            \begin{enumerate}
+                \item Manipulate the constraints and add slack variables so that the right-most portion of $\bm{A}$ becomes an identity matrix.
+                \item Run simplex method on the transformed problem, while maintaining $\bar{\bm{c}} \geq \mathbf{0}$.
+                \begin{enumerate}
+                    \item At the $k$-th iteration, if there is no negative basic variable, then an optimal primal solution has been found.
+                    \item Otherwise, select some $x_{\ell} < 0$ as the leaving variable.
+                    \begin{enumerate}
+                        \item If $d^j_{\ell} \geq 0$ for all $j \in N_k$, then the primal problem is infeasible. 
+                        \item Otherwise, take 
+                        \begin{equation*}
+                            i = \mathrm{argmin}_{j \in N_k}\left\{\frac{\bar{c}_j}{\abs{d^j_{\ell}}} \colon d^j_{\ell} < 0\right\}
+                        \end{equation*}
+                        as the index of the entering variable.
+                    \end{enumerate}
+                \end{enumerate}
+                \item Terminate when we have obtained $\bm{x}_B \geq \mathbf{0}$.   
+            \end{enumerate}
+            \item \textbf{Sensitivity analysis:}
+            \begin{enumerate}
+                \item Optimality condition: $\bm{\bar{c}} = \bm{c}^{\mathrm{T}} - \bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{A} \geq \mathbf{0}$; Feasibility condition: $\bm{A}_B^{-1}\bm{b} \geq \mathbf{0}$.
+                \item $\bm{b} + \delta\bm{e}_i$: $\bm{x}_B^* + \delta\left(\bm{A}_B^{-1}\bm{e}_i\right) \geq \mathbf{0}$. New optimal value: $\bm{c}^{\mathrm{T}}_B\bm{A}_B^{-1}\left(\bm{b} + \delta\bm{e}_i\right) = \bm{c}^{\mathrm{T}}_B\bm{A}_B^{-1}\bm{b} + \delta p^*_i$. $p^*_i$ is the \textbf{marginal cost}.
+                \item $\bm{c} + \delta\bm{e}_i$: If $i$ is non-basic, optimal iff $\delta \geq -\bar{c}_j$. If $i$ is basic, for each $j \in N$ we need $c_i - \left(\bm{c}_B + \delta\bm{e}_j\right)^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}_i = \bar{c}_j - \delta\bm{e}_j^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}_i \geq 0$. Define $\bar{a}_{i, j} = \bm{e}_j^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}_i$, then $\bm{x}^*$ is still optimal iff
+                \begin{equation*}
+                    \max_{\bar{a}_{i, j} < 0} \frac{\bar{c}_j}{\bar{a}_{i, j}} \leq \delta \leq \min_{\bar{a}_{i, j} > 0} \frac{\bar{c}_j}{\bar{a}_{i, j}}.
+                \end{equation*}
+                \item $a_{ij} + \delta$ for some $j \in N$. $\bm{x}^*$ is still feasible iff $\bar{c}_j' = \bar{c}_j - \delta p_i \geq 0$.
+                \item New variable $x_{n + 1}$: $(\bm{x}^*, 0)$ is a BFS, so it is optimal iff $\bar{c}_{n + 1} = c_{n + 1} - \bm{c}_B^{\mathrm{T}}\bm{A}_B^{-1}\bm{A}_{n + 1} \geq 0$. Otherwise, $x_{n - 1}$ is entering variable so we run simplex again.
+                \item New constraint $\bm{a}_{m + 1}^{\mathrm{T}}\bm{x} \leq b_{m + 1}$ with induced new slack variable $x_{n + 1}$: nothing to do if $\bm{x}^*$ satisfies the constraint. Otherwise add $x_{n + 1}$ as new basic variable, and $x_{n + 1} < 0$ ($x_{n + 1} \quad \bm{a}_B^{\mathrm{T}} \quad \bm{a}_N^{\mathrm{T}} \quad 1 \quad b_{m + 1}$ in optimal tableau). Run dual simplex method to obtain new solution.
+            \end{enumerate}
+            \item Flow balance constraint: 
+            \begin{equation*}
+                \sum_{j \in O(i)}x_{ij} - \sum_{k \in I(i)}x_{ki} = b_i \quad \forall i \in V.
+            \end{equation*}
+            \item Row sums of node-arc incidence matrix and supply vector are zero.
+            \item If $\bm{Ax = b}$ where $\bm{A}$ is a $0$-$1$ matrix such that the $1$'s in each column appear consecutively, then 
+            \begin{equation*}
+                \bm{A}' = \begin{bmatrix}
+                    1 & 0 & \cdots & 0 & 0 \\
+                    -1 & 1 & \cdots & 0 & 0 \\
+                    \vdots & \vdots & \ddots & \vdots & \vdots \\
+                    0 & 0 & \cdots & - 1 & 1 \\
+                    0 & 0 & \cdots & 0 & -1
+                \end{bmatrix}\bm{A}
+            \end{equation*}
+            is a node-arc incidence matrix.
+            \item \textbf{SSSP:} $\min \bm{c}^{\mathrm{T}}\bm{x} \quad \textrm{s.t. } \bm{Ax} = \bm{e}_s - \bm{e}_t, \bm{x} \geq \mathbf{0}$. Dual: $\max p_s - p_t \quad \textrm{s.t. }p_i - p_j \leq c_{(i, j)} \quad \forall (i, j) \in E(G)$. We can set $p_t = 0$ when solving the dual.
+            \item \textbf{Three Jug Puzzle: }
+            \begin{itemize}
+                \item $(i, j) \to (b, j)$: $1 \to 2$;
+                \item $(i, j) \to (0, j)$: $2 \to 1$;
+                \item $(i, j) \to (i, c)$: $1 \to 3$;
+                \item $(i, j) \to (i, 0)$: $3 \to 1$;
+                \item $(i, j) \to \left(\min\left\{0, i + j - c\right\}, \max\left\{i + j, c\right\}\right)$: $2 \to 3$;
+                \item $(i, j) \to \left(\max\left\{i + j, b\right\}, \min\left\{0, i + j - b\right\}\right)$: $3 \to 2$.
+            \end{itemize}
+            \item \textbf{Dynamic Lot Sizing: } $c_{(i, j)} = K_i + c_ix_i + \sum_{k = i}^{j - 1}h_kI_k$ where $I_k = x_i - \sum_{r = i}^{k}d_r = \sum_{r = k + 1}^{j - 1}d_r$, so 
+            \begin{equation*}
+                c_{(i, j)} = K_i + c_i\sum_{k = i}^{j - 1}d_k + \sum_{k = i}^{j - 2}\left(h_k\sum_{r = k + 1}^{j - 1}d_r\right).
+            \end{equation*}
+            \item \textbf{Max flow:} $\min v \quad \textrm{s.t. } \bm{Ax} = (\bm{e}_s - \bm{e}_t)v, \mathbf{0} \leq \bm{x} \leq \bm{u}$. If there are multiple sources/destinations, add artificial single source and destination with uncapacitated arcs.
+            \item \textbf{Min cut:} $\min\bm{u}^{\mathrm{T}}\bm{z} \quad \textrm{s.t. } \bm{d}^{\mathrm{T}}\bm{y} = 1, \bm{z} - \bm{A}^{\mathrm{T}}\bm{y}\leq \mathbf{0}, \bm{z} \geq \mathbf{0}$. Here $\bm{u}$ is the capacities, $\bm{y}, \bm{z}$ are boolean vectors. $\bm{y}$ indicates the section a vertex is in, $\bm{z}$ indicates if an edge is taken. It is dual to max flow.
+            \item Truncated node-arc incidence matrix $\widetilde{A}$: delete last row from $\bm{A}$. An edge set $B$ is a basis of $\widetilde{A}$ iff it induces a spanning tree. Dual vector $\bm{p}^{\mathrm{T}} = \bm{c}^{\mathrm{T}}_B\widetilde{A}_B^{-1}$.
+            \item \textbf{Network simplex method:}
+            \begin{enumerate}
+                \item Take a spanning tree $T_0 \subseteq G$ and find a basis $B$ from $E(T_0)$ and a feasible tree solution $\bm{x}_0$.
+                \item At the $k$-th iteration, compute $\bm{p}^{\mathrm{T}} = \bm{c}^{\mathrm{T}}_{B}\widetilde{\bm{A}}_{B}^{-1}$.
+                \item Solve $p_n = 0, p_i - p_j = c_{(i, j)}$ for all $(i, j) \in B$.
+                \item Reduced cost $\bar{c}_{(i, j)} = c_{(i, j)} - (p_{i_k} - p_{j_k})$.
+                \item If $\bar{c}_{(i, j)} \geq 0$ for all $(i, j) \in E(G)$, then $\bm{x}_k$ is optimal. 
+                \item Otherwise, choose $(i, j) \notin B$ with $\bar{c}_{(i, j)} < 0$.
+                \item Add $(i, j)$ to produce a cycle, $i \to j$ is forward.
+                \begin{enumerate}
+                    \item Unbounded if no backward arc.
+                    \item Otherwise, $\theta^* \coloneqq x_{pq} = \min_{(k, {\ell}) \in C_b}x_{k\ell}$.
+                \end{enumerate}
+                \item Update $\bm{x}_k$ to $\bm{x}_{k + 1}$ by 
+                \begin{equation*}
+                    \widehat{x_{k\ell}} = \begin{cases}
+                        x_{k\ell} + \theta^* & \textrm{if } (k, {\ell}) \in C_f \\
+                        x_{k\ell} - \theta^* & \textrm{if } (k, {\ell}) \in C_b \\
+                        x_{k\ell} & \textrm{otherwise}
+                    \end{cases}.
+                \end{equation*}
+                \item Update $T_{k + 1} = \bigl(T - (p, q)\bigr)\cup (i, j)$.
+            \end{enumerate}
+            \item \textbf{Two-phase network simplex method:}
+            \begin{enumerate}
+                \item Connect all $i \to n$, set $c_{(i, j)} = 0$ and $c_{(i, n)} = 1$.
+                \item Use star rooted at $n$ as initial basis to remove all extra arcs. Take the resultant basis to run network simplex method.
+            \end{enumerate}
+            \item If $G$ is a weakly connected network, then $\widetilde{A}_B^{-1}$ is integer for all $B$.
+            \item Let $G$ be an $n$-vertex weakly connected network. Consider a network flow problem $(P)$ such that an optimal solution exists. If the supply vector $\bm{b}$ consists of purely integer entries, then there is an integer optimal solution; if the cost vector $\bm{c}$ consists of purely integer entries, then there is an integer dual optimal solution.
+        \end{itemize}
+    \end{multicols*}
+\end{document}

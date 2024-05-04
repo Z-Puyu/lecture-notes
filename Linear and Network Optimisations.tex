@@ -2,9 +2,92 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead (see below):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -58,11 +141,11 @@ where the $a_i$'s are real coefficients. In matrix notations, this becomes
 \begin{equation*}
     f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + a_0
 \end{equation*}
-for some $\mathbfit{c} \in \R^n$. Let $f(\mathbfit{x}) = a_0 + b$, then we have $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = b$. Note that this level set equation gives a linear function in $\R^{n - 1}$, because obviously $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = c_nx_n + \mathbfit{\bar{c}}^{\mathrm{T}}\mathbfit{x'}$, so
+for some $\mathbfit{c} \in \R^n$. Let $f(\mathbfit{x}) = a_0 + b$, then we have $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = b$. Note that this level set equation gives a linear function in $\R^{n - 1}$, because obviously $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = c_nx_n + \mathbfit{\widebar{c}}^{\mathrm{T}}\mathbfit{x'}$, so
 \begin{equation*}
-    x_n = \frac{b}{c_n} - \frac{1}{c_n}\mathbfit{\bar{c}}^{\mathrm{T}}\mathbfit{x'}.
+    x_n = \frac{b}{c_n} - \frac{1}{c_n}\mathbfit{\widebar{c}}^{\mathrm{T}}\mathbfit{x'}.
 \end{equation*} 
-Apparently, $-\frac{1}{c_n}\mathbfit{\bar{c}} \in \R^{n - 1}$, so $x_n$ is a linear function of $\mathbfit{x}'$. This means every straight line in $\R^n$ is defined by an equation
+Apparently, $-\frac{1}{c_n}\mathbfit{\widebar{c}} \in \R^{n - 1}$, so $x_n$ is a linear function of $\mathbfit{x}'$. This means every straight line in $\R^n$ is defined by an equation
 \begin{equation*}
     \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b
 \end{equation*}
@@ -329,9 +412,9 @@ where $\mathbfit{A} \in \R^{m \times n}$. Obviously, $P$ has no basic feasible s
             \begin{bmatrix}
                 \mathbfit{A}_B & \mathbfit{A}_N \\
                 \mathbf{0} & \mathbfit{I}_N
-            \end{bmatrix}\mathbfit{\bar{x}}^* = \mathbf{0},
+            \end{bmatrix}\mathbfit{\widebar{x}}^* = \mathbf{0},
         \end{equation*}
-        where $\mathbfit{\bar{x}}^*$ is obtained by re-arranging the rows of $\mathbfit{x}^*$ accordingly. Note that the columns of $\mathbfit{A}_B$ is linearly independent, so $\det(\mathbfit{A}_B) \neq 0$. Therefore, 
+        where $\mathbfit{\widebar{x}}^*$ is obtained by re-arranging the rows of $\mathbfit{x}^*$ accordingly. Note that the columns of $\mathbfit{A}_B$ is linearly independent, so $\det(\mathbfit{A}_B) \neq 0$. Therefore, 
         \begin{equation*}
             \begin{vmatrix}
                 \mathbfit{A}_B & \mathbfit{A}_N \\
@@ -516,41 +599,41 @@ so our target is simply $c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\ma
 \begin{dfnbox}{Reduced Cost}{reducedCost}
     Let $\mathbfit{x}$ be a basic feasible solution with respect to objective function $f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$. Let~$\mathbfit{c} = \left(\mathbfit{c}_B, \mathbfit{c}_N\right)$. For each $j = 1, 2, \cdots, n$, the {\color{red} \textbf{reduced cost}} of variable $x_j$ is defined as 
     \begin{equation*}
-        \bar{c}_j = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j.
+        \widebar{c}_j = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j.
     \end{equation*}
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        For any $i \in B$, note that $\mathbfit{A}_i = \mathbfit{A}_B\mathbfit{e}_i$, we have $\mathbfit{A}_B^{-1}\mathbfit{A}_i = \mathbfit{e}_i$. Therefore, $\bar{c_i} = 0$.
+        For any $i \in B$, note that $\mathbfit{A}_i = \mathbfit{A}_B\mathbfit{e}_i$, we have $\mathbfit{A}_B^{-1}\mathbfit{A}_i = \mathbfit{e}_i$. Therefore, $\widebar{c_i} = 0$.
     \end{remark}
 \end{notebox}
-We say that a direction $\mathbfit{d}^j$ is an \textit{improving direction} if and only if $\bar{c}_j < 0$. Furthermore, notice that by Theorem \ref{thm:bfsDir}, we have
+We say that a direction $\mathbfit{d}^j$ is an \textit{improving direction} if and only if $\widebar{c}_j < 0$. Furthermore, notice that by Theorem \ref{thm:bfsDir}, we have
 \begin{align*}
-    \bar{c}_j & = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j \\
+    \widebar{c}_j & = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j \\
     & = \mathbfit{c}^{\mathrm{T}}\mathbfit{e}_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_j \\
     & = \mathbfit{c}_N^{\mathrm{T}}\mathbfit{d}_N^j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{d}_B^j \\
     & = \mathbfit{c}^{\mathrm{T}}\mathbfit{d}^j.
 \end{align*}
 Combining with Proposition \ref{pro:fDirLinCombi}, the above gives us a quicker way to compute the reduced cost given any feasible direction at a point $\mathbfit{x}$.
 
-Next, we only need to determine a $\bar{\theta_j} > 0$ such that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ gives us another basic feasible solution. Since we already know that $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$ for all $\bar{\theta_j} > 0$, a natural idea is to take $\bar{\theta_j}$ to be the greatest positive real number such that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j \geq \mathbf{0}$, i.e., we will move in the direction $\mathbfit{d}^j$ until we can barely stay in the feasible polyhedron. Consider
+Next, we only need to determine a $\widebar{\theta_j} > 0$ such that $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ gives us another basic feasible solution. Since we already know that $\mathbfit{A}\left(\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$ for all $\widebar{\theta_j} > 0$, a natural idea is to take $\widebar{\theta_j}$ to be the greatest positive real number such that $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j \geq \mathbf{0}$, i.e., we will move in the direction $\mathbfit{d}^j$ until we can barely stay in the feasible polyhedron. Consider
 \begin{align*}
-    \mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j = \left(\mathbfit{x}_B + \bar{\theta_j}\mathbfit{d}^j_B, \mathbfit{x}_N + \bar{\theta_j}\mathbfit{d}^j_N\right).
+    \mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j = \left(\mathbfit{x}_B + \widebar{\theta_j}\mathbfit{d}^j_B, \mathbfit{x}_N + \widebar{\theta_j}\mathbfit{d}^j_N\right).
 \end{align*}
-Note that $\mathbfit{x}_N \geq \mathbf{0}$ and $\bar{\theta_j}\mathbfit{d}^j_N = \bar{\theta_j}\mathbfit{e}_j \geq \mathbf{0}$, so it suffices to check that $\mathbfit{x}_B + \bar{\theta_j}\mathbfit{d}^j_B \geq \mathbf{0}$. This implies that for each $i \in B$, we have $\bar{\theta_j} \geq -\frac{x_i}{d^j_i}$. Therefore, we only need to take
+Note that $\mathbfit{x}_N \geq \mathbf{0}$ and $\widebar{\theta_j}\mathbfit{d}^j_N = \widebar{\theta_j}\mathbfit{e}_j \geq \mathbf{0}$, so it suffices to check that $\mathbfit{x}_B + \widebar{\theta_j}\mathbfit{d}^j_B \geq \mathbf{0}$. This implies that for each $i \in B$, we have $\widebar{\theta_j} \geq -\frac{x_i}{d^j_i}$. Therefore, we only need to take
 \begin{equation*}
-    \bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\}.
+    \widebar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\}.
 \end{equation*}
-Note that here we do not consider those $d^j_i$'s with $d^j_i > 0$ because in such cases $x_i + \bar{\theta_j}d^j_i \geq 0$ for all $\bar{\theta_j} > 0$. Now, we would verify that the new point we reach is indeed another basic feasible solution.
+Note that here we do not consider those $d^j_i$'s with $d^j_i > 0$ because in such cases $x_i + \widebar{\theta_j}d^j_i \geq 0$ for all $\widebar{\theta_j} > 0$. Now, we would verify that the new point we reach is indeed another basic feasible solution.
 \begin{probox}{$\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ Is A Basic Feasible Solution}{anotherBFS}
-    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
+    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
     \tcblower
     \begin{proof}
-        Note that $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$. Note that by the definition of $\bar{\theta_j}$, we have 
+        Note that $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$. Note that by the definition of $\widebar{\theta_j}$, we have 
         \begin{equation*}
-            \bar{\theta_j} = -\frac{x_{\ell}}{d_{\ell}^j}
+            \widebar{\theta_j} = -\frac{x_{\ell}}{d_{\ell}^j}
         \end{equation*}
-        for some $\ell \in B$. Therefore, we have $\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right)_{\ell} = 0$. Notice that at $\mathbfit{x} \coloneqq \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$, we have~$\ell \in B$ and $j \in N$. Consider $\bar{B} \coloneqq (B - \{\ell\}) \cup \{j\}$ and $\bar{N} \coloneqq (N - \{j\}) \cup \{\ell\}$. One may check that $\bar{B}$ is linearly independent, so by Theorem \ref{thm:basicSolnChar}, $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution.
+        for some $\ell \in B$. Therefore, we have $\left(\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j\right)_{\ell} = 0$. Notice that at $\mathbfit{x} \coloneqq \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$, we have~$\ell \in B$ and $j \in N$. Consider $\widebar{B} \coloneqq (B - \{\ell\}) \cup \{j\}$ and $\widebar{N} \coloneqq (N - \{j\}) \cup \{\ell\}$. One may check that $\widebar{B}$ is linearly independent, so by Theorem \ref{thm:basicSolnChar}, $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution.
     \end{proof}
 \end{probox}
 By now, we already have devised a systematic method to reach another basic feasible solution from a given basic feasible solution such that our objective value improves. The next goal is to determine a condition by which we should terminate our search and declare the current basic feasible solution to be optimal.
@@ -564,39 +647,39 @@ Before we do that, we need to first deal with an edge case where some basic feas
         This also concludes that $\mathbfit{x}$ is non-degenerate if $\mathbfit{x}_B = \mathbfit{A}_B^{-1}\mathbfit{b} > \mathbf{0}$.
     \end{remark}
 \end{notebox}
-Recall that along an improving direction $\mathbfit{d}^j$, the reduced cost for $x_j$ is $\bar{c}_j < 0$. A natural observation here is that if we cannot find any improving direction at a point $\mathbfit{x}^*$, then this point must be optimal. Therefore, we are tempted to conclude that $\bar{c}_j \geq 0$ for all $j \in N$.
+Recall that along an improving direction $\mathbfit{d}^j$, the reduced cost for $x_j$ is $\widebar{c}_j < 0$. A natural observation here is that if we cannot find any improving direction at a point $\mathbfit{x}^*$, then this point must be optimal. Therefore, we are tempted to conclude that $\widebar{c}_j \geq 0$ for all $j \in N$.
 \begin{thmbox}{Optimality Conditions for Simplex Method}{simplexOptCond}
-    Let $\mathbfit{x}^* = \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$ be a basic feasible solution to some standard linear program. Let $\mathbfit{\bar{c}}$ be the vector of reduced costs associated with $\mathbfit{x}^*$, then 
+    Let $\mathbfit{x}^* = \left(\mathbfit{x}_B, \mathbfit{x}_N\right)$ be a basic feasible solution to some standard linear program. Let $\mathbfit{\widebar{c}}$ be the vector of reduced costs associated with $\mathbfit{x}^*$, then 
     \begin{enumerate}
-        \item If $\mathbfit{\bar{c}} \geq \mathbf{0}$, then $\mathbfit{x}^*$ is optimal;
-        \item If $\mathbfit{x}^*$ is optimal and non-degenerate, then $\mathbfit{\bar{c}} \geq \mathbf{0}$.
+        \item If $\mathbfit{\widebar{c}} \geq \mathbf{0}$, then $\mathbfit{x}^*$ is optimal;
+        \item If $\mathbfit{x}^*$ is optimal and non-degenerate, then $\mathbfit{\widebar{c}} \geq \mathbf{0}$.
     \end{enumerate}
     \tcblower
     \begin{proof}
-        Suppose that $\mathbfit{\bar{c}} \geq \mathbf{0}$. Let $\mathbfit{y}$ be any feasible solution, then $\mathbfit{y - x}^*$ is a feasible direction. By Proposition \ref{pro:fDirLinCombi}, 
+        Suppose that $\mathbfit{\widebar{c}} \geq \mathbf{0}$. Let $\mathbfit{y}$ be any feasible solution, then $\mathbfit{y - x}^*$ is a feasible direction. By Proposition \ref{pro:fDirLinCombi}, 
         \begin{equation*}
             \mathbfit{y - x}^* = \sum_{j \in N}\lambda_j\mathbfit{d}^j,
         \end{equation*}
         where $\lambda_j \geq 0$ for all $j \in N$. Therefore,
         \begin{align*}
             \mathbfit{c}^{\mathrm{T}}\mathbfit{y} & = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \sum_{j \in N}\lambda_j\mathbfit{c}^{\mathrm{T}}\mathbfit{d}^j \\
-            & = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \sum_{j \in N}\lambda_j\bar{c}_j \\
+            & = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^* + \sum_{j \in N}\lambda_j\widebar{c}_j \\
             & \geq \mathbfit{c}^{\mathrm{T}}\mathbfit{x}^*.
         \end{align*}
         Therefore, $\mathbfit{x}^*$ is an optimal solution.
         \\\\
-        Suppose that $\mathbfit{x}^*$ is a non-degenerate optimal solution. For each $j \in N$, consider the adjacent basic feasible solution $\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$. Notice that 
+        Suppose that $\mathbfit{x}^*$ is a non-degenerate optimal solution. For each $j \in N$, consider the adjacent basic feasible solution $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$. Notice that 
         \begin{equation*}
-            \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \leq \mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \bar{\theta_j}\bar{c}_j
+            \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \leq \mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + \widebar{\theta_j}\widebar{c}_j
         \end{equation*}
-        for all $j \in N$. Therefore, we must have $\bar{\theta_j}\bar{c}_j \geq 0$ for all $j \in N$. Since $\mathbfit{x}$ is non-degenerate, for each $j \in N$ we have 
+        for all $j \in N$. Therefore, we must have $\widebar{\theta_j}\widebar{c}_j \geq 0$ for all $j \in N$. Since $\mathbfit{x}$ is non-degenerate, for each $j \in N$ we have 
         \begin{equation*}
-            \bar{\theta_j} = -\frac{x_{\ell}}{d^j_{\ell}} > 0,
+            \widebar{\theta_j} = -\frac{x_{\ell}}{d^j_{\ell}} > 0,
         \end{equation*}
-        and so $\bar{c}_j \geq 0$. Note that for all $i \in B$, we have $\bar{c_i} = 0$, so $\mathbfit{\bar{c}} \geq \mathbf{0}$.
+        and so $\widebar{c}_j \geq 0$. Note that for all $i \in B$, we have $\widebar{c_i} = 0$, so $\mathbfit{\widebar{c}} \geq \mathbf{0}$.
     \end{proof}
 \end{thmbox}
-Recall that $\mathbfit{\bar{c}}_B = \mathbf{0}$, so it suffices to check that $\mathbfit{\bar{c}}_N \geq \mathbf{0}$ for the $(n - m)$ inequality constraints to determine whether $\mathbfit{x}^*$ is an optimal solution.
+Recall that $\mathbfit{\widebar{c}}_B = \mathbf{0}$, so it suffices to check that $\mathbfit{\widebar{c}}_N \geq \mathbf{0}$ for the $(n - m)$ inequality constraints to determine whether $\mathbfit{x}^*$ is an optimal solution.
 
 With the above preliminary works done, we are now able to develop the algorithm for simplex method.
 \begin{tecbox}{Simplex Method}{simplex}
@@ -610,15 +693,15 @@ With the above preliminary works done, we are now able to develop the algorithm 
         \item At the $k$-th iteration, choose an index set $B_k$ such that the columns of $\mathbfit{A}_{B_k}$ are a basis for the column space of $\mathbfit{A}$.
         \item Let $N_k \coloneqq \left\{1, 2, \cdots, n\right\} - B_k$. For each $j \in N_k$, compute the reduced cost 
         \begin{equation*}
-            \bar{c}_j = c_j - \mathbfit{c}_{B_k}^{\mathrm{T}}\mathbfit{A}_{B_k}^{-1}\mathbfit{A}_j.
+            \widebar{c}_j = c_j - \mathbfit{c}_{B_k}^{\mathrm{T}}\mathbfit{A}_{B_k}^{-1}\mathbfit{A}_j.
         \end{equation*}
-        \item If $\bar{c}_j \geq 0$ for all $j \in N_k$:
+        \item If $\widebar{c}_j \geq 0$ for all $j \in N_k$:
         \begin{itemize}
             \item $\mathbfit{x}_k$ is an optimal solution.
         \end{itemize}
         \item Otherwise:
         \begin{enumerate}
-            \item Take some $j \in N_k$ such that $\bar{c}_j < 0$. $\left(\mathbfit{x}_{k}\right)_j$ is called an {\color{red} \textbf{entering variable}}.
+            \item Take some $j \in N_k$ such that $\widebar{c}_j < 0$. $\left(\mathbfit{x}_{k}\right)_j$ is called an {\color{red} \textbf{entering variable}}.
             \item Compute $\mathbfit{d}^j_{B_k} = -\mathbfit{A}_{B_k}^{-1}\mathbfit{A}_j$.
             \item If $\mathbfit{d}^j_{B_k} \geq \mathbf{0}$:
             \begin{itemize}
@@ -626,13 +709,13 @@ With the above preliminary works done, we are now able to develop the algorithm 
             \end{itemize}
             \item Otherwise:
             \begin{enumerate}
-                \item Let $\ell \in B_k$ be such that $\bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = \frac{x_{\ell}}{d^j_{\ell}}$. $\left(\mathbfit{x}_{k}\right)_{\ell}$ is called a {\color{red} \textbf{leaving variable}}.
+                \item Let $\ell \in B_k$ be such that $\widebar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = \frac{x_{\ell}}{d^j_{\ell}}$. $\left(\mathbfit{x}_{k}\right)_{\ell}$ is called a {\color{red} \textbf{leaving variable}}.
                 \item Update $B_{k + 1} \coloneqq (B - \{\ell\}) \cup \{j\}$.
                 \item Update $\mathbfit{x}_{k + 1}$ by 
                 \begin{equation*}
                     \left(\mathbfit{x}_{k + 1}\right)_i = \begin{cases}
-                        \left(\mathbfit{x}_{k}\right)_i + \bar{\theta_j}\mathbfit{d}^j_i & \quad\textrm{if } i \in B - \{\ell\} \\
-                        \bar{\theta_j} & \quad\textrm{if } i = j \\
+                        \left(\mathbfit{x}_{k}\right)_i + \widebar{\theta_j}\mathbfit{d}^j_i & \quad\textrm{if } i \in B - \{\ell\} \\
+                        \widebar{\theta_j} & \quad\textrm{if } i = j \\
                         0 & \quad\textrm{otherwise}
                     \end{cases}
                 \end{equation*} 
@@ -647,7 +730,7 @@ A common way to run simplex method is by tabulating the relevant variables, solu
         \hline
         Basic & $\mathbfit{x}$ & Solution \\
         \hline
-        $\mathbfit{\bar{c}}$ & $\mathbfit{c}^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        $\mathbfit{\widebar{c}}$ & $\mathbfit{c}^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
         \hline
         $\mathbfit{x}_B$ & $\mathbfit{A}_B^{-1}\mathbfit{A}$ & $\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
         \hline
@@ -659,7 +742,7 @@ If we expand the tableau with more detailed information, we get the following re
         \hline
         Basic & $x_1$ & $\cdots$ & $x_n$ & Solution \\
         \hline
-        $\mathbfit{\bar{c}}$ & $\bar{c_1}$ & $\cdots$ & $\bar{c}_n$ & $-\mathbfit{c}^{\mathrm{T}}\mathbfit{x}_B$ \\
+        $\mathbfit{\widebar{c}}$ & $\widebar{c_1}$ & $\cdots$ & $\widebar{c}_n$ & $-\mathbfit{c}^{\mathrm{T}}\mathbfit{x}_B$ \\
         \hline
         $x_{B(1)}$ & & & & \\
         $\vdots$ & & & & \\
@@ -675,7 +758,7 @@ Notice that $\mathbfit{A}_B^{-1}\mathbfit{A}_B = \mathbfit{I}$, we may wish to r
         \hline
         Basic & $\mathbfit{x}_B$ & $\mathbfit{x}_N$ & Solution \\
         \hline
-        $\mathbfit{\bar{c}}$ & $\mathbf{0}$ & $\mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_N$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
+        $\mathbfit{\widebar{c}}$ & $\mathbf{0}$ & $\mathbfit{c}_N^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_N$ & $-\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
         \hline
         $\mathbfit{x}_B$ & $\mathbfit{I}$ & $\mathbfit{A}_B^{-1}\mathbfit{A}_N$ & $\mathbfit{A}_B^{-1}\mathbfit{b}$ \\
         \hline
@@ -688,7 +771,7 @@ Note that at each iteration, we need to ``swap'' the $\ell$-th and $j$-th column
         \mathbfit{I} & \mathbfit{A}_B^{-1}\mathbfit{A}_N & \mathbfit{A}_B^{-1}\mathbfit{b}
     \end{bmatrix}
 \end{equation*}
-such that the $j$-th column becomes $\mathbfit{e}_{i}$. Then, we will swap the row label $\mathbfit{x}_{\ell}$ with the column label $\mathbfit{x}_j$. We repeat this process until $\mathbfit{\bar{c}} \geq \mathbf{0}$, where we will extract $\mathbfit{A}_B^{-1}\mathbfit{b}$ from the table as our $\mathbfit{x}_B$.
+such that the $j$-th column becomes $\mathbfit{e}_{i}$. Then, we will swap the row label $\mathbfit{x}_{\ell}$ with the column label $\mathbfit{x}_j$. We repeat this process until $\mathbfit{\widebar{c}} \geq \mathbf{0}$, where we will extract $\mathbfit{A}_B^{-1}\mathbfit{b}$ from the table as our $\mathbfit{x}_B$.
 \section{Finding An Initial Basic Feasible Solution} \label{twoPhaseBigM}
 Recall that to start the simplex method algorithm, we need to initialise $\mathbfit{x}_0$ to be some basic feasible solution in the feasible region. However, this may not be straight-forward. Consider the standard linear program
 \begin{align*}
@@ -775,27 +858,27 @@ where $M > 0$ is an arbitrarily large constant. We can see that if this augmente
 \section{Special Cases}
 Next, we discuss a few special cases when using the simplex method. First, recall that in Definition \ref{dfn:degeneracy}, we know that a feasible basic solution $\mathbfit{x}$ is degenerate if there is some redundant active constraint. However, note that this implies that more than one basic variables can leave. Algebraically, this means that there are different $\ell_1, \ell_2 \in B$ such that 
 \begin{equation*}
-    \bar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = -\frac{x_{\ell_1}}{d^j_{\ell_1}} = -\frac{x_{\ell_2}}{d^j_{\ell_2}}.
+    \widebar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\} = -\frac{x_{\ell_1}}{d^j_{\ell_1}} = -\frac{x_{\ell_2}}{d^j_{\ell_2}}.
 \end{equation*}
 Without loss of generality, suppose we take $x_{\ell_1}$ as the leaving variable and try to update $x_{\ell_2}$ to $x_{\ell_2}'$. By Proposition \ref{pro:anotherBFS}, we have 
 \begin{equation*}
-    x_{\ell_2}' = x_{\ell_2} + \bar{\theta_j}d^j_{\ell_2} = x_{\ell_2} - \frac{x_{\ell_1}}{d^j_{\ell_1}}d^j_{\ell_2} = x_{\ell_2} - \frac{x_{\ell_2}}{d^j_{\ell_2}}d^j_{\ell_2} = 0,
+    x_{\ell_2}' = x_{\ell_2} + \widebar{\theta_j}d^j_{\ell_2} = x_{\ell_2} - \frac{x_{\ell_1}}{d^j_{\ell_1}}d^j_{\ell_2} = x_{\ell_2} - \frac{x_{\ell_2}}{d^j_{\ell_2}}d^j_{\ell_2} = 0,
 \end{equation*}
 so $x_{\ell_2}$ is indeed degenerate by Definition \ref{dfn:standardDegeneracy}.
 
-Note also that in some cases, we may have more than one optimal solution for the linear program. Intuitively, this occurs when at an optimal basic feasible solution, we can still find some feasible direction along which the objective value does not deteriorate. Therefore, \textbf{an alternative optimal solution can be found if and only if some reduced cost} $\bar{c}_j = 0$ at an optimal solution. There are $2$ specific cases:
+Note also that in some cases, we may have more than one optimal solution for the linear program. Intuitively, this occurs when at an optimal basic feasible solution, we can still find some feasible direction along which the objective value does not deteriorate. Therefore, \textbf{an alternative optimal solution can be found if and only if some reduced cost} $\widebar{c}_j = 0$ at an optimal solution. There are $2$ specific cases:
 \begin{enumerate}
     \item If we can find optimal solutions $\mathbfit{x}^1, \mathbfit{x}^2, \cdots, \mathbfit{x}^k$, then the set of optimal solutions is bounded and can be constructed as 
     \begin{equation*}
         \mathrm{conv}\left\{\mathbfit{x}^1, \mathbfit{x}^2, \cdots, \mathbfit{x}^k\right\}.
     \end{equation*}
-    \item If at an optimal solution $\mathbfit{x}^*$, there is $\bar{c}_j = 0$ but $\mathbfit{d}^j \geq \mathbf{0}$, it means that $\mathbfit{x}^* + \theta\mathbfit{d}^j \geq \mathbf{0}$ is feasible for any $\theta \geq 0$, so the set of optimal solutions given by 
+    \item If at an optimal solution $\mathbfit{x}^*$, there is $\widebar{c}_j = 0$ but $\mathbfit{d}^j \geq \mathbf{0}$, it means that $\mathbfit{x}^* + \theta\mathbfit{d}^j \geq \mathbf{0}$ is feasible for any $\theta \geq 0$, so the set of optimal solutions given by 
     \begin{equation*}
         \left\{\mathbfit{x}^* + \theta\mathbfit{d}^j \colon \theta \geq 0\right\}
     \end{equation*}
     is unbounded.
 \end{enumerate}
-Similar to case $2$ above, if at any basic feasible solution $\mathbfit{x}^*$, there is some $j \in N$ such that $\bar{c}_j < 0$ and $\mathbfit{d}^j \geq \mathbf{0}$, then any $\mathbfit{x}^* + \theta\mathbfit{d}^j$ where $\theta > 0$ is feasible and improves the objective value. This implies that the optimal value can be \textbf{improved indefinitely} and so the program is unbounded.
+Similar to case $2$ above, if at any basic feasible solution $\mathbfit{x}^*$, there is some $j \in N$ such that $\widebar{c}_j < 0$ and $\mathbfit{d}^j \geq \mathbf{0}$, then any $\mathbfit{x}^* + \theta\mathbfit{d}^j$ where $\theta > 0$ is feasible and improves the objective value. This implies that the optimal value can be \textbf{improved indefinitely} and so the program is unbounded.
 
 Lastly, suppose we have some linear program with an empty feasible set. We have seen in Section \ref{twoPhaseBigM} that we can use either the two-phase method or the big-$M$ method to detect this, because if the feasible set were to be empty, we will not be able to find an optimal solution for the auxiliary problem such that $\mathbfit{y}^* = \mathbf{0}$.
 \chapter{Duality Theory}
@@ -930,7 +1013,7 @@ Recall that in general, the duality gap between the primal and dual optimal valu
     \begin{proof}
         Suppose that $(P)$ is a primal linear program with an optimal solution $\mathbfit{x}^*$, then there is some basis $B$ such that $\mathbfit{x}^*_B = \mathbfit{A}_B^{-1}\mathbfit{b}$. Since $B$ is an optimal basis, we have 
         \begin{equation*}
-            \bar{\mathbfit{c}}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} \geq \mathbf{0}.
+            \widebar{\mathbfit{c}}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} \geq \mathbf{0}.
         \end{equation*}
         Take $\mathbfit{p}^{\mathrm{T}} = \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}$, then $\mathbfit{p}^{\mathrm{T}}\mathbfit{A} \leq \mathbfit{c}^{\mathrm{T}}$ and so $\mathbfit{p}$ is feasible to the dual problem $(D)$. Note that $\mathbfit{x}_N = \mathbf{0}$, so 
         \begin{equation*}
@@ -983,11 +1066,11 @@ The two approaches are known as P-Algorithm and D-Algorithm respectively.
 
 To maintain feasibility of $\mathbfit{x}$, it is equivalent to maintaining $\mathbfit{A}_B^{-1}\mathbfit{b} \geq \mathbf{0}$. Now, for $\mathbfit{p}$ to be feasible, we need $\mathbfit{p}^{\mathrm{T}}\mathbfit{A} \leq \mathbfit{c}^{\mathrm{T}}$, which implies that
 \begin{equation*}
-    \bar{\mathbfit{c}} = \mathbfit{c}^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} \geq \mathbf{0}.
+    \widebar{\mathbfit{c}} = \mathbfit{c}^{T} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} \geq \mathbf{0}.
 \end{equation*}
 This gives the implementation for the \textit{primal algorithm}, which is exactly Technique \ref{tec:simplex}.
 
-Conversely, by maintaining $\bar{\mathbfit{c}} \geq \mathbf{0}$, we only need to achieve $\mathbfit{A}_B^{-1}\mathbfit{b} \geq \mathbf{0}$ to make $\mathbfit{x}$ feasible, because $\mathbfit{Ax} = \mathbfit{b}$ always holds. This leads to the \textit{dual simplex method}.
+Conversely, by maintaining $\widebar{\mathbfit{c}} \geq \mathbf{0}$, we only need to achieve $\mathbfit{A}_B^{-1}\mathbfit{b} \geq \mathbf{0}$ to make $\mathbfit{x}$ feasible, because $\mathbfit{Ax} = \mathbfit{b}$ always holds. This leads to the \textit{dual simplex method}.
 \begin{tecbox}{Dual Simplex Method}{dualSimplex}
     Let $f \colon \R^n \to \R$ defined by $f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x}$ be the objective function of a standard linear program with feasible set 
     \begin{equation*}
@@ -995,8 +1078,20 @@ Conversely, by maintaining $\bar{\mathbfit{c}} \geq \mathbf{0}$, we only need to
     \end{equation*}
     The dual simplex method finds the optimal solution using the following procedures:
     \begin{enumerate}
-        \item Multiply the rows of $\mathbfit{Ax} = \mathbfit{b}$ so that the right-most portion of $\mathbfit{A}$ becomes an identity matrix.
-        \item Run simplex method on the transformed problem, while maintaining $\bar{\mathbfit{c}} \geq \mathbf{0}$.
+        \item Manipulate the constraints and add slack variables so that the right-most portion of $\mathbfit{A}$ becomes an identity matrix.
+        \item Run simplex method on the transformed problem, while maintaining $\widebar{\mathbfit{c}} \geq \mathbf{0}$.
+        \begin{enumerate}
+            \item At the $k$-th iteration, if there is no negative basic variable, then an optimal primal solution has been found.
+            \item Otherwise, select some $x_{\ell} < 0$ as the leaving variable.
+            \begin{enumerate}
+                \item If $d^j_{\ell} \geq 0$ for all $j \in N_k$, then the primal problem is infeasible. 
+                \item Otherwise, take 
+                \begin{equation*}
+                    i = \argmin_{j \in N_k}\left\{\frac{\bar{c}_j}{\abs{d^j_{\ell}}} \colon d^j_{\ell} < 0\right\}
+                \end{equation*}
+                as the index of the entering variable.
+            \end{enumerate}
+        \end{enumerate}
         \item Terminate the search when we have obtained $\mathbfit{x}_B \geq \mathbf{0}$.   
     \end{enumerate}
 \end{tecbox}
@@ -1023,37 +1118,37 @@ We see that the change in objective value is closely tied to the dual optimal so
 Suppose that $\mathbfit{c}$ is changed to $\mathbfit{c} + \delta\mathbfit{e}_j$ for some $j$. Note that 
 the feasibility condition is independent of $\mathbfit{c}$. If $x_j$ is non-basic, the altered reduced cost is 
 \begin{equation*}
-    \bar{c}_j' = c_j + \delta - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} = \bar{c}_j + \delta.
+    \widebar{c}_j' = c_j + \delta - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A} = \widebar{c}_j + \delta.
 \end{equation*}
-Clearly, optimality remains if and only if $\delta \geq -\bar{c}_j$. If $x_j$ is basic, then for each $i \in N$, we need 
+Clearly, optimality remains if and only if $\delta \geq -\widebar{c}_j$. If $x_j$ is basic, then for each $i \in N$, we need 
 \begin{align*}
     c_i - \left(\mathbfit{c}_B + \delta\mathbfit{e}_j\right)^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i & = c_i - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i - \delta\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i \\
-    & = \bar{c}_j - \delta\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i \\
+    & = \widebar{c}_j - \delta\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i \\
     & \geq 0.
 \end{align*}
-If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i > 0$, we have $\delta \leq \frac{\bar{c}_j}{\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i}$. If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i < 0$, we have $\delta \geq \frac{\bar{c}_j}{\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i}$. If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i = 0$, it is clear that $\bar{c}_j$ is unchanged. Therefore, let $\bar{a}_{i, j} = \mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i$, we have
+If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i > 0$, we have $\delta \leq \frac{\widebar{c}_j}{\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i}$. If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i < 0$, we have $\delta \geq \frac{\widebar{c}_j}{\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i}$. If $\mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i = 0$, it is clear that $\widebar{c}_j$ is unchanged. Therefore, let $\widebar{a}_{i, j} = \mathbfit{e}_j^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_i$, we have
 \begin{equation*}
-    \max_{\bar{a}_{i, j} < 0} \frac{\bar{c}_j}{\bar{a}_{i, j}} \leq \delta \leq \min_{\bar{a}_{i, j} > 0} \frac{\bar{c}_j}{\bar{a}_{i, j}}.
+    \max_{\widebar{a}_{i, j} < 0} \frac{\widebar{c}_j}{\widebar{a}_{i, j}} \leq \delta \leq \min_{\widebar{a}_{i, j} > 0} \frac{\widebar{c}_j}{\widebar{a}_{i, j}}.
 \end{equation*}
 Suppose that some entry $a_{ij}$ of a non-basic column $\mathbfit{A}_j$ is changed to $a_{ij} + \delta$ for some $\delta \neq 0$. Note that $j \notin B$, so this change does not affect the feasibility $\mathbfit{A}_B^{-1}\mathbfit{b} \geq \mathbf{0}$. In terms of optimality, the only reduced cost affected is 
 \begin{align*}
-    \bar{c}_j' & = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\left(\mathbfit{A}_j + \delta\mathbfit{e}_i\right) \\
-    & = \bar{c}_j - \delta\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{e}_i \\
-    & = \bar{c}_j - \delta p_i.
+    \widebar{c}_j' & = c_j - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\left(\mathbfit{A}_j + \delta\mathbfit{e}_i\right) \\
+    & = \widebar{c}_j - \delta\mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{e}_i \\
+    & = \widebar{c}_j - \delta p_i.
 \end{align*}
-Clearly, if $\bar{c}_j - \delta p_i \geq 0$, the original optimal solution remains optimal in the altered problem, so we obtain a condition on $\delta$ to maintain the optimality.
+Clearly, if $\widebar{c}_j - \delta p_i \geq 0$, the original optimal solution remains optimal in the altered problem, so we obtain a condition on $\delta$ to maintain the optimality.
 
 Suppose we add a new variable $x_{n + 1}$, i.e., we raise the dimension of the problem by $1$, then we obtain a new problem 
 \begin{align*}
-    \min & \mathbfit{c}^{\mathrm{T}} + c_{n + 1}x_{n + 1} \\
+    \min\,& \mathbfit{c}^{\mathrm{T}} + c_{n + 1}x_{n + 1} \\
     \textrm{s.t. } & \mathbfit{Ax} + x_{n + 1}\mathbfit{A}_{n + 1} = \mathbfit{b}, \\
     & \mathbfit{x} \geq \mathbf{0}, \qquad x_{n + 1} \geq 0.
 \end{align*}
 Note that $\left(\mathbfit{x}^*, 0\right)$ is still a basic feasible solution to the new problem by taking $x_{n + 1} = 0$, so it suffices to consider the optimality at $\left(\mathbfit{x}^*, 0\right)$ by computing 
 \begin{equation*}
-    \bar{c}_{n + 1} = c_{n + 1} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_{n + 1}.
+    \widebar{c}_{n + 1} = c_{n + 1} - \mathbfit{c}_B^{\mathrm{T}}\mathbfit{A}_B^{-1}\mathbfit{A}_{n + 1}.
 \end{equation*}
-If $\bar{c}_{n + 1} \geq 0$, this new basic feasible solution is still an optimal solution. Otherwise, this implies that $x_{n + 1}$ can be an entering variable, and we should use the simplex method to find the optimal solution for the update problem.
+If $\widebar{c}_{n + 1} \geq 0$, this new basic feasible solution is still an optimal solution. Otherwise, this implies that $x_{n + 1}$ can be an entering variable, and we should use the simplex method to find the optimal solution for the update problem.
 
 Suppose we add a new constraint $\mathbfit{a}_{m + 1}^{\mathrm{T}}\mathbfit{x} \leq b_{m + 1}$, we will actually implicitly introduce a new variable $x_{n + 1}$ as a slack variable. Note that the objective function remains unchanged, so if $\mathbfit{x}^*$ satisfies this new constraint, there is nothing to do --- it is still an optimal solution!
 
@@ -1140,6 +1235,19 @@ Notice that by using the node-arc incidence matrix, we can actually formulate a 
     & \mathbf{0 \leq x \leq u},
 \end{align*}
 where $\mathbfit{x}$ is the flow vector, $\mathbfit{c}$ is the cost, $\mathbfit{b}$ is the external supply vector, $\mathbfit{A}$ is the node-arc incidence matrix and $\mathbfit{u}$ is the upper bound for flow.
+
+In general, there are some types of linear programs which can be converted to a network flow problem. For example, if the constraint of a linear program is of the form $\mathbfit{Ax = b}$ where $\mathbfit{A}$ is an $m \times n$ $0$-$1$ matrix such that the $1$'s in each column appear consecutively, then we can obtain a corresponding node-arc incidence matrix by 
+\begin{equation*}
+    \mathbfit{A}' = \begin{bmatrix}
+        1 & 0 & 0 & \cdots & 0 & 0 \\
+        -1 & 1 & 0 & \cdots & 0 & 0 \\
+        0 & -1 & 1 & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & 1 & 0 \\
+        0 & 0 & 0 & \cdots & - 1 & 1 \\
+        0 & 0 & 0 & \cdots & 0 & -1
+    \end{bmatrix}\mathbfit{A}.
+\end{equation*}
 \subsection{Single-Source Shortest Path Problem}
 In graph theory, the \textit{single-source shortest path problem} (SSSP) is a classic and easy-to-solve optimisation problem. The problem statement is as follows:
 \begin{quote}
@@ -1189,6 +1297,82 @@ An alternative perspective to view Proposition \ref{pro:sssp} is as follows: lab
     E(G) \coloneqq \left\{e_1, e_2, \cdots, e_m\right\}.
 \end{equation*}
 Define a mapping $E(G) \mapsto \mathcal{B}$, where $\mathcal{B}$ is the family of all boolean arrays of length $m$, as follows: for every edge $e_i \in E(G)$, mark it as ``taken'' by mapping it to $1$ and ``not taken'' by mapping it to $0$. The corresponding boolean array $\mathbfit{x}$ optimal to the minimisation problem essentially indicates all edges included in the shortest $s$-$t$ path in $G$.
+
+In addition, we can re-write the SSSP problem in the following form:
+\begin{align*}
+    \min\,& \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
+    \textrm{s.t. } & \mathbfit{Ax} = \mathbfit{e}_s - \mathbfit{e}_t \\
+    & \mathbfit{x} \geq \mathbf{0}.
+\end{align*}
+the dual problem to an SSSP can be formulated as 
+\begin{align*}
+    \max\,& \mathbfit{p}^{\mathrm{T}}\left(\mathbfit{e}_s - \mathbfit{e}_t\right) \\
+    \textrm{s.t. } & \mathbfit{A}^{\mathrm{T}}\mathbfit{p} \leq \mathbfit{c},
+\end{align*}
+which can be further simplified to 
+\begin{align*}
+    \max\,& p_s - p_t \\
+    \textrm{s.t. } & p_i - p_j \leq c_{(i, j)} \quad \textrm{for all } (i, j) \in E(G).
+\end{align*}
+This means that $\mathbfit{p}$ and $\mathbfit{p} + \mathbfit{\alpha}$ are equivalent in the dual problem and so we can safely set $p_t = 0$ by defining $\alpha = -p_t$.
+
+We now discuss a few applications of SSSP programs.
+\subsubsection{Three Jug Puzzle}
+\begin{genbox}{Three Jug Puzzle}
+    Given a $a$-litre jug filled with water and two empty jugs of capacity $b$ and $c$ litres respectively such that $a = b + c$, find the minimum number of steps to measure out exactly $d$ litres of water by transferring water between the jugs only.
+\end{genbox}
+We first define a state in the problem by an ordered $3$-tuple $(a_i, b_i, c_i)$ indicating the amount of water in the three jugs respectively. Clearly, $a_i + b_i + c_i = a$ and so $a_i$ is actually implicitly determined by $b_i$ and $c_i$ Therefore, every state in the problem can be represented by an ordered pair $(b_i, c_i)$. Now, construct a network with vertex set
+\begin{equation*}
+    V \coloneqq \left\{(i, j) \colon i = 0, 1, \cdots, b, j = 0, 1, \cdots, c\right\}.
+\end{equation*}
+We define the edges as follows:
+\begin{itemize}
+    \item $(i, j) \to (b, j)$: transferring water from the first jug to the second jug;
+    \item $(i, j) \to (0, j)$: transferring water from the second jug to the first jug;
+    \item $(i, j) \to (i, c)$: transferring water from the first jug to the third jug;
+    \item $(i, j) \to (i, 0)$: transferring water from the third jug to the first jug;
+    \item $(i, j) \to \left(\min\left\{0, i + j - c\right\}, \max\left\{i + j, c\right\}\right)$: transferring water from the second jug to the third jug;
+    \item $(i, j) \to \left(\max\left\{i + j, b\right\}, \min\left\{0, i + j - b\right\}\right)$: transferring water from the third jug to the second jug;
+\end{itemize}
+Now we only need to find the shortest $(0, 0)$-$(i, j)$ path such that either $i = d$ or $j = d$ or $a - i - j = d$.
+\subsubsection{Dynamic Lot Sizing}
+\begin{genbox}{Dynamic Lot Sizing}
+    Suppose a factory has $T$ production periods with demand $d_i$ for the $i$-th period. Let $x_i$ be the output of the $i$-th period and $I_i$ be the inventory at the end of the $(i - 1)$-th period. The cost per unit of production is $c_i$ and the cost per unit of inventory holding is $h_i$ in the $i$-th period, and a set-up cost of $K_i$ is incurred in the $i$-th period whenever $x_i > 0$. Determine a production plan $\mathbfit{x} = (x_1, x_2, \cdots, x_T)$ to meet the demands and minimise the total cost.
+\end{genbox}
+First, notice that $I_{i} = I_{i - 1} + x_i - d_i$. To minimise the total cost, we should not produce any redundant unit of goods, and so $I_0 = I_T = 0$. Moreover, the following proposition is true:
+\begin{probox}{Optimality Condition of Dynamic Lot Sizing}{optPlan}
+    If $(x_1, x_2, \cdots, x_T)$ is an optimal production plan, then $I_{i - 1}x_i = 0$ and $x_i = \sum_{k = i}^{j_i}d_k$ for some $j_i \geq j - 1$.
+\end{probox}
+This means that to achieve minimal production cost, we should not both use the inventory and produce new goods in a period, and each production should be prudently scheduled to meet future demands for several periods. Therefore, suppose there are $m$ periods, labelled as $j_1, j_2, \cdots, j_m$, where production is carried out, then 
+\begin{equation*}
+    x_{j_k} = \sum_{i = j_k}^{j_{k + 1} - 1}d_i.
+\end{equation*}
+Therefore, if we define the $T$ periods as a vertex set, then a $0$-$T$ path indicates the periods where production should take place, where an edge $(i, j)$ connects two consecutive production periods. Therefore, we can define the flow cost on the edge by 
+\begin{equation*}
+    c_{(i, j)} = K_i + c_ix_i + \sum_{k = i}^{j - 1}h_kI_k,
+\end{equation*}
+where
+\begin{equation*}
+    I_k = x_i - \sum_{r = i}^{k}d_r = \sum_{r = k + 1}^{j - 1}d_r.
+\end{equation*}
+Since we do not carry over $I_{j - 1}$ to the $j$-th period, we need $I_{j - 1} = 0$ to minimise wastage. Therefore, 
+\begin{equation*}
+    c_{(i, j)} = K_i + c_i\sum_{k = i}^{j - 1}d_k + \sum_{k = i}^{j - 2}\left(h_k\sum_{r = k + 1}^{j - 1}d_r\right).
+\end{equation*}
+Now, we only need to find the shortest $0$-$T$ path.
+\subsubsection{Project Management}
+\begin{genbox}{Project Management}
+    Given a list of activities $A_1, A_2, \cdots, A_n$. Let $t_i$ be the duration for $A_i$ and $P(A_i)$ be the required activities which must be completed before $A_i$ starts. For each activity, find the maximum possible time to delay without affecting the project completion time.
+\end{genbox}
+For each activity $A_i$, write $A_i \coloneqq \left(s_{E_i}, e_{E_i}, s_i, i, s_{L_i}, e_{L_i}\right)$ as a node, where $s_{E_i}, e_{E_i}$ are the earliest start and end time and $s_{L_i}, e_{L_i}$ are the latest start and end time, such that $s_i = s_{L_i} - s_{E_i}$. $s_i$ is known as the \textit{slack} of $A_i$. Connect $A_i \to A_j$ if $A_i \in P(A_j)$. Take a node with the lowest topological ordering as the source node. We will first process the nodes in the forward direction and set 
+\begin{equation*}
+    s_{E_i} = \max\,\left\{e_{E_j} \colon A_j \in P(A_i)\right\},
+\end{equation*}
+i.e., take the latest start time for each activity. After all nodes are processed, we backtrack from the node with the highest topological ordering and set 
+\begin{equation*}
+    e_{L_i} = \min\,\left\{s_{L_j} \colon A_i \in P(A_j)\right\}.
+\end{equation*}
+Eventually, there will be a path such that every node in the path has zero slack. This path is known as the \textit{critical path}.
 \subsection{Maximum Flow Problem}
 The maximum flow problem has the following statement:
 \begin{quote}
@@ -1204,6 +1388,10 @@ Suppose $b_s = b$, then the maximum flow problem can be formulated as the linear
     \end{cases} \\
     & \mathbf{0} \leq \mathbfit{x} \leq \mathbfit{u}. 
 \end{align*}
+The flow balance constraint can be written as $\mathbfit{Ax = d}f$, where $f$ is the amount of flow from $s$ to $t$ and $\mathbfit{d} = \mathbfit{e}_s - \mathbfit{e}_t$.
+
+A variant of the maximum flow problem is the multi-source maximum flow problem, where we are given $n$ source nodes $s_1, s_2, \cdots, s_n$ and $m$ destination nodes $t_1, t_2, \cdots, t_m$. The aim is to find the maximum total flow from the sources to the destinations. This can be easily converted back to the single-source case by adding a new source $s$ and a new destination $t$, and join $s \to s_i$ for all $i = 1, 2, \cdots, n$ and $t_j \to t$ for all $j = 1, 2, \cdots, m$ using uncapacitated arcs. 
+
 A problem closely related to the maximum flow problem is the \textit{minimum cut problem}, which states the following:
 \begin{quote}
     Let $G$ be a directed graph with $w \colon E(G) \to \R^+_0$ as a weight map over the edges. For two fixed vertices $s, t \in V(G)$, find an edge cut $X \subseteq E(G)$ with minimum total weight such that $s$ and $t$ are in different connected components in $G - X$.
@@ -1217,8 +1405,20 @@ We introduce a few relevant definitions to the minimum cut problem.
         Clearly, the total capacity of the minimal $s$-$t$ cut in $G$ upper bounds the maximum flow from $s$ to $t$ in $G$.
     \end{remark}
 \end{notebox}
+Therefore, this motivates us to view a maximum flow problem from the perspective of a minimum cut problem. To formulate a minimum $s$-$t$ cut problem, we can assign boolean flags to the vertices, such that $y_i = 1$ if $u_i \in S_1$ and $y_i = 0$ if $u_i \in S_2$. It is clear that $y_s = 1$ and $y_t = 0$.
+
+For every edge $u_iu_j$, we again assign boolean flags to them such that $z_{ij} = 1$ if $u_1u_j$ is an $S_1$-$S_2$ edge and $z_{ij} = 0$ otherwise. Additionally, note that for every edge $u_iu_j$, if $z_{ij} = 1$, we can without loss of generality assume that $y_i = 1$ and $y_j = 0$, and so $y_i - y_j = 1$. Otherwise, $z_{ij} = 0$ and $y_i = y_j$. Either way, we have $y_i - y_j \leq z_{ij}$. However, if $\mathbfit{A}$ is the node-arc incident matrix, $y_i - y_j$ is exactly the row corresponding to $u_iu_j$ in $\mathbfit{A}^{\mathrm{T}}\mathbfit{y}$. 
+
+Therefore, we can formulate the minimum $s$-$t$ cut problem as follows:
+\begin{align*}
+    \min\,& \mathbfit{u}^{\mathrm{T}}\mathbfit{z} \\
+    \textrm{s.t. } & \mathbfit{d}^{\mathrm{T}}\mathbfit{y} = 1 \\
+    & -\mathbfit{A}^{\mathrm{T}}\mathbfit{y} + \mathbfit{z} \leq \mathbf{0} \\
+    & \mathbfit{z} \geq \mathbf{0}
+\end{align*}
+With some careful work, it can be verified that this is exactly the dual problem of a maximum flow problem. By Theorem \ref{thm:strongDuality}, this means that the total capacity of the minimum $s$-$t$ cut gives the maximum $s$-$t$ flow.
 \begin{probox}{Maximum Flow Problem and Minimum Cut Problem}{dualMFP=MCP}
-    Let (P) be a maximum flow problem on a network $G$ with flow capacity $u \colon E(G) \to \R^+_0$, then the dual of (P), (D), is the minimum cut problem on $G$ with $u$ as the edge weight.
+    The maximum $s$-$t$ flow in a network $G$ is equal to the total capacity of the minimum $s$-$t$ cut in $G$.
 \end{probox}
 \section{Network Simplex Method}
 Consider an uncapacitated minimum cost flow problem formulated as
@@ -1231,41 +1431,41 @@ Note that here, $\mathbfit{A}$ is a node-arc incidence matrix. By Definition \re
 \\\\
 We first characterise basic feasible solutions in the problem. Take any index set $B$. Notice that the row sum of $\mathbfit{A}_B$ is always $\mathbfit{0}$, so any $\mathbfit{A}_B$ is never invertible. Therefore, we can never find a basis for the network problem and thus cannot compute the basic solution using $\mathbfit{x}_B = \mathbfit{A}_B^{-1}\mathbfit{b}$.
 \begin{dfnbox}{Truncated Node-Arc Incidence Matrix}{truncatedInMat}
-    Let $\mathbfit{A}$ be a node-arc incidence matrix, the {\color{red} \textbf{truncated node-arc incidence matrix}} $\tilde{\mathbfit{A}}$ is obtained by deleting any row from $\mathbfit{A}$.
+    Let $\mathbfit{A}$ be a node-arc incidence matrix, the {\color{red} \textbf{truncated node-arc incidence matrix}} $\widetilde{\mathbfit{A}}$ is obtained by deleting any row from $\mathbfit{A}$.
 \end{dfnbox}
-It is easy to check that the rows of $\tilde{\mathbfit{A}}$ are always linearly independent, provided that the underlying directed graph has no isolated vertex. Correspondingly, we can obtain a truncated constraint $\tilde{\mathbfit{A}}\mathbfit{x} = \tilde{\mathbfit{b}}$. Now, for any network $G$, we consider its spanning trees.
+It is easy to check that the rows of $\widetilde{\mathbfit{A}}$ are always linearly independent, provided that the underlying directed graph has no isolated vertex. Correspondingly, we can obtain a truncated constraint $\widetilde{\mathbfit{A}}\mathbfit{x} = \widetilde{\mathbfit{b}}$. Now, for any network $G$, we consider its spanning trees.
 \begin{dfnbox}{Tree Solution}{TreeSoln}
-    Let $G$ be a network with node-arc incidence matrix $\mathbfit{A}$. A flow vector $\mathbfit{x} \in \R^{e(G)}$ is a {\color{red} \textbf{tree solution}} if $\tilde{\mathbfit{A}}\mathbfit{x} = \tilde{\mathbfit{b}}$ and there exists some spanning tree $T$ of $G$ such that $x_i = 0$ for all $e_i \notin E(T)$. A {\color{red} \textbf{feasible tree solution}} is a tree solution $\mathbfit{x}$ with $\mathbfit{x} \geq \mathbf{0}$.
+    Let $G$ be a network with node-arc incidence matrix $\mathbfit{A}$. A flow vector $\mathbfit{x} \in \R^{e(G)}$ is a {\color{red} \textbf{tree solution}} if $\widetilde{\mathbfit{A}}\mathbfit{x} = \widetilde{\mathbfit{b}}$ and there exists some spanning tree $T$ of $G$ such that $x_i = 0$ for all $e_i \notin E(T)$. A {\color{red} \textbf{feasible tree solution}} is a tree solution $\mathbfit{x}$ with $\mathbfit{x} \geq \mathbf{0}$.
 \end{dfnbox}
 \begin{probox}{Spanning Tree Induces Basis on $\tilde{\mathbfit{A}}$}{spanBasis}
-    Let $\mathbfit{A}$ be the node-arc incidence matrix for a network $G$. An index set $B$ is a basis of $\tilde{A}$ if and only if the set $E_B \coloneqq \left\{e_i \in E(G) \colon i \in B\right\}$ induces a spanning tree of $G$.
+    Let $\mathbfit{A}$ be the node-arc incidence matrix for a network $G$. An index set $B$ is a basis of $\widetilde{A}$ if and only if the set $E_B \coloneqq \left\{e_i \in E(G) \colon i \in B\right\}$ induces a spanning tree of $G$.
     \tcblower
     \begin{proof}
-        Without loss of generality, suppose $\tilde{\mathbfit{A}}$ is the first $(n - 1)$ rows of $\mathbfit{A}$. Suppose $E_B$ induces a spanning tree of $G$, then it suffices to prove that $\tilde{\mathbfit{A}}_B$ is invertible. We shall prove this by showing that the rows of $\tilde{\mathbfit{A}}$ are linearly independent. Suppose $\mathbfit{w} \in \R^{n - 1}$ is such that $\mathbfit{w}^{\mathrm{T}}\tilde{\mathbfit{A}}_B = \mathbf{0}$, then $\mathbfit{w}^{\mathrm{T}}\tilde{\mathbfit{A}}_i = 0$ for all $i \in B$. Let $e_i = (v_k, v_h)$. Observe that if $v_n \notin e_i$, then $w_k = w_h$. If $v_k = v_n$, then $w_h = 0$ and vice versa. Since $E_B$ induces a spanning tree $T$, there is some $j \in B$ such that $e_j$ is incident to $v_n$, and so there is some $w_r = 0$. Note that for all neighbours $v_m$ connected to $v_r$ in $T$, $w_m = 0$. This means $\mathbfit{w} = 0$.
+        Without loss of generality, suppose $\widetilde{\mathbfit{A}}$ is the first $(n - 1)$ rows of $\mathbfit{A}$. Suppose $E_B$ induces a spanning tree of $G$, then it suffices to prove that $\widetilde{\mathbfit{A}}_B$ is invertible. We shall prove this by showing that the rows of $\widetilde{\mathbfit{A}}$ are linearly independent. Suppose $\mathbfit{w} \in \R^{n - 1}$ is such that $\mathbfit{w}^{\mathrm{T}}\widetilde{\mathbfit{A}}_B = \mathbf{0}$, then $\mathbfit{w}^{\mathrm{T}}\widetilde{\mathbfit{A}}_i = 0$ for all $i \in B$. Let $e_i = (v_k, v_h)$. Observe that if $v_n \notin e_i$, then $w_k = w_h$. If $v_k = v_n$, then $w_h = 0$ and vice versa. Since $E_B$ induces a spanning tree $T$, there is some $j \in B$ such that $e_j$ is incident to $v_n$, and so there is some $w_r = 0$. Note that for all neighbours $v_m$ connected to $v_r$ in $T$, $w_m = 0$. This means $\mathbfit{w} = 0$.
     \end{proof}
 \end{probox}
-Now, we consider the reduced cost. Recall that $\mathbfit{p}$ such that $\mathbfit{p}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}}_B\tilde{\mathbfit{A}}_B^{-1}$ is an optimal solution to the dual problem. Therefore, the reduced costs are 
+Now, we consider the reduced cost. Recall that $\mathbfit{p}$ such that $\mathbfit{p}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}}_B\widetilde{\mathbfit{A}}_B^{-1}$ is an optimal solution to the dual problem. Therefore, the reduced costs are 
 \begin{equation*}
-    \bar{\mathbfit{c}}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\tilde{\mathbfit{A}}.
+    \widebar{\mathbfit{c}}^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}} - \mathbfit{p}^{\mathrm{T}}\widetilde{\mathbfit{A}}.
 \end{equation*}
 Since the $n$-th row of $\mathbfit{A}$ is removed in the truncated matrix, we have 
 \begin{equation*}
-    \bar{c}_{(i, j)} = \begin{cases}
+    \widebar{c}_{(i, j)} = \begin{cases}
         c_{(i, j)} - (p_i - p_j) & \textrm{if } i, j \neq n \\
         c_{(i, j)} - p_i & \textrm{if } j = n \\
         c_{(i, j)} + p_j & \textrm{if } i = n
     \end{cases}.
 \end{equation*}
-By defining $p_n = 0$, we obtain $\bar{c}_{(i, j)} = c_{(i, j)} - (p_i - p_j)$ for all $(i, j) \in E(G)$. Let $B$ be a basis inducing a spanning tree $T$ on the network $G$. Note that if $(i, j) \in B$, we must have $\bar{c}_{(i, j)} = 0$, so we have 
+By defining $p_n = 0$, we obtain $\widebar{c}_{(i, j)} = c_{(i, j)} - (p_i - p_j)$ for all $(i, j) \in E(G)$. Let $B$ be a basis inducing a spanning tree $T$ on the network $G$. Note that if $(i, j) \in B$, we must have $\widebar{c}_{(i, j)} = 0$, so we have 
 \begin{align*}
     p_i - p_j & = c_{(i, j)} \quad \textrm{for all } (v_i, v_j) \in E(T), \\
     p_n = 0.
 \end{align*}
-Note that $V(T) = V(G)$, so solving the above system of equations gives the values of the $p_i$'s for all $i = 1, 2, \cdots, n$, which then allows us to compute $\bar{\mathbfit{c}}$.
+Note that $V(T) = V(G)$, so solving the above system of equations gives the values of the $p_i$'s for all $i = 1, 2, \cdots, n$, which then allows us to compute $\widebar{\mathbfit{c}}$.
 \\\\
-Suppose we take a basis $B$ corresponding to the spanning tree $T$ of a network $G$. If there is some $(i, j) \notin B$ such that $\bar{c}_{(i, j)} < 0$, it means the edge $(v_i, v_j)$ should be added to improve the flow. Note that there is an undirected $v_i$-$v_j$ path in $T$, so $T + (v_i, v_j)$ contains a cycle $C$ containing $v_i$ and $v_j$. We define the direction of $(v_i, v_j)$ as the forward direction and let $E_f$ and $E_b$ be the sets of forward and backward edges in $C$ respectively. 
+Suppose we take a basis $B$ corresponding to the spanning tree $T$ of a network $G$. If there is some $(i, j) \notin B$ such that $\widebar{c}_{(i, j)} < 0$, it means the edge $(v_i, v_j)$ should be added to improve the flow. Note that there is an undirected $v_i$-$v_j$ path in $T$, so $T + (v_i, v_j)$ contains a cycle $C$ containing $v_i$ and $v_j$. We define the direction of $(v_i, v_j)$ as the forward direction and let $C_f$ and $C_b$ be the sets of forward and backward edges in $C$ respectively. 
 \\\\
-To improve the cost, we need to increase the flow in $(v_i, v_j)$ as much as possible. Suppose we set $x_{(i, j)} = \theta^*$, then the amount of forward flow in every $e_f \in E_f$ increases by $\theta^*$, which means we need to reduce the backward flow in every $e_b \in E_b$ by $\theta^*$ as well. Intuitively, we can take 
+To improve the cost, we need to increase the flow in $(v_i, v_j)$ as much as possible. Suppose we set $x_{(i, j)} = \theta^*$, then the amount of forward flow in every $C_f \in C_f$ increases by $\theta^*$, which means we need to reduce the backward flow in every $e_b \in C_b$ by $\theta^*$ as well. Intuitively, we can take 
 \begin{equation*}
     \theta^* = \min_{(v_k, v_{\ell}) \in C_b}x_{k\ell}.
 \end{equation*}
@@ -1273,7 +1473,64 @@ In particular, if $C_b = \varnothing$, $\theta^* = \infty$ and the optimal cost 
 \begin{tecbox}{Network Simplex Method}{networkSimplex}
     Consider an uncapacitated minimum cost flow problem on a network $G$ with node-arc incidence matrix $\mathbfit{A}$. The network simplex method finds the optimal flow vector $\mathbfit{x}^*$ by the following procedures:
     \begin{enumerate}
-        \item Take a spanning tree $T \subseteq G$ and find a basis $B$ from $E(T)$ and a feasible tree solution $\mathbfit{x}_0$.
+        \item Take a spanning tree $T_0 \subseteq G$ and find a basis $B$ from $E(T_0)$ and a feasible tree solution $\mathbfit{x}_0$.
+        \item At the $k$-th iteration, compute the dual vector $\mathbfit{p}_k^{\mathrm{T}} = \mathbfit{c}^{\mathrm{T}}_{B_k}\widetilde{\mathbfit{A}}_{B_k}^{-1}$. Define $p_{n_{k}} = 0$. 
+        \item For each edge $u_iu_j \in E(G)$, compute the reduced cost $\widebar{c}_{(i, j)} = c_{(i, j)} - (p_{i_k} - p_{j_k})$.
+        \item If $\widebar{c}_{(i, j)} \geq 0$ for all $(i, j) \in E(G)$, then $\mathbfit{x}_k$ is optimal. 
+        \item Otherwise, choose $(i, j) \notin B$ with $\widebar{c}_{(i, j)} < 0$.
+        \item Let $C_k$ be the cycle contained in $T + u_iu_j$ and $C_f$ and $C_b$ be the forward and backward edges in $C_k$ respectively, where $u_iu_j$ induces the forward direction. 
+        \begin{enumerate}
+            \item If $C_b = \varnothing$, then the optimal cost is unbounded.
+            \item Otherwise, compute
+            \begin{equation*}
+                \theta^* \coloneqq x_{pq} = \min_{(u_k, u_{\ell}) \in C_b}x_{k\ell}.
+            \end{equation*}
+        \end{enumerate}
+        \item Update $\mathbfit{x}_k$ to $\mathbfit{x}_{k + 1}$ by 
+        \begin{equation*}
+            \yhwidehat{x_{k\ell}} = \begin{cases}
+                x_{k\ell} + \theta^* & \textrm{if } u_ku_{\ell} \in C_f \\
+                x_{k\ell} - \theta^* & \textrm{if } u_ku_{\ell} \in C_b \\
+                x_{k\ell} & \textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        \item Update $T_{k + 1} = \left(T - u_pu_q\right)\cup u_iu_j$.
     \end{enumerate}
 \end{tecbox}
+Similar to Technique \ref{tec:2Phase}, we can also deploy a two-phase method to initialise a feasible tree solution.
+\begin{tecbox}{Network Two-Phase Method}{network2Phase}
+    Consider an uncapacitated minimum cost flow problem on an $n$-vertex network $G$ with node-arc incidence matrix $\mathbfit{A}$ and supply vector $\mathbfit{b}$. The network two-phase method finds the optimal flow vector $\mathbfit{x}^*$ by the following procedures:
+    \begin{enumerate}
+        \item Construct an auxiliary network $G'$ on $V(G)$ with 
+        \begin{equation*}
+            E(G') \coloneqq E(G) \cup \left\{u_iu_n \notin E(G) \colon b_i \geq 0 \right\} \cup \left\{u_nu_j \notin E(G) \colon b_j < 0\right\}.
+        \end{equation*}
+        \item Initialise flow costs on $G'$ by
+        \begin{equation*}
+            c'_{(i, j)} = \begin{cases}
+                0 & \textrm{if } u_iu_j \in E(G) \\
+                1 & \textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        \item Take $B \coloneqq \left\{u_iu_n \in E(G') \colon b_i \geq 0 \right\} \cup \left\{u_nu_j \in E(G') \colon b_j < 0\right\}$ as an initial basis. Run network simplex method on $G'$ until a basis $B_0$ containing no edge from $G' - G$ is found.
+        \item Take $B_0$ as an initial basis to run network simplex method on $G$.
+    \end{enumerate}
+\end{tecbox}
+\section{Integrality}
+Network problems exhibit an interesting feature that most quantities and parameters of interest are integers if the network data is given in integers.
+\begin{thmbox}{Integrality of Network Optimisation Problems}{integer}
+    Let $G$ be an $n$-vertex network with a connected underlying graph, then $\widetilde{\mathbfit{A}}_B^{-1}$ has only integer entries for any basis $B$.
+    \tcblower
+    \begin{proof}
+        For each vertex $v_i \in V(G)$ where $1 \leq i \leq n - 1$, Consider a network flow problem $(P_i)$ defined on a network $H_i \subseteq G$ with $V(H_i) = V(G)$ and $E(H_i) = B$, such that $b_i = 1$ and $b_n = -1$, while all other nodes are transshipment nodes with no external supply nor demand. Clearly, the flow balance equation for $(P_i)$ is 
+        \begin{equation*}
+            \mathbfit{A}_B\mathbfit{x}_B = \mathbfit{b}, \quad \textrm{where } \mathbfit{b} = \mathbfit{e}_i - \mathbfit{e}_n.
+        \end{equation*}
+        Truncating the equation by taking the first $(n - 1)$ rows yields $\widetilde{\mathbfit{A}}_B\mathbfit{x}_B = \mathbfit{e}_i$. Therefore, we have $\widetilde{\mathbfit{A}}_B^{-1}\mathbfit{e}_i = \mathbfit{x}_B$. By Proposition \ref{pro:spanBasis}, $H_i$ is a spanning tree of $G$ and so there is a unique path between any pair of vertices. Therefore, the flow is either $1$ or $-1$ depending on the directions of the edges. This implies that $\widetilde{\mathbfit{A}}_B^{-1}\mathbfit{e}_i$ has only integer entries, and so $\widetilde{\mathbfit{A}}_B^{-1}$ is an integer matrix.
+    \end{proof}
+\end{thmbox}
+From Theorem \ref{thm:integer}, we see that if the supply vector $\mathbfit{b}$ is also integer, then every basic solution $\mathbfit{x}$ must be integer since $\mathbfit{x}_B = \widetilde{\mathbfit{A}}_B^{-1}\mathbfit{b}$ is now integer. Similarly, the dual basic solution $\mathbfit{p} = \mathbfit{c}^{\mathrm{T}}_B\widetilde{\mathbfit{A}}_B^{-1}$ is also integer if the cost vector $\mathbfit{c}$ is integer. This leads to the following easy corollary:
+\begin{corbox}{Integrality of Optimal Solution in Network Flow Problems}{integerOptimal}
+    Let $G$ be an $n$-vertex network with a connected underlying graph. Consider a network flow problem $(P)$ such that an optimal solution exists. If the supply vector $\mathbfit{b}$ consists of purely integer entries, then there is an integer optimal solution; if the cost vector $\mathbfit{c}$ consists of purely integer entries, then there is an integer dual optimal solution.
+\end{corbox}
 \end{document}
