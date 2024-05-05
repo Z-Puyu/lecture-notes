@@ -133,7 +133,7 @@
             \end{enumerate}
             \item Special cases:
             \begin{enumerate}
-                \item Multiple leaving variables: degenerate BFS.
+                \item Multiple leaving variables: degenerate BFS (some $\bar{c}_j$ might be negative at degenerate optimum).
                 \item Multiple optimal solutions iff $\bar{c}_j = 0$ at an optimum.
                 \begin{enumerate}
                     \item If $\bar{c}_j = 0$ but $\bm{d}^j \geq \mathbf{0}$, the optimal set is $\left\{\bm{x}^* + \theta\bm{d}^j \colon \theta \geq 0\right\}$.
@@ -141,18 +141,18 @@
                 \end{enumerate}
                 \item $\bar{c}_j < 0$ but $\bm{d}^j \geq \mathbf{0}$: unbounded.
                 \item Empty feasible set: detect with two-phase method or Big-$M$ method.
-                \item \textbf{Dual problem:} $\max_{\bm{p} \in \mathbb{R}^n} \bm{p}^{\mathrm{T}}\bm{b} \quad \textrm{s.t. } \bm{p}^{\mathrm{T}}\bm{A} \leq \bm{c}^{\mathrm{T}}$.
-                \item Dual of the dual is the primal.
-                \item \textbf{Weak duality:} $\sup \bm{p}^{\mathrm{T}}\bm{b} \leq \inf \bm{c}^{\mathrm{T}}\bm{x}$.
-                \item If $(\bm{p}^*)^{\mathrm{T}}\bm{b} = \bm{c}^{\mathrm{T}}\bm{x}^*$, then both are optimal solutions.
-                \item ($P$) is unbounded iff ($D$) is infeasible. ($P$) is infeasible iff ($D$) is unbounded.
-                \item \textbf{Strong duality:} If primal and dual are feasible, then $(\bm{p}^*)^{\mathrm{T}}\bm{b} = \inf \bm{c}^{\mathrm{T}}\bm{x}^*$. The dual optimal solution $\bm{p}^* = \bm{c}^{\mathrm{T}}_B\bm{A}_B$.
-                \item \textbf{Complementary slackness:} Let $(P)$ be a primal linear program with constraints $\bm{a}_i^{\mathrm{T}}\bm{x} \leq b_i$, $\bm{a}_i^{\mathrm{T}}\bm{x} \geq b_i$ or $\bm{a}_i^{\mathrm{T}}\bm{x} = b_i$. Let $\bm{x}$ and $\bm{p}$ be feasible solutions to $(P)$ and the dual problem $(D)$ respectively, then $\bm{x}$ and $\bm{p}$ are optimal iff 
-                \begin{equation*}
-                    p_i\left(\bm{a}_i^{\mathrm{T}}\bm{x} - b_i\right) = 0, \qquad \left(c_j - \bm{p}^{\mathrm{T}}\bm{A}_j\right)x_j = 0
-                \end{equation*}
-                for all $i, j$. A feasible $\bm{x}$ is optimal iff there is a feasible dual solution $\bm{p}$ satisfying complementary slackness conditions.
             \end{enumerate} 
+            \item \textbf{Dual problem:} $\max_{\bm{p} \in \mathbb{R}^n} \bm{p}^{\mathrm{T}}\bm{b} \quad \textrm{s.t. } \bm{p}^{\mathrm{T}}\bm{A} \leq \bm{c}^{\mathrm{T}}$.
+            \item Dual of the dual is the primal.
+            \item \textbf{Weak duality:} $\sup \bm{p}^{\mathrm{T}}\bm{b} \leq \inf \bm{c}^{\mathrm{T}}\bm{x}$.
+            \item If $(\bm{p}^*)^{\mathrm{T}}\bm{b} = \bm{c}^{\mathrm{T}}\bm{x}^*$, then both are optimal solutions.
+            \item ($P$) is unbounded iff ($D$) is infeasible. ($P$) is infeasible iff ($D$) is unbounded.
+            \item \textbf{Strong duality:} If primal and dual are feasible, then $(\bm{p}^*)^{\mathrm{T}}\bm{b} = \inf \bm{c}^{\mathrm{T}}\bm{x}^*$. The dual optimum $\bm{p}^* = \bm{c}^{\mathrm{T}}_B\bm{A}_B$.
+            \item \textbf{Complementary slackness:} If $(P)$ has constraints $\bm{a}_i^{\mathrm{T}}\bm{x} \leq b_i$, $\bm{a}_i^{\mathrm{T}}\bm{x} \geq b_i$ or $\bm{a}_i^{\mathrm{T}}\bm{x} = b_i$. Objective values at $\bm{x}$ and $\bm{p}$ are equal iff 
+            \begin{equation*}
+                p_i\left(\bm{a}_i^{\mathrm{T}}\bm{x} - b_i\right) = 0, \qquad \left(c_j - \bm{p}^{\mathrm{T}}\bm{A}_j\right)x_j = 0
+            \end{equation*}
+            for all $i, j$ (and both optimal if $\bm{x}$, $\bm{p}$ are feasible). A feasible $\bm{x}$ is optimal iff there is a feasible dual solution $\bm{p}$ satisfying complementary slackness conditions. \textbf{NOTE: In NETWORKS, both $i$ and $j$ NEED TO BE EDGE INDEX!}
             \item \textbf{Dual simplex method:}
             \begin{enumerate}
                 \item Manipulate the constraints and add slack variables so that the right-most portion of $\bm{A}$ becomes an identity matrix.
@@ -214,7 +214,7 @@
                 c_{(i, j)} = K_i + c_i\sum_{k = i}^{j - 1}d_k + \sum_{k = i}^{j - 2}\left(h_k\sum_{r = k + 1}^{j - 1}d_r\right).
             \end{equation*}
             \item \textbf{Max flow:} $\min v \quad \textrm{s.t. } \bm{Ax} = (\bm{e}_s - \bm{e}_t)v, \mathbf{0} \leq \bm{x} \leq \bm{u}$. If there are multiple sources/destinations, add artificial single source and destination with uncapacitated arcs.
-            \item \textbf{Min cut:} $\min\bm{u}^{\mathrm{T}}\bm{z} \quad \textrm{s.t. } \bm{d}^{\mathrm{T}}\bm{y} = 1, \bm{z} - \bm{A}^{\mathrm{T}}\bm{y}\leq \mathbf{0}, \bm{z} \geq \mathbf{0}$. Here $\bm{u}$ is the capacities, $\bm{y}, \bm{z}$ are boolean vectors. $\bm{y}$ indicates the section a vertex is in, $\bm{z}$ indicates if an edge is taken. It is dual to max flow.
+            \item \textbf{Min cut:} $\min\bm{u}^{\mathrm{T}}\bm{z} \quad \textrm{s.t. } \bm{d}^{\mathrm{T}}\bm{y} = 1, \bm{z} - \bm{A}^{\mathrm{T}}\bm{y}\geq \mathbf{0}, \bm{z} \geq \mathbf{0}$. Here $\bm{u}$ is the capacities, $\bm{y}, \bm{z}$ are boolean vectors. $\bm{y}$ indicates the section a vertex is in, $\bm{z}$ indicates if an edge is taken. It is dual to max flow. \textbf{Here, the dual vectors of $\bm{b}$ and $\bm{u}$ are $\bm{y}$ and $\bm{z}$ respectively.}
             \item Truncated node-arc incidence matrix $\widetilde{A}$: delete last row from $\bm{A}$. An edge set $B$ is a basis of $\widetilde{A}$ iff it induces a spanning tree. Dual vector $\bm{p}^{\mathrm{T}} = \bm{c}^{\mathrm{T}}_B\widetilde{A}_B^{-1}$.
             \item \textbf{Network simplex method:}
             \begin{enumerate}

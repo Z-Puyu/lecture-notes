@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 MAY 2024 03:51
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  5 MAY 2024 22:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -248,8 +248,7 @@ File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
 \g__pdf_backend_object_int=\count285
 \g__pdf_backend_annotation_int=\count286
 \g__pdf_backend_link_int=\count287
-)
-No file cheatsheet.aux.
+) (./cheatsheet.aux)
 \openout1 = `cheatsheet.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -262,7 +261,7 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 18.
-(c:/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
+ (c:/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 18.
@@ -344,12 +343,12 @@ Overfull \hbox (1.9624pt too wide) detected at line 75
 
 ] [2] (./cheatsheet.aux) ) 
 Here is how much of TeX's memory you used:
- 3748 strings out of 478630
- 58980 string characters out of 5847730
+ 3750 strings out of 478630
+ 59010 string characters out of 5847730
  1889012 words of memory out of 5000000
  23846 multiletter control sequences out of 15000+600000
  516775 words of font info for 53 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 58i,10n,63p,449b,596s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 58i,10n,63p,514b,596s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on cheatsheet.pdf (2 pages).
