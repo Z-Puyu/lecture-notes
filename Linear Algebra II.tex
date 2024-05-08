@@ -2,10 +2,23 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
-\usepackage{yhmath}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
 \makeatletter
 \let\save@mathaccent\mathaccent
 \newcommand*\if@single[3]{%
@@ -209,29 +222,64 @@ Note that a vector space is extended based on a set of vectors, so we can define
 \begin{dfnbox}{Subspace}{subspace}
     Let $V$ be a vector space. $U \subseteq V$ is called a {\color{red} \textbf{subspace}} if $U$ is a vector space under addition and scalar multiplication in $V$.
 \end{dfnbox}
-It is easy to see that the intersection of any number of subspaces of a vector space $V$ is still a subspace of $V$, but the union might not be so. In particular, we would like to consider a special construct known as \textit{direct sum}.
-\begin{dfnbox}{Direct Sum}{directSum}
-    Let $V$ be a vector space and $U_1, U_2 \subseteq V$ such that $U_1 \cap U_2 = \{\zero\}$, then their {\color{red} \textbf{direct sum}} is defined as
+It is easy to see that the intersection of any number of subspaces of a vector space $V$ is still a subspace of $V$, but the union might not be so. Therefore, when we try to ``merge'' different subspaces, we usually use the notion of a \textit{sum} instead of a union. 
+\begin{dfnbox}{Sum of Subspaces}{subspaceSum}
+    Let $V_1, V_2$ be subspaces of a vector space $V$, then their {\color{red} \textbf{sum}} is defined as 
     \begin{equation*}
-        U_1 \oplus U_2 \coloneqq \left\{\mathbfit{u}_1 + \mathbfit{u}_2 \colon \mathbfit{u}_1 \in U_1, \mathbfit{u}_2 \in U_2\right\}.
+        V_1 + V_2 \coloneqq \left\{\mathbfit{v}_1 + \mathbfit{v}_2 \colon \mathbfit{v}_1 \in V_1, \mathbfit{v}_2 \in V_2\right\}.
     \end{equation*}
 \end{dfnbox}
-More generally, we can let $U_1$ and $U_2$ be any subsets of $V$ and define $U_1 + U_2$ in the same manner, which is known as the \textit{sum} of $U_1$ and $U_2$.
-
-It can be easily proven that for any vector space $V$, the direct sum of any two subspaces of $V$ is still a subspace of $V$. A nice property of direct sum can be proven as follows:
-\begin{probox}{Unique Decomposition with Direct Sums}{uniqueDecomp}
-    Let $V = U_1 \oplus U_2$, then every $\mathbfit{v} \in V$ can be uniquely expressed as $\mathbfit{u + w}$ for some $\mathbfit{u} \in U_1$ and $\mathbfit{w} \in U_2$.
+We would like to verify that the space in Definition \ref{dfn:subspaceSum} is indeed still a subspace of $V$. First, the following proposition will be handy:
+\begin{probox}{Subspaces Share a Unique Zero Vector}{sameZero}
+    Let $U$ be any subspace of a vector space $V$. If $\zero_U$ and $\zero_V$ are the zero vectors in $U$ and $V$ respectively, then $\zero_U = \zero_V$.
     \tcblower
     \begin{proof}
-        The existence of $\mathbfit{u}$ and $\mathbfit{w}$ is trivial by Definition \ref{dfn:directSum}. Suppose there exist $\mathbfit{u}' \in U_1$ and $\mathbfit{w}' \in U_2$ such that $\mathbfit{u + w} = \mathbfit{u}' + \mathbfit{w}'$, then we have $\mathbfit{u - u}' = \mathbfit{w}' - \mathbfit{w}$. Note that $\mathbfit{u - u}' \in U_1$ and $\mathbfit{w}' - \mathbfit{w} \in U_2$, so we have $\mathbfit{u - u}', \mathbfit{w}' - \mathbfit{w} \in U_1 \cap U_2 = \{\zero\}$, i.e.,
+        Since $U \subseteq V$, we have $\zero_U \in V$. Therefore, $\zero_U + \zero_V = \zero_U = \zero_U + \zero_U$, which implies that $\zero_U = \zero_V$.
+    \end{proof}
+\end{probox} 
+Now, it is legal to state $\zero \in V$ as ``the'' zero vector of $V_1, V_2$ and $V$. So clearly $V_1 + V_2 \neq \varnothing$ because $\zero \in V_1 + V_2$. Take any $\mathbfit{w}_1 = \mathbfit{v}_1 + \mathbfit{u}_1$ and $\mathbfit{w}_2 = \mathbfit{v}_2 + \mathbfit{u}_2$ in $V_1 + V_2$. Without loss of generality, let $\mathbfit{v}_1, \mathbfit{v}_2 \in V_1$ and $\mathbfit{u}_1, \mathbfit{u}_2 \in V_2$. Then, 
+\begin{equation*}
+    \mathbfit{w}_1 + \alpha\mathbfit{w}_2 = (\mathbfit{v}_1 + \alpha\mathbfit{v}_2) + (\mathbfit{u}_1 + \alpha\mathbfit{u}_2) \in V_1 + V_2,
+\end{equation*}
+which implies that $V_1 + V_2$ is a subspace of $V$. In fact, not only is $V_1 +  V_2$ a subspace of $V$, it is the minimal subspace containing both $V_1$ and $V_2$!
+\begin{probox}{Sum as the Minimal Containing Subspace}{minimalContain}
+    Let $V_1, V_2, \cdots, V_k$ be subspaces of $V$, then $\sum_{i = 1}^{k}V_i$ is the minimal subspace of $V$ containing all of $V_1, V_2, \cdots, V_k$.
+    \tcblower
+    \begin{proof}
+        Let $U$ be the minimal subspace of $V$ containing all of $V_1, V_2, \cdots, V_k$. Clearly, $V_i \subseteq U$ for all $i = 1, 2, \cdots, k$. Take any $\mathbfit{w} \in \sum_{i = 1}^{k}V_i$, then we can write 
+        \begin{equation*}
+            \mathbfit{w} = \sum_{i = 1}^{k}\mathbfit{v}_i
+        \end{equation*}
+        where $\mathbfit{v}_i \in V_i$. Clearly, $\mathbfit{v}_i \in U$ for every $i = 1, 2, \cdots, k$, so $\mathbfit{w} \in U$, which means that 
+        \begin{equation*}
+            \sum_{i = 1}^{k}V_i \subseteq U.
+        \end{equation*}
+        However, it is clear that $V_i \subseteq \sum_{i = 1}^{k}V_i$ for all $i = 1, 2, \cdots, k$, so by the minimality of~$U$, we have $\sum_{i = 1}^{k}V_i = U$.
+    \end{proof}
+\end{probox}
+In particular, we would like to consider a special construct known as \textit{direct sum}.
+\begin{dfnbox}{Direct Sum}{directSum}
+    Let $V$ be a vector space and $U_1, U_2$ be subspaces of $V$. The sum $U_1 + U_2$ is said to be a {\color{red} \textbf{direct sum}}, denoted as $U_1 \oplus U_2$, if for every $\mathbfit{u} \in U_1 + U_2$ there is a unique way to express it as $\mathbfit{u} = \mathbfit{u}_1 + \mathbfit{u}_2$ for $\mathbfit{u}_1 \in U_1$ and $\mathbfit{u}_2 \in U_2$.
+\end{dfnbox}
+In some sense, a direct sum of $V$ can be viewed as a ``partition'' of $V$ into two subsets with a minimal overlap. Note that unlike partition in its real definition, the subspaces $U_1$ and $U_2$ here cannot be disjoint sets as both of them have to contain the zero vector in $V$. In fact, we can prove that if $U_1 \oplus U_2$ exists, then $\zero$ is the only thing in the intersection $U_1 \cap U_2$.
+\begin{thmbox}{Equivalent Definition of Direct Sums}{altDirSum}
+    Let $V$ be a vector space and $U_1, U_2$ be subspaces of $V$, then $U_1 + U_2$ is a direct sum if and only if $U_1 \cap U_2 = \{\zero\}$.
+    \tcblower
+    \begin{proof}
+        We shall prove that $U_1 + U_2$ being a direct sum implies that $U_1 \cap U_2 = \{\zero\}$ by considering the contrapositive. Suppose on contrary that there exists some $\mathbfit{u_0 \neq \zero}$ in $U_1 \cap U_2$, then clearly $-\mathbfit{u}_0 \in U_1 \cap U_2$ and so $\zero = \mathbfit{u}_0 + \left(-\mathbfit{u}_0\right) = \zero + \zero$ is expressible in two distinct ways. Therefore, $U_1 + U_2$ is not a direct sum.
+        \\\\
+        Suppose conversely that $U_1 \cap U_2 = \{\zero\}$. Suppose that there exist some $\mathbfit{u}' \in U_1$ and~$\mathbfit{w}' \in U_2$ such that $\mathbfit{u + w} = \mathbfit{u}' + \mathbfit{w}'$, then we have $\mathbfit{u - u}' = \mathbfit{w}' - \mathbfit{w}$. Notice that~$\mathbfit{u - u}' \in U_1$ and $\mathbfit{w}' - \mathbfit{w} \in U_2$, so we have $\mathbfit{u - u}', \mathbfit{w}' - \mathbfit{w} \in U_1 \cap U_2 = \{\zero\}$, i.e.,
         \begin{equation*}
             \mathbfit{u - u}' = \mathbfit{w}' - \mathbfit{w} = \zero.
         \end{equation*} 
         Therefore, $\mathbfit{u} = \mathbfit{u}'$ and $\mathbfit{w} = \mathbfit{w}'$, i.e., $\mathbfit{u}$ and $\mathbfit{w}$ are unique.
     \end{proof}
-\end{probox}
-In some sense, a direct sum of $V$ can be viewed as a ``partition'' of $V$ into two subsets with a minimal overlap. Note that unlike partition in its real definition, the subspaces $U_1$ and $U_2$ here cannot be disjoint sets as both of them have to contain the zero vector in $V$. More generally, for any subspace $U \subseteq V$, we have $\zero_U = \zero_V$, the proof of which should be trivial enough as an exercise to the reader.
-
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        Another interpretation here is that $U_1 + U_2$ is a direct sum if and only if $\zero$ is uniquely expressible as $\mathbfit{u}_1 + \mathbfit{u}_2$ for some $\mathbfit{u}_1 \in U_1$ and $\mathbfit{u}_2 \in U_2$.
+    \end{remark}
+\end{notebox}
 In particular, we would like to consider $\F^n$ for a general field $\F$. We can define the dot product operation over $\F^n$ in the same way as $\R^n$. Take any subspace $U \subseteq \F^n$ and define the set
 \begin{equation*}
     U_{\perp} \coloneqq \left\{\mathbfit{u} \in \F^n \colon \mathbfit{u \cdot v} = 0 \quad\textrm{for all } \mathbfit{v} \in U\right\},
@@ -242,8 +290,7 @@ To justify this, we first take any $\mathbfit{v} \in \F^n$. Using some calculus,
 \begin{equation*}
     \mathbfit{u}_0 = \argmin_{\mathbfit{u} \in U}\abs{\mathbfit{u \cdot v}}.
 \end{equation*}
-Let $\mathbfit{w = v - u}_0$, then clearly $\mathbfit{v = w + u}_0$ where $\mathbfit{u}_0 \in U$ and $\mathbfit{w} \in U_{\perp}$. This implies that~$V = U + U_{\perp}$. Note that $\zero$ is the only vector in $\F^n$ which is orthogonal to itself, so we have $U \cap U_{\perp} = \{\zero\}$. It follows that $V = U \oplus U_{\perp}$.
-
+Let $\mathbfit{w = v - u}_0$, then clearly $\mathbfit{v = w + u}_0$ where $\mathbfit{u}_0 \in U$ and $\mathbfit{w} \in U_{\perp}$. This implies that~$V = U + U_{\perp}$. Note that $\zero$ is the only vector in $\F^n$ which is orthogonal to itself, so we have $U \cap U_{\perp} = \{\zero\}$. It follows that $V = U \oplus U_{\perp}$. This is known as the \textit{orthogonal decomposition} of $\F^n$.
 \section{Isomorphism}
 Since the underlying structure of a vector space is still a set, the notion of a mapping between two vector spaces is well-defined. However, note that a vector space possesses unique algebraic structures and properties, namely that the linear combinations of any members of the space are still in the space, so we would like to focus on mapping which preserves such properties.
 \begin{dfnbox}{Homomorphism}{homomorphic}
@@ -283,7 +330,14 @@ Now, observe that for any field $\F$, the set $\F^n$ for any $n \in \N$ is a vec
     A vector space $V$ is said to be {\color{red} \textbf{finite-dimensional}} over a field $\F$ if it it is isomorphic to $\F^n$ for some $n \in \N$. $n$ is called the {\color{red} \textbf{dimension}} of $V$.
 \end{dfnbox}
 Obviously, a vector space which is not finite-dimensional is called \textit{infinite-dimensional}. For example, the set of all polynomials is a vector space of infinite dimension.
-
+\begin{dfnbox}{Polynomial}{polynomial}
+    A function $p \colon \F \to \F$ is said to be a {\color{red} \textbf{polynomial}} with coefficients in $\F$ if there exists scalars $a_0, a_1, \cdots, a_n \in \F$ such that 
+    \begin{equation*}
+        p(x) = \sum_{i = 0}^{n}a_ix^i, \quad\textrm{for all } x \in \F.
+    \end{equation*}
+    The largest $m$ such that $a_m \neq 0$ is known as the {\color{red} \textbf{degree}} of $p$, denoted by $\deg p$. We say that $\deg p = -\infty$ if $p = 0$. We denote the set of all polynomials with coefficients in $\F$ by $\mathscr{P}(\F)$, and the set of all such polynomials with degrees at most $m$ by $\mathscr{P}_m(\F)$.
+\end{dfnbox}
+Clearly, both $\mathscr{P}(\F)$ and $\mathscr{P}_m(\F)$ are vector spaces over $\F$. One can also verify that they are subspaces of $\F^{\F}$ (the set of all functions from $\F$ to $\F$). However $\mathscr{P}_m(\F)$ is finite-dimensional while $\mathscr{P}(\F)$ is clearly infinite-dimensional.
 \section{Basis}
 Recall that a \textit{linear combination} of vectors is in the form of
 \begin{equation*}
@@ -293,7 +347,11 @@ In case where no confusion is caused, this can be abbreviated as $a_i\mathbfit{v
 \begin{equation*}
     \mathrm{span}(V) \coloneqq \left\{a_i\mathbfit{v}_i \colon \mathbfit{v}_i \in V\right\},
 \end{equation*}
-where $a_i$'s are scalars. A span of a subset of a vector space $V$ is clearly a subspace of $V$. We also know that a set of vectors $S$ is said to be \textit{linearly independent} if and only if  $a_i\mathbfit{v}_i = \zero$ implies that $a_i = 0$ for all $i = 1, 2, \cdots$. A \textit{basis} of a vector space $V$ is a linearly independent set $S$ such that $\mathrm{span}(S) = V$. One may check that if $S$ is a basis for $V$, then any $\mathbfit{v} \in V$ can be \textbf{uniquely} expressed as a linear combination of the members of $S$, but $S$ itself is not unique. In particular, the coefficients in this linear combination is known as the \textit{components} of $\mathbfit{v}$ relative to $S$.
+where $a_i$'s are scalars. A span of a subset of a vector space $V$ is clearly a subspace of $V$. By deploying a similar proof technique as Proposition \ref{pro:minimalContain}, we can prove the following result:
+\begin{probox}{Linear Span as the Minimal Containing Subspace}{spanMinContain}
+    Let $U \subseteq V$ be a set of vectors, then $\mathrm{span(U)}$ is the minimal subspace of $V$ containing $U$.
+\end{probox}
+We also know that a set of vectors $S$ is said to be \textit{linearly independent} if and only if  $a_i\mathbfit{v}_i = \zero$ implies that $a_i = 0$ for all $i = 1, 2, \cdots$. A \textit{basis} of a vector space $V$ is a linearly independent set $S$ such that $\mathrm{span}(S) = V$. One may check that if $S$ is a basis for $V$, then any $\mathbfit{v} \in V$ can be \textbf{uniquely} expressed as a linear combination of the members of $S$, but $S$ itself is not unique. In particular, the coefficients in this linear combination is known as the \textit{components} of $\mathbfit{v}$ relative to $S$.
 
 We will see that the basis is closely related to the dimension of vector spaces. First, let us consider the trivial basis for $\F^n$.
 \begin{dfnbox}{Canonical Basis}{canonicalBasis}
