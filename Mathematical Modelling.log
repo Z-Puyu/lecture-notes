@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  8 MAY 2024 23:35
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  10 JUL 2024 22:57
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"Linear Algebra II"
-(./Linear Algebra II.tex
+**"Mathematical Modelling"
+(./Mathematical Modelling.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (./amznotes.cls
 Document Class: amznotes 2023/03/03 amznotes
@@ -889,7 +889,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@listing=\toks53
 \c@listing=\count390
 )
-runsystem(if not exist _minted-Linear_Algebra_II mkdir _minted-Linear_Algebra_II)...executed.
+runsystem(if not exist _minted-Mathematical_Modelling mkdir _minted-Mathematical_Modelling)...executed.
 
  (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
 Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
@@ -1365,34 +1365,34 @@ Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified s
 \c@ROWcellindex@=\count395
 )
 \c@case=\count396
-LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 119.
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Linear_Algebra_II.aex <nul: /p x=^%~$PATH:i>> Linear_Algebra_II.aex)...executed.
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 120.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Mathematical_Modelling.aex <nul: /p x=^%~$PATH:i>> Mathematical_Modelling.aex)...executed.
 
-runsystem(del Linear_Algebra_II.aex)...executed.
+runsystem(del Mathematical_Modelling.aex)...executed.
 
- (./Linear Algebra II.aux)
-\openout1 = `"Linear Algebra II.aux"'.
+ (./Mathematical Modelling.aux)
+\openout1 = `"Mathematical Modelling.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1429,9 +1429,9 @@ LaTeX Font Info:    ... okay on input line 121.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 121.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 121.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 122.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1450,13 +1450,13 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 121.
-(./Linear Algebra II.out) (./Linear Algebra II.out)
+Package hyperref Info: Link coloring ON on input line 122.
+(./Mathematical Modelling.out) (./Mathematical Modelling.out)
 \@outlinefile=\write6
-\openout6 = `"Linear Algebra II.out"'.
+\openout6 = `"Mathematical Modelling.out"'.
 
 \c@lstlisting=\count397
- (./Linear Algebra II.toc
+ (./Mathematical Modelling.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
@@ -1483,101 +1483,29 @@ File: OMXyhex.fd
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 ))
 \tf@toc=\write7
-\openout7 = `"Linear Algebra II.toc"'.
+\openout7 = `"Mathematical Modelling.toc"'.
 
  [1
 
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 135.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 133.
 [2
 
-] [3] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 269--272
-
- []
-
-[6] [7] [8] [9] [10] [11]
-Chapter 2.
-[12
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 452--455
-
- []
-
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 488--492
-
- []
-
-[14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27]
-Underfull \hbox (badness 10000) in paragraph at lines 961--965
-
- []
-
-[28] [29]
-Chapter 3.
-[30
-
-] [31] [32]
-Underfull \hbox (badness 10000) in paragraph at lines 1107--1110
-
- []
-
-[33] [34] [35]
-Overfull \hbox (8.9322pt too wide) in paragraph at lines 1201--1230
-[]\TU/STIXTwoText(0)/m/n/12 The reason that we consider the Jordan block is that any Jordan block has only one eigenspace
- []
-
-[36] [37] [38] [39] [40] [41]
-Chapter 4.
-[42
-
-] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] [54]
-Overfull \hbox (4.45213pt too wide) in paragraph at lines 1811--1812
-[]\TU/STIXTwoText(0)/m/n/12 Therefore, every sesquilinear map over a complex vector space $[]$ defines a unique conjugate-
- []
-
-[55] [56] [57] [58] [59]
-Chapter 5.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 17.28183pt on input line 1940.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 10.00107pt on input line 1940.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 17.27815pt on input line 1940.
-LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 1940.
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1940.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1940.
-
-[60
-
-] [61] [62] [63] [64]
-Underfull \hbox (badness 10000) in paragraph at lines 2113--2116
-
- []
-
-[65] [66] [67] [68] [69] 
+] [3] [4] [5] [6] [7] [8] [9] [10] 
 enddocument/afterlastpage: lastpage setting LastPage.
-(./Linear Algebra II.aux)
-Package rerunfilecheck Info: File `"Linear Algebra II".out' has not changed.
+(./Mathematical Modelling.aux)
+Package rerunfilecheck Info: File `"Mathematical Modelling".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39710 strings out of 478630
- 834085 string characters out of 5847730
- 1900012 words of memory out of 5000000
- 59133 multiletter control sequences out of 15000+600000
- 521789 words of font info for 124 fonts, out of 8000000 for 9000
+ 39422 strings out of 478630
+ 828753 string characters out of 5847730
+ 1877012 words of memory out of 5000000
+ 58860 multiletter control sequences out of 15000+600000
+ 518874 words of font info for 101 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,17n,131p,1204b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,17n,131p,1209b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Linear Algebra II.pdf (69 pages).
+Output written on Mathematical Modelling.pdf (10 pages).

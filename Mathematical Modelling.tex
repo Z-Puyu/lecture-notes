@@ -1,0 +1,415 @@
+\documentclass[math, code]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{yhmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead (see below):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\begin{document}
+\fancyhead[L]{
+    Mathematical Modelling
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Differential Equations}
+\section{Initial Value Problems}
+\begin{dfnbox}{Differential Equation}{DE}
+    A {\color{red} \textbf{differential equation}} is an equation relating derivatives of a differentiable function. The {\color{red} \textbf{order}} of a differential equation is the order of the highest order derivative. 
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A differential equation is said to be an {\color{red} \textbf{ordinary}} differential equation (ODE) if it contains only a single independent variable.
+    \end{remark}
+\end{notebox}
+A \textit{solution} to a differential equation is naturally a function $f$ which satisfies the given equation in its derivatives. Intuitively, if a function $y = f(x)$ is a solution, then $y = f(x) + c$ for any constant $c$ will also be a solution.
+\begin{dfnbox}{Solutions to a Differential Equation}{DESoln}
+    A function $y = f(x) + c$ where $c$ is an arbitrary constant is called a {\color{red} \textbf{general solution}} to a differential equation if it satisfies the equation. A {\color{red} \textbf{particular solution}} $y_p = f(x) + b$ is obtained by fixing a value for the constant $c$.
+\end{dfnbox}
+Differential equations are solved by integration. Notice that in general, we always obtain a family of solutions to an ODE due to the arbitrary constant terms. However, a unique solution may be fixed if an \textit{initial value} is provided, i.e., an additional constraint that $f(x_0) = a$. 
+\begin{dfnbox}{Initial Value Problem}{InitValProb}
+    An {\color{red} \textbf{initial value problem}} is in the form 
+    \begin{align*}
+        \frac{\d y}{\d x} = f(x, y), \qquad \textrm{such that } \eval{y}{x}{x_0} = y_0.
+    \end{align*}
+\end{dfnbox}
+For ODEs, we can view $f$ in \ref{dfn:InitValProb} as a function from $\Omega$ to $\R^n$, where $\Omega \subseteq \R \times \R^n$, and therefore the initial condition is equivalent to saying that the point $(x_0, y_0)$ is in $\Omega$.
+
+An initial value problem involving higher orders of derivatives can always be reduced to the above standard form via the obvious manner.
+\section{Existence and Uniqueness Theorems}
+Intuitively, for any initial value problem, its solution should be unique if it exists. We will prove this rigorously in this section. Recall from real analysis the following notion:
+\begin{dfnbox}{Lipschitz Continuity}{LipschitzContinuity}
+    Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces. A function $f \colon X \to Y$ is said to be {\color{red} \textbf{Lipschitz continuous}} if there exists some positive real constant $K$ such that 
+    \begin{equation*}
+        d_Y\bigl(f(x_1), f(x_2)\bigr) \leq Kd_X(x_1, x_2)
+    \end{equation*}
+    for any $x_1, x_2 \in X$.
+\end{dfnbox}
+Note that in Euclidean spaces, the Lipschitz condition can be written as 
+\begin{equation*}
+    \norm{f(x_1) - f(x_2)} \leq K\norm{x_1 - x_2}.
+\end{equation*}
+We shall now prove that given Lipschitz continuity, the uniqueness of solutions to initial value problems is guaranteed.
+\begin{thmbox}{The Uniqueness Theorem}{Uniqueness}
+    Let $y \colon \R \to \R^n$ be a function. Consider the initial value problem 
+    \begin{equation*}
+        \frac{\d y}{\d x} = f\bigl(x, y(x)\bigr), \qquad \textrm{such that } y(x_0) = y_0.
+    \end{equation*}
+    If $f$ is locally Lipschitz continuous in $y$ at $y_0$, then the solution to the initial value problem is unique if it exists.
+    \tcblower
+    \begin{proof}
+        Since $f$ is locally Lipschitz continuous at $y_0$, there exists some $\delta > 0$ such that for any $y_1, y_2 \in V_\delta(y_0)$, there exists some $K > 0$ such that 
+        \begin{equation*}
+            \norm{f\bigl(x_1, y_1\bigr) - f\bigl(x_2, y_2\bigr)} \leq K\norm{y_1 - y_2}
+        \end{equation*}
+        for all $x_1, x_2 \in \R$. Suppose on contrary that there exists two distinct solutions $\alpha_1, \alpha_2$ such that 
+        \begin{equation*}
+            \alpha_1(x_0) = \alpha_2(x_0) = y_0.
+        \end{equation*}
+        Note that $y$ is continuous. Without loss of generality, there exists some $\epsilon > 0$ such that $K\epsilon \leq \frac{1}{2}$ and $\alpha_1(x) \neq \alpha_2(x) \in V_\delta(y_0)$ whenever~$x \in [x_0, \epsilon]$. For any $t \in [x_0, \epsilon]$, consider 
+        \begin{align*}
+            \norm{\alpha_1(t) - \alpha_2(t)} & = \norm{\int_{x_0}^t\!f\bigl(x, \alpha_1(x)\bigr)\,\d x - \int_0^t\!f\bigl(x, \alpha_2(x)\bigr)\,\d x} \\
+            & \leq \int_{x_0}^t\!\norm{f\bigl(x, \alpha_1(x)\bigr) - f\bigl(x, \alpha_2(x)\bigr)}\,\d x \\
+            & \leq K\int_{x_0}^t\!\norm{\alpha_1(x) - \alpha_2(x)}\,\d x \\
+            & \leq K\int_{x_0}^{\epsilon}\!\max_{x \in [0, \epsilon]}\norm{\alpha_1(x) - \alpha_2(x)}\,\d x \\
+            & = K\epsilon\max_{x \in [x_0, \epsilon]}\norm{\alpha_1(x) - \alpha_2(x)} \\
+            & \leq \frac{1}{2}\max_{x \in [x_0, \epsilon]}\norm{\alpha_1(x) - \alpha_2(x)}.
+        \end{align*}
+        This implies that $\norm{\alpha_1(t) - \alpha_2(t)} = 0$ for all $t \in [x_0, \epsilon]$, which is a contradiction.
+    \end{proof}
+\end{thmbox}
+We shall introduce the notion of a \textit{contraction} in order to generalise our results later for all metric spaces.
+\begin{dfnbox}{Contraction}{Contraction}
+    Let $(X, d)$ be a metric space. A map $T \colon X \to X$ is called a {\color{red} \textbf{contraction}} if there exists some $q \in [0, 1)$ such that 
+    \begin{equation*}
+        d\bigl(T(x), T(y)\bigr) \leq qd(x, y)
+    \end{equation*}
+    for all $x, y \in X$.
+\end{dfnbox}
+It is clear that any contraction is uniformly continuous (the proof is left to the reader as an revision exercise). The following theorem guarantees an \textit{invariant point} under a contraction map:
+\begin{thmbox}{Banach Fixed Point Theorem}{Banach}
+    Let $(X, d)$ be a non-empty complete metric space and $T \colon X \to X$ be a contraction map, then there exists a unique $x^* \in X$ such that $x^* = T(x^*)$.
+    \tcblower
+    \begin{proof}
+        By Definition \ref{dfn:Contraction}, there exists some $q \in [0, 1)$ such that for all $n \geq 1$,
+        \begin{equation*}
+            d(x_n, x_{n - 1}) \leq q^nd(x_1, x_0).
+        \end{equation*}
+        Notice that for any $\epsilon > 0$, there exists some $N \in \N$ such that 
+        \begin{equation*}
+            q^n < \frac{\epsilon(1 - q)}{d(x_1, x_0)}
+        \end{equation*}
+        whenever $n \geq N$. Therefore, for any $m, n \in \N$ with $m > n \geq N$, we have 
+        \begin{align*}
+            d(x_m, x_n) & \leq \sum_{i = 0}^{m - n - 1}d(x_{m - i}, x_{m - i - 1}) \\
+            & \leq q^nd(x_1, x_0)\sum_{i = 0}^{m - n - 1}q^i \\
+            & \leq q^nd(x_1, x_0)\sum_{i = 0}^{\infty}q^i \\
+            & = \frac{q^n}{1 - q}d(x_1, x_0) \\
+            & < \epsilon.
+        \end{align*}
+        Therefore, $\{x_n\}_{n = 0}^{\infty}$ is a Cauchy sequence and so it converges to some $x^* \in X$ because~$X$ is complete. Since $T$ is continuous, we have
+        \begin{equation*}
+            x^* = \lim_{n \to \infty}x_n = \lim_{n \to \infty}T(x_{n - 1}) = T\left(\lim_{n \to \infty}x_{n - 1}\right) = T(x^*).
+        \end{equation*}
+        Now, suppose on contrary that there exists some $y^* \in X$ with $y^* = T(y^*) \neq x^*$, then 
+        \begin{equation*}
+            d\bigl(T(x^*), T(y^*)\bigr) = d(x^*, y^*) > qd(x^*, y^*),
+        \end{equation*}
+        which is a contradiction. Therefore, $x^*$ is unique.
+    \end{proof}
+\end{thmbox}
+Now let us revisit our initial value problem. Since $\frac{\d y}{\d x} = f\bigl(x, y(x)\bigr)$, we have 
+\begin{equation*}
+    \int_{x_0}^x\!y'(t)\,\d t = \int_{x_0}^x\!f\bigl(t, y(t)\bigr)\,\d t.
+\end{equation*}
+By applying $y(x_0) = y_0$, we have derived a general formula for $y$ as follows:
+\begin{equation*}
+    y(x) = y_0 + \int_{x_0}^x\!f\bigl(t, y(t)\bigr)\,\d t.
+\end{equation*}
+Now, define a map 
+\begin{equation*}
+    \Phi \colon \left(\R^n\right)^{\R} \to \left(\R^n\right)^{\R}
+\end{equation*}
+whose explicit form is given by 
+\begin{equation*}
+    \Phi(g)(x) = y_0 + \int_{x_0}^x\!f\bigl(t, g(t)\bigr)\,\d t,
+\end{equation*}
+then clearly, the solution to the initial value problem is exactly the fixed point $y \in \left(\R^n\right)^{\R}$ under $\Phi$. To find this fixed point, we apply a similar recursive procedure as the proof of Theorem \ref{thm:Banach}.
+\begin{thmbox}{Picard-Lindel\"{o}f Theorem}{PicardLindelof}
+    Consider the initial value problem 
+    \begin{equation*}
+        y'(x) = f\bigl(x, y(x)\bigr), \qquad y(x_0) = y_0.
+    \end{equation*} 
+    If $D \subseteq \R \times \R^n$ be a closed rectangle with $(x_0, y_0)$ in the interior of $D$ and $f \colon D \to R^n$ is continuous in $x$ and Lipschitz continuous in $y$, then there exists some $\epsilon > 0$ such that the initial value problem has a unique solution on $[x_0 - \epsilon, x_0 + \epsilon]$.
+    \tcblower
+    \begin{proof}
+        Without loss of generality, write $D \coloneqq [x_0 - \epsilon, x_0 + \epsilon] \times [y_0 - \delta, y_0 + \delta]$. Define 
+        \begin{equation*}
+            \mathcal{C} \coloneqq f \in C^0([x_0 - \epsilon, x_0 + \epsilon], [y_0 - \delta, y_0 + \delta]).
+        \end{equation*}
+        Consider the map $d \colon (\R^n)^{\R}$ such that 
+        \begin{equation*}
+            d(f, g) = \norm{f(x), g(x)}_{\infty}.
+        \end{equation*}
+        One may check that $\left(\mathcal{C}, d\right)$ is a non-empty complete metric space. Define $\Phi \colon \mathcal{C} \to \mathcal{C}$ such that 
+        \begin{equation*}
+            \Phi(g)(x) = y_0 + \int_{x_0}^x\!f\bigl(t, g(t)\bigr)\,\d t.
+        \end{equation*}
+        Define $\phi_0 \colon [x_0 - \epsilon, x_0 + \epsilon] \to [y_0 - \delta, y_0 + \delta]$ by $\phi_0(x) = y_0$ and $\phi_{k + 1} = \Phi(\phi_k)$ for all $k \in \N$. By Theorem \ref{thm:Banach}, there exists a unique $\alpha \in \mathcal{C}$ such that $\Phi(\alpha) = \alpha$, i.e.,
+        \begin{equation*}
+            \alpha(x) = y_0 + \int_{x_0}^x\!f\bigl(t, \alpha(t)\bigr)\,\d t.
+        \end{equation*}
+        Therefore, $\alpha$ is the unique solution to the initial value problem.
+    \end{proof}
+\end{thmbox}
+\section{Separable Differential Equations}
+\begin{dfnbox}{Separable Differential Equation}{SeparableDE}
+    A differential equation is {\color{red} \textbf{separable}} if it can be written in the form
+    \begin{equation*}
+        f(x)\,\d x = g(y)\,\d y.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The above form is equivalent to $f(x) - g(y)\frac{\d y}{\d x} = 0$.
+    \end{remark}
+\end{notebox}
+Clearly, separable differential equations can be solved by simply 
+\begin{equation*}
+    \int\!f(x)\,\d x = \int\!g(y)\,\d y + c,
+\end{equation*}
+where $c$ is an arbitrary constant. 
+
+Certain non-separable differential equations can be reduced to a separable form by substitution. Consider
+\begin{equation*}
+    \frac{\d y}{\d x} = g\left(\frac{y}{x}\right).
+\end{equation*}
+By setting $v = \frac{y}{x}$, we have $y = vx$ and so $\frac{\d y}{\d x} = v + \frac{\d v}{\d x}x$. Therefore, the original equation becomes 
+\begin{equation*}
+    v + \frac{\d v}{\d x}x = g(v),
+\end{equation*}
+which is separable because
+\begin{equation*}
+    \frac{1}{g(v) - v}\,\d v = \frac{1}{x}\,\d x.
+\end{equation*}
+In general, we have the following result:
+\begin{probox}{Linear Change of Variables}{LinChangeVar}
+    A differential equation of the form 
+    \begin{equation*}
+        \frac{\d y}{\d x} = f(ax + by + c)
+    \end{equation*}
+    where $a, b, c$ are constants can be reduced to a separable form by setting $u = ax + by + c$.
+\end{probox}
+Of course, not all differential equations are separable. 
+\section{First Order Linear Ordinary Differential Equations}
+\begin{dfnbox}{First Order Linear Ordinary Differential Equations}{Lin1stOrderODE}
+    We say that a differential equation is {\color{red} \textbf{linear}} if it can be written in the form 
+    \begin{equation*}
+        \sum_{i = 0}^{n}a_if^{(i)}(x) = g(x),
+    \end{equation*}
+    where $g$ is a function in $x$ and the $a_i$'s are constant coefficients. A {\color{red} \textbf{linear first order ordinary differential equation}} is an ODE which can be written in the form
+    \begin{equation*}
+        \frac{\d y}{\d x} + P(x)y = Q(x),
+    \end{equation*}
+    where $P$ and $Q$ are functions in $x$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The above form is known as the {\color{red} \textbf{standard form}} of linear first order ODEs.
+    \end{remark}
+\end{notebox}
+To solve a linear first order ODE, consider the function 
+\begin{equation*}
+    R(x) = \e^{\int\!P(x)\,\d x}.
+\end{equation*}
+Note that $R'(x) = R(x)P(x)$, so we have 
+\begin{equation*}
+    \bigl(R(x)y\bigr)' = R(x)P(x)y + R(x)\frac{\d y}{\d x}.
+\end{equation*}
+However, note that the above is exactly the left-hand side of the standard form multiplied by $R(x)$. Therefore, we have 
+\begin{equation*}
+    y = \frac{\int\!R(x)Q(x)\,\d x}{R(x)} + c,
+\end{equation*}
+where $c$ is an arbitrary constant.
+\begin{dfnbox}{Integrating Factor}{IntFactor}
+    Consider the linear first order ODE 
+    \begin{equation*}
+        \frac{\d y}{\d x} + P(x)y = Q(x).
+    \end{equation*}
+    The {\color{red} \textbf{integrating factor}} of the ODE is defined as the function 
+    \begin{equation*}
+        R(x) = \e^{\int\!P(x)\,\d x}.
+    \end{equation*}
+\end{dfnbox}
+Certain non-linear ODEs can be reduced to a linear form. The most famous example is the \textit{Bernoulli differential equations}.
+\begin{dfnbox}{Bernoulli Differential Equations}{BernoulliDEs}
+    The {\color{red} \textbf{Bernoulli differential equations}} are differential equations of the form 
+    \begin{equation*}
+        \frac{\d y}{\d x} + p(x)y = q(x)y^n
+    \end{equation*}
+    where $n \in \R$.
+\end{dfnbox}
+When $n = 0$ or $n = 1$, the Bernoulli differential equations are linear, but otherwise they are non-linear. However, by setting $z = y^{1 - n}$, we have 
+\begin{equation*}
+    \frac{\d z}{\d x} = (1 - n)y^{-n}\frac{\d y}{\d x},
+\end{equation*}
+and so 
+\begin{equation*}
+    \frac{\d z}{\d x} + (1 - n)p(x)z = q(x),
+\end{equation*}
+which is linear.
+\section{Second Order Linear Ordinary Differential Equations}
+\begin{dfnbox}{Second Order Linear Ordinary Differential Equations}{2ndOrderLinODEs}
+    A {\color{red} \textbf{second order linear ordinary differential equation}} is an ODE which can be written in the form 
+    \begin{equation*}
+        \frac{\d^2y}{\d x^2} + p(x)\frac{\d y}{\d x} + q(x)y = F(x).
+    \end{equation*}
+    If $F(x) = 0$, the ODE is said to be {\color{red} \textbf{homogeneous}}, and otherwise {\color{red} \textbf{non-homogeneous}}. 
+\end{dfnbox}
+It is clear that the solutions to a homogeneous second order linear ODE form a vector space.
+\begin{thmbox}{Superposition Principle}{Superposition}
+    Consider a homogeneous second order linear ODE 
+    \begin{equation*}
+        \frac{\d^2y}{\d x^2} + p(x)\frac{\d y}{\d x} + q(x)y = 0.
+    \end{equation*}
+    If $y_1$ and $y_2$ are solutions to the ODE on an open interval $I$, then their linear combinations $\alpha y_1 + \beta y_2$ for any $\alpha, \beta \in \C$ are also solutions to the ODE on $I$.
+\end{thmbox}
+The above theorem is trivially true and the proof is left to the reader as a warm-up exercise. Now, for any homogeneous second order linear ODE, let its solution space be $S$. Since $S$ is a vector space, all there is left to do is to find its basis. Consider the ODE 
+\begin{equation*}
+    \frac{\d^2y}{\d x^2} + p(x)\frac{\d y}{\d x} + q(x)y = 0.
+\end{equation*}
+Let $z = \frac{\d y}{\d x}$, then the ODE can be re-written as a system of first order linear ODEs:
+\begin{equation*}
+    \begin{cases}
+        \frac{\d y}{\d x} = z \\
+        \frac{\d z}{\d x} = -p(x)z - q(x)y
+    \end{cases}.
+\end{equation*}
+By Theorem \ref{thm:PicardLindelof}, the solution $(y, z)$ is uniquely determined by the initial value $\bigl(y(0), z(0)\bigr)$. This means that 
+\begin{equation*}
+    S \cong \mathrm{span}\left\{\begin{pmatrix}
+        1 \\
+        0
+    \end{pmatrix}, \begin{pmatrix}
+        0 \\
+        1
+    \end{pmatrix}\right\}
+\end{equation*}
+and so $\dim(S) = 2$. What this means is that to solve any second order linear ODE, we only need to find $2$ linearly independent solutions $y_1$ and $y_2$, and the solution space will be given by $\mathrm{span}\{y_1, y_2\}$.
+\end{document}
