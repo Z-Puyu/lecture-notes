@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 AUG 2024 16:28
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  12 AUG 2024 23:51
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1493,19 +1493,24 @@ Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 134.
 [2
 
-] [3] [4] [5] [6] [7] 
+] [3] [4] [5]
+Overfull \hbox (4.00095pt too wide) in paragraph at lines 265--272
+\TU/STIXTwoText(0)/m/n/12 Recall that $[]$ random variables $[]$ and $[]$ are \TU/STIXTwoText(0)/m/it/12 independent \TU/STIXTwoText(0)/m/n/12 if and only if $[][][][][] [][] [] [][][][][][][][][][]$
+ []
+
+[6] [7] [8] [9] [10] [11] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Information and Coding Theory.aux)
 Package rerunfilecheck Info: File `"Information and Coding Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39403 strings out of 478630
- 828363 string characters out of 5847730
- 1869012 words of memory out of 5000000
- 58845 multiletter control sequences out of 15000+600000
- 518842 words of font info for 97 fonts, out of 8000000 for 9000
+ 39430 strings out of 478630
+ 829030 string characters out of 5847730
+ 1874012 words of memory out of 5000000
+ 58870 multiletter control sequences out of 15000+600000
+ 518858 words of font info for 99 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,12n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,18n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Information and Coding Theory.pdf (7 pages).
+Output written on Information and Coding Theory.pdf (11 pages).
