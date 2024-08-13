@@ -1,0 +1,273 @@
+\documentclass[math, code]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{yhmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead (see below):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\begin{document}
+\fancyhead[L]{
+    Metric and Topological Spaces
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+\chapter{Topology}
+\section{Topological Spaces}
+\begin{dfnbox}{Topology}{topology}
+    A {\color{red} \textbf{topology}} on a set $X$ is a collection $\mathcal{T} \subseteq \mathcal{P}(X)$ such that 
+    \begin{itemize}
+        \item $\varnothing, X \in \mathcal{T}$;
+        \item for any index set $I$, if $\{X_i \colon i \in I\} \subseteq \mathcal{P}(\mathcal{T})$, then $\bigcup_{i \in I}X_i \in \mathcal{T}$;
+        \item for any $X_1, X_2, \cdots, X_n \in \mathcal{T}$, $\bigcap_{i = 1}^nX_i \in \mathcal{T}$.
+    \end{itemize}
+    The pair $(X, \mathcal{T})$ is said to be a {\color{red} \textbf{topological space}}. A subset $Y \subseteq X$ is {\color{red} \textbf{open}} if $Y \in \mathcal{T}$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        For any set $X$, we define $\{\varnothing, X\}$ as the \textit{trivial topology} on $X$ and $\mathcal{P}(X)$ as the \textit{discrete topology}. Take any finite subset $U \subseteq X$, then $\{X \backslash U, \varnothing\}$ is called a \textit{co-finite topology}.
+    \end{remark}
+\end{notebox}
+The set $\left\{(-\alpha, \alpha) \colon \alpha > 0\right\} \cup \{\R, \varnothing\}$ defines a topology on $\R$. This example also demonstrates why it is crucial to only consider closure under finite intersections when defining a topology, because
+\begin{equation*}
+    \bigcap_{n = 1}^{\infty}\left(-1 - \frac{1}{n}, 1 + \frac{1}{n}\right) = [-1, 1] \notin \mathcal{T}.
+\end{equation*}
+We now seek a systematic method to generate a topology given any set. The idea here is to make use of a \textit{cover}.
+\begin{dfnbox}{Basis}{basis}
+    A {\color{red} \textbf{basis}} for a topology on $X$ is a collection $\mathcal{B} \subseteq \mathcal{P}(X)$ such that 
+    \begin{itemize}
+        \item for any $x \in X$, there exists some $B \in \mathcal{B}$ such that $x \in B$;
+        \item for any $x \in X$ and $B_1, B_2 \in \mathcal{B}$ with $x \in B_1 \cap B_2$, there exists some $B \in \mathcal{B}$ such that $x \in B \subseteq B_1 \cap B_2$.
+    \end{itemize}
+\end{dfnbox}
+It may be useful to see a basis as a cover of a set with the second additional property as stated in the above definition. Notice that the first property of the basis $\mathcal{B}$ is basically saying that 
+\begin{equation*}
+    X \subseteq \bigcup \mathcal{B},
+\end{equation*}
+i.e., $\mathcal{B}$ is a cover of $X$.
+
+Given any basis $\mathcal{B}$ for some topology on $X$, a set generated by $\mathcal{B}$ can be defined as 
+\begin{equation*}
+    \mathcal{T} \coloneqq \left\{U \subseteq X \colon \textrm{for any } u \in U, \textrm{ there exists some } B \in \mathcal{B} \textrm{ such that } u \in B \subseteq U\right\}
+\end{equation*}
+We will show that $\mathcal{T}$ is a topology on $X$. First, it is clear that $\varnothing, X \in \mathcal{T}$. 
+
+Let $I$ be an index set and $\{X_i \colon i \in I\}\subseteq \mathcal{P}(\mathcal{T})$ be any collection of subsets of $X$. Notice that for any $x \in \bigcup_{i \in I}X_i$, there exists some $j \in I$ such that $x \in X_j \subseteq \mathcal{T}$. According to our construction, this means that there exists some $B \in \mathcal{B}$ such that $x \in B \subseteq X_j \subseteq \mathcal{T}$. Therefore, $\bigcup_{i \in I}X_i \subseteq \mathcal{T}$ as desired.
+
+To prove that $\mathcal{T}$ is closed under finite intersection, we consider the following lemma:
+\begin{lembox}{Finite Intersection of Elements in Basis Is Covered}{coverFiniteIntersectionOfBasis}
+    Let $\mathcal{B}$ be a basis for a topology on $X$ and $B_1, B_2, \cdots, B_n \in \mathcal{B}$, then for any $x \in \bigcap_{i = 1}^nB_i$, there exists some $B \in \mathcal{B}$ such that $x \in B \subseteq \bigcap_{i = 1}^nB_i$.
+    \tcblower
+    \begin{proof}
+        The case where $n = 1$ is trivial by taking $B = B_1$. Suppose that there is some integer $k \geq 1$ such that for any $B_1, B_2, \cdots, B_k \in \mathcal{B}$ and any $x \in \bigcap_{i = 1}^kB_i$, there exists some $B \in \mathcal{B}$ such that $x \in B \subseteq \bigcap_{i = 1}^kB_i$. Take any $B_{k + 1} \in \mathcal{B}$. It is clear that for any~$x \in \bigcap_{i = 1}^{k + 1}B_i$, there exists some $B \in \mathcal{B}$ such that 
+        \begin{equation*}
+            x \in B \subseteq \bigcap_{i = 1}^kB_i.
+        \end{equation*}
+        Notice that $x \in B_{k + 1} \in \mathcal{B}$, so we know that $x \in B \cap B_{k + 1}$. By Definition \ref{dfn:basis}, this means that there exists some $B' \in \mathcal{B}$ such that 
+        \begin{equation*}
+            x \in B' \subseteq B \cap B_{k + 1} \subseteq \bigcap_{i = 1}^{k + 1}B_i.
+        \end{equation*}
+    \end{proof}
+\end{lembox}
+Now, suppose $X_1, X_2, \cdots, X_n \in \mathcal{T}$ are finitely many subsets of $X$. Take any $x \in \bigcap_{i = 1}^nX_i$. It is clear that $x \in X_i$ for each $i = 1, 2, \cdots, n$. Therefore, for each $i = 1, 2, \cdots, n$, there exists some $B_i \in \mathcal{B}$ such that $x \in B_i \subseteq X_i$. By Lemma \ref{lem:coverFiniteIntersectionOfBasis}, this means that there exists some set~$B \in \mathcal{B}$ such that 
+\begin{equation*}
+    x \in B \subseteq \bigcap_{i = 1}^nB_i \subseteq \bigcap_{i = 1}^nX_i.    
+\end{equation*}
+Therefore, $\bigcap_{i = 1}^nX_i \in \mathcal{T}$. So this set $\mathcal{T}$ generated by $\mathcal{B}$ is indeed a topology on $X$. 
+
+The following proposition further shows that the topology generated by a basis $\mathcal{B}$ is the set of all possible unions of elements in $\mathcal{B}$:
+\begin{probox}{\small Equivalent Construction of Topologies Generated from Bases}{equivalentConstruction}
+    Let $X$ be any set. If $\mathcal{B}$ is a basis for a topology $\mathcal{T}$ on $X$, then 
+    \begin{equation*}
+        \mathcal{T} = \left\{\bigcup_{A \in \mathcal{V}} A  \colon \mathcal{V}\in \mathcal{P}(\mathcal{B})\right\}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Denote 
+        \begin{equation*}
+            \mathcal{T}_{\mathcal{B}} \coloneqq \left\{U \subseteq X \colon \textrm{for any } u \in U, \textrm{ there exists some } B \in \mathcal{B} \textrm{ such that } u \in B \subseteq U\right\}.
+        \end{equation*}
+        It suffices to prove that $\mathcal{T} = \mathcal{T}_{\mathcal{B}}$. Take any $T \in \mathcal{T}$, then there exists some $V \in \mathcal{P}(\mathcal{B})$ such that $T = \bigcup_{A \in \mathcal{V}}A$. This means that for every $t \in T$, there exists some $B_t \in \mathcal{V}$ such that $t \in B_t \subseteq T$. Therefore, $T \in \mathcal{T}_{\mathcal{B}}$. Conversely, for any $S \in \mathcal{T}_{\mathcal{B}}$, there exists some $B_s \in \mathcal{B}$ for each $s \in S$ such that $s \in B_s$. Denote $U \coloneqq \left\{B_s \colon s \in S\right\} \in \mathcal{P}(\mathcal{B})$, then it is clear that $S \subseteq \bigcup_{B \in U}B$. Since $B_s \subseteq S$ for each $s \in S$, we have $\bigcup_{B \in U}B \subseteq S$, which implies that $S = \bigcup_{B \in U}B$. This means that $S \in \mathcal{T}$. Therefore, $\mathcal{T} \subseteq \mathcal{T}_{\mathcal{B}}$ and $\mathcal{T}_{\mathcal{B}} \subseteq \mathcal{T}$, which means that~$\mathcal{T} = \mathcal{T}_{\mathcal{B}}$.
+    \end{proof}
+\end{probox}
+Next, we define a special topology in Euclidean spaces using open balls.
+\begin{dfnbox}{Standard Topology}{standardTopology}
+    For any $\mathbfit{x} = (x_1, x_2, \cdots, x_n) \in \R^n$ and any $r > 0$. Denote the Euclidean open ball centred at $\mathbfit{x}$ with radius $r$ by
+    \begin{equation*}
+        B_{r}(\mathbfit{x}) \coloneqq \left\{\mathbfit{y} = (y_1, y_2, \cdots, y_n) \in \R^n \colon \sqrt{\sum_{i = 1}^{n}(x_i - y_i)^2} < r\right\}
+    \end{equation*} 
+    The {\color{red} \textbf{standard topology}} on $\R^n$ is the set generated by the basis
+    \begin{equation*}
+        \mathcal{B} \coloneqq \left\{B_{r}(\mathbfit{x}) \colon \mathbfit{x} \in \R^n, r \in \R^+\right\}.
+    \end{equation*}
+\end{dfnbox}
+It may be helpful to actually show that this set $\mathcal{B}$ is indeed a basis of a topology on $\R^n$. The fact that $\mathcal{B}$ is a cover for $\R^n$ is trivial enough. Take any $\mathbfit{x} \in \R^n$ and balls $B_{\alpha}(\mathbfit{x}_1), B_{\beta}(\mathbfit{x}_2) \in \mathcal{B}$ such that $\mathbfit{x} \in B_{\alpha}(\mathbfit{x}_1) \cap B_{\beta}(\mathbfit{x}_2)$ (the existence of these $2$ balls is again trivial enough). Take 
+\begin{equation*}
+    r = \min\left\{\alpha - \norm{\mathbfit{x} - \mathbfit{x}_1}, \beta - \norm{\mathbfit{x} - \mathbfit{x}_2}\right\}.
+\end{equation*}
+Clearly, $r > 0$ and $\mathbfit{x} \in B_r(\mathbfit{x})$, so we are done.
+
+Now, we discuss the analogue of the subset relation in topologies.
+\begin{dfnbox}{Fineness and Coarseness}{fine}
+    Let $\mathcal{T}$ and $\mathcal{T}'$ be topologies on some set $X$. We say that $\mathcal{T}$ is {\color{red} \textbf{finer}} than $\mathcal{T}'$, or equivalently, that $\mathcal{T}'$ is {\color{red} \textbf{coarser}} than $\mathcal{T}$, if $\mathcal{T}' \subseteq \mathcal{T}$.
+\end{dfnbox}
+Observe that any topology of $X$ must be a subset of $\mathcal{P}(X)$, which is the discrete topology on~$X$, so the discrete topology is the finest topology on a set.
+\begin{notebox}
+    \begin{remark}
+        For any basis $\mathcal{B}$ for a topology on $X$, the topology generated by $\mathcal{B}$ is the coarsest topology containing $\mathcal{B}$.
+    \end{remark}
+\end{notebox}
+The above remark is easy to verify. Let $\mathcal{T}$ be any topology on $X$ with $\mathcal{B} \subseteq \mathcal{T}$ and $\mathcal{T}_{\mathcal{B}}$ be the topology generated by $\mathcal{B}$. For any $T \in \mathcal{T}_{\mathcal{B}}$, by Proposition \ref{pro:equivalentConstruction}, there exists some $V \subseteq \mathcal{B}$ such that $T = \bigcup_{A \in \mathcal{V}}A$. Note that $A \in \mathcal{T}$ for all $A \in \mathcal{V}$, so by Definition \ref{dfn:topology}, $T \in \mathcal{T}$ and so $\mathcal{T}_{\mathcal{B}} \subseteq \mathcal{T}$ as desired.
+
+This motivates us to consider fineness in terms of bases.
+\begin{probox}{Fineness in Terms of Bases}{fineBasis}
+    Let $\mathcal{B}$ and $\mathcal{B}'$ generate topologies $\mathcal{T}$ and $\mathcal{T}'$ respectively on $X$, then $\mathcal{T}'$ is finer than $\mathcal{T}$ if and only if for every $B \in \mathcal{B}$, there exists some $B' \in \mathcal{B}'$ such that for any $x \in B$, we have~$x \in B' \subseteq B$.
+    \tcblower
+    \begin{proof}
+        Suppose that $\mathcal{T}'$ is finer than $\mathcal{T}$, then $\mathcal{T} \subseteq \mathcal{T}'$. Take any $B \in \mathcal{B}$, then by Proposition \ref{pro:equivalentConstruction}, $B \in \mathcal{T}$, which means that $B \in \mathcal{T}'$. Since $\mathcal{B}'$ is a basis for $\mathcal{T}'$, by Definition \ref{dfn:basis} for any $x \in B$, there exists some $B' \in \mathcal{B}'$ such that $x \in B' \subseteq B$.
+        \\\\
+        Suppose conversely that for every $B \in \mathcal{B}$, there exists some $B' \in \mathcal{B}'$ such that for any $x \in B$, we have $x \in B' \subseteq B$. Take any $T \in \mathcal{T}$, for each $x \in T$, by Definition \ref{dfn:basis} there exists some $B \in \mathcal{B}$ such that $x \in B \subseteq T$. Notice that there exists some~$B' \in \mathcal{B}'$ such that $x \in B' \subseteq B \subseteq T$, so $T \in \mathcal{T}'$. Therefore, $\mathcal{T} \subseteq \mathcal{T}'$ and so $\mathcal{T}'$ is finer than~$\mathcal{T}$.
+    \end{proof}
+\end{probox}
+Recall that every basis of a topology on $X$ is an open cover of $X$ consisting only of subsets of $X$. Therefore, the union of the elements in the basis is essentially $X$ itself. This motivates us to propose another way to generate a topology on a set.
+\begin{dfnbox}{Sub-basis}{subbasis}
+    A {\color{red} \textbf{sub-basis}} of $X$ is a collection $\mathcal{S} \subseteq \mathcal{P}(X)$ such that $\bigcup_{A \in \mathcal{S}}A = X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Every basis is a sub-basis.
+    \end{remark}
+\end{notebox}
+For an arbitrary set $X$, let $\mathcal{S}$ be a sub-basis and denote the collection of all finite subsets of $\mathcal{S}$ as $\mathcal{F}_{\mathcal{S}}$. Define 
+\begin{equation*}
+    \mathcal{U}_{\mathcal{S}} \coloneqq \left\{\bigcap_{A \in F}A \colon F \in \mathcal{F}_{\mathcal{S}}\right\}
+\end{equation*}
+to be the collection of all finite intersections of sets in $\mathcal{S}$. The topology generated by a sub-basis of $X$ is given by 
+\begin{equation*}
+    \mathcal{T} \coloneqq \left\{\bigcup_{A \in \mathcal{V}}A  \colon \mathcal{V}\subseteq \mathcal{U}_{\mathcal{S}}\right\}.
+\end{equation*}
+We shall show that $\mathcal{T}$ is indeed a topology on $X$ by considering the following proposition:
+\begin{probox}{Finite Intersections of Sets in a Sub-basis Form a Basis}{finiteIntersectionBasis}
+    Let $\mathcal{S}$ be a sub-basis for a set $X$ and let $\mathcal{U}_{\mathcal{S}}$ be the set of all finite intersections of sets in $\mathcal{S}$, then $\mathcal{U}_{\mathcal{S}}$ is a basis of a topology on $X$.
+    \tcblower
+    \begin{proof}
+        Take any $x \in X$. By Definition \ref{dfn:subbasis}, we have $x \in \bigcup_{A \in \mathcal{S}}A$. Therefore, there exists some $A \in \mathcal{S} \subseteq \mathcal{P}(X)$ such that $x \in A$. For any $x \in X$ and $B_1, B_2 \in \mathcal{U}_{\mathcal{S}}$ such that~$x \in B_1 \cap B_2$, notice that $B_1 \cap B_2$ is a finite intersection of sets in $\mathcal{S}$, so $B_1 \cap B_2 \in \mathcal{U}_{\mathcal{S}}$. Therefore, by Definition \ref{dfn:basis}, $\mathcal{U}_{\mathcal{S}}$ is a basis. 
+    \end{proof}
+\end{probox}
+With Propositions \ref{pro:finiteIntersectionBasis} and \ref{pro:equivalentConstruction}, it is clear that $\mathcal{T}$ as constructed above is a topology on $X$.
+\end{document}
