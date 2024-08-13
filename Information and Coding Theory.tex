@@ -382,38 +382,107 @@ Note that the bound given by Markov's inequality is a rather loose bound. The fo
 \end{thmbox}
 Finally, we state the following law of large numbers:
 \begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeNum}
-    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = 0$ and $\mathrm{Var}(X_i) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}(X_i) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
     \begin{equation*}
-        \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i} > \epsilon\right) = 0.
+        \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
     \end{equation*}
     \tcblower
     \begin{proof}
-        Note that $\mathbb{E}\left[\frac{1}{n}\sum_{i = 1}^nX_i\right] = 0$ and that 
+        Note that $\mathbb{E}\left[\frac{1}{n}\sum_{i = 1}^nX_i\right] = \mu$ and that 
         \begin{equation*}
             \mathrm{Var}\left(\frac{1}{n}\sum_{i = 1}^nX_i\right) = \frac{\sum_{i = 1}^{n}\mathrm{Var}(X_i)}{n^2} = \frac{\sigma^2}{n}.
         \end{equation*}
         By Theorem \ref{thm:ChebyshevIneq}, we have 
         \begin{equation*}
-            0 \leq \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i} > \epsilon\right) \leq \frac{\sigma^2}{n\epsilon^2}.
+            0 \leq \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \frac{\sigma^2}{n\epsilon^2}.
         \end{equation*}
         By Squeeze Theorem, this clearly implies that 
         \begin{equation*}
-            \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i} > \epsilon\right) = 0.
+            \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
         \end{equation*}
     \end{proof}
 \end{thmbox}
-Alternatively, we may phrase Theorem \ref{thm:weakLawLargeNum} as ``$\frac{1}{n}\sum_{i = 1}^nX_i$ converges to $0$ in probability''. When a sequence $\{S_n\}_{n = 1}^{\infty}$ converges to $b$ in probability, we write $S_n \xrightarrow{\mathrm{p}} b$. 
-
-Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng(\epsilon)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
+Alternatively, we may phrase Theorem \ref{thm:weakLawLargeNum} as ``$\frac{1}{n}\sum_{i = 1}^nX_i$ converges to $\mu$ in probability''. When a sequence $\{S_n\}_{n = 1}^{\infty}$ converges to $b$ in probability, we write $S_n \xrightarrow{\mathrm{p}} b$. 
+\begin{notebox}
+    \begin{remark}
+        Essentially, what Theorem \ref{thm:weakLawLargeNum} says is that when $n$ is large, the sample mean from $n$ measurements of the same data converges to the expectation of the distribution.
+    \end{remark}
+\end{notebox}
+Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng(\epsilon)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
 \begin{equation*}
-    \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i} > \epsilon\right) \leq \exp\bigl(-ng(\epsilon) + o(n)\bigr).
+    \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \exp\bigl(-ng(\epsilon) + o(n)\bigr).
 \end{equation*}
 Equivalently, this means that there exists a function $g \colon \R \to \R$ with $g(\epsilon) > 0$ for every $\epsilon > 0$ such that 
 \begin{equation*}
-    \liminf_{n \to \infty}-\frac{1}{n}\log\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i} > \epsilon\right) \geq g(\epsilon) + o(1).
+    \liminf_{n \to \infty}-\frac{1}{n}\log\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \geq g(\epsilon) + o(1).
 \end{equation*}
-A convex function is an overestimate of all linear functions whose values are bounded above by it.
-\begin{thmbox}{Jensen's Inequality}{JensenIneq}
-    Let $f$ be a convex function and $X$ be a random variable, then $\mathbb{E}[f(x)] \geq f(\mathbb{E}[X])$.
+There is a strong version for the law, which shall be stated without proof:
+\begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeNum}
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}(X_i) = \sigma^2 \in \R$ for every $i \in \N^+$, then 
+    \begin{equation*}
+        \mathrm{Pr}\left(\lim_{n \to \infty}\frac{1}{n}\sum_{i = 1}^{n}X_i = \mu\right) = 1.
+    \end{equation*}
 \end{thmbox}
+\section{Convexity}
+Recall the following definition:
+\begin{dfnbox}{Convex Function}{convexFunc}
+    A function $f \colon \R^n \to \R$ is {\color{red} \textbf{convex}} if for any $\lambda \in [0, 1]$ and any $\mathbfit{x}, \mathbfit{y} \in \R^n$,
+    \begin{equation*}
+        f\bigl(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\bigr) \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
+    \end{equation*}
+\end{dfnbox}
+From a graphical perspective, a convex function is an overestimate of all linear functions whose values are bounded above by it. The following proposition set this result in a rigorous context:
+\begin{probox}{Convex Functions as Overestimates for Linear Functions}{convexFuncEstimate}
+    Let $f \colon \R^n \to \R$ be a convex function and define 
+    \begin{equation*}
+        \mathcal{L} \coloneqq \left\{\ell \in \mathrm{Maps}\left(\R^n, \R\right) \colon \ell(\mathbfit{u}) = \mathbfit{a}^{\mathrm{T}} \cdot \mathbfit{u} + b \leq f(\mathbfit{u}) \textrm{ for all } \mathbfit{u} \in \R^n, \mathbfit{a} \in \R^n, b \in \R\right\}
+    \end{equation*}
+    to be the set of all linear functions bounded above by $f$, then for each $\mathbfit{x} \in \R^n$, 
+    \begin{equation*}
+        f(\mathbfit{x}) = \sup_{\ell \in \mathcal{L}}\ell(\mathbfit{x}).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        It suffices to prove that for all $\mathbfit{x} \in \R^n$, there exists some linear function~$\ell \in \mathcal{L}$ such that $\ell(\mathbfit{x}) = f(\mathbfit{x})$. Take any $\mathbfit{h} \in \R^n$. Since $f$ is convex, we have 
+        \begin{align*}
+            2f(\mathbfit{x}) & = 2f\left(\frac{1}{2}(\mathbfit{x + h}) + \frac{1}{2}(\mathbfit{x - h})\right) \\
+            & \leq f(\mathbfit{x + h}) + f(\mathbfit{x - h}).
+        \end{align*}
+        Therefore, we have
+        \begin{equation*}
+            L_1 = \lim_{\norm{\mathbfit{h}} \to 0}\frac{f(\mathbfit{x}) - f(\mathbfit{x - h})}{\norm{\mathbfit{h}}} \leq \lim_{\norm{\mathbfit{h}} \to 0}\frac{f(\mathbfit{x + h}) - f(\mathbfit{x})}{\norm{\mathbfit{h}}} = L_2.
+        \end{equation*}
+        Take some $a \in [L_1, L_2]$ and let $\ell(\mathbfit{y}) = a\norm{\mathbfit{y - x}} + f(\mathbfit{x})$. Observe that $\ell(\mathbfit{x}) = f(\mathbfit{x})$. Take $\mathbfit{h} = \mathbfit{y - x}$, then 
+        \begin{align*}
+            \ell(\mathbfit{y}) & = a\norm{\mathbfit{y - x}} + f(\mathbfit{x}) \\
+            & \leq \frac{f(\mathbfit{x + h}) - f(\mathbfit{x})}{\norm{\mathbfit{h}}}\norm{\mathbfit{y - x}} + f(\mathbfit{x}) \\
+            & = f(\mathbfit{x + h}) \\
+            & = f(\mathbfit{y}).
+        \end{align*} 
+        Therefore, $\ell \in \mathcal{L}$ as desired.
+    \end{proof}
+\end{probox}
+The following proposition gives a simple test for convexity in one-dimensional case, which is a special case of the Hessian matrix test:
+\begin{probox}{Second Derivative Test for Convexity}{2ndDiffTest}
+    If a real-valued function $f$ is twice-differentiable on $[a, b]$, then it is convex if and only if $f''(x) \geq 0$ for all $x \in (a, b)$.
+\end{probox}
+Convex functions produce the following interesting result regarding expectation:
+\begin{thmbox}{Jensen's Inequality}{JensenIneq}
+    Let $f$ be a convex function and $X$ be a random variable, then $\mathbb{E}[f(X)] \geq f(\mathbb{E}[X])$.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{L}$ be the set of all linear functions bounded above by $f$. By Proposition \ref{pro:convexFuncEstimate}, we have 
+        \begin{align*}
+            \mathbb{E}[f(X)] & = \mathbb{E}\left[\sup_{\ell \in \mathcal{L}}\ell(X)\right] \\
+            & \geq \sup_{\ell \in \mathcal{L}}\mathbb{E}[\ell(X)] \\
+            & = \sup_{\ell \in \mathcal{L}}\ell(\mathbb{E}[X]) \\
+            & = f(\mathbb{E}[X]).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        If $f$ is strictly convex, the equality holds if and only if $X$ is constant.
+    \end{remark}
+\end{notebox}
 \end{document}

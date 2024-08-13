@@ -2,3 +2,4 @@
 \contentsline {section}{\numberline {1.1}Probability Spaces}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Markov Chains}{6}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Probability Bounds}{9}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Convexity}{11}{section.1.4}%
