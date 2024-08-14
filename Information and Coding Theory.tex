@@ -38,7 +38,7 @@
   \def\mathaccent##1##2{%
 %Enable nesting of accents:
     \let\mathaccent\save@mathaccent
-%If there's more than a single symbol, use the first character instead (see below):
+%If there's more than a single symbol, use the first character instead \left(see below\right):
     \if#32 \let\macc@nucleus\first@char \fi
 %Determine the italic correction:
     \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
@@ -52,14 +52,14 @@
 %Now \@tempdima is the width of the symbol.
     \divide\@tempdima 10
     \advance\dimen@-\@tempdima
-%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
     \ifdim\dimen@>\z@ \dimen@0pt\fi
 %The bar will be shortened in the case \dimen@<0 !
     \rel@kern{0.6}\kern-\dimen@
     \if#31
       \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
       \advance\dimen@0.4\dimexpr\macc@kerna
-%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
       \let\final@kern#2%
       \ifdim\dimen@<\z@ \let\final@kern1\fi
       \if\final@kern1 \kern-\dimen@\fi
@@ -132,7 +132,7 @@
 \section{Probability Spaces}
 In an elementary level, we have been viewing probability as the quotient between the number of desired outcomes and the number of all possible outcomes. This definition, though intuitive, is not very solid when it comes to an infinite sample space. In this introductory chapter, we would establish the theories of probability using a more modern and rigorous structure.
 \begin{dfnbox}{Set Algebra}{setAlgebra}
-    Let $X$ be a set. A {\color{red} \textbf{set algebra}} over $X$ is a family $\mathcal{F} \subseteq \mathcal{P}(X)$ such that 
+    Let $X$ be a set. A {\color{red} \textbf{set algebra}} over $X$ is a family $\mathcal{F} \subseteq \mathcal{P}\left(X\right)$ such that 
     \begin{itemize}
         \item $X \backslash F \in \mathcal{F}$ for all $F \in \mathcal{F}$ (closed under complementation);
         \item $X \in \mathcal{F}$;
@@ -149,7 +149,7 @@ Second, by De Morgan's Law, one can easily check that if the first $2$ axioms ho
     \item $\bigcup_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$;
     \item $\bigcap_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$.
 \end{itemize}
-$(X, \mathcal{F})$ is known as a \textit{field of sets}, where the elements of $X$ are called \textit{points} and those of $\mathcal{F}$, \textit{complexes} or \textit{admissible sets} of $X$.
+$\left(X, \mathcal{F}\right)$ is known as a \textit{field of sets}, where the elements of $X$ are called \textit{points} and those of $\mathcal{F}$, \textit{complexes} or \textit{admissible sets} of $X$.
 
 In probability theory, what we are interested in is a special type of set algebras known as $\sigma$-\textit{algebras}.
 \begin{dfnbox}{$\sigma$-Algebra}{sigmaAlgebra}
@@ -165,39 +165,39 @@ Now, as we all know, we can take some set $\Omega$ as a \textit{sample space} an
     \end{equation*}
     such that 
     \begin{itemize}
-        \item $\mu(E) \geq 0$ for all $E \in \Sigma$ (non-negativity);
-        \item $\mu(\varnothing) = 0$;
-        \item $\mu\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}\mu(E_i)$ for any countable collection of pairwise disjoint elements of $\Sigma$ (countable additivity or $\sigma$-additivity).
+        \item $\mu\left(E\right) \geq 0$ for all $E \in \Sigma$ (non-negativity);
+        \item $\mu\left(\varnothing\right) = 0$;
+        \item $\mu\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}\mu\left(E_i\right)$ for any countable collection of pairwise disjoint elements of $\Sigma$ (countable additivity or $\sigma$-additivity).
     \end{itemize}
-    The triple $(X, \Sigma, \mu)$ is known as a {\color{red} \textbf{measure space}} and the pair $(X, \Sigma)$, a {\color{red} \textbf{measurable space}}.
+    The triple $\left(X, \Sigma, \mu\right)$ is known as a {\color{red} \textbf{measure space}} and the pair $\left(X, \Sigma\right)$, a {\color{red} \textbf{measurable space}}.
 \end{dfnbox}
-One thing to note here is that if at least one $E \in \Sigma$ has a finite measure, then $\mu(\varnothing) = 0$ is automatically guaranteed for obvious reasons.
+One thing to note here is that if at least one $E \in \Sigma$ has a finite measure, then $\mu\left(\varnothing\right) = 0$ is automatically guaranteed for obvious reasons.
 \begin{dfnbox}{Probability Space}{probSpace}
-    Let $\Omega$ be a sample space and $\mathcal{F}$ be a $\sigma$-algebra over $\Omega$. A {\color{red} \textbf{probability space}} is a measure space $(\Omega, \mathcal{F}, \mathbb{P})$ where $\mathbb{P} \colon \mathcal{F} \to [0, 1]$, known as a {\color{red} \textbf{probability measure}}, is such that $\mathbb{P}(\Omega) = 1$.
+    Let $\Omega$ be a sample space and $\mathcal{F}$ be a $\sigma$-algebra over $\Omega$. A {\color{red} \textbf{probability space}} is a measure space $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ where $\mathbb{P} \colon \mathcal{F} \to [0, 1]$, known as a {\color{red} \textbf{probability measure}}, is such that $\mathbb{P}\left(\Omega\right) = 1$.
 \end{dfnbox}
 Obviously, the above definition immediately guarantees that 
 \begin{enumerate}
-    \item $\mathbb{P}(A^c) = 1 - \mathbb{P}(A)$;
-    \item $\mathbb{P}(A) \leq \mathbb{P}(B)$ if $\mathbb{P}(A) \subseteq \mathbb{P}(A)$;
-    \item $\mathbb{P}(A \cup B) \leq \mathbb{P}(A) + \mathbb{P}(B)$.
+    \item $\mathbb{P}\left(A^c\right) = 1 - \mathbb{P}\left(A\right)$;
+    \item $\mathbb{P}\left(A\right) \leq \mathbb{P}\left(B\right)$ if $\mathbb{P}\left(A\right) \subseteq \mathbb{P}\left(A\right)$;
+    \item $\mathbb{P}\left(A \cup B\right) \leq \mathbb{P}\left(A\right) + \mathbb{P}\left(B\right)$.
 \end{enumerate}
 The third result follows from a direct application of the principle of inclusion and exclusion. By induction, one can easily check that 
 \begin{equation*}
-    \mathbb{P}\left(\bigcup_{i = 1}^{n}E_i\right) \leq \sum_{i = 1}^{n}\mathbb{P}(E_i)
+    \mathbb{P}\left(\bigcup_{i = 1}^{n}E_i\right) \leq \sum_{i = 1}^{n}\mathbb{P}\left(E_i\right)
 \end{equation*}
 for any finitely many events. The following proposition extends this result to countable collections of events:
 \begin{probox}{Union Bound of Countable Collections of Events}{unionBound}
-    Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space and $E_1, E_2, \cdots, E_n, \cdots \in \mathcal{F}$ is any countable sequence of events, then 
+    Let $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ be a probability space and $E_1, E_2, \cdots, E_n, \cdots \in \mathcal{F}$ is any countable sequence of events, then 
     \begin{equation*}
-        \mathbb{P}\left(\bigcup_{i = 1}^{\infty}E_i\right) \leq \sum_{i = 1}^{\infty}\mathbb{P}(E_i).
+        \mathbb{P}\left(\bigcup_{i = 1}^{\infty}E_i\right) \leq \sum_{i = 1}^{\infty}\mathbb{P}\left(E_i\right).
     \end{equation*}
     \tcblower
     \begin{proof}
-        Define $F_1 \coloneqq E_1$ and $F_k \coloneqq E_k \backslash \bigcup_{i = 1}^{k - 1}E_i$ for $k \geq 2$. Clearly, the $F_i$'s are pairwise disjoint. By Definition \ref{dfn:sigmaAlgebra}, the $F_i$'s are elements of $\mathcal{F}$. Note that $\mathbb{P}(F_i) \leq \mathbb{E_i}$ for all $i \in \N^+$, so 
+        Define $F_1 \coloneqq E_1$ and $F_k \coloneqq E_k \backslash \bigcup_{i = 1}^{k - 1}E_i$ for $k \geq 2$. Clearly, the $F_i$'s are pairwise disjoint. By Definition \ref{dfn:sigmaAlgebra}, the $F_i$'s are elements of $\mathcal{F}$. Note that $\mathbb{P}\left(F_i\right) \leq \mathbb{E_i}$ for all $i \in \N^+$, so 
         \begin{align*}
             \mathbb{P}\left(\bigcup_{i = 1}^{\infty}E_i\right) & = \mathbb{P}\left(\bigcup_{i = 1}^{\infty}F_i\right) \\
-            & = \sum_{i = 1}^{\infty}\mathbb{P}(F_i) \\
-            & \leq \sum_{i = 1}^{\infty}\mathbb{P}(E_i).
+            & = \sum_{i = 1}^{\infty}\mathbb{P}\left(F_i\right) \\
+            & \leq \sum_{i = 1}^{\infty}\mathbb{P}\left(E_i\right).
         \end{align*}
     \end{proof}
 \end{probox}
@@ -207,54 +207,54 @@ Next, we will introduce the notion of \textit{random variables} formally. For th
 \end{dfnbox}
 Clearly, the Borel algebra over $X$ contains all open sets in $X$ according to the above axioms from Definition \ref{dfn:sigmaAlgebra}. This helps us define the following:
 \begin{dfnbox}{Random Variable}{RV}
-    Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space and $(\mathcal{X}, \mathcal{B})$ be a measurable space where $\mathcal{B}$ is the Borel algebra over $\mathcal{X}$. A {\color{red} \textbf{random variable}} is a function $X \colon \Omega \to \mathcal{X}$ such that 
+    Let $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ be a probability space and $\left(\mathcal{X}, \mathcal{B}\right)$ be a measurable space where $\mathcal{B}$ is the Borel algebra over $\mathcal{X}$. A {\color{red} \textbf{random variable}} is a function $X \colon \Omega \to \mathcal{X}$ such that 
     \begin{equation*}
-        \left\{\omega \in \Omega \colon X(\omega) \in B\right\} \in \mathcal{F} 
+        \left\{\omega \in \Omega \colon X\left(\omega\right) \in B\right\} \in \mathcal{F} 
     \end{equation*}
     for all $B \in \mathcal{B}$.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        Rigorously, such a random variable $X$ is a \textit{measurable function} or \textit{measurable mapping} from $(\Omega, \mathcal{F})$ to $(\mathcal{X}, \mathcal{B})$.
+        Rigorously, such a random variable $X$ is a \textit{measurable function} or \textit{measurable mapping} from $\left(\Omega, \mathcal{F}\right)$ to $\left(\mathcal{X}, \mathcal{B}\right)$.
     \end{remark}
 \end{notebox}
-The probability measure $\mathbb{P}$ thus induces a probability measure $P_X$ over $(\mathcal{X}, \mathcal{B})$.
+The probability measure $\mathbb{P}$ thus induces a probability measure $P_X$ over $\left(\mathcal{X}, \mathcal{B}\right)$.
 \begin{dfnbox}{Distribution}{distribution}
-    Let $X \colon \Omega \to \mathcal{X}$ be a random variable over the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ and $\mathcal{B}$ be the Borel algebra over $\mathcal{X}$, the {\color{red} \textbf{distribution}} of $X$ is the probability measure $P_X$ on $(\mathcal{X}, \mathcal{B})$ given by 
+    Let $X \colon \Omega \to \mathcal{X}$ be a random variable over the probability space $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ and $\mathcal{B}$ be the Borel algebra over $\mathcal{X}$, the {\color{red} \textbf{distribution}} of $X$ is the probability measure $P_X$ on $\left(\mathcal{X}, \mathcal{B}\right)$ given by 
     \begin{equation*}
-        P_X(B) = \mathbb{P}\left(\left\{\omega \in \Omega \colon X(\omega) \in B\right\}\right).
+        P_X\left(B\right) = \mathbb{P}\left(\left\{\omega \in \Omega \colon X\left(\omega\right) \in B\right\}\right).
     \end{equation*}
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        Often times, we write $\mathrm{Pr}(X \in B) = P_X(B)$.
+        Often times, we write $\mathrm{Pr}\left(X \in B\right) = P_X\left(B\right)$.
     \end{remark}
 \end{notebox}
 In the context of information theory, we mostly are concerned with real-valued random variables only.
 \begin{dfnbox}{Real-Valued Random Variable}{RRV}
-    Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space, a {\color{red} \textbf{real-valued random variable}} over the space is a mapping $X \colon \Omega \to \R$ such that 
+    Let $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ be a probability space, a {\color{red} \textbf{real-valued random variable}} over the space is a mapping $X \colon \Omega \to \R$ such that 
     \begin{equation*}
-        \left\{\omega \in \Omega \colon X(\omega) \leq x\right\} \in \mathcal{F}
+        \left\{\omega \in \Omega \colon X\left(\omega\right) \leq x\right\} \in \mathcal{F}
     \end{equation*}
     for all $x \in \R$.
 \end{dfnbox}
 Note that the Borel set over $\R$ is just the family of all open intervals. 
 
-Clearly, if $X$ is a real-valued random variable, we have $\left\{\omega \in \Omega \colon X(\omega) > x\right\} \in \mathcal{F}$. Moreover, we claim that 
+Clearly, if $X$ is a real-valued random variable, we have $\left\{\omega \in \Omega \colon X\left(\omega\right) > x\right\} \in \mathcal{F}$. Moreover, we claim that 
 \begin{equation*}
-    \left\{\omega \in \Omega \colon X(\omega) < x\right\} = \bigcup_{y < x}\left\{\omega \in \Omega \colon X(\omega) \leq y\right\}.
+    \left\{\omega \in \Omega \colon X\left(\omega\right) < x\right\} = \bigcup_{y < x}\left\{\omega \in \Omega \colon X\left(\omega\right) \leq y\right\}.
 \end{equation*}
 The proof is quite straightforward and is left to the reader as an exercise. By Definition \ref{dfn:sigmaAlgebra}, this means that 
 \begin{equation*}
-    \left\{\omega \in \Omega \colon X(\omega) < x\right\} \cup \left\{\omega \in \Omega \colon X(\omega) > x\right\} \in \mathcal{F}.
+    \left\{\omega \in \Omega \colon X\left(\omega\right) < x\right\} \cup \left\{\omega \in \Omega \colon X\left(\omega\right) > x\right\} \in \mathcal{F}.
 \end{equation*}
-Therefore, $\left\{\omega \in \Omega \colon X(\omega) = x\right\} \in \mathcal{F}$. This argument justifies the probabilities $\mathrm{Pr}(X < x)$ and $\mathrm{Pr}(X = x)$. We give a special name to the range of a random variable in computer science.
+Therefore, $\left\{\omega \in \Omega \colon X\left(\omega\right) = x\right\} \in \mathcal{F}$. This argument justifies the probabilities $\mathrm{Pr}\left(X < x\right)$ and $\mathrm{Pr}\left(X = x\right)$. We give a special name to the range of a random variable in computer science.
 \begin{dfnbox}{Alphabet}{alphabet}
     Let $X$ be a random variable, the range of $X$ is called an {\color{red} \textbf{alphabet}}, denoted as $\mathcal{X}$.
 \end{dfnbox}
 Recall that we have defined expectations for discrete and continuous random variables in elementary probability theory. In terms of measure theory, the two formulae can be unified as the Lebesgue integral
 \begin{equation*}
-    \mathbb{E}[X] = \int_{\Omega}\!X(\omega)\,\d\mathbb{P}(\omega).
+    \mathbb{E}[X] = \int_{\Omega}\!X\left(\omega\right)\,\d\mathbb{P}\left(\omega\right).
 \end{equation*}
 Note that $\mathbb{E}[X]$ is a real number while $\mathbb{E}[X \mid Y]$ is a \textbf{random variable} formed as a function of $Y$. In a way, $Y$ partitions the sample space into regions where $\mathbb{E}[X \mid Y = y_i]$ gives the expectation of $X$ in the region induced by $Y = y_i$ for each $y_i \in \mathcal{Y}$. In general, the following result holds:
 \begin{thmbox}{Law of Iterated Expectations}{iterExpectations}
@@ -262,29 +262,29 @@ Note that $\mathbb{E}[X]$ is a real number while $\mathbb{E}[X \mid Y]$ is a \te
 \end{thmbox}
 The above formula can be interpreted as the fact that $\mathbb{E}[X \mid Y]$ is a best estimator for $X$.
 \section{Markov Chains}
-Recall that $2$ random variables $X$ and $Z$ are \textit{independent} if and only if $P_{X, Z}(x, z) = P_X(x)P_Z(z)$ or $P_{X \mid Z}(x \mid z) = P_X(x)$ for all $(x, z) \in \mathcal{X} \times \mathcal{Z}$. We will extend this definition with a third random variable.
+Recall that $2$ random variables $X$ and $Z$ are \textit{independent} if and only if $P_{X, Z}\left(x, z\right) = P_X\left(x\right)P_Z\left(z\right)$ or $P_{X \mid Z}\left(x \mid z\right) = P_X\left(x\right)$ for all $\left(x, z\right) \in \mathcal{X} \times \mathcal{Z}$. We will extend this definition with a third random variable.
 \begin{dfnbox}{Markov Chain}{MarkovChain}
     Let $X, Y, Z$ be random variables. If 
     \begin{equation*}
-        P_{X, Y, Z}(x, y, z) = P_X(x)P_{Y \mid X}(y \mid x)P_{Z \mid Y}(z \mid y)
+        P_{X, Y, Z}\left(x, y, z\right) = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid Y}\left(z \mid y\right)
     \end{equation*}
-    for all $(x, y, z) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$, then we say that $X, Y, Z$ forms a {\color{red} \textbf{Markov chain}} in this order, or that $X$ and $Z$ are conditionally independent on $Y$.
+    for all $\left(x, y, z\right) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$, then we say that $X, Y, Z$ forms a {\color{red} \textbf{Markov chain}} in this order, or that $X$ and $Z$ are conditionally independent on $Y$.
 \end{dfnbox}
 Recall also that the \textit{Bayes's Rule} states the following:
 \begin{thmbox}{Bayes's Rule}{BayesRule}
     For any random variables $X$ and $Y$, 
     \begin{equation*}
-        P_{X \mid Y}(x \mid y) = \frac{P_{Y \mid X}(y \mid x)P_X(x)}{\sum_{x' \in \mathcal{X}}P_{Y \mid X}(y \mid x')P_X(x')}.
+        P_{X \mid Y}\left(x \mid y\right) = \frac{P_{Y \mid X}\left(y \mid x\right)P_X\left(x\right)}{\sum_{x' \in \mathcal{X}}P_{Y \mid X}\left(y \mid x'\right)P_X\left(x'\right)}.
     \end{equation*}
 \end{thmbox}
 Based on Theorem \ref{thm:BayesRule}, we have 
 \begin{equation*}
-    P_{X, Y}(x, y) = P_{X \mid Y}(x \mid y)P_Y(y) = P_X(x)P_{Y \mid X}(y \mid x).
+    P_{X, Y}\left(x, y\right) = P_{X \mid Y}\left(x \mid y\right)P_Y\left(y\right) = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right).
 \end{equation*}
 By applying the formula repeatedly, we have 
 \begin{align*}
-    P_{X, Y, Z}(x, y, z) & = P_{X, Y}(x, y)P_{Z \mid X, Y}(z \mid x, y) \\
-    & = P_X(x)P_{Y \mid X}(y \mid x)P_{Z \mid X, Y}(z \mid x, y).
+    P_{X, Y, Z}\left(x, y, z\right) & = P_{X, Y}\left(x, y\right)P_{Z \mid X, Y}\left(z \mid x, y\right) \\
+    & = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid X, Y}\left(z \mid x, y\right).
 \end{align*}
 Therefore, a Markov chain simply states that the distribution of $Z$ is no longer dependent on $X$, but depends on $Y$ solely. Therefore, this allows us to remove one condition when applying Theorem \ref{thm:BayesRule}. Thus, it actually suffices to prove $P_{Z \mid X, Y} = P_{Z \mid Y}$ when proving that $X$-$Y$-$Z$ forms a Markov chain.  
  
@@ -295,35 +295,35 @@ We can denote a Markov chain by $X$-$Y$-$Z$. Intuitively, such a relationship sh
     \begin{proof}
         By Definition \ref{dfn:MarkovChain}, 
         \begin{align*}
-            P_{X, Y, Z}(x, y, z) & = P_X(x)P_{Y \mid X}(y \mid x)P_{Z \mid Y}(z \mid y).
+            P_{X, Y, Z}\left(x, y, z\right) & = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid Y}\left(z \mid y\right).
         \end{align*}
         By Theorem \ref{thm:BayesRule}, we have 
         \begin{align*}
-            P_{X \mid Y}(x \mid y) & = \frac{P_X(x)P_{Y \mid X}(y \mid x)}{P_Y(y)} \\
-            & = \frac{P_{X, Y, Z}(x, y, z)}{P_Y(y)P_{Z \mid Y}(z \mid y)} \\
-            & = \frac{P_{X, Y, Z}(x, y, z)}{P_{Z, Y}(z, y)} \\
-            & = P_{X \mid Z, Y}(x \mid z, y).
+            P_{X \mid Y}\left(x \mid y\right) & = \frac{P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)}{P_Y\left(y\right)} \\
+            & = \frac{P_{X, Y, Z}\left(x, y, z\right)}{P_Y\left(y\right)P_{Z \mid Y}\left(z \mid y\right)} \\
+            & = \frac{P_{X, Y, Z}\left(x, y, z\right)}{P_{Z, Y}\left(z, y\right)} \\
+            & = P_{X \mid Z, Y}\left(x \mid z, y\right).
         \end{align*}
         Therefore, $Z$-$Y$-$X$ is a Markov chain.
     \end{proof}
 \end{probox}
 One obvious case where dependence exists between the random variables in a Markov chain is that one of the random variables is a function of another one.
 \begin{probox}{Markov Chain Involving Functions of a Random Variable}{funcMarkovChain}
-    Let $X$ and $Y$ be any random variables and $Z \coloneqq f(Y)$ for some function $f$, then $X$-$Y$-$Z$ is a Markov chain.
+    Let $X$ and $Y$ be any random variables and $Z \coloneqq f\left(Y\right)$ for some function $f$, then $X$-$Y$-$Z$ is a Markov chain.
     \tcblower
     \begin{proof}
         Notice that 
         \begin{align*}
-            P_{Z \mid X, Y}(z \mid x, y) & = P_{f(Y) \mid X, Y}(z \mid x, y) = \begin{cases}
-                1 &\quad \textrm{if } z = f(y) \\
+            P_{Z \mid X, Y}\left(z \mid x, y\right) & = P_{f\left(Y\right) \mid X, Y}\left(z \mid x, y\right) = \begin{cases}
+                1 &\quad \textrm{if } z = f\left(y\right) \\
                 0 &\quad \textrm{otherwise} 
             \end{cases}, \\
-            P_{Z \mid Y}(z \mid y) & = P_{f(Y) \mid Y}(z \mid y) = \begin{cases}
-                1 &\quad \textrm{if } z = f(y) \\
+            P_{Z \mid Y}\left(z \mid y\right) & = P_{f\left(Y\right) \mid Y}\left(z \mid y\right) = \begin{cases}
+                1 &\quad \textrm{if } z = f\left(y\right) \\
                 0 &\quad \textrm{otherwise} 
             \end{cases}
         \end{align*}
-        for all $(x, y, z) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$. Therefore, $P_{Z \mid X, Y} = P_{Z \mid Y}$ and so $X$-$Y$-$Z$ forms a Markov chain.
+        for all $\left(x, y, z\right) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$. Therefore, $P_{Z \mid X, Y} = P_{Z \mid Y}$ and so $X$-$Y$-$Z$ forms a Markov chain.
     \end{proof}
 \end{probox}
 Note that if $X$ and $Z$ are independent, they are naturally conditionally independent given any $Y$. However, the inverse may not be true.
@@ -337,10 +337,10 @@ Note that if $X$ and $Z$ are independent, they are naturally conditionally indep
         \end{equation*}
         Take $X = N_1 + N_2$, $Y = N_2$ and $Z = N_2 + N_3$. Clearly, $X$ and $Z$ are dependent, but 
         \begin{align*}
-            P_{Z \mid X}(z \mid x) & = P_{N_2 + N_3 \mid N_1 + N_2}(z \mid x) \\
-            & = P_{N_3 \mid N_1, N_2}(z - y \mid x - y, y) \\
-            & = P_{N_2 + N_3 \mid N_1 + N_2, N_2}(z \mid x, y) \\
-            & = P_{Z \mid X, Y}(z \mid x, y),
+            P_{Z \mid X}\left(z \mid x\right) & = P_{N_2 + N_3 \mid N_1 + N_2}\left(z \mid x\right) \\
+            & = P_{N_3 \mid N_1, N_2}\left(z - y \mid x - y, y\right) \\
+            & = P_{N_2 + N_3 \mid N_1 + N_2, N_2}\left(z \mid x, y\right) \\
+            & = P_{Z \mid X, Y}\left(z \mid x, y\right),
         \end{align*}
         which implies that $X$ and $Z$ are conditionally independent given $Y$.
     \end{proof}
@@ -348,41 +348,41 @@ Note that if $X$ and $Z$ are independent, they are naturally conditionally indep
 \section{Probability Bounds}
 We use various bounds to make estimates and approximations for probability distributions. The first commonly used bound is \textit{Markov's Inequality}.
 \begin{thmbox}{Markov's Inequality}{MarkovIneq}
-    If $X$ is a non-negative random variable, then $\mathrm{Pr}(X \geq a) \leq \frac{\mathbb{E}[X]}{a}$ for all $a > 0$.
+    If $X$ is a non-negative random variable, then $\mathrm{Pr}\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$ for all $a > 0$.
     \tcblower
     \begin{proof}
         It suffices to prove for the continuous case. Notice that 
         \begin{align*}
-            \mathbb{E}[X] & = \int_{0}^{\infty}\!xf_X(x)\,\d x \\
-            & \geq \int_{a}^{\infty}\!xf_X(x)\,\d x \\
-            & \geq a\int_{0}^{\infty}\!f_X(x)\,\d x \\
-            & = \mathrm{Pr}(X \geq a).
+            \mathbb{E}[X] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq \int_{a}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq a\int_{0}^{\infty}\!f_X\left(x\right)\,\d x \\
+            & = \mathrm{Pr}\left(X \geq a\right).
         \end{align*}
-        Therefore, $\mathrm{Pr}(X \geq a) \leq \frac{\mathbb{E}[X]}{a}$.
+        Therefore, $\mathrm{Pr}\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$.
     \end{proof}
 \end{thmbox}
 Note that the bound given by Markov's inequality is a rather loose bound. The following inequality proposes a better bound:
 \begin{thmbox}{Chebyshev's Inequality}{ChebyshevIneq}
     For any real-valued random variable $X$ with finite variance, 
     \begin{equation*}
-        \mathrm{Pr}\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}(X)}\right) \leq \frac{1}{a^2}
+        \mathrm{Pr}\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
     \end{equation*}
     for all $a > 0$.
     \tcblower
     \begin{proof}
-        Define $g(X) \colon (X - \mathbb{E}[X])^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
+        Define $g\left(X\right) \colon \left(X - \mathbb{E}[X]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
         \begin{equation*}
-            \mathrm{Pr}\bigl(g(X) > a^2\mathrm{Var}(X)\bigr) \leq \frac{\mathbb{E}[g(X)]}{a^2\mathrm{Var}(X)}.
+            \mathrm{Pr}\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}[g\left(X\right)]}{a^2\mathrm{Var}\left(X\right)}.
         \end{equation*}
-        Note that $\mathbb{E}[g(X)] = \mathrm{Var}(X)$, so 
+        Note that $\mathbb{E}[g\left(X\right)] = \mathrm{Var}\left(X\right)$, so 
         \begin{equation*}
-            \mathrm{Pr}\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}(X)}\right) = \mathrm{Pr}\bigl(g(X) > a^2\mathrm{Var}(X)\bigr) \leq \frac{1}{a^2}.
+            \mathrm{Pr}\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = \mathrm{Pr}\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
         \end{equation*}
     \end{proof}
 \end{thmbox}
 Finally, we state the following law of large numbers:
 \begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeNum}
-    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}(X_i) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
     \begin{equation*}
         \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
     \end{equation*}
@@ -390,7 +390,7 @@ Finally, we state the following law of large numbers:
     \begin{proof}
         Note that $\mathbb{E}\left[\frac{1}{n}\sum_{i = 1}^nX_i\right] = \mu$ and that 
         \begin{equation*}
-            \mathrm{Var}\left(\frac{1}{n}\sum_{i = 1}^nX_i\right) = \frac{\sum_{i = 1}^{n}\mathrm{Var}(X_i)}{n^2} = \frac{\sigma^2}{n}.
+            \mathrm{Var}\left(\frac{1}{n}\sum_{i = 1}^nX_i\right) = \frac{\sum_{i = 1}^{n}\mathrm{Var}\left(X_i\right)}{n^2} = \frac{\sigma^2}{n}.
         \end{equation*}
         By Theorem \ref{thm:ChebyshevIneq}, we have 
         \begin{equation*}
@@ -408,17 +408,17 @@ Alternatively, we may phrase Theorem \ref{thm:weakLawLargeNum} as ``$\frac{1}{n}
         Essentially, what Theorem \ref{thm:weakLawLargeNum} says is that when $n$ is large, the sample mean from $n$ measurements of the same data converges to the expectation of the distribution.
     \end{remark}
 \end{notebox}
-Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng(\epsilon)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
+Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng\left(\epsilon\right)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
 \begin{equation*}
-    \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \exp\bigl(-ng(\epsilon) + o(n)\bigr).
+    \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \exp\bigl(-ng\left(\epsilon\right) + o\left(n\right)\bigr).
 \end{equation*}
-Equivalently, this means that there exists a function $g \colon \R \to \R$ with $g(\epsilon) > 0$ for every $\epsilon > 0$ such that 
+Equivalently, this means that there exists a function $g \colon \R \to \R$ with $g\left(\epsilon\right) > 0$ for every $\epsilon > 0$ such that 
 \begin{equation*}
-    \liminf_{n \to \infty}-\frac{1}{n}\log\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \geq g(\epsilon) + o(1).
+    \liminf_{n \to \infty}-\frac{1}{n}\log\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \geq g\left(\epsilon\right) + o\left(1\right).
 \end{equation*}
 There is a strong version for the law, which shall be stated without proof:
 \begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeNum}
-    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}(X_i) = \sigma^2 \in \R$ for every $i \in \N^+$, then 
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$, then 
     \begin{equation*}
         \mathrm{Pr}\left(\lim_{n \to \infty}\frac{1}{n}\sum_{i = 1}^{n}X_i = \mu\right) = 1.
     \end{equation*}
@@ -428,55 +428,55 @@ Recall the following definition:
 \begin{dfnbox}{Convex Function}{convexFunc}
     A function $f \colon \R^n \to \R$ is {\color{red} \textbf{convex}} if for any $\lambda \in [0, 1]$ and any $\mathbfit{x}, \mathbfit{y} \in \R^n$,
     \begin{equation*}
-        f\bigl(\lambda\mathbfit{x} + (1 - \lambda)\mathbfit{y}\bigr) \leq \lambda f(\mathbfit{x}) + (1 - \lambda)f(\mathbfit{y}).
+        f\bigl(\lambda\mathbfit{x} + \left(1 - \lambda\right)\mathbfit{y}\bigr) \leq \lambda f\left(\mathbfit{x}\right) + \left(1 - \lambda\right)f\left(\mathbfit{y}\right).
     \end{equation*}
 \end{dfnbox}
 From a graphical perspective, a convex function is an overestimate of all linear functions whose values are bounded above by it. The following proposition set this result in a rigorous context:
 \begin{probox}{Convex Functions as Overestimates for Linear Functions}{convexFuncEstimate}
     Let $f \colon \R^n \to \R$ be a convex function and define 
     \begin{equation*}
-        \mathcal{L} \coloneqq \left\{\ell \in \mathrm{Maps}\left(\R^n, \R\right) \colon \ell(\mathbfit{u}) = \mathbfit{a}^{\mathrm{T}} \cdot \mathbfit{u} + b \leq f(\mathbfit{u}) \textrm{ for all } \mathbfit{u} \in \R^n, \mathbfit{a} \in \R^n, b \in \R\right\}
+        \mathcal{L} \coloneqq \left\{\ell \in \mathrm{Maps}\left(\R^n, \R\right) \colon \ell\left(\mathbfit{u}\right) = \mathbfit{a}^{\mathrm{T}} \cdot \mathbfit{u} + b \leq f\left(\mathbfit{u}\right) \textrm{ for all } \mathbfit{u} \in \R^n, \mathbfit{a} \in \R^n, b \in \R\right\}
     \end{equation*}
     to be the set of all linear functions bounded above by $f$, then for each $\mathbfit{x} \in \R^n$, 
     \begin{equation*}
-        f(\mathbfit{x}) = \sup_{\ell \in \mathcal{L}}\ell(\mathbfit{x}).
+        f\left(\mathbfit{x}\right) = \sup_{\ell \in \mathcal{L}}\ell\left(\mathbfit{x}\right).
     \end{equation*}
     \tcblower
     \begin{proof}
-        It suffices to prove that for all $\mathbfit{x} \in \R^n$, there exists some linear function~$\ell \in \mathcal{L}$ such that $\ell(\mathbfit{x}) = f(\mathbfit{x})$. Take any $\mathbfit{h} \in \R^n$. Since $f$ is convex, we have 
+        It suffices to prove that for all $\mathbfit{x} \in \R^n$, there exists some linear function~$\ell \in \mathcal{L}$ such that $\ell\left(\mathbfit{x}\right) = f\left(\mathbfit{x}\right)$. Take any $\mathbfit{h} \in \R^n$. Since $f$ is convex, we have 
         \begin{align*}
-            2f(\mathbfit{x}) & = 2f\left(\frac{1}{2}(\mathbfit{x + h}) + \frac{1}{2}(\mathbfit{x - h})\right) \\
-            & \leq f(\mathbfit{x + h}) + f(\mathbfit{x - h}).
+            2f\left(\mathbfit{x}\right) & = 2f\left(\frac{1}{2}\left(\mathbfit{x + h}\right) + \frac{1}{2}\left(\mathbfit{x - h}\right)\right) \\
+            & \leq f\left(\mathbfit{x + h}\right) + f\left(\mathbfit{x - h}\right).
         \end{align*}
         Therefore, we have
         \begin{equation*}
-            L_1 = \lim_{\norm{\mathbfit{h}} \to 0}\frac{f(\mathbfit{x}) - f(\mathbfit{x - h})}{\norm{\mathbfit{h}}} \leq \lim_{\norm{\mathbfit{h}} \to 0}\frac{f(\mathbfit{x + h}) - f(\mathbfit{x})}{\norm{\mathbfit{h}}} = L_2.
+            L_1 = \lim_{\norm{\mathbfit{h}} \to 0}\frac{f\left(\mathbfit{x}\right) - f\left(\mathbfit{x - h}\right)}{\norm{\mathbfit{h}}} \leq \lim_{\norm{\mathbfit{h}} \to 0}\frac{f\left(\mathbfit{x + h}\right) - f\left(\mathbfit{x}\right)}{\norm{\mathbfit{h}}} = L_2.
         \end{equation*}
-        Take some $a \in [L_1, L_2]$ and let $\ell(\mathbfit{y}) = a\norm{\mathbfit{y - x}} + f(\mathbfit{x})$. Observe that $\ell(\mathbfit{x}) = f(\mathbfit{x})$. Take $\mathbfit{h} = \mathbfit{y - x}$, then 
+        Take some $a \in [L_1, L_2]$ and let $\ell\left(\mathbfit{y}\right) = a\norm{\mathbfit{y - x}} + f\left(\mathbfit{x}\right)$. Observe that $\ell\left(\mathbfit{x}\right) = f\left(\mathbfit{x}\right)$. Take $\mathbfit{h} = \mathbfit{y - x}$, then 
         \begin{align*}
-            \ell(\mathbfit{y}) & = a\norm{\mathbfit{y - x}} + f(\mathbfit{x}) \\
-            & \leq \frac{f(\mathbfit{x + h}) - f(\mathbfit{x})}{\norm{\mathbfit{h}}}\norm{\mathbfit{y - x}} + f(\mathbfit{x}) \\
-            & = f(\mathbfit{x + h}) \\
-            & = f(\mathbfit{y}).
+            \ell\left(\mathbfit{y}\right) & = a\norm{\mathbfit{y - x}} + f\left(\mathbfit{x}\right) \\
+            & \leq \frac{f\left(\mathbfit{x + h}\right) - f\left(\mathbfit{x}\right)}{\norm{\mathbfit{h}}}\norm{\mathbfit{y - x}} + f\left(\mathbfit{x}\right) \\
+            & = f\left(\mathbfit{x + h}\right) \\
+            & = f\left(\mathbfit{y}\right).
         \end{align*} 
         Therefore, $\ell \in \mathcal{L}$ as desired.
     \end{proof}
 \end{probox}
 The following proposition gives a simple test for convexity in one-dimensional case, which is a special case of the Hessian matrix test:
 \begin{probox}{Second Derivative Test for Convexity}{2ndDiffTest}
-    If a real-valued function $f$ is twice-differentiable on $[a, b]$, then it is convex if and only if $f''(x) \geq 0$ for all $x \in (a, b)$.
+    If a real-valued function $f$ is twice-differentiable on $[a, b]$, then it is convex if and only if $f''\left(x\right) \geq 0$ for all $x \in \left(a, b\right)$.
 \end{probox}
 Convex functions produce the following interesting result regarding expectation:
 \begin{thmbox}{Jensen's Inequality}{JensenIneq}
-    Let $f$ be a convex function and $X$ be a random variable, then $\mathbb{E}[f(X)] \geq f(\mathbb{E}[X])$.
+    Let $f$ be a convex function and $X$ be a random variable, then $\mathbb{E}[f\left(X\right)] \geq f\left(\mathbb{E}[X]\right)$.
     \tcblower
     \begin{proof}
         Let $\mathcal{L}$ be the set of all linear functions bounded above by $f$. By Proposition \ref{pro:convexFuncEstimate}, we have 
         \begin{align*}
-            \mathbb{E}[f(X)] & = \mathbb{E}\left[\sup_{\ell \in \mathcal{L}}\ell(X)\right] \\
-            & \geq \sup_{\ell \in \mathcal{L}}\mathbb{E}[\ell(X)] \\
-            & = \sup_{\ell \in \mathcal{L}}\ell(\mathbb{E}[X]) \\
-            & = f(\mathbb{E}[X]).
+            \mathbb{E}[f\left(X\right)] & = \mathbb{E}\left[\sup_{\ell \in \mathcal{L}}\ell\left(X\right)\right] \\
+            & \geq \sup_{\ell \in \mathcal{L}}\mathbb{E}[\ell\left(X\right)] \\
+            & = \sup_{\ell \in \mathcal{L}}\ell\left(\mathbb{E}[X]\right) \\
+            & = f\left(\mathbb{E}[X]\right).
         \end{align*}
     \end{proof}
 \end{thmbox}
@@ -485,4 +485,208 @@ Convex functions produce the following interesting result regarding expectation:
         If $f$ is strictly convex, the equality holds if and only if $X$ is constant.
     \end{remark}
 \end{notebox}
+\chapter{Information Theory}
+\section{Entropy}
+In information theory, the very first question to ask is how we can measure the quantity of information contained in communication. Colloquially, we say that communication gives more information if more knowledge which has remained unknown previously is revealed.
+
+We describe such revelation of new knowledge as the ``surprise'' of an event. Using probability theory, we use a random variable $X$ to represent an event by $X = x$. Intuitively, an event is surprising if the probability of its occurrence is low. This is formally stated as follows:
+\begin{dfnbox}{Surprise}{surprise}
+    Let $X$ be a random variable. The {\color{red} \textbf{surprise}} of an event $X = x$ is defined as 
+    \begin{equation*}
+        \log_2\frac{1}{P_X\left(x\right)} = \log_2\frac{1}{\mathrm{Pr}\left(X = x\right)}.
+    \end{equation*}
+\end{dfnbox}
+Now, suppose we are \textbf{uncertain} about some event $X = x$. We may wish to measure how much uncertainty we have towards the outcome of the event, or equivalently, what is the \textbf{expected surprise} for the event. It is easy to see that if we define a random variable for surprise as a function of $X$, we can make use of the expectation formula to compute this quantity.
+\begin{dfnbox}{Entropy of Discrete Random Variables}{entropy}
+    Let $X$ be a discrete random variable supported on a finite alphabet $\mathcal{X}$ with probability mass function $p_X$, then {\color{red} \textbf{entropy}} of $X$ is defined as
+    \begin{equation*}
+        H\left(X\right) \coloneqq -\sum_{x \in \mathcal{X}}p_X\left(x\right)\log_{2}p_X\left(x\right).
+    \end{equation*}
+\end{dfnbox}
+It is clear that this definition can be manipulated into 
+\begin{equation*}
+    H\left(X\right) = \mathbb{E}\left[\log_2\frac{1}{p_X\left(X\right)}\right],
+\end{equation*}
+i.e., the entropy of $X$ is exactly the expected surprise of $X$. There is a small problem, though, which is that $\log_2n$ is undefined when $n \leq 0$. Since $p_X\left(x\right) \geq 0$ for all $x \in \mathcal{X}$, we only need to take care of $0$ as a special case. Notice that 
+\begin{align*}
+    \lim_{x \to 0^+}x\log_2x & = \lim_{x \to 0^+}\frac{x\ln x}{\ln 2} \\
+    & = -\frac{1}{\ln 2}\lim_{x \to 0^+}\frac{-\ln x}{x^{-1}} \\
+    & = -\frac{1}{\ln 2}\lim_{x \to 0^+}\frac{-x^{-1}}{-x^{-2}} \\
+    & = 0.
+\end{align*}
+Therefore, it makes sense to set $x\log_2x = 0$ when $x = 0$.
+\begin{notebox}
+    \begin{remark}
+        By convention, we set $0\log_20 = 0$.
+    \end{remark}
+\end{notebox}
+We will later prove that $0 \leq H\left(X\right) \leq \log_2\abs{\mathcal{X}}$. Moreover, $H\left(X\right)$ is closely related with the minimal number of bits to encode $X$ in binary number unambiguously. In particular, if we let $b\left(X\right)$ be the minimal number of bits to encode $X$ in binary strings unambiguously, we have 
+\begin{equation*}
+    H\left(X\right) \leq \mathbb{E}[b\left(X\right)] < H\left(X\right) + 1.
+\end{equation*}
+Moreover, if we let $q\left(X\right)$ to be the number of attempts to guess the value of $X$ correctly, we might be surprised by the fact that 
+\begin{equation*}
+    H\left(X\right) \leq \mathbb{E}[q\left(X\right)] < H\left(X\right) + 1,
+\end{equation*}
+i.e., it is expected to attempt at least $H\left(X\right)$ times to guess the value of $X$, but there is always a strategy to expect success before the $\bigl(H\left(X\right) + 1\bigr)$-th attempt.
+
+Those with prior knowledge in machine learning and decision trees might find the following special form of entropy familiar:
+\begin{dfnbox}{Binary Entropy}{binEntropy}
+    Let $X$ be a Bernoulli random variable with parameter $p$. The {\color{red} \textbf{binary entropy}} of $p$ is defined as 
+    \begin{equation*}
+        H_b\left(p\right) = -p\log_2p - \left(1 - p\right)\log_2\left(1 - p\right).
+    \end{equation*}
+\end{dfnbox}
+With some simple computation, it is easy to check that $H_b\left(p\right)$ is maximised when $p = \frac{1}{2}$ and is zero if and only if $p = 1$ or $p = 0$.
+
+Entropy can be defined over multiple random variables just like probability distributions. In fact, we denote the tuple of $n$ random variables as 
+\begin{equation*}
+    X_{1}^{n} \coloneqq \left(X_1, X_2, \cdots, X_n\right)
+\end{equation*}
+Clearly, we may view $X_1^n$ as nothing else than a single random variable whose alphabet is just $\mathcal{X}_1 \times \mathcal{X}_2 \times \cdots \times \mathcal{X}_n$.
+\begin{dfnbox}{Joint Entropy}{jointEntropy}
+    Let $X_1^n$ be a tuple of discrete random variable supported on a finite alphabet 
+    \begin{equation*}
+        \mathcal{X} \coloneqq \mathcal{X}_1 \times \mathcal{X}_2 \times \cdots \times \mathcal{X}_n
+    \end{equation*}
+    with joint probability mass function $p_{X_1^n}$. The {\color{red} \textbf{joint entropy}} of $X_1, X_2, \cdots, X_n$ is defined as 
+    \begin{equation*}
+        H\left(X_1^n\right) \coloneqq -\sum_{\mathbfit{x} \in \mathcal{X}}p_{X_1^n}\left(\mathbfit{x}\right)\log_{2}p_{X_1^n}\left(\mathbfit{x}\right).
+    \end{equation*}
+\end{dfnbox}
+Additionally, we can of course define the conditional entropy to measure the uncertainty of one event given the information on another event.
+\begin{dfnbox}{Conditional Entropy}{condEntropy}
+    Let $\left(X, Y\right)$ be a pair of discrete random variable supported on a finite alphabet $\mathcal{X} \times \mathcal{Y}$. Let $p_X$ and $p_Y$ be the probability mass functions for $X$ and $Y$ respectively. The {\color{red} \textbf{conditional entropy}} of $X$ given $Y$ is defined as 
+    \begin{equation*}
+        H\left(X \mid Y\right) \coloneqq \sum_{y \in \mathcal{Y}}p_Y\left(y\right)H\left(X \mid Y = y\right).
+    \end{equation*}
+\end{dfnbox}
+Note that here $H\left(X \mid Y = y\right)$ is also known as the \textit{conditional entropy}, but it is different in meaning with $H\left(X \mid Y\right)$. In particular:
+\begin{equation*}
+    H\left(X \mid Y = y\right) = -\sum_{x \in \mathcal{X}}p_{X \mid Y}\left(x \mid y\right)\log_2p_{X \mid Y}\left(x \mid y\right).
+\end{equation*}
+Therefore, we can expand the expression in Definition \ref{dfn:condEntropy} into
+\begin{align*}
+    H\left(X \mid Y\right) & = -\sum_{y \in \mathcal{Y}}p_Y\left(y\right)\sum_{x \in \mathcal{X}}p_{X \mid Y}\left(x \mid y\right)\log_2p_{X \mid Y}\left(x \mid y\right) \\
+    & = -\sum_{\left(x, y\right) \in \mathcal{X \times Y}}p_{X, Y}\left(x, y\right)\log_2p_{X \mid Y}\left(x \mid y\right) \\
+    & = \mathbb{E}\left[\log_2\frac{1}{p_{X \mid Y}\left(X \mid Y\right)}\right].
+\end{align*}
+One thing to note is that conditional entropy is \textbf{not symmetric}. We can interpret $H\left(X \mid Y\right)$ as ``the remaining uncertainty of $X$ given information on $Y$''. Hence, it is not surprising that the following identity is true:
+\begin{equation*}
+    H\left(X, Y\right) = H\left(X\right) + H\left(Y \mid X\right)
+\end{equation*}
+This is generalised as follows:
+\begin{probox}{Chain Rule of Entropy}{chain}
+    Let $X_1^n$ be a tuple of any $n$ discrete random variables supported on finite alphabets, then 
+    \begin{equation*}
+        H\left(X_1^n\right) = \sum_{i = 1}^{n}H\left(X_i \mid X_1^{i - 1}\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        The case where $n = 2$ follows directly from the result that 
+        \begin{equation*}
+            H\left(X_1, X_2\right) = H\left(X_1\right) + H\left(X_2 \mid X_1\right).
+        \end{equation*}
+        Suppose that there exists some integer $k \geq 2$ such that $H\left(X_1^k\right) = \sum_{i = 1}^{k}H\left(X_i \mid X_1^{i - 1}\right)$, consider
+        \begin{align*}
+            H\left(X_1^{k + 1}\right) & = H\left(X_1^k, X_{k + 1}\right) \\
+            & = H\left(X_1^k\right) + H\left(X_{k + 1} \mid X_1^k\right) \\
+            & = \sum_{i = 1}^{k}H\left(X_i \mid X_1^{i - 1}\right) + H\left(X_{k + 1} \mid X_1^k\right) \\
+            & = \sum_{i = 1}^{k + 1}H\left(X_i \mid X_1^{i - 1}\right).
+        \end{align*}
+    \end{proof}
+\end{probox}
+A direct application of Proposition \ref{pro:chain} yields the following result:
+\begin{corbox}{Chain Rule of Entropy for Conditional Joint Distributions}{chain3}
+    Let $X, Y, Z$ be discrete random variables supported on finite alphabets, then 
+    \begin{equation*}
+        H\left(X, Y \mid Z\right) = H\left(X \mid Z\right) + H\left(Y \mid X, Z\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $X_1 \coloneqq X \mid Z$ and $X_2 \coloneqq Y \mid Z$, then 
+        \begin{align*}
+            H\left(X, Y \mid Z\right) & = H\left(X_1, X_2\right) \\
+            & = H\left(X_1\right) + H\left(X_2 \mid X_1\right) \\
+            & = H\left(X \mid Z\right) + H\bigl(\left(Y \mid Z\right) \mid \left(X \mid Z\right)\bigr) \\
+            & = H\left(X \mid Z\right) + H\left(Y \mid X, Z\right).
+        \end{align*}
+    \end{proof}
+\end{corbox}
+Given different distributions for the same random variable, we may be interested to know how much the distributions differ from one another. In other words, we wish to measure how much one distribution is different from another in terms of uncertainty.
+\begin{dfnbox}{Relative Entropy}{relativeEntropy}
+    Let $p$ and $q$ be probability mass functions for some discrete random variable $X$ supported over an alphabet $\mathcal{X}$. The {\color{red} \textbf{relative entropy}}, or alternatively, {\color{red} \textbf{Kullback-Leibler (KL) divergence}}, between $p$ and $q$ is defined as 
+    \begin{equation*}
+        D\left(p \parallel q\right) \coloneqq \sum_{x \in \mathcal{X}}p\left(x\right)\log_2\frac{p\left(x\right)}{q\left(x\right)}.
+    \end{equation*}
+\end{dfnbox}
+The above definition essentially describes the ``difference'' between two distributions as their expected ratio because 
+\begin{equation*}
+    \sum_{x \in \mathcal{X}}p\left(x\right)\log_2\frac{p\left(x\right)}{q\left(x\right)} = \mathbb{E}\left[\log_2\frac{p(X)}{q(X)}\right].
+\end{equation*}
+\begin{notebox}
+    \begin{remark}
+        Using a similar argument to Definition \ref{dfn:entropy}, we set the following conventions:
+        \begin{enumerate}
+            \item $0\log_2\frac{0}{q} = 0$ for all $q \in \R$;
+            \item $p\log_2\frac{p}{0} = +\infty$ for all $p \in \R$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+Notice that by applying Proposition \ref{pro:chain}, we have 
+\begin{equation*}
+    H\left(X\right) + H\left(Y \mid X\right) = H\left(Y\right) + H\left(X \mid Y\right)
+\end{equation*}
+due to $H\left(X, Y\right)$ being symmetric. This implies that 
+\begin{equation*}
+    H\left(X\right) - H\left(X \mid Y\right) = H\left(Y\right) - H\left(Y \mid X\right).
+\end{equation*}
+Informally speaking, the left-hand side of the above identity is the remaining uncertainty of $X$ after knowing $Y$, while the right-hand side is that of $Y$ after knowing $X$. Note that this quantity can be interpreted as ``the uncertain part of $X$ and $Y$ which cannot be reduced by knowing one of them''. In other words, this remaining uncertainty is shared by both $X$ and $Y$. The following notion formalises this observation:
+\begin{dfnbox}{Mutual Information}{mutualInfo}
+    Let $\left(X, Y\right)$ be a pair of discrete random variables with joint probability mass function~$p_{X, Y}$. The {\color{red} \textbf{mutual information}} between $X$ and $Y$ is defined as 
+    \begin{equation*}
+        I\left(X ; Y\right) \coloneqq D\left(p_{X, Y} \parallel p_X \cdot p_Y\right).
+    \end{equation*}
+\end{dfnbox}
+It turns out that mutual information is symmetric, because 
+\begin{align*}
+    I\left(X ; Y\right) & = D\left(p_{X, Y} \parallel p_X \cdot p_Y\right) \\
+    & = \sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}}p_{X, Y}(x, y)\log_2\frac{p_{X, Y}(x, y)}{p_X(x)p_Y(y)} \\
+    & = \mathbb{E}_{p_{X, Y}}\left[\log_2\frac{p_{X, Y}(x, y)}{p_X(x)p_Y(y)}\right].
+\end{align*}
+One may check that 
+\begin{equation*}
+    I\left(X ; Y\right) = H\left(X\right) - H\left(X \mid Y\right) = H\left(Y\right) - H\left(Y \mid X\right).
+\end{equation*}
+In this way, by using Proposition \ref{pro:chain}, we can also see that 
+\begin{align*}
+    I\left(X ; Y\right) & = H\left(X\right) - H\left(X \mid Y\right) \\
+    & = H\left(X\right) + H\left(Y\right) - H\left(X, Y\right),
+\end{align*}
+and hence the symmetric property of mutual information.
+
+Naturally, the mutual information between $X$ and $Y$ cannot exceed the entropy of either of them. Therefore, it is intuitive that 
+\begin{equation*}
+    0 \leq I(X ; Y) \leq \min\left\{\log_2\abs{\mathcal{X}}, \log_2\abs{\mathcal{Y}}\right\}.
+\end{equation*}
+Mutual information can be conditional as well.
+\begin{probox}{Chain Rule of Mutual Information}{IChain}
+    Let $\left(X_1^n, Y\right)$ be a tuple of discrete random variables with joint probability mass function~$p$, then 
+    \begin{equation*}
+        I\left(X_1^n ; Y\right) = \sum_{i = 1}^{n}I\left(X_i ; Y \mid X_1^{i - 1}\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        By using Proposition \ref{pro:chain},
+        \begin{align*}
+            I\left(X_1^n ; Y\right) & = H\left(X_1^n\right) - H\left(X_1^n \mid Y\right) \\
+            & = \sum_{i = 1}^{n}H\left(X_i \mid X_1^{i - 1}\right) - \sum_{i = 1}^{n}H\left(X_i \mid Y, X_i^{i - 1}\right) \\
+            & = \sum_{i = 1}^{n}\Bigl(H\left(X_i \mid X_1^{i - 1}\right) - H\left(X_i \mid Y, X_i^{i - 1}\right)\Bigr) \\
+            & = \sum_{i = 1}^{n}I\left(X_i ; Y \mid X_1^{i - 1}\right).
+        \end{align*}
+    \end{proof}
+\end{probox}
+We could make some analogy between entropy and set theory. Suppose we have two random variables $X$ and $Y$, we could let some sets $\mathcal{H}_X$ and $\mathcal{H}_Y$ represent $H\left(X\right)$ and $H\left(Y\right)$. It is intuitive to see that $H\left(X \mid Y\right)$ corresponds to $\mathcal{H}_X \backslash \mathcal{H}_Y$, $H\left(X, Y\right)$ corresponds to $\mathcal{H}_X \cup \mathcal{H}_Y$, and that $I\left(X ; Y\right)$ corresponds to $\mathcal{H}_X \cap \mathcal{H}_Y$.
+
+This inspires us to study mutual information between more than $2$ random variables via the principle of inclusion and exclusion. However, the situation becomes problematic when we consider more random variables. It can be shown that there exist random variables $X, Y, Z$ such that $I\left(X ; Y ; Z\right) < 0$, which does not make much sense in information theory.
 \end{document}
