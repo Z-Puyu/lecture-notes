@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{diagbox}
 \DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
 
 \usepackage{scalerel}[2014/03/10]
@@ -556,7 +557,7 @@ Clearly, we may view $X_1^n$ as nothing else than a single random variable whose
 \end{dfnbox}
 Additionally, we can of course define the conditional entropy to measure the uncertainty of one event given the information on another event.
 \begin{dfnbox}{Conditional Entropy}{condEntropy}
-    Let $\left(X, Y\right)$ be a pair of discrete random variable supported on a finite alphabet $\mathcal{X} \times \mathcal{Y}$. Let $p_X$ and $p_Y$ be the probability mass functions for $X$ and $Y$ respectively. The {\color{red} \textbf{conditional entropy}} of $X$ given $Y$ is defined as 
+    Let $\left(X, Y\right)$ be a pair of discrete random variables supported on an alphabet~$\mathcal{X} \times \mathcal{Y}$ which is finite. Let $p_X$ and $p_Y$ be the probability mass functions for $X$ and $Y$ respectively. The {\color{red} \textbf{conditional entropy}} of $X$ given $Y$ is defined as 
     \begin{equation*}
         H\left(X \mid Y\right) \coloneqq \sum_{y \in \mathcal{Y}}p_Y\left(y\right)H\left(X \mid Y = y\right).
     \end{equation*}
@@ -633,6 +634,13 @@ The above definition essentially describes the ``difference'' between two distri
         \end{enumerate}
     \end{remark}
 \end{notebox}
+Relative entropy can be defined in a conditional context as well.
+\begin{dfnbox}{Conditional Relative Entropy}{condRelativeEntropy}
+    Let $p_{X, Y}$ and $q_{X, Y}$ be joint probability mass functions for some pair of discrete random variables $\left(X, Y\right)$ supported over an alphabet $\mathcal{X} \times \mathcal{Y}$. The {\color{red} \textbf{conditional relative entropy}} between $p_{Y \mid X}$ and $q_{Y \mid X}$ averaged over $X$ is 
+    \begin{equation*}
+        D\left(p_{Y \mid X} \parallel q_{Y \mid X} \mid p_X\right) \coloneqq \sum_{x \in \mathcal{X}}p_X\left(x\right)D\left(p_{Y \mid X}\left(\cdot \parallel x\right) \parallel q_{Y \mid X}\left(\cdot \parallel x\right)\right).
+    \end{equation*}
+\end{dfnbox}
 Notice that by applying Proposition \ref{pro:chain}, we have 
 \begin{equation*}
     H\left(X\right) + H\left(Y \mid X\right) = H\left(Y\right) + H\left(X \mid Y\right)
@@ -689,4 +697,152 @@ Mutual information can be conditional as well.
 We could make some analogy between entropy and set theory. Suppose we have two random variables $X$ and $Y$, we could let some sets $\mathcal{H}_X$ and $\mathcal{H}_Y$ represent $H\left(X\right)$ and $H\left(Y\right)$. It is intuitive to see that $H\left(X \mid Y\right)$ corresponds to $\mathcal{H}_X \backslash \mathcal{H}_Y$, $H\left(X, Y\right)$ corresponds to $\mathcal{H}_X \cup \mathcal{H}_Y$, and that $I\left(X ; Y\right)$ corresponds to $\mathcal{H}_X \cap \mathcal{H}_Y$.
 
 This inspires us to study mutual information between more than $2$ random variables via the principle of inclusion and exclusion. However, the situation becomes problematic when we consider more random variables. It can be shown that there exist random variables $X, Y, Z$ such that $I\left(X ; Y ; Z\right) < 0$, which does not make much sense in information theory.
+\section{Information Inequality}
+A lot of theorems in information theory are developed from inequalities. Among them, the core inequality result is known as the \textit{information inequality} which can be used to prove a wide range of corollaries.
+\begin{thmbox}{Information Inequality}{infoIneq}
+    For any probability mass functions $p$ and $q$ for some random variable $X$, $D\left(p \parallel q\right) \geq 0$. The equality is attained if and only if $p = q$.
+    \tcblower
+    \begin{proof}
+        Let $A \coloneqq \left\{x \in \mathcal{X} \colon p\left(x\right) > 0\right\}$. Take $Y \coloneqq \frac{q\left(X\right)}{p\left(X\right)}$ with support 
+        \begin{equation*}
+            \mathcal{Y} \coloneqq \left\{\frac{q\left(x\right)}{p\left(x\right)} \colon x \in A\right\}.
+        \end{equation*}
+        By Theorem \ref{thm:JensenIneq}, we have 
+        \begin{equation*}
+            \sum_{x \in A}p\left(x\right)\log_2\frac{q\left(x\right)}{p\left(x\right)} = \mathbb{E}_p\left[\log_2Y\right] \leq \log_2\mathbb{E}_p\left[Y\right] = \log_2\sum_{x \in A}p\left(x\right)\frac{q\left(x\right)}{p\left(x\right)}.
+        \end{equation*}
+        Note that $q\left(x\right) \geq 0$ for all $x \in \mathcal{X}$ and $p\left(x\right) > 0$ for all $x \in A$. Therefore, 
+        \begin{align*}
+            -D\left(p \parallel q\right) & = -\sum_{x \in \mathcal{X}}p\left(x\right)\log_2\frac{p\left(x\right)}{q\left(x\right)} \\
+            & = \sum_{x \in A}p\left(x\right)\log_2\frac{q\left(x\right)}{p\left(x\right)} \\
+            & \leq \log_2\sum_{x \in A}p\left(x\right)\frac{q\left(x\right)}{p\left(x\right)} \\
+            & = \log_2\sum_{x \in A}q\left(x\right) \\
+            & \leq \log_2\sum_{x \in \mathcal{X}}q\left(x\right) \\
+            & = \log_21 \\
+            & = 0.
+        \end{align*}
+        Therefore, $D\left(p \parallel q\right) \geq 0$. Clearly, the equality holds if and only if 
+        \begin{equation*}
+            \mathbb{E}_p\left[\log_2Y\right] = \log_2\mathbb{E}_p\left[Y\right] \quad\textrm{and}\quad \sum_{x \in A}q\left(x\right) = \sum_{x \in \mathcal{X}}q\left(x\right).
+        \end{equation*}
+        Note that $f\left(x\right) = \log_2x$ is strictly convex, so $\mathbb{E}_p\left[\log_2Y\right] = \log_2\mathbb{E}_p\left[Y\right]$ if and only if~$Y$ is constant, i.e., $\frac{q\left(x\right)}{p\left(x\right)} = c$ for some fixed $c \in \R$ for all $x \in A$. Notice that this is equivalent to 
+        \begin{equation*}
+            1 = \sum_{x \in A}q\left(x\right) = c\sum_{x \in A}p\left(x\right) = c,
+        \end{equation*}
+        i.e., $p\left(x\right) = q\left(x\right)$ for all $x \in A$. Note that in the same time, $q\left(x\right) = 0$ for all $x \in \mathcal{X} \backslash A$, i.e., $q\left(x\right) = 0$ if and only if $p\left(x\right) = 0$. Therefore, $p = q$ as desired.
+    \end{proof}
+\end{thmbox}
+The information inequality leads to many bounding conditions to the common quantities we have discussed so far.
+\begin{corbox}{Mutual Information Is Non-negative}{nonnegativeI}
+    For any jointly distributed discrete random variables $X$ and $Y$, $I\left(X ; Y\right) \geq 0$ with equality attained if and only if $X$ and $Y$ are independent.
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{align*}
+            \sum_{\left(x, y\right) \in \mathcal{X \times Y}}p_X\left(x\right)p_Y\left(y\right) = \left(\sum_{x \in \mathcal{X}}p_X\left(x\right)\right)\left(\sum_{y \in \mathcal{Y}}p_Y\left(y\right)\right) = 1,
+        \end{align*}
+        so $p_X \cdot p_Y$ is a probability mass function for $\left(X, Y\right)$. Therefore, by Theorem \ref{thm:infoIneq}, 
+        \begin{align*}
+            I\left(X ; Y\right) = D\left(p_{X, Y} \parallel p_X \cdot p_Y\right) \geq 0,
+        \end{align*}
+        where the equality is attained if and only if $p_{X, Y} = p_X \cdot p_Y$, i.e., $X$ and $Y$ are independent.
+    \end{proof}
+\end{corbox}
+Naturally, the conditional relative entropy should also be non-negative.
+\begin{corbox}{Conditional Relative Entropy Is Non-negative}{nonnegativeCondKLDiv}
+    For any pair of discrete random variables $\left(X, Y\right)$, $D\left(p_{Y \mid X} \parallel q_{Y \mid X} \mid p_X\right) \geq 0$ with equality attained if and only if $p_{Y \mid X}\left(\cdot \mid x\right) = q_{Y \mid X}\left(\cdot \mid x\right)$ for all $x \in \mathcal{X} \backslash p_X^{-1}\left[\left\{0\right\}\right]$. 
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:infoIneq}, 
+        \begin{equation*}
+            D\left(p_{Y \mid X}\left(\cdot \parallel x\right) \parallel q_{Y \mid X}\left(\cdot \parallel x\right)\right) \geq 0
+        \end{equation*}
+        for all $x \in \mathcal{X}$. Since $p_X\left(x\right) \geq 0$ for all $x \in \mathcal{X}$, clearly 
+        \begin{equation*}
+            D\left(p_{Y \mid X} \parallel q_{Y \mid X} \mid p_X\right) \geq 0,
+        \end{equation*}
+        where the equality is attained if and only if 
+        \begin{equation*}
+            D\left(p_{Y \mid X}\left(\cdot \parallel x\right) \parallel q_{Y \mid X}\left(\cdot \parallel x\right)\right) = 0
+        \end{equation*}
+        for all $x \in \mathcal{X} \backslash p_X^{-1}\left[\left\{0\right\}\right]$. This is equivalent to $p_{Y \mid X}\left(\cdot \parallel x\right) = q_{Y \mid X}\left(\cdot \parallel x\right)$ for all $x \in \mathcal{X} \backslash p_X^{-1}\left[\left\{0\right\}\right]$.
+    \end{proof}
+\end{corbox}
+We can do a similar argument for conditional mutual information as well.
+\begin{corbox}{Conditional Mutual Information Is Non-negative}{nonnegativeCondI}
+    For any discrete random variables $X, Y, Z$, we have $I\left(X ; Y \mid Z\right) \geq 0$ with equality attained if and only if $X$-$Z$-$Y$ is a Markov chain.
+    \tcblower
+    \begin{proof}
+        Notice that by Theorem \ref{thm:infoIneq},
+        \begin{equation*}
+            I\left(X ; Y \mid Z\right) = D\left(p_{X, Y \mid Z} \parallel p_{X \mid Z} \cdot p_{Y \mid Z}\right) \geq 0,
+        \end{equation*}
+        where the equality is attained if and only if $p_{X, Y \mid Z} = p_{X \mid Z} \cdot p_{Y \mid Z}$. 
+    \end{proof}
+\end{corbox}
+Recall that we previously mentioned that $0 \leq H\left(X\right) \leq \log_2\abs{\mathcal{X}}$. The upper bound can be derived using the information inequality as well.
+\begin{probox}{Upper Bound of Entropy}{maxEntropy}
+    For any discrete random variable $X$ supported on a finite alphabet $\mathcal{X}$, we have $H\left(X\right) \leq \log_2\abs{\mathcal{X}}$ with equality attained if and only if $p_X$ is uniform on $\mathcal{X}$.
+    \tcblower
+    \begin{proof}
+        Define $u\left(x\right) \coloneqq \frac{1}{\abs{\mathcal{X}}}$ to be the uniform distribution over $\mathcal{X}$. Consider 
+        \begin{align*}
+            D\left(p_X \parallel u\right) & = \sum_{x \in \mathcal{X}}p_X\left(x\right)\log_2\frac{p_X\left(x\right)}{u\left(x\right)} \\
+            & = \sum_{x \in \mathcal{X}}p_X\left(x\right)\log_2\abs{\mathcal{X}}p_X\left(x\right) \\
+            & = \sum_{x \in \mathcal{X}}p_X\left(x\right)\log_2\abs{\mathcal{X}} + \sum_{x \in \mathcal{X}}p_X\left(x\right)\log_2p_X\left(x\right) \\
+            & = \log_2\abs{X} - H\left(X\right).
+        \end{align*}
+        By Theorem \ref{thm:infoIneq}, we have $D\left(p_X \parallel u\right) \geq 0$ and so $H\left(X\right) \leq \log_2\abs{X}$. The equality is attained if and only if $p_X = u$ is uniform over $\mathcal{X}$.
+    \end{proof}
+\end{probox}
+One important result derived from this upper bound is as follows:
+\begin{corbox}{Conditioning Does Not Increase Entropy}{condDoesNotIncrEntropy}
+    For any pair of discrete random variables $\left(X, Y\right)$ supported over a finite alphabet $\mathcal{X \times Y}$, we have $H\left(X \mid Y\right) \leq H\left(X\right)$ with equality attained if and only if $X$ and $Y$ are independent.
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{equation*}
+            H\left(X\right) - H\left(X \mid Y\right) = I\left(X ; Y\right) \geq 0
+        \end{equation*}
+        by Corollary \ref{cor:nonnegativeI}, so $H\left(X \mid Y\right) \leq H\left(X\right)$ as desired.
+    \end{proof}
+\end{corbox}
+However, do note that there could exist some $y \in \mathcal{Y}$ such that $H\left(X \mid Y = y\right) > H\left(X\right)$. For example, consider the following joint distribution:
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \diagbox{$Y$}{$X$} & $1$ & $2$ \\
+        \hline 
+        $1$ & $0$ & $0.75$ \\
+        \hline 
+        $2$ & $0.125$ & $0.125$ \\
+        \hline
+    \end{tabular}
+\end{center}
+We compute the conditional entropy values:
+\begin{align*}
+    H\left(X \mid Y = 1\right) & = -p_{X \mid Y}\left(2 \mid 1\right)\log_2p_{X \mid Y}\left(2 \mid 1\right) = 0, \\
+    H\left(X \mid Y = 2\right) & = -p_{X \mid Y}\left(1 \mid 2\right)\log_2p_{X \mid Y}\left(1 \mid 2\right) - p_{X \mid Y}\left(2 \mid 2\right)\log_2p_{X \mid Y}\left(2 \mid 2\right) = 1.
+\end{align*}
+\begin{corbox}{}{}
+    For any mutually independent random variables $X_1, X_2, \cdots, X_n$,
+    \begin{equation*}
+        H\left(X_1^n\right) \leq \sum_{i = 1}^{n}H\left(X_i \mid X_1^{i - 1}\right).
+    \end{equation*}
+\end{corbox}
+\begin{thmbox}{Log-sum Inequality}{logsum}
+    Let $\left\{a_i\right\}_{i = 1}^n$ and $\left\{b_i\right\}_{i = 1}^n$ be non-negative real-valued sequences, then 
+    \begin{equation*}
+        \sum_{i = 1}^{n}a_i\log_2\frac{a_i}{b_i} \geq \left(\sum_{i = 1}^{n}a_i\right)\log_2\frac{\sum_{i = 1}^{n}a_i}{\sum_{i = 1}^{n}b_i}
+    \end{equation*}
+\end{thmbox}
+\begin{thmbox}{Convexity of Relative Entropy}{convextRelativeEntropy}
+    $D\left(p \parallel q\right)$ is jointly convex.
+\end{thmbox}
+\begin{thmbox}{Concavity of Entropy}{concaveEntropy}
+    $H\left(p\right)$ is concave in $p$.
+\end{thmbox}
+\begin{thmbox}{Convexity of Mutual Information}{convexI}
+    $I\left(p_X, p_{Y \mid X}\right)$ is concave in $p_X$ and convex in $p_{Y \mid X}$.
+\end{thmbox}
 \end{document}
