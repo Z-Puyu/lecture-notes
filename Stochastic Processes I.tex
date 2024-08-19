@@ -129,414 +129,114 @@
 \tableofcontents
 
 \chapter{Probability}
-\section{Probability Spaces}
-In an elementary level, we have been viewing probability as the quotient between the number of desired outcomes and the number of all possible outcomes. This definition, though intuitive, is not very solid when it comes to an infinite sample space. In this introductory chapter, we would establish the theories of probability using a more modern and rigorous structure.
-\begin{dfnbox}{Set Algebra}{setAlgebra}
-    Let $X$ be a set. A {\color{red} \textbf{set algebra}} over $X$ is a family $\mathcal{F} \subseteq \mathcal{P}\left(X\right)$ such that 
-    \begin{itemize}
-        \item $X \backslash F \in \mathcal{F}$ for all $F \in \mathcal{F}$ (closed under complementation);
-        \item $X \in \mathcal{F}$;
-        \item $X_1 \cup X_2 \in \mathcal{F}$ for any $X_1, X_2 \in \mathcal{F}$ (closed under binary union).
-    \end{itemize}
+\chapter{Markov Chains}
+\section{Markov Chains}
+\begin{dfnbox}{Stochastic Process}{stochastic}
+    A {\color{red} \textbf{stochastic process}} is a collection of random variables $\left\{X\left(t\right) \colon t \in T\right\}$ where $T$ is an {\color{red} \textbf{index set}} and $X\left(t\right)$ is known as the {\color{red} \textbf{current state}}. The set of all possible states is known as the {\color{red} \textbf{state space}}.
 \end{dfnbox}
-There are several immediate implications from the above definition. 
+Let $\Omega$ be a sample space, a stochastic process defined over the space can be thought of a sequence of random variables where $X\left(t\right)$ describes the distribution of an outcome $\omega \in \Omega$ at timestamp $t$. The state space $S$ is simply the co-domain of the $X\left(t\right)$'s.
 
-First, by closure under complementation, we know that an algebra over any set $X$ must contain the empty set. 
-
-Second, by De Morgan's Law, one can easily check that if the first $2$ axioms hold, the closure under binary union is equivalent to 
+A stochastic process is said to be 
 \begin{itemize}
-    \item $X_1 \cap X_2 \in \mathcal{F}$ for any $X_1, X_2 \in \mathcal{F}$;
-    \item $\bigcup_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$;
-    \item $\bigcap_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$.
+    \item \textit{discrete-time} if the index set is countable;
+    \item \textit{continuous-time} if the index set is a continuum;
+    \item \textit{discrete-state} if the state space is countable;
+    \item \textit{finite-state} if the state space is finite;
+    \item \textit{continuous-state} if the state space is a continuum.
 \end{itemize}
-$\left(X, \mathcal{F}\right)$ is known as a \textit{field of sets}, where the elements of $X$ are called \textit{points} and those of $\mathcal{F}$, \textit{complexes} or \textit{admissible sets} of $X$.
+The term ``continuum'' refers to a \textbf{non-empty compact connected metric space}. 
 
-In probability theory, what we are interested in is a special type of set algebras known as $\sigma$-\textit{algebras}.
-\begin{dfnbox}{$\sigma$-Algebra}{sigmaAlgebra}
-    A {\color{red} \textbf{$\sigma$-Algebra}} over a set $A$ is a non-empty set algebra over $A$ that is closed under countable union.
-\end{dfnbox}
-Of course, by the same argument as above, we known that any $\sigma$-algebra is closed under countable intersection as well.
-
-Now, as we all know, we can take some set $\Omega$ as a \textit{sample space} and denote an \textit{event} by some subset of $\Omega$. Roughly speaking, we could now define the probability of an event $E \subseteq \Omega$ as the ratio between the sets' volumes. The remaining question now is: how do we define the volume of a set properly?
-\begin{dfnbox}{Measure}{measure}
-    Let $X$ be a set and $\Sigma$ be a $\sigma$-algebra over $X$. A {\color{red} \textbf{measure}} over $\Sigma$ is a function 
+In this course, we focus on discrete-time discrete-state stochastic processes. One important property we will discuss now is the \textit{Markovian property}.
+\begin{dfnbox}{Markovian Property}{markovian}
+    Let $\left\{X_n \colon n \in T\right\}$ be a discrete-time stochastic process over some probability space~$\left(\Omega, \mathcal{F}, P\right)$. The stochastic process is called {\color{red} \textbf{Markovian}} if 
     \begin{equation*}
-        \mu \colon \Sigma \to \R \cup \{-\infty, +\infty\}
+        P\bigl(X_{n + 1} = x_{n + 1} \mid X_0^n = \left(x_0, x_1, \cdots, x_n\right)\bigr) = P\left(X_{n + 1} = x_{n + 1} \mid X_n = x_n\right)
     \end{equation*}
-    such that 
-    \begin{itemize}
-        \item $\mu\left(E\right) \geq 0$ for all $E \in \Sigma$ (non-negativity);
-        \item $\mu\left(\varnothing\right) = 0$;
-        \item $\mu\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}\mu\left(E_i\right)$ for any countable collection of pairwise disjoint elements of $\Sigma$ (countable additivity or $\sigma$-additivity).
-    \end{itemize}
-    The triple $\left(X, \Sigma, \mu\right)$ is known as a {\color{red} \textbf{measure space}} and the pair $\left(X, \Sigma\right)$, a {\color{red} \textbf{measurable space}}.
+    for all $n \in \N$.
 \end{dfnbox}
-One thing to note here is that if at least one $E \in \Sigma$ has a finite measure, then $\mu\left(\varnothing\right) = 0$ is automatically guaranteed for obvious reasons.
-\begin{dfnbox}{Probability Space}{probSpace}
-    Let $\Omega$ be a sample space and $\mathcal{F}$ be a $\sigma$-algebra over $\Omega$. A {\color{red} \textbf{probability space}} is a measure space $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ where $\mathbb{P} \colon \mathcal{F} \to [0, 1]$, known as a {\color{red} \textbf{probability measure}}, is such that $\mathbb{P}\left(\Omega\right) = 1$.
+The Markovian property essentially says that, given $X_n$, what has happened before, i.e., $X_k$ for all $k < n$, is independent of what happens afterwards, i.e., $X_{n + m}$ for $m \in \N^+$.
+
+As the name suggests, the Markovian property is closely related to the Markov chains, which can be defined rigorously as follows:
+\begin{dfnbox}{Discrete-Time Markov Chain}{MarkovChain}
+    A {\color{red} \textbf{Markov chain}} is a discrete-time discrete-state stochastic process satisfying the Markovian property.
 \end{dfnbox}
-Obviously, the above definition immediately guarantees that 
-\begin{enumerate}
-    \item $\mathbb{P}\left(A^c\right) = 1 - \mathbb{P}\left(A\right)$;
-    \item $\mathbb{P}\left(A\right) \leq \mathbb{P}\left(B\right)$ if $\mathbb{P}\left(A\right) \subseteq \mathbb{P}\left(A\right)$;
-    \item $\mathbb{P}\left(A \cup B\right) \leq \mathbb{P}\left(A\right) + \mathbb{P}\left(B\right)$.
-\end{enumerate}
-The third result follows from a direct application of the principle of inclusion and exclusion. By induction, one can easily check that 
-\begin{equation*}
-    \mathbb{P}\left(\bigcup_{i = 1}^{n}E_i\right) \leq \sum_{i = 1}^{n}\mathbb{P}\left(E_i\right)
-\end{equation*}
-for any finitely many events. The following proposition extends this result to countable collections of events:
-\begin{probox}{Union Bound of Countable Collections of Events}{unionBound}
-    Let $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ be a probability space and $E_1, E_2, \cdots, E_n, \cdots \in \mathcal{F}$ is any countable sequence of events, then 
+Recall that the \textit{Bayes's Theorem} states the following:
+\begin{thmbox}{Bayes's Theorem}{Bayes}
+    For any random variables $X$ and $Y$, 
     \begin{equation*}
-        \mathbb{P}\left(\bigcup_{i = 1}^{\infty}E_i\right) \leq \sum_{i = 1}^{\infty}\mathbb{P}\left(E_i\right).
+        p_{X \mid Y}\left(x \mid y\right) = \frac{p_{Y \mid X}\left(y \mid x\right)p_X\left(x\right)}{\sum_{x' \in \mathcal{X}}p_{Y \mid X}\left(y \mid x'\right)p_X\left(x'\right)}.
+    \end{equation*}
+\end{thmbox}
+Theorem \ref{thm:Bayes} leads to the following important result:
+\begin{corbox}{Bayes' Rule for Markov Chains}{MarkovBayes}
+    Let $X_1, X_2, \cdots, X_n$ be any $n$ random variables forming a Markov chain, then 
+    \begin{equation*}
+        p_{X_1^n}\left(x_1, x_2, \cdots, x_n\right) = p_{X_1}\left(x_1\right)\prod_{i = 1}^{n - 1}p_{X_{i + 1} \mid X_i}\left(x_{i + 1} \mid x_i\right).
     \end{equation*}
     \tcblower
     \begin{proof}
-        Define $F_1 \coloneqq E_1$ and $F_k \coloneqq E_k \backslash \bigcup_{i = 1}^{k - 1}E_i$ for $k \geq 2$. Clearly, the $F_i$'s are pairwise disjoint. By Definition \ref{dfn:sigmaAlgebra}, the $F_i$'s are elements of $\mathcal{F}$. Note that $\mathbb{P}\left(F_i\right) \leq \mathbb{E_i}$ for all $i \in \N^+$, so 
+        If $n = 2$, by Theorem \ref{thm:Bayes}, we know that 
         \begin{align*}
-            \mathbb{P}\left(\bigcup_{i = 1}^{\infty}E_i\right) & = \mathbb{P}\left(\bigcup_{i = 1}^{\infty}F_i\right) \\
-            & = \sum_{i = 1}^{\infty}\mathbb{P}\left(F_i\right) \\
-            & \leq \sum_{i = 1}^{\infty}\mathbb{P}\left(E_i\right).
+            p_{X_1, X_2}\left(x_1, x_2\right) & = p_{X_1 \mid X_2}\left(x_1 \mid x_2\right)p_{X_2}\left(x_2\right) \\
+            & = p_{X_1}\left(x_1\right)p_{X_2 \mid X_1}\left(x_2 \mid x_1\right).
+        \end{align*}
+        Suppose that there exists some integer $k \geq 2$ such that 
+        \begin{equation*}
+            p_{X_1^k}\left(x_1, x_2, \cdots, x_k\right) = p_{X_1}\left(x_1\right)\prod_{i = 1}^{k - 1}p_{X_{i + 1} \mid X_i}\left(x_{i + 1} \mid x_i\right)
+        \end{equation*}
+        For any $k$ random variables $X_1^k$ forming a Markov chain. Let $X_{k + 1}$ be any random variable such that $X_1^{k + 1}$ forms a Markov chain, then 
+        \begin{equation*}
+            p_{X_{k + 1} \mid X_1^{k}}\left(x_{k + 1} \mid x_1, x_2, \cdots, x_k\right) = p_{X_{k + 1} \mid X_k}\left(x_{k + 1} \mid x_k\right).
+        \end{equation*}
+        By using Theorem \ref{thm:Bayes}, we have
+        \begin{align*}
+            p_{X_1^{k + 1}}\left(x_1, x_2, \cdots, x_{k + 1}\right) & = p_{X_{k + 1} \mid X_1^{k}}\left(x_{k + 1} \mid x_1, x_2, \cdots, x_k\right)p_{X_1^k}\left(x_1, x_2, \cdots, x_k\right) \\
+            & = p_{X_{k + 1} \mid X_k}\left(x_{k + 1} \mid x_k\right)p_{X_1}\left(x_1\right)\prod_{i = 1}^{k - 1}p_{X_{i + 1} \mid X_i}\left(x_{i + 1} \mid x_i\right) \\
+            & = p_{X_1}\left(x_1\right)\prod_{i = 1}^{k}p_{X_{i + 1} \mid X_i}\left(x_{i + 1} \mid x_i\right).
         \end{align*}
     \end{proof}
-\end{probox}
-Next, we will introduce the notion of \textit{random variables} formally. For this purpose, we first establish the notion of a \textit{Borel algebra}.
-\begin{dfnbox}{Borel Algebra}{borelAlgebra}
-    Let $X$ be a topological space. A {\color{red} \textbf{Borel set}} on $X$ is a set which can be formed via countable union, countable intersection and relative complementation of open sets in $X$. The smallest $\sigma$-algebra over $X$ containing all Borel sets on $X$ is known as the {\color{red} \textbf{Borel algebra}} over $X$.
-\end{dfnbox}
-Clearly, the Borel algebra over $X$ contains all open sets in $X$ according to the above axioms from Definition \ref{dfn:sigmaAlgebra}. This helps us define the following:
-\begin{dfnbox}{Random Variable}{RV}
-    Let $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ be a probability space and $\left(\mathcal{X}, \mathcal{B}\right)$ be a measurable space where $\mathcal{B}$ is the Borel algebra over $\mathcal{X}$. A {\color{red} \textbf{random variable}} is a function $X \colon \Omega \to \mathcal{X}$ such that 
-    \begin{equation*}
-        \left\{\omega \in \Omega \colon X\left(\omega\right) \in B\right\} \in \mathcal{F} 
-    \end{equation*}
-    for all $B \in \mathcal{B}$.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Rigorously, such a random variable $X$ is a \textit{measurable function} or \textit{measurable mapping} from $\left(\Omega, \mathcal{F}\right)$ to $\left(\mathcal{X}, \mathcal{B}\right)$.
-    \end{remark}
-\end{notebox}
-The probability measure $\mathbb{P}$ thus induces a probability measure $P_X$ over $\left(\mathcal{X}, \mathcal{B}\right)$.
-\begin{dfnbox}{Distribution}{distribution}
-    Let $X \colon \Omega \to \mathcal{X}$ be a random variable over the probability space $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ and $\mathcal{B}$ be the Borel algebra over $\mathcal{X}$, the {\color{red} \textbf{distribution}} of $X$ is the probability measure $P_X$ on $\left(\mathcal{X}, \mathcal{B}\right)$ given by 
-    \begin{equation*}
-        P_X\left(B\right) = \mathbb{P}\left(\left\{\omega \in \Omega \colon X\left(\omega\right) \in B\right\}\right).
-    \end{equation*}
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Often times, we write $P\left(X \in B\right) = P_X\left(B\right)$.
-    \end{remark}
-\end{notebox}
-In the context of information theory, we mostly are concerned with real-valued random variables only.
-\begin{dfnbox}{Real-Valued Random Variable}{RRV}
-    Let $\left(\Omega, \mathcal{F}, \mathbb{P}\right)$ be a probability space, a {\color{red} \textbf{real-valued random variable}} over the space is a mapping $X \colon \Omega \to \R$ such that 
-    \begin{equation*}
-        \left\{\omega \in \Omega \colon X\left(\omega\right) \leq x\right\} \in \mathcal{F}
-    \end{equation*}
-    for all $x \in \R$.
-\end{dfnbox}
-Note that the Borel set over $\R$ is just the family of all open intervals. 
-
-Clearly, if $X$ is a real-valued random variable, we have $\left\{\omega \in \Omega \colon X\left(\omega\right) > x\right\} \in \mathcal{F}$. Moreover, we claim that 
+\end{corbox}
+Consider a discrete-time discrete-state stochastic process $\left\{X_n \colon n \in T\right\}$ with state space $S$ over some probability space $\left(\Omega, \mathcal{F}, P\right)$. Here, the $\sigma$-algebra $\mathcal{F}$ can be generated using simple events $\left\{\omega \in \Omega \colon X_n\left(\omega\right) = s\right\}$ for all $n \in T$ and $s \in S$. Notice that this means that we need to find the joint distribution 
 \begin{equation*}
-    \left\{\omega \in \Omega \colon X\left(\omega\right) < x\right\} = \bigcup_{y < x}\left\{\omega \in \Omega \colon X\left(\omega\right) \leq y\right\}.
+    p_{X_{n_1}^{n_k}}\left(s_1, s_2, \cdots, s_k\right)
 \end{equation*}
-The proof is quite straightforward and is left to the reader as an exercise. By Definition \ref{dfn:sigmaAlgebra}, this means that 
-\begin{equation*}
-    \left\{\omega \in \Omega \colon X\left(\omega\right) < x\right\} \cup \left\{\omega \in \Omega \colon X\left(\omega\right) > x\right\} \in \mathcal{F}.
-\end{equation*}
-Therefore, $\left\{\omega \in \Omega \colon X\left(\omega\right) = x\right\} \in \mathcal{F}$. This argument justifies the probabilities $P\left(X < x\right)$ and $P\left(X = x\right)$. We give a special name to the range of a random variable in computer science.
-\begin{dfnbox}{Alphabet}{alphabet}
-    Let $X$ be a random variable, the range of $X$ is called an {\color{red} \textbf{alphabet}}, denoted as $\mathcal{X}$.
-\end{dfnbox}
-Recall that we have defined expectations for discrete and continuous random variables in elementary probability theory. In terms of measure theory, the two formulae can be unified as the Lebesgue integral
-\begin{equation*}
-    \mathbb{E}[X] = \int_{\Omega}\!X\left(\omega\right)\,\d\mathbb{P}\left(\omega\right).
-\end{equation*}
-Note that $\mathbb{E}[X]$ is a real number while $\mathbb{E}[X \mid Y]$ is a \textbf{random variable} formed as a function of $Y$. In a way, $Y$ partitions the sample space into regions where $\mathbb{E}[X \mid Y = y_i]$ gives the expectation of $X$ in the region induced by $Y = y_i$ for each $y_i \in \mathcal{Y}$. In general, the following result holds:
-\begin{thmbox}{Law of Iterated Expectations}{iterExpectations}
-    Let $X$ and $Y$ be random variables, then $\mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr] = \mathbb{E}[X]$.
-\end{thmbox}
-The above formula can be interpreted as the fact that $\mathbb{E}[X \mid Y]$ is a best estimator for $X$.
-
-Next, we consider some example random variables. Consider $\Omega$ to be any sample space. For any event $A \subseteq \Omega$, we can define an \textit{indicator function} $I\left(A\right)$ as follows:
-\begin{dfnbox}{Indicator Function}{indicator}
-    Let $\Omega$ be a sample space and $A \subseteq \Omega$ be any event. The {\color{red} \textbf{indicator function}} for $A$ is a mapping $I\left(A\right) \colon \Omega \to \left\{0, 1\right\}$ defined as 
-    \begin{equation*}
-        I\left(A\right)\left(\omega\right) = \begin{cases}
-            1, & \quad\textrm{if } \omega \in A \\
-            0, & \quad\textrm{otherwise}
-        \end{cases}.
-    \end{equation*} 
-\end{dfnbox}
-Obviously, an indicator function is a Bernoulli random variable. One may check that 
-\begin{equation*}
-    \mathbb{E}\left[I\left(A\right)\right] = P\bigl(I\left(A\right) = 1\bigr) = P\left(A\right).
-\end{equation*}
-It is also easy to check that if $A, B \subseteq \Omega$ are events from the same sample space, then 
+for any tuple of random variables $X_{n_1}^{n_k}$ in the stochastic process, where $k \in \N$ and $k \leq \abs{T}$ if $T$ is finite, and any $\left(s_1, s_2, \cdots, s_k\right) \in S^k$. In general, this joint distribution might be hard to find, but things become easier if the stochastic process is a Markov chain because by Corollary \ref{cor:MarkovBayes} we have
 \begin{align*}
-    I\left(A \cap B\right) & = I\left(A\right)I\left(B\right), \\
-    I\left(A \cup B\right) & = I\left(A\right) + I\left(B\right) - I\left(A \cap B\right).
+    p_{X_{n_1}^{n_k}}\left(s_1, s_2, \cdots, s_k\right) = p_{X_{n_1}}\left(s_1\right)\prod_{i = 1}^{k - 1}p_{X_{n_{i + 1}} \mid X_{n_i}}\left(s_{i + 1} \mid s_i\right).
 \end{align*}
-\section{Moments}
-Consider $n$ events $A_1, A_2, \cdots, A_n$. Define
+If we can find $p_{X_m \mid X_n}\left(s_m \mid s_n\right)$ for any $m > n$, we could simplify this expression further! 
+\begin{dfnbox}{Transition Probability}{transProb}
+    The {\color{red} \textbf{transition probability}} is defined as 
+    \begin{equation*}
+        p_{ij}^{n, m} \coloneqq P\left(X_{m} = j \mid X_n = i\right).
+    \end{equation*}
+    In particular, $p_{ij}^{n, n + 1}$ is known as the {\color{red} \textbf{one-step transition probability}} or {\color{red} \textbf{jump probability}}.
+\end{dfnbox}
+Take some $k \in \N^+$ and consider
+\begin{align*}
+    p_{ij}^{n, n + k} = P\left(X_{n + k} = j \mid X_n = i\right).
+\end{align*}
+We first marginalise $P\left(X_{n + k} = j \mid X_n = i\right)$ with respect to $X_{n + 1}$ to obtain
 \begin{equation*}
-    X_i = \begin{cases}
-        1, & \quad\textrm{if } A_i \textrm{ occurs} \\
-        0, & \quad\textrm{otherwise}
-    \end{cases},
+    P\left(X_{n + k} = j \mid X_n = i\right) = \sum_{s \in S}P\left(X_{n + k} = j \mid X_n = i, X_{n + 1} = s\right)P\left(X_{n + 1} = s \mid X_n = i\right).
 \end{equation*}
-then $X = \sum_{i = 1}^{n}X_i$ is the number of events which have occurred. Observe that
+Since $X_n$, $X_{n + 1}$ and $X_{n + k}$ form a Markov chain, we have
 \begin{equation*}
-    \mathbb{E}\left[X\right] = \sum_{i = 1}^{n}P\left(A_i\right).
-\end{equation*}
-Define the event
-\begin{equation*}
-    E_{m, k} = \bigcap_{i = 1}^{k}A_{m_i}
-\end{equation*}
-where $1 \leq m_i \leq n$ for any $i = 1, 2, \cdots, k$, then the number of such $E_{m, k}$'s which have occurred is given by $\left(\begin{smallmatrix}
-    X \\
-    k
-\end{smallmatrix}\right)$. Note that the event $\bigcap_{i = 1}^{k}A_{m_i}$ occurs if and only if $\prod_{i = 1}^{k}X_{m_i} = 1$, so
-\begin{equation*}
-    \begin{pmatrix}
-        X \\
-        k
-    \end{pmatrix} = \sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right).
+    P\left(X_{n + k} = j \mid X_n = i, X_{n + 1} = s\right) = P\left(X_{n + k} = j \mid X_{n + 1} = s\right).
 \end{equation*}
 Therefore, 
 \begin{align*}
-    \mathbb{E}\left[\begin{pmatrix}
-        X \\
-        k
-    \end{pmatrix}\right] & = \mathbb{E}\left[\sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right)\right] \\
-    & = \sum_{m_1 < m_2 < \cdots < m_k}P\left(E_{m, k}\right).
+    p_{ij}^{n, n + k} & = P\left(X_{n + k} = j \mid X_n = i\right) \\
+    & = \sum_{s \in S}P\left(X_{n + k} = j \mid X_{n + 1} = s\right)P\left(X_{n + 1} = s \mid X_n = i\right) \\
+    & = \sum_{s \in S}p_{sj}^{n + 1, n + k}p_{is}^{n, n + 1}.
 \end{align*}
-Notice that $\mathbb{E}\left[\left(\begin{smallmatrix}
-    X \\
-    k
-\end{smallmatrix}\right)\right]$ is a linear combination of the first $k$-th momenets of $X$. We would like to find a way to quickly compute the $n$-th moment of a random variable.
-
-Let $X$ be a discrete random variable, then 
+Notice that now we have reduced the gap by $1$. By repeatedly applying this process to $p_{sj}^{n + 1, n + k}$, we eventually arrive at 
 \begin{equation*}
-    \mathbb{E}\left[X^n\right] = \sum_{x}x^np_X\left(x\right).
+    p_{ij}^{n, n + k} = \sum_{s_1, s_2, \cdots, s_{k - 1} \in S}p_{is_1}^{n, n + 1}\left(\prod_{r = 1}^{m - n - 2}p_{s_rs_{r + 1}}^{n + r, n + r + 1}\right)p_{s_{m - 1}j}^{n + k - 1, n + k}
 \end{equation*}
-Note that by Maclaurin Series, we have
+It is useful to see the one-step transition probability $p_{ij}^{n, n + 1}$ as a function 
 \begin{equation*}
-    g\left(t\right) = \sum_{n = 0}^{\infty}\frac{g^{\left(n\right)\left(0\right)}}{n!}t^n
+    f \colon T \times S \times S \to \R.
 \end{equation*}
-for any function $g$. A motivation is to construct $g$ such that $g^{\left(n\right)}\left(0\right) = \mathbb{E}\left[X^n\right]$. Therefore,
-\begin{align*}
-    g\left(t\right) & = \sum_{n = 0}^{\infty}\frac{\mathbb{E}\left[X^n\right]}{n!}t^n \\
-    & = \sum_{n = 0}^{\infty}\frac{\sum_{x}x^np_X\left(x\right)}{n!}t^n \\
-    & = \sum_{x}\left(p_X\left(x\right)\sum_{n = 0}^{\infty}\frac{\left(tx\right)^n}{n!}\right) \\
-    & = \sum_{x}\e^{tx}p_X\left(x\right) \\
-    & = \mathbb{E}\left[\e^{tX}\right].
-\end{align*}
-\begin{dfnbox}{Moment Generating Function}{momentGenFunc}
-    Let $X$ be a random variable, the {\color{red} \textbf{moment generating function}} of $X$ is defined as 
-    \begin{equation*}
-        M_X\left(t\right) = \mathbb{E}\left[\e^{tX}\right]
-    \end{equation*}
-    such that 
-    \begin{equation*}
-        \mathbb{E}\left[X^n\right] = M_X^{\left(n\right)}\left(0\right) \quad\textrm{for all } n \in \N.
-    \end{equation*}
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        In general, $M_{aX + b}\left(t\right) = \e^{bt}M_X\left(at\right)$ for all $a, b \in \R$.
-    \end{remark}
-\end{notebox}
-It can be proven that for any random variable $X$, $M_X$ is unique. In other words, if two random variables have the same moment generating function, they must be the same random variable.
-\begin{thmbox}{Uniqueness of Moment Generating Function}{uniqueMomentGenFunc}
-    Let $X$ and $Y$ be random variables. If
-    \begin{equation*}
-        \lim_{t \to 0}M_X\left(t\right) = \lim_{t \to 0}M_Y\left(t\right),
-    \end{equation*}
-    then $X$ and $Y$ have the same distribution.
-\end{thmbox}
-By properties of exponential functions, the following theorem can also be easily proven:
-\begin{probox}{Moments of Sum of Independent Random Variables}{momentSumIndRV}
-    Let $X_1, X_2, \cdots, X_n$ be independent random variables, then 
-    \begin{equation*}
-        M_{\sum_{i = 1}^{n}X_i}\left(t\right) = \prod_{i = 1}^{n}M_{X_i}\left(t\right).
-    \end{equation*}
-\end{probox}
-However, note that the converse of Proposition \ref{pro:momentSumIndRV} is not true in general.
-
-We may define the moment generating function for jointly distributed random variables.
-\begin{dfnbox}{Joint Moment Generating Function}{jointMomentGenFunc}
-    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{joint moment generating function}} of $X$ and $Y$ is defined as
-    \begin{equation*}
-        M_{X, Y}\left(s, t\right) = \mathbb{E}\left[\e^{sX + tY}\right].
-    \end{equation*}
-\end{dfnbox}
-Observe that in the joint case, $M_X\left(s\right) = M_{X, Y}\left(s, 0\right)$ and $M_Y\left(t\right) = M_{X, Y}\left(0, t\right)$. $X$ and $Y$ are independent if and only if $M_{X, Y}\left(s, t\right) = M_X\left(s\right)M_Y\left(t\right)$.
-\section{Probability Bounds}
-We use various bounds to make estimates and approximations for probability distributions. The first commonly used bound is \textit{Markov's Inequality}.
-\begin{thmbox}{Markov's Inequality}{MarkovIneq}
-    If $X$ is a non-negative random variable, then $P\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$ for all $a > 0$.
-    \tcblower
-    \begin{proof}
-        It suffices to prove for the continuous case. Notice that 
-        \begin{align*}
-            \mathbb{E}[X] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
-            & \geq \int_{a}^{\infty}\!xf_X\left(x\right)\,\d x \\
-            & \geq a\int_{0}^{\infty}\!f_X\left(x\right)\,\d x \\
-            & = P\left(X \geq a\right).
-        \end{align*}
-        Therefore, $P\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$.
-    \end{proof}
-\end{thmbox}
-Note that the bound given by Markov's inequality is a rather loose bound. The following inequality proposes a better bound:
-\begin{thmbox}{Chebyshev's Inequality}{ChebyshevIneq}
-    For any real-valued random variable $X$ with finite variance, 
-    \begin{equation*}
-        P\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
-    \end{equation*}
-    for all $a > 0$.
-    \tcblower
-    \begin{proof}
-        Define $g\left(X\right) \colon \left(X - \mathbb{E}[X]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
-        \begin{equation*}
-            P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}[g\left(X\right)]}{a^2\mathrm{Var}\left(X\right)}.
-        \end{equation*}
-        Note that $\mathbb{E}[g\left(X\right)] = \mathrm{Var}\left(X\right)$, so 
-        \begin{equation*}
-            P\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
-        \end{equation*}
-    \end{proof}
-\end{thmbox}
-Finally, we state the following law of large numbers:
-\begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeNum}
-    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
-    \begin{equation*}
-        \lim_{n \to \infty}P\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
-    \end{equation*}
-    \tcblower
-    \begin{proof}
-        Note that $\mathbb{E}\left[\frac{1}{n}\sum_{i = 1}^nX_i\right] = \mu$ and that 
-        \begin{equation*}
-            \mathrm{Var}\left(\frac{1}{n}\sum_{i = 1}^nX_i\right) = \frac{\sum_{i = 1}^{n}\mathrm{Var}\left(X_i\right)}{n^2} = \frac{\sigma^2}{n}.
-        \end{equation*}
-        By Theorem \ref{thm:ChebyshevIneq}, we have 
-        \begin{equation*}
-            0 \leq P\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \frac{\sigma^2}{n\epsilon^2}.
-        \end{equation*}
-        By Squeeze Theorem, this clearly implies that 
-        \begin{equation*}
-            \lim_{n \to \infty}P\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
-        \end{equation*}
-    \end{proof}
-\end{thmbox}
-Alternatively, we may phrase Theorem \ref{thm:weakLawLargeNum} as ``$\frac{1}{n}\sum_{i = 1}^nX_i$ converges to $\mu$ in probability''. When a sequence $\{S_n\}_{n = 1}^{\infty}$ converges to $b$ in probability, we write $S_n \xrightarrow{\mathrm{p}} b$. 
-\begin{notebox}
-    \begin{remark}
-        Essentially, what Theorem \ref{thm:weakLawLargeNum} says is that when $n$ is large, the sample mean from $n$ measurements of the same data converges to the expectation of the distribution.
-    \end{remark}
-\end{notebox}
-Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $P\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng\left(\epsilon\right)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
-\begin{equation*}
-    P\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \exp\bigl(-ng\left(\epsilon\right) + o\left(n\right)\bigr).
-\end{equation*}
-Equivalently, this means that there exists a function $g \colon \R \to \R$ with $g\left(\epsilon\right) > 0$ for every $\epsilon > 0$ such that 
-\begin{equation*}
-    \liminf_{n \to \infty}-\frac{1}{n}\log P\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \geq g\left(\epsilon\right) + o\left(1\right).
-\end{equation*}
-There is a strong version for the law, which shall be stated without proof:
-\begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeNum}
-    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$, then 
-    \begin{equation*}
-        P\left(\lim_{n \to \infty}\frac{1}{n}\sum_{i = 1}^{n}X_i = \mu\right) = 1.
-    \end{equation*}
-\end{thmbox}
-\chapter{Markov Chains}
-\section{Markov Chains}
-Recall that $2$ random variables $X$ and $Z$ are \textit{independent} if and only if $P_{X, Z}\left(x, z\right) = P_X\left(x\right)P_Z\left(z\right)$ or $P_{X \mid Z}\left(x \mid z\right) = P_X\left(x\right)$ for all $\left(x, z\right) \in \mathcal{X} \times \mathcal{Z}$. We will extend this definition with a third random variable.
-\begin{dfnbox}{Markov Chain}{MarkovChain}
-    Let $X, Y, Z$ be random variables. If 
-    \begin{equation*}
-        P_{X, Y, Z}\left(x, y, z\right) = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid Y}\left(z \mid y\right)
-    \end{equation*}
-    for all $\left(x, y, z\right) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$, then we say that $X, Y, Z$ forms a {\color{red} \textbf{Markov chain}} in this order, or that $X$ and $Z$ are conditionally independent on $Y$.
-\end{dfnbox}
-Recall also that the \textit{Bayes's Rule} states the following:
-\begin{thmbox}{Bayes's Rule}{BayesRule}
-    For any random variables $X$ and $Y$, 
-    \begin{equation*}
-        P_{X \mid Y}\left(x \mid y\right) = \frac{P_{Y \mid X}\left(y \mid x\right)P_X\left(x\right)}{\sum_{x' \in \mathcal{X}}P_{Y \mid X}\left(y \mid x'\right)P_X\left(x'\right)}.
-    \end{equation*}
-\end{thmbox}
-Based on Theorem \ref{thm:BayesRule}, we have 
-\begin{equation*}
-    P_{X, Y}\left(x, y\right) = P_{X \mid Y}\left(x \mid y\right)P_Y\left(y\right) = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right).
-\end{equation*}
-By applying the formula repeatedly, we have 
-\begin{align*}
-    P_{X, Y, Z}\left(x, y, z\right) & = P_{X, Y}\left(x, y\right)P_{Z \mid X, Y}\left(z \mid x, y\right) \\
-    & = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid X, Y}\left(z \mid x, y\right).
-\end{align*}
-Therefore, a Markov chain simply states that the distribution of $Z$ is no longer dependent on $X$, but depends on $Y$ solely. Therefore, this allows us to remove one condition when applying Theorem \ref{thm:BayesRule}. Thus, it actually suffices to prove $P_{Z \mid X, Y} = P_{Z \mid Y}$ when proving that $X$-$Y$-$Z$ forms a Markov chain.  
- 
-We can denote a Markov chain by $X$-$Y$-$Z$. Intuitively, such a relationship should be symmetric.
-\begin{probox}{Symmetricity of Markov Chains}{symmetricMarkovChains}
-    If $X$-$Y$-$Z$ is a Markov chain, then $Z$-$Y$-$X$ is also a Markov chain.
-    \tcblower
-    \begin{proof}
-        By Definition \ref{dfn:MarkovChain}, 
-        \begin{align*}
-            P_{X, Y, Z}\left(x, y, z\right) & = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid Y}\left(z \mid y\right).
-        \end{align*}
-        By Theorem \ref{thm:BayesRule}, we have 
-        \begin{align*}
-            P_{X \mid Y}\left(x \mid y\right) & = \frac{P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)}{P_Y\left(y\right)} \\
-            & = \frac{P_{X, Y, Z}\left(x, y, z\right)}{P_Y\left(y\right)P_{Z \mid Y}\left(z \mid y\right)} \\
-            & = \frac{P_{X, Y, Z}\left(x, y, z\right)}{P_{Z, Y}\left(z, y\right)} \\
-            & = P_{X \mid Z, Y}\left(x \mid z, y\right).
-        \end{align*}
-        Therefore, $Z$-$Y$-$X$ is a Markov chain.
-    \end{proof}
-\end{probox}
-One obvious case where dependence exists between the random variables in a Markov chain is that one of the random variables is a function of another one.
-\begin{probox}{Markov Chain Involving Functions of a Random Variable}{funcMarkovChain}
-    Let $X$ and $Y$ be any random variables and $Z \coloneqq f\left(Y\right)$ for some function $f$, then $X$-$Y$-$Z$ is a Markov chain.
-    \tcblower
-    \begin{proof}
-        Notice that 
-        \begin{align*}
-            P_{Z \mid X, Y}\left(z \mid x, y\right) & = P_{f\left(Y\right) \mid X, Y}\left(z \mid x, y\right) = \begin{cases}
-                1 &\quad \textrm{if } z = f\left(y\right) \\
-                0 &\quad \textrm{otherwise} 
-            \end{cases}, \\
-            P_{Z \mid Y}\left(z \mid y\right) & = P_{f\left(Y\right) \mid Y}\left(z \mid y\right) = \begin{cases}
-                1 &\quad \textrm{if } z = f\left(y\right) \\
-                0 &\quad \textrm{otherwise} 
-            \end{cases}
-        \end{align*}
-        for all $\left(x, y, z\right) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$. Therefore, $P_{Z \mid X, Y} = P_{Z \mid Y}$ and so $X$-$Y$-$Z$ forms a Markov chain.
-    \end{proof}
-\end{probox}
-Note that if $X$ and $Z$ are independent, they are naturally conditionally independent given any $Y$. However, the inverse may not be true.
-\begin{probox}{Conditional Independence Does Not Imply Independence}{condIndNotInd}
-    There exists random variables $X, Y, Z$ such that $X$ and $Z$ are dependent but conditionally independent given $Y$.
-    \tcblower
-    \begin{proof}
-        Let $N_1, N_2, N_3$ be pairwise independent random variables such that 
-        \begin{equation*}
-            \mathcal{N}_1 = \mathcal{N}_2 = \mathcal{N}_3 = \{0, 1\}.
-        \end{equation*}
-        Take $X = N_1 + N_2$, $Y = N_2$ and $Z = N_2 + N_3$. Clearly, $X$ and $Z$ are dependent, but 
-        \begin{align*}
-            P_{Z \mid X}\left(z \mid x\right) & = P_{N_2 + N_3 \mid N_1 + N_2}\left(z \mid x\right) \\
-            & = P_{N_3 \mid N_1, N_2}\left(z - y \mid x - y, y\right) \\
-            & = P_{N_2 + N_3 \mid N_1 + N_2, N_2}\left(z \mid x, y\right) \\
-            & = P_{Z \mid X, Y}\left(z \mid x, y\right),
-        \end{align*}
-        which implies that $X$ and $Z$ are conditionally independent given $Y$.
-    \end{proof}
-\end{probox}
+Thus far, we have basically shown that to specify a Markov chain fully, we will need to define the \textbf{index set} $T$, the \textbf{state space} $S$ and the \textbf{one-step transition probabilities} $p_{ij}^{n, n + 1}$ for all $i, j \in S$.
 \end{document}
