@@ -6,7 +6,9 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{accents}
 \DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+\renewcommand{\mathring}[1]{\accentset{\circ}{#1}}
 
 \usepackage{scalerel}[2014/03/10]
 \usepackage{stackengine}
@@ -550,7 +552,128 @@ Naturally, the following result is true:
     Let $\left(X, d\right)$ be a metric space. The topology induced by the subspace metric $d_A$ on some subspace $A \subseteq X$ is the subspace topology on $A$.
     \tcblower
     \begin{proof}
-        Let $\mathcal{T}_d$ and $\mathcal{T}_{d_A}$ be topologies induced by $d$ on $X$ with basis $\mathcal{B}_d$ and by $d_A$ on $A$ with basis $\mathcal{B}_{d_A}$ respectively. Let $\mathcal{T}_A$ be the subspace topology on $A$ with basis $\mathcal{B}_A$. Take any $B \in \mathcal{B}_{d_A} \subseteq \mathcal{B}_d$, then clearly any $x \in B$ is such that $x \in B \cap A \in \mathcal{B}_A$. Therefore, by Proposition \ref{pro:fineBasis}, $\mathcal{T}_{d_A} \subseteq \mathcal{T}_A$. Conversely, take any $B_A \mathcal{B}_A$. For any $x \in B_A$, there exists some $B_1 \in \mathcal{B}_d$ such that $x \in B_1$ and $B_A = B_1 \cap A$. Notice that this implies that~$x \in A \in \mathcal{T}_{d_A}$, so we can find some $B_2 \in \mathcal{B}_{d_A} \subseteq \mathcal{B}_d$ such that $x \in B_2$. By Definition \ref{dfn:basis}, there exists some $B \subseteq B_1 \cap B_2 \in \mathcal{B}_{d_A}$ such that $x \in B$. By Proposition \ref{pro:fineBasis}, this means that $\mathcal{T}_A \subseteq \mathcal{T}_{d_A}$. Therefore, $\mathcal{T}_A = \mathcal{T}_{d_A}$. 
+        Let $\mathcal{T}_d$ and $\mathcal{T}_{d_A}$ be topologies induced by $d$ on $X$ with basis $\mathcal{B}_d$ and by $d_A$ on $A$ with basis $\mathcal{B}_{d_A}$ respectively. Let $\mathcal{T}_A$ be the subspace topology on $A$ with basis $\mathcal{B}_A$. Take any $B_A \in \mathcal{B}_A$, then there exists $B_r\left(x\right) \in \mathcal{B}_d$ such that $B_A = B_r\left(x\right) \cap A$. For any~$y \in B_A$, consider the ball 
+        \begin{equation*}
+            B_{r'}\left(y\right) \coloneqq \left\{z \in A \colon d_A\left(z, y\right) < r'\right\} \in \mathcal{B}_{d_A}.
+        \end{equation*}
+        Note that $y \in B_{r'}\left(y\right)$, so by Proposition \ref{pro:fineBasis}, we have $\mathcal{T}_A \subseteq \mathcal{T}_{d_A}$. Conversely, for any~$B_r\left(x\right) \in \mathcal{B}_{d_A}$, there exists some $B_{r'}\left(x\right) \in \mathcal{B}_d$ such that $B_r\left(x\right) \subseteq B_{r'}\left(x\right)$. Notice that $B_r\left(x\right) \subseteq A$, so for any $y \in B_r\left(x\right)$, we have $y \in B_{r'}\left(x\right) \cap A \in \mathcal{B}_A$. Therefore, by Proposition \ref{pro:fineBasis}, $\mathcal{T}_{d_A} \subseteq \mathcal{T}_A$ and so $\mathcal{T}_{d_A} = \mathcal{T}_A$.
     \end{proof}
 \end{probox}
+\section{Closed Sets}
+\begin{dfnbox}{Closed Set}{closedSet}
+    Let $\left(X, \mathcal{T}\right)$ be a topological space. A subset $A \subseteq X$ is {\color{red} \textbf{closed}} if $X \backslash A \in \mathcal{T}$.
+\end{dfnbox}
+A set might be open and closed simultaneously. For example, every set $X$ is both open and closed in itself.
+\begin{probox}{\small Arbitrary Intersection and Finite Union of Closed Sets Are Closed}{intersectionClosed}
+    Let $\left(X, \mathcal{T}\right)$ be a topological space, then 
+    \begin{enumerate}
+        \item if $\mathcal{G} \coloneqq \left\{G_{\alpha} \colon \alpha \in I\right\}$ is a family of closed set in $X$ with respect to some index set $I$, then $\bigcap_{\alpha \in I}G_{\alpha}$ is closed in $X$;
+        \item if $G_1, G_2, \cdots, G_n$ are closed in $X$, then $\bigcup_{i = 1}^nG_i$ is closed in $X$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Notice that
+        \begin{align*}
+            X \backslash \bigcap_{\alpha \in I}G_{\alpha} & = \bigcup_{\alpha \in G} X \backslash G_{\alpha}.
+        \end{align*}
+        Since $X \backslash G_{\alpha}$ is open in $X$ for all $\alpha \in I$, this means that $X \backslash \bigcap_{\alpha \in I}G_{\alpha}$ is open in $X$, and so $\bigcap_{\alpha \in I}G_{\alpha}$ is closed in $X$. Notice also that 
+        \begin{align*}
+            X \backslash \bigcup_{i = 1}^nG_i & = \bigcap_{i = 1}^nX \backslash G_i.
+        \end{align*}
+        By a similar argument $\bigcup_{i = 1}^nG_i$ is closed in $X$.
+    \end{proof}
+\end{probox}
+The following proposition justifies the fact that intersecting a closed set with a subspace produces a closed set in that subspace:
+\begin{probox}{Closed Sets in Subspace Topology}{subClosed}
+    Let $Y \subseteq X$, then $A \subseteq Y$ is closed in $Y$ if and only if there exists some closed set $G \subseteq X$ such that $A = G \cap Y$.
+    \tcblower
+    \begin{proof}
+        Suppose that $A$ is closed in $Y$, then $Y \backslash A$ is open in $Y$. Therefore, there exists some open set $B \subseteq X$ such that $Y \backslash A = B \cap Y$. Take $G \coloneqq X \backslash B$, then 
+        \begin{align*}
+            G \cap Y & = A.
+        \end{align*}
+        Suppose conversely that there exists some closed set $G \subseteq X$ such that $A = G \cap Y$. Consider 
+        \begin{equation*}
+            Y \backslash \left(G \cap Y\right) = (X \backslash G) \cap Y.
+        \end{equation*}
+        Notice that $X \backslash G$ is open in $X$, so $Y \cap A$ is open in $Y$, i.e., $A$ is closed in $Y$.
+    \end{proof}
+\end{probox}
+The following result is analogous to Proposition \ref{pro:preserveOpen}:
+\begin{probox}{Superspace Preserves Closed Sets}{preserveClosed}
+    If $Y \subseteq X$ is closed in $X$ and $A \subseteq Y$ is closed in $Y$, then $A$ is closed in $X$.
+    \tcblower
+    \begin{proof}
+        Consider $X \backslash A = X \backslash Y \cup Y \backslash A$. Since $Y$ is closed in $X$, this means that $X \backslash Y$ is open in $X$. Note also that $Y \backslash A$ is open in $Y$. By Proposition \ref{pro:preserveOpen}, $Y \backslash A$ is open in $X$. Therefore, $X \backslash A$ is open in $X$ and so $A$ is closed in $X$.
+    \end{proof}
+\end{probox}
+Closed sets help define the notion ``interior of a set''.
+\begin{dfnbox}{Interior, Closure and Boundary}{intCl}
+    Let $\left(X, \mathcal{T}\right)$ be a topological space and $A \subseteq X$. The {\color{red} \textbf{interior}} of $A$ is 
+    \begin{equation*}
+        \mathring{A} \coloneqq \bigcup_{\substack{U \in \mathcal{T}\\U \subseteq A}}A \cap U.
+    \end{equation*}
+    The {\color{red} \textbf{closure}} of $A$ is 
+    \begin{equation*}
+        \widebar{A} \coloneqq \bigcap_{\substack{X \backslash G \in \mathcal{T}\\A \subseteq G}}G.
+    \end{equation*}
+    The {\color{red} \textbf{boundary}} of $A$ is 
+    \begin{equation*}
+        \partial A = \widebar{A} \backslash \mathring{A}.
+    \end{equation*}
+\end{dfnbox}
+We interpret the above definition as follows: $\mathring{A}$ is the union of all open sets contained by $A$. Moreover, $\widebar{A}$ is the smallest closed set in $X$ which contains $A$. To see this, let $C \subseteq X$ be any closed set in $X$ containing $A$. Take any $a \in \widebar{A}$, then since $a$ is contained by all closed sets containing $A$, it is clear that $a \in C$, which implies that $\widebar{A} \subseteq C$.
+\begin{notebox}
+    \begin{remark}
+        \quad
+        \begin{enumerate}
+            \item $\mathring{A} \subseteq A \subseteq \widebar{A}$.
+            \item $\mathring{A} = A$ if and only if $A$ is open in $X$.
+            \item $\widebar{A} = A$ if and only if $A$ is closed in $X$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+We would like to discuss the properties of closure. The following definition is useful:
+\begin{dfnbox}{Limit Point}{limPt}
+    Let $\left(X, \mathcal{T}\right)$ be a topological space. For any $A \subseteq X$, a point $x \in X$ is a {\color{red} \textbf{limit point}} of $A$ if for every open set $U \subseteq X$ containing $x$,
+    \begin{equation*}
+        \left(A \backslash \left\{x\right\}\right) \cap U \neq \varnothing.
+    \end{equation*}
+\end{dfnbox}
+Now, we propose two properties for the closure:
+\begin{probox}{Properties of Closure}{clProps}
+    Let $\left(X, \mathcal{T}\right)$ be a topological space. For any $A \subseteq X$,
+    \begin{enumerate}
+        \item $x \in \widebar{A}$ if and only if for any open set $U \subseteq X$ containing $x$, $U \cap A \neq \varnothing$;
+        \item if $A'$ is the set of limit points of $A$, then $\widebar{A} = A \cup A'$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        We will prove the first statement by considering the contrapositive, i.e., we prove that $x \in X \backslash \widebar{A}$ if and only if there exists some open set $U \subseteq X$ containing $x$ such that $U \cap A = \varnothing$. The ``if'' direction is trivial because $X \backslash \widebar{A}$ is open in $X$ such that~$\left(X \backslash \widebar{A}\right) \cap A = \varnothing$. Take $U \subseteq X$ to be an open set in $X$ with $x \in U$ and $U \cap A = \varnothing$. This means that $x \notin A \subseteq \widebar{A}$. Therefore, $x \in X \backslash \widebar{A}$.
+        \\\\
+        Take any $a \in A'$, then for every open set $U \subseteq X$ with $a \in U$, we have 
+        \begin{equation*}
+            U \cap A \supseteq U \cap \left(A \backslash \left\{a\right\}\right) \neq \varnothing.
+        \end{equation*}
+        Therefore, $A \cup A' \subseteq \widebar{A}$. Take any $x \in \widebar{A}$, we shall prove that if $x \notin A'$, then $x \in A$. Since $x$ is not a limit point of $A$, there exists some open set $V \subseteq X$ containing $x$ such that $\left(A \backslash \left\{x\right\}\right) \cap V = \varnothing$. However, $x \in \widebar{A}$ implies that $V \cap A \neq \varnothing$, so $x \in A$.
+    \end{proof}
+\end{probox}
+The notion of limit points also leads to the definition of convergence. Before that, we shall define the notion of \textit{neighbourhood}. 
+\begin{dfnbox}{Neighbourhood}{neighbourhood}
+    Let $\left(X, \mathcal{T}\right)$ be a topological space. An open set $U \subseteq X$ is called a {\color{red} \textbf{neighbourhood}} of some $x \in X$ if $x \in U$.
+\end{dfnbox}
+Intuitively, we think of the statement $x_i \to x$ as the fact that no matter how small a neighbourhood we choose for $x$, there is always a consecutive infinite subsequence of the $x_i$'s which falls in this neighbourhood.
+\begin{dfnbox}{Convergence}{convergence}
+    A sequence $\left\{x_i\right\}_{i = 1}^{\infty}$ of points in a topological space $\left(X, \mathcal{T}\right)$ {\color{red} \textbf{converges}} to $x \in X$ if for any neighbourhood $U \subseteq X$ containing $x$, there exists some $N \in \N^+$ such that $x_k \in U$ for all $k > N$, denoted as $x_i \to x$. $x$ is said to be the {\color{red} \textbf{limit}} of $\left\{x_i\right\}_{i = 1}^{\infty}$.
+\end{dfnbox}
+It is important to distinguish between limit and limit points. For example, consider the constant sequence $\left\{1\right\}_{i = 1}^{\infty}$. Clearly, $x_i \to 1$ but one may check that $1$ is not a limit point for this sequence.
+
+In a metric space, we can make use of the metric to describe convergence in a more quantitative way.
+\begin{thmbox}{Convergence in Metric Spaces}{metricSpaceConverge}
+    Let $\left(X, d\right)$ be a metric space. A sequence $\left\{x_i\right\}_{i = 1}^{\infty}$ in $X$ converges to $x$ if and only if for every~$\epsilon > 0$, there exists some $N \in \N^+$ such that $d\left(x_i, x\right) < \epsilon$ for all $i > N$.
+    \tcblower
+    \begin{proof}
+        Suppose that $x_i \to x$ as $i \to \infty$. For all $\epsilon > 0$, take the open ball $B_{\epsilon}\left(x\right) \subseteq X$. Clearly, $B_{\epsilon}\left(x\right)$ is a neighbourhood of $x$. By Definition \ref{dfn:convergence}, there exists some $N \in \N^+$ such that $x_i \in B_{\epsilon}\left(x\right)$ for all $i > N$, i.e., $d\left(x_i, x\right) < \epsilon$ for all $i > N$. Conversely, suppose that for every $\epsilon > 0$, there exists some $N \in \N^+$ such that $d\left(x_i, x\right) < \epsilon$ for all $i > N$. Let~$U \subseteq X$ be any neighbourhood containing $x$. Note that $U$ is open in~$X$, so by Theorem \ref{pro:equivalentConstruction}, there exists some open ball $B_r\left(x\right) \subseteq U$ such that $x \in B_r\left(x\right)$. Therefore, there exists some $M \in \N^+$ such that $d\left(x_i, x\right) < r$, i.e., $x_i \in B_r\left(x\right) \subseteq U$, for all $i > M$. Therefore, $x_i \to x$.
+    \end{proof}
+\end{thmbox}
 \end{document}

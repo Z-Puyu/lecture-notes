@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  16 AUG 2024 23:40
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  20 AUG 2024 16:52
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1234,6 +1234,13 @@ LaTeX Font Info:    Redeclaring math delimiter \urcorner on input line 75.
 LaTeX Font Info:    Redeclaring math delimiter \llcorner on input line 76.
 LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+) (c:/texlive/2023/texmf-dist/tex/latex/accents/accents.sty
+Package: accents 2006/05/12 v1.4 Math Accent Tools
+\cc@skew=\dimen333
+\cc@wd=\dimen334
+\cc@code=\count392
+\cc@group=\count393
+\cc@skewchar=\count394
 )
 \symyhlargesymbols=\mathgroup9
  (c:/texlive/2023/texmf-dist/tex/latex/scalerel/scalerel.sty
@@ -1257,7 +1264,7 @@ Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 104 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 105 replaced by U+FFFD.
-\loi_cnt_foreach_nest=\count392
+\loi_cnt_foreach_nest=\count395
 Invalid UTF-8 byte or sequence at line 139 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 146 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 192 replaced by U+FFFD.
@@ -1285,7 +1292,7 @@ Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 354 replaced by U+FFFD.
-\loi_nestcnt=\count393
+\loi_nestcnt=\count396
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
@@ -1351,7 +1358,7 @@ Invalid UTF-8 byte or sequence at line 541 replaced by U+FFFD.
 )
 Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified sep char (CT)
 )
-\c@@stackindex=\count394
+\c@@stackindex=\count397
 \@boxshift=\skip87
 \stack@tmplength=\skip88
 \temp@stkl=\skip89
@@ -1362,10 +1369,10 @@ Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified s
 \se@backgroundbox=\box144
 \stackedbox=\box145
 \@centerbox=\box146
-\c@ROWcellindex@=\count395
+\c@ROWcellindex@=\count398
 )
-\c@case=\count396
-LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 120.
+\c@case=\count399
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 122.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Metric_and_Topological_Spaces.aex <nul: /p x=^%~$PATH:i>> Metric_and_Topological_Spaces.aex)...executed.
 
 runsystem(del Metric_and_Topological_Spaces.aex)...executed.
@@ -1373,26 +1380,26 @@ runsystem(del Metric_and_Topological_Spaces.aex)...executed.
  (./Metric and Topological Spaces.aux)
 \openout1 = `"Metric and Topological Spaces.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1429,9 +1436,9 @@ LaTeX Font Info:    ... okay on input line 122.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 122.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 124.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 122.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 124.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1450,12 +1457,12 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 122.
+Package hyperref Info: Link coloring ON on input line 124.
 (./Metric and Topological Spaces.out) (./Metric and Topological Spaces.out)
 \@outlinefile=\write6
 \openout6 = `"Metric and Topological Spaces.out"'.
 
-\c@lstlisting=\count397
+\c@lstlisting=\count400
  (./Metric and Topological Spaces.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
@@ -1490,32 +1497,37 @@ File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 132.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 134.
 [2
 
 ] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 242--245
+Underfull \hbox (badness 10000) in paragraph at lines 244--247
 
  []
 
 [5] [6] [7] [8] [9] [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 508--511
+Underfull \hbox (badness 10000) in paragraph at lines 510--513
 
  []
 
-[12] [13] [14] 
+[12] [13] [14] [15]
+Underfull \hbox (badness 10000) in paragraph at lines 652--655
+
+ []
+
+[16] [17] [18] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39439 strings out of 478630
- 829274 string characters out of 5847730
- 1877012 words of memory out of 5000000
- 58878 multiletter control sequences out of 15000+600000
+ 39517 strings out of 478630
+ 830638 string characters out of 5847730
+ 1882012 words of memory out of 5000000
+ 58952 multiletter control sequences out of 15000+600000
  518866 words of font info for 100 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,12n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (14 pages).
+Output written on Metric and Topological Spaces.pdf (18 pages).
