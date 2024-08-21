@@ -797,7 +797,7 @@ Recall that we previously mentioned that $0 \leq H\left(X\right) \leq \log_2\abs
 \end{probox}
 One important result derived from this upper bound is as follows:
 \begin{corbox}{Conditioning Does Not Increase Entropy}{condDoesNotIncrEntropy}
-    For any pair of discrete random variables $\left(X, Y\right)$ supported over a finite alphabet $\mathcal{X \times Y}$, we have $H\left(X \mid Y\right) \leq H\left(X\right)$ with equality attained if and only if $X$ and $Y$ are independent.
+    For any pair of discrete random variables $\left(X, Y\right)$, we have $H\left(X \mid Y\right) \leq H\left(X\right)$ with equality attained if and only if $X$ and $Y$ are independent.
     \tcblower
     \begin{proof}
         Notice that 
@@ -824,25 +824,109 @@ We compute the conditional entropy values:
     H\left(X \mid Y = 1\right) & = -p_{X \mid Y}\left(2 \mid 1\right)\log_2p_{X \mid Y}\left(2 \mid 1\right) = 0, \\
     H\left(X \mid Y = 2\right) & = -p_{X \mid Y}\left(1 \mid 2\right)\log_2p_{X \mid Y}\left(1 \mid 2\right) - p_{X \mid Y}\left(2 \mid 2\right)\log_2p_{X \mid Y}\left(2 \mid 2\right) = 1.
 \end{align*}
-\begin{corbox}{}{}
-    For any mutually independent random variables $X_1, X_2, \cdots, X_n$,
+However, $H\left(X \mid Y\right) = p_Y(2)H\left(X \mid Y = 2\right) = 0.25 < H\left(X \mid Y = 2\right)$. 
+
+Corollary \ref{cor:condDoesNotIncrEntropy} can be generalised further. We first introduce a preliminary definition.
+\begin{dfnbox}{Mutual Independence}{mutualInd}
+    Let $X_1, X_2, \cdots, X_n$ be any $n$ random variables. They are said to be {\color{red} \textbf{mutually independent}} if for any $S \subseteq \left[n\right] \backslash \left\{0\right\}$, 
     \begin{equation*}
-        H\left(X_1^n\right) \leq \sum_{i = 1}^{n}H\left(X_i \mid X_1^{i - 1}\right).
+        p_{X_S} = \prod_{i \in S}p_{X_i}.
     \end{equation*}
+\end{dfnbox}
+Now, we propose the following inequality for conditional entropy:
+\begin{corbox}{Generalised Inequality for Conditional Entropy}{genIneqCondEntropy}
+    For any random variables $X_1, X_2, \cdots, X_n$,
+    \begin{equation*}
+        H\left(X_1^n\right) \leq \sum_{i = 1}^{n}H\left(X_i\right),
+    \end{equation*}
+    where the equality attained if and only if the $X_i$'s are mutually independent.
+    \tcblower
+    \begin{proof}
+        By Corollary \ref{cor:condDoesNotIncrEntropy}, $H\left(X_i \mid X_1^{i - 1}\right) \leq H\left(X_i\right)$ for all $i = 1, 2, \cdots, n$, so
+        \begin{align*}
+            H\left(X_1^n\right) & = \sum_{i = 1}^nH\left(X_i \mid X_1^{i - 1}\right)  \leq \sum_{i = 1}^{n}H\left(X_i\right).
+        \end{align*}
+        The equality is attained if and only if $X_i$ and $X_j$ are independent whenever $i \neq j$, i.e., the $X_i$'s are mutually independent.
+    \end{proof}
 \end{corbox}
+The next inequality is very useful tool which can be used to prove the many results derived from the information inequality so far.
 \begin{thmbox}{Log-sum Inequality}{logsum}
     Let $\left\{a_i\right\}_{i = 1}^n$ and $\left\{b_i\right\}_{i = 1}^n$ be non-negative real-valued sequences, then 
     \begin{equation*}
         \sum_{i = 1}^{n}a_i\log_2\frac{a_i}{b_i} \geq \left(\sum_{i = 1}^{n}a_i\right)\log_2\frac{\sum_{i = 1}^{n}a_i}{\sum_{i = 1}^{n}b_i}
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        If there exists some $i \in \N^+$ such that $b_i = 0$, then the left-hand side is $+\infty$. If there exists some $i \in \N^+$ such that $a_i = 0$, then $a_i$ contribute $0$ to both side of the inequality. Therefore, without loss of generality, we can assume that $a_i, b_i > 0$ for all~$i = 1, 2, \cdots, n$. Let $a = \sum_{i = 1}^{n}a_i$ and $b = \sum_{i = 1}^nb_i$. One may check that the function~$f\left(x\right) = x\log_2x$ is strictly convex, so
+        \begin{align*}
+            \sum_{i = 1}^{n}\frac{b_ia_i}{bb_i}\log_2\frac{a_i}{b_i} & \geq \left(\sum_{i = 1}^{n}\frac{b_ia_i}{bb_i}\right)\log_2\sum_{i = 1}^{n}\frac{b_ia_i}{bb_i}.
+        \end{align*}
+        Simplifying the inequality yields 
+        \begin{align*}
+            \frac{1}{b}\sum_{i = 1}^{n}a_i\log_2\frac{a_i}{b_i} & \geq \frac{a}{b}\log_2\frac{a}{b},
+        \end{align*}
+        and so 
+        \begin{equation*}
+            \sum_{i = 1}^{n}a_i\log_2\frac{a_i}{b_i} \geq a\log_2\frac{a}{b}.
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
-\begin{thmbox}{Convexity of Relative Entropy}{convextRelativeEntropy}
+One result which can be proven with the aid of the log-sum inequality is the joint convexity of relative entropy.
+\begin{probox}{Convexity of Relative Entropy}{convextRelativeEntropy}
     $D\left(p \parallel q\right)$ is jointly convex.
-\end{thmbox}
+    \tcblower
+    \begin{proof}
+        Let $p_1, p_2, q_1, q_2$ be probability mass functions for the same random variable $X$. It suffices to prove that 
+        \begin{equation*}
+            D\bigl(\lambda p_1 + \left(1 - \lambda\right)p_2 \parallel \lambda q_1 + \left(1 - \lambda\right)q_2\bigr) \leq \lambda D\left(p_1 \parallel q_1\right) + \left(1 - \lambda\right)D\left(p_2 \parallel q_2\right).
+        \end{equation*}
+        For any $x \in \mathcal{X}$, let 
+        \begin{align*}
+            x_{p_1} = \lambda p_1\left(x\right), & \qquad x_{p_2} = \left(1- \lambda\right)p_2\left(x\right); \\
+            x_{q_1} = \lambda q_1\left(x\right), & \qquad x_{q_2} = \left(1- \lambda\right)q_2\left(x\right).
+        \end{align*}
+        By Theorem \ref{thm:logsum},
+        \begin{equation*}
+            \left(x_{p_1} + x_{p_2}\right)\log_2\frac{x_{p_1} + x_{p_2}}{x_{q_1} + x_{q_2}} \leq x_{p_1}\log_2\frac{x_{p_1}}{x_{q_1}} + x_{p_2}\log_2\frac{x_{p_2}}{x_{q_2}}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
 \begin{thmbox}{Concavity of Entropy}{concaveEntropy}
     $H\left(p\right)$ is concave in $p$.
 \end{thmbox}
 \begin{thmbox}{Convexity of Mutual Information}{convexI}
     $I\left(p_X, p_{Y \mid X}\right)$ is concave in $p_X$ and convex in $p_{Y \mid X}$.
+\end{thmbox}
+\begin{thmbox}{Data Processing Inequality}{DPI}
+    If $X$-$Y$-$Z$ forms a Markov chain, then $I\left(X ; Y\right) \geq I\left(X ; Z\right)$.
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{equation*}
+            I\left(X ; Z\right) + I\left(X ; Y \mid Z\right) = I\left(X ; Y, Z\right) = I\left(X ; Y\right) + I\left(X; Z \mid Y\right).
+        \end{equation*}
+        Since $X$-$Y$-$Z$ forms a Markov chain, $I\left(X ; Z \mid Y\right) = 0$.
+    \end{proof}
+\end{thmbox}
+\begin{corbox}{Mutual Information Does Not Increase After Processing}{nonIncrI}
+    For any random variables $X$ and $Y$, we have $I\left(X ; Y\right) \geq I\left(X ; g\left(Y\right)\right)$ for all function $g$.
+\end{corbox}
+\section{Sufficient Statistics}
+Consider a parametric family of probability distributions $\left\{f_{\theta}\left(x\right) \colon \theta \in \Theta\right\}$ for some index set $\Theta$. Let $T\left(X\right)$ be any statistic. One may check that $\Theta$-$X$-$T\left(X\right)$ is a Markov chain. By Theorem \ref{thm:DPI} we know that $I\left(\Theta ; T\left(X\right)\right) \leq I\left(\Theta ; X\right)$. If the equality is attained, no information is lost in this statistic.
+\begin{dfnbox}{Sufficient Statistic}{sufficientStats}
+    A function $T \colon \mathcal{X} \to \R$ is said to be a {\color{red} \textbf{sufficient statistic}} relative to a parametric family $\mathcal{F}_{\theta} \coloneqq \left\{f_{\theta}\left(x\right) \colon \theta \in \Theta\right\}$ of probability distributions if $\Theta$-$T\left(X\right)$-$X$ forms a Markov chain.
+\end{dfnbox}
+Let $X$ be any random variable and $Y$ be another random variable correlated to $Y$. Suppose now we wish to estimate $X$ via observations about $Y$. Let $\hat{X}\left(Y\right)$ be an estimator obtained this way about $X$.
+
+If $H\left(X \mid Y\right) = 0$, one can expect that a perfect estimation is possible. On the other hand, if $H\left(X \mid Y\right) = \log_2\abs{\mathcal{X}}$, the the estimation is bad. Notice that this happens if and only if $X$ is uniform and independent of $Y$. In reality, we may wish $H\left(X \mid Y\right)$ to be small, where the error of estimation can be small.
+\begin{thmbox}{Fano's Inequality}{Fano}
+    For any estimator $\hat{X}$, $H_b\left(p_e\right) + p_e\log_2\abs{X} \geq H\left(X \mid \hat{X}\right) \geq H\left(X \mid Y\right)$.
+    \tcblower
+    \begin{proof}
+        Define $E \coloneqq \mathbf{1}\left\{\hat{X} \neq X\right\}$ to be the error random variable. Consider 
+        \begin{equation*}
+            H\left(E \mid \hat{X}\right) + H\left(X \mid E, \hat{X}\right) = H\left(E, X \mid \hat{X}\right) = H\left(X \mid \hat{X}\right) + H\left(E \mid X, \hat{X}\right).
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
 \end{document}
