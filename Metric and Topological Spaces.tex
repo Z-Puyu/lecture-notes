@@ -1,4 +1,4 @@
-\documentclass[math, code]{amznotes}
+\documentclass[math]{amznotes}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -676,4 +676,101 @@ In a metric space, we can make use of the metric to describe convergence in a mo
         Suppose that $x_i \to x$ as $i \to \infty$. For all $\epsilon > 0$, take the open ball $B_{\epsilon}\left(x\right) \subseteq X$. Clearly, $B_{\epsilon}\left(x\right)$ is a neighbourhood of $x$. By Definition \ref{dfn:convergence}, there exists some $N \in \N^+$ such that $x_i \in B_{\epsilon}\left(x\right)$ for all $i > N$, i.e., $d\left(x_i, x\right) < \epsilon$ for all $i > N$. Conversely, suppose that for every $\epsilon > 0$, there exists some $N \in \N^+$ such that $d\left(x_i, x\right) < \epsilon$ for all $i > N$. Let~$U \subseteq X$ be any neighbourhood containing $x$. Note that $U$ is open in~$X$, so by Theorem \ref{pro:equivalentConstruction}, there exists some open ball $B_r\left(x\right) \subseteq U$ such that $x \in B_r\left(x\right)$. Therefore, there exists some $M \in \N^+$ such that $d\left(x_i, x\right) < r$, i.e., $x_i \in B_r\left(x\right) \subseteq U$, for all $i > M$. Therefore, $x_i \to x$.
     \end{proof}
 \end{thmbox}
+\chapter{Continuity}
+\section{Continuity}
+\begin{dfnbox}{Continuous Map}{continuous}
+    Let $X$ and $Y$ be topological spaces. A map $f \colon X \to Y$ is {\color{red} \textbf{continuous}} if for any open set $U \subseteq Y$, the pre-image $f^{-1}\left(U\right)$ is open in $X$.
+\end{dfnbox}
+Suppose $\mathcal{T}_X$ and $\mathcal{T}_Y$ are topologies on $X$ and $Y$ respectively. The above definition basically says that for all $U \in \mathcal{T}_Y$, we have $f^{-1}\left(U\right) \in \mathcal{T}_X$. The following proposition gives an equivalent definition for continuity in terms of sub-bases.
+\begin{probox}{Equivalent Definition of Continuity}{equivDefContinuity}
+    If $\mathcal{S}$ is a sub-basis for a topology on some set $Y$, then for any topological space $X$, a map~$f \colon X \to Y$ is continuous if and only if $f^{-1}\left(S\right)$ is open in $X$ for any $S \in \mathcal{S}$.
+    \tcblower
+    \begin{proof}
+        Suppose that $f$ is continuous. Note that any $S \in \mathcal{S}$ is open in $Y$, so by Definition \ref{dfn:continuous}, $f^{-1}\left(S\right)$ is open in $X$. Suppose conversely that $f^{-1}\left(S\right)$ is open in $X$ for any~$S \in \mathcal{S}$. Take any open set $U \subseteq Y$. By Propositions \ref{pro:subspaceBasis} and \ref{pro:equivalentConstruction}, there exists finite subsets $\mathcal{U}_i \subseteq \mathcal{P}\left(\mathcal{S}\right)$ where $i \in I$ for some index set $I$ such that 
+        \begin{equation*}
+            U = \bigcup_{i \in I}\left(\bigcap_{S \in \mathcal{U}_i}S\right).
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            f^{-1}\left(U\right) & = \bigcup_{i \in I}\left(\bigcap_{S \in \mathcal{U}_i}f^{-1}\left(S\right)\right),
+        \end{align*}
+        which is clearly open in $X$. Therefore, $f$ is continuous.
+    \end{proof}
+\end{probox}
+A trivial example for continuous maps is the \textit{constant map} $f \colon X \to Y$ such that $f\left(x\right) = y_0$ for some fixed $y_0 \in Y$. This is simply because 
+\begin{equation*}
+    f^{-1}\left(U\right) = \begin{cases}
+        X & \quad\textrm{if } y_0 \in U \\
+        \varnothing & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+The following result should be very intuitive:
+\begin{probox}{Composition Preserves Continuity}{compoContinuity}
+    Let $X, Y, Z$ be topological spaces. If $f \colon X \to Y$ and $g \colon Y \to Z$ are continuous maps, then $g \circ f$ is continuous.
+\end{probox}
+It is also clear that for any topological space $X$, the \textit{inclusion map} $f \colon A \to X$ for any $A \subseteq X$ such that $f\left(a\right) = a$ is continuous. Analogously, if $f \colon X \to Y$ is continuous, then the restriction $f\rvert_A \colon A \to Y$ for any subspace $A \subseteq X$ is also continuous.
+\begin{probox}{Properties of Continuous Maps}{continuousMapProps}
+    Let $X$ and $Y$ be topological spaces. For any map $f \colon X \to Y$, the followings are equivalent:
+    \begin{enumerate}
+        \item $f$ is continuous;
+        \item for all $A \subseteq X$, $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$;
+        \item for any closed set $B \subseteq Y$, $f^{-1}\left(B\right)$ is closed in $X$;
+        \item for any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$, there exists an open set~$U \subseteq X$ such that $x \in U$ and $f\left(U\right) \subseteq V$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Suppose that $f$ is continuous. Note that $f\left(A\right) \subseteq \widebar{f\left(A\right)}$, so $A \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $\widebar{f\left(A\right)}$ is closed in $Y$, so by Definition \ref{dfn:continuous}, 
+        \begin{equation*}
+            f^{-1}\left(Y \backslash \widebar{f\left(A\right)}\right) = X \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)
+        \end{equation*}
+        is open in $X$. Therefore, $f^{-1}\left(\widebar{f\left(A\right)}\right)$ is closed in $X$. By Proposition \ref{pro:clProps}, $\widebar{A} = A \cup A'$ where $A'$ is the set of limit points of $A$. We claim that $A' \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Suppose on contrary that there exists some $a \in A' \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $X \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)$ is open, by Definition \ref{dfn:limPt}, 
+        \begin{equation*}
+            \left(A \backslash \left\{a\right\}\right) \cap \Biggl(X \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)\Biggr) \neq \varnothing,
+        \end{equation*}
+        which is a contradiction because $A \backslash \left\{a\right\} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Therefore, $\widebar{A} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$, which means that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$.
+        \\\\
+        Suppose that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$ for any $A \subseteq X$. For any closed set $B \subseteq Y$, we have $B = \widebar{B}$. Notice that 
+        \begin{equation*}
+            f\left(\widebar{f^{-1}\left(B\right)} \right) \subseteq \widebar{f\left(f^{-1}\left(B\right)\right)} = B = f\left(f^{-1}\left(B\right)\right),
+        \end{equation*}
+        so $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$. This implies that $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$, and so $f^{-1}\left(B\right)$ is closed in~$X$.
+        \\\\
+        Suppose that $f^{-1}\left(B\right)$ is closed in $X$ for any closed set $b \subseteq Y$. Take any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$. Since $Y \backslash V$ is closed in $Y$, $f^{-1}\left(Y \backslash V\right) = X \backslash f^{-1}\left(V\right)$ is closed in $X$. Therefore, $f^{-1}\left(V\right)$ is open in $X$. It is clear that $x \in f^{-1}\left(V\right)$ and~$f\left(f^{-1}\left(V\right)\right) \subseteq V$.
+    \end{proof}
+\end{probox}
+Next, we introduce a lemma which specifies a methodology to construct a continuous map from two different continuous maps.
+\begin{lembox}{Pasting Lemma}{pasting}
+    Let $X$ and $Y$ be topological spaces such that $X = A \cup B$ for some closed sets $A$ and $B$. If~$f \colon A \to Y$ and $g \colon B \to Y$ are continuous and $f\left(x\right) = g\left(x\right)$ for all $x \in A \cap B$, then the function $h \colon X \to Y$ defined by 
+    \begin{equation*}
+        h\left(x\right) = \begin{cases}
+            f\left(x\right) & \quad\textrm{if } x \in A \\
+            g\left(x\right) & \quad\textrm{if } x \in B
+        \end{cases}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $U \subseteq Y$ be any open set. Then it is clear that $h^{-1}\left(U\right) = f^{-1}\left(U\right) \cup g^{-1}\left(U\right)$. Since $f$ and $g$ are continuous, both $f^{-1}\left(U\right)$ and $g^{-1}\left(U\right)$ are open in $X$, so it follows that $h^{-1}\left(U\right)$ is open in $X$. Therefore, $h$ is continuous.
+    \end{proof}
+\end{lembox}
+Observe that the continuity of a function $f \colon X \to Y$ actually depends on our choice of topologies on $X$ and $Y$. On the other hand, this also means that every function $f$ could induce a topology on $X$ such that it is continuous.
+\begin{dfnbox}{Pull-Back Topology}{pullback}
+    Let $\mathcal{T}_Y$ be a topology on $Y$ and let $f \colon X \to Y$. The {\color{red} \textbf{pull-back topology}} on $X$ is defined as 
+    \begin{equation*}
+        \mathcal{T}_X \coloneqq \left\{f^{-1}\left(U\right) \colon U \in \mathcal{T}_Y\right\}.
+    \end{equation*}
+\end{dfnbox}
+Note that the pull-back topology is the coarsest topology on $X$ such that $f$ is a continuous map. To verify this, let $\mathcal{T}$ be any topology on $X$ such that $f$ is continuous. Take any $T \in \mathcal{T}_X$, then there exists some $U \in \mathcal{T}_Y$ such that $T = f^{-1}\left(U\right)$. However, this means that $T \in \mathcal{T}$ since $f$ is continuous with respect to $\mathcal{T}$. This shows that $\mathcal{T}_X \subseteq \mathcal{T}$.
+\begin{dfnbox}{Uniform Continuity}{uniformContinuity}
+    Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces. A function $f \colon X \to Y$ is {\color{red} \textbf{uniformly continuous}} on $X$ if for all $\epsilon > 0$, there exists some $\delta > 0$ such that $d_Y\bigl(f\left(x\right), f\left(y\right)\bigr) < \epsilon$ whenever~$d_X\left(x, y\right) < \delta$.
+\end{dfnbox}
+Essentially, uniform continuity describes a phenomenon where the choice of $\delta$ is irrelevant to the point in the function's domain.
+
+We wish to use the following proposition to characterise all uniformly continuous functions:
+\begin{probox}{Uniform Continuity Characterisation}{characteriseUniformContinuity}
+    Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces. A function $f \colon X \to Y$ is uniformly continuous if and only if for any sequences $\left\{x_i\right\}_i^{\infty}$ and $\left\{y_i\right\}_{i}^{\infty}$ in $X$ such that $\lim_{i \to \infty}d_X\left(x_i, y_i\right) = 0$, we have $\lim_{i \to \infty}d_Y\bigl(f\left(x_i\right), f\left(y_i\right)\bigr) = 0$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove the ``if'' direction only because the other direction is trivial from Definition \ref{dfn:uniformContinuity}. We shall consider the contrapositive statement. Suppose that there exist sequences $\left\{x_i\right\}_i^{\infty}$ and $\left\{y_i\right\}_{i}^{\infty}$ with $\lim_{i \to \infty}d_X\left(x_i, y_i\right) = 0$ such that~$\lim_{i \to \infty}d_Y\bigl(f\left(x_i\right), f\left(y_i\right)\bigr) \neq 0$, then for all $\delta > 0$, there exists some $N \in \N^+$ such that $d_X\left(x_i, y_i\right) > 0$ for all $i > N$. However, notice that there exists some $\epsilon > 0$ such that for all~$M \in \N^+$, there exists some $m > M$ with $d_Y\bigl(f\left(x_m\right), f\left(y_m\right)\bigr) \geq \epsilon$. This means that for any $\epsilon > 0$, we can find some $k$ such that for all $\delta > 0$, we have~$d_X\left(x_k, y_k\right) < \delta$ but $d_Y\bigl(f\left(x_k\right), f\left(y_k\right)\bigr) \geq \epsilon$. By Definition \ref{dfn:uniformContinuity}, this implies that $f$ is not uniformly continuous.
+    \end{proof}
+\end{probox}
 \end{document}

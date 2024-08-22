@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  20 AUG 2024 16:52
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  22 AUG 2024 13:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -798,101 +798,6 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip76
 \thm@headsep=\skip77
 \dth@everypar=\toks49
-) (c:/texlive/2023/texmf-dist/tex/latex/minted/minted.sty
-Package: minted 2022/12/12 v2.7 Yet another Pygments shim for LaTeX
- (c:/texlive/2023/texmf-dist/tex/latex/fvextra/fvextra.sty
-Package: fvextra 2022/11/30 v1.5 fvextra - extensions and patches for fancyvrb
- (c:/texlive/2023/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
-\FV@CodeLineNo=\count362
-\FV@InFile=\read4
-\FV@TabBox=\box132
-\c@FancyVerbLine=\count363
-\FV@StepNumber=\count364
-\FV@OutFile=\write4
-) (c:/texlive/2023/texmf-dist/tex/latex/upquote/upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
-) (c:/texlive/2023/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2023/01/19 line numbers on paragraphs v5.1
-Invalid UTF-8 byte or sequence at line 290 replaced by U+FFFD.
-\linenopenalty=\count365
-\output=\toks50
-\linenoprevgraf=\count366
-\linenumbersep=\dimen318
-\linenumberwidth=\dimen319
-\c@linenumber=\count367
-\c@pagewiselinenumber=\count368
-\c@LN@truepage=\count369
-\c@internallinenumber=\count370
-\c@internallinenumbers=\count371
-\quotelinenumbersep=\dimen320
-\bframerule=\dimen321
-\bframesep=\dimen322
-\bframebox=\box133
-\linenoamsmath@ams@eqpen=\count372
-LaTeX Info: Redefining \\ on input line 3131.
-)
-\c@FV@TrueTabGroupLevel=\count373
-\c@FV@TrueTabCounter=\count374
-\FV@TabBox@Group=\box134
-\FV@TmpLength=\skip78
-\c@FV@HighlightLinesStart=\count375
-\c@FV@HighlightLinesStop=\count376
-\FV@LoopCount=\count377
-\FV@NCharsBox=\box135
-\FV@BreakIndent=\dimen323
-\FV@BreakIndentNChars=\count378
-\FV@BreakSymbolSepLeft=\dimen324
-\FV@BreakSymbolSepLeftNChars=\count379
-\FV@BreakSymbolSepRight=\dimen325
-\FV@BreakSymbolSepRightNChars=\count380
-\FV@BreakSymbolIndentLeft=\dimen326
-\FV@BreakSymbolIndentLeftNChars=\count381
-\FV@BreakSymbolIndentRight=\dimen327
-\FV@BreakSymbolIndentRightNChars=\count382
-\c@FancyVerbLineBreakLast=\count383
-\FV@LineBox=\box136
-\FV@LineIndentBox=\box137
-\c@FV@BreakBufferDepth=\count384
-\FV@LineWidth=\dimen328
-) (c:/texlive/2023/texmf-dist/tex/latex/ifplatform/ifplatform.sty
-Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
- (c:/texlive/2023/texmf-dist/tex/generic/catchfile/catchfile.sty
-Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
-) (c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-)) (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.sty (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.tex
-\integerpart=\count385
-\decimalpart=\count386
-)
-Package: xstring 2023/01/14 v1.85 String manipulations (CT)
-) (c:/texlive/2023/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip79
-\fb@frw=\dimen329
-\fb@frh=\dimen330
-\FrameRule=\dimen331
-\FrameSep=\dimen332
-) (c:/texlive/2023/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count387
-\float@exts=\toks51
-\float@box=\box138
-\@float@everytoks=\toks52
-\@floatcapt=\box139
-)
-\minted@appexistsfile=\read5
-\minted@bgbox=\box140
-\minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count388
-\c@minted@pygmentizecounter=\count389
-\@float@every@listing=\toks53
-\c@listing=\count390
-)
-runsystem(if not exist _minted-Metric_and_Topological_Spaces mkdir _minted-Metric_and_Topological_Spaces)...executed.
-
- (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
-Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
 )
 
 Package fontspec Info: Font family 'STIXTwoText(0)' created for font
@@ -1216,11 +1121,11 @@ LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `normal'
 LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `bold'
 (Font)                  TU/XITSMath(0)/m/n --> TU/XITSMath(0)/b/n on input line 80.
 Package hyperref Info: Option `colorlinks' set `true' on input line 109.
-\c@amzboxcounter=\count391
+\c@amzboxcounter=\count362
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks54
-\inpenc@posthook=\toks55
+\inpenc@prehook=\toks50
+\inpenc@posthook=\toks51
 
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
@@ -1236,22 +1141,22 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 ) (c:/texlive/2023/texmf-dist/tex/latex/accents/accents.sty
 Package: accents 2006/05/12 v1.4 Math Accent Tools
-\cc@skew=\dimen333
-\cc@wd=\dimen334
-\cc@code=\count392
-\cc@group=\count393
-\cc@skewchar=\count394
+\cc@skew=\dimen318
+\cc@wd=\dimen319
+\cc@code=\count363
+\cc@group=\count364
+\cc@skewchar=\count365
 )
 \symyhlargesymbols=\mathgroup9
  (c:/texlive/2023/texmf-dist/tex/latex/scalerel/scalerel.sty
 Package: scalerel 2016/12/29 v1.8 Routines for constrained scaling and stretching of objects, relative to a reference object or in absolute terms
-\thesrwidth=\skip80
-\thesrheight=\skip81
-\srblobheight=\skip82
-\srblobdepth=\skip83
-\mnxsrwidth=\skip84
-\LMex=\skip85
-\LMpt=\skip86
+\thesrwidth=\skip78
+\thesrheight=\skip79
+\srblobheight=\skip80
+\srblobdepth=\skip81
+\mnxsrwidth=\skip82
+\LMex=\skip83
+\LMpt=\skip84
 ) (c:/texlive/2023/texmf-dist/tex/latex/stackengine/stackengine.sty
 Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient ways
  (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.sty (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.tex
@@ -1264,7 +1169,7 @@ Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 104 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 105 replaced by U+FFFD.
-\loi_cnt_foreach_nest=\count395
+\loi_cnt_foreach_nest=\count366
 Invalid UTF-8 byte or sequence at line 139 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 146 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 192 replaced by U+FFFD.
@@ -1292,7 +1197,7 @@ Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 354 replaced by U+FFFD.
-\loi_nestcnt=\count396
+\loi_nestcnt=\count367
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
@@ -1358,25 +1263,21 @@ Invalid UTF-8 byte or sequence at line 541 replaced by U+FFFD.
 )
 Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified sep char (CT)
 )
-\c@@stackindex=\count397
-\@boxshift=\skip87
-\stack@tmplength=\skip88
-\temp@stkl=\skip89
-\@stackedboxwidth=\skip90
-\@addedbox=\box141
-\@anchorbox=\box142
-\@insetbox=\box143
-\se@backgroundbox=\box144
-\stackedbox=\box145
-\@centerbox=\box146
-\c@ROWcellindex@=\count398
+\c@@stackindex=\count368
+\@boxshift=\skip85
+\stack@tmplength=\skip86
+\temp@stkl=\skip87
+\@stackedboxwidth=\skip88
+\@addedbox=\box132
+\@anchorbox=\box133
+\@insetbox=\box134
+\se@backgroundbox=\box135
+\stackedbox=\box136
+\@centerbox=\box137
+\c@ROWcellindex@=\count369
 )
-\c@case=\count399
+\c@case=\count370
 LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 122.
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Metric_and_Topological_Spaces.aex <nul: /p x=^%~$PATH:i>> Metric_and_Topological_Spaces.aex)...executed.
-
-runsystem(del Metric_and_Topological_Spaces.aex)...executed.
-
  (./Metric and Topological Spaces.aux)
 \openout1 = `"Metric and Topological Spaces.aux"'.
 
@@ -1459,10 +1360,10 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 
 Package hyperref Info: Link coloring ON on input line 124.
 (./Metric and Topological Spaces.out) (./Metric and Topological Spaces.out)
-\@outlinefile=\write6
-\openout6 = `"Metric and Topological Spaces.out"'.
+\@outlinefile=\write4
+\openout4 = `"Metric and Topological Spaces.out"'.
 
-\c@lstlisting=\count400
+\c@lstlisting=\count371
  (./Metric and Topological Spaces.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
@@ -1489,8 +1390,8 @@ LaTeX Font Info:    Trying to load font information for OMX+yhex on input line 2
 File: OMXyhex.fd 
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 ))
-\tf@toc=\write7
-\openout7 = `"Metric and Topological Spaces.toc"'.
+\tf@toc=\write5
+\openout5 = `"Metric and Topological Spaces.toc"'.
 
  [1
 
@@ -1515,19 +1416,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 652--655
 
  []
 
-[16] [17] [18] 
+[16] [17] [18]
+Chapter 2.
+[19
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 729--733
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 735--739
+
+ []
+
+[20] [21] [22] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39517 strings out of 478630
- 830638 string characters out of 5847730
- 1882012 words of memory out of 5000000
- 58952 multiletter control sequences out of 15000+600000
- 518866 words of font info for 100 fonts, out of 8000000 for 9000
+ 36734 strings out of 478630
+ 767296 string characters out of 5847730
+ 1883012 words of memory out of 5000000
+ 56222 multiletter control sequences out of 15000+600000
+ 518882 words of font info for 102 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,12n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (18 pages).
+Output written on Metric and Topological Spaces.pdf (22 pages).
