@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 AUG 2024 12:57
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  22 AUG 2024 15:06
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1514,19 +1514,19 @@ Overfull \hbox (3.46593pt too wide) detected at line 440
 Chapter 2.
 [14
 
-] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] 
+] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28] [29] [30] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Information and Coding Theory.aux)
 Package rerunfilecheck Info: File `"Information and Coding Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39802 strings out of 478630
- 835429 string characters out of 5847730
- 1883012 words of memory out of 5000000
- 59229 multiletter control sequences out of 15000+600000
+ 39803 strings out of 478630
+ 835445 string characters out of 5847730
+ 1886012 words of memory out of 5000000
+ 59230 multiletter control sequences out of 15000+600000
  518890 words of font info for 103 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Information and Coding Theory.pdf (27 pages).
+Output written on Information and Coding Theory.pdf (30 pages).

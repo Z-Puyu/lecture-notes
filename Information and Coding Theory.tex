@@ -876,7 +876,7 @@ One result which can be proven with the aid of the log-sum inequality is the joi
     $D\left(p \parallel q\right)$ is jointly convex.
     \tcblower
     \begin{proof}
-        Let $p_1, p_2, q_1, q_2$ be probability mass functions for the same random variable $X$. It suffices to prove that 
+        Let $p_1, p_2, q_1, q_2$ be probability mass functions for the same random variable $X$. It suffices to prove that for any $\lambda \in \left[0, 1\right]$,
         \begin{equation*}
             D\bigl(\lambda p_1 + \left(1 - \lambda\right)p_2 \parallel \lambda q_1 + \left(1 - \lambda\right)q_2\bigr) \leq \lambda D\left(p_1 \parallel q_1\right) + \left(1 - \lambda\right)D\left(p_2 \parallel q_2\right).
         \end{equation*}
@@ -891,13 +891,62 @@ One result which can be proven with the aid of the log-sum inequality is the joi
         \end{equation*}
     \end{proof}
 \end{probox}
-\begin{thmbox}{Concavity of Entropy}{concaveEntropy}
-    $H\left(p\right)$ is concave in $p$.
-\end{thmbox}
+We can use a similar approach to analyse the convexity of entropy
+\begin{probox}{Concavity of Entropy}{concaveEntropy}
+    For any discrete random variable $X$ with a finite alphabet and distribution $p$, $H\left(p\right)$ is concave in $p$.
+    \tcblower
+    \begin{proof}
+        Let $u$ be the uniform distribution for $X$, then $u\left(x\right) = \frac{1}{\abs{\mathcal{X}}}$ for all $x \in \mathcal{X}$. Notice that 
+        \begin{align*}
+            D\left(p \parallel u\right) & = \sum_{x \in \mathcal{X}}p\left(x\right)\log_2\frac{p\left(x\right)}{u\left(x\right)} \\
+            & = \sum_{x \in \mathcal{X}}p\left(x\right)\log_2\frac{1}{u\left(x\right)} - \sum_{x \in \mathcal{X}}p\left(x\right)\log_2\frac{1}{p\left(x\right)} \\
+            & = \log_2\abs{\mathcal{X}} - H\left(p\right).
+        \end{align*}
+        By Proposition \ref{pro:convextRelativeEntropy}, $D\left(p \parallel u\right)$ is convex, so $H\left(p\right)$ must be concave.
+    \end{proof}
+\end{probox}
+Alternatively, let $T \sim \mathrm{Bernoulli}\left(\lambda\right)$ and define $Z \coloneqq X \mid T$, where $X \mid T = 1$ and $X \mid T = 0$ have distributions $p_1$ and $p_2$ respectively, then clearly $p_Z = \lambda p_1 + \left(1 - \lambda\right)p_2$. Therefore,
+\begin{align*}
+    H\bigl(\lambda p_1 + \left(1 - \lambda\right)p_2\bigr) & = H\left(Z\right) \\
+    & \geq H\left(Z \mid T\right) \\
+    & = p_T\left(1\right)H\left(Z \mid T = 1\right) + p_T\left(0\right)H\left(Z \mid T = 0\right) \\
+    & = \lambda H\left(X \mid T = 1\right) + \left(1 - \lambda\right)H\left(X \mid T = 0\right) \\
+    & = \lambda H\left(p_1\right) + \left(1 - \lambda\right)H\left(p_2\right).
+\end{align*}
+This gives a more classical approach to proving Proposition \ref{pro:concaveEntropy}.
+
+Note that we can view $I\left(X ; Y\right)$ as a function of $p_{X, Y}$, which can be further unpacked as a function of $p_X$ and $p_{Y \mid X}$. Here, $p_X$ is known as the \textit{input distribution} and $p_{Y \mid X}$ is known as the \textit{channel}.
 \begin{thmbox}{Convexity of Mutual Information}{convexI}
-    $I\left(p_X, p_{Y \mid X}\right)$ is concave in $p_X$ and convex in $p_{Y \mid X}$.
+    $I\left(X ; Y\right)$ is concave in $p_X$ and convex in $p_{Y \mid X}$.
+    \tcblower
+    \begin{proof}
+        Fix $p_{Y \mid X}$, consider
+        \begin{align*}
+            I\left(X ; Y\right) & = H\left(Y\right) - H\left(X \mid Y\right) \\
+            & = H\left(p_Y\right) - \sum_{x \in \mathcal{X}}p_X\left(x\right)H\left(Y \mid X = x\right).
+        \end{align*}
+        Note that $H\left(Y \mid X = x\right)$ only depends on $p_{Y \mid X}$ and so is a constant and for any $y \in \mathcal{Y}$,
+        \begin{equation*}
+            p_Y\left(y\right) = \sum_{x \in \mathcal{X}}p_X\left(x\right)p_{Y \mid X}\left(y \mid x\right)
+        \end{equation*}
+        is linear in $p_X\left(x\right)$. Therefore, $I\left(X ; Y\right)$ is linear in $p_X$ and so concave in $p_X$. Now, fix $p_X$ and define $T \sim \mathrm{Bernoulli}\left(\lambda\right)$ to be independent of $X$, then 
+        \begin{equation*}
+            p_{Y \mid X} = \lambda p_{Y \mid X, T = 1} + \left(1 - \lambda\right)p_{Y \mid X, T = 0}.
+        \end{equation*}
+        Notice that 
+        \begin{equation*}
+            I\left(X ; T\right) + I\left(X ; Y \mid T\right) = I\left(X ; Y\right) = I\left(X ; Y\right) + I\left(X ; T \mid Y\right).
+        \end{equation*}
+        Since $I\left(X ; T\right) = 0$, this implies that $I\left(X ; Y \mid T\right) = I\left(X ; Y\right) + I\left(X ; T \mid Y\right)$. This means that 
+        \begin{align*}
+            I\left(X ; Y\right) & \leq I\left(X ; Y \mid T\right) \\
+            & = \lambda I\left(X ; Y \mid T = 1\right) + \left(1 - \lambda\right)I\left(X ; Y \mid T = 0\right),
+        \end{align*}
+        which implies that $I\left(X ; Y\right)$ is convex in $p_{Y \mid X}$. 
+    \end{proof}
 \end{thmbox}
-\begin{thmbox}{Data Processing Inequality}{DPI}
+The next inequality is concerning data processing.
+\begin{thmbox}{Data Processing Inequality (DPI)}{DPI}
     If $X$-$Y$-$Z$ forms a Markov chain, then $I\left(X ; Y\right) \geq I\left(X ; Z\right)$.
     \tcblower
     \begin{proof}
@@ -905,28 +954,68 @@ One result which can be proven with the aid of the log-sum inequality is the joi
         \begin{equation*}
             I\left(X ; Z\right) + I\left(X ; Y \mid Z\right) = I\left(X ; Y, Z\right) = I\left(X ; Y\right) + I\left(X; Z \mid Y\right).
         \end{equation*}
-        Since $X$-$Y$-$Z$ forms a Markov chain, $I\left(X ; Z \mid Y\right) = 0$.
+        Since $X$-$Y$-$Z$ forms a Markov chain, $I\left(X ; Z \mid Y\right) = 0$. Therefore, 
+        \begin{equation*}
+            I\left(X ; Y\right) = I\left(X ; Z\right) + I\left(X ; Y \mid Z\right) \geq I\left(X ; Z\right).
+        \end{equation*}
     \end{proof}
 \end{thmbox}
+Mathematically, data processing can be described as mapping a random variable $Y$ to some transformed image via a function $g$. Recall that in Proposition \ref{pro:funcMarkovChain}, we have shown that for any random variables $X$ and $Y$, $X$-$Y$-$f\left(Y\right)$ is always a Markov chain, which motivates the following application of the DPI.
 \begin{corbox}{Mutual Information Does Not Increase After Processing}{nonIncrI}
-    For any random variables $X$ and $Y$, we have $I\left(X ; Y\right) \geq I\left(X ; g\left(Y\right)\right)$ for all function $g$.
+    For any random variables $X$ and $Y$, we have $I\left(X ; Y\right) \geq I\bigl(X ; g\left(Y\right)\bigr)$ for all function $g$.
 \end{corbox}
+One implication of this is that no matter what method is used to process the information $Y$, the shared knowledge between $Y$ and some other data set $X$ can be at best retained at the same level as before.
 \section{Sufficient Statistics}
 Consider a parametric family of probability distributions $\left\{f_{\theta}\left(x\right) \colon \theta \in \Theta\right\}$ for some index set $\Theta$. Let $T\left(X\right)$ be any statistic. One may check that $\Theta$-$X$-$T\left(X\right)$ is a Markov chain. By Theorem \ref{thm:DPI} we know that $I\left(\Theta ; T\left(X\right)\right) \leq I\left(\Theta ; X\right)$. If the equality is attained, no information is lost in this statistic.
 \begin{dfnbox}{Sufficient Statistic}{sufficientStats}
     A function $T \colon \mathcal{X} \to \R$ is said to be a {\color{red} \textbf{sufficient statistic}} relative to a parametric family $\mathcal{F}_{\theta} \coloneqq \left\{f_{\theta}\left(x\right) \colon \theta \in \Theta\right\}$ of probability distributions if $\Theta$-$T\left(X\right)$-$X$ forms a Markov chain.
 \end{dfnbox}
-Let $X$ be any random variable and $Y$ be another random variable correlated to $Y$. Suppose now we wish to estimate $X$ via observations about $Y$. Let $\hat{X}\left(Y\right)$ be an estimator obtained this way about $X$.
+Let $X$ be any random variable and $Y$ be another random variable correlated to $Y$. Suppose now we wish to estimate $X$ via observations about $Y$. Let $\yhwidehat{X}\left(Y\right)$ be an estimator obtained this way about $X$.
 
 If $H\left(X \mid Y\right) = 0$, one can expect that a perfect estimation is possible. On the other hand, if $H\left(X \mid Y\right) = \log_2\abs{\mathcal{X}}$, the the estimation is bad. Notice that this happens if and only if $X$ is uniform and independent of $Y$. In reality, we may wish $H\left(X \mid Y\right)$ to be small, where the error of estimation can be small.
 \begin{thmbox}{Fano's Inequality}{Fano}
-    For any estimator $\hat{X}$, $H_b\left(p_e\right) + p_e\log_2\abs{X} \geq H\left(X \mid \hat{X}\right) \geq H\left(X \mid Y\right)$.
+    For any estimator $\yhwidehat{X}$ obtained from $Y$, let $p_e \coloneqq \Pr\left(\yhwidehat{X} \neq X\right)$ be the probability of error, then 
+    \begin{equation*}
+        H_b\left(p_e\right) + p_e\log_2\abs{\mathcal{X}} \geq H\left(X \mid \yhwidehat{X}\right) \geq H\left(X \mid Y\right).
+    \end{equation*}
     \tcblower
     \begin{proof}
-        Define $E \coloneqq \mathbf{1}\left\{\hat{X} \neq X\right\}$ to be the error random variable. Consider 
+        Define $E \coloneqq \mathbf{1}\left\{\yhwidehat{X} \neq X\right\}$ to be the error random variable, then $p_e = \Pr\left(E = 1\right)$. Consider 
         \begin{equation*}
-            H\left(E \mid \hat{X}\right) + H\left(X \mid E, \hat{X}\right) = H\left(E, X \mid \hat{X}\right) = H\left(X \mid \hat{X}\right) + H\left(E \mid X, \hat{X}\right).
+            H\left(E \mid \yhwidehat{X}\right) + H\left(X \mid E, \yhwidehat{X}\right) = H\left(E, X \mid \yhwidehat{X}\right) = H\left(X \mid \yhwidehat{X}\right) + H\left(E \mid X, \yhwidehat{X}\right).
         \end{equation*}
+        It is clear that $H\left(E \mid X, \yhwidehat{X}\right) = 0$. By Corollary \ref{cor:condDoesNotIncrEntropy}, since $E$ is a Bernoulli random variable, we have 
+        \begin{equation*}
+            H\left(E \mid \yhwidehat{X}\right) \leq H\left(E\right) = H_b\left(p_e\right).
+        \end{equation*}
+        Note that 
+        \begin{equation*}
+            H\left(X \mid E, \yhwidehat{X}\right) = \Pr\left(E = 1\right)H\left(X \mid E = 1, \yhwidehat{X}\right) + \Pr\left(E = 0\right)H\left(X \mid E = 0, \yhwidehat{X}\right).
+        \end{equation*}
+        Clearly, $H\left(X \mid E = 0, \yhwidehat{X}\right) = 0$ and $H\left(X \mid E = 1, \yhwidehat{X}\right) \leq \log_2\abs{\mathcal{X}}$, so 
+        \begin{equation*}
+            H\left(X \mid E, \yhwidehat{X}\right) \leq p_e\log_2\abs{\mathcal{X}}.
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            H\left(X \mid \yhwidehat{X}\right) = H\left(E \mid \yhwidehat{X}\right) + H\left(X \mid E, \yhwidehat{X}\right) \leq H_b\left(p_e\right) + p_e\log_2\abs{\mathcal{X}}.
+        \end{equation*}
+        Note that $\yhwidehat{X}$ is a function of $Y$, so by Corollary \ref{pro:funcMarkovChain}, $X$-$Y$-$\yhwidehat{X}$ forms a Markov chain. By Theorem \ref{thm:DPI}, 
+        \begin{align*}
+            H\left(X\right) - H\left(X \mid Y\right) & = I\left(X ; Y\right) \\
+            & \geq I\left(X ; \yhwidehat{X}\right) \\
+            & = H\left(X\right) - H\left(X \mid \yhwidehat{X}\right),
+        \end{align*}
+        which reduces to $H\left(X \mid \yhwidehat{X}\right) \geq H\left(X \mid Y\right)$.
     \end{proof}
 \end{thmbox}
+With some algebraic manipulations, it can be obtained from Theorem \ref{thm:Fano} that 
+\begin{equation*}
+    p_e \geq \frac{H\left(X \mid Y\right) - 1}{\log_2\abs{\mathcal{X}}}.
+\end{equation*}
+In other words, this means that 
+\begin{equation*}
+    \inf \Pr\left(\yhwidehat{X}\left(Y\right) \neq X\right) \geq \frac{H\left(X \mid Y\right) - 1}{\log_2\abs{\mathcal{X}}}.
+\end{equation*}
+This is one of the few results which offer a \textbf{lower bound estimate} for probabilities. In particular, this result shows that in a non-trivial scenario ($\abs{\mathcal{X}} > 1$), perfect estimator is attainable only when $H\left(X \mid Y\right) \leq 1$. 
 \end{document}

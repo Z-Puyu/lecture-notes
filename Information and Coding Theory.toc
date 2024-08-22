@@ -6,4 +6,4 @@
 \contentsline {chapter}{\numberline {2}Information Theory}{14}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Entropy}{14}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Information Inequality}{20}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Sufficient Statistics}{26}{section.2.3}%
+\contentsline {section}{\numberline {2.3}Sufficient Statistics}{28}{section.2.3}%
