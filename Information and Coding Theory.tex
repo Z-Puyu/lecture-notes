@@ -826,7 +826,83 @@ We compute the conditional entropy values:
 \end{align*}
 However, $H\left(X \mid Y\right) = p_Y(2)H\left(X \mid Y = 2\right) = 0.25 < H\left(X \mid Y = 2\right)$. 
 
-Corollary \ref{cor:condDoesNotIncrEntropy} can be generalised further. We first introduce a preliminary definition.
+An important result which can be proven using the above facts is the \textit{Hans's inequality}, which states that 
+\begin{equation*}
+    H\left(X_1, X_2, X_3\right) \leq \frac{1}{2}\bigl(H\left(X_1, X_2\right) + H\left(X_1, X_3\right) + H\left(X_2, X_3\right)\bigr).
+\end{equation*}
+This inequality can be easily proven by considering the fact that 
+\begin{equation*}
+    H\left(X_1, X_2, X_3\right) = H\left(X_1 \mid X_2, X_3\right) + H\left(X_2, X_3\right).
+\end{equation*}
+However, the inequality can in fact be seen as a special case for a more powerful result known as \textit{Shearer's inequality}.
+\begin{thmbox}{Shearer's Inequality}{Shearer}
+    For any $n \in \N$ and any random subset $\mathcal{S} \subseteq \left[n\right] \backslash \left\{0\right\}$ such that $\Pr\left(i \in \mathcal{S}\right) \geq \mu$ for all~$i \in \left[n\right]$, 
+    \begin{equation*}
+        \mathbb{E}\left[H\left(X_{\mathcal{S}}\right)\right] \geq H\left(X_1^n\right).
+    \end{equation*} 
+    \tcblower
+    \begin{proof}
+        For any $\mathcal{S} \subseteq \left[n\right] \backslash \left\{0\right\}$, we can write 
+        \begin{equation*}
+            \mathcal{S} = \left\{i_1, i_2, \cdots, i_k\right\}
+        \end{equation*}
+        for some $k \in \left[n\right]$ such that $i_p < i_q$ whenever $p < q$. Notice that 
+        \begin{equation*}
+            H\left(X_{\mathcal{S}}\right) = \sum_{j = 1}^{k}H\left(X_{i_j} \mid X_{i_1}, X_{i_2}, \cdots, X_{i_{j - 1}}\right) \geq \sum_{j = 1}^{k}H\left(X_{i_j} \mid X_1^{i_j - 1}\right).
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            \mathbb{E}\left[H\left(X_{\mathcal{S}}\right)\right] & \geq \mathbb{E}\left[\sum_{i \in \mathcal{S}}H\left(X_{i} \mid X_1^{i - 1}\right)\right] \\
+            & = \mathbb{E}\left[\sum_{i = 1}^{n}\mathbf{1}\left\{i \in \mathcal{S}\right\}H\left(X_{i} \mid X_1^{i - 1}\right)\right] \\
+            & = \sum_{i = 1}^{n}\mathbb{E}\left[\mathbf{1}\left\{i \in \mathcal{S}\right\}\right]H\left(X_{i} \mid X_1^{i - 1}\right) \\
+            & = \sum_{i = 1}^{n}\Pr\left(i \in \mathcal{S}\right)H\left(X_{i} \mid X_1^{i - 1}\right) \\
+            & \geq \mu\sum_{i = 1}^{n}H\left(X_{i} \mid X_1^{i - 1}\right) \\
+            & = \mu H\left(X_1^n\right).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+A different way to state Shearer's inequality uses a combinatorial construction:
+\begin{thmbox}{Equivalent Statement for Shearer's Inequality}{ShearerEquiv}
+    Let $X_1, X_2, \cdots, X_n$ be $n$ random variables for some $n \in \N^+$. For every positive integer~$m \leq n$, define $\mathcal{S}_m \subseteq \mathcal{P}\left(\left[n\right] \backslash \left\{0\right\}\right)$ to be a collection of subsets of $\left[n\right] \backslash \left\{0\right\}$ such that for each~$i \in \left[n\right] \backslash \left\{0\right\}$, there exist at least $m$ sets containing $i$ in $\mathcal{S}_m$, then
+    \begin{equation*}
+        H\left(X_1, X_2, \cdots, X_n\right) \leq \frac{1}{m}\sum_{S \in \mathcal{S}_m}H\left(X_{S}\right),
+    \end{equation*}
+    where $X_{S} = \left\{X_i \colon i \in S \subseteq \left[n\right] \backslash \left\{0\right\}\right\}$.
+\end{thmbox}
+Using either version, we can prove Hans's inequality by simply taking $n = 3$ and $\mathcal{S}$ to be uniform over all subsets of $\left\{1, 2, 3\right\}$ with cardinality $2$.
+\begin{corbox}{Hans's Inequality}{Hans}
+    For any random variables $X_1, X_2, X_3$,
+    \begin{equation*}
+        H\left(X_1, X_2, X_3\right) \leq \frac{1}{2}\bigl(H\left(X_1, X_2\right) + H\left(X_1, X_3\right) + H\left(X_2, X_3\right)\bigr).
+    \end{equation*}
+\end{corbox}
+Theorem \ref{thm:Shearer} has many seemingly surprising applications. For example, we can apply it to prove some results in graph theory by probabilistic methods.
+\begin{probox}{The Number of Triangles in Simple Undirected Graphs}{NumTri}
+    Let $G$ be a simple undirected graph containing $t$ triangles, then 
+    \begin{equation*}
+        t \leq \frac{1}{6}\bigl(2e\left(G\right)\bigr)^{\frac{3}{2}}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{V}$ be the set of all ordered $3$-tuples inducing some~$C_3 \subseteq G$. Notice that for every $H \subseteq G$ such that $H \cong C_3$, there are $6$ different permutations of $V\left(H\right)$. Therefore,~$\abs{\mathcal{V}} = 6t$. Let $\left(X_1, X_2, X_3\right)$ be uniformly distributed over $\mathcal{V}$, then clearly 
+        \begin{equation*}
+            \Pr\left(X_1 = v_i, X_2 = v_j, X_3 = v_k\right) = \frac{1}{6t}
+        \end{equation*}
+        for all $\left(v_i, v_j, v_k\right) \in \mathcal{V}$. By Proposition \ref{pro:maxEntropy}, it is clear that $H\left(X_1, X_2, X_3\right) = \log_2\left(6t\right)$. Let $\mathcal{S}$ be uniformly distributed over $\mathcal{P}\left(\left\{1, 2, 3\right\}\right)$, then by Theorem \ref{thm:Shearer}, 
+        \begin{equation*}
+            \mathbb{E}\left[H\left(X_{\mathcal{S}}\right)\right] \geq \frac{2}{3}H\left(X_1, X_2, X_3\right) = \frac{2}{3}\log_2\left(6t\right).
+        \end{equation*}
+        Notice that this implies that there exists some $\mathcal{T} \subseteq \left\{1, 2, 3\right\}$ with $\abs{\mathcal{T}} = 2$ such that~$H\left(X_{\mathcal{T}}\right) \geq \frac{2}{3}\log_2\left(6t\right)$. However, observe that $X_{\mathcal{T}}$ is supported over the set of all ordered pairs induced by $E\left(G\right)$, which means that $H\left(X_{\mathcal{T}}\right) \leq \log_2\bigl(2e\left(G\right)\bigr)$. Therefore, 
+        \begin{equation*}
+            \frac{2}{3}\log_2\left(6t\right) \leq \log_2\bigl(2e\left(G\right)\bigr).
+        \end{equation*}
+        One may check that this inequality is equivalent to 
+        \begin{equation*}
+            t \leq \frac{1}{6}\bigl(2e\left(G\right)\bigr)^{\frac{3}{2}}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+We have seen how useful Corollary \ref{cor:condDoesNotIncrEntropy} is. Actually, the result can be generalised further. We first introduce a preliminary definition.
 \begin{dfnbox}{Mutual Independence}{mutualInd}
     Let $X_1, X_2, \cdots, X_n$ be any $n$ random variables. They are said to be {\color{red} \textbf{mutually independent}} if for any $S \subseteq \left[n\right] \backslash \left\{0\right\}$, 
     \begin{equation*}
@@ -834,7 +910,7 @@ Corollary \ref{cor:condDoesNotIncrEntropy} can be generalised further. We first 
     \end{equation*}
 \end{dfnbox}
 Now, we propose the following inequality for conditional entropy:
-\begin{corbox}{Generalised Inequality for Conditional Entropy}{genIneqCondEntropy}
+\begin{corbox}{Sub-additivity of Conditional Entropy}{subadd}
     For any random variables $X_1, X_2, \cdots, X_n$,
     \begin{equation*}
         H\left(X_1^n\right) \leq \sum_{i = 1}^{n}H\left(X_i\right),
@@ -964,7 +1040,7 @@ Mathematically, data processing can be described as mapping a random variable $Y
 \begin{corbox}{Mutual Information Does Not Increase After Processing}{nonIncrI}
     For any random variables $X$ and $Y$, we have $I\left(X ; Y\right) \geq I\bigl(X ; g\left(Y\right)\bigr)$ for all function $g$.
 \end{corbox}
-One implication of this is that no matter what method is used to process the information $Y$, the shared knowledge between $Y$ and some other data set $X$ can be at best retained at the same level as before.
+One implication of this is that no matter what method is used to process the information~$Y$, the shared knowledge between $Y$ and some other data set $X$ can be at best retained at the same level as before.
 \section{Sufficient Statistics}
 Consider a parametric family of probability distributions $\left\{f_{\theta}\left(x\right) \colon \theta \in \Theta\right\}$ for some index set $\Theta$. Let $T\left(X\right)$ be any statistic. One may check that $\Theta$-$X$-$T\left(X\right)$ is a Markov chain. By Theorem \ref{thm:DPI} we know that $I\left(\Theta ; T\left(X\right)\right) \leq I\left(\Theta ; X\right)$. If the equality is attained, no information is lost in this statistic.
 \begin{dfnbox}{Sufficient Statistic}{sufficientStats}
@@ -1018,4 +1094,247 @@ In other words, this means that
     \inf \Pr\left(\yhwidehat{X}\left(Y\right) \neq X\right) \geq \frac{H\left(X \mid Y\right) - 1}{\log_2\abs{\mathcal{X}}}.
 \end{equation*}
 This is one of the few results which offer a \textbf{lower bound estimate} for probabilities. In particular, this result shows that in a non-trivial scenario ($\abs{\mathcal{X}} > 1$), perfect estimator is attainable only when $H\left(X \mid Y\right) \leq 1$. 
+
+\chapter{Data Compression}
+\section{Asymptotic Equipartition Property}
+In this section, we try to investigate some bounding conditions on the rate of data compression. We focus on a special type of sources called the \textit{discrete memoryless source} (DMS), which can be viewed as a sequence of \textbf{independent and identically distributed} discrete random variables such that the distribution of $X_n$ is independent of the distributions of all~$X_i$'s with $i < n$. 
+\begin{dfnbox}{Discrete Memoryless Source}{DMS}
+    A {\color{red} \textbf{discrete memoryless source}} is a sequence of identically distributed random variables $X_1^n$ such that $X_i$ is independent of all $X_j$ whenever $j < i$.
+\end{dfnbox}
+One may check that a DMS is mutually independent.
+
+We introduce the following notion:
+\begin{dfnbox}{$\epsilon$-Weakly Typical Set}{weaklyTypical}
+    Let $X$ be a discrete memoryless random variable with distribution $p_X$. An {\color{red} \textbf{$\epsilon$-Weakly Typical Set}} of $X$ is defined as 
+    \begin{equation*}
+        A_{\epsilon}^{\left(n\right)}\left(X\right) \coloneqq \left\{\mathbfit{x} \in \mathcal{X}^n \colon \abs{\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} - H\left(X\right)} \leq \epsilon\right\}
+    \end{equation*}
+    where $n \in \N^+$.
+\end{dfnbox}
+While this definition could seem obscure, we can unpack the inequality into 
+\begin{equation*}
+    2^{-n\bigl(H\left(X\right) + \epsilon\bigr)} \leq \prod_{i = 1}^np_X\left(x_i\right) \leq 2^{-n\bigl(H\left(X\right) - \epsilon\bigr)}.
+\end{equation*}
+As $\epsilon \to 0$, we see that $A_{\epsilon}^{\left(n\right)}\left(X\right)$ defines a set of sequences which have an asymptotically equal probability of occurring as the output from a discrete memoryless source.
+\begin{thmbox}{Asymptotic Equipartition Property}{AEP}
+    If $X_1^n$ is a discrete memoryless source, then for all $\epsilon > 0$, there exists some $N \in \N^+$ such that for all $n > N$, 
+    \begin{equation*}
+        \Pr\left(X_1^n \in A_{\epsilon}^{\left(n\right)}\left(X\right)\right) \geq 1 - \epsilon,
+    \end{equation*}
+    where 
+    \begin{equation*}
+        \left(1 - \epsilon\right)2^{n\bigl(H\left(X\right) - \epsilon\bigr)} \leq \abs{A_{\epsilon}^{\left(n\right)}\left(X\right)} \leq 2^{n\bigl(H\left(X\right) + \epsilon\bigr)}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider 
+        \begin{align*}
+            \Pr\left(X_1^n \notin A_{\epsilon}^{\left(n\right)}\left(X\right)\right) & = \Pr\left(\abs{\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(Z_i\right)} - H\left(X\right)} > \epsilon\right) \\
+            & = \Pr\left(\abs{\frac{1}{n}\sum_{i = 1}^{n}\frac{1}{p_X\left(X_i\right)} - H\left(X\right)} > \epsilon\right) \\
+            & = \Pr\left(\abs{\frac{1}{n}\sum_{i = 1}^{n}\frac{1}{p_X\left(X_i\right)} - \mathbb{E}\left[\frac{1}{p_X\left(X_1\right)}\right]} > \epsilon\right).
+        \end{align*}
+        Since the $X_i$'s are identical and independent, by Theorem \ref{thm:weakLawLargeNum}, for all $\epsilon > 0$, there exists some $N \in \N^+$ such that for all $n > N$, we have
+        \begin{equation*}
+            \Pr\left(X_1^n \notin A_{\epsilon}^{\left(n\right)}\left(X\right)\right) < \epsilon,
+        \end{equation*}
+        which implies that 
+        \begin{equation*}
+            \Pr\left(X_1^n \in A_{\epsilon}^{\left(n\right)}\left(X\right)\right) = 1 - \Pr\left(X_1^n \notin A_{\epsilon}^{\left(n\right)}\left(X\right)\right) \geq 1 - \epsilon.
+        \end{equation*}
+        Notice that for each $\mathbfit{x} \in A_{\epsilon}^{\left(n\right)}\left(X\right)$, we have 
+        \begin{equation*}
+            2^{-n\bigl(H\left(X\right) + \epsilon\bigr)} \leq \prod_{i = 1}^np_X\left(x_i\right) \leq 2^{-n\bigl(H\left(X\right) - \epsilon\bigr)}.
+        \end{equation*}
+        Since $A_{\epsilon}^{\left(n\right)}\left(X\right) \subseteq \mathcal{X}^n$, we have 
+        \begin{align*}
+            1 & \geq \sum_{\mathbfit{x} \in A_{\epsilon}^{\left(n\right)}\left(X\right)}\prod_{i = 1}^{n}p_X\left(x_i\right) \\
+            & \geq \sum_{\mathbfit{x} \in A_{\epsilon}^{\left(n\right)}\left(X\right)}2^{-n\bigl(H\left(X\right) + \epsilon\bigr)} \\
+            & = 2^{-n\bigl(H\left(X\right) + \epsilon\bigr)}\abs{A_{\epsilon}^{\left(n\right)}\left(X\right)}.
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            \abs{A_{\epsilon}^{\left(n\right)}\left(X\right)} \leq 2^{n\bigl(H\left(X\right) + \epsilon\bigr)}.
+        \end{equation*}
+        For all $n > N$, consider 
+        \begin{align*}
+            1 - \epsilon & \leq \Pr\left(X_1^n \in A_{\epsilon}^{\left(n\right)}\left(X\right)\right) \\
+            & = \sum_{\mathbfit{x} \in A_{\epsilon}^{\left(n\right)}\left(X\right)}\prod_{i = 1}^{n}p_X\left(x_i\right) \\
+            & \leq \sum_{\mathbfit{x} \in A_{\epsilon}^{\left(n\right)}\left(X\right)}2^{-n\bigl(H\left(X\right) - \epsilon\bigr)} \\
+            & = 2^{-n\bigl(H\left(X\right) - \epsilon\bigr)}\abs{A_{\epsilon}^{\left(n\right)}\left(X\right)}.
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            \left(1 - \epsilon\right)2^{n\bigl(H\left(X\right) - \epsilon\bigr)} \leq \abs{A_{\epsilon}^{\left(n\right)}\left(X\right)}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        The upper bound for $\abs{A_{\epsilon}^{\left(n\right)}\left(X\right)}$ holds for all $n \in \N^+$, where the lower bound only holds when $n$ is sufficiently large.
+    \end{remark}
+\end{notebox}
+One important implication of the AEP is as follows: in computers, we code information into binary strings. Now, suppose $X$ is a binary random variable, then clearly $\mathcal{X}^n = \left\{0, 1\right\}^n$. By Theorem \ref{thm:AEP}, we know that when an input binary string $X_1^n$ is very long, there exists a very small subset $A_{\epsilon}^{\left(n\right)}\left(X\right) \subseteq \mathcal{X}^n$ of size approximately $2^{nH\left(X\right)}$. This is because if $X$ is not uniform, then $0 \leq H\left(X\right) < 1$ and so $\abs{A_{\epsilon}^{\left(n\right)}\left(X\right)}$ is much smaller than $\abs{\mathcal{X}^n} = 2^n$. However, the probability that $X_1^n$ falls in $A_{\epsilon}^{\left(n\right)}\left(X\right)$ is very high according to Theorem \ref{thm:AEP}.
+\section{Fixed-to-Fixed-Length Data Compression}
+Consider a sequence of random variables $X_1^n$, we wish to construct an \textit{encoder} 
+\begin{equation*}
+    \mathrm{Enc} \colon \mathcal{X}^n \to \left\{0, 1\right\}^{nR}
+\end{equation*}
+for some $R \in \R$ to map any possible input to a binary string. Moreover, we also wish to construct a \textit{decoder}
+\begin{equation*}
+    \mathrm{Dec} \colon \left\{0, 1\right\}^{nR} \to \yhwidehat{\mathcal{X}}_1^n
+\end{equation*}
+to restore the original input as a sequence of estimators. This process is known as \textit{compression}. This can be formalised as the following:
+\begin{dfnbox}{Fixed-To-Fixed-Length Source Code}{ftf}
+    An {\color{red} \textbf{$\left(n, 2^{nR}\right)$-fixed-to-fixed-length source code}} for a random variable $X$ is an {\color{red} \textbf{encoder}}
+    \begin{equation*}
+        f \colon \mathcal{X}^n \to \left\{1, 2, \cdots, 2^{nR}\right\}
+    \end{equation*}
+    plus a {\color{red} \textbf{decoder}}
+    \begin{equation*}
+        \varphi \colon \left\{1, 2, \cdots, 2^{nR}\right\} \to \mathcal{X}^n,
+    \end{equation*}
+    where $n$ is known as the {\color{red} \textbf{block length}} and $R$, {\color{red} \textbf{code rate}}. We define $M \coloneqq f\left(X_1^n\right)$ as the {\color{red} \textbf{compression index}} and $\yhwidehat{X}_1^n \coloneqq \varphi\left(M\right)$ as the {\color{red} \textbf{reconstructed source}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Technically, $nR$ might not be an integer, but for the sake of simplicity, we take $2^{nR}$ to be the same as $\left\lceil 2^{nR}\right\rceil$.
+    \end{remark}
+\end{notebox}
+Ideally, we wish to achieve perfect compression with $\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) = 0$, but that means that we need $R = \log_2\abs{X}$, which is as if we are not compressing any data contained in $X$. Therefore, we can relax this constraint a bit and now aim at 
+\begin{equation*}
+    \lim_{n \to \infty}\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) = 0.
+\end{equation*} 
+\begin{dfnbox}{Achievable Rate}{achievable}
+    Let $X$ be a random variable. A code rate $R \geq 0$ is said to be {\color{red} \textbf{achievable}} if there exists a sequence of $\left(n, 2^{nR}\right)$-codes such that 
+    \begin{equation*}
+        \lim_{n \to \infty}\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) = 0.
+    \end{equation*} 
+\end{dfnbox}
+In other words, as $n \to \infty$, we have $\yhwidehat{X}_1^n = \varphi\bigl(f\left(X_1^n\right)\bigr) \approx X_1^n$. This is known as \textit{vanishing probability of error}. The question is: how large should we take $R$ to be in order to achieve this?
+
+First, observe that if $R$ is achievable, then any $R' > R$ is also achievable. Therefore, it suffices to focus on the minimal achievable rate.
+\begin{dfnbox}{Optimal Source Coding Rate}{optRate}
+    The {\color{red} \textbf{optimal source coding rate}} for a discrete memoryless source $X$ is defined as 
+    \begin{equation*}
+        R^*\left(X\right) \coloneqq \inf \left\{R \geq 0 \colon R \textrm{ is achievable}\right\}.
+    \end{equation*}
+\end{dfnbox}
+The following theorem states the main result for fixed-to-fixed-length data compression.
+\begin{thmbox}{Fixed-To-Fixed-Length Data Compression}{ftfDataCompression}
+    For any discrete memoryless source $X$, we have $R^*\left(X\right) = H\left(X\right)$.
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:AEP}, $A_{\epsilon}^{\left(n\right)}\left(X\right)$ is finite for all $n \in \N^+$ and all $\epsilon > 0$, so we can always fix a bijection $m_n \colon A_{\epsilon}^{\left(n\right)}\left(X\right) \to \left\{1, 2, \cdots, \abs{A_{\epsilon}^{\left(n\right)}\left(X\right)}\right\}$. For any $n \in \N^+$ and any~$\epsilon > 0$, define an encoder $f_n \colon \mathcal{X}^n \to \left\{1, 2, \cdots, 2^{nR}\right\}$ by 
+        \begin{equation*}
+            f_n\left(X_1^n\right) = \begin{cases}
+                m_n\left(X_1^n\right) & \quad\textrm{if } X_1^n \in A_{\epsilon}^{\left(n\right)}\left(X\right) \\
+                1 & \quad\textrm{otherwise}
+            \end{cases}
+        \end{equation*}
+        and a decoder $\varphi_n \colon \left\{1, 2, \cdots, 2^{nR}\right\} \to \mathcal{X}^n$ by $\varphi_n\left(M\right) = m_n^{-1}\left(M\right)$. Notice that by Theorem \ref{thm:AEP}, $\abs{A_{\epsilon}^{\left(n\right)}\left(X\right)} \leq 2^{n\bigl(H\left(X\right) + \epsilon\bigr)}$, so
+        \begin{equation*}
+            R \leq H\left(X\right) + \epsilon
+        \end{equation*}
+        for all $\epsilon > 0$. Observe that for any $X_1^n$, there could be an error if $X_1^n \notin A_{\epsilon}^{\left(n\right)}\left(X\right)$, so 
+        \begin{equation*}
+            \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \leq \Pr\left(X_1^n \notin A_{\epsilon}^{\left(n\right)}\left(X\right)\right).
+        \end{equation*}
+        By Theorem \ref{thm:AEP}, $\lim_{n \to \infty}\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) = 0$ as desired. This means that $R$ is achievable and so $R^*\left(X\right) \leq H\left(X\right) + \epsilon$ for all $\epsilon > 0$.
+        \\\\
+        Let $M = f_n\left(X_1^n\right)$. Since $\yhwidehat{\mathcal{X}}_1^n$ is an estimator for $\mathcal{X}_1^n$ obtained from $M$, by Theorem \ref{thm:Fano} we have 
+        \begin{equation*}
+            \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \frac{H\left(X_1^n \mid M\right) - 1}{\log_2\left(\abs{\mathcal{X}}^n\right)}.
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            H\left(X_1^n \mid M\right) & \leq n\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right)\log_2\abs{\mathcal{X}} + 1.
+        \end{align*}
+        Notice that 
+        \begin{align*}
+            nR & = \log_2\abs{M} \\
+            & \geq H\left(M\right) \\
+            & = H\left(M\right) - H\left(M \mid X_1^n\right) + H\left(M \mid X_1^n\right) \\
+            & = I\left(M ; X_1^n\right) \\
+            & = nH\left(X\right) - H\left(X_1^n \mid M\right).
+        \end{align*}
+        By Corollary \ref{cor:subadd}, $H\left(X_1^n\right) \leq nH\left(X\right)$, so we have 
+        \begin{equation*}
+            nR \geq nH\left(X\right) - n\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right)\log_2\abs{\mathcal{X}} - 1.
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            R \geq H\left(X\right) - \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right)\log_2\abs{\mathcal{X}} - \frac{1}{n}.
+        \end{equation*}
+        Since 
+        \begin{equation*}
+            \lim_{n \to \infty}\left(\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right)\log_2\abs{\mathcal{X}} + \frac{1}{n}\right) = 0,
+        \end{equation*}
+        we have $R \geq H\left(X\right)$. Therefore, $R^*\left(X\right) \geq H\left(X\right)$. Combining the two directions we have $R^*\left(X\right) = H\left(X\right)$.
+    \end{proof}
+\end{thmbox}
+We can attempt to relax the condition on the error probability to 
+\begin{equation*}
+    \limsup_{n \to \infty}\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \leq \epsilon
+\end{equation*}
+for some $\epsilon \in \left[0, 1\right)$ instead. This kind of behaviour is called $\epsilon$-achievability. If we define the optimal $\epsilon$-achievable rate to be 
+\begin{equation*}
+    R_{\epsilon}^*\left(X\right) \coloneqq \left\{R \geq 0 \colon R \textrm{ is } \epsilon\textrm{-achievable}\right\}.
+\end{equation*}
+It is clear that $R^*\left(X\right) = R^*_0\left(X\right) \geq R^*_{\epsilon}\left(X\right)$ for all $\epsilon \in \left[0, 1\right)$. Surprisingly, this does not improve $R^*\left(X\right)$. We first consider a lemma which helps us prove this:
+\begin{lembox}{Information Spectrum Technique}{infoSpec}
+    For any $\left(n, 2^{nR}\right)$-code, then 
+    \begin{equation*}
+        \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \inf_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        For every $\gamma > 0$ and $n \in \N^+$, define 
+        \begin{align*}
+            T_n & \coloneqq \left\{\mathbfit{x} \in \mathcal{X}^n \colon \frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right\}, \\
+            S_n & \coloneqq \left\{\mathbfit{x} \in \mathcal{X}^n \colon \phi_n\bigl(f_n\left(\mathbfit{x}\right)\bigr) = \mathbfit{x}\right\}.
+        \end{align*}
+        Consider 
+        \begin{align*}
+            \Pr\left(X_1^n \in T_n\right) & = \Pr\left(X_1^n \in T_n \cap S_n\right) + \Pr\left(X_1^n \in T_n \cap S_n^c\right) \\
+            & \leq \Pr\left(X_1^n \in T_n \cap S_n\right) + \Pr\left(X_1^n \in S_n^c\right) \\
+            & = \Pr\left(X_1^n \in T_n \cap S_n\right) + \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right).
+        \end{align*}
+        For each $\mathbfit{x} \in T_n$, we have 
+        \begin{equation*}
+            \prod_{i = 1}^{n}p_X\left(x_i\right) \leq 2^{-n\left(R + \gamma\right)},
+        \end{equation*}
+        and so 
+        \begin{align*}
+            \Pr\left(X_1^n \in T_n \cap S_n\right) & = \sum_{\mathbfit{x} \in T_n \cap S_n}\prod_{i = 1}^{n}p_X\left(x_i\right) \\
+            & \leq \sum_{\mathbfit{x} \in T_n \cap S_n}2^{-n\left(R + \gamma\right)} \\
+            & \leq 2^{-n\left(R + \gamma\right)}\abs{S_n} \\
+            & = 2^{-n\gamma}.
+        \end{align*}
+        Therefore, $\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \Pr\left(X_1^n \in T_n\right) - 2^{-n\gamma} \geq \Pr\left(X_1^n \in T_n\right) - \e^{-n\gamma}$, and so 
+        \begin{equation*}
+            \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \inf_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
+        \end{equation*}
+    \end{proof}
+\end{lembox}
+Using the above lemma, we can prove that an optimal achievable rate can never be smaller than the entropy of the source.
+\begin{thmbox}{Strong Converse of Optimal Rate}{strongConverse}
+    If $R < H\left(X\right)$, then $\lim_{n \to \infty}\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) = 1$.
+    \tcblower
+    \begin{proof}
+        For any $\eta > 0$, let $R = H\left(X\right) - \eta$, then by Lemma \ref{lem:infoSpec}, 
+        \begin{align*}
+            \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) & \geq \Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \frac{\eta}{2}\right) - \e^{-n\frac{\eta}{2}} \\
+            & = \Pr\left(\frac{1}{n}\sum_{i = 1}^{n}\log_2\frac{1}{p_X\left(x_i\right)} \geq H\left(X\right) - \frac{\eta}{2}\right) - \e^{-n\frac{\eta}{2}} \\
+            & \geq \Pr\left(\abs{H\left(X\right) - \frac{1}{n}\sum_{i = 1}^{n}\log_2\frac{1}{p_X\left(x_i\right)}} \leq \frac{\eta}{2}\right) - \e^{-n\frac{\eta}{2}}.
+        \end{align*}
+        By Theorem \ref{thm:weakLawLargeNum}, 
+        \begin{align*}
+            \lim_{n \to \infty}\Pr\left(\abs{H\left(X\right) - \frac{1}{n}\sum_{i = 1}^{n}\log_2\frac{1}{p_X\left(x_i\right)}} \leq \frac{\eta}{2}\right) = 1.
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            \lim_{n \to \infty}\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) = 1.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 \end{document}
