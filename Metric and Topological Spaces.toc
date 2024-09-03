@@ -5,3 +5,4 @@
 \contentsline {section}{\numberline {1.4}Closed Sets}{14}{section.1.4}%
 \contentsline {section}{\numberline {1.5}Continuity}{18}{section.1.5}%
 \contentsline {section}{\numberline {1.6}Product Space}{22}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Quotient Topological Spaces}{29}{section.1.7}%

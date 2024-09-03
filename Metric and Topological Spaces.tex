@@ -772,13 +772,26 @@ We wish to use the following proposition to characterise all uniformly continuou
         It suffices to prove the ``if'' direction only because the other direction is trivial from Definition \ref{dfn:uniformContinuity}. We shall consider the contrapositive statement. Suppose that there exist sequences $\left\{x_i\right\}_i^{\infty}$ and $\left\{y_i\right\}_{i}^{\infty}$ with $\lim_{i \to \infty}d_X\left(x_i, y_i\right) = 0$ such that~$\lim_{i \to \infty}d_Y\bigl(f\left(x_i\right), f\left(y_i\right)\bigr) \neq 0$, then for all $\delta > 0$, there exists some $N \in \N^+$ such that $d_X\left(x_i, y_i\right) > 0$ for all $i > N$. However, notice that there exists some $\epsilon > 0$ such that for all~$M \in \N^+$, there exists some $m > M$ with $d_Y\bigl(f\left(x_m\right), f\left(y_m\right)\bigr) \geq \epsilon$. This means that for any $\epsilon > 0$, we can find some $k$ such that for all $\delta > 0$, we have~$d_X\left(x_k, y_k\right) < \delta$ but $d_Y\bigl(f\left(x_k\right), f\left(y_k\right)\bigr) \geq \epsilon$. By Definition \ref{dfn:uniformContinuity}, this implies that $f$ is not uniformly continuous.
     \end{proof}
 \end{probox}
+Recall that previously, we have defined convergence for sequences. In particular, we can consider a sequence of functions. Note that, if we say that $\left\{f_n\right\}_{n = 1}^{\infty}$ converges to some function $f$, it might have two different interpretations. First, it might be the case where for any fixed $x$, we have $f_n\left(x\right)$ converging to $f\left(x\right)$; second it is also possible that the values of $f_n$ and $f$ becomes infinitesimally close when $n$ is large over all possible $x$. We will formalise this distinction as follows:
 \begin{dfnbox}{Point-wise and Uniform Convergence}{pointwiseAndUniform}
     Let $\left\{f_n\right\}_{n = 1}^{\infty}$ be a sequence of maps from $X$ to a metric space $\left(Y, d\right)$. We say that $\left\{f_n\right\}_{n = 1}^{\infty}$ {\color{red} \textbf{converges point-wisely}} to $f \colon X \to Y$ if for any $x \in X$, $\lim_{n \to \infty}f_n\left(x\right) = f\left(x\right)$, and that $\left\{f_n\right\}_{n = 1}^{\infty}$ {\color{red} \textbf{converges uniformly}} to $f \colon X \to Y$ if for any $\epsilon > 0$, there exists some~$N \in \N^+$ such that for all $n \geq N$ and any $x \in X$, $d\bigl(f_n\left(x\right), f\left(x\right)\bigr) < \epsilon$.
 \end{dfnbox}
+The following proposition gives a test for continuity using convergence of functional sequences:
 \begin{probox}{Uniform Convergence Implies Continuity}{uniformThenContinuous}
     Let $\left\{f_n\right\}_{n = 1}^{\infty}$ be a sequence of maps from a metric space $\left(X, d_X\right)$ to a metric space $\left(Y, d_Y\right)$. If $\left\{f_n\right\}_{n = 1}^{\infty}$ converges uniformly to $f \colon X \to Y$, then $f$ is continuous.
+    \tcblower
+    \begin{proof}
+        Since $\left\{f_n\right\}_{n = 1}^{\infty}$ converges uniformly to $f$, for any $x \in X$ and any $\epsilon > 0$, there exists some $N \in \N^+$ such that $d_Y\bigl(f_n\left(x\right), f\left(x\right)\bigr) < \frac{\epsilon}{3}$ for all $n > N$. Since $f_n$ is continuous, for each $x_0 \in X$ there exists some $\delta > 0$ such that $d_Y\bigl(f_n\left(x_0\right), f_n\left(x\right)\bigr) < \frac{\epsilon}{3}$ whenever~$d_X\left(x_0, x\right) < \delta$. Notice that for all $x \in X$ such that $d_X\left(x_0, x\right) < \delta$, we have 
+        \begin{align*}
+            d_Y\bigl(f\left(x_0\right), f\left(x\right)\bigr) & \leq d_Y\bigl(f\left(x_0\right), f_n\left(x_0\right)\bigr)  + d_Y\bigl(f_n\left(x_0\right), f_n\left(x\right)\bigr) + d_Y\bigl(f_n\left(x\right), f\left(x\right)\bigr) \\
+            & < \epsilon.
+        \end{align*}
+        Therefore, $f$ is continuous on $X$.
+    \end{proof}
 \end{probox}
+In other words, a function is continuous if there exists some sequence of continuous functions which converges to it uniformly.
 \section{Product Space}
+Since topological spaces are essentially sets, we can consider the product of multiple spaces.
 \begin{dfnbox}{Projection}{proj}
     Let $\left\{X_{\alpha}\right\}_{\alpha \in \Lambda}$ be a sequence of non-empty sets, consider the product space $\prod_{\alpha \in \Lambda}X_{\alpha}$. The {\color{red} \textbf{projection}} on the $\beta$-th factor is 
     \begin{equation*}
@@ -786,44 +799,137 @@ We wish to use the following proposition to characterise all uniformly continuou
     \end{equation*}
     such that $\pi_{X_{\beta}}\left(\mathbfit{x}\right) = x_{\beta}$.
 \end{dfnbox}
+Observe that essentially, the projection maps a vector in the product space to some element in the space representing the $\beta$-th dimension.
+
 Note that for any $\beta \in \Lambda$ and any $U \subseteq X_{\beta}$, we have
 \begin{equation*}
     \pi_{X_{\beta}}^{-1}\left(U\right) = \left\{\mathbfit{x} \in \prod_{\alpha \in \Lambda}X_{\alpha} \colon x_{\beta} \in U\right\}.
 \end{equation*}
+In other words, the pre-image of projection for some set $U$ is the set of all vectors in the product space whose $\beta$-th component is in $U$.
 \begin{dfnbox}{Product Topology}{prodTopo}
     Let $\left\{\left(X_{\alpha}, \mathcal{T}_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ be a sequence of non-empty topological spaces. The {\color{red} \textbf{product topology}} is the topology generated by the sub-basis 
     \begin{equation*}
         \mathcal{S} \coloneqq \left\{\pi_{X_{\alpha}}^{-1}\left(U_{\alpha}\right) \colon \alpha \in \Lambda, U_{\alpha} \in \mathcal{T}_{\alpha}\right\}.
     \end{equation*}
 \end{dfnbox}
+Intuitively, the product topology is formed by all vectors whose every component is contained in some open set in one of the topological spaces. This might seem similar to collecting all products formed taking one arbitrary open set from each space and multiplying them together.
 \begin{dfnbox}{Box Topology}{box}
-    Let $\left\{\left(X_{\alpha}, \mathcal{T}_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ be a sequence of non-empty topological spaces. The {\color{red} \textbf{box topology}} is the topology generated by the sub-basis 
+    Let $\left\{\left(X_{\alpha}, \mathcal{T}_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ be a sequence of non-empty topological spaces. The {\color{red} \textbf{box topology}} is the topology generated by the basis 
     \begin{equation*}
         \mathcal{B} \coloneqq \left\{\prod_{\alpha \in \Lambda}U_{\alpha} \colon U_{\alpha} \in \mathcal{T}_{\alpha}\right\}.
     \end{equation*}
 \end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        For finite product spaces, the product topology and the box topology are the same. However, they are different if the product is infinite.
+    \end{remark}
+\end{notebox}
+We may check that the set $\mathcal{B}$ in Definition \ref{dfn:box} is indeed a basis. Take any $\mathcal{x} \in \prod_{\alpha \in \Lambda}X_{\alpha}$, then for each $\alpha \in \Lambda$, there exists some $U_{\alpha} \in \mathcal{T}_{\alpha}$ such that $x_{\alpha} \in U_{\alpha}$, which implies that 
+\begin{equation*}
+    \mathbfit{x} \in \prod_{\alpha \in \Lambda}U_{\alpha}.
+\end{equation*}
+If $V \coloneqq \prod_{\alpha \in \Lambda}U_{\alpha}$ and $U \coloneqq \prod_{\alpha \in \Lambda}U_{\alpha}$ are such that $\mathbfit{x} \in U \cap V$, then $x_{\alpha} \in U_{\alpha} \cap V_{\alpha}$ for each~$\alpha \in \Lambda$. Clearly, $U_{\alpha} \cap V_{\alpha} \in \mathcal{T}_{\alpha}$, so we can take $W \coloneqq \prod_{\alpha \in \Lambda}U_{\alpha} \cap V_{\alpha}$ such that 
+\begin{equation*}
+    \mathbfit{x} \in W \subseteq V \cap U.
+\end{equation*}
+We now make a claim that the projection from product topology is always continuous.
 \begin{probox}{Product Topology Guarantees Continuous Projection}{continuousProj}
     Let $\left\{\left(X_{\alpha}, \mathcal{T}_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ be a sequence of non-empty topological spaces. The product topology on $\prod_{\alpha \in \Lambda}X_{\alpha}$ is the coarsest topology such that $\pi_{X_{\alpha}}$ is continuous for all $\alpha \in \Lambda$.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{S}$ be the sub-basis generating the product topology and let $U \subseteq X_{\alpha}$ be open, then $\pi^{-1}_{X_{\alpha}}\left(U\right) \in \mathcal{S}$ and therefore is open. Therefore, $\pi_{X_{\alpha}}$ is continuous with respect to the product topology.
+        \\\\
+        Let $\mathcal{T}$ be any topology on $\prod_{\alpha \in \Lambda}X_{\alpha}$ such that $\pi_{X_{\alpha}}$ is continuous, then for any open set $U \in \mathcal{T}$, the pre-image $\pi^{-1}_{X_{\alpha}}\left(U\right) \in \mathcal{S}$ must be open, which implies that $\mathcal{S} \subseteq \mathcal{T}$. Notice that this is equivalent to $\mathcal{T}$ containing 
+        \begin{equation*}
+            \mathcal{B} \coloneqq \left\{\bigcap_{\alpha \in \Lambda}\pi^{-1}_{X_{\alpha}}\left(U_{\alpha}\right) \colon \Lambda' \subseteq \Lambda \textrm{ is finite}, U_{\alpha} \in \mathcal{T}_{\alpha}\right\}.
+        \end{equation*}
+        However, $\mathcal{B}$ generates the product topology, which is the coarsest topology containing~$\mathcal{B}$, so $\mathcal{T}$ must be finer than the product topology.
+    \end{proof}
 \end{probox}
+Analogously, we can construct continuous functions over the product space using continuous functions defined on each of the individual spaces.
 \begin{probox}{Continuous of Functions over Product Spaces}{continuousOverProd}
     Let $\left\{\left(X_{\alpha}, \mathcal{T}_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ be a sequence of non-empty topological spaces and let $Y$ be a topological space. For any $\alpha \in \Lambda$, define $f_{\alpha} \colon Y \to X_{\alpha}$, then $f \colon Y \to \prod_{\alpha \in \Lambda}X_{\alpha}$ defined by 
     \begin{equation*}
         f\left(y\right) = \bigl(f_{\alpha}\left(y\right)\bigr)_{\alpha \in \Lambda}
     \end{equation*}
     is continuous if and only if $f_{\alpha}$ is continuous for all $\alpha \in \Lambda$.
+    \tcblower
+    \begin{proof}
+        Suppose that $f$ is continuous. Notice that for all $\alpha \in \Lambda$,
+        \begin{equation*}
+            f_{\alpha}\left(y\right) = \pi_{X_{\alpha}}\bigl(f\left(y\right)\bigr)
+        \end{equation*}
+        for all $y \in Y$. Therefore, $f_{\alpha} = \pi_{X_{\alpha}} \circ f$. By Proposition \ref{pro:continuousProj}, $\pi_{X_{\alpha}}$ is continuous, and so $f_{\alpha}$ is continuous for all $\alpha \in \Lambda$.
+        \\\\
+        Conversely, suppose that $f_{\alpha}$ is continuous for all $\alpha \in \Lambda$. Notice that the basis for the product topology is given by 
+        \begin{equation*}
+            \mathcal{B} \coloneqq \left\{\bigcap_{\alpha \in \Lambda}\pi^{-1}_{X_{\alpha}}\left(U_{\alpha}\right) \colon \Lambda' \subseteq \Lambda \textrm{ is finite}, U_{\alpha} \in \mathcal{T}_{\alpha}\right\}.
+        \end{equation*}
+        For any finite $\Lambda' \subseteq \Lambda$, we have 
+        \begin{align*}
+            f^{-1}\left(\bigcap_{\alpha \in \Lambda}\pi^{-1}_{X_{\alpha}}\left(U_{\alpha}\right)\right) & = \bigcap_{\alpha \in \Lambda}f^{-1}\left(\pi^{-1}_{X_{\alpha}}\left(U_{\alpha}\right)\right) \\
+            & = \bigcap_{\alpha \in \Lambda}\left(\pi_{X_{\alpha}} \circ f\right)^{-1}\left(U_{\alpha}\right) \\
+            & =  \bigcap_{\alpha \in \Lambda}f_{\alpha}^{-1}\left(U_{\alpha}\right),
+        \end{align*}
+        which is open. Therefore, $f$ is continuous.
+    \end{proof}
 \end{probox}
-Let $f \colon \R \to \R^{\N}$ such that $f\left(x\right) = \left(x, x, \cdots\right)$. We claim that $f$ is not continuous with respect to the box topology.
-\begin{corbox}{}{}
+Notice that it is important to equip the product space with the product topology. Let $f \colon \R \to \R^{\N}$ such that $f\left(x\right) = \left(x, x, \cdots\right)$. We claim that $f$ is not continuous with respect to the box topology.
+
+The following result should be common sense enough.
+\begin{corbox}{Arithmetic of Continuous Functions}{arithmetic}
     Let $X$ be a topological space and let $f, g \colon X \to \R$ be continuous functions, then the functions $f + g$, $f - g$ and $fg$ are continuous. If $0 \notin g\left(X\right)$, then $\frac{f}{g}$ is continuous.
 \end{corbox}
-\begin{probox}{}{}
-    Let $\left(X, \mathcal{T}_X\right)$ and $\left(Y, \mathcal{T}_Y\right)$ be topological spaces. Let $A \subseteq X$, $B \subseteq Y$ and $\mathcal{T}_{A \times B}$ be the subspace topology on $A \times B$ induced by $\mathcal{T}_X \times \mathcal{T}_Y$, then $\mathcal{T}_{A \times B} = \mathcal{T}_A \times \mathcal{T}_B$.
+Intuitively, the subspace topology on product space should be the product of subspace topologies.
+\begin{probox}{Subspace Topology on Product Spaces}{prodSubTopo}
+    Let $\left(X, \mathcal{T}_X\right)$ and $\left(Y, \mathcal{T}_Y\right)$ be topological spaces. Let $A \subseteq X$, $B \subseteq Y$ and $\mathcal{T}_{A \times B}$ be the subspace topology on $A \times B$ induced by the product topology. If $\mathcal{T}_{A \times B}'$ be the product topology induced by the subspace topologies on $A$ and $B$, then $\mathcal{T}_{A \times B} = \mathcal{T}_{A \times B}'$.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{T}_A$ and $\mathcal{T}_B$ be the subspace topologies on $A$ and $B$ respectively, then $\mathcal{T}_{A \times B}'$ is generated by the basis 
+        \begin{equation*}
+            \mathcal{B}' \coloneqq \left\{T_A \times T_B \colon T_A \in \mathcal{T}_A, T_B \in \mathcal{T}_B\right\}.
+        \end{equation*}
+        Let $\mathcal{T}_{X \times Y}$ be the product topology for $X \times Y$, then $\mathcal{T}_{X \times Y}$ is generated by 
+        \begin{equation*}
+            \mathcal{B}_{X \times Y} \coloneqq \left\{U_X \times U_Y \colon U_X \in \mathcal{T}_X, U_Y \in \mathcal{T}_Y\right\}.
+        \end{equation*}
+        Therefore, by Proposition \ref{pro:subspaceBasis}, $\mathcal{T}_{A \times B}$ is generated by 
+        \begin{equation*}
+            \mathcal{B} \coloneqq \left\{\left(U_X \times U_Y\right) \cap \left(A \times B\right) \colon U_X \in \mathcal{T}_X, U_Y \in \mathcal{T}_Y\right\}.
+        \end{equation*}
+        It is clear that $\mathcal{B} = \mathcal{B}'$ (???).
+    \end{proof}
 \end{probox}
-\begin{probox}{}{}
-    Let $n \in \Z^+$ and $n = \sum_{i = 1}^km_i$ with $m_i \in \Z^+$ for $i = 1, 2, \cdots, k$, then 
-    \begin{equation*}
-        \prod_{i = 1}^k\R^{m_i} = \R^n.
-    \end{equation*}
+\begin{probox}{Standard Topology Decomposition on Euclidean Spaces}{decompose}
+    Let $n \in \Z^+$ and $n = \sum_{i = 1}^km_i$ with $m_i \in \Z^+$ for $i = 1, 2, \cdots, k$. Let $\mathcal{T}_i$ be the standard topology on $\R^{m_i}$ and $\mathcal{T}$ be the product topology induced by the $\mathcal{T}_i$'s, then $\mathcal{T}$ is the standard topology on $\R^n$.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{B}_n$ be the standard basis generating the standard topology $\mathcal{T}_n$ over $\R^n$ for each $n \in \N^+$. Take any $B_r^{\left(n\right)}\left(\mathbfit{x}\right) \in \mathcal{B}_n$. For any $\mathbfit{y} \in B_r^{\left(n\right)}\left(\mathbfit{x}\right)$, define $t = r - \norm{\mathbfit{x - y}}$ and consider, for each $i = 1, 2, \cdots, k$,
+        \begin{equation*}
+            B_t^{\left(m_i\right)}\left(\pi_{\R^{m_i}}\left(\mathbfit{y}\right)\right) \in \mathcal{B}_{m_i} \subseteq \mathcal{T}_i
+        \end{equation*}
+        to be an open ball centred at the projection of $\mathbfit{y}$ to the $m_i$-th factor. Denote 
+        \begin{equation*}
+            B_t \coloneqq \prod_{i = 1}^{k}B_t^{\left(m_i\right)}\left(\pi_{\R^{m_i}}\left(\mathbfit{y}\right)\right).
+        \end{equation*}
+        Clearly, $B_t$ is contained by the basis for the product topology induced by the $\mathcal{T}_i$'s. For any $\mathbfit{p} \in B_t$, we have 
+        \begin{equation*}
+            \norm{\mathbfit{p - x}} \leq \norm{\mathbfit{p - y}} + \norm{\mathbfit{x - y}} < r.
+        \end{equation*} 
+        Therefore, $\mathbfit{y} \in B_t \subseteq B_r^{\left(n\right)}\left(\mathbfit{x}\right)$. By Proposition \ref{pro:fineBasis}, $\mathcal{T} \subseteq \mathcal{T}_n$. Conversely, take an arbitrary $U_i \in \mathcal{T}_i$ for each $i = 1, 2, \cdots, k$. Notice that for any $\mathbfit{x} \in \prod_{i = 1}^kU_i$, there is some open ball $B_{r_i}^{\left(m_i\right)}\left(\pi_{\R^{m_i}}\left(\mathbfit{x}\right)\right) \in \mathcal{B}_{m_i}$, centred at the projection of $\mathbfit{x}$ to the $m_i$-th factor, such that $B_{r_i}^{\left(m_i\right)}\left(\pi_{\R^{m_i}}\left(\mathbfit{x}\right)\right) \subseteq U_i$. Take
+        \begin{equation*}
+            r \coloneqq \min_{1 \leq i \leq k}r_i
+        \end{equation*}
+        and consider the open ball $B_r^{\left(n\right)}\left(\mathbfit{x}\right) \in \mathcal{B}_n$. For any $\mathbfit{y} \in B_r^{\left(n\right)}\left(\mathbfit{x}\right)$, consider 
+        \begin{align*}
+            \norm{\mathbfit{y - x}} & = \sum_{i = 1}^{k}\norm{\pi_{\R^{m_i}}\left(\mathbfit{y}\right) - \pi_{\R^{m_i}}\left(\mathbfit{x}\right)} < r \leq \min_{1 \leq i \leq k}r_i.
+        \end{align*}
+        Therefore, for every positive integer $i \leq k$, we have 
+        \begin{equation*}
+            \norm{\pi_{\R^{m_i}}\left(\mathbfit{y}\right) - \pi_{\R^{m_i}}\left(\mathbfit{x}\right)} < r_i,
+        \end{equation*}
+        which implies that $\pi_{\R^{m_i}}\left(\mathbfit{y}\right) \in B_{r_i}^{\left(m_i\right)}\left(\pi_{\R^{m_i}}\left(\mathbfit{x}\right)\right) \subseteq U_i$. Therefore, $\mathbfit{y} \in \prod_{i = 1}^{k}U_i$ and so $\mathcal{T}_n \subseteq \mathcal{T}$ by Proposition \ref{pro:fineBasis}. Therefore, $\mathcal{T} = \mathcal{T}_n$.
+    \end{proof}
 \end{probox}
 \begin{dfnbox}{$L^p$-Metric}{Lp}
     Let $\left(X_1, d_{X_1}\right), \left(X_2, d_{X_2}\right), \cdots, \left(X_n, d_{X_n}\right)$ be metric spaces, we define 
@@ -844,6 +950,31 @@ Let $f \colon \R \to \R^{\N}$ such that $f\left(x\right) = \left(x, x, \cdots\ri
         \rho\left(x, y\right) \coloneqq \frac{d\left(x, y\right)}{1 + d\left(x, y\right)},
     \end{equation*}
     then $\rho$ is a metric on $X$ and $\mathrm{diam}_{\rho}\left(X\right) < 1$. Let $\mathcal{T}_{\rho}$ and $\mathcal{T}_d$ be the topologies on $X$ induced by $\rho$ and $d$ respectively, then $\mathcal{T}_{\rho} = \mathcal{T}_d$.
+    \tcblower
+    \begin{proof}
+        We first show that $\rho$ is a metric. The non-negativity and symmetry are obvious, so it suffices to prove the triangle inequality. Consider 
+        \begin{equation*}
+            f\left(t\right) = \frac{t}{1 + t}.
+        \end{equation*}
+        One may check that $f$ is an increasing concave function with $f\left(0\right) = 0$. Therefore,
+        \begin{equation*}
+            \frac{b}{a + b}f\left(a + b\right) = \frac{a}{a + b}f\left(0\right) + \frac{b}{a + b}f\left(a + b\right) \leq f\left(b\right).
+        \end{equation*}
+        By symmetry, $\frac{a}{a + b}f\left(a + b\right) \leq f\left(a\right)$, and so $f\left(a\right) + f\left(b\right) \geq f\left(a + b\right)$. Therefore, for any $x, y, z \in X$, 
+        \begin{align*}
+            \rho\left(x, y\right) + \rho\left(y, z\right) & = f\bigl(d\left(x, y\right)\bigr) + f\bigl(d\left(y, z\right)\bigr) \\
+            & \geq f\bigl(d\left(x, y\right) + d\left(y, z\right)\bigr) \\
+            & \geq f\bigl(d\left(x, z\right)\bigr) \\
+            & = \rho\left(x, z\right).
+        \end{align*}
+        It is clear that $\mathrm{diam}_{\rho}\left(X\right) = \max_{\left(x, y\right) \in X^2}\rho\left(x, y\right) < 1$. Notice that 
+        \begin{align*}
+            2\rho\left(x, y\right) & = \frac{2d\left(x, y\right)}{1 + d\left(x, y\right)} \\
+            & > d\left(x, y\right) \\
+            & > \rho\left(x, y\right)
+        \end{align*}
+        for all $x, y \in X$. Therefore, $\mathcal{T}_d = \mathcal{T}_{\rho}$.
+    \end{proof}
 \end{probox}
 \begin{probox}{Product Topology on Infinite Product}{infProdTopo}
     Let $\left\{\left(X, d_{X_i}\right)\right\}_{i = 1}^{\infty}$ be a sequence of metric spaces and define $\rho_i \colon X_i \times X_i \to \R$ by 
@@ -855,5 +986,39 @@ Let $f \colon \R \to \R^{\N}$ such that $f\left(x\right) = \left(x, x, \cdots\ri
         d\left(\mathbfit{x}, \mathbfit{y}\right) \coloneqq \sup \left\{\frac{\rho_{i}\left(x_i, y_i\right)}{i} \colon i \in \Z^+\right\}
     \end{equation*}
     is a metric inducing the product topology on $\prod_{i = 1}^{\infty}X_i$.
+    \tcblower
+    \begin{proof}
+        Define $\rho_i' = \frac{1}{i}\rho_i$. Let $\mathcal{B}_d$ be the basis induced by the metric $d$ and $\mathcal{B}_i$ be the basis induced by the metric $\rho_i'$. Take any $B_r^d\left(\mathbfit{x}\right) \in \mathcal{B}_d$. For any $\mathbfit{y} \in B_r^d\left(\mathbfit{x}\right)$, we have 
+        \begin{equation*}
+            \frac{\rho_i\left(x_i, y_i\right)}{i} \leq d\left(\mathbfit{x}, \mathbfit{y}\right) < r
+        \end{equation*}
+        for all $i \in \Z^+$. Therefore, $\mathbfit{y} \in B_r^{\rho_i'}$ and so $B_r^d\left(\mathbfit{x}\right) \subseteq \prod_{i = 1}^{\infty}B_r^{\rho_i'}$
+        For any $\mathbfit{x} \in \prod_{i = 1}^{\infty}X_i$, Notice that for any $r > 0$, there exists some $N \in \N^+$ such that $\frac{1}{i} < \frac{r}{2}$ for all $i \geq N$. By Proposition \ref{pro:rho}, $\mathrm{diam}\left(\rho_i\right) < 1$ for all $i \in \N^+$, so 
+        \begin{equation*}
+            \mathrm{diam}\left(\frac{1}{i}\rho_i\right) = \frac{1}{i}\mathrm{diam}\left(\rho_i\right) < r
+        \end{equation*}
+        whenever $i \geq N$.  Therefore, $B_r^{\rho_i'}\left(\mathbfit{x}_i\right) = X_i$ for any $\mathbfit{x}_i \in X_i$. This means that for any $\mathbfit{x} \in \prod_{i = 1}^{\infty}X_i$, we can write 
+        \begin{equation*}
+            B_r^d\left(\mathbfit{x}\right) = \prod_{i = 1}^{N - 1}B_r
+        \end{equation*}
+    \end{proof}
 \end{probox}
+\section{Quotient Topological Spaces}
+\begin{dfnbox}{Quotient Map}{quotient}
+    Let $\left(X, \mathcal{T}_X\right)$ and $\left(Y, \mathcal{T}_Y\right)$ be topological spaces. A surjective map $p \colon X \to Y$ is a {\color{red} \textbf{quotient map}} if for all $V \subseteq Y$, $V \in \mathcal{T}_Y$ if and only if $p^{-1}\left(V\right) \subseteq X$ is open in $X$.
+\end{dfnbox}
+\begin{dfnbox}{Open and Closed Maps}{openAndClosed}
+    A continuous map $f \colon X \to Y$ is {\color{red} \textbf{open}} if $f\left(U\right)$ is open in $Y$ for any open set $U \subseteq X$, and {\color{red} \textbf{closed}} if $f\left(V\right)$ is closed in $Y$ for any closed set $V \subseteq X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        If a surjective continuous map is open or closed, then it is a quotient map.
+    \end{remark}
+\end{notebox}
+\begin{notebox}
+    \begin{remark}
+        Quotient map, open map and closed map are all preserved under composition.
+    \end{remark}
+\end{notebox}
+
 \end{document}
