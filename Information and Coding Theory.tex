@@ -264,12 +264,12 @@ Note that $\mathbb{E}[X]$ is a real number while $\mathbb{E}[X \mid Y]$ is a \te
 The above formula can be interpreted as the fact that $\mathbb{E}[X \mid Y]$ is a best estimator for $X$.
 \section{Markov Chains}
 Recall that $2$ random variables $X$ and $Z$ are \textit{independent} if and only if $P_{X, Z}\left(x, z\right) = P_X\left(x\right)P_Z\left(z\right)$ or $P_{X \mid Z}\left(x \mid z\right) = P_X\left(x\right)$ for all $\left(x, z\right) \in \mathcal{X} \times \mathcal{Z}$. We will extend this definition with a third random variable.
-\begin{dfnbox}{Markov Chain}{MarkovChain}
+\begin{dfnbox}{Conditional Independence}{condInd}
     Let $X, Y, Z$ be random variables. If 
     \begin{equation*}
         P_{X, Y, Z}\left(x, y, z\right) = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid Y}\left(z \mid y\right)
     \end{equation*}
-    for all $\left(x, y, z\right) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$, then we say that $X, Y, Z$ forms a {\color{red} \textbf{Markov chain}} in this order, or that $X$ and $Z$ are conditionally independent on $Y$.
+    for all $\left(x, y, z\right) \in \mathcal{X} \times \mathcal{Y} \times \mathcal{Z}$, then we say that $X, Y, Z$ forms a {\color{red} \textbf{Markov chain}} in this order, or that $X$ and $Z$ are {\color{red} \textbf{conditionally independent}} on $Y$.
 \end{dfnbox}
 Recall also that the \textit{Bayes's Rule} states the following:
 \begin{thmbox}{Bayes's Rule}{BayesRule}
@@ -294,7 +294,7 @@ We can denote a Markov chain by $X$-$Y$-$Z$. Intuitively, such a relationship sh
     If $X$-$Y$-$Z$ is a Markov chain, then $Z$-$Y$-$X$ is also a Markov chain.
     \tcblower
     \begin{proof}
-        By Definition \ref{dfn:MarkovChain}, 
+        By Definition \ref{dfn:condInd}, 
         \begin{align*}
             P_{X, Y, Z}\left(x, y, z\right) & = P_X\left(x\right)P_{Y \mid X}\left(y \mid x\right)P_{Z \mid Y}\left(z \mid y\right).
         \end{align*}
@@ -1282,7 +1282,7 @@ for some $\epsilon \in \left[0, 1\right)$ instead. This kind of behaviour is cal
 \end{equation*}
 It is clear that $R^*\left(X\right) = R^*_0\left(X\right) \geq R^*_{\epsilon}\left(X\right)$ for all $\epsilon \in \left[0, 1\right)$. Surprisingly, this does not improve $R^*\left(X\right)$. We first consider a lemma which helps us prove this:
 \begin{lembox}{Information Spectrum Technique}{infoSpec}
-    For any $\left(n, 2^{nR}\right)$-code, then 
+    For any $\left(n, 2^{nR}\right)$-code, 
     \begin{equation*}
         \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \inf_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
     \end{equation*}
@@ -1337,4 +1337,180 @@ Using the above lemma, we can prove that an optimal achievable rate can never be
         \end{equation*}
     \end{proof}
 \end{thmbox}
+\section{Stochastic Processes}
+In the previous section, we have discussed some results in fixed-to-fixed-length source coding for discrete memoryless sources. However, there are times where the source is not memoryless. A general model we adopt for such cases is \textit{stochastic processes}.
+\begin{dfnbox}{Discrete Time Stochastic Process}{stochastic}
+    A {\color{red} \textbf{discrete time stochastic process}} is a sequence of random variables $\left\{X_i\right\}_{i \in \N^+}$ such that 
+    \begin{equation*}
+        \sum_{x_n \in \mathcal{X}_n}p_{X_1^n}\left(x_1, x_2, \cdots, x_n\right) = p_{X_1^{n - 1}}\left(x_1, x_2, \cdots, x_{n - 1}\right)
+    \end{equation*}
+    for all $n \in \N^+$.
+\end{dfnbox}
+In a sense, a stochastic process is fully characterised by all of its joint PMFs such that the PMFs stay consistent under marginalisation. In our case, we focus on some stochastic processes satisfying certain special properties.
+\begin{dfnbox}{Stationary Stochastic Process}{stationary}
+    A stochastic process $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ is {\color{red} \textbf{stationary}} if for all $n \in \N^+$ and all $\ell \in \N$, 
+    \begin{equation*}
+        p_{X_1^n}\left(x_1, x_2, \cdots, x_n\right) = p_{X_{1 + \ell}^{n + \ell}}\left(x_1, x_2, \cdots, x_n\right)
+    \end{equation*}
+    for all $x_1, x_2, \cdots, x_n \in \mathcal{X}$.
+\end{dfnbox}
+Here, $\ell$ is known as the \textit{shift}. A stochastic can become a Markov chain if every random variable $X_i$ in the sequence only depends on the immediate previous random variable.
+\begin{dfnbox}{Markov Chain}{MarkovChain}
+    A stochastic process $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ is a {\color{red} \textbf{Markov chain}} if 
+    \begin{equation*}
+        p_{X_{n + 1} \mid X_1^n}\left(x_{n + 1} \mid x_1, x_2, \cdots, x_n\right) = p_{X_{n + 1} \mid X_n}\left(x_{n + 1} \mid x_n\right)
+    \end{equation*}
+    for all $n \in \N^+$.
+\end{dfnbox}
+It can be easily verified that for such a Markov chain,
+\begin{equation*}
+    p_{X_1^n}\left(x_1, x_2, \cdots, x_n\right) = p_{X_1}\left(x_1\right)\prod_{i = 1}^{n - 1}p_{X_{i + 1} \mid X_i}\left(x_{i + 1} \mid x_i\right)
+\end{equation*}
+for all $n \in \N^+$. Now, the next question is: does the conditional probability 
+\begin{equation*}
+    \Pr\left(X_{n + 1} = x_{n + 1} \mid X_n = x_n\right)
+\end{equation*} 
+depend on where we are in the chain? In general, the answer is ``yes''.
+\begin{dfnbox}{Time-Invariant Markov Chain}{timeInvariant}
+    A markov chain $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ is {\color{red} \textbf{time-invariant}} if 
+    \begin{equation*}
+        p_{X_{n + 1} \mid X_n}\left(x_{n + 1} \mid x_n\right) = p_{X_2 \mid X_1}\left(x_2 \mid x_1\right)
+    \end{equation*}
+    for all $n \in \N^+$ and all $x_{n + 1}, x_n \in \mathcal{X}$.
+\end{dfnbox}
+For time-invariant discrete-time markov chains, we can capture the transition conditional probabilities $\Pr\left(X_{n + 1} = j \mid X_n = i\right)$ into a matrix.
+\begin{dfnbox}{Transition Probability Matrix}{TPM}
+    Let $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ be a time-invariant discrete-time markov chain. The {\color{red} \textbf{transition probability matrix}} (TPM) $\mathbfit{P}$ of $X$ is defined such that 
+    \begin{equation*}
+        P_{ij} \coloneqq \Pr\left(X_{n + 1} = j \mid X_{n} = i\right)
+    \end{equation*}
+    for all $n \in \N^+$ and all $i, j \in \mathcal{X}$.
+\end{dfnbox}
+Suppose that $\mathcal{X}$ is finite. Then clearly, with respect to the TPM, we can write 
+\begin{align*}
+    \Pr\left(X_{n + 1} = j\right) & = \sum_{i \in \mathcal{X}}\Pr\left(X_{n + 1} = j \mid X_n = i\right)\Pr\left(X_n = i\right) \\
+    & = \sum_{i \in \mathcal{X}}P_{ij}\Pr\left(X_n = i\right)
+\end{align*}
+for all $n \in \N^+$ and all $j \in \mathcal{X}$. Now, by writing everything in terms of matrix multiplication, we have 
+\begin{equation*}
+    \begin{bmatrix}
+        p_{X_{n + 1}}\left(x_1\right) & p_{X_{n + 1}}\left(x_2\right) & \cdots & p_{X_{n + 1}}\left(x_{\abs{\mathcal{X}}}\right)
+    \end{bmatrix} = \begin{bmatrix}
+        p_{X_{n}}\left(x_1\right) & p_{X_{n}}\left(x_2\right) & \cdots & p_{X_{n}}\left(x_{\abs{\mathcal{X}}}\right)
+    \end{bmatrix}\mathbfit{P}.
+\end{equation*}
+Let us define 
+\begin{equation*}
+    \pi_n \coloneqq \begin{bmatrix}
+        p_{X_{n}}\left(x_1\right) & p_{X_{n}}\left(x_2\right) & \cdots & p_{X_{n}}\left(x_{\abs{\mathcal{X}}}\right)
+    \end{bmatrix},
+\end{equation*}
+then $\pi_n$ is clearly a distribution for $X_n$. Now, this equation seems suspicious enough that~$\pi_n$ might possess some sort of limiting behaviour, which we define as follows:
+\begin{dfnbox}{Stationary Distribution}{stationaryDist}
+    Let $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ be a Markov chain with transition probability matrix $\mathbfit{P}$. A distribution $\pi$ on $\mathcal{X}$ is said to be a {\color{red} \textbf{stationary distribution}} if $\pi = \pi\mathbfit{P}$.
+\end{dfnbox}
+A fact is that not all Markov chains have a well-defined stationary distribution. The following two important properties for Markov chains help guarantee the existence of such a distribution.
+\begin{enumerate}
+    \item \textit{irreducible}: a Markov chain is irreducible if it is possible to go from any state to any other state, i.e.,
+    \begin{equation*}
+        \Pr\left(X_m = a \mid X_n = b\right) \neq 0
+    \end{equation*}
+    for all $a \neq b \in \mathcal{X}$ and $m > n$.
+    \item \textit{aperiodic}: a Markov chain is aperiodic if for any state $i \in \mathcal{X}$, either it is impossible to go back to $i$ from $i$, or the greatest common divisor for the lengths of all paths going from $i$ to itself is $1$.
+\end{enumerate}
+\begin{thmbox}{Characterisation of Irreducible and Aperiodic Markov Chains}{irreducibleAndAperiodic}
+    An irreducible and aperiodic Markov chain has a unique stationary distribution.
+\end{thmbox}
+Suppose the stationary distribution $\pi$ exists, then it is clear that we can find $\pi$ by solving the system 
+\begin{equation*}
+    \pi\mathbfit{P - I} = \mathbf{0}.
+\end{equation*}
+Of course, one might also attempt to diagonalise $\mathbfit{P}$ to find $\lim_{n \to \infty}\mathbfit{P}^n$ because $\pi_n = \pi_0\mathbfit{P}^n$. Furthermore, suppose 
+\begin{equation*}
+    \pi = \begin{bmatrix}
+        p_1, p_2, \cdots, p_{\abs{\mathcal{X}}}
+    \end{bmatrix}.
+\end{equation*}
+Notice that
+\begin{equation*}
+    p_j = \sum_{i \in \mathcal{X}}P_{ij}p_i
+\end{equation*}
+for all $j \in \mathcal{X}$. It is not difficult to see that $P_{ij} = p_j$ for all $i \in \mathcal{X}$, and so 
+\begin{equation*}
+    \lim_{n \to \infty}\mathbfit{P}^n = \begin{bmatrix}
+        \pi \\
+        \pi \\
+        \vdots \\
+        \pi
+    \end{bmatrix}.
+\end{equation*}
+\begin{dfnbox}{Entropy Rate}{entropyRate}
+    Let $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ be a stochastic process. The {\color{red} \textbf{entropy rate}} of $X$ is defined as 
+    \begin{equation*}
+        H\left(X\right) \coloneqq \lim_{n \to \infty}\frac{1}{n}H\left(X_1, X_2, \cdots, X_n\right)
+    \end{equation*}
+    if the limit exists.
+\end{dfnbox}
+There is an alternative way to define the entropy rate:
+\begin{dfnbox}{Prime Definition for Entropy Rate}{primeEntropyRate}
+    Let $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ be a stochastic process. The {\color{red} \textbf{prime entropy rate}} of $X$ is defined as 
+    \begin{equation*}
+        H'\left(X\right) \coloneqq \lim_{n \to \infty}H\left(X_{n} \mid X_1^{n - 1}\right)
+    \end{equation*}
+    if the limit exists.
+\end{dfnbox}
+In general, the two types of entropy rate may not be equivalent. However, we can check that they are the same for stationary processes.
+\begin{thmbox}{Equivalence of Entropy Rates for Stationary Sources}{equivEntropyRate}
+    If $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ is a stationary stochastic process, then $H\left(X\right)$ and $H'\left(X\right)$ both exist and~$H\left(X\right) = H'\left(X\right)$.
+    \tcblower
+    \begin{proof}
+        Since $X$ is stationary, 
+        \begin{align*}
+            H\left(X_n \mid X_1^{n - 1}\right) & \leq H\left(X_n \mid X_2^{n - 1}\right) \\
+            & = H\left(X_{n - 1} \mid X_1^{n - 2}\right).
+        \end{align*}
+        Note that $H\left(X_n \mid X_1^{n - 1}\right) \geq 0$ for all $n \in \N^+$, so by monotone convergence theorem, 
+        \begin{equation*}
+            H'\left(X\right) = \lim_{n \to \infty}H\left(X_n \mid X_1^{n - 1}\right)
+        \end{equation*}
+        exists. Notice that 
+        \begin{equation*}
+            \frac{1}{n}H\left(X_1, X_2, \cdots, X_n\right) = \frac{1}{n}\sum_{i = 1}^{n}H\left(X_n \mid X_1^{n - 1}\right),
+        \end{equation*}
+        so clearly 
+        \begin{equation*}
+            H\left(X\right) = \lim_{n \to \infty}\frac{1}{n}H\left(X_1, X_2, \cdots, X_n\right) = \lim_{n \to \infty}H\left(X_n \mid X_1^{n - 1}\right) = H'\left(X\right).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+We now state a theorem without proof which will generalise Theorem \ref{thm:AEP} to stationary stochastic processes.
+\begin{thmbox}{Shannon-McMillian-Breiman Theorem}{SMB}
+    For a stationary ergodic process $X$, 
+    \begin{equation*}
+        \lim_{n \to \infty}-\frac{1}{n}\log_2p\left(X_1, X_2, \cdots, X_n\right) = H\left(X\right).
+    \end{equation*}
+\end{thmbox}
+Now, we apply this theorem to Markov chains. We first state the following fact:
+\begin{probox}{Entropy Rate of Stationary Markov Chains}{stationaryMarkovEntropy}
+    For any time-invariant stationary Markov chain $X$ with transition probability matrix $\mathbfit{P}$ and stationary distribution $\pi$, the entropy rate is given by 
+    \begin{align*}
+        H\left(X\right) & = H'\left(X\right) = H\left(X_2 \mid X_1\right)
+    \end{align*}
+    where $X_1 \sim \pi$ and $X_2 \mid X_1$ follows the distribution induced by $\mathbfit{P}$.
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:equivEntropyRate}, since $X$ is a Markov chain,
+        \begin{align*}
+            H\left(X\right) & = H'\left(X\right) \\
+            & = \lim_{n \to \infty}H\left(X_n \mid X_1^{n - 1}\right) \\
+            & = \lim_{n \to \infty}H\left(X_n \mid X_{n - 1}\right) \\
+            & = \lim_{n \to \infty}\sum_{i \in \mathcal{X}}p_{X_{n - 1}}\left(i\right)H\left(X_n \mid X_{n - 1} = i\right) \\
+            & = \lim_{n \to \infty}\sum_{i \in \mathcal{X}}p_{X_{n - 1}}\left(i\right)\left(-\sum_{j \in \mathcal{X}}p_{X_n \mid X_{n - 1}}\left(j \mid i\right)\log_2p_{X_n \mid X_{n - 1}}\left(j \mid i\right)\right) \\
+            & = \lim_{n \to \infty}\sum_{i \in \mathcal{X}}p_{X_{n - 1}}\left(i\right)\left(-\sum_{j \in \mathcal{X}}P_{ij}\log_2P_{ij}\right) \\
+            & = \lim_{n \to \infty}\sum_{i \in \mathcal{X}}p_{X_{n - 1}}\left(i\right)H\left(X_2 \mid X_1 = i\right) \\
+            & = \sum_{i \in \mathcal{X}}\pi\left(i\right)H\left(X_2 \mid X_1 = i\right) \\
+            & = H\left(X_2 \mid X_1\right)
+        \end{align*}
+    \end{proof}
+\end{probox}
 \end{document}
