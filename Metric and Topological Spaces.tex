@@ -1020,5 +1020,52 @@ Intuitively, the subspace topology on product space should be the product of sub
         Quotient map, open map and closed map are all preserved under composition.
     \end{remark}
 \end{notebox}
-
+\begin{dfnbox}{Saturated Set}{saturate}
+    Let $f \colon X \to Y$ be a surjective continuous map. A set $A \subseteq X$ is {\color{red} \textbf{saturated}} with respect to $f$ if $A = f^{-1}\left(S\right)$ for some $S \subseteq Y$.
+\end{dfnbox}
+Equivalently, this means that $A = f^{-1}\bigl(f\left(A\right)\bigr)$.
+\begin{probox}{Equivalent Definition for Quotient Maps}{equivQuotient}
+    Let $f \colon X \to Y$ be a surjective continuous map, then $f$ is a quotient map if and only if $f\left(A\right)$ is open (closed) in $Y$ whenever $A$ is a saturated open (closed) set with respect to $f$ in $X$.
+    \tcblower
+    \begin{proof}
+        Take any saturated open set $A \subseteq X$, then $A = f^{-1}\bigl(f\left(A\right)\bigr)$. By definition \ref{dfn:quotient}, since $f^{-1}\bigl(f\left(A\right)\bigr)$ is open, $f\left(A\right)$ must be open in $Y$. Conversely, suppose that $f\left(A\right)$ is open in $Y$ for all saturated open set $A \subseteq X$. Let $U \subseteq Y$ such that $f^{-1}\left(U\right)$ is open in~$X$. Notice that $f^{-1}\left(U\right)$ is saturated. Therefore, $f\bigl(f^{-1}\left(U\right)\bigr) = U$ is open in $Y$. Since $f$ is surjective, it is a quotient map.
+    \end{proof}
+\end{probox}
+\begin{probox}{Restriction of Quotient Map to Saturated Open Sets}{restrictQuotient}
+    If $f \colon X \to Y$ is a continuous quotient map and $A \subseteq X$ is a saturated open (closed) set with respect to $f$, then $\left.f\right\rvert_A \colon A \to f\left(A\right)$ is a quotient map.
+    \tcblower
+    \begin{proof}
+        Let $B \subseteq A$ be open and saturated with respect to $\left.f\right\rvert_A$, then $B = \left.f\right\rvert_A^{-1}\bigl(\left.f\right\rvert_A\left(B\right)\bigr)$. Note that 
+        \begin{equation*}
+            \left.f\right\rvert_A\left(B\right) = f\left(B \cap A\right) = f\left(B\right)
+        \end{equation*}
+        for any $B \subseteq A$. Since $B$ is open,by Proposition \ref{pro:equivQuotient}, $f\left(B\right)$ is open. This implies that $\left.f\right\rvert_A$ is a quotient map.
+    \end{proof}
+\end{probox}
+\begin{probox}{Existence and Uniqueness of Quotient Topology}{exist!quotientTopo}
+    Let $p \colon X \to A$ be surjective for some $A \subseteq X$, then there exists a unique topology $\mathcal{T}_A$ such that $p$ is a quotient map.
+    \tcblower
+    \begin{proof}
+        Define 
+        \begin{equation*}
+            \mathcal{T}_A \coloneqq \left\{U \subseteq A \colon p^{-1}\left(U\right) \subseteq X \textrm{ is open}\right\}.
+        \end{equation*}
+        Observe that $\varnothing, A \in \mathcal{T}_A$. Note that for any index set $\Lambda$ such that $U_{\alpha} \in \mathcal{T}_A$ for all $\alpha \in \Lambda$,
+        \begin{equation*}
+            p^{-1}\left(\bigcup_{\alpha \in \Lambda}U_{\alpha}\right) = \bigcup_{\alpha \in \Lambda}p^{-1}\left(U_{\alpha}\right)
+        \end{equation*}
+        is open is $X$, so $\bigcup_{\alpha \in \Lambda}U_{\alpha} \in \mathcal{T}_A$. Similarly, one may check that $\bigcup_{i = 1}^nU_{i} \in \mathcal{T}_A$ for any $n \in \N^+$ such that $U_i \in \mathcal{T}_A$ for all $i = 1, 2, \cdots, n$. Let $\mathcal{T}'$ be any topology on $A$ such that $p$ is a quotient map. For any $U \subseteq A$, notice that $U \in \mathcal{T}'$ if and only if $p^{-1}\left(U\right) \subseteq X$ is open, i.e., $U \in \mathcal{T}'$ if and only if $U \in \mathcal{T}_A$. Therefore, $\mathcal{T}' = \mathcal{T}_A$, which means that $\mathcal{T}_A$ is unique.
+    \end{proof}
+\end{probox}
+\begin{dfnbox}{Quotient Space}{quotientSpace}
+    Let $X$ be a topological space and $X^*$ be a partition of $X$. Let $p \colon X \to X^*$ be a surjective map such that $x \in p\left(x\right)$. If $\mathcal{T}^*$ is the quotient topology on $X^*$, then $\left(X^*, \mathcal{T}^*\right)$ is the {\color{red} \textbf{quotient space}} of $X$.
+\end{dfnbox}
+\begin{dfnbox}{$T_1$ and $T_2$ Spaces}{T1T2}
+    Let $X$ be a topological space. $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open set $U \subseteq X$ such that $x \in U$ but $y \notin U$. $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
+\end{dfnbox}
+We can check that every metric space is Hausdorff, as for any $x \neq y$, we can always take 
+\begin{equation*}
+    r \coloneqq \frac{1}{3}d\left(x, y\right),
+\end{equation*}
+and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff.
 \end{document}
