@@ -1411,12 +1411,15 @@ then $\pi_n$ is clearly a distribution for $X_n$. Now, this equation seems suspi
 \end{dfnbox}
 A fact is that not all Markov chains have a well-defined stationary distribution. The following two important properties for Markov chains help guarantee the existence of such a distribution.
 \begin{enumerate}
-    \item \textit{irreducible}: a Markov chain is irreducible if it is possible to go from any state to any other state, i.e.,
+    \item \textit{Irreducible}: a Markov chain is irreducible if it is possible to go from any state to any other state, i.e.,
     \begin{equation*}
-        \Pr\left(X_m = a \mid X_n = b\right) \neq 0
+        \Pr\left(X_m = a \mid X_n = b\right) > 0, \qquad \Pr\left(X_m = b \mid X_n = a\right) > 0
     \end{equation*}
     for all $a \neq b \in \mathcal{X}$ and $m > n$.
-    \item \textit{aperiodic}: a Markov chain is aperiodic if for any state $i \in \mathcal{X}$, either it is impossible to go back to $i$ from $i$, or the greatest common divisor for the lengths of all paths going from $i$ to itself is $1$.
+    \item \textit{Aperiodic}: a Markov chain is aperiodic if for any state $i \in \mathcal{X}$, either it is impossible to go back to $i$ from $i$, or the greatest common divisor for the lengths of all paths going from $i$ to itself is $1$. Formally, this means that 
+    \begin{equation*}
+        \gcd\left\{n \in \N^+ \colon \Pr\left(X_n = i \mid X_0 = i\right) > 0\right\} = 1.
+    \end{equation*}
 \end{enumerate}
 \begin{thmbox}{Characterisation of Irreducible and Aperiodic Markov Chains}{irreducibleAndAperiodic}
     An irreducible and aperiodic Markov chain has a unique stationary distribution.
@@ -1509,8 +1512,67 @@ Now, we apply this theorem to Markov chains. We first state the following fact:
             & = \lim_{n \to \infty}\sum_{i \in \mathcal{X}}p_{X_{n - 1}}\left(i\right)\left(-\sum_{j \in \mathcal{X}}P_{ij}\log_2P_{ij}\right) \\
             & = \lim_{n \to \infty}\sum_{i \in \mathcal{X}}p_{X_{n - 1}}\left(i\right)H\left(X_2 \mid X_1 = i\right) \\
             & = \sum_{i \in \mathcal{X}}\pi\left(i\right)H\left(X_2 \mid X_1 = i\right) \\
-            & = H\left(X_2 \mid X_1\right)
+            & = H\left(X_2 \mid X_1\right).
         \end{align*}
     \end{proof}
 \end{probox}
+Let us discuss a few applications of Markov chains.
+\subsection{Application: List Shuffling}
+Suppose we have a list containing $k$ distinct items and we wish to shuffle the list such that the end outcome is \textbf{completely random}, i.e., the shuffled list is independent of the starting state of the original list. Let us make a na\"{i}ve attempt first:
+\subsubsection{One-at-a-Time Shuffling}
+Let $X \coloneqq \left\{X_i\right\}_{i \in \N^+}$ be a stochastic process where $X_i$ represents the permutation of the list after the $i$-th shuffle. First, observe that $\abs{\mathcal{X}} = k!$. Given $X_n$, we obtain $X_{n + 1}$ by selecting any item from $X_n$ uniformly and insert the item to the first index of the list. Notice that this means $X_{n + 1}$ could take $k$ different permutations uniformly. Since the stochastic process is obviously a Markov chain, we have
+\begin{equation*}
+    H\left(X_{n + 1} \mid X_1^n\right) = H\left(X_{n + 1} \mid X_n\right) = \log_2 k
+\end{equation*}
+for all $n \in \N^+$. In the long-run, there is an equal probability of obtaining any permutation, so the stationary distribution is uniform. Therefore,
+\begin{equation*}
+    \lim_{n \to \infty}H\left(X_n\right) = \log_2 k!.
+\end{equation*}
+Furthermore, one may check that this Markov chain is time-invariant, irreducible and aperiodic (this is because we can always restore a permutation with $2$ or $3$ times of such shuffles). Now we ask the following question:
+\begin{quote}
+    How many steps of such shuffling process does it take such that the permutation of list obtained is independent of the initial list?
+\end{quote}
+Suppose that $X_n$ and $X_0$ are independent for some $n \in \N^+$, then necessarily $I\left(X_n ; X_0\right) = 0$. This implies that the sufficient and necessary condition for such independence is 
+\begin{equation*}
+    H\left(X_n \mid X_0\right) = H\left(X_n\right) - I\left(X_n ; X_0\right) = \log_2 k!.
+\end{equation*}
+Let $N_i$ be the index of the item selected during the $i$-th shuffle, then clearly $X_n$ is completely determined by $X_0$ and $N_1^{n - 1}$. Since the $N_i$'s are independent and identically distributed, by Corollary \ref{cor:subadd} we have
+\begin{equation*}
+    H\left(X_0^n\right) = H\left(X_0, N_1^{n}\right) = H\left(X_0\right) + nH\left(N_1\right).
+\end{equation*}
+On the other hand, we also have 
+\begin{align*}
+    H\left(X_0^n\right) & = H\left(X_0\right) + H\left(X_1^n \mid X_0\right) \\
+    & = H\left(X_0\right) + H\left(X_n \mid X_0\right) + H\left(X_1^{n - 1} \mid X_0, X_n\right).
+\end{align*}
+Therefore, 
+\begin{align*}
+    H\left(X_n \mid X_0\right) & = nH\left(N_1\right) - H\left(X_1^{n - 1} \mid X_0, X_n\right) \\
+    & \leq nH\left(N_1\right) \\
+    & = n\log_2 k.
+\end{align*}
+Therefore, we necessarily need $n\log_2 k \geq \log_2 k!$, so $n \geq \frac{\log_2 k!}{\log_2 k}$. One can in fact prove further that no matter how many shuffles we perform in this manner, we still have some dependence between $X_n$ and $X_0$, i.e., $H\left(X_n \mid X_0\right) < \log_2 k!$ for all $n \in \N^+$.
+\subsubsection{Fisher-Yates Shuffle}
+We have demonstrated that the na\"{i}ve way of shuffling is never truly random. Now let us try to improve our algorithm. For $i = 1, 2, \cdots, k$, let $M_i$ uniformly distributed over the index set $\left\{i, i + 1, \cdots, k\right\}$ represent the index of the item selected at random during the $i$-th shuffle such that the $M_i$-th item is then inserted to the first index of the list. Clearly, this shuffling will terminate if and only if we have performed $k$ rounds. Furthermore, notice that by labelling each item with their index in the initial list, after the $n$-th round, one can re-construct the sequence $\left\{M_i\right\}_{i = 1}^n$ by taking the labels of items from the $n$-th item backwards to the first item sequentially. This means that $\left\{M_i\right\}_{i = 1}^{n - 1}$, and thereafter $\left\{X_i\right\}_{i = 1}^{n - 1}$, is completely determined by $X_0$ and $X_n$. Therefore,
+\begin{equation*}
+    H\left(X_1^{n - 1} \mid X_0, X_n\right) = 0
+\end{equation*}
+for all $n \in \left\{1, 2, \cdots, k\right\}$. Note that since the $M_i$'s are independent and completely determine the $X_i$'s given $X_0$, by Corollary \ref{cor:subadd} we have
+\begin{align*}
+    H\left(X_0\right) + H\left(X_k \mid X_0\right) + H\left(X_1^{k - 1} \mid X_0, X_k\right) & = H\left(X_0^k\right) \\
+    & = H\left(X_0, M_1^k\right) \\
+    & = H\left(X_0\right) + \sum_{i = 1}^{k}H\left(M_i\right).
+\end{align*}
+Therefore, 
+\begin{align*}
+    H\left(X_k \mid X_0\right) & = \sum_{i = 1}^{k}H\left(M_i\right) - H\left(X_1^{n - 1} \mid X_0, X_n\right) \\
+    & = \sum_{i = 1}^{k}\log_2\left(k - i + 1\right) \\
+    & = \log_2 k!.
+\end{align*}
+Thus, we have showed that this new algorithm is indeed a truly random shuffling!
+\subsection{Application: Random Walk}
+Consider a simple weighted undirected graph $G$ with no loops. Let $w_{ij}$ denote the weight of the edge $ij \in E\left(G\right)$. Suppose a moving body is traversing the graph randomly and let $X_t$ denote its position at time $t$. For each $u \in V\left(G\right)$, define 
+\begin{equation*}
+    \Pr\left(X_{t + 1} = v \mid X_t = u\right) = \frac{w_{uv}}{\sum_{w \in N\left(u\right)}w_{wv}}.
+\end{equation*}
 \end{document}
