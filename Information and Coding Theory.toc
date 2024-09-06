@@ -15,3 +15,4 @@
 \contentsline {subsubsection}{One-at-a-Time Shuffling}{45}{subsection.3.3.1}%
 \contentsline {subsubsection}{Fisher-Yates Shuffle}{46}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Application: Random Walk}{47}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Application: Hidden Markov Model}{49}{subsection.3.3.3}%

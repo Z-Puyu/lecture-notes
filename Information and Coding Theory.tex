@@ -1575,4 +1575,93 @@ Consider a simple weighted undirected graph $G$ with no loops. Let $w_{ij}$ deno
 \begin{equation*}
     \Pr\left(X_{t + 1} = v \mid X_t = u\right) = \frac{w_{uv}}{\sum_{w \in N\left(u\right)}w_{wv}}.
 \end{equation*}
+Now we wish to investigate \textbf{how likely it is for the body to reach $v \in V\left(G\right)$ in the long-run}, i.e., given the stationary distribution $\pi$, what is $\pi\left(v\right)$ for each $v \in V\left(G\right)$?
+
+First, we claim that 
+\begin{equation*}
+    \pi_i = \frac{\sum_{j \in N\left(i\right)}w_{ij}}{\sum_{ij \in E\left(G\right)}w_{ij}}
+\end{equation*}
+for all $i \in V\left(G\right)$. For simplicity, let us define 
+\begin{equation*}
+    \omega_i = \sum_{j \in N\left(i\right)}w_{ij}, \qquad \omega = \sum_{ij \in E\left(G\right)}w_{ij}
+\end{equation*}
+for all $i \in V\left(G\right)$. Let the transition probability matrix be $\mathbfit{P}$. For each $j \in V\left(G\right)$, notice that 
+\begin{align*}
+    \sum_{i \in V\left(G\right)}\pi_iP_{ij} & = \sum_{i \in V\left(G\right)}\frac{\omega_i}{\omega} \cdot \frac{w_{ij}}{\sum_{k \in N\left(i\right)}w_{ik}} \\
+    & = \sum_{i \in V\left(G\right)}\frac{\omega_i}{\omega} \cdot \frac{w_{ij}}{\omega_i} \\
+    & = \sum_{i \in V\left(G\right)}\frac{w_{ij}}{\omega} \\
+    & = \frac{\sum_{i \in N\left(j\right)}w_{ij}}{\omega} \\
+    & = \pi_j,
+\end{align*}
+which implies that $\pi = \pi\mathbfit{P}$. Therefore, $\pi$ as defined by us previously is indeed a stationary distribution. This pretty much coincides with our intuition, because the probability of the body reaching vertex $i$ in the long-run is given by the ratio between the total weight of the edges incident to $i$ and that of the entire graph.
+
+Since the process is stationary, by Proposition \ref{pro:stationaryMarkovEntropy}, we can compute the entropy rate as 
+\begin{align*}
+    H\left(X\right) & = H\left(X_2 \mid X_1\right) \\
+    & = -\sum_{i \in V\left(G\right)}\pi_i\sum_{j \in V\left(G\right)}P_{ij}\log_2P_{ij} \\
+    & = -\sum_{i \in V\left(G\right)}\pi_i\sum_{j \in N\left(i\right)}P_{ij}\log_2P_{ij} \\
+    & = -\sum_{i \in V\left(G\right)}\frac{\omega_i}{\omega}\sum_{j \in N\left(i\right)}\frac{w_{ij}}{\omega_i}\log_2\frac{w_{ij}}{\omega_i} \\
+    & = -\sum_{i, j \in V\left(G\right)^2}\frac{w_{ij}}{\omega}\log_2\frac{w_{ij}}{\omega_i} \\
+    & = -\left(\sum_{i, j \in V\left(G\right)^2}\frac{w_{ij}}{\omega}\log_2\frac{w_{ij}}{\omega} - \sum_{i, j \in V\left(G\right)^2}\frac{w_{ij}}{\omega}\log_2\frac{w_{i}}{\omega}\right) \\
+    & = -\sum_{i, j \in V\left(G\right)^2}\frac{w_{ij}}{\omega}\log_2\frac{w_{ij}}{\omega} + \sum_{i \in V\left(G\right)}\frac{w_{i}}{\omega}\log_2\frac{w_{i}}{\omega},
+\end{align*}
+where $X_1 \sim \pi$. Let $\left(U, V\right)$ be a pair of vertices in $G$ such that $\Pr\bigl(\left(U, V\right) = \left(i, j\right)\bigr) = \frac{w_{ij}}{\omega}$, then 
+\begin{equation*}
+    H\left(X\right) = H\left(U, V\right) - H\left(X_1\right).
+\end{equation*}
+In the case where the graph $G$ is uniformly-weighted, one can check that the Markov chain becomes time-invariant with the stationary distribution given by 
+\begin{equation*}
+    \pi_i = \frac{d\left(i\right)}{e\left(G\right)}.
+\end{equation*}
+Clearly, $\left(U, V\right)$ is now uniformly distributed and so 
+\begin{equation*}
+    H\left(X\right) = \log_2{2e\left(G\right)} - H\left(\pi\right).
+\end{equation*}
+This means that during a random walk where the choice of the next vertex is uniformly distributed, the entropy rate of the walk is completely determined by the number of edges and the entropy rate of the stationary distribution.
+\subsection{Application: Hidden Markov Model}
+Let $\left\{X_i\right\}_{i \in \N^+}$ be a Markov chain and define $Y_i = \phi\left(X_i\right)$ for some function $\phi$. Note that in general, $\left\{Y_i\right\}_{i \in \N^+}$ may not still be a Markov chain. However, it can be proved that $Y$ is always a stationary stochastic process. By Theorem \ref{thm:equivEntropyRate}, the entropy rate of $Y$ is well-defined and given by 
+\begin{equation*}
+    H'\left(Y\right) = \lim_{n \to \infty}H\left(X_n \mid X_1^{n - 1}\right),
+\end{equation*}
+where $\left\{H\left(X_n \mid X_1^{n - 1}\right)\right\}_{i = 1}^{\infty}$ is a non-increasing sequence. Therefore, we have 
+\begin{equation*}
+    H'\left(Y\right) \leq H\left(X_n \mid X_1^{n - 1}\right)
+\end{equation*}
+for all $n \in \N^+$. However, if we were to approximate $H'\left(Y\right)$ with a tolerance of error of $\epsilon$, this alone is not sufficient. Notice that by Proposition \ref{pro:cor:condDoesNotIncrEntropy}, 
+\begin{equation*}
+    H\left(Y_n \mid Y_1^{n - 1}, X_1\right) \leq H\left(Y_n \mid Y_1^{n - 1}\right)
+\end{equation*}
+for all $n \in \N^+$, so 
+\begin{equation*}
+    H\left(Y_n \mid Y_1^{n - 1}, X_1\right) \leq \lim_{n \to \infty}H\left(Y_n \mid Y_1^{n - 1}\right) = H'\left(Y\right).
+\end{equation*}
+Therefore, we can apply some numerical methods such that 
+\begin{equation*}
+    \abs{H\left(Y_n \mid Y_1^{n - 1}, X_1\right) - H\left(Y_n \mid Y_1^{n - 1}\right)} < 2\epsilon
+\end{equation*}
+to ensure that we have a good approximation of $H'\left(Y\right)$.
+
+Alternatively, we can also achieve this bounding condition by considering 
+\begin{align*}
+    I\left(Y_n ; X_1 \mid Y_1^{n - 1}\right) & = H\left(X_1 \mid Y_1^{n - 1}\right) - H\left(X_1 \mid Y_n, Y_1^{n - 1}\right) \\
+    & \leq H\left(X_1 \mid Y_1^{n - 1}\right) \\
+    & \leq H\left(X_1\right).
+\end{align*}
+Furthermore, we have 
+\begin{equation*}
+    I\left(X_1 ; Y_1^n\right) = H\left(X_1\right) - H\left(Y_1^n \mid X_1\right) \leq H\left(X_1\right)
+\end{equation*}
+for all $n \in \N^+$. This means that $\left\{I\left(X_1 ; Y_1^n\right)\right\}_{n = 1}^{\infty}$ is a non-decreasing sequence upper bounded by $H\left(X_1\right)$, so by monotone convergence theorem,
+\begin{align*}
+    H\left(X_1\right) & \geq \lim_{n \to \infty}I\left(X_1 ; Y_1^n\right) \\
+    & = \lim_{n \to \infty}\sum_{i = 1}^{n}I\left(X_1 ; Y_i \mid Y_1^{i - 1}\right).
+\end{align*}
+This means that the series 
+\begin{equation*}
+    \sum_{i = 1}^{\infty}I\left(X_1 ; Y_i \mid Y_1^{i - 1}\right)
+\end{equation*}
+converges, and so 
+\begin{equation*}
+    \lim_{n \to \infty}I\left(X_i ; Y_n \mid Y_1^{n - 1}\right) = \lim_{n \to \infty}\abs{H\left(X_1\right) - H\left(Y_1^n \mid X_1\right)} = 0.
+\end{equation*}
 \end{document}
