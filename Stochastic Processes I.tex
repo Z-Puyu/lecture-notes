@@ -425,7 +425,7 @@ A random variable can be neither discrete nor continuous. For example, let $Y$ b
     X \coloneqq \mathbf{1}_{W = 1}Y + \mathbf{1}_{W = 2}Z,
 \end{equation*}
 then $P\left(X \in A\right) = pP\left(Y \in A\right) + \left(1 - p\right)P\left(Z \in A\right)$.
-
+\subsection{Expectation}
 Recall that we have defined expectations for discrete and continuous random variables in elementary probability theory. In terms of measure theory, the two formulae can be unified as the Lebesgue integral
 \begin{equation*}
     \mathbb{E}[X] = \int_{S}\!X\left(\omega\right)\,\d P\left(\omega\right).
@@ -442,12 +442,78 @@ In the real-valued continuous case, we have
 \begin{equation*}
     \mathbb{E}\left[g\left(x\right)\right] = \int_{-\infty}^{\infty}\!g\left(x\right)f_X\left(x\right)\,\d x.
 \end{equation*}
+The following result gives a way to approximate probabilities by the expectation of a random variable:
+\begin{thmbox}{Markov's Inequality}{MarkovIneq}
+    If $X$ is a non-negative random variable, then $P\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$ for all $a > 0$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove for the continuous case. Notice that 
+        \begin{align*}
+            \mathbb{E}[X] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq \int_{a}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq a\int_{0}^{\infty}\!f_X\left(x\right)\,\d x \\
+            & = P\left(X \geq a\right).
+        \end{align*}
+        Therefore, $P\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$.
+    \end{proof}
+\end{thmbox}
 Note that $\mathbb{E}[X]$ is a real number while $\mathbb{E}[X \mid Y]$ is a \textbf{random variable} formed as a function of $Y$. In a way, $Y$ partitions the sample space into regions where $\mathbb{E}[X \mid Y = y_i]$ gives the expectation of $X$ in the region induced by $Y = y_i$ for each $y_i \in \mathcal{Y}$. In general, the following result holds:
 \begin{thmbox}{Law of Iterated Expectations}{iterExpectations}
     Let $X$ and $Y$ be random variables, then $\mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr] = \mathbb{E}[X]$.
 \end{thmbox}
 The above formula can be interpreted as the fact that $\mathbb{E}[X \mid Y]$ is a best estimator for $X$.
-\chapter{Markov Chains}
+\subsection{Variance}
+Note that the expectation is insufficient in describing a random variable because probability mass on exceptionally large values can influence the expectation significantly. For example, let $X_n$ be a random variable with $\Pr\left(X_n = n\right) = \frac{1}{n}$ and $\Pr\left(X_n = 0\right) = 1 - \frac{1}{n}$. Notice that by taking the limit, $\lim_{n \to \infty}\Pr\left(X_n = 0\right) = 1$ but $\mathbb{E}\left[X_n\right] = 1$ for all $n \in \N^+$. Therefore, we define the \textit{variance} as another parameter to specify a distribution.
+\begin{dfnbox}{Variance}{var}
+    Let $X$ be a random variable. The {\color{red} \textbf{variance}} of $X$ is defined as 
+    \begin{equation*}
+        \mathrm{Var}\left(X\right) \coloneqq \mathbb{E}\left[\left(X - \mathbb{E}\left[X\right]\right)^2\right] = \mathbb{E}\left[X^2\right] - \mathbb{E}\left[X\right]^2.
+    \end{equation*}
+    $\sqrt{\mathrm{Var}\left(X\right)}$ is called the {\color{red} \textbf{standard deviation}} of $X$.
+\end{dfnbox}
+Note that the variance might not be finite. Consider a continuous random variable $X$ with probability density function $f\left(x\right) = \frac{c}{1 + x^3}\mathbf{1}_{\left[0, \infty\right)}\left(x\right)$ where $c > 0$ is appropriately chosen. One can check that $\mathbb{E}\left[X\right]$ is finite but $\mathbb{E}\left[X^2\right]$ is unbounded.
+
+The following result is important:
+\begin{thmbox}{Chebyshev's Inequality}{ChebyshevIneq}
+    For any real-valued random variable $X$ with finite variance, 
+    \begin{equation*}
+        P\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
+    \end{equation*}
+    for all $a > 0$.
+    \tcblower
+    \begin{proof}
+        Define $g\left(X\right) \colon \left(X - \mathbb{E}[X]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
+        \begin{equation*}
+            P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}[g\left(X\right)]}{a^2\mathrm{Var}\left(X\right)}.
+        \end{equation*}
+        Note that $\mathbb{E}[g\left(X\right)] = \mathrm{Var}\left(X\right)$, so 
+        \begin{equation*}
+            P\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        In general, 
+        \begin{equation*}
+            P\left(\abs{X - \mathbb{E}[X]} > a\right) \leq \frac{\mathrm{Var}\left(X\right)}{a^2}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+\subsection{Correlation}
+Given any random variables $X$ and $Y$, they are not necessarily independent in general. We wish to investigate how correlated they are to each other. For this purpose, we introduce the following notion:
+\begin{dfnbox}{Covaraince}{cov}
+    If $X$ and $Y$ are real-valued random variables, the {\color{red} \textbf{covariance}} between $X$ and $Y$ is defined as
+    \begin{equation*}
+        \mathrm{Cov}\left(X, Y\right) \coloneqq \mathbb{E}\left[XY\right] - \mathbb{E}\left[X\right]\mathbb{E}\left[Y\right] = \mathbb{E}\bigl[\left(X - \mathbb{E}\left[X\right]\right)\left(Y - \mathbb{E}\left[Y\right]\right)\bigr].
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $\mathrm{Cov}\left(X, Y\right) = \mathrm{Cov}\left(Y, X\right)$ and $\mathrm{Cov}\left(X, X\right) = \mathrm{Var}\left(X\right)$.
+    \end{remark}
+\end{notebox}
+\chapter{Stochastic Process}
 \section{Markov Chains}
 \begin{dfnbox}{Stochastic Process}{stochastic}
     A {\color{red} \textbf{stochastic process}} is a collection of random variables $\left\{X\left(t\right) \colon t \in T\right\}$ where $T$ is an {\color{red} \textbf{index set}} and $X\left(t\right)$ is known as the {\color{red} \textbf{current state}}. The set of all possible states is known as the {\color{red} \textbf{state space}}.
@@ -556,5 +622,70 @@ It is useful to see the one-step transition probability $p_{ij}^{n, n + 1}$ as a
 \begin{equation*}
     f \colon T \times S \times S \to \R.
 \end{equation*}
-Thus far, we have basically shown that to specify a Markov chain fully, we will need to define the \textbf{index set} $T$, the \textbf{state space} $S$ and the \textbf{one-step transition probabilities} $p_{ij}^{n, n + 1}$ for all $i, j \in S$.
+Thus far, we have basically shown that to specify a Markov chain fully, we will need to define the \textbf{index set} $T$, the \textbf{state space} $S$ and the \textbf{one-step transition probabilities} $p_{ij}^{n, n + 1}$ for all $i, j \in S$. 
+
+We can write the transition probabilities as a matrix.
+\begin{dfnbox}{Transition Probability Matrix}{TPM}
+    For any Markov chain, the {\color{red} \textbf{transition probability matrix}} is a matrix $\mathbfit{P}^{n, n + 1}$ where $P^{n, n + 1}_{ij} = p_{ij}^{n, n + 1}$.
+\end{dfnbox}
+Let $\pi_t$ be the distribution at time $t$ for a Markov chain $\left\{X_i\right\}_{i \in \N^+}$, then we can write 
+\begin{equation*}
+    \pi_t \coloneqq \begin{bmatrix}
+        P\left(X_t = x_1\right), P\left(X_t = x_2\right), \cdots, P\left(X_t = x_{\abs{\mathcal{X}}}\right).
+    \end{bmatrix}
+\end{equation*}
+Therefore, the distribution at time $t + 1$ is given by 
+\begin{equation*}
+    \pi_{t + 1} = \pi_t\mathbfit{P}^{n, n + 1}.
+\end{equation*}
+Iterate this process and we have 
+\begin{equation*}
+    \pi_t = \pi_0\prod_{i = 0}^{t - 1}\mathbfit{P}^{i, i + 1}.
+\end{equation*}
+Generally, the $\left(i, j\right)$ entry of $\prod_{i = n}^{m - 1}\mathbfit{P}^{i, i + 1}$ is exactly $p_{ij}^{n, m}$.
+
+Notice that in general, $p_{ij}^{n, n + 1}$ is dependent on $n$, but when the transition probability is independent of $n$, the computation will become much easier.
+\begin{dfnbox}{Time-Homogeneous Markov Chain}{timeHomo}
+    A Markov Chain is {\color{red} \textbf{time-homogeneous}} if $p_{ij}^{n, n + 1} = p_{ij}^{1, 2}$ for all $n \in \N^+$.
+\end{dfnbox}
+For a time-homogeneous Markov chain $X$, we can write its distribution as 
+\begin{equation*}
+    \pi_t = \pi_0\mathbfit{P}^t.
+\end{equation*}
+This means that any time-homogeneous Markov chain is fully determined by its state space, transition probability matrix $\mathbfit{P}$ and the starting distribution $\pi_0$.
+\begin{dfnbox}{Stochastic Matrix}{stochasticMatrix}
+    Let $S$ be a countable index set. A matrix $\mathbfit{P}$ is called a {\color{red} \textbf{stochastic matrix}} if $P_{ij} \geq 0$ for all $i, j \in S$ and $\sum_{j \in S}P_{ij} = 1$ for all $i \in S$.
+\end{dfnbox}
+The above computation can be summarised into the following result:
+\begin{thmbox}{Chapman-Kolmogorov Equations}{ChapmanKolmogorov}
+    Let $X$ be a time-homogeneous Markov chain with state space $S$ and transition probability matrix $\mathbfit{P}$. For any $m, n \in \N$, 
+    \begin{equation*}
+        P\left(X_{m + n} = j \mid X_0 = i\right) = \sum_{k \in S}P\left(X_m = k \mid X_0 = i\right)P\left(X_n = j \mid X_0 = k\right).
+    \end{equation*}
+    Furthermore, for all $n \in \N$,\
+    \begin{equation*}
+        P\left(X_n = j \mid X_0 = i\right) = \mathbfit{P}^n_{ij}.
+    \end{equation*}
+\end{thmbox}
+Take any state space $S \coloneqq \left\{x_1, x_2, \cdots, x_s\right\}$. Notice that if we have a column vector 
+\begin{equation*}
+    \mu \coloneqq \begin{bmatrix}
+        f\left(x_1\right) \\
+        f\left(x_2\right) \\
+        \vdots \\
+        f\left(x_s\right)
+    \end{bmatrix}
+\end{equation*}
+for some function $f$, then 
+\begin{align*}
+    \left(\mathbfit{P}^n\mu\right)_i & = \sum_{j = 1}^{s}\mathbfit{P}^n_{ij}\mu_j \\
+    & = \sum_{j = 1}^{s}P\left(X_n = x_j \mid X_0 = x_i\right)f\left(x_j\right) \\
+    & = \mathbb{E}\left[f\left(X_n\right) \mid X_0 = x_i\right].
+\end{align*}
+Suppose $X_0 \sim \lambda$, then clearly 
+\begin{align*}
+    \mathbb{E}\left[f\left(X_n\right)\right] & = \sum_{i = 1}^{s}\mathbb{E}\left[f\left(X_n\right) \mid X_0 = x_i\right]\lambda_i \\
+    & = \sum_{i = 1}^{s}\lambda_i\left(\mathbfit{P}^n\mu\right)_i \\
+    & = \lambda\mathbfit{P}^n\mu.
+\end{align*}
 \end{document}

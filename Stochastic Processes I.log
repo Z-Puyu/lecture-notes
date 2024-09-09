@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 AUG 2024 17:47
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  6 SEP 2024 17:33
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1473,16 +1473,16 @@ Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 136.
 [2
 
-] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12]
+] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14]
 Chapter 2.
 
-Underfull \hbox (badness 4279) in paragraph at lines 469--470
+Underfull \hbox (badness 4279) in paragraph at lines 535--536
 []\TU/STIXTwoText(0)/m/n/12 Let $[]$ be a discrete-time stochastic process over some probability
  []
 
-[13
+[15
 
-] [14] [15] [16] 
+] [16] [17] [18] [19] [20] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Stochastic Processes I.aux)
 
@@ -1492,12 +1492,12 @@ Package rerunfilecheck Info: File `"Stochastic Processes I".out' has not changed
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39445 strings out of 478630
- 829114 string characters out of 5847730
+ 39471 strings out of 478630
+ 829658 string characters out of 5847730
  1875012 words of memory out of 5000000
- 58887 multiletter control sequences out of 15000+600000
- 518874 words of font info for 101 fonts, out of 8000000 for 9000
+ 58911 multiletter control sequences out of 15000+600000
+ 518890 words of font info for 103 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,131p,1209b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Stochastic Processes I.pdf (16 pages).
+Output written on Stochastic Processes I.pdf (20 pages).
