@@ -1281,17 +1281,17 @@ for some $\epsilon \in \left[0, 1\right)$ instead. This kind of behaviour is cal
     R_{\epsilon}^*\left(X\right) \coloneqq \left\{R \geq 0 \colon R \textrm{ is } \epsilon\textrm{-achievable}\right\}.
 \end{equation*}
 It is clear that $R^*\left(X\right) = R^*_0\left(X\right) \geq R^*_{\epsilon}\left(X\right)$ for all $\epsilon \in \left[0, 1\right)$. Surprisingly, this does not improve $R^*\left(X\right)$. We first consider a lemma which helps us prove this:
-\begin{lembox}{Information Spectrum Technique}{infoSpec}
+\begin{lembox}{Han-Verd\'{u} Technique}{infoSpec}
     For any $\left(n, 2^{nR}\right)$-code, 
     \begin{equation*}
-        \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \inf_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
+        \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \sup_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
     \end{equation*}
     \tcblower
     \begin{proof}
         For every $\gamma > 0$ and $n \in \N^+$, define 
         \begin{align*}
             T_n & \coloneqq \left\{\mathbfit{x} \in \mathcal{X}^n \colon \frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right\}, \\
-            S_n & \coloneqq \left\{\mathbfit{x} \in \mathcal{X}^n \colon \phi_n\bigl(f_n\left(\mathbfit{x}\right)\bigr) = \mathbfit{x}\right\}.
+            S_n & \coloneqq \left\{\mathbfit{x} \in \mathcal{X}^n \colon \varphi_n\bigl(f_n\left(\mathbfit{x}\right)\bigr) = \mathbfit{x}\right\}.
         \end{align*}
         Consider 
         \begin{align*}
@@ -1312,7 +1312,7 @@ It is clear that $R^*\left(X\right) = R^*_0\left(X\right) \geq R^*_{\epsilon}\le
         \end{align*}
         Therefore, $\Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \Pr\left(X_1^n \in T_n\right) - 2^{-n\gamma} \geq \Pr\left(X_1^n \in T_n\right) - \e^{-n\gamma}$, and so 
         \begin{equation*}
-            \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \inf_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
+            \Pr\left(X_1^n \neq \yhwidehat{\mathcal{X}}_1^n\right) \geq \sup_{\gamma > 0}\left\{\Pr\left(\frac{1}{n}\log_2\frac{1}{\prod_{i = 1}^np_X\left(x_i\right)} \geq R + \gamma\right) - \e^{-n\gamma}\right\}.
         \end{equation*}
     \end{proof}
 \end{lembox}
