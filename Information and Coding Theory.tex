@@ -1,4 +1,4 @@
-\documentclass[math, code]{amznotes}
+\documentclass[math]{amznotes}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -1664,4 +1664,209 @@ converges, and so
 \begin{equation*}
     \lim_{n \to \infty}I\left(X_i ; Y_n \mid Y_1^{n - 1}\right) = \lim_{n \to \infty}\abs{H\left(X_1\right) - H\left(Y_1^n \mid X_1\right)} = 0.
 \end{equation*}
+\section{Fixed-to-Variable-Length Data Compression}
+Note that a fixed-to-fixed-length source code will map a sequence of $n$ random variables to a binary string of length $2^{nR}$. Now, let us consider another approach of coding: instead of encoding the entire sequence, we devise a way to encode every character in the sequence first. The code for the whole sequence then is just the concatenation of the codes of all characters. 
+\begin{dfnbox}{Fixed-to-Variable-Length Source Code}{F2V}
+    A {\color{red} \textbf{Fixed-to-Variable-Length Source Code}} for a random variable $X$ is a map 
+    \begin{equation*}
+        C \coloneqq \mathcal{X} \to \left\{0, 1\right\}^*
+    \end{equation*}
+    where 
+    \begin{equation*}
+        \left\{0, 1\right\}^*\bigcup_{n \in \N^+}\left\{0, 1\right\}^n
+    \end{equation*}
+    is the set of all finite-length binary strings. We say that $C\left(x\right)$ is the {\color{red} \textbf{codeword}} corresponding to $x$ and $\ell\left(x\right)$ is the {\color{red} \textbf{length}} of $C\left(x\right)$.
+\end{dfnbox}
+Notice that now $\ell\left(X\right)$ is a function of $X$, and so it is meaningful to talk about its expectation.
+\begin{dfnbox}{Expeted Code Length}{El}
+    The {\color{red} \textbf{expected length}} $L\left(C\right)$ of a code $C \colon \mathcal{X} \to \left\{0, 1\right\}^*$ for a random variable $X \sim p_X$ is 
+    \begin{equation*}
+        L\left(C\right) = \sum_{x \in \mathcal{X}}p_X\left(x\right)\ell\left(x\right) = \mathbb{E}\left[\ell\left(X\right)\right].
+    \end{equation*} 
+\end{dfnbox}
+Given a string consisting of identically distributed random variables $X_1, X_2, \cdots, X_n$, we can form its codeword as $C\left(X_1\right), C\left(X_2\right), \cdots, C\left(X_n\right)$. However, the separation by comma here seems wasteful because it costs $\mathcal{O}\left(n\right)$ memory to store the commas. Can we come up with a code such that we can decode the string from the concatenation of the codewords for each character directly, without facing ambiguity? It is easy to see that a necessary condition for this is that the map $C$ must be injective.
+\begin{dfnbox}{Non-singular Code}{nonsingular}
+    A code $C$ is {\color{red} \textbf{non-singular}} if $C$ is injective.
+\end{dfnbox}
+Given a map $C$ to encode over an alphabet, we see that $C$ induces an encoder over all strings formed by the alphabet.
+\begin{dfnbox}{Extension}{extension}
+    The {\color{red} \textbf{extension}} of a code $C$ is the map 
+    \begin{equation*}
+        C^* \colon \mathcal{X}^* \to \left\{0, 1\right\}^*
+    \end{equation*}
+    such that $C^*\left(x_1x_2\cdots x_n\right) = C\left(x_1\right)C\left(x_2\right)\cdots C\left(x_n\right)$.
+\end{dfnbox}
+Clearly, if $C^*$ is non-singular, then for every code, there is only on unique string which can be encoded into it.
+\begin{dfnbox}{Unique Decodability}{UD}
+    A code $C$ is {\color{red} \textbf{uniquely decodable}} if $C^*$ is non-singular.
+\end{dfnbox}
+It is generally hard to decide if a code is uniquely decodable. However, there is a special class for uniquely decodable codes which are relatively easy to check.
+\begin{dfnbox}{Prefix-Free Code}{PF}
+    A code $C$ is called {\color{red} \textbf{prefix-free}} or {\color{red} \textbf{instantaneous}} if for all $x_1, x_2 \in \mathcal{X}$ with $x_1 \neq x_2$, we have $C\left(x_1\right) \neq C\left(x_2\right)s$ for all $s \in \left\{0, 1\right\}^*$.
+\end{dfnbox}
+For any random variable $X$, let $\mathcal{C}_X$ be the set of all codes, $\mathcal{S}_X$ be the set of non-singular codes, $\mathcal{U}_X$ be the set of uniquely decodable codes and $\mathcal{F}_X$ be the set of prefix-free codes on $X$ respectively, then 
+\begin{equation*}
+    \mathcal{F}_X \subseteq \mathcal{U}_X \subseteq \mathcal{S}_X \subseteq \mathcal{C}_X.
+\end{equation*}
+In fact, we can prove that the above inclusion is strict.
+
+First, it is clear that $C\left(x\right) = 0$ for all $x \in \mathcal{X}$ is a singular code for $X$. Consider $\mathcal{X} = \left\{1, 2, 3\right\}$ and 
+\begin{equation*}
+    C\left(x\right) = \begin{cases}
+        0 & \quad\textrm{if } x = 1 \\
+        010 & \quad\textrm{if } x = 2 \\
+        01 & \quad\textrm{if } x = 3
+    \end{cases}.
+\end{equation*}
+Clearly, the codeword $010$ is not uniquely decodable and so we have found a non-singular code which is not uniquely decodable. With some work, we can show that the code 
+\begin{equation*}
+    C\left(x\right) = \begin{cases}
+        10 & \quad\textrm{if } x = 1 \\
+        00 & \quad\textrm{if } x = 2 \\
+        11 & \quad\textrm{if } x = 3 \\
+        110 & \quad\textrm{if } x = 4
+    \end{cases}
+\end{equation*}
+is not prefix-free but uniquely decodable over $\left\{1, 2, 3, 4\right\}$.
+
+Let us study the properties of prefix-free codes in more detail.
+\begin{thmbox}{Kraft's Inequality}{Kraft}
+    For any binary prefix-free code over some alphabet $\mathcal{X} \coloneqq \left\{x_1, x_2, \cdots, x_M\right\}$, if $\ell_i = \ell\left(x_i\right)$ for each $x_i \in \mathcal{X}$, then 
+    \begin{equation*}
+        \sum_{i = 1}^{M}2^{-\ell_i} \leq 1.
+    \end{equation*} 
+    Conversely, if there exists positive integers $\ell_1, \ell_2, \cdots, \ell_{M}$ such that 
+    \begin{equation*}
+        \sum_{i = 1}^{M}2^{-\ell_i} \leq 1,
+    \end{equation*}
+    then there exists a prefix-free code $C$ over the alphabet $\left\{x_1, x_2, \cdots, x_M\right\}$ with $\ell\left(x_i\right) = \ell_i$.
+    \tcblower
+    \begin{proof}
+        Without loss of generality, let $\ell_i \leq \ell_j$ for all $i \leq j$. Let $A$ be a complete binary tree of depth $\ell_M$ and order $2^{\ell_M + 1} - 1$. Associate every left edge with $0$ and every right edge with $1$, then every code word corresponds to a unique path from the root of $A$ to some vertex in $A$. Therefore, there exists an injection $f \colon \mathcal{X} \to V\left(A\right)$. For any~$i < j$, we claim that $f\left(x_j\right)$ is not in the subtree rooted at $f\left(x_i\right)$. Suppose on contrary that~$f\left(x_j\right)$ is in the subtree rooted at $f\left(x_i\right)$, then since $\ell_j \geq \ell_i$, the codeword for $x_i$ must be a prefix to the codeword for $x_j$, which is a contradiction. Let $A_i$ be the set of leaves in the subtree rooted at $v_i \in V\left(A\right)$, then $A_i \cap A_j = \varnothing$ whenever $i \neq j$. Notice that 
+        \begin{equation*}
+            \abs{A_i} = 2^{\ell_M - \ell_i}.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            2^{\ell_M} & \geq \abs{\bigcup_{i = 1}^{M}A_i} \\
+            & = \sum_{i = 1}^{M}2^{\ell_M - \ell_i},
+        \end{align*}
+        which implies that 
+        \begin{equation*}
+            \sum_{i = 1}^{M}2^{-\ell_i} \leq 1.
+        \end{equation*} 
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        The converse of the theorem can be easily proven by tracing the complete binary tree backwards to re-construct the codeword for each character.
+    \end{remark}
+\end{notebox}
+\subsection{Optimal Code}
+With Theorem \ref{thm:Kraft}, we now have a systematic way to construct a prefix-free code. The next question is: how do we construct such a code with minimal code length? Given 
+\begin{equation*}
+    \mathcal{X} = \left\{x_1, x_2, \cdots, x_M\right\},
+\end{equation*}
+this becomes an optimisation problem 
+\begin{align*}
+    \min_{\ell_1, \ell_2, \cdots, \ell_M \in \N^+}&\sum_{i = 1}^{M}p_X\left(x_i\right)\ell_i \\
+    \textrm{such that }& \sum_{i = 1}^{M}2^{-\ell_i} \leq 1.
+\end{align*}
+Notice that this is an integer program. For the sake of simplicity, we may consider dropping the constraint on integrality and loosen the problem into a convex program. We can write out the Lagrangian as
+\begin{equation*}
+    \mathcal{L}\left(\mathbfit{l}, \lambda\right) = \sum_{i = 1}^{M}p_X\left(x_i\right)\ell_i + \lambda\left(\sum_{i = 1}^{M}2^{-\ell_i} - 1\right).
+\end{equation*}
+At the optimum, we have 
+\begin{equation*}
+    \frac{\partial \mathcal{L}}{\partial \ell_i} = p_X\left(x_i\right) - \lambda2^{-\ell_i}\ln 2 = 0,
+\end{equation*}
+for all $i = 1, 2, \cdots, M$. If $\mathbfit{l}^*$ is an optimum, then $\ell_i^* \propto -\log_2p\left(x_i\right)$ for all $i = 1, 2, \cdots, M$. Notice that if $\ell_i^* = -\log_2p\left(x_i\right)$ for all $i = 1, 2, \cdots, M$, we have 
+\begin{equation*}
+    \sum_{i = 1}^{M}2^{-\ell_i} = 1.
+\end{equation*}
+It can be proven that such a choice yields the optimal scenario, where 
+\begin{align*}
+    L^* & = \sum_{i = 1}^{M}p_X\left(x_i\right)\ell_i^* \\
+    & = -\sum_{i = 1}^{M}p_X\left(x_i\right)\log_2p_X\left(x_i\right) \\
+    & = H\left(X\right).
+\end{align*}
+Clearly, the optimum of the corresponding integer program cannot be more optimal than this solution, which motivates the following theorem:
+\begin{thmbox}{Lower Bound of Expected Code Length}{lowerBoundCodeLen}
+    Let $L^*$ be the expected code length of any prefix-free code for a random variable $X$, then we have $L^* \geq H\left(X\right)$, where the equality holds if and only if $2^{-\ell_i} = p_i$ for all $i = 1, 2, \cdots, \abs{\mathcal{X}}$.
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{align*}
+            L^* - H\left(X\right) & = \sum_{i = 1}^{\abs{\mathcal{X}}}p_i\ell^*_i - \sum_{i = 1}^{\abs{\mathcal{X}}}p_i\log_2\frac{1}{p_i} \\
+            & = -\sum_{i = 1}^{\abs{\mathcal{X}}}p_i\log_2\left(2^{-\ell^*_i}\right) + \sum_{i = 1}^{\abs{\mathcal{X}}}p_i\log_2{p_i}.
+        \end{align*}
+        By Theorem \ref{thm:Kraft}, take $c \coloneqq \sum_{i = 1}^{\abs{\mathcal{X}}}2^{-\ell^*_i} \leq 1$ and define
+        \begin{equation*}
+            r_i \coloneqq \frac{2^{-\ell^*_i}}{c},
+        \end{equation*}
+        then clearly $\mathbfit{r}$ is a probability vector. Observe that we can re-write 
+        \begin{align*}
+            L^* - H\left(X\right) & = \sum_{i = 1}^{\abs{\mathcal{X}}}p_i\log_2\frac{p_i}{r_i} - \log_2 c \\
+            & = D\left(p \parallel r\right) + \log_2\frac{1}{c} \\
+            & \geq 0.
+        \end{align*}
+        Therefore, $L^* \geq H\left(X\right)$. Clearly, the equality is achieved if and only if 
+        \begin{equation*}
+            \sum_{i = 1}^{\abs{\mathcal{X}}}2^{-\ell^*_i} = 1
+        \end{equation*}
+        and $p = r$, i.e., $p_i = 2^{-\ell_i^*}$.
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        If $p_i = 2^{-\ell_i^*}$ for some integer $\ell_i^*$, then $p_i$ is known as a \textit{dyadic rational}.
+    \end{remark}
+\end{notebox}
+Notice that to make $L^*$ closer to $H\left(X\right)$, we need $\ell_1^* \approx \log_2\frac{1}{p_i}$. However, based on Theorem \ref{thm:lowerBoundCodeLen} we also know it is impossible to have $\ell_1^* < \log_2\frac{1}{p_i}$. Therefore, a natural choice of the code lengths are the ceiling of the probabilities.
+\begin{dfnbox}{Shannon Code}{shannonCode}
+    A {\color{red} \textbf{Shannon code}} for a random variable $X$ over $\left\{x_1, x_2, \cdots, x_M\right\}$ is a code satisfying 
+    \begin{equation*}
+        \ell_i \coloneqq \ell\left(x_i\right) = \left\lceil\log_2\frac{1}{p_i}\right\rceil.
+    \end{equation*}
+\end{dfnbox}
+We can check that for a Shannon code,
+\begin{align*}
+    \sum_{i = 1}^{M}2^{-\ell_i} & = \sum_{i = 1}^{M}2^{-\left\lceil\log_2\frac{1}{p_i}\right\rceil} \\
+    & \leq \sum_{i = 1}^{M}2^{-\log_2\frac{1}{p_i}} \\
+    & = \sum_{i = 1}^{M}p_i\\
+    & = 1.
+\end{align*}
+Therefore, a Shannon code can be always made prefix-free and thus uniquely decodable. Furthermore, 
+\begin{equation*}
+    \log_2\frac{1}{p_i} \leq \ell_i = \left\lceil\log_2\frac{1}{p_i}\right\rceil < \log_2\frac{1}{p_i} + 1,
+\end{equation*}
+and so 
+\begin{align*}
+    \sum_{i = 1}^{M}p_i\log_2\frac{1}{p_i} & \leq \sum_{i = 1}^{M}p_i\ell_i \\
+    & < \sum_{i = 1}^{M}p_i\log_2\frac{1}{p_i} + \sum_{i = 1}^{M}p_i \\
+    & < H\left(X\right) + 1.
+\end{align*}
+Since $\sum_{i = 1}^{M}p_i\ell_i = L$, we have
+\begin{equation*}
+    H\left(X\right) \leq L^* < H\left(X\right) + 1.
+\end{equation*}
+Note that $1$ might induce a huge interval if $X$ is very small. To counter this, we adopt a technique known as \textit{coding over long blocks}.
+
+Consider any $\left(x_1, x_2, \cdots, x_n\right) \in \mathcal{X}^n$ for some $n \in \N^+$ and define the expected codeword length per unit symbol for this vector as 
+\begin{equation*}
+    L_n \coloneqq \frac{1}{n}\mathbb{E}\left[\ell\left(X_1, X_2, \cdots, X_n\right)\right].
+\end{equation*}
+By the previous bounds, we have 
+\begin{equation*}
+    H\left(X_1^n\right) \leq \mathbb{E}\left[\ell\left(X_1, X_2, \cdots, X_n\right)\right] < H\left(X_1^n\right) + 1,
+\end{equation*}
+and so 
+\begin{equation*}
+    \frac{H\left(X_1^n\right)}{n} \leq L_n^* < \frac{H\left(X_1^n\right)}{n} + \frac{1}{n}.
+\end{equation*}
+Since the source is independent and identically distributed, we have 
+\begin{equation*}
+    H\left(X\right) \leq L_n^* < H\left(X\right) + \frac{1}{n}.
+\end{equation*}
+Therefore, the longer our block is, the smaller the difference between $L_n^*$ and $H\left(X\right)$ will be.
 \end{document}

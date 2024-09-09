@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  6 SEP 2024 15:20
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  9 SEP 2024 22:50
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -798,101 +798,6 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip76
 \thm@headsep=\skip77
 \dth@everypar=\toks49
-) (c:/texlive/2023/texmf-dist/tex/latex/minted/minted.sty
-Package: minted 2022/12/12 v2.7 Yet another Pygments shim for LaTeX
- (c:/texlive/2023/texmf-dist/tex/latex/fvextra/fvextra.sty
-Package: fvextra 2022/11/30 v1.5 fvextra - extensions and patches for fancyvrb
- (c:/texlive/2023/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
-\FV@CodeLineNo=\count362
-\FV@InFile=\read4
-\FV@TabBox=\box132
-\c@FancyVerbLine=\count363
-\FV@StepNumber=\count364
-\FV@OutFile=\write4
-) (c:/texlive/2023/texmf-dist/tex/latex/upquote/upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
-) (c:/texlive/2023/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2023/01/19 line numbers on paragraphs v5.1
-Invalid UTF-8 byte or sequence at line 290 replaced by U+FFFD.
-\linenopenalty=\count365
-\output=\toks50
-\linenoprevgraf=\count366
-\linenumbersep=\dimen318
-\linenumberwidth=\dimen319
-\c@linenumber=\count367
-\c@pagewiselinenumber=\count368
-\c@LN@truepage=\count369
-\c@internallinenumber=\count370
-\c@internallinenumbers=\count371
-\quotelinenumbersep=\dimen320
-\bframerule=\dimen321
-\bframesep=\dimen322
-\bframebox=\box133
-\linenoamsmath@ams@eqpen=\count372
-LaTeX Info: Redefining \\ on input line 3131.
-)
-\c@FV@TrueTabGroupLevel=\count373
-\c@FV@TrueTabCounter=\count374
-\FV@TabBox@Group=\box134
-\FV@TmpLength=\skip78
-\c@FV@HighlightLinesStart=\count375
-\c@FV@HighlightLinesStop=\count376
-\FV@LoopCount=\count377
-\FV@NCharsBox=\box135
-\FV@BreakIndent=\dimen323
-\FV@BreakIndentNChars=\count378
-\FV@BreakSymbolSepLeft=\dimen324
-\FV@BreakSymbolSepLeftNChars=\count379
-\FV@BreakSymbolSepRight=\dimen325
-\FV@BreakSymbolSepRightNChars=\count380
-\FV@BreakSymbolIndentLeft=\dimen326
-\FV@BreakSymbolIndentLeftNChars=\count381
-\FV@BreakSymbolIndentRight=\dimen327
-\FV@BreakSymbolIndentRightNChars=\count382
-\c@FancyVerbLineBreakLast=\count383
-\FV@LineBox=\box136
-\FV@LineIndentBox=\box137
-\c@FV@BreakBufferDepth=\count384
-\FV@LineWidth=\dimen328
-) (c:/texlive/2023/texmf-dist/tex/latex/ifplatform/ifplatform.sty
-Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
- (c:/texlive/2023/texmf-dist/tex/generic/catchfile/catchfile.sty
-Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
-) (c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-)) (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.sty (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.tex
-\integerpart=\count385
-\decimalpart=\count386
-)
-Package: xstring 2023/01/14 v1.85 String manipulations (CT)
-) (c:/texlive/2023/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip79
-\fb@frw=\dimen329
-\fb@frh=\dimen330
-\FrameRule=\dimen331
-\FrameSep=\dimen332
-) (c:/texlive/2023/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count387
-\float@exts=\toks51
-\float@box=\box138
-\@float@everytoks=\toks52
-\@floatcapt=\box139
-)
-\minted@appexistsfile=\read5
-\minted@bgbox=\box140
-\minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count388
-\c@minted@pygmentizecounter=\count389
-\@float@every@listing=\toks53
-\c@listing=\count390
-)
-runsystem(if not exist _minted-Information_and_Coding_Theory mkdir _minted-Information_and_Coding_Theory)...executed.
-
- (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
-Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
 )
 
 Package fontspec Info: Font family 'STIXTwoText(0)' created for font
@@ -1192,11 +1097,11 @@ LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `normal'
 LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `bold'
 (Font)                  TU/XITSMath(0)/m/n --> TU/XITSMath(0)/b/n on input line 80.
 Package hyperref Info: Option `colorlinks' set `true' on input line 109.
-\c@amzboxcounter=\count391
+\c@amzboxcounter=\count362
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks54
-\inpenc@posthook=\toks55
+\inpenc@prehook=\toks50
+\inpenc@posthook=\toks51
 
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
@@ -1222,36 +1127,36 @@ Package pict2e Info: Driver file for pict2e: p2e-xetex.def on input line 114.
  (c:/texlive/2023/texmf-dist/tex/latex/pict2e/p2e-xetex.def
 File: p2e-xetex.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
 )
-\pIIe@GRAPH=\toks56
-\@arclen=\dimen333
-\@arcrad=\dimen334
-\pIIe@tempdima=\dimen335
-\pIIe@tempdimb=\dimen336
-\pIIe@tempdimc=\dimen337
-\pIIe@tempdimd=\dimen338
-\pIIe@tempdime=\dimen339
-\pIIe@tempdimf=\dimen340
+\pIIe@GRAPH=\toks52
+\@arclen=\dimen318
+\@arcrad=\dimen319
+\pIIe@tempdima=\dimen320
+\pIIe@tempdimb=\dimen321
+\pIIe@tempdimc=\dimen322
+\pIIe@tempdimd=\dimen323
+\pIIe@tempdime=\dimen324
+\pIIe@tempdimf=\dimen325
 )
-\diagbox@boxa=\box141
-\diagbox@boxb=\box142
-\diagbox@boxm=\box143
-\diagbox@wd=\dimen341
-\diagbox@ht=\dimen342
-\diagbox@insepl=\dimen343
-\diagbox@insepr=\dimen344
-\diagbox@outsepl=\dimen345
-\diagbox@outsepr=\dimen346
+\diagbox@boxa=\box132
+\diagbox@boxb=\box133
+\diagbox@boxm=\box134
+\diagbox@wd=\dimen326
+\diagbox@ht=\dimen327
+\diagbox@insepl=\dimen328
+\diagbox@insepr=\dimen329
+\diagbox@outsepl=\dimen330
+\diagbox@outsepr=\dimen331
 )
 \symyhlargesymbols=\mathgroup9
  (c:/texlive/2023/texmf-dist/tex/latex/scalerel/scalerel.sty
 Package: scalerel 2016/12/29 v1.8 Routines for constrained scaling and stretching of objects, relative to a reference object or in absolute terms
-\thesrwidth=\skip80
-\thesrheight=\skip81
-\srblobheight=\skip82
-\srblobdepth=\skip83
-\mnxsrwidth=\skip84
-\LMex=\skip85
-\LMpt=\skip86
+\thesrwidth=\skip78
+\thesrheight=\skip79
+\srblobheight=\skip80
+\srblobdepth=\skip81
+\mnxsrwidth=\skip82
+\LMex=\skip83
+\LMpt=\skip84
 ) (c:/texlive/2023/texmf-dist/tex/latex/stackengine/stackengine.sty
 Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient ways
  (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.sty (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.tex
@@ -1264,7 +1169,7 @@ Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 104 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 105 replaced by U+FFFD.
-\loi_cnt_foreach_nest=\count392
+\loi_cnt_foreach_nest=\count363
 Invalid UTF-8 byte or sequence at line 139 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 146 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 192 replaced by U+FFFD.
@@ -1292,7 +1197,7 @@ Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 354 replaced by U+FFFD.
-\loi_nestcnt=\count393
+\loi_nestcnt=\count364
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
@@ -1358,25 +1263,21 @@ Invalid UTF-8 byte or sequence at line 541 replaced by U+FFFD.
 )
 Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified sep char (CT)
 )
-\c@@stackindex=\count394
-\@boxshift=\skip87
-\stack@tmplength=\skip88
-\temp@stkl=\skip89
-\@stackedboxwidth=\skip90
-\@addedbox=\box144
-\@anchorbox=\box145
-\@insetbox=\box146
-\se@backgroundbox=\box147
-\stackedbox=\box148
-\@centerbox=\box149
-\c@ROWcellindex@=\count395
+\c@@stackindex=\count365
+\@boxshift=\skip85
+\stack@tmplength=\skip86
+\temp@stkl=\skip87
+\@stackedboxwidth=\skip88
+\@addedbox=\box135
+\@anchorbox=\box136
+\@insetbox=\box137
+\se@backgroundbox=\box138
+\stackedbox=\box139
+\@centerbox=\box140
+\c@ROWcellindex@=\count366
 )
-\c@case=\count396
+\c@case=\count367
 LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 121.
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Information_and_Coding_Theory.aex <nul: /p x=^%~$PATH:i>> Information_and_Coding_Theory.aex)...executed.
-
-runsystem(del Information_and_Coding_Theory.aex)...executed.
-
  (./Information and Coding Theory.aux)
 \openout1 = `"Information and Coding Theory.aux"'.
 
@@ -1459,10 +1360,10 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 
 Package hyperref Info: Link coloring ON on input line 123.
 (./Information and Coding Theory.out) (./Information and Coding Theory.out)
-\@outlinefile=\write6
-\openout6 = `"Information and Coding Theory.out"'.
+\@outlinefile=\write4
+\openout4 = `"Information and Coding Theory.out"'.
 
-\c@lstlisting=\count397
+\c@lstlisting=\count368
  (./Information and Coding Theory.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
@@ -1489,8 +1390,8 @@ LaTeX Font Info:    Trying to load font information for OMX+yhex on input line 2
 File: OMXyhex.fd 
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 ))
-\tf@toc=\write7
-\openout7 = `"Information and Coding Theory.toc"'.
+\tf@toc=\write5
+\openout5 = `"Information and Coding Theory.toc"'.
 
  [1
 
@@ -1532,7 +1433,7 @@ Overfull \hbox (1.85857pt too wide) in paragraph at lines 1653--1655
 \TU/STIXTwoText(0)/m/n/12 for all $[] [] [][]$. This means that $[][]$ is a non-decreasing sequence upper bounded
  []
 
-[50] 
+[50] [51] [52] [53] [54] [55] [56] [57] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Information and Coding Theory.aux)
 
@@ -1542,12 +1443,12 @@ Package rerunfilecheck Info: File `"Information and Coding Theory".out' has not 
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39875 strings out of 478630
- 836756 string characters out of 5847730
+ 37092 strings out of 478630
+ 773230 string characters out of 5847730
  1894012 words of memory out of 5000000
- 59300 multiletter control sequences out of 15000+600000
+ 56572 multiletter control sequences out of 15000+600000
  518906 words of font info for 105 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Information and Coding Theory.pdf (50 pages).
+Output written on Information and Coding Theory.pdf (57 pages).

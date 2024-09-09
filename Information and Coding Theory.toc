@@ -16,3 +16,5 @@
 \contentsline {subsubsection}{Fisher-Yates Shuffle}{46}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Application: Random Walk}{47}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Application: Hidden Markov Model}{49}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Fixed-to-Variable-Length Data Compression}{50}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Optimal Code}{53}{subsection.3.4.1}%
