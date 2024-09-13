@@ -1060,6 +1060,8 @@ Equivalently, this means that $A = f^{-1}\bigl(f\left(A\right)\bigr)$.
 \begin{dfnbox}{Quotient Space}{quotientSpace}
     Let $X$ be a topological space and $X^*$ be a partition of $X$. Let $p \colon X \to X^*$ be a surjective map such that $x \in p\left(x\right)$. If $\mathcal{T}^*$ is the quotient topology on $X^*$, then $\left(X^*, \mathcal{T}^*\right)$ is the {\color{red} \textbf{quotient space}} of $X$.
 \end{dfnbox}
+\chapter{Characterisation of Topological Spaces}
+\section{Hausdorff Spaces}
 \begin{dfnbox}{$T_1$ and $T_2$ Spaces}{T1T2}
     Let $X$ be a topological space. $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open set $U \subseteq X$ such that $x \in U$ but $y \notin U$. $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
 \end{dfnbox}
@@ -1068,4 +1070,77 @@ We can check that every metric space is Hausdorff, as for any $x \neq y$, we can
     r \coloneqq \frac{1}{3}d\left(x, y\right),
 \end{equation*}
 and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff.
+\begin{probox}{Characterisation of $T_1$ Spaces}{T1Space}
+    A topological space $X$ is $T_1$ if and only if for all $x \in X$, the singleton set $\left\{x\right\}$ is closed.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is $T_1$ and take any $x \in X$. Let $y \in X \backslash \left\{x\right\}$ be any point. Notice that there exists some open set $V_y \subseteq X$ such that $y \in V_y$ but $x \notin V_y$. Clearly, 
+        \begin{equation*}
+            X \backslash \left\{x\right\} = \bigcup_{y \in X \backslash \left\{x\right\}}V_y
+        \end{equation*}
+        is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \backslash \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
+    \end{proof}
+\end{probox}
+\begin{corbox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
+    Let $X$ be a metric space, then all finite sets in $X$ are closed.
+\end{corbox}
+\section{First Countable Spaces}
+\begin{dfnbox}{Countable Basis}{countableBasis}
+    Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis}} of $x$ is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing $x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$. 
+\end{dfnbox}
+\begin{dfnbox}{First Countable Space}{1stCountable}
+    A topological space $X$ is {\color{red} \textbf{first countable}} if every $x \in X$ has a countable basis.
+\end{dfnbox}
+We claim that all metric spaces are first countable. Let $X$ be a metric space and take any $x \in X$, then we can take its countable basis as 
+\begin{equation*}
+    \mathcal{B} \coloneqq \left\{B_{\frac{1}{i}}\left(x\right) \colon i \in \Z^+\right\}.
+\end{equation*}
+Consider some uncountable set $Y$ equipped with the co-finite topology. For any $y \in Y$, suppose it has a countable basis $\mathcal{B}$. Note that in the co-finite topology, a set is open if and only if its complement is finite. Therefore, there exists some finite set $F_i \subseteq Y$ such that there exists some $B_i \in \mathcal{B}$ such that $Y \backslash F_i = B_i$. Notice that 
+\begin{equation*}
+    Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right) \neq \varnothing.
+\end{equation*}
+Take some $z \in Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right)$, then $U \coloneqq Y \backslash \left\{z\right\}$ is open such that $y \in U$. Note that for all $B_i \in \mathcal{B}$, we have $z \in B_i$. This means that $B_i \not\subseteq U$ for all $i \in \Z^+$ because otherwise $y \in U$ which is not possible. Therefore, $\mathcal{B}$ is not a countable basis.
+\begin{probox}{Closure Characterisation of First Countable Spaces}{characterise1stCountableClosure}
+    Let $X$ be a topological space and $A \subseteq X$. If there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$, then $x \in \widebar{A}$. The converse is true if $X$ is first countable.
+    \tcblower
+    \begin{proof}
+        Suppose that there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$. Notice that $\widebar{A} = A \cup A'$, then it suffices to prove that $x \notin A$ implies that $x \in A'$. Suppose that $x \notin A$. Note that for any open set $U \subseteq X$ such that $x \in U$, there exists some $N \in \N$ such that $x_n \in U$ for all $n \geq N$. In particular, this means that $x_N \in U \cap \left(A \backslash \left\{x\right\}\right)$. Therefore, $x$ is a limit point of $A$.
+        \\\\
+        Conversely, suppose that $x \in \widebar{A}$. Since $X$ is first countable, $x$ has some countable basis $\mathcal{X}$. For each $i \in \N^+$, take 
+        \begin{equation*}
+            x_i \in \bigcap_{j = 1}^{i}\left(B_j \cap A\right),
+        \end{equation*}
+        then $\left\{x_i\right\}_{i = \N^+}$ is a sequence in $A$. Let $U$ be any open set containing $x$, then there exists some $B_N \in \mathcal{B}$ such that $x \in B_N \subseteq U$. However, notice that for all $i \geq N$, we have $x_i \in B_N \subseteq U$, and so $x_i \to x$.
+    \end{proof}
+\end{probox}
+\begin{probox}{Continuous Map Characterisation of First Countable Spaces}{characterise1stCountableContinuous}
+    Let $X$ be a topological space. If $f \colon X \to Y$ is continuous, then for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. The converse is true if $X$ is first countable.
+    \tcblower
+    \begin{proof}
+        Suppose that $f \colon X \to Y$ is continuous. Let $U \subseteq Y$ be an open set such that $f\left(x\right) \in U$, then $x \in f^{-1}\left(U\right)$, which is open. Note that there exists some $N \in \N^+$ such that $x_i \in f^{-1}\left(U\right)$ for all $i \geq N$, i.e., $f\left(x_i\right) \in U$ for all $i \geq N$. Therefore, $f\left(x_i\right) \to f\left(x\right)$.
+        \\\\
+        Conversely, suppose that for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. Take any $A \subseteq X$ with $x \in \widebar{A}$. Since $X$ is first countable, by Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{y_i\right\}_{i \in \N^+}$ in $A$ such that $y_i \to x$. This means that $f\left(y_i\right) \to f\left(x\right)$. Since $f\left(x_i\right) \in f\left(A\right)$, this means that $f\left(x\right) \in \widebar{f\left(A\right)}$, and so $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$. By Proposition \ref{pro:continuousMapProps}, $f$ is continuous.
+    \end{proof}
+\end{probox}
+\section{Compactness}
+\begin{dfnbox}{Open Cover}{openCover}
+    Let $X$ be a topological space. An {\color{red} \textbf{open cover}} is a collection of open sets $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ such that 
+    \begin{equation*}
+        \bigcup_{\alpha \in \Lambda}U_{\alpha} = X.
+    \end{equation*}
+\end{dfnbox}
+\begin{dfnbox}{Compact Space}{compact}
+    Let $X$ be a topological space. $X$ is {\color{red} \textbf{compact}} if every open cover of $X$ contains a finite sub-cover for $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        $Y \subseteq X$ is a compact subspace if and only if every collection $\mathcal{U}$ of open sets in $Y$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}}U$ contains a finite sub-collection $\mathcal{U}' \subseteq \mathcal{U}$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}'}U$.
+    \end{remark}
+\end{notebox}
+\begin{probox}{Closed Subspaces of Compact Spaces Are Compact}{closedCompact}
+    Every closed subspace of a compact space is compact.
+\end{probox}
+\begin{probox}{Continuous Map Induces Compact Image}{ContinuousCompact}
+    Let $f \colon X \to Y$ be continuous, if $X$ is compact, then $f\left(X\right)$ is compact.
+\end{probox}
 \end{document}
