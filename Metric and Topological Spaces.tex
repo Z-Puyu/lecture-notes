@@ -1061,6 +1061,7 @@ Equivalently, this means that $A = f^{-1}\bigl(f\left(A\right)\bigr)$.
     Let $X$ be a topological space and $X^*$ be a partition of $X$. Let $p \colon X \to X^*$ be a surjective map such that $x \in p\left(x\right)$. If $\mathcal{T}^*$ is the quotient topology on $X^*$, then $\left(X^*, \mathcal{T}^*\right)$ is the {\color{red} \textbf{quotient space}} of $X$.
 \end{dfnbox}
 \chapter{Characterisation of Topological Spaces}
+In the previous chapter, we have discussed various fundamental concepts and properties of general topological spaces. In this chapter, the main focus is to characterise a number of topological spaces and categorise them into different types.
 \section{Hausdorff Spaces}
 \begin{dfnbox}{$T_1$ and $T_2$ Spaces}{T1T2}
     Let $X$ be a topological space. $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open set $U \subseteq X$ such that $x \in U$ but $y \notin U$. $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
@@ -1069,7 +1070,13 @@ We can check that every metric space is Hausdorff, as for any $x \neq y$, we can
 \begin{equation*}
     r \coloneqq \frac{1}{3}d\left(x, y\right),
 \end{equation*}
-and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff.
+and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff. 
+
+Next, we prove that the co-finite topology is always $T_1$.
+\begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
+    Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
+\end{probox}
+Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some open sets to cover every point in the space other than $x$, which means that the isolated singleton $\left\{x\right\}$ is closed.
 \begin{probox}{Characterisation of $T_1$ Spaces}{T1Space}
     A topological space $X$ is $T_1$ if and only if for all $x \in X$, the singleton set $\left\{x\right\}$ is closed.
     \tcblower
@@ -1081,13 +1088,16 @@ and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can als
         is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \backslash \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
     \end{proof}
 \end{probox}
+Notice that by Definition \ref{dfn:T1T2}, all $T_2$ spaces are $T_1$, so the following corollary is easy to show:
 \begin{corbox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
     Let $X$ be a metric space, then all finite sets in $X$ are closed.
 \end{corbox}
 \section{First Countable Spaces}
+Consider a random point $x$ in some topological space. Suppose that $U$ is an open set containing $x$. Intuitively, we can reduce $U$ by taking an open subset of $U$ containing $x$. We do this repeatedly until we find some minimal open subset of $U$ containing $x$. Now, we can perform this operation to every open set containing $x$ in the space and collect all these minimal open subsets. The countability of this collection offers a different criterion of space categorisation.
 \begin{dfnbox}{Countable Basis}{countableBasis}
-    Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis}} of $x$ is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing $x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$. 
+    Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis}} of $x$ is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing~$x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$. 
 \end{dfnbox}
+Now we define \textit{first countable spaces} as follows:
 \begin{dfnbox}{First Countable Space}{1stCountable}
     A topological space $X$ is {\color{red} \textbf{first countable}} if every $x \in X$ has a countable basis.
 \end{dfnbox}
@@ -1100,13 +1110,18 @@ Consider some uncountable set $Y$ equipped with the co-finite topology. For any 
     Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right) \neq \varnothing.
 \end{equation*}
 Take some $z \in Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right)$, then $U \coloneqq Y \backslash \left\{z\right\}$ is open such that $y \in U$. Note that for all $B_i \in \mathcal{B}$, we have $z \in B_i$. This means that $B_i \not\subseteq U$ for all $i \in \Z^+$ because otherwise $y \in U$ which is not possible. Therefore, $\mathcal{B}$ is not a countable basis.
+
+Suppose that $x$ is a random point in a topological space with a countable basis $\mathcal{B}$. Fix any~$B \in \mathcal{B}$, then $x \in B$. Notice that for any open set $U$ containing $x$, it is not possible that $U$ and $B$ are disjoint. Therefore, there exists some open subset of $B$ which contains $x$. This motivates the following natural question: can we always re-construct the countable basis such that for any pair of sets in the basis, one must be a subset of the other?
+\begin{probox}{Construction of Countable Basis}{constructCountable}
+    Let $x \in X$ be a point with a countable basis $\mathcal{B}$, then there exists some countable basis $\mathcal{B}'$ of $x$ such that for any $B_1, B_2 \in \mathcal{B}'$, either $B_1 \subseteq B_2$ or $B_2 \subseteq B_1$.
+\end{probox}
 \begin{probox}{Closure Characterisation of First Countable Spaces}{characterise1stCountableClosure}
     Let $X$ be a topological space and $A \subseteq X$. If there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$, then $x \in \widebar{A}$. The converse is true if $X$ is first countable.
     \tcblower
     \begin{proof}
         Suppose that there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$. Notice that $\widebar{A} = A \cup A'$, then it suffices to prove that $x \notin A$ implies that $x \in A'$. Suppose that $x \notin A$. Note that for any open set $U \subseteq X$ such that $x \in U$, there exists some $N \in \N$ such that $x_n \in U$ for all $n \geq N$. In particular, this means that $x_N \in U \cap \left(A \backslash \left\{x\right\}\right)$. Therefore, $x$ is a limit point of $A$.
         \\\\
-        Conversely, suppose that $x \in \widebar{A}$. Since $X$ is first countable, $x$ has some countable basis $\mathcal{X}$. For each $i \in \N^+$, take 
+        Conversely, suppose that $x \in \widebar{A}$. Since $X$ is first countable, $x$ has some countable basis $\mathcal{B} \coloneqq \left\{B_i \colon i \in \N^+\right\}$. By Proposition \ref{pro:constructCountable}, we can assume that $B_j \subseteq B_i$ whenever $j \geq i$. For each $i \in \N^+$, take 
         \begin{equation*}
             x_i \in \bigcap_{j = 1}^{i}\left(B_j \cap A\right),
         \end{equation*}
@@ -1142,5 +1157,54 @@ Take some $z \in Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\inft
 \end{probox}
 \begin{probox}{Continuous Map Induces Compact Image}{ContinuousCompact}
     Let $f \colon X \to Y$ be continuous, if $X$ is compact, then $f\left(X\right)$ is compact.
+\end{probox}
+\begin{probox}{Compact Subspaces of Hausdorff Spaces Are Closed}{compactClosed}
+    Every compact subspace of a Hausdorff space is closed.
+\end{probox}
+\begin{probox}{Sets in Co-finite Topology Are Compact}{compactCofinite}
+    Let $X$ be a topological space equipped with the co-finite topology, then for every $U \subseteq X$, $U$ is compact and $U$ is closed if and only if $U$ is finite.
+\end{probox}
+\begin{lembox}{Tube Lemma}{tube}
+    Let $X$ be a topological space and $Y$ be a compact topological space. If $N \subseteq X \times Y$ is an open set that contains $\left\{\left(x_0, y\right) \colon y \in Y \right\}$, then $N$ contains $W \times Y$ for some open $W \subseteq X$ that contains $x_0$.
+\end{lembox}
+\begin{corbox}{Compactness of Cartesian Product}{compactCartProd}
+    If $X$ and $Y$ are compact topological spaces, then $X \times Y$ is compact.
+\end{corbox}
+\begin{dfnbox}{Finite Intersection Property}{finiteIntersect}
+    Let $X$ be some set. A collection $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ has the {\color{red} \textbf{finite intersection property}} if for any finite sub-collection $\mathcal{G}' \subseteq \mathcal{G}$, we have 
+    \begin{equation*}
+        \bigcap_{G \in \mathcal{G}'}G \neq \varnothing.
+    \end{equation*}
+\end{dfnbox}
+\begin{probox}{Characterisation of Compactness}{compactFiniteIntersect}
+    Let $X$ be a topological space, then $X$ is compact if and only if for any collection of closed sets $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ with the finite intersection property, we have 
+    \begin{equation*}
+        \bigcap_{G \in \mathcal{G}}G \neq \varnothing.
+    \end{equation*}
+\end{probox}
+\begin{corbox}{Intersection of Nested Closed Sets in Compact Spaces}{nestedClosedInCompact}
+    Let $X$ be a compact topological space and $\left\{G_i\right\}_{i = 1}^{\infty}$ be a sequence of closed sets in $X$ such that $G_{i + 1} \subseteq G_i$ for all $i \in \N^+$, then 
+    \begin{equation*}
+        \bigcap_{i = 1}^{\infty}G_i \neq \varnothing.
+    \end{equation*}
+\end{corbox}
+\begin{dfnbox}{Isolated Point}{isolatePt}
+    A point $x$ in a topological space $X$ is {\color{red} \textbf{isolated}} if $\left\{x\right\}$ is open in $X$.
+\end{dfnbox}
+\begin{probox}{Characterisation of Uncountable Topological Spaces}{characteriseUncountable}
+    Let $X$ be a non-empty compact Hausdorff space. If $X$ has no isolated point, then $X$ is uncountable.
+\end{probox}
+\begin{dfnbox}{Limit Point Compactness}{limPtCompact}
+    A topological space $X$ is {\color{red} \textbf{limit point compact}} if every infinite subset of $X$ has a limit point in $X$.
+\end{dfnbox}
+It is possible for a non-compact space to be limit point compact. However, a compact space must be limit point compact.
+\begin{probox}{Compactness Implies Limit Point Compactness}{compactToLimPtCompact}
+    Any compact topological space is limit point compact.
+\end{probox}
+\begin{dfnbox}{Sequential Compactness}{seqCompact}
+    A topological space $X$ is {\color{red} \textbf{sequentially compact}} if every sequence in $X$ has a convergent subsequence.
+\end{dfnbox}
+\begin{probox}{Sequential Compactness Implies Limit Point Compactness}{seqCompactToLimPtCompact}
+    Any sequentially compact topological space is limit point compact, but the converse is not true.
 \end{probox}
 \end{document}

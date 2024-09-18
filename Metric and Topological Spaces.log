@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  10 SEP 2024 11:34
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 SEP 2024 22:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1454,17 +1454,17 @@ Package tcolorbox Warning: Discard zero height first box part due to break probl
 Chapter 2.
 [32
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 1107--1110
+] [33]
+Underfull \hbox (badness 10000) in paragraph at lines 1122--1125
 
  []
 
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 1120--1123
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 1135--1138
 
  []
 
-[34] [35] 
+[35] [36] [37] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 
@@ -1474,12 +1474,12 @@ Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not 
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36809 strings out of 478630
- 768583 string characters out of 5847730
+ 36840 strings out of 478630
+ 769173 string characters out of 5847730
  1894012 words of memory out of 5000000
- 56297 multiletter control sequences out of 15000+600000
+ 56328 multiletter control sequences out of 15000+600000
  518882 words of font info for 102 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (35 pages).
+Output written on Metric and Topological Spaces.pdf (37 pages).
