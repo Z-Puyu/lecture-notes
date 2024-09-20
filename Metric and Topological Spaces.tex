@@ -142,7 +142,7 @@
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        For any set $X$, we define $\left\{\varnothing, X\right\}$ as the \textit{trivial topology} on $X$, $\mathcal{P}\left(X\right)$ as the \textit{discrete topology}, and $\left\{X \backslash U \colon U \subseteq X \textrm{ is finite}\right\} \cup \left\{\varnothing\right\}$ as the \textit{co-finite topology}.
+        For any set $X$, we define $\left\{\varnothing, X\right\}$ as the \textit{trivial topology} on $X$, $\mathcal{P}\left(X\right)$ as the \textit{discrete topology}, and $\left\{X \setminus U \colon U \subseteq X \textrm{ is finite}\right\} \cup \left\{\varnothing\right\}$ as the \textit{co-finite topology}.
     \end{remark}
 \end{notebox}
 The set $\left\{\left(-\alpha, \alpha\right) \colon \alpha > 0\right\} \cup \left\{\R, \varnothing\right\}$ defines a topology on $\R$. This example also demonstrates why it is crucial to only consider closure under finite intersections when defining a topology, because
@@ -353,7 +353,7 @@ $d_\infty\left(\mathbfit{x}, \mathbfit{y}\right)$ can be alternatively written a
 
 The $p$-adic numbers can be defined from the following lemma:
 \begin{lembox}{$p$-adic Numbers}{padic}
-    Let $p$ be any prime number. For all $x \in \Q \backslash \left\{0\right\}$, there exists a unique $k \in \Z$ such that
+    Let $p$ be any prime number. For all $x \in \Q \setminus \left\{0\right\}$, there exists a unique $k \in \Z$ such that
     \begin{equation*}
         x = \frac{p^kr}{s}, \qquad r, s \in \Z
     \end{equation*}
@@ -482,9 +482,9 @@ means that all $L^p$-metrics are equivalent over the same space.
     \end{equation*}
     is the {\color{red} \textbf{subspace topology}} on $X$.
 \end{dfnbox}
-We may check that $\mathcal{T}_X$ defined as such is indeed a topology on $X$. First, by taking $U = \varnothing$ and~$U = Y$ respectively, we know that $\varnothing, X \in \mathcal{T}_X$. For any $U \in \mathcal{T}_Y$, we have $Y \backslash U \in \mathcal{T}_Y$ and so 
+We may check that $\mathcal{T}_X$ defined as such is indeed a topology on $X$. First, by taking $U = \varnothing$ and~$U = Y$ respectively, we know that $\varnothing, X \in \mathcal{T}_X$. For any $U \in \mathcal{T}_Y$, we have $Y \setminus U \in \mathcal{T}_Y$ and so 
 \begin{equation*}
-    X \backslash \left(U \cap X\right) = \left(Y \backslash U\right) \cap X \in \mathcal{T}_X.
+    X \setminus \left(U \cap X\right) = \left(Y \setminus U\right) \cap X \in \mathcal{T}_X.
 \end{equation*}
 For any $\mathcal{V} \subseteq \mathcal{T}_X$, we define a subset $\mathcal{U_{\mathcal{V}}} \subseteq \mathcal{T}_Y$ such that for each $V \in \mathcal{V}$ there is a unique~$U_V \in \mathcal{U}_{\mathcal{V}}$ such that $V = U_V \cap X$. Then, 
 \begin{align*}
@@ -561,7 +561,7 @@ Naturally, the following result is true:
 \end{probox}
 \section{Closed Sets}
 \begin{dfnbox}{Closed Set}{closedSet}
-    Let $\left(X, \mathcal{T}\right)$ be a topological space. A subset $A \subseteq X$ is {\color{red} \textbf{closed}} if $X \backslash A \in \mathcal{T}$.
+    Let $\left(X, \mathcal{T}\right)$ be a topological space. A subset $A \subseteq X$ is {\color{red} \textbf{closed}} if $X \setminus A \in \mathcal{T}$.
 \end{dfnbox}
 A set might be open and closed simultaneously. For example, every set $X$ is both open and closed in itself.
 \begin{probox}{\small Arbitrary Intersection and Finite Union of Closed Sets Are Closed}{intersectionClosed}
@@ -574,11 +574,11 @@ A set might be open and closed simultaneously. For example, every set $X$ is bot
     \begin{proof}
         Notice that
         \begin{align*}
-            X \backslash \bigcap_{\alpha \in I}G_{\alpha} & = \bigcup_{\alpha \in G} X \backslash G_{\alpha}.
+            X \setminus \bigcap_{\alpha \in I}G_{\alpha} & = \bigcup_{\alpha \in G} X \setminus G_{\alpha}.
         \end{align*}
-        Since $X \backslash G_{\alpha}$ is open in $X$ for all $\alpha \in I$, this means that $X \backslash \bigcap_{\alpha \in I}G_{\alpha}$ is open in $X$, and so $\bigcap_{\alpha \in I}G_{\alpha}$ is closed in $X$. Notice also that 
+        Since $X \setminus G_{\alpha}$ is open in $X$ for all $\alpha \in I$, this means that $X \setminus \bigcap_{\alpha \in I}G_{\alpha}$ is open in $X$, and so $\bigcap_{\alpha \in I}G_{\alpha}$ is closed in $X$. Notice also that 
         \begin{align*}
-            X \backslash \bigcup_{i = 1}^nG_i & = \bigcap_{i = 1}^nX \backslash G_i.
+            X \setminus \bigcup_{i = 1}^nG_i & = \bigcap_{i = 1}^nX \setminus G_i.
         \end{align*}
         By a similar argument $\bigcup_{i = 1}^nG_i$ is closed in $X$.
     \end{proof}
@@ -588,15 +588,15 @@ The following proposition justifies the fact that intersecting a closed set with
     Let $Y \subseteq X$, then $A \subseteq Y$ is closed in $Y$ if and only if there exists some closed set $G \subseteq X$ such that $A = G \cap Y$.
     \tcblower
     \begin{proof}
-        Suppose that $A$ is closed in $Y$, then $Y \backslash A$ is open in $Y$. Therefore, there exists some open set $B \subseteq X$ such that $Y \backslash A = B \cap Y$. Take $G \coloneqq X \backslash B$, then 
+        Suppose that $A$ is closed in $Y$, then $Y \setminus A$ is open in $Y$. Therefore, there exists some open set $B \subseteq X$ such that $Y \setminus A = B \cap Y$. Take $G \coloneqq X \setminus B$, then 
         \begin{align*}
             G \cap Y & = A.
         \end{align*}
         Suppose conversely that there exists some closed set $G \subseteq X$ such that $A = G \cap Y$. Consider 
         \begin{equation*}
-            Y \backslash \left(G \cap Y\right) = (X \backslash G) \cap Y.
+            Y \setminus \left(G \cap Y\right) = (X \setminus G) \cap Y.
         \end{equation*}
-        Notice that $X \backslash G$ is open in $X$, so $Y \cap A$ is open in $Y$, i.e., $A$ is closed in $Y$.
+        Notice that $X \setminus G$ is open in $X$, so $Y \cap A$ is open in $Y$, i.e., $A$ is closed in $Y$.
     \end{proof}
 \end{probox}
 The following result is analogous to Proposition \ref{pro:preserveOpen}:
@@ -604,7 +604,7 @@ The following result is analogous to Proposition \ref{pro:preserveOpen}:
     If $Y \subseteq X$ is closed in $X$ and $A \subseteq Y$ is closed in $Y$, then $A$ is closed in $X$.
     \tcblower
     \begin{proof}
-        Consider $X \backslash A = X \backslash Y \cup Y \backslash A$. Since $Y$ is closed in $X$, this means that $X \backslash Y$ is open in $X$. Note also that $Y \backslash A$ is open in $Y$. By Proposition \ref{pro:preserveOpen}, $Y \backslash A$ is open in $X$. Therefore, $X \backslash A$ is open in $X$ and so $A$ is closed in $X$.
+        Consider $X \setminus A = X \setminus Y \cup Y \setminus A$. Since $Y$ is closed in $X$, this means that $X \setminus Y$ is open in $X$. Note also that $Y \setminus A$ is open in $Y$. By Proposition \ref{pro:preserveOpen}, $Y \setminus A$ is open in $X$. Therefore, $X \setminus A$ is open in $X$ and so $A$ is closed in $X$.
     \end{proof}
 \end{probox}
 Closed sets help define the notion ``interior of a set''.
@@ -615,11 +615,11 @@ Closed sets help define the notion ``interior of a set''.
     \end{equation*}
     The {\color{red} \textbf{closure}} of $A$ is 
     \begin{equation*}
-        \widebar{A} \coloneqq \bigcap_{\substack{X \backslash G \in \mathcal{T}\\A \subseteq G}}G.
+        \widebar{A} \coloneqq \bigcap_{\substack{X \setminus G \in \mathcal{T}\\A \subseteq G}}G.
     \end{equation*}
     The {\color{red} \textbf{boundary}} of $A$ is 
     \begin{equation*}
-        \partial A = \widebar{A} \backslash \mathring{A}.
+        \partial A = \widebar{A} \setminus \mathring{A}.
     \end{equation*}
 \end{dfnbox}
 We interpret the above definition as follows: $\mathring{A}$ is the union of all open sets contained by $A$. Moreover, $\widebar{A}$ is the smallest closed set in $X$ which contains $A$. To see this, let $C \subseteq X$ be any closed set in $X$ containing $A$. Take any $a \in \widebar{A}$, then since $a$ is contained by all closed sets containing $A$, it is clear that $a \in C$, which implies that $\widebar{A} \subseteq C$.
@@ -637,7 +637,7 @@ We would like to discuss the properties of closure. The following definition is 
 \begin{dfnbox}{Limit Point}{limPt}
     Let $\left(X, \mathcal{T}\right)$ be a topological space. For any $A \subseteq X$, a point $x \in X$ is a {\color{red} \textbf{limit point}} of $A$ if for every open set $U \subseteq X$ containing $x$,
     \begin{equation*}
-        \left(A \backslash \left\{x\right\}\right) \cap U \neq \varnothing.
+        \left(A \setminus \left\{x\right\}\right) \cap U \neq \varnothing.
     \end{equation*}
 \end{dfnbox}
 Now, we propose two properties for the closure:
@@ -649,13 +649,13 @@ Now, we propose two properties for the closure:
     \end{enumerate}
     \tcblower
     \begin{proof}
-        We will prove the first statement by considering the contrapositive, i.e., we prove that $x \in X \backslash \widebar{A}$ if and only if there exists some open set $U \subseteq X$ containing $x$ such that $U \cap A = \varnothing$. The ``if'' direction is trivial because $X \backslash \widebar{A}$ is open in $X$ such that~$\left(X \backslash \widebar{A}\right) \cap A = \varnothing$. Take $U \subseteq X$ to be an open set in $X$ with $x \in U$ and $U \cap A = \varnothing$. This means that $x \notin A \subseteq \widebar{A}$. Therefore, $x \in X \backslash \widebar{A}$.
+        We will prove the first statement by considering the contrapositive, i.e., we prove that $x \in X \setminus \widebar{A}$ if and only if there exists some open set $U \subseteq X$ containing $x$ such that $U \cap A = \varnothing$. The ``if'' direction is trivial because $X \setminus \widebar{A}$ is open in $X$ such that~$\left(X \setminus \widebar{A}\right) \cap A = \varnothing$. Take $U \subseteq X$ to be an open set in $X$ with $x \in U$ and $U \cap A = \varnothing$. This means that $x \notin A \subseteq \widebar{A}$. Therefore, $x \in X \setminus \widebar{A}$.
         \\\\
         Take any $a \in A'$, then for every open set $U \subseteq X$ with $a \in U$, we have 
         \begin{equation*}
-            U \cap A \supseteq U \cap \left(A \backslash \left\{a\right\}\right) \neq \varnothing.
+            U \cap A \supseteq U \cap \left(A \setminus \left\{a\right\}\right) \neq \varnothing.
         \end{equation*}
-        Therefore, $A \cup A' \subseteq \widebar{A}$. Take any $x \in \widebar{A}$, we shall prove that if $x \notin A'$, then $x \in A$. Since $x$ is not a limit point of $A$, there exists some open set $V \subseteq X$ containing $x$ such that $\left(A \backslash \left\{x\right\}\right) \cap V = \varnothing$. However, $x \in \widebar{A}$ implies that $V \cap A \neq \varnothing$, so $x \in A$.
+        Therefore, $A \cup A' \subseteq \widebar{A}$. Take any $x \in \widebar{A}$, we shall prove that if $x \notin A'$, then $x \in A$. Since $x$ is not a limit point of $A$, there exists some open set $V \subseteq X$ containing $x$ such that $\left(A \setminus \left\{x\right\}\right) \cap V = \varnothing$. However, $x \in \widebar{A}$ implies that $V \cap A \neq \varnothing$, so $x \in A$.
     \end{proof}
 \end{probox}
 The notion of limit points also leads to the definition of convergence. Before that, we shall define the notion of \textit{neighbourhood}. 
@@ -720,13 +720,13 @@ It is also clear that for any topological space $X$, the \textit{inclusion map} 
     \begin{proof}
         Suppose that $f$ is continuous. Note that $f\left(A\right) \subseteq \widebar{f\left(A\right)}$, so $A \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $\widebar{f\left(A\right)}$ is closed in $Y$, so by Definition \ref{dfn:continuous}, 
         \begin{equation*}
-            f^{-1}\left(Y \backslash \widebar{f\left(A\right)}\right) = X \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)
+            f^{-1}\left(Y \setminus \widebar{f\left(A\right)}\right) = X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)
         \end{equation*}
-        is open in $X$. Therefore, $f^{-1}\left(\widebar{f\left(A\right)}\right)$ is closed in $X$. By Proposition \ref{pro:clProps}, $\widebar{A} = A \cup A'$ where $A'$ is the set of limit points of $A$. We claim that $A' \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Suppose on contrary that there exists some $a \in A' \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $X \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)$ is open, by Definition \ref{dfn:limPt}, 
+        is open in $X$. Therefore, $f^{-1}\left(\widebar{f\left(A\right)}\right)$ is closed in $X$. By Proposition \ref{pro:clProps}, $\widebar{A} = A \cup A'$ where $A'$ is the set of limit points of $A$. We claim that $A' \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Suppose on contrary that there exists some $a \in A' \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)$ is open, by Definition \ref{dfn:limPt}, 
         \begin{equation*}
-            \left(A \backslash \left\{a\right\}\right) \cap \Biggl(X \backslash f^{-1}\left(\widebar{f\left(A\right)}\right)\Biggr) \neq \varnothing,
+            \left(A \setminus \left\{a\right\}\right) \cap \Biggl(X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)\Biggr) \neq \varnothing,
         \end{equation*}
-        which is a contradiction because $A \backslash \left\{a\right\} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Therefore, $\widebar{A} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$, which means that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$.
+        which is a contradiction because $A \setminus \left\{a\right\} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Therefore, $\widebar{A} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$, which means that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$.
         \\\\
         Suppose that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$ for any $A \subseteq X$. For any closed set $B \subseteq Y$, we have $B = \widebar{B}$. Notice that 
         \begin{equation*}
@@ -734,7 +734,7 @@ It is also clear that for any topological space $X$, the \textit{inclusion map} 
         \end{equation*}
         so $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$. This implies that $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$, and so $f^{-1}\left(B\right)$ is closed in~$X$.
         \\\\
-        Suppose that $f^{-1}\left(B\right)$ is closed in $X$ for any closed set $b \subseteq Y$. Take any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$. Since $Y \backslash V$ is closed in $Y$, $f^{-1}\left(Y \backslash V\right) = X \backslash f^{-1}\left(V\right)$ is closed in $X$. Therefore, $f^{-1}\left(V\right)$ is open in $X$. It is clear that $x \in f^{-1}\left(V\right)$ and~$f\left(f^{-1}\left(V\right)\right) \subseteq V$.
+        Suppose that $f^{-1}\left(B\right)$ is closed in $X$ for any closed set $b \subseteq Y$. Take any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$. Since $Y \setminus V$ is closed in $Y$, $f^{-1}\left(Y \setminus V\right) = X \setminus f^{-1}\left(V\right)$ is closed in $X$. Therefore, $f^{-1}\left(V\right)$ is open in $X$. It is clear that $x \in f^{-1}\left(V\right)$ and~$f\left(f^{-1}\left(V\right)\right) \subseteq V$.
     \end{proof}
 \end{probox}
 Next, we introduce a lemma which specifies a methodology to construct a continuous map from two different continuous maps.
@@ -1081,11 +1081,11 @@ Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some ope
     A topological space $X$ is $T_1$ if and only if for all $x \in X$, the singleton set $\left\{x\right\}$ is closed.
     \tcblower
     \begin{proof}
-        Suppose that $X$ is $T_1$ and take any $x \in X$. Let $y \in X \backslash \left\{x\right\}$ be any point. Notice that there exists some open set $V_y \subseteq X$ such that $y \in V_y$ but $x \notin V_y$. Clearly, 
+        Suppose that $X$ is $T_1$ and take any $x \in X$. Let $y \in X \setminus \left\{x\right\}$ be any point. Notice that there exists some open set $V_y \subseteq X$ such that $y \in V_y$ but $x \notin V_y$. Clearly, 
         \begin{equation*}
-            X \backslash \left\{x\right\} = \bigcup_{y \in X \backslash \left\{x\right\}}V_y
+            X \setminus \left\{x\right\} = \bigcup_{y \in X \setminus \left\{x\right\}}V_y
         \end{equation*}
-        is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \backslash \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
+        is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \setminus \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
     \end{proof}
 \end{probox}
 Notice that by Definition \ref{dfn:T1T2}, all $T_2$ spaces are $T_1$, so the following corollary is easy to show:
@@ -1105,29 +1105,35 @@ We claim that all metric spaces are first countable. Let $X$ be a metric space a
 \begin{equation*}
     \mathcal{B} \coloneqq \left\{B_{\frac{1}{i}}\left(x\right) \colon i \in \Z^+\right\}.
 \end{equation*}
-Consider some uncountable set $Y$ equipped with the co-finite topology. For any $y \in Y$, suppose it has a countable basis $\mathcal{B}$. Note that in the co-finite topology, a set is open if and only if its complement is finite. Therefore, there exists some finite set $F_i \subseteq Y$ such that there exists some $B_i \in \mathcal{B}$ such that $Y \backslash F_i = B_i$. Notice that 
+Consider some uncountable set $Y$ equipped with the co-finite topology. For any $y \in Y$, suppose it has a countable basis $\mathcal{B}$. Note that in the co-finite topology, a set is open if and only if its complement is finite. Therefore, there exists some finite set $F_i \subseteq Y$ such that there exists some $B_i \in \mathcal{B}$ such that $Y \setminus F_i = B_i$. Notice that 
 \begin{equation*}
-    Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right) \neq \varnothing.
+    Y \setminus \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right) \neq \varnothing.
 \end{equation*}
-Take some $z \in Y \backslash \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right)$, then $U \coloneqq Y \backslash \left\{z\right\}$ is open such that $y \in U$. Note that for all $B_i \in \mathcal{B}$, we have $z \in B_i$. This means that $B_i \not\subseteq U$ for all $i \in \Z^+$ because otherwise $y \in U$ which is not possible. Therefore, $\mathcal{B}$ is not a countable basis.
+Take some $z \in Y \setminus \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right)$, then $U \coloneqq Y \setminus \left\{z\right\}$ is open such that $y \in U$. Note that for all $B_i \in \mathcal{B}$, we have $z \in B_i$. This means that $B_i \not\subseteq U$ for all $i \in \Z^+$ because otherwise $y \in U$ which is not possible. Therefore, $\mathcal{B}$ is not a countable basis.
 
 Suppose that $x$ is a random point in a topological space with a countable basis $\mathcal{B}$. Fix any~$B \in \mathcal{B}$, then $x \in B$. Notice that for any open set $U$ containing $x$, it is not possible that $U$ and $B$ are disjoint. Therefore, there exists some open subset of $B$ which contains $x$. This motivates the following natural question: can we always re-construct the countable basis such that for any pair of sets in the basis, one must be a subset of the other?
 \begin{probox}{Construction of Countable Basis}{constructCountable}
     Let $x \in X$ be a point with a countable basis $\mathcal{B}$, then there exists some countable basis $\mathcal{B}'$ of $x$ such that for any $B_1, B_2 \in \mathcal{B}'$, either $B_1 \subseteq B_2$ or $B_2 \subseteq B_1$.
+    \tcblower
+    \begin{proof}
+        Take any $B_1, B_2 \in \mathcal{B}$ such that $B_1 \not\subseteq B_2$ and $B_2 \not\subseteq B_1$, then $B_1 \cap B_2$ is open and $x \in B_1 \cap B_2$. Therefore, for any open set $U$ containing $B_2$, clearly $B_1 \cap B_2 \subseteq U$. Therefore, we can repeat this process until we obtain a countable basis $\mathcal{B}'$ such that for any $B_1', B_2' \in \mathcal{B}'$, we have either $B_1' \subseteq B_2'$ or $B_2' \subseteq B_1'$.
+    \end{proof}
 \end{probox}
+Based on this small proposition, we introduce the following result to help us identify spaces which are not first countable:
 \begin{probox}{Closure Characterisation of First Countable Spaces}{characterise1stCountableClosure}
     Let $X$ be a topological space and $A \subseteq X$. If there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$, then $x \in \widebar{A}$. The converse is true if $X$ is first countable.
     \tcblower
     \begin{proof}
-        Suppose that there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$. Notice that $\widebar{A} = A \cup A'$, then it suffices to prove that $x \notin A$ implies that $x \in A'$. Suppose that $x \notin A$. Note that for any open set $U \subseteq X$ such that $x \in U$, there exists some $N \in \N$ such that $x_n \in U$ for all $n \geq N$. In particular, this means that $x_N \in U \cap \left(A \backslash \left\{x\right\}\right)$. Therefore, $x$ is a limit point of $A$.
+        Suppose that there exists a sequence $\left\{x_i\right\}_{i \in \N^+} \subseteq A$ such that $x_i \to x$. Notice that $\widebar{A} = A \cup A'$, then it suffices to prove that $x \notin A$ implies $x \in A'$. Suppose that~$x \notin A$. Note that for any open set $U \subseteq X$ such that $x \in U$, there exists some $N \in \N$ such that $x_n \in U$ for all $n \geq N$. In particular, this means that~$x_N \in U \cap \left(A \setminus \left\{x\right\}\right)$. Therefore, $x$ is a limit point of $A$.
         \\\\
         Conversely, suppose that $x \in \widebar{A}$. Since $X$ is first countable, $x$ has some countable basis $\mathcal{B} \coloneqq \left\{B_i \colon i \in \N^+\right\}$. By Proposition \ref{pro:constructCountable}, we can assume that $B_j \subseteq B_i$ whenever $j \geq i$. For each $i \in \N^+$, take 
         \begin{equation*}
             x_i \in \bigcap_{j = 1}^{i}\left(B_j \cap A\right),
         \end{equation*}
-        then $\left\{x_i\right\}_{i = \N^+}$ is a sequence in $A$. Let $U$ be any open set containing $x$, then there exists some $B_N \in \mathcal{B}$ such that $x \in B_N \subseteq U$. However, notice that for all $i \geq N$, we have $x_i \in B_N \subseteq U$, and so $x_i \to x$.
+        then $\left\{x_i\right\}_{i = \N^+}$ is a sequence in $A$. Let $U$ be any open set containing $x$, then there exists some $B_N \in \mathcal{B}$ such that $x \in B_N \subseteq U$. However, notice that for all $i \geq N$, we have~$x_i \in B_N \subseteq U$, and so $x_i \to x$.
     \end{proof}
 \end{probox}
+An alternative proposition makes use of continuous maps:
 \begin{probox}{Continuous Map Characterisation of First Countable Spaces}{characterise1stCountableContinuous}
     Let $X$ be a topological space. If $f \colon X \to Y$ is continuous, then for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. The converse is true if $X$ is first countable.
     \tcblower
@@ -1138,29 +1144,51 @@ Suppose that $x$ is a random point in a topological space with a countable basis
     \end{proof}
 \end{probox}
 \section{Compactness}
+We next introduce the notion of compact spaces, which are an attempt to generalise the notion of \textbf{closed and bounded} subsets in Euclidean spaces. The idea here is to define compactness as ``having no missing end point''.
+
+First, notice that given any topological space, we can always partition the space into a collection of open sets in the space.
 \begin{dfnbox}{Open Cover}{openCover}
     Let $X$ be a topological space. An {\color{red} \textbf{open cover}} is a collection of open sets $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ such that 
     \begin{equation*}
         \bigcup_{\alpha \in \Lambda}U_{\alpha} = X.
     \end{equation*}
 \end{dfnbox}
+The intuition here is that if a space is not compact, i.e., it can extend indefinitely without an end, then there is a way to partition the space into infinitely many open subsets. On the other hand, if the space has a clearly defined boundary, then every possible partition must be finite.
 \begin{dfnbox}{Compact Space}{compact}
     Let $X$ be a topological space. $X$ is {\color{red} \textbf{compact}} if every open cover of $X$ contains a finite sub-cover for $X$.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        $Y \subseteq X$ is a compact subspace if and only if every collection $\mathcal{U}$ of open sets in $Y$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}}U$ contains a finite sub-collection $\mathcal{U}' \subseteq \mathcal{U}$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}'}U$.
+        $Y \subseteq X$ is a compact subspace if and only if for every collection $\mathcal{U}$ of open sets in $Y$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}}U$, there exists a finite sub-collection $\mathcal{U}' \subseteq \mathcal{U}$ such that~$Y \subseteq \bigcup_{U \in \mathcal{U}'}U$.
     \end{remark}
 \end{notebox}
+Note that previously we have shown that a closed set contains all of its limit points. Therefore, it is intuitive that if a closed set is contained by a compact space, this closed set should be compact as well.
 \begin{probox}{Closed Subspaces of Compact Spaces Are Compact}{closedCompact}
     Every closed subspace of a compact space is compact.
+    \tcblower
+    \begin{proof}
+        Let $X$ be a compact topological space and $Y \subseteq X$ be a closed subspace. Let~$\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover of $Y$ with $U_{\alpha} \subseteq X$ for all $\alpha \in \Lambda$, then $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda} \cup \left\{X \setminus Y\right\}$ is an open cover for $X$ because $Y$ is closed. Since $X$ is compact, we can find a finite sub-cover $\mathcal{U} \subseteq \left\{U_{\alpha}\right\}_{\alpha \in \Lambda} \cup \left\{X \setminus Y\right\}$. Clearly, $\mathcal{U} \setminus \left\{X \setminus Y\right\} \subseteq \left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ is a finite sub-cover for $Y$. Therefore, $Y$ is compact. 
+    \end{proof}
 \end{probox}
-\begin{probox}{Continuous Map Induces Compact Image}{ContinuousCompact}
-    Let $f \colon X \to Y$ be continuous, if $X$ is compact, then $f\left(X\right)$ is compact.
-\end{probox}
+One may be tempted to think that compact subspaces must be closed. However, this is not true in general. Consider $X$ to be an infinite topological space equipped with the co-finite topology. For any $Y \subseteq X$, let $\mathcal{U}$ be an open cover for $Y$. Take any $U \in \mathcal{U}$, then clearly $Y \setminus U$ is finite. For each $y \in Y \setminus U$, there exists some $U_y \in \mathcal{U}$ such that $y \in U_y$. Therefore, 
+\begin{equation*}
+    \left\{U\right\} \cup \left\{U_y \colon y \in Y \setminus U\right\}
+\end{equation*}
+is a finite sub-cover for $Y$. Therefore, every subset of $X$ is compact. However, $Y \subseteq X$ is closed if and only if $Y$ is finite.
+
+To conclude closed-ness from compactness, we require some additional assumptions.
 \begin{probox}{Compact Subspaces of Hausdorff Spaces Are Closed}{compactClosed}
     Every compact subspace of a Hausdorff space is closed.
 \end{probox}
+Intuitively, a continuous map should send a compact set to a compact image because open sets, and hence open covers, are preserved by the map.
+\begin{probox}{Continuous Map Induces Compact Image}{ContinuousCompact}
+    Let $f \colon X \to Y$ be continuous, if $X$ is compact, then $f\left(X\right)$ is compact.
+    \tcblower
+    \begin{proof}
+        Let $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover for $f\left(X\right)$. Note that $\left\{f^{-1}\left(U_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ is an open cover for $X$. Since $X$ is compact, there exists some finite $I \subseteq \Lambda$ such that $\left\{f^{-1}\left(U_i\right)\right\}_{i \in I}$ is a finite sub-cover for $X$. Clearly, $\left\{U_i\right\}_{i \in I}$ is a finite sub-cover for $f\left(X\right)$ and so $f\left(X\right)$ is compact.
+    \end{proof}
+\end{probox}
+
 \begin{probox}{Sets in Co-finite Topology Are Compact}{compactCofinite}
     Let $X$ be a topological space equipped with the co-finite topology, then for every $U \subseteq X$, $U$ is compact and $U$ is closed if and only if $U$ is finite.
 \end{probox}
