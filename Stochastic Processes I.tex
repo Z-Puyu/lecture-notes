@@ -580,6 +580,7 @@ Theorem \ref{thm:Bayes} leads to the following important result:
         \end{align*}
     \end{proof}
 \end{corbox}
+\subsection{Transition Probabilities}
 Consider a discrete-time discrete-state stochastic process $\left\{X_n \colon n \in T\right\}$ with state space $S$ over some probability space $\left(S, \mathcal{F}, P\right)$. Here, the $\sigma$-algebra $\mathcal{F}$ can be generated using simple events $\left\{\omega \in S \colon X_n\left(\omega\right) = s\right\}$ for all $n \in T$ and $s \in S$. Notice that this means that we need to find the joint distribution 
 \begin{equation*}
     p_{X_{n_1}^{n_k}}\left(s_1, s_2, \cdots, s_k\right)
@@ -626,7 +627,7 @@ Thus far, we have basically shown that to specify a Markov chain fully, we will 
 
 We can write the transition probabilities as a matrix.
 \begin{dfnbox}{Transition Probability Matrix}{TPM}
-    For any Markov chain, the {\color{red} \textbf{transition probability matrix}} is a matrix $\mathbfit{P}^{n, n + 1}$ where $P^{n, n + 1}_{ij} = p_{ij}^{n, n + 1}$.
+    For any Markov chain, the {\color{red} \textbf{transition probability matrix}} is a matrix $\mathbfit{P}^{n, n + 1}$ such that~$P^{n, n + 1}_{ij} = p_{ij}^{n, n + 1}$.
 \end{dfnbox}
 Let $\pi_t$ be the distribution at time $t$ for a Markov chain $\left\{X_i\right\}_{i \in \N^+}$, then we can write 
 \begin{equation*}
@@ -645,20 +646,25 @@ Iterate this process and we have
 Generally, the $\left(i, j\right)$ entry of $\prod_{i = n}^{m - 1}\mathbfit{P}^{i, i + 1}$ is exactly $p_{ij}^{n, m}$.
 
 Notice that in general, $p_{ij}^{n, n + 1}$ is dependent on $n$, but when the transition probability is independent of $n$, the computation will become much easier.
-\begin{dfnbox}{Time-Homogeneous Markov Chain}{timeHomo}
-    A Markov chain is {\color{red} \textbf{time-homogeneous}} if $p_{ij}^{n, n + 1} = p_{ij}^{1, 2}$ for all $n \in \N^+$.
+\begin{dfnbox}{Stationary Markov Chain}{timeHomo}
+    A Markov chain is {\color{red} \textbf{stationary}} if $p_{ij}^{n, n + 1} = p_{ij}^{1, 2}$ for all $n \in \N^+$.
 \end{dfnbox}
-For a time-homogeneous Markov chain $X$, we can write its distribution as 
+For a stationary Markov chain $X$, suppose $\mathbfit{P}^{\left(m\right)}$ is the $m$-step transition probability matrix, then we can write its distribution as 
 \begin{equation*}
-    \pi_t = \pi_0\mathbfit{P}^t.
+    \pi_{t + m} = \pi_t\mathbfit{P}^{\left(m\right)} = \pi_t\mathbfit{P}^{m}.
 \end{equation*}
-This means that any time-homogeneous Markov chain is fully determined by its state space, transition probability matrix $\mathbfit{P}$ and the starting distribution $\pi_0$.
+This means that any stationary Markov chain is fully determined by its state space, transition probability matrix $\mathbfit{P}$ and the starting distribution $\pi_0$.
 \begin{dfnbox}{Stochastic Matrix}{stochasticMatrix}
     Let $S$ be a countable index set. A matrix $\mathbfit{P}$ is called a {\color{red} \textbf{stochastic matrix}} if $P_{ij} \geq 0$ for all $i, j \in S$ and $\sum_{j \in S}P_{ij} = 1$ for all $i \in S$.
 \end{dfnbox}
 The above computation can be summarised into the following result:
 \begin{thmbox}{Chapman-Kolmogorov Equations}{ChapmanKolmogorov}
-    Let $X$ be a time-homogeneous Markov chain with state space $S$ and transition probability matrix $\mathbfit{P}$. For any $m, n \in \N$, 
+    Let $X$ be a Markov chain with state space $S$, then 
+    \begin{align*}
+        \mathbfit{P}^{\left(m\right)} & = \mathbfit{P}\mathbfit{P}^{\left(m - 1\right)} \\
+        & = \mathbfit{P}^{\left(m - 1\right)}\mathbfit{P}.
+    \end{align*}
+    In particular, if $X$ is a stationary Markov chain with transition probability matrix $\mathbfit{P}$, then for any $m, n \in \N$, 
     \begin{equation*}
         P\left(X_{m + n} = j \mid X_0 = i\right) = \sum_{k \in S}P\left(X_m = k \mid X_0 = i\right)P\left(X_n = j \mid X_0 = k\right).
     \end{equation*}
@@ -688,7 +694,12 @@ Suppose $X_0 \sim \lambda$, then clearly
     & = \sum_{i = 1}^{s}\lambda_i\left(\mathbfit{P}^n\mu\right)_i \\
     & = \lambda\mathbfit{P}^n\mu.
 \end{align*}
-We consider the following example: suppose $X$ is a discrete-time Markov chain with finite state space $S$. Fix some $a, b \in S$ with $a \neq b$, and define 
+\subsection{Stationary Distribution}
+One classic problem related to Markov chains is \textbf{Gambler's Ruin}, which states the following scenario:
+\begin{quote}
+    Two gamblers $A$ and $B$ bet against each other by flipping a fair coin. Upon each flip, if a head shows up, $B$ gives $1$ dollar to $A$ and if a tail shows up, $A$ gives $1$ dollar to $B$. Let $X_i$ and $Y_i$ be the amount of money $A$ and $B$ have after the $i$-th coin flip respectively. If $X_0 = m$ and $Y_0 = n$, what is the probability that $A$ is ruined first? 
+\end{quote}
+We can model this problem with a discrete-time Markov chain $X$ with finite state space $S$. Fix some $a, b \in S$ with $a \neq b$, and define 
 \begin{equation*}
     H \coloneqq \begin{cases}
         1 & \quad\textrm{if there exists } i < j \textrm{ such that } X_i = a \textrm{ and } X_j = b \\
@@ -735,10 +746,15 @@ if $\pi$ is a stationary distribution. To see this, we consider the following pr
         Therefore, $\abs{\lambda} \leq 1$.
     \end{proof}
 \end{probox}
+\subsection{Intercommunicating Classes}
 One important property of the state space in Markov chains is the reachability between states.
-\begin{dfnbox}{}{}
-    
+\begin{dfnbox}{Accessibility}{access}
+    Let $X$ be a Markov chain with probability transition matrix $\mathbfit{P}$. A state $j$ is said to be {\color{red} \textbf{accessible}} from another state $i$ if $P^{\left(m\right)}_{ij} > 0$ for some $m \in \N$.
 \end{dfnbox}
+In other words, $j$ is accessible from $i$ of the Markov chain can reach $j$ with \textbf{non-zero probability} when starting from $i$ using finitely many steps. We sometimes use $i \to j$ to denote such accessibility.
+
+It is easy to check that accessibility is \textbf{transitive}.
+
 Markov chains might exhibit some pathological behaviours.
 \begin{dfnbox}{Disconnected States}{disconnected}
     Let $S$ be the state space of a discrete-time Markov chain with probability transition matrix $\mathbfit{P}$. If there exist $X, Y \subseteq S$ such that $P_{ij} = 0$ for all $\left(i, j\right) \in X \times Y$ and for all~$\left(i, j\right) \in Y \times X$, then $X$ and $Y$ are said to be {\color{red} \textbf{disconnected}}. 
@@ -754,7 +770,7 @@ Note the disconnected states are mutually unreachable. There is another situatio
 \end{notebox}
 Therefore, the ideal case is that every pair of states are mutually reachable.
 \begin{dfnbox}{Intercommunication}{intercom}
-    For a Markov chain $X$ with state space $S$, two states $x$ and $y$ are said to {\color{red} \textbf{intercommunicate}}, denoted as $x \sim y$, if 
+    For a Markov chain $X$ with state space $S$, two states $x$ and $y$ are said to {\color{red} \textbf{intercommunicate}}, denoted as $x \leftrightarrow y$, if 
     \begin{equation*}
         P\left(X_m = y \mid X_0 = x\right) > 0 \quad\textrm{and}\quad P\left(X_n = x \mid X_0 = y\right) > 0
     \end{equation*}
@@ -762,26 +778,79 @@ Therefore, the ideal case is that every pair of states are mutually reachable.
 \end{dfnbox}
 It is clear that intercommunication is an \textbf{equivalence relation} on the state space, the proof of which is easy enough to be left as an exercise to the reader. 
 
-Now, the state space will be partitioned by the quotient with $\sim$. Each equivalence class is a closed walk with states as the vertices. Clearly it suffices to study the Markov chain on a sink class to investigate the long-term behaviour.
+Now, the state space will be partitioned by the quotient with $\leftrightarrow$. Each equivalence class, denoted by $\mathcal{C}$, is a closed walk with states as the vertices. Clearly it suffices to study the Markov chain on a sink class to investigate the long-term behaviour.
 
 In particular, we may consider a Markov chain such that the entire state space intercommunicates.
 \begin{dfnbox}{Irreducibility}{irreducible}
-    A Markov chain is {\color{red} \textbf{irreducible}} if its state space is an equivalence class under $\sim$.
+    A Markov chain is {\color{red} \textbf{irreducible}} if its state space is an equivalence class under $\leftrightarrow$.
 \end{dfnbox}
-\section{Irreducible Markov Chains}
+Note that a Markov chain is irreducible if and only if it has only one intercommunicating class. Furthermore, an irreducible chain can have finitely or infinitely many states.
+
 Irreducible Markov chains can be further classified to \textit{transient} ones and \textit{recurrent} ones.
-\begin{dfnbox}{Transient and Recurrent States}{transientAndRecur}
-    Let $X$ be a finite-state discrete-time Markov chain with state space $S$. For every $x \in S$, define 
+\begin{dfnbox}{Return Probability}{returnProb}
+    Let $i$ be a state of a Markov chain $X$. The {\color{red} \textbf{return probability}} to $i$ is defined as 
     \begin{equation*}
-        T_x \coloneqq \min\left\{n \in \N^+ \colon X_n = x\right\}
+        P^{\left(n\right)}_{ii} \coloneqq P\left(X_n = i \mid X_0 = i\right).
     \end{equation*}
-    as the first time at which the process returns to the state $x$. Define 
+\end{dfnbox}
+By this definition, we have $P^{\left(n\right)}_{ii} = \left(\mathbfit{P}^n\right)_{ii}$ for stationary chains. Note that $3$ cases could be possible when a state $i$ is re-visited in $n$ steps:
+\begin{enumerate}
+    \item starting from $i$, the chain self-loop at $i$ for $n$ times;
+    \item starting from $i$, the chain visits some different states and re-visit $i$ for the first time at the $n$-th step;
+    \item starting from $i$, the chain re-visits $i$ for several times and happens to reach $i$ again at the $n$-th step.
+\end{enumerate}
+However, we should observe that the key to computing the probability for either case is to find the time taken for the chain to re-visit the starting state \textbf{for the first time}.
+\begin{dfnbox}{First Return Probability}{1stReturn}
+    Let $X$ be a Markov chain and $i$ be a state. The {\color{red} \textbf{first return probability}} to $i$ at the $n$-th transition is defined as 
     \begin{equation*}
-        f_{xx} \coloneqq \sum_{n = 1}^{\infty}P\left(T_x = n \mid X_0 = x\right)
+        f_{ii}^{\left(n\right)} \coloneqq P\left(X_1 \neq i, X_2 \neq i, \cdots, X_{n - 1} \neq i, X_n = i \mid X_0 = i\right).
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        We define $f^{\left(0\right)}_{ii} = 0$.
+    \end{remark}
+\end{notebox}
+Clearly, $f_{ii}^{\left(n\right)} \leq P_{ii}^{\left(n\right)}$ for all $n \in \N$. 
+\begin{thmbox}{Formula for Return Probability}{returnProbFormula}
+    Let $X$ be a Markov chain and $i$ be a state, then 
+    \begin{equation*}
+        P_{ii}^{\left(n\right)} = \sum_{k = 0}^{n}f_{ii}^{\left(k\right)}P_{ii}^{\left(n - k\right)}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let 
+        \begin{equation*}
+            T_i \coloneqq \min\left\{n \in \N^+ \colon X_n = i\right\}
+        \end{equation*}
+        be the first timestamp at which $X$ returns to $i$ starting from $i$. Notice that 
+        \begin{align*}
+            P_{ii}^{\left(n\right)} & = \sum_{k = 0}^{n}P\left(T_i = k \mid X_0 = i\right)P\left(X_n = i \mid X_k = i\right) \\
+            & = \sum_{k = 0}^{n}f_{ii}^{\left(k\right)}P_{ii}^{\left(n - k\right)}.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+Notice that since $f_{ii}^{\left(0\right)} = 0$, we only need $P_{ii}^{\left(1\right)}, \cdots, P_{ii}^{\left(n - 1\right)}$ to compute $P_{ii}^{\left(n\right)}$.
+
+It is intuitive to classify the states based on whether we can ascertain that the Markov chain can return to the state in finite time.
+\begin{dfnbox}{Transient and Recurrent States}{transientAndRecur}
+    Let 
+    \begin{equation*}
+        f_{xx} \coloneqq \sum_{n = 0}^{\infty}f^{\left(n\right)}_{xx}
     \end{equation*}
     be the probability that $X$ returns to $x$ in finite time. The state $x$ is said to be {\color{red} \textbf{recurrent}} if $f_{xx} = 1$ and {\color{red} \textbf{transient}} if $f_{xx} < 1$.
 \end{dfnbox}
-In short, a recurrent state is one which the process will definitely return to in finite time, and a transient state always has a non-zero probability that the process never returns to it in finite time. Notice that the probability that the process cannot return to $x$ is given by~$1 - f_{xx}$.
+In short, a recurrent state is one which the process will definitely return to in finite time, and a transient state always has a non-zero probability that the process never returns to it in finite time. Therefore, an alternative definition considers 
+\begin{equation*}
+    T_x \coloneqq \min\left\{n \in \N^+ \colon X_n = x\right\}
+\end{equation*}
+and define
+\begin{equation*}
+    f_{xx} \coloneqq \sum_{n = 0}^{\infty}P\left(T_x = n \mid X_0 = x\right).
+\end{equation*}
+It is easy to see that the two definitions are equivalent, which also follows from Definition \ref{dfn:1stReturn}.
+
+Notice that the probability that the process cannot return to $x$ is given by~$1 - f_{xx}$.
 
 Note that if $x$ is a recurrent state, then the probability of $X$ returning to $x$ in finite time after starting at $x$ is $1$. By the Markovian property, we know that $X$ will also return to $x$ in finite time for the second time. This implies that for any recurrent state $x$, the process will visit it for infinitely many times in the long-run with a probability of $1$. Consider $\mathbf{1}_{\left\{X_n = x\right\}}$ to be a Bernoulli random variable with parameter $f_{xx}$, then if $x$ is recurrent, we have 
 \begin{equation*}
@@ -795,24 +864,24 @@ A small note is that this does not mean that $\mathbfit{P}^n\left(x, x\right)$ m
 
 If $x$ is a transient state, then there is a non-zero probability that $X$ never returns to $x$ in finite time. Let $N_x$ be the number of times $X$ returns to $x$ before it never returns to $x$ in finite time. It is clear that $N_x \sim \mathrm{Geo}\left(1 - f_{xx}\right)$. Therefore, the expected number of returns to $x$ is 
 \begin{equation*}
-    \mathbb{E}\left[N_x\right] = \frac{1}{1 - f_{xx}}.
+    \mathbb{E}\left[N_x\right] = \frac{f_{xx}}{1 - f_{xx}}.
 \end{equation*}
 We formalise this observation into the following proposition:
 \begin{probox}{Expected Number of Returns of Markov Chains}{expectedReturnNum}
-    Let $X$ be a discrete-time finite-state irreducible Markov chain and $x$ be some state. Let $N_x$ be the number of returns to $x$ given $X_0 = x$ before $X$ never returns to $x$ in finite time, then 
+    Let $X$ be a discrete-time finite-state irreducible Markov chain and $x$ be some state. Let~$N_x$ be the number of returns to $x$ given $X_0 = x$ before $X$ never returns to $x$ in finite time, then 
     \begin{equation*}
-        \mathbb{E}\left[N_x\right] = \frac{1}{1 - f_{xx}}.
+        \mathbb{E}\left[N_x \mid X_0 = x\right] = \frac{f_{xx}}{1 - f_{xx}}.
     \end{equation*}
     \tcblower
     \begin{proof}
         Let $T_n$ be the return time for the $n$-th return to $x$ and define $T_0 = 0$. Consider 
         \begin{align*}
-            P\left(N_x = k\right) & = P\left(T_k = \infty, T_{k - 1} < \infty\right) \\
-            & = \sum_{n = 0}^{\infty}P\left(T_k = \infty, T_{k - 1} = n\right) \\
-            & = \sum_{n = 0}^{\infty}P\left(T_k = \infty \mid T_{k - 1} = n\right)P\left(T_{k - 1} = n\right) \\
-            & = \sum_{n = 0}^{\infty}P\left(T_1 = \infty \mid X_0 = x\right)P\left(T_{k - 1} = n\right) \\
-            & = P\left(T_1 = \infty \mid X_0 = x\right)\sum_{n = 0}^{\infty}P\left(T_{k - 1} = n\right) \\
-            & = \left(1 - f_{xx}\right)P\left(T_{k - 1} < \infty\right).
+            P\left(N_x = k \mid X_0 = x\right) & = P\left(T_{k + 1} = \infty, T_{k} < \infty\right) \\
+            & = \sum_{n = 0}^{\infty}P\left(T_{k + 1} = \infty, T_{k} = n\right) \\
+            & = \sum_{n = 0}^{\infty}P\left(T_{k + 1} = \infty \mid T_{k} = n\right)P\left(T_{k} = n\right) \\
+            & = \sum_{n = 0}^{\infty}P\left(T_1 = \infty \mid X_0 = x\right)P\left(T_{k} = n\right) \\
+            & = P\left(T_1 = \infty \mid X_0 = x\right)\sum_{n = 0}^{\infty}P\left(T_{k} = n\right) \\
+            & = \left(1 - f_{xx}\right)P\left(T_{k} < \infty\right).
         \end{align*}
         Note that $P\left(T_n < \infty\right) = P\left(T_{n - 1} < \infty\right)f_{xx}$, so we have 
         \begin{equation*}
@@ -820,16 +889,54 @@ We formalise this observation into the following proposition:
         \end{equation*}
         for all $n \in \N$. Therefore, 
         \begin{equation*}
-            P\left(N_x = k\right) = \left(1 - f_{xx}\right)f_{xx}^{k - 1}.
+            P\left(N_x = k \mid X_0 = x\right) = \left(1 - f_{xx}\right)f_{xx}^{k}
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            \mathbb{E}\left[N_x \mid X_0 = x\right] = \frac{f_{xx}}{1 - f_{xx}}.
         \end{equation*}
     \end{proof}
 \end{probox}
+\begin{notebox}
+    \begin{remark}
+        A direct consequence of this result is that the expected number of \textbf{visits} including the initial one to $x$ is $\frac{1}{1 - f_{xx}}$.
+    \end{remark}
+\end{notebox}
+We can related this result to Definition \ref{dfn:returnProb} to derive a characterisation for recurrent and transient states.
+\begin{probox}{Characterisation of Recurrent and Transient States}{characteriseStates}
+    Let $X$ be a Markov chain and $i$ be a state, then $i$ is transient if and only if 
+    \begin{equation*}
+        \sum_{n = 1}^{\infty}P^{\left(n\right)}_{ii}
+    \end{equation*}
+    is finite.
+    \tcblower
+    \begin{proof}
+        Let $N_i$ be the number of returns to $i$ starting from $i$, then
+        \begin{equation*}
+            N_i = \sum_{n = 1}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}}.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            \mathbb{E}\left[N_i \mid X_0 = i\right] & = \mathbb{E}\left[\sum_{n = 1}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \mid X_0 = i\right] \\
+            & = \sum_{n = 1}^{\infty}\mathbb{E}\left[\mathbf{1}_{\left\{X_n = i\right\}} \mid X_0 = i\right] \\
+            & = \sum_{n = 1}^{\infty}P\left(X_n = i \mid X_0 = i\right) \\
+            & = \sum_{n = 1}^{\infty}P^{\left(n\right)}_{ii}.
+        \end{align*}
+        By Proposition \ref{pro:expectedReturnNum}, $i$ is transient if and only if $\sum_{n = 1}^{\infty}P^{\left(n\right)}_{ii}$ is finite.
+    \end{proof}
+\end{probox}
+An important implication of this result is that, if $i$ is a transient state, then $\sum_{n = m}^{\infty}P^{\left(n\right)}_{ii}$ is non-increasing as $m$ increases. Therefore, by monotone convergence theorem, 
+\begin{equation*}
+    \lim_{m \to \infty}\sum_{n = m}^{\infty}P^{\left(n\right)}_{ii} = 0,
+\end{equation*}
+which means that the probability of returning to $i$ is \textbf{vanishing} in the long-run.
+
 Intuitively, if a transient state $x$ intercommunicates with some other state $y$, then $y$ will also be transient because we can return to $y$ as long as we return to $x$. In general, we propose the following result:
 \begin{probox}{Recurrence and Transience as a Class Property}{classRecurTrans}
     Let $x$ and $y$ be intercommunicating states of a Markov chain, then they are either both transient or both recurrent.
     \tcblower
     \begin{proof}
-        It suffices to show that $x$ is recurrent if and only if $y$ is recurrent. Let $\mathbfit{P}$ be the transition probability matrix of the Markov chain. Since $x \sim y$, there exists $k, \ell \in \N$ such that
+        It suffices to show that $x$ is recurrent if and only if $y$ is recurrent. Let $\mathbfit{P}$ be the transition probability matrix of the Markov chain. Since $x \leftrightarrow y$, there exists $k, \ell \in \N$ such that
         \begin{equation*}
             \mathbfit{P}^k\left(x, y\right) > 0, \qquad \mathbfit{P}^{\ell}\left(x, y\right) > 0.
         \end{equation*}
