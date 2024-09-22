@@ -735,6 +735,10 @@ if $\pi$ is a stationary distribution. To see this, we consider the following pr
         Therefore, $\abs{\lambda} \leq 1$.
     \end{proof}
 \end{probox}
+One important property of the state space in Markov chains is the reachability between states.
+\begin{dfnbox}{}{}
+    
+\end{dfnbox}
 Markov chains might exhibit some pathological behaviours.
 \begin{dfnbox}{Disconnected States}{disconnected}
     Let $S$ be the state space of a discrete-time Markov chain with probability transition matrix $\mathbfit{P}$. If there exist $X, Y \subseteq S$ such that $P_{ij} = 0$ for all $\left(i, j\right) \in X \times Y$ and for all~$\left(i, j\right) \in Y \times X$, then $X$ and $Y$ are said to be {\color{red} \textbf{disconnected}}. 
@@ -785,7 +789,7 @@ Note that if $x$ is a recurrent state, then the probability of $X$ returning to 
 \end{equation*}
 This means that the expected number of returns to $x$ in the long-run is given by
 \begin{equation*}
-    \mathbb{E}\left[\sum_{n = 1}^{\infty}\mathbf{1}_{\left\{X_n = x\right\}} \mid X_0 = x\right] = \sum_{n = 1}^{\infty}\mathbfit{P}^n\left(x, x\right) = \infty.
+    \mathbb{E}\left[\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = x\right\}} \mid X_0 = x\right] = \sum_{n = 0}^{\infty}\mathbfit{P}^n\left(x, x\right) = \infty.
 \end{equation*}
 A small note is that this does not mean that $\mathbfit{P}^n\left(x, x\right)$ must not converge to $0$.
 
@@ -819,5 +823,35 @@ We formalise this observation into the following proposition:
             P\left(N_x = k\right) = \left(1 - f_{xx}\right)f_{xx}^{k - 1}.
         \end{equation*}
     \end{proof}
+\end{probox}
+Intuitively, if a transient state $x$ intercommunicates with some other state $y$, then $y$ will also be transient because we can return to $y$ as long as we return to $x$. In general, we propose the following result:
+\begin{probox}{Recurrence and Transience as a Class Property}{classRecurTrans}
+    Let $x$ and $y$ be intercommunicating states of a Markov chain, then they are either both transient or both recurrent.
+    \tcblower
+    \begin{proof}
+        It suffices to show that $x$ is recurrent if and only if $y$ is recurrent. Let $\mathbfit{P}$ be the transition probability matrix of the Markov chain. Since $x \sim y$, there exists $k, \ell \in \N$ such that
+        \begin{equation*}
+            \mathbfit{P}^k\left(x, y\right) > 0, \qquad \mathbfit{P}^{\ell}\left(x, y\right) > 0.
+        \end{equation*}
+        Notice that 
+        \begin{equation*}
+            \mathbfit{P}^{k + \ell + n}\left(x, x\right) \geq \mathbfit{P}^{k}\left(x, y\right)\mathbfit{P}^{n}\left(y, y\right)\mathbfit{P}^{\ell}\left(y, x\right)
+        \end{equation*}
+        for all $n \in \N$. Notice that the expected number of returns to $x$ is given by 
+        \begin{align*}
+            \sum_{i = 0}^{\infty}\mathbfit{P}^i\left(x, x\right) & \geq \sum_{n = 0}^{\infty}\mathbfit{P}^{k + \ell + n}\left(x, x\right) \\
+            & \geq \sum_{n = 0}^{\infty}\mathbfit{P}^{k}\left(x, y\right)\mathbfit{P}^{n}\left(y, y\right)\mathbfit{P}^{\ell}\left(y, x\right) \\
+            & = \mathbfit{P}^{k}\left(x, y\right)\mathbfit{P}^{\ell}\left(y, x\right)\sum_{n = 0}^{\infty}\mathbfit{P}^{n}\left(y, y\right).
+        \end{align*}
+        Therefore, $x$ is recurrent if and only if $y$ is recurrent.
+    \end{proof}
+\end{probox}
+Therefore, for each intercommunicating class in a Markov chain, we can classify it as either a ``recurrent'' class or a ``transient'' class. This motivates the following definition:
+\begin{dfnbox}{Recurrent and Transient Markov Chains}{recurTransMarkov}
+    An irreducible Markov chain with a countable state space is called {\color{red} \textbf{recurrent}} if one of its states is recurrent, and {\color{red} \textbf{transient}} if one of its states is transient.
+\end{dfnbox}
+Now we states a result about finite-state irreducible chains:
+\begin{probox}{Recurrence of Finite-State Irreducible Markov Chains}{finiteMarkovRecur}
+    All finite-state irreducible Markov chains are recurrent.
 \end{probox}
 \end{document}
