@@ -513,7 +513,7 @@ Given any random variables $X$ and $Y$, they are not necessarily independent in 
         Note that $\mathrm{Cov}\left(X, Y\right) = \mathrm{Cov}\left(Y, X\right)$ and $\mathrm{Cov}\left(X, X\right) = \mathrm{Var}\left(X\right)$.
     \end{remark}
 \end{notebox}
-\chapter{Stochastic Process}
+\chapter{Markov Chains}
 \section{Markov Chains}
 \begin{dfnbox}{Stochastic Process}{stochastic}
     A {\color{red} \textbf{stochastic process}} is a collection of random variables $\left\{X\left(t\right) \colon t \in T\right\}$ where $T$ is an {\color{red} \textbf{index set}} and $X\left(t\right)$ is known as the {\color{red} \textbf{current state}}. The set of all possible states is known as the {\color{red} \textbf{state space}}.
@@ -580,7 +580,7 @@ Theorem \ref{thm:Bayes} leads to the following important result:
         \end{align*}
     \end{proof}
 \end{corbox}
-\subsection{Transition Probabilities}
+\section{Transition Probabilities}
 Consider a discrete-time discrete-state stochastic process $\left\{X_n \colon n \in T\right\}$ with state space $S$ over some probability space $\left(S, \mathcal{F}, P\right)$. Here, the $\sigma$-algebra $\mathcal{F}$ can be generated using simple events $\left\{\omega \in S \colon X_n\left(\omega\right) = s\right\}$ for all $n \in T$ and $s \in S$. Notice that this means that we need to find the joint distribution 
 \begin{equation*}
     p_{X_{n_1}^{n_k}}\left(s_1, s_2, \cdots, s_k\right)
@@ -694,7 +694,7 @@ Suppose $X_0 \sim \lambda$, then clearly
     & = \sum_{i = 1}^{s}\lambda_i\left(\mathbfit{P}^n\mu\right)_i \\
     & = \lambda\mathbfit{P}^n\mu.
 \end{align*}
-\subsection{Stationary Distribution}
+\section{Stationary Distribution}
 One classic problem related to Markov chains is \textbf{Gambler's Ruin}, which states the following scenario:
 \begin{quote}
     Two gamblers $A$ and $B$ bet against each other by flipping a fair coin. Upon each flip, if a head shows up, $B$ gives $1$ dollar to $A$ and if a tail shows up, $A$ gives $1$ dollar to $B$. Let $X_i$ and $Y_i$ be the amount of money $A$ and $B$ have after the $i$-th coin flip respectively. If $X_0 = m$ and $Y_0 = n$, what is the probability that $A$ is ruined first? 
@@ -746,7 +746,7 @@ if $\pi$ is a stationary distribution. To see this, we consider the following pr
         Therefore, $\abs{\lambda} \leq 1$.
     \end{proof}
 \end{probox}
-\subsection{Intercommunicating Classes}
+\section{Intercommunicating Classes}
 One important property of the state space in Markov chains is the reachability between states.
 \begin{dfnbox}{Accessibility}{access}
     Let $X$ be a Markov chain with probability transition matrix $\mathbfit{P}$. A state $j$ is said to be {\color{red} \textbf{accessible}} from another state $i$ if $P^{\left(m\right)}_{ij} > 0$ for some $m \in \N$.
@@ -961,4 +961,106 @@ Now we states a result about finite-state irreducible chains:
 \begin{probox}{Recurrence of Finite-State Irreducible Markov Chains}{finiteMarkovRecur}
     All finite-state irreducible Markov chains are recurrent.
 \end{probox}
+We now briefly discuss the \textbf{long-run behaviour} of reducible Markov chains. Note that if $X$ is a reducible Markov chain, then we can decompose the state space of $X$ into intercommunicating classes $\mathcal{C}_1, \mathcal{C}_2, \cdots$. It is clear that 
+\begin{equation*}
+    \lim_{n \to \infty}P\left(X_n \in \mathcal{C}_k\right) = 0
+\end{equation*}
+if $\mathcal{C}_k$ is transient. If $\mathcal{C}_k$ is recurrent, we say that $P\left(X_n \in \mathcal{C}_k\right)$ is the \textit{entering probability}. Note that for a recurrent $\mathcal{C}_k$, we can restrict $X$ to $\mathcal{C}_k$ as the new state space to construct an irreducible recurrent Markov chain. If $\pi$ is a stationary of the restricted chain and $p$ is the entering probability to $\mathcal{C}_k$, then for the original chain we have 
+\begin{equation*}
+    P\left(X_n = i\right) = \pi_ip.
+\end{equation*}
+Therefore, to investigate the long-run behaviour of a reducible Markov chain, it suffices to discuss the long-run behaviour of the restricted chains on all of its recurrent classes.
+\section{Regularity}
+\begin{dfnbox}{Period}{period}
+    Let $X$ be a Markov chain and $i$ be a state. The {\color{red} \textbf{period}} of $i$ is defined as
+    \begin{equation*}
+        d\left(i\right) \coloneqq \gcd\left\{n \in \N^+ \colon P_{ii}^{\left(n\right)} > 0\right\}.
+    \end{equation*}
+    If $P_{ii}^{\left(n\right)} = 0$ for all $n \in \N^+$, we define $d\left(i\right) = 0$. If $d\left(i\right) = 1$, then $i$ is said to be an {\color{red} \textbf{aperiodic state}}.
+\end{dfnbox}
+If we simulate the chain with a graph, then $\left\{n \in \N^+ \colon P_{ii}^{\left(n\right)} > 0\right\}$ is the set of lengths of all~$i$-$i$ walks and the period is just the greatest common divisor of all these walk lengths. Intuitively, all states in the same intercommunicating class should have the same period.
+\begin{probox}{Periodicity as a Class Property}{periodicity}
+    If $i \leftrightarrow j$ in a Markov chain, then $d\left(i\right) = d\left(j\right)$.
+    \tcblower
+    \begin{proof}
+        Since $i \leftrightarrow j$, there exists some $k, \ell \in \N^+$ such that $P_{ji}^{\left(k\right)} > 0$ and $P_{ij}^{\left(\ell\right)} > 0$. Therefore, 
+        \begin{equation*}
+            P_{ii}^{\left(\ell + k\right)} \geq P_{ij}^{\left(\ell\right)}P_{ji}^{\left(k\right)} > 0
+        \end{equation*}
+        and so $d\left(i\right) \mid \left(\ell + k\right)$. Now, for all $n \in \left\{n \in \N^+ \colon P_{jj}^{\left(n\right)} > 0\right\}$, we have 
+        \begin{equation*}
+            P_{ii}^{\left(\ell + n + k\right)} \geq  P_{ij}^{\left(\ell\right)}P_{jj}^{\left(n\right)}P_{ji}^{\left(k\right)} > 0.
+        \end{equation*}
+        Therefore, $d\left(i\right) \mid \left(\ell + n + k\right)$ and so $d\left(i\right) \mid n$. This means that $d\left(i\right) \geq d\left(j\right)$. Similarly, we can show that $d\left(j\right) \geq d\left(i\right)$, and so $d\left(i\right) = d\left(j\right)$.
+    \end{proof}
+\end{probox}
+It is clear that for any state $i$, we can find some positive integer $N$ such that $P^{\left(Nd\left(i\right)\right)}_{ii} > 0$. In general, we have the following result:
+\begin{probox}{Long-Run Behaviour of Periodicity}{periodLongRun}
+    For any state $i$ in a Markov chain, there is some $N \in \N$ such that for any integer~$n \geq N$, we have 
+    \begin{equation*}
+        P^{\left(nd\left(i\right)\right)}_{ii} > 0
+    \end{equation*}
+    and 
+    \begin{equation*}
+        P_{ji}^{\left(m + nd\left(i\right)\right)} > 0
+    \end{equation*}
+    whenever $P_{ji}^{\left(m\right)} > 0$ for some $m \in \N^+$.
+\end{probox}
+Consider an irreducible Markov chain $X$. Note that $X$ only has one intercommunicating class, so every state of $X$ shares the same period. Therefore, it makes sense to talk about the period of the Markov chain, denoted by $d$. If $d = 1$, then we say that $X$ is an \textit{aperiodic Markov chain}.
+\begin{probox}{Long-Run Behaviour of Irreducible Aperiodic Chains}{irreducibleAperiodic}
+    Let $X$ be a finite-state irreducible aperiodic Markov chain with transition probability matrix $\mathbfit{P}$, then there exists some $N \in \N^+$ such that $\mathbfit{P}^{\left(N\right)}$ has all positive entries.
+    \tcblower
+    \begin{proof}
+        Let $S$ be the finite state space. For all $i \in S$, by Proposition \ref{pro:periodLongRun} there exists some $N_i \in \N^+$ such that for any integer $n \geq N_i$ we have $P_{ii}^{\left(n\right)} > 0$. Take 
+        \begin{equation*}
+            N \coloneqq \max_{i \in S}N_i,
+        \end{equation*}
+        then we have $P_{ii}^{\left(N\right)} > 0$ for all $i \in S$, i.e., $\mathbfit{P}^{\left(N\right)}$ has positive entries along its diagonal. Take any $j \in S$, then by Proposition \ref{pro:periodLongRun} we can find some $M_{ij} \in \N^+$ such that 
+        \begin{equation*}
+            P_{ij}^{\left(M_{ij}\right)} > 0.
+        \end{equation*}
+        Define $N_{ij} \coloneqq N + M_{ij}$, then for any integer $n \geq N_{ij}$, we can write $n = n_0 + m$ for some $m \geq M_{ij}$ and some $n_0 \geq N$. Therefore,
+        \begin{align*}
+            P_{ij}^{\left(n\right)} & = P_{ij}^{\left(n_0 + m\right)} \\
+            & \geq P_{ii}^{\left(n_0\right)}P_{ij}^{\left(m\right)} \\
+            & > 0. 
+        \end{align*}
+        Take $M \coloneqq \max_{i, j \in S}N_{ij}$, then $P_{ij}^{M} > 0$ for all $i, j \in S$, i.e., $\mathbfit{P}^{\left(M\right)}$ has all positive entries.
+    \end{proof}
+\end{probox}
+The above result implies that when $N$ is large enough, a finite-state irreducible aperiodic Markov chain can reach any state after exactly $N$ steps!
+\begin{dfnbox}{Regular Markov Chain}{regular}
+    A Markov chain is said to be {\color{red} \textbf{regular}} if there exists some $k \in \N^+$ such that the $k$-step transition probability matrix $\mathbfit{P}^{\left(k\right)}$ has all positive entries.
+\end{dfnbox}
+Such a $\mathbfit{P}^{\left(k\right)}$ is called a \textit{regular transition probability matrix} and it implies that 
+\begin{equation*}
+    P\left(X_k = j \mid X_0 = i\right) > 0
+\end{equation*}
+for any states $i$ and $j$. Using Proposition \ref{pro:irreducibleAperiodic}, we have already characterised one type of regular chains.
+\begin{probox}{\small Irreducible Aperiodic Finite-State Markov Chains Are Regular}{irreducibleAperiodicFinite}
+    All irreducible aperiodic finite-state Markov chains are regular.
+\end{probox}
+It is easy to see that all regular Markov chains must be irreducible. We claim that if $\mathbfit{P}^k$ has all positive entries, then so does $\mathbfit{P}^{n}$ for all $n \geq k$. The intuition is as follows: $\mathbfit{P}^k$ having all positive entries means that we can reach any state after $k$ steps. Note that irreducibility means that for any state $i$, there exists at least some other state $j \neq i$ such that $j \to i$. Since it is possible to reach $j$ after $k$ steps, then it must be possible to reach $i$ after $\left(k + 1\right)$ steps.
+\begin{probox}{Regular $n$-step Transition Probability Matrix}{regularTPM}
+    In a regular Markov chain, if $\mathbfit{P}^{\left(k\right)}$ is regular, then $\mathbfit{P}^{\left(n\right)}$ is regular for all $n \geq k$.
+\end{probox}
+We now state the main theorem for regular Markov chains:
+\begin{thmbox}{Main Theorem for Regular Markov Chains}{main}
+    Let $\mathbfit{P}$ be a regular transition probability matrix for some regular Markov chain with state space $S \coloneqq \left\{1, 2, \cdots, N\right\}$, then 
+    \begin{enumerate}
+        \item the limit $\pi_j \coloneqq \lim_{n \to \infty}P^{\left(n\right)}_{ij}$ exists and is independent of $i$;
+        \item $\sum_{i = 1}^{N}\pi_i = 1$ and $\pi \coloneqq \begin{pmatrix}
+            \pi_1, \pi_2, \cdots, \pi_N
+        \end{pmatrix}$ satisfies $\pi\mathbfit{P} = \pi$;
+        \item $\pi$ is unique.
+    \end{enumerate}
+\end{thmbox}
+The distribution $\pi$ obtained from the above theorem is known as the \textit{limiting distribution}. Notice that 
+\begin{align*}
+    \lim_{n \to \infty}P\left(X_n = j\right) & = \sum_{i = 1}^{N} \lim_{n \to \infty}P\left(X_n = j \mid X_0 = i\right)P\left(X_0 = i\right) \\
+    & = \sum_{i = 1}^{N}\pi_jP\left(X_0 = i\right) \\
+    & = \pi_j\sum_{i = 1}^{N}P\left(X_0 = i\right) \\
+    & = \pi_j.
+\end{align*}
+Therefore, $\pi_j$ gives the marginal probability of $X_n = j$ in the long-run.
 \end{document}

@@ -5,8 +5,9 @@
 \contentsline {subsection}{\numberline {1.3.1}Expectation}{11}{subsection.1.3.1}%
 \contentsline {subsection}{\numberline {1.3.2}Variance}{13}{subsection.1.3.2}%
 \contentsline {subsection}{\numberline {1.3.3}Correlation}{14}{subsection.1.3.3}%
-\contentsline {chapter}{\numberline {2}Stochastic Process}{15}{chapter.2}%
+\contentsline {chapter}{\numberline {2}Markov Chains}{15}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Markov Chains}{15}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Transition Probabilities}{17}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Stationary Distribution}{20}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Intercommunicating Classes}{22}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Transition Probabilities}{17}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Stationary Distribution}{20}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Intercommunicating Classes}{22}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Regularity}{30}{section.2.5}%
