@@ -17,6 +17,10 @@
 \begin{document}
     \begin{multicols*}{2}
         \begin{itemize}
+            \item $\mathrm{Var}\left(X\right) = E\left[X^2\right] - E\left[X\right]^2$.
+            \item $\mathrm{Cov}\left(X, Y\right) \coloneqq E\left[XY\right] - E\left[X\right]E\left[Y\right] = E\bigl[\left(X - E\left[X\right]\right)\left(Y - E\left[Y\right]\right)\bigr]$
+            \item \textbf{Markov's Inequality}: if $X \geq 0$, then $P\left(X \geq a\right) \leq \frac{E\left[X\right]}{a}$ for all $a > 0$.
+            \item \textbf{Chebyshev's Inequality}: for finite variance, $P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{E[g\left(X\right)]}{a^2\mathrm{Var}\left(X\right)}$.
             \item Law of total probability: if $\left\{B_i \colon i \in I\right\}$ is a partition of the sample space, then
             \begin{equation*}
                 P\left(A\right) = \sum_{i \in I}P\left(A \mid B_i\right)P\left(B_i\right).
