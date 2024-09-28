@@ -1,0 +1,119 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+    \begin{multicols*}{2}
+        \begin{itemize}
+            \item Law of total probability: if $\left\{B_i \colon i \in I\right\}$ is a partition of the sample space, then
+            \begin{equation*}
+                P\left(A\right) = \sum_{i \in I}P\left(A \mid B_i\right)P\left(B_i\right).
+            \end{equation*}
+            \item Law of total expectation: $E\left[X\right] = E\bigl[E\left[X \mid Y\right]\bigr]$.
+            \item Law of total variance: $\mathrm{Var}\left(X\right) = E\left[\mathrm{Var}\left(X \mid Y\right)\right] + \mathrm{Var}\left(E\left[X \mid Y\right]\right)$.
+            \item Bayes's Theorem: $P\left(A \mid B\right) = \frac{P\left(B \mid A\right)P\left(A\right)}{P\left(B\right)}$.
+            \item Markov chain: future is independent of the past, i.e., $X_{n + 1}$ is at most dependent on $X_n$.
+            \item Transition probability: $p_{ij}^{n, m} = P\left(X_m = j \mid X_n = i\right)$.
+            \item Transition probability matrix: if $\pi_i$ is the distribution of $X_i$, then $\pi_t = \pi_0\prod_{i = 0}^{t - 1}\bm{P}^{i, i + 1}$.
+            \item Stationary Markov chain: transition probability matrix is independent of the timestamp $n$.
+            \item \textbf{Stochastic matrix}: non-negative matrix such that row sums are $1$.
+            \item \textbf{Chapman-Kolmogorov Equations}: $\bm{P}^{\left(m\right)} = \bm{P}\bm{P}^{\left(m - 1\right)} = \bm{P}^{\left(m - 1\right)}\bm{P}$. If $X$ is stationary, then for all $m, n \in \mathbb{N}$,
+            \begin{equation*}
+                P^{0, m + n}_{ij} = \sum_{k \in S}P^{0, m}_{ik}P^{0, n}_{kj},
+            \end{equation*}
+            and $P\left(X_n = j \mid X_0 = i\right) = \left(\bm{P}^n\right)_{ij}$.
+            \item if we have a column vector 
+            \begin{equation*}
+                \mu \coloneqq \begin{bmatrix}
+                    f\left(x_1\right) \\
+                    f\left(x_2\right) \\
+                    \vdots \\
+                    f\left(x_s\right)
+                \end{bmatrix}
+            \end{equation*}
+            for some function $f$ on the state space, then 
+            \begin{align*}
+                \left(\bm{P}^n\mu\right)_i & = \sum_{j = 1}^{s}\bm{P}^n_{ij}\mu_j \\
+                & = \sum_{j = 1}^{s}P\left(X_n = x_j \mid X_0 = x_i\right)f\left(x_j\right) \\
+                & = E\left[f\left(X_n\right) \mid X_0 = x_i\right].
+            \end{align*}
+            Suppose $X_0 \sim \lambda$, then clearly 
+            \begin{align*}
+                E\left[f\left(X_n\right)\right] & = \sum_{i = 1}^{s}E\left[f\left(X_n\right) \mid X_0 = x_i\right]\lambda_i \\
+                & = \sum_{i = 1}^{s}\lambda_i\left(\bm{P}^n\mu\right)_i \\
+                & = \lambda\bm{P}^n\mu.
+            \end{align*}
+            \item \textbf{Stationary distribution}: $\pi = \pi\bm{P}$.
+            \item If $\lambda$ is an eigenvalue of $\bm{P}$, then $\abs{\lambda} \leq 1$.
+            \item \textbf{Absorbing state}: for all $j \neq i$, we have $P_{ij} = 0$.
+            \item \textbf{Intercommunicating states}: $\exists m, n \in \mathbb{N}$ such that $P_{xy}^{\left(m\right)}, P_{yx}^{\left(n\right)} > 0$.
+            \item \textbf{Irreducible chain}: all states intercommunicate, i.e., only one class.
+            \item \textbf{Return probability}: $P_{ii}^{\left(n\right)} = P\left(X_n = i \mid X_0 = i\right)$.
+            \item \textbf{First return probability}: $f_{ii}^{\left(n\right)} = P\left(X_1 \neq i, \cdots X_{n - 1} \neq i, X_n = i \mid X_0 = i\right)$. $f_{ii}^{\left(0\right)} = 0$ and $f_{ii}^{\left(n\right)} \leq P_{ii}^{\left(n\right)}$.
+            \item $P_{ii}^{\left(n\right)} = \sum_{k = 0}^{n}f_{ii}^{\left(k\right)}P_{ii}^{\left(n - k\right)}$.
+            \item $f_{ii} = \sum_{n = 0}^{\infty}f_{ii}^{\left(n\right)}$ is the probability of returning to $i$ in finite time. $i$ is \textbf{recurrent} if $f_{ii} = 1$ and \textbf{transient} if $f_{ii} < 1$.
+            \item For any recurrent state $i$, $P\left(\sum_{n = 1}^{\infty}I\left\{X_n = i\right\} = \infty \mid X_0 = i\right) = 1$ and so 
+            \begin{equation*}
+                E\left[\sum_{n = 0}^{\infty}I{\left\{X_n = x\right\}} \mid X_0 = x\right] = \sum_{n = 0}^{\infty}\bm{P}^n\left(x, x\right) = \infty,
+            \end{equation*}
+            but $\bm{P}^n\left(x, x\right)$ may converge to $0$.
+            \item Number of revisits to $i$: $N_i \sim \mathrm{Geo}\left(1 - f_{ii}\right)$. $E\left[N_i \mid X_0 = i\right] = \frac{f_{ii}}{1 - f_{ii}}$ and expected number of visits including the initial one is $\frac{1}{1 - f_{ii}}$.
+            \item $i$ is a transient state iff $\sum_{n = 1}^{\infty}P_{ii}^{\left(n\right)}$ is finite.
+            \item If $i$ is transient, then $\lim_{m \to \infty}\sum_{n = m}^{\infty}P_{ii}^{\left(n\right)} = 0$ by monotone convergence theorem.
+            \item All finite-state irreducible chains are recurrent.
+            \item Reducible chains will enter one of the recurrent classes in the long-run.
+            \item \textbf{Period}: $d\left(i\right) \coloneqq \gcd\left\{n \in \mathbb{N}^+ \colon P_{ii}^{\left(n\right)} > 0\right\}$. $i$ is \textbf{aperiodic} iff $d\left(i\right) = 1$.
+            \item If $i \leftrightarrow j$, then $d\left(i\right) = d\left(j\right)$.
+            \item $\forall i \in S$, $\exists N \in \mathbb{N}$ such that $\forall n \geq N$, $P_{ii}^{\left(n \cdot d\left(i\right)\right)} > 0$ and $P_{ji}^{\left(m + n \cdot d\left(i\right)\right)} > 0$ whenever $P_{ji}^{\left(m\right)} > 0$.
+            \item If $\bm{P}$ is the TPM for a finite-state irreducible aperiodic chain, then $\exists N \in \mathbb{N}^+$ such that $\bm{P}^{\left(N\right)}$ has all positive entries (definition for regular chain).
+            \item Irreducible, aperiodic, finite-state $\implies$ regular chain.
+            \item Regular $\implies$ irreducible.
+            \item $\bm{P}^{\left(k\right)}$ is regular $\implies \bm{P}^{\left(n\right)}$ is regular $\forall n \geq k$.
+            \item Let $\bm{P}$ be a regular transition probability matrix for some regular Markov chain with state space $S \coloneqq \left\{1, 2, \cdots, N\right\}$, then 
+            \begin{enumerate}
+                \item the limit $\pi_j \coloneqq \lim_{n \to \infty}P^{\left(n\right)}_{ij}$ exists and is independent of $i$;
+                \item $\sum_{i = 1}^{N}\pi_i = 1$ and $\pi \coloneqq \begin{pmatrix}
+                    \pi_1, \pi_2, \cdots, \pi_N
+                \end{pmatrix}$ satisfies $\pi\bm{P} = \pi$;
+                \item $\pi$ is unique.
+            \end{enumerate}
+            $\pi_j$ is the marginal probability $P\left(X_n = j\right)$ in the long-run
+            \item \textbf{Stopping time}: $T_A \coloneqq \min\left\{n \in \mathbb{N} \colon X_n \in A\right\}$ is the first time $X$ enters $A$.
+            \item If $f\left(x\right) = P\left(T_A < T_B \mid X_0 = x\right)$, then for all $x \notin A \cup B$,
+            \begin{align*}
+                f\left(x\right) & = \sum_{y \in S}P\left(T_A < T_B \mid X_1 = y, X_0 = x\right)P\left(X_1 = y \mid X_0 = x\right) \\
+                & = \sum_{y \in S}P\left(T_A < T_B \mid X_0 = y\right)P\left(X_1 = y \mid X_0 = x\right) \\
+                & = \sum_{y \in S}P_{xy}f\left(y\right).
+            \end{align*}
+            \item \textbf{First-step analysis}:
+            \begin{enumerate}
+                \item Identify quantity of interest $a_i\left(T\right) = h\left(i, X_1, \cdots, X_T \mid X_0 = i\right)$.
+                \item Consider $a_i\left(T\right) = \sum_{k \in S}h\left(\cdot \mid X_1 = k, X_0 = i\right)P\left(X_1 = k \mid X_0 = i\right)$.
+                \item Consider $Y_n = X_{n + 1}$ and establish $h\left(\cdot \mid X_1 = k, X_0 = i\right) = g_i\bigl(a_k\left(T\right)\bigr)$.
+                \item Solve the system.
+            \end{enumerate}
+            \item Gambler's ruin: $X_0 = k$ for $0 < k < N$ with winning probability $p$.
+            \begin{itemize}
+                \item Fair game: $P\left(X_T = 0 \mid X_0 = k\right) = 1 - \frac{k}{N}$ and $E\left[T \mid X_0 = k\right] = k\left(N - k\right)$.
+                \item Otherwise: 
+                \begin{align*}
+                    P\left(X_T = 0 \mid X_0 = k\right) & = 1 - \frac{1 - \left(q / p\right)^k}{1 - \left(q / p\right)^N}, \\
+                    E\left[T \mid X_0 = k\right] & = \frac{1}{p - q}\left[\frac{N\left(1 - \left(q / p\right)^k\right)}{1 - \left(q / p\right)^N} - k\right]
+                \end{align*}
+            \end{itemize}
+            \item Random walk: $\frac{\xi_i + 1}{2} \sim \mathrm{Bernoulli}\left(p\right)$, $\frac{X_n + n}{2} \mid X_0 = 0 \sim \mathrm{Bin}\left(n, p\right)$.
+        \end{itemize}
+    \end{multicols*}
+\end{document}
