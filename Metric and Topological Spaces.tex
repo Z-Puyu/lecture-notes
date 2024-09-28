@@ -1194,9 +1194,52 @@ Intuitively, a continuous map should send a compact set to a compact image becau
 \end{probox}
 \begin{lembox}{Tube Lemma}{tube}
     Let $X$ be a topological space and $Y$ be a compact topological space. If $N \subseteq X \times Y$ is an open set that contains $\left\{\left(x_0, y\right) \colon y \in Y \right\}$, then $N$ contains $W \times Y$ for some open $W \subseteq X$ that contains $x_0$.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{B}$ be the basis generating the product topology. Define 
+        \begin{equation*}
+            \mathcal{A} \coloneqq \left\{U \times V \in \mathcal{B} \colon \subseteq N, x_0 \in U\right\}.
+        \end{equation*}
+        Since $N$ is open, then for any $y \in Y$, there exists some $U_y \times V_y \in \mathcal{B}$ such that 
+        \begin{equation*}
+            \left(x_0, y\right) \in U_y \times V_y \subseteq N.
+        \end{equation*}
+        Therefore, $\mathcal{A}$ is an open cover for $\left\{x_0\right\} \times Y$. Note that $\left\{x_0\right\} \times Y$ is compact because of the compactness of $Y$. Therefore, there exists a finite sub-cover
+        \begin{equation*}
+            \left\{U_1 \times V_1, \cdots, U_n \times V_n\right\} \subseteq \mathcal{A}
+        \end{equation*}
+        of $\left\{x_0\right\} \times Y$ where $\bigcup_{i = 1}^nV_i = Y$. Take 
+        \begin{equation*}
+            W \coloneqq \bigcap_{i = 1}^nU_i \subseteq X,
+        \end{equation*}
+        then $W$ is open and $x_0 \in W$. Since $W \subseteq U_i$ for all $i = 1, 2, \cdots, n$, we have 
+        \begin{equation*}
+            W \times Y = \bigcup_{i = 1}^n\left(W \times V_i\right) \subseteq \bigcup_{i = 1}^n\left(U_i \times V_i\right) \subseteq N.
+        \end{equation*}
+    \end{proof}
 \end{lembox}
+Applying the Tube Lemma to Cartesian products yields the following result:
 \begin{corbox}{Compactness of Cartesian Product}{compactCartProd}
     If $X$ and $Y$ are compact topological spaces, then $X \times Y$ is compact.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{A}$ be an open cover of $X \times Y$, then $\mathcal{A}$ is also an open cover of $\left\{x\right\} \times Y$ for any~$x \in X$. Since $Y$ is compact, there exists some finite subset $\mathcal{A}_x \subseteq \mathcal{A}$ such that 
+        \begin{equation*}
+            \left\{x\right\} \times Y \subseteq \bigcup_{A \in \mathcal{A}_x}A \coloneqq N_x.
+        \end{equation*}
+        Note that $N_x$ is open in $X \times Y$. By Lemma \ref{lem:tube}, there exists some open subset $W_x \subseteq X$ such that $x \in W_x$ and $W_x \times Y \subseteq N_x$. Clearly, $\left\{W_x \coloneqq x \in X\right\}$ is an open cover for $X$. Since $X$ is compact, this means that there exists $x_1, x_2, \cdots, x_n \in X$ such that 
+        \begin{equation*}
+            X = \bigcup_{i = 1}^nW_{x_i}.
+        \end{equation*}
+        Take $\mathcal{A}' \coloneqq \bigcup_{i = 1}^n\mathcal{A}_{x_i} \subseteq \mathcal{A}$ which is finite, then 
+        \begin{align*}
+            X \times Y & \subseteq \bigcup_{i = 1}^n\left(W_{x_i} \times Y\right) \\
+            & \subseteq \bigcup_{i = 1}^nN_{x_i} \\
+            & = \bigcup_{i = 1}^n\bigcup_{A \in \mathcal{A}_{x_i}}A \\
+            & = \bigcup_{A \in \mathcal{A}'}A.
+        \end{align*}
+        Therefore, $\mathcal{A}'$ is a finite sub-cover for $X \times Y$ and so $X \times Y$ is compact.
+    \end{proof}
 \end{corbox}
 \begin{dfnbox}{Finite Intersection Property}{finiteIntersect}
     Let $X$ be some set. A collection $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ has the {\color{red} \textbf{finite intersection property}} if for any finite sub-collection $\mathcal{G}' \subseteq \mathcal{G}$, we have 
@@ -1209,30 +1252,127 @@ Intuitively, a continuous map should send a compact set to a compact image becau
     \begin{equation*}
         \bigcap_{G \in \mathcal{G}}G \neq \varnothing.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Suppose that for any collection $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ of closed sets in $X$ with the finite intersection property, we have $\bigcap_{G \in \mathcal{G}} \neq \varnothing$. Let $\mathcal{U}$ be an open cover of $X$ and consider 
+        \begin{equation*}
+            \mathcal{G} \coloneqq \left\{X \setminus U \colon U \in \mathcal{U}\right\}.
+        \end{equation*}
+        Note that $\mathcal{G}$ is a collection of closed sets and 
+        \begin{equation*}
+            \bigcap_{G \in \mathcal{G}}G = \bigcap_{U \in \mathcal{U}}X \setminus U = X \setminus \bigcup_{U \in \mathcal{U}}U = \varnothing.
+        \end{equation*}
+        This implies that $\mathcal{G}$ does not have the finite intersection property, i.e., there exists open sets $U_1, U_2, \cdots, U_n \in \mathcal{U}$ such that 
+        \begin{equation*}
+            \bigcap_{i = 1}^nX \setminus U_i = X \setminus \bigcup_{i = 1}^nU_i = \varnothing.
+        \end{equation*}
+        This means that $\left\{U_1, U_2, \cdots, U_n\right\} \subseteq \mathcal{U}$ is a finite sub-cover for $X$ and so $X$ is compact. Conversely suppose $X$ is compact and let $\mathcal{G}$ be a collection of closed sets in $X$ such that 
+        \begin{equation*}
+            \bigcap_{G \in \mathcal{G}}G = \varnothing.
+        \end{equation*}
+        Define 
+        \begin{equation*}
+            \mathcal{U} \coloneqq \left\{X \setminus G \colon G \in \mathcal{G}\right\},
+        \end{equation*}
+        then clearly 
+        \begin{equation*}
+            \bigcup_{U \in \mathcal{U}} = X \setminus \bigcap_{G \in \mathcal{G}}G = X,
+        \end{equation*}
+        so there exists $G_1, G_2, \cdots, G_n \in \mathcal{G}$ such that 
+        \begin{equation*}
+            \bigcup_{i = 1}^nX \setminus G_i = X \setminus \bigcap_{i = 1}^nG_i = X.
+        \end{equation*}
+        Therefore, $\mathcal{G}$ does not have the finite intersection property.
+    \end{proof}
 \end{probox}
+An intuitive example of a collection with finite intersection property is \textbf{nested closed intervals} in Euclidean spaces. This can be generalised as the following corollary:
 \begin{corbox}{Intersection of Nested Closed Sets in Compact Spaces}{nestedClosedInCompact}
     Let $X$ be a compact topological space and $\left\{G_i\right\}_{i = 1}^{\infty}$ be a sequence of closed sets in $X$ such that $G_{i + 1} \subseteq G_i$ for all $i \in \N^+$, then 
     \begin{equation*}
         \bigcap_{i = 1}^{\infty}G_i \neq \varnothing.
     \end{equation*}
 \end{corbox}
+Lastly, we discuss the cardinality of compact spaces. Intuitively, a space is unlikely to be countable if its points are \textbf{dense}. To visualise the density of points, it might be helpful to think of \textbf{sparse points} as points around which there is some \textbf{empty space}.
 \begin{dfnbox}{Isolated Point}{isolatePt}
     A point $x$ in a topological space $X$ is {\color{red} \textbf{isolated}} if $\left\{x\right\}$ is open in $X$.
 \end{dfnbox}
+We can establish an analogous connection between the density of points distributed in a space and the number of isolated points in the space. Naturally, a space contains ``fewer'' points if there are lots of isolated points.
 \begin{probox}{Characterisation of Uncountable Topological Spaces}{characteriseUncountable}
     Let $X$ be a non-empty compact Hausdorff space. If $X$ has no isolated point, then $X$ is uncountable.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $X$ is countable, then we can write 
+        \begin{equation*}
+            X \coloneqq \left\{x_i \colon i \in I\right\}
+        \end{equation*}
+        for some $I \subseteq \N^+$. We consider the following lemma:
+        \begin{lembox}{Non-isolated Points in Hausdorff Spaces}{closureNonIso}
+            Let $X$ be a Hausdorff space. If $U \subseteq X$ is open and non-empty and $x \in X$ is not isolated, then there exists some open and non-empty subset $V \subseteq U$ with $x \notin \widebar{V}$.
+            \tcblower
+            \begin{proof}
+                Note that $U \setminus \left\{x\right\}$ is open and non-empty because otherwise $\left\{x\right\}$ is open. Fix some $y \in U \setminus \left\{x\right\}$, then since $X$ is Hausdorff, we can find some disjoint open sets $W_{x}, W_{y} \subseteq X$ such that $x \in W_{x}$ and $y \in W_{y}$. Take $V \coloneqq W_y \cap U \subseteq U$, then $V$ is non-empty and open. Note that $X \setminus W_{x}$ is a closed set containing $V$, so $\widebar{V} \subseteq X \setminus W_{x_i}$. This means that $x \notin \widebar{V}$.
+            \end{proof}
+        \end{lembox}
+        By Lemma \ref{lem:closureNonIso}, there exists some open set $V_1 \subseteq X$ such that $x_1 \notin \widebar{V_1}$. For each $i = 2, 3, \cdots$, we can find some open set $V_i \subseteq V_{i - 1}$ such that $x_i \notin \widebar{V_i}$. By Corollary \ref{cor:nestedClosedInCompact}, we know that 
+        \begin{equation*}
+            \bigcap_{i \in I}\widebar{V_i} \neq \varnothing.
+        \end{equation*}
+        However, for every $x_i \in X$, there exists some $V_i$ such that $x_i \notin \widebar{V_i}$, which is a contradiction.
+    \end{proof}
 \end{probox}
+\subsection{Limit Point and Sequential Compactness}
 \begin{dfnbox}{Limit Point Compactness}{limPtCompact}
     A topological space $X$ is {\color{red} \textbf{limit point compact}} if every infinite subset of $X$ has a limit point in $X$.
 \end{dfnbox}
 It is possible for a non-compact space to be limit point compact. However, a compact space must be limit point compact.
 \begin{probox}{Compactness Implies Limit Point Compactness}{compactToLimPtCompact}
     Any compact topological space is limit point compact.
+    \tcblower
+    \begin{proof}
+        Let $A \subseteq X$ be a subset without any limit point in $X$, then it suffices to prove that $A$ is finite. Notice that $A = \widebar{A}$, so $A$ is closed in $X$. By Proposition \ref{pro:closedCompact}, $A$ is compact. For every $a \in A$, since $a$ is not a limit point, by Definition \ref{dfn:limPt} there exists some open set $U_a \subseteq X$ with $a \in U_a$ but 
+        \begin{equation*}
+            \left(A \setminus \left\{a\right\}\right) \cap U_a = \varnothing.
+        \end{equation*}
+        Clearly, this means that $U_a \cap A = \left\{a\right\}$. Therefore, $\left\{a\right\}$ is open in $A$. This means that 
+        \begin{equation*}
+            \mathcal{A} \coloneqq \bigl\{\left\{a\right\} \colon a \in A\bigr\}
+        \end{equation*}
+        is an open cover of $A$. Since $A$ is compact, there exists $a_1, a_2, \cdots, a_n \in A$ such that 
+        \begin{equation*}
+            A \subseteq \bigcup_{i = 1}^n\left\{a_i\right\},
+        \end{equation*}
+        and so $A$ is finite.
+    \end{proof}
 \end{probox}
 \begin{dfnbox}{Sequential Compactness}{seqCompact}
     A topological space $X$ is {\color{red} \textbf{sequentially compact}} if every sequence in $X$ has a convergent subsequence.
 \end{dfnbox}
 \begin{probox}{Sequential Compactness Implies Limit Point Compactness}{seqCompactToLimPtCompact}
     Any sequentially compact topological space is limit point compact, but the converse is not true.
+\end{probox}
+\begin{dfnbox}{Lebesgue Number}{LebesgueNum}
+    Let $\mathcal{U}$ be an open cover for a metric space $X$, then $\delta > 0$ is called a {\color{red} \textbf{Lebesgue number}} for $\mathcal{U}$ if for all $S \subseteq X$ with $\mathrm{diam}\left(S\right) < \delta$, there exists some $U \in \mathcal{U}$ such that $S \subseteq U$. 
+\end{dfnbox}
+The existence of Lebesgue number is not guaranteed in general. However, it can be shown that Lebesgue number always exists for sequentially compact spaces.
+\begin{probox}{Sequentially Compact Spaces Guarantee Lebesgue Number}{seqCompactLeb}
+    Every open cover of a sequentially compact metric space has a Lebesgue number.
+\end{probox}
+\begin{dfnbox}{Totally Bounded Space}{totalBound}
+    A metric space $X$ is {\color{red} \textbf{totally bounded}} if for all $\epsilon > 0$, there exists a finite cover of $X$ by open balls of radius $\epsilon$.
+\end{dfnbox}
+\begin{probox}{Sequentially Compactness Implies Total Boundedness}{seqCompactTotalBound}
+    Every sequentially compact metrisable topological space is totally bounded.
+\end{probox}
+A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactTotalBound} is that they apply to any compact space in general, which is a result of the following equivalence:
+\begin{probox}{Compactness of Metrisable Spaces}{metricCompact}
+    If $X$ is a metrisable topological space, then the followings are equivalent:
+    \begin{enumerate}
+        \item $X$ is compact;
+        \item $X$ is limit point compact;
+        \item $X$ is sequentially compact.
+    \end{enumerate}
+\end{probox} 
+\begin{probox}{Compact Spaces Induce Uniform Continuity}{compactUniContinuous}
+    Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces and $f \colon X \to Y$ be continuous. If $X$ is compact, then $f$ is uniformly continuous.
 \end{probox}
 \end{document}
