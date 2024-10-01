@@ -1869,4 +1869,27 @@ Since the source is independent and identically distributed, we have
     H\left(X\right) \leq L_n^* < H\left(X\right) + \frac{1}{n}.
 \end{equation*}
 Therefore, the longer our block is, the smaller the difference between $L_n^*$ and $H\left(X\right)$ will be.
+\begin{thmbox}{Wrong Code Theorem}{wrongCode}
+    Let $X \sim p$ and $q$ be a probability distribution on $\mathcal{X}$. For any Shannon code with 
+    \begin{equation*}
+        \ell\left(x\right) = \left\lceil\log\frac{1}{q\left(x\right)}\right\rceil,
+    \end{equation*}
+    we have 
+    \begin{equation*}
+        H\left(p\right) + D\left(p \parallel q\right) \leq \mathbb{E}_p\left[\ell\left(X\right)\right] < H\left(p\right) + D\left(p \parallel q\right) + 1.
+    \end{equation*}
+\end{thmbox}
+\begin{lembox}{Necessary Condition for Optimal Code}{condOpt}
+    If $p_i > p_j$, then $\ell_i \leq \ell_j$.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that in an optimal code, $\ell_j < \ell_i$ but $p_i > p_j$. By exchanging the codewords for $i$ and $j$ to obtain a new prefix-free code, we can check that the expected codeword length strictly decreases. 
+    \end{proof}
+\end{lembox}
+\begin{lembox}{Existence of Sibling Codewords}{existSibling}
+    There exists an optimal code such that the codewords for the two symbols with the smallest probabilities are siblings. 
+\end{lembox}
+\begin{thmbox}{Optimality of Huffman Code}{huffmanOpt}
+    
+\end{thmbox}
 \end{document}
