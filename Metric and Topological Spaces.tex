@@ -640,6 +640,8 @@ We would like to discuss the properties of closure. The following definition is 
         \left(A \setminus \left\{x\right\}\right) \cap U \neq \varnothing.
     \end{equation*}
 \end{dfnbox}
+Note that this definition is essentially saying that \textbf{every open neighbourhood of a limit point of a set $A$ contains at least one other element in $A$}.
+
 Now, we propose two properties for the closure:
 \begin{probox}{Properties of Closure}{clProps}
     Let $\left(X, \mathcal{T}\right)$ be a topological space. For any $A \subseteq X$,
@@ -824,7 +826,7 @@ Intuitively, the product topology is formed by all vectors whose every component
         For finite product spaces, the product topology and the box topology are the same. However, they are different if the product is infinite.
     \end{remark}
 \end{notebox}
-We may check that the set $\mathcal{B}$ in Definition \ref{dfn:box} is indeed a basis. Take any $\mathcal{x} \in \prod_{\alpha \in \Lambda}X_{\alpha}$, then for each $\alpha \in \Lambda$, there exists some $U_{\alpha} \in \mathcal{T}_{\alpha}$ such that $x_{\alpha} \in U_{\alpha}$, which implies that 
+We may check that the set $\mathcal{B}$ in Definition \ref{dfn:box} is indeed a basis. Take any $\mathbfit{x} \in \prod_{\alpha \in \Lambda}X_{\alpha}$, then for each $\alpha \in \Lambda$, there exists some $U_{\alpha} \in \mathcal{T}_{\alpha}$ such that $x_{\alpha} \in U_{\alpha}$, which implies that 
 \begin{equation*}
     \mathbfit{x} \in \prod_{\alpha \in \Lambda}U_{\alpha}.
 \end{equation*}
