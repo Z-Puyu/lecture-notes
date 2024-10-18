@@ -633,7 +633,15 @@ We interpret the above definition as follows: $\mathring{A}$ is the union of all
         \end{enumerate}
     \end{remark}
 \end{notebox}
-We would like to discuss the properties of closure. The following definition is useful:
+The above results come in handy to prove the existence of sets which are neither open nor closed. Consider 
+\begin{equation*}
+    A \coloneqq \left\{\frac{1}{n} \colon n \in \N^+\right\}.
+\end{equation*}
+Observe that with respect to the Euclidean topology on $\R$, the only open subset of $A$ is $\varnothing$, so $\mathring{A} = \varnothing \neq A$.
+
+To find $\widebar{A}$ requires a bit of work. Intuitively, the boundary $\partial A$ separates $A$ from the rest of the space $X$. Therefore, it is natural that every open neighbourhood of a point $a \in \partial A$ has to intersect with $A$.
+
+Now, this means that we can shrink such an open neighbourhood indefinitely while maintaining a non-empty intersection. If this intersection contains more than the point $a$ itself, then this analogously means that we can find points in $A$ which are \textbf{arbitrarily close} to $a$.
 \begin{dfnbox}{Limit Point}{limPt}
     Let $\left(X, \mathcal{T}\right)$ be a topological space. For any $A \subseteq X$, a point $x \in X$ is a {\color{red} \textbf{limit point}} of $A$ if for every open set $U \subseteq X$ containing $x$,
     \begin{equation*}
@@ -642,8 +650,10 @@ We would like to discuss the properties of closure. The following definition is 
 \end{dfnbox}
 Note that this definition is essentially saying that \textbf{every open neighbourhood of a limit point of a set $A$ contains at least one other element in $A$}.
 
-Now, we propose two properties for the closure:
-\begin{probox}{Properties of Closure}{clProps}
+Intuitively, $\widebar{A}$ should contain all limit points of $A$ because every point outside of $\widebar{A}$ is at some ``distance'' away from $\partial{A}$. Formally, for every $a \in X \setminus \widebar{A}$, since $X \setminus \widebar{A}$ is open, we can always find some open ball $B \subseteq X$ such that $a \in B$. Clearly, $B \cap \left(A \setminus \left\{a\right\}\right) = \varnothing$ because $A \subseteq \widebar{A}$.
+
+We know that $A \subseteq \widebar{A}$, so the above simple result motivates us to conclude that $\widebar{A}$ contains nothing else but $A$ and all limit points of $A$.
+\begin{probox}{A Set with All Its Limit Points Is Its Closure}{clProps}
     Let $\left(X, \mathcal{T}\right)$ be a topological space. For any $A \subseteq X$,
     \begin{enumerate}
         \item $x \in \widebar{A}$ if and only if for any open set $U \subseteq X$ containing $x$, $U \cap A \neq \varnothing$;
@@ -660,11 +670,31 @@ Now, we propose two properties for the closure:
         Therefore, $A \cup A' \subseteq \widebar{A}$. Take any $x \in \widebar{A}$, we shall prove that if $x \notin A'$, then $x \in A$. Since $x$ is not a limit point of $A$, there exists some open set $V \subseteq X$ containing $x$ such that $\left(A \setminus \left\{x\right\}\right) \cap V = \varnothing$. However, $x \in \widebar{A}$ implies that $V \cap A \neq \varnothing$, so $x \in A$.
     \end{proof}
 \end{probox}
-The notion of limit points also leads to the definition of convergence. Before that, we shall define the notion of \textit{neighbourhood}. 
+Now let us rewind and consider our set 
+\begin{equation*}
+    A \coloneqq \left\{\frac{1}{n} \colon n \in \N^+\right\}
+\end{equation*}
+again. It is easy to verify that $0$ is the only limit point of $A$, so by Proposition \ref{clProps},
+\begin{equation*}
+    \widebar{A} = \left\{0\right\} \cup \left\{\frac{1}{n} \colon n \in \N^+\right\} \neq A.
+\end{equation*}
+Therefore, $A$ is neither open nor closed in $\R$. This also shows that $\partial A \neq A'$ in general.
+
+It is a good exercise for us to verify that $\widebar{A}$ is indeed closed here. We claim that 
+\begin{equation*}
+    \R \setminus \widebar{A} = \left(-\infty, 0\right) \cup \left(1, +\infty\right) \cup \bigcup_{n \in \N^+}\left(\frac{1}{n + 1}, \frac{1}{n}\right).
+\end{equation*}
+Take any $a \in \left(0, 1\right)$ such that $a \neq \frac{1}{n}$ for all $n \in \N^+$, then there exists some $n_a \in \N^+$ such that 
+\begin{equation*}
+    a \in \left(\frac{1}{n_a + 1}, \frac{1}{n_a}\right),
+\end{equation*}
+and so the equality holds as desired.
+\section{Convergence}
+Recall that in Definition \ref{dfn:limPt}, a limit point of $A$ is defined as a point $a$ such that any open set containing $a$ shares at least one other common point with $A$. Analogously, we may view such phenomenon as $a$ having a ``neighbour'' in $A$. 
 \begin{dfnbox}{Neighbourhood}{neighbourhood}
     Let $\left(X, \mathcal{T}\right)$ be a topological space. An open set $U \subseteq X$ is called a {\color{red} \textbf{neighbourhood}} of some $x \in X$ if $x \in U$.
 \end{dfnbox}
-Intuitively, we think of the statement $x_i \to x$ as the fact that no matter how small a neighbourhood we choose for $x$, there is always a consecutive infinite subsequence of the $x_i$'s which falls in this neighbourhood.
+Now let us generalise the idea of \textit{convergence}. Intuitively, we think of the statement $x_i \to x$ as the fact that $x_i$ will become \textbf{arbitrarily close} to $x$ in the long-run. Equivalently, this means that no matter how small a neighbourhood we choose for $x$, the ``tail'' of the $x_i$'s will always fall in this neighbourhood.
 \begin{dfnbox}{Convergence}{convergence}
     A sequence $\left\{x_i\right\}_{i = 1}^{\infty}$ of points in a topological space $\left(X, \mathcal{T}\right)$ {\color{red} \textbf{converges}} to $x \in X$ if for any neighbourhood $U \subseteq X$ containing $x$, there exists some $N \in \N^+$ such that $x_k \in U$ for all $k > N$, denoted as $x_i \to x$. $x$ is said to be the {\color{red} \textbf{limit}} of $\left\{x_i\right\}_{i = 1}^{\infty}$.
 \end{dfnbox}
@@ -679,10 +709,31 @@ In a metric space, we can make use of the metric to describe convergence in a mo
     \end{proof}
 \end{thmbox}
 \section{Continuity}
+We can also generalise the notion of \textit{continuity}. Recall that in real analysis, a function $f$ is continuous at $a$ if $\lim_{x \to a}f\left(x\right) = f\left(a\right)$. Therefore, if we fix any open neighbourhood $U$ for~$a$, we would expect the pre-image $f^{-1}\left(U\right)$ to be open.
 \begin{dfnbox}{Continuous Map}{continuous}
     Let $X$ and $Y$ be topological spaces. A map $f \colon X \to Y$ is {\color{red} \textbf{continuous}} if for any open set $U \subseteq Y$, the pre-image $f^{-1}\left(U\right)$ is open in $X$.
 \end{dfnbox}
-Suppose $\mathcal{T}_X$ and $\mathcal{T}_Y$ are topologies on $X$ and $Y$ respectively. The above definition basically says that for all $U \in \mathcal{T}_Y$, we have $f^{-1}\left(U\right) \in \mathcal{T}_X$. The following proposition gives an equivalent definition for continuity in terms of sub-bases.
+A map is continuous if and only if pre-images of open sets are open, but an open set may not necessarily have an open image under a continuous map. Here are $2$ examples:
+\begin{enumerate}
+    \item $f \colon \R \to \R$ defined by $f\left(x\right) = \e^{-\abs{x}}$ is clearly continuous because
+    \begin{equation*}
+        f^{-1}\bigl(\left(a, b\right)\bigr) = \begin{cases}
+            \left(-\ln b, -\ln a\right) & \quad\textrm{if } -\ln b \geq 0 \\
+            \left(\ln a, -\ln a\right) & \quad\textrm{if } -\ln b < 0 < -\ln a \\
+            \varnothing & \quad\textrm{if } 0 \geq -\ln a
+        \end{cases}.
+    \end{equation*}
+    However, $f\left(\R\right) = \left(0, 1\right]$ which is neither open nor closed.
+    \item $f \colon \R \to \R$ defined by 
+    \begin{equation*}
+        f\left(x\right) = \begin{cases}
+            1 & \quad\textrm{if } x \leq 0 \\
+            \frac{1}{x + 1} & \quad\textrm{otherwise}
+        \end{cases}
+    \end{equation*}
+    is continuous but $f\bigl(\left(-\infty, 0\right)\bigr) = \left\{1\right\}$ is closed and $f\bigl(\left[0, +\infty\right)\bigr) = \left(0, 1\right]$ is not closed.
+\end{enumerate}
+Suppose $\mathcal{T}_X$ and $\mathcal{T}_Y$ are topologies on $X$ and $Y$ respectively. Definition \ref{dfn:continuous} basically says that for all $U \in \mathcal{T}_Y$, we have $f^{-1}\left(U\right) \in \mathcal{T}_X$. The following proposition gives an equivalent definition for continuity in terms of sub-bases.
 \begin{probox}{Equivalent Definition of Continuity}{equivDefContinuity}
     If $\mathcal{S}$ is a sub-basis for a topology on some set $Y$, then for any topological space $X$, a map~$f \colon X \to Y$ is continuous if and only if $f^{-1}\left(S\right)$ is open in $X$ for any $S \in \mathcal{S}$.
     \tcblower
@@ -720,23 +771,33 @@ It is also clear that for any topological space $X$, the \textit{inclusion map} 
     \end{enumerate}
     \tcblower
     \begin{proof}
-        Suppose that $f$ is continuous. Note that $f\left(A\right) \subseteq \widebar{f\left(A\right)}$, so $A \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $\widebar{f\left(A\right)}$ is closed in $Y$, so by Definition \ref{dfn:continuous}, 
+        Suppose that $f$ is continuous. We claim that $\widebar{A} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Observe that~$X = f^{-1}\left(Y\right)$, so 
         \begin{equation*}
-            f^{-1}\left(Y \setminus \widebar{f\left(A\right)}\right) = X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)
+            X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right) = f^{-1}\left(Y\right) \setminus f^{-1}\left(\widebar{f\left(A\right)}\right) = f^{-1}\left(Y \setminus \widebar{f\left(A\right)}\right)
         \end{equation*}
-        is open in $X$. Therefore, $f^{-1}\left(\widebar{f\left(A\right)}\right)$ is closed in $X$. By Proposition \ref{pro:clProps}, $\widebar{A} = A \cup A'$ where $A'$ is the set of limit points of $A$. We claim that $A' \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Suppose on contrary that there exists some $a \in A' \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)$. Since $X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)$ is open, by Definition \ref{dfn:limPt}, 
+        Since $\widebar{f\left(A\right)}$ is closed in $Y$, so by Definition \ref{dfn:continuous}, we know that $f^{-1}\left(\widebar{f\left(A\right)}\right)$ is closed in $X$. For any~$a \in A$, we have 
         \begin{equation*}
-            \left(A \setminus \left\{a\right\}\right) \cap \Biggl(X \setminus f^{-1}\left(\widebar{f\left(A\right)}\right)\Biggr) \neq \varnothing,
+            f\left(a\right) \in f\left(A\right) \subseteq \widebar{f\left(A\right)},
         \end{equation*}
-        which is a contradiction because $A \setminus \left\{a\right\} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Therefore, $\widebar{A} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$, which means that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$.
+        and so $A \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$. Recall that $\widebar{A}$ is the smallest closed set containing $A$, so~$\widebar{A} \subseteq f^{-1}\left(\widebar{f\left(A\right)}\right)$ as desired. Therefore, $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$.
         \\\\
         Suppose that $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$ for any $A \subseteq X$. For any closed set $B \subseteq Y$, we have $B = \widebar{B}$. Notice that 
         \begin{equation*}
-            f\left(\widebar{f^{-1}\left(B\right)} \right) \subseteq \widebar{f\left(f^{-1}\left(B\right)\right)} = B = f\left(f^{-1}\left(B\right)\right),
+            f\left(\widebar{f^{-1}\left(B\right)} \right) \subseteq \widebar{f\bigl(f^{-1}\left(B\right)\bigr)} = B = f\left(f^{-1}\left(B\right)\right),
         \end{equation*}
-        so $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$. This implies that $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$, and so $f^{-1}\left(B\right)$ is closed in~$X$.
+        so $\widebar{f^{-1}\left(B\right)} \subseteq f^{-1}\left(B\right)$. This implies that $\widebar{f^{-1}\left(B\right)} = f^{-1}\left(B\right)$, and so $f^{-1}\left(B\right)$ is closed in~$X$.
         \\\\
-        Suppose that $f^{-1}\left(B\right)$ is closed in $X$ for any closed set $b \subseteq Y$. Take any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$. Since $Y \setminus V$ is closed in $Y$, $f^{-1}\left(Y \setminus V\right) = X \setminus f^{-1}\left(V\right)$ is closed in $X$. Therefore, $f^{-1}\left(V\right)$ is open in $X$. It is clear that $x \in f^{-1}\left(V\right)$ and~$f\left(f^{-1}\left(V\right)\right) \subseteq V$.
+        Suppose that $f^{-1}\left(B\right)$ is closed in $X$ for any closed set $B \subseteq Y$. Take any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$. Since $Y \setminus V$ is closed in $Y$, $f^{-1}\left(Y \setminus V\right) = X \setminus f^{-1}\left(V\right)$ is closed in $X$. Therefore, $f^{-1}\left(V\right)$ is open in $X$. It is clear that $x \in f^{-1}\left(V\right)$ and~$f\left(f^{-1}\left(V\right)\right) \subseteq V$.
+        \\\\
+        Suppose that for any $x \in X$ and any open set $V \subseteq Y$ with $f\left(x\right) \in V$, there exists an open set $U \subseteq X$ such that $x \in U$ and $f\left(U\right) \subseteq V$. For any open set $V \subseteq Y$, consider 
+        \begin{equation*}
+            f^{-1}\left(V\right) = \left\{x \in X \colon f\left(x\right) \in V\right\}.
+        \end{equation*}
+        For each $x \in f^{-1}\left(V\right)$, fix some open set $U_x \subseteq X$ such that $x \in U_x$ and $f\left(U_x\right) \subseteq V$. Notice that this means that $U_x \subseteq f^{-1}\left(V\right)$, and so 
+        \begin{equation*}
+            f^{-1}\left(V\right) = \bigcup_{x \in f^{-1}\left(V\right)}U_x
+        \end{equation*}
+        is open in $X$. Therefore, $f$ is continuous.
     \end{proof}
 \end{probox}
 Next, we introduce a lemma which specifies a methodology to construct a continuous map from two different continuous maps.
@@ -761,6 +822,28 @@ Observe that the continuity of a function $f \colon X \to Y$ actually depends on
     \end{equation*}
 \end{dfnbox}
 Note that the pull-back topology is the coarsest topology on $X$ such that $f$ is a continuous map. To verify this, let $\mathcal{T}$ be any topology on $X$ such that $f$ is continuous. Take any $T \in \mathcal{T}_X$, then there exists some $U \in \mathcal{T}_Y$ such that $T = f^{-1}\left(U\right)$. However, this means that $T \in \mathcal{T}$ since $f$ is continuous with respect to $\mathcal{T}$. This shows that $\mathcal{T}_X \subseteq \mathcal{T}$.
+
+We can define continuity in metric spaces quantitatively as follows:
+\begin{dfnbox}{Continuity in Metric Spaces}{metricContinuous}
+    Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces. A function $f \colon X \to Y$ is {\color{red} \textbf{continuous}} at a point~$x_0 \in X$ if for all $\epsilon > 0$, there exists some $\delta > 0$ such that $d_Y\bigl(f\left(x\right), f\left(y\right)\bigr) < \epsilon$ whenever~$d_X\left(x_0, y\right) < \delta$.
+\end{dfnbox}
+One can show that Definition \ref{dfn:continuous} aligns with this definition in metric spaces.
+\begin{probox}{Equivalence of Continuity in General Spaces}{equivContinuity}
+    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space, then a map $f \colon X \to Y$ is continuous if and only if for all $\epsilon > 0$, there exists some open neighbourhood $U_x \subseteq X$ of all $x \in X$ such that $d\bigl(f\left(x\right), f\left(z\right)\bigr) < \epsilon$ for all $z \in U_x$.
+    \tcblower
+    \begin{proof}
+        Suppose that $f$ is continuous. For any $\epsilon > 0$ and any $x \in X$, $d\bigl(f\left(x\right)\bigr)$, take 
+        \begin{equation*}
+            U_x \coloneqq f^{-1}\Bigl(B_{\epsilon}\bigl(f\left(x\right)\bigr)\Bigr)
+        \end{equation*}
+        which is an open neighbourhood of $x$ in $X$, then $f\left(z\right) \in B_{\epsilon}\bigl(f\left(x\right)\bigr)$ for all $z \in U_x$, and so $d\bigl(f\left(x\right), f\left(z\right)\bigr) < \epsilon$. Conversely, suppose that for all $\epsilon > 0$, there exists some open neighbourhood $U_x \subseteq X$ of all $x \in X$ such that $d\bigl(f\left(x\right), f\left(z\right)\bigr) < \epsilon$ for all $z \in U_x$. Note that it suffices to prove that $f^{-1}\bigl(B_{\epsilon}\left(y\right)\bigr)$ is open for all $y \in Y$ and all $\epsilon > 0$. Take any $x \in f^{-1}\bigl(B_{\epsilon}\left(y\right)\bigr)$, then there exists some open neighbourhood $U_x$ of $x$ such that~$f\left(U_x\right) \subseteq B_{\epsilon}\left(y\right)$, which implies that $U_x \subseteq f^{-1}\bigl(B_{\epsilon}\left(y\right)\bigr)$. Therefore, 
+        \begin{equation*}
+            f^{-1}\bigl(B_{\epsilon}\left(y\right)\bigr) = \bigcup_{f\left(x\right) \in B_{\epsilon}\left(y\right)}U_x
+        \end{equation*}
+        which is open, and so $f$ is continuous.
+    \end{proof}
+\end{probox}
+Note that in the above definition, the radius of the open neighbourhood of $x_0$ is dependent on the choice of $x_0$. By removing such dependence, we achieve a stronger version of continuity.
 \begin{dfnbox}{Uniform Continuity}{uniformContinuity}
     Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces. A function $f \colon X \to Y$ is {\color{red} \textbf{uniformly continuous}} on $X$ if for all $\epsilon > 0$, there exists some $\delta > 0$ such that $d_Y\bigl(f\left(x\right), f\left(y\right)\bigr) < \epsilon$ whenever~$d_X\left(x, y\right) < \delta$.
 \end{dfnbox}
@@ -778,7 +861,21 @@ Recall that previously, we have defined convergence for sequences. In particular
 \begin{dfnbox}{Point-wise and Uniform Convergence}{pointwiseAndUniform}
     Let $\left\{f_n\right\}_{n = 1}^{\infty}$ be a sequence of maps from $X$ to a metric space $\left(Y, d\right)$. We say that $\left\{f_n\right\}_{n = 1}^{\infty}$ {\color{red} \textbf{converges point-wisely}} to $f \colon X \to Y$ if for any $x \in X$, $\lim_{n \to \infty}f_n\left(x\right) = f\left(x\right)$, and that $\left\{f_n\right\}_{n = 1}^{\infty}$ {\color{red} \textbf{converges uniformly}} to $f \colon X \to Y$ if for any $\epsilon > 0$, there exists some~$N \in \N^+$ such that for all $n \geq N$ and any $x \in X$, $d\bigl(f_n\left(x\right), f\left(x\right)\bigr) < \epsilon$.
 \end{dfnbox}
-The following proposition gives a test for continuity using convergence of functional sequences:
+Clearly, uniform convergence implies point-wise convergence, but the converse is not true in general. In particular, consider $f_n \colon \left[0, 1\right] \to \R$ defined by $f_n\left(x\right) = x^n$. It is clear that 
+\begin{equation*}
+    \lim_{n \to \infty}f_n\left(x\right) = \begin{cases}
+        1 & \quad\textrm{if } x = 1 \\
+        0 & \quad\textrm{if } 0 \leq x < 1
+    \end{cases}.
+\end{equation*}
+Therefore, $\left\{f_n\right\}_{n = 1}^{\infty}$ converges point-wisely to $f \colon \left[0, 1\right] \to \R$ defined by
+\begin{equation*}
+    f\left(x\right) = \begin{cases}
+        1 & \quad\textrm{if } x = 1 \\
+        0 & \quad\textrm{if } 0 \leq x < 1
+    \end{cases}
+\end{equation*}
+but such convergence is not uniform. This example also shows that the limit of a point-wisely convergent sequence of continuous functions need not be continuous. In fact, we can show that the limit of a uniformly convergent sequence of continuous functions has to be continuous.
 \begin{probox}{Uniform Convergence Implies Continuity}{uniformThenContinuous}
     Let $\left\{f_n\right\}_{n = 1}^{\infty}$ be a sequence of maps from a metric space $\left(X, d_X\right)$ to a metric space $\left(Y, d_Y\right)$. If $\left\{f_n\right\}_{n = 1}^{\infty}$ converges uniformly to $f \colon X \to Y$, then $f$ is continuous.
     \tcblower
@@ -1377,4 +1474,22 @@ A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactT
 \begin{probox}{Compact Spaces Induce Uniform Continuity}{compactUniContinuous}
     Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces and $f \colon X \to Y$ be continuous. If $X$ is compact, then $f$ is uniformly continuous.
 \end{probox}
+\section{Completeness}
+\begin{probox}{Characterisation of Compact Spaces}{characteriseCompact}
+    A metric space $\left(X, d\right)$ is compact if and only it is complete and totally bounded.
+\end{probox}
+\begin{corbox}{Compactness of Euclidean Intervals}{EuclideanCompact}
+    A subspace $G \subseteq \R^n$ is compact if and only if it is closed and bounded.
+\end{corbox}
+\section{Local Compactness}
+\begin{dfnbox}{Local Compactness}{localCompact}
+    A topological space $X$ is {\color{red} \textbf{locally compact}} at $x \in X$ if there exists a compact set $C \subseteq X$ and an open set $U \subseteq X$ such that $x \in U \subseteq C$. We say that $X$ is locally compact if it is locally compact at every $x \in X$.
+\end{dfnbox}
+It is easy to see that $\R^n$ is locally compact but $\Q$ is not locally compact.
+\begin{thmbox}{}{}
+    Let $X$ be a topological space. $X$ is locally compact Hausdorff if and only if there exists a compact Hausdorff space $Y$ and a map $h_Y \colon X \to Y$ such that $h_Y$ is a homeomorphism onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set. Furthermore, if $Y'$ and $h_{Y'}$ are another pair of such spaces and maps, then their exists a homeomorphism $f \colon Y \to Y'$ such that 
+    \begin{equation*}
+        \left.f\right\rvert_{h_Y\left(X\right)} = h_{Y'} \circ \left.h_{Y}^{-1}\right\rvert_{h_Y\left(X\right)} \colon h_Y\left(X\right) \to h_{Y'}\left(X\right).
+    \end{equation*}
+\end{thmbox}
 \end{document}
