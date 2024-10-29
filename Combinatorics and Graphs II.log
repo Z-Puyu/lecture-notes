@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 APR 2024 17:55
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 OCT 2024 20:41
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -798,101 +798,6 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip76
 \thm@headsep=\skip77
 \dth@everypar=\toks49
-) (c:/texlive/2023/texmf-dist/tex/latex/minted/minted.sty
-Package: minted 2022/12/12 v2.7 Yet another Pygments shim for LaTeX
- (c:/texlive/2023/texmf-dist/tex/latex/fvextra/fvextra.sty
-Package: fvextra 2022/11/30 v1.5 fvextra - extensions and patches for fancyvrb
- (c:/texlive/2023/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
-\FV@CodeLineNo=\count362
-\FV@InFile=\read4
-\FV@TabBox=\box132
-\c@FancyVerbLine=\count363
-\FV@StepNumber=\count364
-\FV@OutFile=\write4
-) (c:/texlive/2023/texmf-dist/tex/latex/upquote/upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
-) (c:/texlive/2023/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2023/01/19 line numbers on paragraphs v5.1
-Invalid UTF-8 byte or sequence at line 290 replaced by U+FFFD.
-\linenopenalty=\count365
-\output=\toks50
-\linenoprevgraf=\count366
-\linenumbersep=\dimen318
-\linenumberwidth=\dimen319
-\c@linenumber=\count367
-\c@pagewiselinenumber=\count368
-\c@LN@truepage=\count369
-\c@internallinenumber=\count370
-\c@internallinenumbers=\count371
-\quotelinenumbersep=\dimen320
-\bframerule=\dimen321
-\bframesep=\dimen322
-\bframebox=\box133
-\linenoamsmath@ams@eqpen=\count372
-LaTeX Info: Redefining \\ on input line 3131.
-)
-\c@FV@TrueTabGroupLevel=\count373
-\c@FV@TrueTabCounter=\count374
-\FV@TabBox@Group=\box134
-\FV@TmpLength=\skip78
-\c@FV@HighlightLinesStart=\count375
-\c@FV@HighlightLinesStop=\count376
-\FV@LoopCount=\count377
-\FV@NCharsBox=\box135
-\FV@BreakIndent=\dimen323
-\FV@BreakIndentNChars=\count378
-\FV@BreakSymbolSepLeft=\dimen324
-\FV@BreakSymbolSepLeftNChars=\count379
-\FV@BreakSymbolSepRight=\dimen325
-\FV@BreakSymbolSepRightNChars=\count380
-\FV@BreakSymbolIndentLeft=\dimen326
-\FV@BreakSymbolIndentLeftNChars=\count381
-\FV@BreakSymbolIndentRight=\dimen327
-\FV@BreakSymbolIndentRightNChars=\count382
-\c@FancyVerbLineBreakLast=\count383
-\FV@LineBox=\box136
-\FV@LineIndentBox=\box137
-\c@FV@BreakBufferDepth=\count384
-\FV@LineWidth=\dimen328
-) (c:/texlive/2023/texmf-dist/tex/latex/ifplatform/ifplatform.sty
-Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
- (c:/texlive/2023/texmf-dist/tex/generic/catchfile/catchfile.sty
-Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
-) (c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-)) (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.sty (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.tex
-\integerpart=\count385
-\decimalpart=\count386
-)
-Package: xstring 2023/01/14 v1.85 String manipulations (CT)
-) (c:/texlive/2023/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip79
-\fb@frw=\dimen329
-\fb@frh=\dimen330
-\FrameRule=\dimen331
-\FrameSep=\dimen332
-) (c:/texlive/2023/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count387
-\float@exts=\toks51
-\float@box=\box138
-\@float@everytoks=\toks52
-\@floatcapt=\box139
-)
-\minted@appexistsfile=\read5
-\minted@bgbox=\box140
-\minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count388
-\c@minted@pygmentizecounter=\count389
-\@float@every@listing=\toks53
-\c@listing=\count390
-)
-runsystem(if not exist _minted-Combinatorics_and_Graphs_II mkdir _minted-Combinatorics_and_Graphs_II)...executed.
-
- (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
-Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
 )
 
 Package fontspec Info: Font family 'STIXTwoText(0)' created for font
@@ -1192,11 +1097,11 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular(1)/b/n on input line 79.
 Package hyperref Info: Option `colorlinks' set `true' on input line 108.
-\c@amzboxcounter=\count391
+\c@amzboxcounter=\count362
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks54
-\inpenc@posthook=\toks55
+\inpenc@prehook=\toks50
+\inpenc@posthook=\toks51
 
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
@@ -1211,12 +1116,8 @@ LaTeX Font Info:    Redeclaring math delimiter \llcorner on input line 76.
 LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 )
-\c@case=\count392
+\c@case=\count363
 LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 31.
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Combinatorics_and_Graphs_II.aex <nul: /p x=^%~$PATH:i>> Combinatorics_and_Graphs_II.aex)...executed.
-
-runsystem(del Combinatorics_and_Graphs_II.aex)...executed.
-
  (./Combinatorics and Graphs II.aux)
 \openout1 = `"Combinatorics and Graphs II.aux"'.
 
@@ -1299,10 +1200,10 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 
 Package hyperref Info: Link coloring ON on input line 33.
 (./Combinatorics and Graphs II.out) (./Combinatorics and Graphs II.out)
-\@outlinefile=\write6
-\openout6 = `"Combinatorics and Graphs II.out"'.
+\@outlinefile=\write4
+\openout4 = `"Combinatorics and Graphs II.out"'.
 
-\c@lstlisting=\count393
+\c@lstlisting=\count364
  (./Combinatorics and Graphs II.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
@@ -1324,8 +1225,8 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
  (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
-\tf@toc=\write7
-\openout7 = `"Combinatorics and Graphs II.toc"'.
+\tf@toc=\write5
+\openout5 = `"Combinatorics and Graphs II.toc"'.
 
  [1
 
@@ -1934,17 +1835,14 @@ enddocument/afterlastpage: lastpage setting LastPage.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Combinatorics and Graphs II".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39451 strings out of 478630
- 829065 string characters out of 5847730
+ 36643 strings out of 478630
+ 765192 string characters out of 5847730
  1913012 words of memory out of 5000000
- 58920 multiletter control sequences out of 15000+600000
+ 56167 multiletter control sequences out of 15000+600000
  517098 words of font info for 89 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,131p,1607b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
