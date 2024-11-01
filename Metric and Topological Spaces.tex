@@ -1102,7 +1102,7 @@ Intuitively, the subspace topology on product space should be the product of sub
         \end{equation*}
     \end{proof}
 \end{probox}
-\section{Quotient Topological Spaces}
+\section{Quotient Spaces}
 \begin{dfnbox}{Quotient Map}{quotient}
     Let $\left(X, \mathcal{T}_X\right)$ and $\left(Y, \mathcal{T}_Y\right)$ be topological spaces. A surjective map $p \colon X \to Y$ is a {\color{red} \textbf{quotient map}} if for all $V \subseteq Y$, $V \in \mathcal{T}_Y$ if and only if $p^{-1}\left(V\right) \subseteq X$ is open in $X$.
 \end{dfnbox}
@@ -1440,7 +1440,7 @@ We can establish an analogous connection between the density of points distribut
         However, for every $x_i \in X$, there exists some $V_i$ such that $x_i \notin \widebar{V_i}$, which is a contradiction.
     \end{proof}
 \end{probox}
-\subsection{Limit Point and Sequential Compactness}
+Let us re-visit the motivation of compactness: a space with no missing end points (i.e., end points which are infinitely far away). Now, another way to interpret this statement is that if we fix an infinite subset in the space, then we can always find a limit point of the subset in the space.
 \begin{dfnbox}{Limit Point Compactness}{limPtCompact}
     A topological space $X$ is {\color{red} \textbf{limit point compact}} if every infinite subset of $X$ has a limit point in $X$.
 \end{dfnbox}
@@ -1519,7 +1519,7 @@ Previously, we have seen that sequential compactness is closely linked to the ex
         then $\left\{x_i\right\}_{i \in \N^+}$ is a sequence in $X$. Note that for any $i \neq j$, we have $x_j \notin B_{\epsilon}\left(x_i\right)$ and so for all $x \in X$, the open ball $B_{\frac{\epsilon}{2}}\left(x\right)$ contains at most one of $x_1, x_2, \cdots$. Therefore, the sequence contains no convergent subsequence and so $X$ is not sequentially compact.
     \end{proof}
 \end{probox}
-A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactTotalBound} is that they apply to any compact space in general, which is a result of the following equivalence:
+A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactTotalBound} is that they apply to any compact metric space in general, which is a result of the following equivalence:
 \begin{probox}{Compactness of Metrisable Spaces}{metricCompact}
     If $X$ is a metrisable topological space, then the followings are equivalent:
     \begin{enumerate}
@@ -1540,6 +1540,7 @@ A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactT
         We claim that $B_i \cap \left(A \setminus \left\{x\right\}\right)$ is infinite. Suppose on contrary that it is finite,
     \end{proof}
 \end{probox} 
+By exploiting this equivalence in metric spaces, we can obtain the following result:
 \begin{probox}{Compact Spaces Induce Uniform Continuity}{compactUniContinuous}
     Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces and $f \colon X \to Y$ be continuous. If $X$ is compact, then $f$ is uniformly continuous.
 \end{probox}
@@ -1572,32 +1573,229 @@ Total boundedness has the following useful properties:
     \end{enumerate}
 \end{probox}
 \section{Complete Spaces}
-In elementary real analysis, we examine the notion of convergence with Cauchy sequences. We now generalise this idea to all metric spaces.
+In elementary real analysis, we examine the notion of convergence with Cauchy sequences. Recall that in $\R^n$, every Cauchy sequence is convergent. However, in general metric spaces, this might not be the case. We now generalise this idea to all metric spaces.
 \begin{dfnbox}{Complete Space}{complete}
     A metric space $X$ is {\color{red} \textbf{complete}} if every Cauchy sequence in $X$ is convergent.
 \end{dfnbox}
-We can first prove the following properties of Cauchy sequences:
-\begin{probox}{Properties of Cauchy Sequences}{propsCauchy}
-    \begin{enumerate}
-        \item A Cauchy sequence converges if and only if it has a convergent subsequence.
-        \item If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, then a sequence is Cauchy in $\left(X, d\right)$ if and only if it is Cauchy in $\left(X', d'\right)$.
-    \end{enumerate}
+To characterise a complete metric space, it is useful to examine the conditions under which a Cauchy sequence is convergent. 
+\begin{probox}{Convergence of Cauchy Sequences}{cauchyConverge}
+    A Cauchy sequence converges if and only if it has a convergent subsequence.
 \end{probox}
+Note that whether a sequence is Cauchy depends on the metric we choose to equip the space with. The following result shows an important connection between Cauchy sequences and bi-Lipschitz spaces.
+\begin{probox}{Bi-Lipschitz Spaces Preserve Cauchy Sequences}{CauchyBilipschitz}
+    If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, then a sequence is Cauchy in $\left(X, d\right)$ if and only if it is Cauchy in $\left(X', d'\right)$.
+\end{probox}
+Using these concepts, we shall re-visit the Euclidean space $\R^n$. First, let us argue that $\R^n$ is complete with respect to the $\ell_p$-metric for $p \geq 1$.
+
+Take any Cauchy sequence $\left\{x_n\right\}_{n \in \N^+}$ in $\R^n$. It is useful to prove that every Cauchy sequence must be bounded. 
+\begin{probox}{Every Cauchy Sequence Is Bounded}{CauchyBounded}
+    If $\left\{x_n\right\}_{n \in \N^+}$ is a Cauchy sequence in $\left(X, d\right)$, then there exists some $M > 0$ such that for all $n \in \N^+$, we have $d\left(x_n, 0\right) \leq M$.
+\end{probox}
+With this result, it is easy to see that for all $n \in \N^+$, we have $x_n \in \widebar{B_M\left(0\right)}$ for some $M > 0$. Note that $\widebar{B_M\left(0\right)}$ is a compact ball in $\R^n$ and so it must be sequentially compact by Proposition \ref{pro:metricCompact}. Therefore, $\left\{x_n\right\}_{n \in \N^+}$ has a convergent subsequence and so it is convergent by Proposition \ref{pro:cauchyConverge}. Therefore, $\R^n$ is indeed complete with respect to the $\ell_p$-metric for $p \geq 1$.
+
+However, if we restrict the standard metric to $\Q$, then $\Q$ is not complete because we can find a Cauchy sequence in $\Q$ which converges to some $x \in \Q^c$.
+
+Lastly, we propose a more complex example:
+\begin{probox}{Completeness of Infinite Product Spaces}{infProductComp}
+    Let $d$ be the standard metric on $\R$ and define $\rho$ to be a metric on $\R$ by 
+    \begin{equation*}
+        \rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}.
+    \end{equation*}
+    Define $D \colon \R^{\omega} \to \R$ to be a metric by 
+    \begin{equation*}
+        D\left(\mathbfit{x}, \mathbfit{y}\right) = \sup\left\{\frac{\rho\bigl(\pi_k\left(\mathbfit{x}\right), \pi_k\left(\mathbfit{y}\right)\bigr)}{k} \colon k \in \Z^+\right\},
+    \end{equation*}
+    then $\left(\R^{\omega}, D\right)$ is complete.
+\end{probox}
+Another thing we wish to investigate is whether completeness can be inherited through subspaces. It turns out that we only require some small additional condition to make this work.
+\begin{probox}{Closed Subspaces Preserve Completeness}{closedComp}
+    A subspace of a complete metric space is complete if and only if it is closed.
+\end{probox}
+In an elementary level, something we commonly say is that an interval is compact if and only if it is closed and bounded. By now, it should become clear that completeness is a generalisation for closed-ness, and that totally boundedness is a generalisation for boundedness.
 \begin{probox}{Characterisation of Compact Spaces}{characteriseCompact}
     A metric space $\left(X, d\right)$ is compact if and only it is complete and totally bounded.
 \end{probox}
-\begin{corbox}{Compactness of Euclidean Intervals}{EuclideanCompact}
+With this very sophisticated result, we can now turn back and prove something which appears to be very na\"{i}ve (but surprisingly hard to prove):
+\begin{corbox}{Heine-Borel Theorem}{HeineBorel}
     A subspace $G \subseteq \R^n$ is compact if and only if it is closed and bounded.
 \end{corbox}
 \section{Local Compactness}
+In the previous section in the study of compactness, we have been treating a space as a single entity. However, another perspective is to view the space as a collection of many singleton ``points''. This motivates us to define compactness point-wise.
 \begin{dfnbox}{Local Compactness}{localCompact}
     A topological space $X$ is {\color{red} \textbf{locally compact}} at $x \in X$ if there exists a compact set $C \subseteq X$ and an open set $U \subseteq X$ such that $x \in U \subseteq C$. We say that $X$ is locally compact if it is locally compact at every $x \in X$.
 \end{dfnbox}
-It is easy to see that $\R^n$ is locally compact but $\Q$ is not locally compact.
-\begin{thmbox}{}{}
-    Let $X$ be a topological space. $X$ is locally compact Hausdorff if and only if there exists a compact Hausdorff space $Y$ and a map $h_Y \colon X \to Y$ such that $h_Y$ is a homeomorphism onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set. Furthermore, if $Y'$ and $h_{Y'}$ are another pair of such spaces and maps, then their exists a homeomorphism $f \colon Y \to Y'$ such that 
+An interpretation of local compactness at a point $x$ is that we can find a strictly wider compact neighbourhood that contains $x$.
+
+It is easy to see that $\R^n$ is locally compact but $\Q$ is not locally compact because $\Q^c$ is dense.
+
+We can also show that $\R^{\omega}$ with the product topology is not locally compact.
+
+Is there any connection between locally compact spaces and compact spaces? In fact, by going one step further, we may wish to find a way to transform a general space into a compact Hausdorff space. Such a transformation should preserve the structure of the pre-image space. In the context of topological spaces, this means that open spaces should be preserved.
+\begin{dfnbox}{Homeomorphism}{homeomorphism}
+    A function $h \colon X \to Y$ between topological spaces is a {\color{red} \textbf{homeomorphism}} if it is a bijective open map.
+\end{dfnbox}
+In other words, a bijection $h$ between topological spaces is a homeomorphism if both $h$ and $h^{-1}$ are continuous. Sometimes, $h$ is known as \textit{bi-continuous}. Roughly speaking, a homeomorphism is a reversible deformation such that open sets are still open before and after the deformation. In particular, a homeomorphism can be used to construct a compact Hausdorff space from a general topological space.
+\begin{dfnbox}{Compactification}{compactification}
+    Let $X$ be a topological space and $Y$ be a compact Hausdorff space, then $Y$ is a {\color{red} \textbf{compactification}} of $X$ if there exists a map $h \colon X \to Y$ which is homeomorphic onto $h\left(X\right)$ such that $\widebar{h\left(X\right)} = Y$. If $Y \setminus h\left(X\right)$ is a singleton set, then $Y$ is a {\color{red} \textbf{one-point compactification}} of $X$.
+\end{dfnbox}
+In Hausdorff spaces, it is then relatively easy to construct a compactification.
+\begin{probox}{Compactification of Hausdorff Spaces}{compactificationHausdorff}
+    Let $X$ be a Hausdorff space and $Y$ be a compact Hausdorff space. If a map $h_Y \colon X \to Y$ is homeomorphic onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set, then $Y$ is a compactification of $X$.
+\end{probox}
+It is worth noting that compactification may not be unique in general. However, for locally compact Hausdorff spaces, a compactification is always guaranteed.    
+\begin{probox}{Characterisation of Locally Compact Hausdorff Spaces}{characteriseLocallyCompactHausdorff}
+    A topological space $X$ is locally compact and Hausdorff if and only if there exists a compact Hausdorff space $Y$ and a map $h_Y \colon X \to Y$ such that $h_Y$ is homeomorphic onto~$h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set.
+\end{probox}
+Clearly, this compactification is always a one-point compactification. Furthermore, we can show that such a compactification is unique up to a homeomorphism.
+\begin{thmbox}{Existence and Uniqueness of One-Point Compactification}{existenceUniquenessOnePt}
+   Every locally compact and Hausdorff space $X$ has a one-point compactification $Y$ with respect to a map $h_Y$. Furthermore, if $Y'$ is another one-point compactification of $X$ with respect to the map $h_{Y'}$, then there exists a homeomorphism $f \colon Y \to Y'$ such that 
     \begin{equation*}
-        \left.f\right\rvert_{h_Y\left(X\right)} = h_{Y'} \circ \left.h_{Y}^{-1}\right\rvert_{h_Y\left(X\right)} \colon h_Y\left(X\right) \to h_{Y'}\left(X\right).
+        \left.f\right\rvert_{h_Y\left(X\right)} = h_{Y'} \circ \left.h_{Y}^{-1}\right\rvert_{h_Y\left(X\right)}.
     \end{equation*}
 \end{thmbox}
+Since compactification is closely related to Hausdorff spaces and locally compact spaces, it is not surprising that we can make use of it to check if a Hausdorff space is locally compact.
+\begin{probox}{Characterisation of Locally Compact Spaces}{characteriseLocallyCompact}
+    A Hausdorff space $X$ is locally compact if and only if for any $x \in X$ and any open set~$U \subseteq X$ with $x \in U$, there exists an open compact set $V \subseteq X$ such that $x \in V \subseteq U$.
+\end{probox}
+This result can be utilised to check if a subspace of a locally compact space is locally compact.
+\begin{corbox}{Local Compactness of Subspaces}{localCompactSubspace}
+    Let $X$ be a locally compact space and $A \subseteq X$ be a subspace, then $A$ is locally compact if 
+    \begin{enumerate}
+        \item $A$ is closed, or
+        \item $A$ is open and $X$ is Hausdorff.
+    \end{enumerate}
+\end{corbox}
+By using the above results, we propose the last conclusion:
+\begin{probox}{Locally Compact Hausdorff Spaces and Homeomorphisms}{characteriseLocallyCompactHausdorffHomeomorphism}
+    A topological space $X$ is locally compact and Hausdorff if and only if there exists a compact Hausdorff space $Y$ such that $X$ is homeomorphic to some open subset $A \subseteq Y$.
+\end{probox}
+\section{Metric Completion}
+Consider $f \colon X \to Y$ to be a map. It is clear that we can write $f$ as a set of ordered pairs from $X \times Y$. By treating $X$ as an index set, every such map $f$ can be represented as a point from the product space 
+\begin{equation*}
+    Y^X \coloneqq \prod_{x \in X}Y.
+\end{equation*}
+Using the projection map, we can write 
+\begin{equation*}
+    f\left(x\right) = \pi_x\left(f\right).
+\end{equation*}
+Clearly, $Y^X$ is a topological space when equipped with the product topology. Therefore, we can define a suitable metric on it to ``measure'' the distance between maps.
+\begin{dfnbox}{Uniform Metric and Uniform Topology}{uniTopo}
+    Let $\left(Y, d\right)$ be a metric space and $\rho$ be a metric on $Y$ defined by 
+    \begin{equation*}
+        \rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}.
+    \end{equation*}
+    The {\color{red} \textbf{uniform metric}} on $Y^{\Lambda}$ is defined by 
+    \begin{equation*}
+        \widebar{\rho}\left(\mathbfit{x}, \mathbfit{y}\right) = \sup\left\{\rho\bigl(\pi_{\alpha}\left(\mathbfit{x}\right), \pi_{\alpha}\left(\mathbfit{y}\right)\bigr) \colon \alpha \in \Lambda\right\}.
+    \end{equation*}
+    The {\color{red} \textbf{uniform topology}} on $Y^{\Lambda}$ is the topology generated by $\widebar{\rho}$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The uniform topology on $\R^{\Lambda}$ is finer than the product topology and coarser than the box topology. If $\Lambda$ is infinite, then the three topologies are pair-wise unequal.
+    \end{remark}
+\end{notebox}
+Note that $\widebar{\rho}$ is a metric on $Y^X$ because for any two maps $f, g \in Y^X$, we have 
+\begin{equation*}
+    \widebar{\rho}\left(f, g\right) = \sup\left\{\rho\bigl(f\left(x\right), g\left(x\right)\bigr) \colon x \in X\right\},
+\end{equation*}
+i.e., we measure the distance between maps by taking the maximum distance between corresponding points.
+
+The following result examines the completeness of the uniform metric spaces:
+\begin{probox}{Completeness of the Uniform Metric Spaces}{uniformCompleteness}
+    If $\left(Y, d\right)$ is a complete metric space, then $\left(Y^{\Lambda}, \widebar{\rho}\right)$ is complete for any index set $\Lambda$.
+\end{probox}
+Usually, given a topological space $X$ and a metric space $\left(Y, d\right)$, we denote $\mathcal{C}\left(X, Y\right)$ to be the set of all continuous maps from $X$ to $Y$ and $\mathcal{B}\left(X, Y\right)$ to be the set of all bounded maps (i.e., maps $f \colon X \to Y$ such that $\mathrm{diam}\bigl(f\left(X\right)\bigr)$ is finite) from $X$ to $Y$.
+\begin{probox}{Closedness and Completness of $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$}{closedCompCandB}
+    Both $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$ are closed with respect to the uniform topology on $Y^{\Lambda}$. If~$\left(Y, d\right)$ is complete, then both $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$ are complete.
+\end{probox}
+For any two bounded maps $f, g \in \mathcal{B}\left(X, Y\right)$, it is clear that $d\bigl(f\left(x\right), g\left(x\right)\bigr)$ is bounded. Therefore, it makes sense to talk about its supremum.
+\begin{dfnbox}{Supremum Metric}{supMetric}
+    The {\color{red} \textbf{supremum metric}} on $\mathcal{B}\left(X, Y\right)$ is defined by 
+    \begin{equation*}
+        \rho\left(f, g\right) = \sup\left\{d\bigl(f\left(x\right), g\left(x\right)\bigr) \colon x \in X\right\}.
+    \end{equation*}
+\end{dfnbox}
+A basic yet important mapping between two spaces is the \textit{identity map}. In a metric space, however, we can further generalise the identity map into maps which preserve the distance between points.
+\begin{dfnbox}{Isometric Embedding}{isometric}
+    Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces. A map $f \colon X \to Y$ is an {\color{red} \textbf{isometric embedding}} if for all $a, b \in X$,
+    \begin{equation*}
+        d_Y\bigl(f\left(a\right), f\left(b\right)\bigr) = d_X\left(a, b\right).
+    \end{equation*}
+    If $f$ is surjective, then $f$ is said to be an {\color{red} \textbf{isometry}}.
+\end{dfnbox}
+Recall that with compactification, we can construct a compact Hausdorff space from a general topological space. Notice that every metric space is Hausdorff, so analogously, we can construct a complete metric space using an isometric embedding.
+\begin{dfnbox}{Metric Completion}{metricCompletion}
+    Let $\left(X, d_X\right)$ be a metric space. The {\color{red} \textbf{metric completion}} of $X$ is a complete metric space~$\left(Y, d_Y\right)$ with an isometric embedding $\phi \colon X \to Y$ such that $\widebar{\phi\left(X\right)} = Y$.
+\end{dfnbox}
+To obtain a compactification, we require quite a number of conditions. However, we will show that a metric completion always exists, and it is in fact unique up to isometry.
+\begin{thmbox}{Existence and Uniqueness of Metric Completion}{existenceUniquenessMetricCompletion}
+    For every metric space $\left(X, d_X\right)$, there exists a complete metric space $\left(Y, d_Y\right)$ and an isometric embedding $\phi \colon X \to Y$ such that $\phi\left(X\right)$ is dense in $Y$. Furthermore, for any complete metric space $\left(Y, d_Y\right)$ and any isometric embedding $\phi' \colon X \to Y'$ with~$\widebar{\phi'\left(X\right)} = Y'$, there exists an isometry $f \colon Y \to Y'$ such that 
+    \begin{equation*}
+        \left. f\right\rvert_{\phi\left(X\right)} = \phi' \circ \phi^{-1}.
+    \end{equation*}
+\end{thmbox}
+\chapter{Connectivity of Topological Spaces}
+\section{Connectedness}
+Colloquially, when we are talking about a space or ``region'', we can distinguish between a ``contiguous'' region and a ``disconnected'' region based on whether one has to ``jump'' across ``gaps'' in order to traverse in the region. In this section, we will formalise this notion of connectedness.
+\begin{dfnbox}{Separation}{separation}
+    Let $X$ be a topological space. A {\color{red} \textbf{separation}} of $X$ is a pair of disjoint non-empty open subsets $U, V \subseteq X$ such that $U \cup V = X$. A space is {\color{red} \textbf{connected}} if it does not contain any separation.    
+\end{dfnbox}
+In other words, a separation is a bipartition of a space with non-empty open sets. This is intuitive because if $2$ disjoint non-empty open sets can cover the space, then there must exists some gap in between the boundaries of the $2$ sets.
+
+Now, consider a disconnected space $X$ formed by two connected non-empty spaces $A$ and $B$. Intuitively, both $A$ and $B$ are also closed because their closure are equal to themselves. This inspires the following characterisation of a connected space:
+\begin{probox}{Characterisation of Connected Spaces}{connectedSpaces}
+    A topological space $X$ is connected if and only if the only sets which are both open and closed in $X$ are $X$ and $\varnothing$.
+\end{probox}
+Intuitively, if we can find a separation in a space $X$, then any connected subspace of $X$ should not be ``cut off'' by the separation.
+\begin{probox}{Property of Conencted Subspaces}{connectedSubspaces}
+    If $U, V$ are a separation of a topological space $X$ and $Y \subseteq X$ is a connected subspace, then either $Y \subseteq U$ or $Y \subseteq V$.
+\end{probox}
+Naturally, connectedness should be transitive, i.e., if two connected subsets are not disjoint, then their union should be connected. 
+\begin{probox}{Connectedness of the Union of Connected Subspaces}{connectedUnion}
+    If $\left\{A_{\alpha}\right\}_{\alpha \in \Lambda}$ is a collection of connected subsets in a topological space $X$ such that 
+    \begin{equation*}
+        \bigcap_{\alpha \in \Lambda}A_{\alpha} \neq \varnothing,
+    \end{equation*}
+    then $\bigcup_{\alpha \in \Lambda}A_{\alpha}$ is connected.
+\end{probox}
+By intuition, if we slightly expand the boundary of a connected subset, then the resultant set should remain connected. 
+\begin{probox}{Slightly Larger Supersets of Connected Sets Are Connected}{connectedSlightlyLarger}
+    If $A$ is connected in a topological space $X$ and $A \subseteq B \subseteq \widebar{A}$ for some $B \subseteq X$, then $B$ is connected.
+\end{probox}
+Recall that continuous maps preserve open sets, so it is also natural that the image of a connected set under a continuous map is also connected.
+\begin{probox}{Continuous Maps Preserve Connectedness}{connectedContinuous}
+    If $f \colon X \to Y$ is continuous and $A \subseteq X$ is connected, then $f\left(A\right)$ is connected.
+\end{probox}
+Lastly, if we take the Cartesian product of two connected spaces, then this should not result in any new ``gap''.
+\begin{probox}{Cartesian Products of Connected Spaces Are Connected}{connectedCartesian}
+    If $X$ and $Y$ are connected topological spaces, then $X \times Y$ is connected.
+\end{probox}
+For those with background in graph theory, the discussion by now should have been clear that connectedness in topological spaces is a generalisation of connectedness in graphs. For example:
+\begin{enumerate}
+    \item \ref{dfn:separation} is analogous to the fact that a graph is disconnected if and only if we can break it into two subgraphs sharing no common vertex such that there is no edge between their vertices in the original graph.   
+    \item \ref{pro:connectedSpaces} is analogous to the fact that if a graph can be broken up into two subgraphs sharing no common vertex such that there is no edge between their vertices in the original graph, then any connected subgraph must be contained by one of the two subgraphs.
+    \item \ref{pro:connectedSubspaces} is analogous to the fact that if we augment two connected graphs by identifying some vertices, then the resulting graph is still connected.
+\end{enumerate}
+Therefore, it is not surprising that we can generalise the notion of a \textit{path} to topological spaces.
+\begin{dfnbox}{Path}{path}
+    Let $X$ be a topological space. For any $x, y \in X$, a {\color{red} \textbf{path}} from $x$ to $y$ is a continuous map~$f \colon \left[a, b\right] \to X$ such that $f\left(a\right) = x$ and $f\left(b\right) = y$. A space is {\color{red} \textbf{path connected}} if there is a path between any two points in the space.
+\end{dfnbox}
+Clearly, path connectedness is a stronger version of connectedness.
+\begin{probox}{Path Connectedness Implies Connectedness}{pathConnectedImpliesConnected}
+    A space is connected if it is path connected.
+\end{probox}
+One might wonder if the converse of the above result is true. Intuitively, it should not be true. Specifically, we consider the following counter example known as the \textit{topologist's sine curve}: define 
+\begin{equation*}
+    S \coloneqq \left\{\left(x, y\right) \in \R^2 \colon y = \sin\frac{2\pi}{x}, x \in \left(0, 1\right]\right\}
+\end{equation*}
+and let $f \colon \left(0, 1\right] \to S$ be defined as 
+\begin{equation*}
+    f\left(t\right) = \left(t, \sin\frac{2\pi}{t}\right).
+\end{equation*}
+One may check that $S = f\bigl(\left(0, 1\right]\bigr)$ is path connected and thus connected. Now, consider 
+\begin{equation*}
+    \widebar{S} = S \cup \left(\left\{0\right\} \times \left[-1, 1\right]\right),
+\end{equation*}
+which is still connected but not path connected.
 \end{document}
