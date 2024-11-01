@@ -1174,6 +1174,12 @@ and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can als
 Next, we prove that the co-finite topology is always $T_1$.
 \begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
     Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
+    \tcblower
+    \begin{proof}
+        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If $X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
+        \\\\
+        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any $x \in X$ and $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have $y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
+    \end{proof}
 \end{probox}
 Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some open sets to cover every point in the space other than $x$, which means that the isolated singleton $\left\{x\right\}$ is closed.
 \begin{probox}{Characterisation of $T_1$ Spaces}{T1Space}
@@ -1239,7 +1245,7 @@ An alternative proposition makes use of continuous maps:
     \begin{proof}
         Suppose that $f \colon X \to Y$ is continuous. Let $U \subseteq Y$ be an open set such that $f\left(x\right) \in U$, then $x \in f^{-1}\left(U\right)$, which is open. Note that there exists some $N \in \N^+$ such that $x_i \in f^{-1}\left(U\right)$ for all $i \geq N$, i.e., $f\left(x_i\right) \in U$ for all $i \geq N$. Therefore, $f\left(x_i\right) \to f\left(x\right)$.
         \\\\
-        Conversely, suppose that for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. Take any $A \subseteq X$ with $x \in \widebar{A}$. Since $X$ is first countable, by Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{y_i\right\}_{i \in \N^+}$ in $A$ such that $y_i \to x$. This means that $f\left(y_i\right) \to f\left(x\right)$. Since $f\left(x_i\right) \in f\left(A\right)$, this means that $f\left(x\right) \in \widebar{f\left(A\right)}$, and so $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$. By Proposition \ref{pro:continuousMapProps}, $f$ is continuous.
+        Conversely, suppose that for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. Take any $A \subseteq X$ with $x \in \widebar{A}$. Since $X$ is first countable, by Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{y_i\right\}_{i \in \N^+}$ in $A$ such that $y_i \to x$. This means that $f\left(y_i\right) \to f\left(x\right)$. Since $f\left(y_i\right) \in f\left(A\right)$, this means that $f\left(x\right) \in \widebar{f\left(A\right)}$, and so $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$. By Proposition \ref{pro:continuousMapProps}, $f$ is continuous.
     \end{proof}
 \end{probox}
 \section{Compactness}
@@ -1274,10 +1280,24 @@ One may be tempted to think that compact subspaces must be closed. However, this
     \left\{U\right\} \cup \left\{U_y \colon y \in Y \setminus U\right\}
 \end{equation*}
 is a finite sub-cover for $Y$. Therefore, every subset of $X$ is compact. However, $Y \subseteq X$ is closed if and only if $Y$ is finite.
-
+\begin{probox}{Sets in Co-finite Topology Are Compact}{compactCofinite}
+    Let $X$ be a topological space equipped with the co-finite topology, then for every $U \subseteq X$, $U$ is compact and $U$ is closed if and only if $U$ is finite.
+\end{probox}
 To conclude closed-ness from compactness, we require some additional assumptions.
 \begin{probox}{Compact Subspaces of Hausdorff Spaces Are Closed}{compactClosed}
     Every compact subspace of a Hausdorff space is closed.
+    \tcblower
+    \begin{proof}
+        Let $X$ be a Hausdorff space and $Y \subseteq X$ be a compact subspace. Let~$Z \coloneqq X \setminus Y$. Fix any $z \in Z$, then for each $y \in Y$, there exists disjoint open sets $U_y, V_y \subseteq X$ such that $z \in U_y$ and $y \in V_y$. Note that $\left\{V_y \colon y \in Y\right\}$ is an open cover for $Y$, so there exists some finite subset $F \subseteq Y$ such that $\left\{V_y \colon y \in F\right\}$ is a finite sub-cover for $Y$. Take 
+        \begin{equation*}
+            U_z \coloneqq \bigcap_{y \in F}U_y,
+        \end{equation*}
+        then $U_z \cap V_y = \varnothing$ for all $y \in F$, and so $U_z \cap Y = \varnothing$. Note that $U_z$ is an open neighbourhood of $z$, so
+        \begin{equation*}
+            Z = \bigcup_{z \in Z}U_z
+        \end{equation*}
+        is open in $X$. Therefore, $Y = X \setminus Z$ is closed in $X$.
+    \end{proof}
 \end{probox}
 Intuitively, a continuous map should send a compact set to a compact image because open sets, and hence open covers, are preserved by the map.
 \begin{probox}{Continuous Map Induces Compact Image}{ContinuousCompact}
@@ -1287,19 +1307,20 @@ Intuitively, a continuous map should send a compact set to a compact image becau
         Let $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover for $f\left(X\right)$. Note that $\left\{f^{-1}\left(U_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ is an open cover for $X$. Since $X$ is compact, there exists some finite $I \subseteq \Lambda$ such that $\left\{f^{-1}\left(U_i\right)\right\}_{i \in I}$ is a finite sub-cover for $X$. Clearly, $\left\{U_i\right\}_{i \in I}$ is a finite sub-cover for $f\left(X\right)$ and so $f\left(X\right)$ is compact.
     \end{proof}
 \end{probox}
-
-\begin{probox}{Sets in Co-finite Topology Are Compact}{compactCofinite}
-    Let $X$ be a topological space equipped with the co-finite topology, then for every $U \subseteq X$, $U$ is compact and $U$ is closed if and only if $U$ is finite.
-\end{probox}
+Next, we consider the following observation: if $X \coloneqq \left(x_1, x_2\right)$ and $Y \coloneqq \left[y_1, y_2\right]$ are intervals in $\R$, let $N \coloneqq X \times Y$ be a rectangular region in $\R^2$. It is easy to see that if $N$ contains a line segment $\bigl(\left(x_0, y_1\right), \left(x_0, y_2\right)\bigr)$ for some $x_0 \in X$, then $N$ contains a ``tube'' 
+\begin{equation*}
+    T \coloneqq \left(x_0 - \delta, x_0 + \delta\right) \times \left[y_1, y_2\right]
+\end{equation*}
+for some $\delta > 0$. This is generalised to the following lemma:
 \begin{lembox}{Tube Lemma}{tube}
     Let $X$ be a topological space and $Y$ be a compact topological space. If $N \subseteq X \times Y$ is an open set that contains $\left\{\left(x_0, y\right) \colon y \in Y \right\}$, then $N$ contains $W \times Y$ for some open $W \subseteq X$ that contains $x_0$.
     \tcblower
     \begin{proof}
         Let $\mathcal{B}$ be the basis generating the product topology. Define 
         \begin{equation*}
-            \mathcal{A} \coloneqq \left\{U \times V \in \mathcal{B} \colon \subseteq N, x_0 \in U\right\}.
+            \mathcal{A} \coloneqq \left\{U \times V \in \mathcal{B} \colon U \times V \subseteq N, x_0 \in U\right\}.
         \end{equation*}
-        Since $N$ is open, then for any $y \in Y$, there exists some $U_y \times V_y \in \mathcal{B}$ such that 
+        Since $N$ is open, for any $y \in Y$, there exists some $U_y \times V_y \in \mathcal{B}$ such that 
         \begin{equation*}
             \left(x_0, y\right) \in U_y \times V_y \subseteq N.
         \end{equation*}
@@ -1326,7 +1347,7 @@ Applying the Tube Lemma to Cartesian products yields the following result:
         \begin{equation*}
             \left\{x\right\} \times Y \subseteq \bigcup_{A \in \mathcal{A}_x}A \coloneqq N_x.
         \end{equation*}
-        Note that $N_x$ is open in $X \times Y$. By Lemma \ref{lem:tube}, there exists some open subset $W_x \subseteq X$ such that $x \in W_x$ and $W_x \times Y \subseteq N_x$. Clearly, $\left\{W_x \coloneqq x \in X\right\}$ is an open cover for $X$. Since $X$ is compact, this means that there exists $x_1, x_2, \cdots, x_n \in X$ such that 
+        Note that $N_x$ is open in $X \times Y$. By Lemma \ref{lem:tube}, there exists some open subset $W_x \subseteq X$ such that $x \in W_x$ and $W_x \times Y \subseteq N_x$. Clearly, $\left\{W_x \colon x \in X\right\}$ is an open cover for $X$. Since $X$ is compact, this means that there exists $x_1, x_2, \cdots, x_n \in X$ such that 
         \begin{equation*}
             X = \bigcup_{i = 1}^nW_{x_i}.
         \end{equation*}
@@ -1375,9 +1396,9 @@ Applying the Tube Lemma to Cartesian products yields the following result:
         \end{equation*}
         then clearly 
         \begin{equation*}
-            \bigcup_{U \in \mathcal{U}} = X \setminus \bigcap_{G \in \mathcal{G}}G = X,
+            \bigcup_{U \in \mathcal{U}}U = X \setminus \bigcap_{G \in \mathcal{G}}G = X,
         \end{equation*}
-        so there exists $G_1, G_2, \cdots, G_n \in \mathcal{G}$ such that 
+        so $\mathcal{U}$ is an open cover of $X$. Since $X$ is compact, there exists $G_1, G_2, \cdots, G_n \in \mathcal{G}$ such that 
         \begin{equation*}
             \bigcup_{i = 1}^nX \setminus G_i = X \setminus \bigcap_{i = 1}^nG_i = X.
         \end{equation*}
@@ -1423,12 +1444,14 @@ We can establish an analogous connection between the density of points distribut
 \begin{dfnbox}{Limit Point Compactness}{limPtCompact}
     A topological space $X$ is {\color{red} \textbf{limit point compact}} if every infinite subset of $X$ has a limit point in $X$.
 \end{dfnbox}
+Note that it is equivalent to say that every subset of a limit point compact space which has no limit point in the space must be finite.
+
 It is possible for a non-compact space to be limit point compact. However, a compact space must be limit point compact.
 \begin{probox}{Compactness Implies Limit Point Compactness}{compactToLimPtCompact}
     Any compact topological space is limit point compact.
     \tcblower
     \begin{proof}
-        Let $A \subseteq X$ be a subset without any limit point in $X$, then it suffices to prove that $A$ is finite. Notice that $A = \widebar{A}$, so $A$ is closed in $X$. By Proposition \ref{pro:closedCompact}, $A$ is compact. For every $a \in A$, since $a$ is not a limit point, by Definition \ref{dfn:limPt} there exists some open set $U_a \subseteq X$ with $a \in U_a$ but 
+        Let $X$ be a compact topological space and $A \subseteq X$ be a subset without any limit point in $X$, then it suffices to prove that $A$ is finite. Notice that $A = \widebar{A}$, so $A$ is closed in $X$. By Proposition \ref{pro:closedCompact}, $A$ is compact. For every $a \in A$, since $a$ is not a limit point, by Definition \ref{dfn:limPt} there exists some open set $U_a \subseteq X$ with $a \in U_a$ but 
         \begin{equation*}
             \left(A \setminus \left\{a\right\}\right) \cap U_a = \varnothing.
         \end{equation*}
@@ -1443,24 +1466,58 @@ It is possible for a non-compact space to be limit point compact. However, a com
         and so $A$ is finite.
     \end{proof}
 \end{probox}
+We can further strengthen the condition by changing ``existence of limit points'' into convergence.
 \begin{dfnbox}{Sequential Compactness}{seqCompact}
     A topological space $X$ is {\color{red} \textbf{sequentially compact}} if every sequence in $X$ has a convergent subsequence.
 \end{dfnbox}
+Intuitively, sequential compactness should be a stronger result than limit point compactness because not every limit point is the limit of some sequence. 
 \begin{probox}{Sequential Compactness Implies Limit Point Compactness}{seqCompactToLimPtCompact}
     Any sequentially compact topological space is limit point compact, but the converse is not true.
+    \tcblower
+    \begin{proof}
+        Let $X$ be sequentially compact and let $A \subseteq X$ be an infinite subset. Note that there exists a sequence $\left\{a_n\right\}_{n \in \N}$ in $A$, and so we can find a convergent subsequence $\left\{a_{n_i}\right\}_{i \in \N}$ such that $\lim_{i \to \infty}a_{n_i} = a \in X$. It is clear that $a$ is a limit point of $A$ and so $A$ is limit point compact.
+    \end{proof}
 \end{probox}
+\section{Totally Bounded Spaces}
+Suppose we construct an open cover for a space $X$, then intuitively, we could use some open sets which are ``big'' enough to cover the space, such that all the ``small'' subsets of the space can be contained by some single open set in the cover.
 \begin{dfnbox}{Lebesgue Number}{LebesgueNum}
     Let $\mathcal{U}$ be an open cover for a metric space $X$, then $\delta > 0$ is called a {\color{red} \textbf{Lebesgue number}} for $\mathcal{U}$ if for all $S \subseteq X$ with $\mathrm{diam}\left(S\right) < \delta$, there exists some $U \in \mathcal{U}$ such that $S \subseteq U$. 
 \end{dfnbox}
 The existence of Lebesgue number is not guaranteed in general. However, it can be shown that Lebesgue number always exists for sequentially compact spaces.
 \begin{probox}{Sequentially Compact Spaces Guarantee Lebesgue Number}{seqCompactLeb}
     Every open cover of a sequentially compact metric space has a Lebesgue number.
+    \tcblower
+    \begin{proof}
+        Let $X$ be sequentially compact. Suppose on contrary that there exists some open cover $\mathcal{U}$ of $X$ without a Lebesgue number, then for all $n \in \N^+$, there exists some $S_n \subseteq X$ such that $\mathrm{diam}\left(S_n\right) < \frac{1}{n}$. For each $n \in \N^+$, pick some $x_n \in S_n$ to form a sequence, then this sequence has a convergent subsequence $\left\{x_{n_i}\right\}_{i \in \N^+}$. Let $\lim_{i \to \infty}x_{n_i} = x$ and $x \in U$ for some $U \in \mathcal{U}$, then there exists some $\epsilon > 0$ such that $B_{\epsilon}\left(x\right) \subseteq U$. Note that there exists some $N \in \N^+$ such that $\frac{1}{N} < \frac{\epsilon}{2}$ and $x_{n_i} \in B_{\frac{\epsilon}{2}}\left(x\right)$ for all $i > N$. Note that for all $i > N$, we have $n_i \geq i > N$, so 
+        \begin{equation*}
+            \mathrm{diam}\left(S_{n_i}\right) < \frac{1}{n_i} < \frac{1}{N} < \frac{\epsilon}{2}.
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            S_{n_i} \subseteq B_{\frac{\epsilon}{2}}\left(x_{n_i}\right) \subseteq B_{\epsilon}\left(x\right) \subseteq U,
+        \end{equation*}
+        which is a contradiction.
+    \end{proof}
 \end{probox}
+Suppose that we have constructed an open cover with a Lebesgue number $\delta$. Clearly, we can partition any space into subsets with diameter strictly less than $\delta$. This means that for each of the subset, we can first fix some $U$ containing it, and find an open ball containing $U$ in the space. In a more ideal case, such open balls will have their radius upper-bounded by an arbitrarily small number. Intuitively, this means that we will be able to cover the space with balls which are ``small'' enough.
 \begin{dfnbox}{Totally Bounded Space}{totalBound}
     A metric space $X$ is {\color{red} \textbf{totally bounded}} if for all $\epsilon > 0$, there exists a finite cover of $X$ by open balls of radius $\epsilon$.
 \end{dfnbox}
-\begin{probox}{Sequentially Compactness Implies Total Boundedness}{seqCompactTotalBound}
+Previously, we have seen that sequential compactness is closely linked to the existence of Lebesgue numbers. Therefore, it is not so surprising that sequential compactness leads to total boundedness.
+\begin{probox}{Sequential Compactness Implies Total Boundedness}{seqCompactTotalBound}
     Every sequentially compact metrisable topological space is totally bounded.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive. Suppose that $X$ is a metric that is not totally bounded, then there exists some $\epsilon > 0$ such that $X$ cannot be covered with open $\epsilon$-balls. This means that for any $n \in \N$ and any $x_1, x_2, \cdots, x_n \in X$, 
+        \begin{equation*}
+            X \setminus \bigcup_{i = 1}^nB_{\epsilon}\left(x_i\right) \neq \varnothing.
+        \end{equation*}
+        Now, fix some $x_1 \in X$ and for each $i = 2, 3, \cdots$, pick some
+        \begin{equation*}
+            x_i \in X \setminus \bigcup_{j = 1}^iB_{\epsilon}\left(x_j\right),
+        \end{equation*}
+        then $\left\{x_i\right\}_{i \in \N^+}$ is a sequence in $X$. Note that for any $i \neq j$, we have $x_j \notin B_{\epsilon}\left(x_i\right)$ and so for all $x \in X$, the open ball $B_{\frac{\epsilon}{2}}\left(x\right)$ contains at most one of $x_1, x_2, \cdots$. Therefore, the sequence contains no convergent subsequence and so $X$ is not sequentially compact.
+    \end{proof}
 \end{probox}
 A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactTotalBound} is that they apply to any compact space in general, which is a result of the following equivalence:
 \begin{probox}{Compactness of Metrisable Spaces}{metricCompact}
@@ -1470,11 +1527,62 @@ A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactT
         \item $X$ is limit point compact;
         \item $X$ is sequentially compact.
     \end{enumerate}
+    \tcblower
+    \begin{proof}
+        (1) $\implies$ (2) is by Proposition \ref{pro:compactToLimPtCompact}. Now, suppose $X$ is limit point compact and let $\left\{x_i\right\}_{i \in \N}$ be any sequence in $X$. Define 
+        \begin{equation*}
+            A \coloneqq \left\{x_i \colon i \in \N\right\}.
+        \end{equation*}
+        If $A$ is finite, then there exists some $x_k$ which appears countably infinite times in the sequence, and so $\left\{x_k\right\}_{i \in \N}$ is a convergent subsequence. If $A$ is infinite, then it has a limit point $x$. Since $X$ is a metric space, it is first countable and $T_1$. Fix a countable basis $\mathcal{B} \coloneqq \left\{B_i \colon i \in \N^+\right\}$ for $x$ such that $B_{i + 1} \subseteq B_i$ for all $i \in \N^+$, then 
+        \begin{equation*}
+            B_i \cap \left(A \setminus \left\{x\right\}\right) \neq \varnothing.
+        \end{equation*}
+        We claim that $B_i \cap \left(A \setminus \left\{x\right\}\right)$ is infinite. Suppose on contrary that it is finite,
+    \end{proof}
 \end{probox} 
 \begin{probox}{Compact Spaces Induce Uniform Continuity}{compactUniContinuous}
     Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces and $f \colon X \to Y$ be continuous. If $X$ is compact, then $f$ is uniformly continuous.
 \end{probox}
-\section{Completeness}
+An intuition regarding totally bounded spaces is that: since we can cover the entire space with finitely many balls, then the ``size'' of the space should not be too large.
+\begin{probox}{Totally Bounded Spaces Have Finite Diameter}{finDiam}
+    If a metric space $X$ is totally bounded, then $\mathrm{diam}\left(X\right)$ is finite.
+    \tcblower
+    \begin{proof}
+        Fix some $\epsilon > 0$, then we can find a finite cover with open $\epsilon$-balls $\left\{B_1, B_2, \cdots, B_k\right\}$ for $X$. For each $i = 1, 2, \cdots, k$, pick some $x_i \in B_i$ and define 
+        \begin{equation*}
+            M \coloneqq \max\left\{d\left(x_i, x_j\right) \colon i, j = 1, 2, \cdots, k\right\}.
+        \end{equation*}
+        For all $x, y \in X$, there exist $B_i, B_j$ with $x \in B_i$ and $y \in B_j$. Therefore,
+        \begin{equation*}
+            d\left(x, y\right) \leq d\left(x, x_i\right) + d\left(x_i, x_j\right) + d\left(x_j, y\right) \leq M + 2\epsilon.
+        \end{equation*}
+        Therefore, $\mathrm{diam}\left(X\right) \leq M + 2\epsilon$ is finite.
+    \end{proof}
+\end{probox}
+Total boundedness has the following useful properties:
+\begin{probox}{Properties of Total Boundedness}{propsTotalBound}
+    \begin{enumerate}
+        \item If $\left(X, d\right)$ is a metric space and $\rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}$, then $\left(X, \rho\right)$ is totally bounded if and only if $\left(X, d\right)$ is totally bounded.
+        \item If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, i.e., there exists some $A > 1$ such that 
+        \begin{equation*}
+            \frac{1}{A}d\left(x, y\right) < d'\left(x, y\right) < Ad\left(x, y\right),
+        \end{equation*}
+        then $\left(X, d\right)$ is totally bounded if and only if $\left(X', d'\right)$ is totally bounded.
+        \item Every subspace $X$ of $\left(\R^n, \ell_p\right)$ is totally bounded if and only if $X$ is bounded.
+    \end{enumerate}
+\end{probox}
+\section{Complete Spaces}
+In elementary real analysis, we examine the notion of convergence with Cauchy sequences. We now generalise this idea to all metric spaces.
+\begin{dfnbox}{Complete Space}{complete}
+    A metric space $X$ is {\color{red} \textbf{complete}} if every Cauchy sequence in $X$ is convergent.
+\end{dfnbox}
+We can first prove the following properties of Cauchy sequences:
+\begin{probox}{Properties of Cauchy Sequences}{propsCauchy}
+    \begin{enumerate}
+        \item A Cauchy sequence converges if and only if it has a convergent subsequence.
+        \item If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, then a sequence is Cauchy in $\left(X, d\right)$ if and only if it is Cauchy in $\left(X', d'\right)$.
+    \end{enumerate}
+\end{probox}
 \begin{probox}{Characterisation of Compact Spaces}{characteriseCompact}
     A metric space $\left(X, d\right)$ is compact if and only it is complete and totally bounded.
 \end{probox}
