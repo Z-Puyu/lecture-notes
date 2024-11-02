@@ -116,6 +116,7 @@
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
 %\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+\newcommand{\psim}{\mathop{\mathrel{\accentset{p}{\sim}}}}
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
@@ -1161,17 +1162,12 @@ Equivalently, this means that $A = f^{-1}\bigl(f\left(A\right)\bigr)$.
 \end{dfnbox}
 \chapter{Characterisation of Topological Spaces}
 In the previous chapter, we have discussed various fundamental concepts and properties of general topological spaces. In this chapter, the main focus is to characterise a number of topological spaces and categorise them into different types.
-\section{Hausdorff Spaces}
-\begin{dfnbox}{$T_1$ and $T_2$ Spaces}{T1T2}
-    Let $X$ be a topological space. $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open set $U \subseteq X$ such that $x \in U$ but $y \notin U$. $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
+\section{Separation}
+\subsection{$T_1$ Spaces}
+\begin{dfnbox}{$T_1$ Spaces}{T1}
+    A topological space $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open set $U \subseteq X$ such that $x \in U$ but $y \notin U$. 
 \end{dfnbox}
-We can check that every metric space is Hausdorff, as for any $x \neq y$, we can always take 
-\begin{equation*}
-    r \coloneqq \frac{1}{3}d\left(x, y\right),
-\end{equation*}
-and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff. 
-
-Next, we prove that the co-finite topology is always $T_1$.
+We shall prove that the co-finite topology is always $T_1$.
 \begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
     Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
     \tcblower
@@ -1193,19 +1189,68 @@ Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some ope
         is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \setminus \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
     \end{proof}
 \end{probox}
-Notice that by Definition \ref{dfn:T1T2}, all $T_2$ spaces are $T_1$, so the following corollary is easy to show:
-\begin{corbox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
-    Let $X$ be a metric space, then all finite sets in $X$ are closed.
-\end{corbox}
-\section{First Countable Spaces}
-Consider a random point $x$ in some topological space. Suppose that $U$ is an open set containing $x$. Intuitively, we can reduce $U$ by taking an open subset of $U$ containing $x$. We do this repeatedly until we find some minimal open subset of $U$ containing $x$. Now, we can perform this operation to every open set containing $x$ in the space and collect all these minimal open subsets. The countability of this collection offers a different criterion of space categorisation.
-\begin{dfnbox}{Countable Basis}{countableBasis}
-    Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis}} of $x$ is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing~$x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$. 
+\subsection{Hausdorff Spaces}
+Note that $T_1$ spaces are essentially spaces in which for any two different points, we can find an open set to ``separate'' them by secluding the first point with the open set. However, notice that the second point might not be contained by an open set in the set-up, which can be strengthened.
+\begin{dfnbox}{Hausdorff Space}{hausdorff}
+    A topological space $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
 \end{dfnbox}
-Now we define \textit{first countable spaces} as follows:
+It is easy to see that every Hausdorff space is $T_1$. We can check that every metric space is Hausdorff, as for any $x \neq y$, we can always take 
+\begin{equation*}
+    r \coloneqq \frac{1}{3}d\left(x, y\right),
+\end{equation*}
+and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff. 
+
+Therefore, the following result is easy to show:
+\begin{probox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
+    Let $X$ be a metric space, then all finite sets in $X$ are closed.
+\end{probox}
+\subsection{Regular Spaces}
+Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq X$ to seclude $x$ from the rest of the space, then $X \setminus U$ is closed. In a more ideal situation, we may wish to aim for a secluding open set which is as small as possible. 
+\begin{dfnbox}{Regular Space}{regular}
+    A topological space $X$ is {\color{red} \textbf{regular}} or {\color{red} \textbf{$T_3$}} if for any $x \in X$ and any closed set $B \in X$ with $x \notin B$, there exists disjoint open sets $U, V \subseteq X$ with $x \in U$ and $B \subseteq V$.
+\end{dfnbox}
+Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space $X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
+\begin{probox}{Characterisation of Regular Spaces}{regularSpace}
+    A topological space $X$ is regular if and only if for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists an open set $V \subseteq X$ with $x \in V$ such that $\widebar{V} \subseteq U$.
+\end{probox}
+\subsection{Normal Spaces}
+Note that in a regular space, we are able to separate every point from an arbitrary closed set. A strengthened version of this property is that we can also separate every pair of disjoint closed sets in the space. 
+\begin{dfnbox}{Normal Space}{normal}
+    A topological space $X$ is {\color{red} \textbf{normal}} or {\color{red} \textbf{$T_4$}} if for any disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V \subseteq X$ such that $A \subseteq U$ and $B \subseteq V$.
+\end{dfnbox}
+Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. We can characterise a normal space using the following result:
+\begin{probox}{Characterisation of Normal Spaces}{normalSpace}
+    A topological space $X$ is normal if and only if for any closed set $A \subseteq X$ and any open set~$U \subseteq X$ with $A \subseteq U$, there exists some open set $V \subseteq X$ such that $A \subseteq V$ and $\widebar{V} \subseteq U$.
+\end{probox}
+Recall that we have argued that every metric space is Hausdorff using a simple argument. In fact, we can directly prove a much stronger result that every metric space is normal.
+\begin{probox}{Every Metrisable Space Is Normal}{metricSpaceIsNormal}
+    Every metrisable space is normal.
+\end{probox}
+Notice that we get regularity from a normal space for free. Now in the converse direction, we wish to investigate what is the condition which will lead to normality from a regular space.
+\begin{probox}{Regular Spaces with Countable Bases Are Normal}{regWithCountableBasis}
+    A regular space with a countable basis is normal.
+\end{probox}
+\section{Countability}
+\subsection{Second Countable Spaces}
+Note that a topological space can be completely captured by its basis, so an important property of a topological space is the countability of its basis. In fact, this has been demonstrated in the previous section where a regular space becomes normal if it has a countable basis. Roughly speaking, the countability of the basis represents how ``easy'' it is to generate all open sets in the space using some fixed open sets.
+\begin{dfnbox}{Second Countable Space}{2ndCountable}
+    A topological space $X$ is {\color{red} \textbf{second countable}} if it has a countable basis.
+\end{dfnbox}
+We introduce the following interesting result for second countable spaces:
+\begin{probox}{Dense Countable Subspaces in Second Countable Spaces}{denseCountable}
+    If $X$ is a second countable space, then there exists a countable subset $A \subseteq X$ such that $A$ is dense in $X$.
+\end{probox}
+\subsection{First Countable Spaces}
+We can also discuss countability in a ``local'' context. Consider a random point $x$ in some topological space. Suppose that $U$ is an open set containing $x$. Intuitively, we can reduce $U$ by taking an open subset of $U$ containing $x$. We do this repeatedly until we find some minimal open subset of $U$ containing $x$. Now, we can perform this operation to every open set containing $x$ in the space and collect all these minimal open subsets. The countability of this collection offers a different criterion of space categorisation.
+\begin{dfnbox}{Countable Basis}{countableBasis}
+    Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis of $x$}} is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing~$x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$.
+\end{dfnbox}
+The next definition is a ``local'' version of second countable spaces.
 \begin{dfnbox}{First Countable Space}{1stCountable}
     A topological space $X$ is {\color{red} \textbf{first countable}} if every $x \in X$ has a countable basis.
 \end{dfnbox}
+Intuitively, every second countable space is first countable. Suppose $\mathcal{U}$ is a countable basis for the space, then for each point $x$ in the space, we can simply take $\left\{U \in \mathcal{U} \colon x \in U\right\}$ as a countable basis of $x$.
+
 We claim that all metric spaces are first countable. Let $X$ be a metric space and take any $x \in X$, then we can take its countable basis as 
 \begin{equation*}
     \mathcal{B} \coloneqq \left\{B_{\frac{1}{i}}\left(x\right) \colon i \in \Z^+\right\}.
@@ -1248,8 +1293,12 @@ An alternative proposition makes use of continuous maps:
         Conversely, suppose that for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. Take any $A \subseteq X$ with $x \in \widebar{A}$. Since $X$ is first countable, by Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{y_i\right\}_{i \in \N^+}$ in $A$ such that $y_i \to x$. This means that $f\left(y_i\right) \to f\left(x\right)$. Since $f\left(y_i\right) \in f\left(A\right)$, this means that $f\left(x\right) \in \widebar{f\left(A\right)}$, and so $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$. By Proposition \ref{pro:continuousMapProps}, $f$ is continuous.
     \end{proof}
 \end{probox}
-\section{Compactness}
-We next introduce the notion of compact spaces, which are an attempt to generalise the notion of \textbf{closed and bounded} subsets in Euclidean spaces. The idea here is to define compactness as ``having no missing end point''.
+Lastly, we shall prove that both subspaces and product spaces preserve first and second countability.
+\begin{probox}{Cartesian Product and Subspace Preserve Countability}{cartesianProductSubspaceCountability}
+    If $X$ is first or second countable, then every subset $A \subseteq X$ is first or second countable respectively. Furthermore, if $Y$ is also first or second countable respectively, then $X \times Y$ is first or second countable respectively.
+\end{probox}
+\subsection{Lindelof Spaces}
+Now, based on some intuition, we see that certain spaces are ``tight'' in a sense that they have a clearly defined boundary, whereas some other spaces like $\R$ can extend indefinitely. One idea to measure the ``tightness'' of a topological space is to consider the number of open sets needed to cover the entire space.
 
 First, notice that given any topological space, we can always partition the space into a collection of open sets in the space.
 \begin{dfnbox}{Open Cover}{openCover}
@@ -1258,6 +1307,18 @@ First, notice that given any topological space, we can always partition the spac
         \bigcup_{\alpha \in \Lambda}U_{\alpha} = X.
     \end{equation*}
 \end{dfnbox}
+The first step here is to check if the space can be covered by countably many open sets.
+\begin{dfnbox}{Lindelof Space}{Lindelof}
+    A topological space $X$ is {\color{red} \textbf{Lindelof}} if every open cover of $X$ contains a countable sub-cover.
+\end{dfnbox}
+Intuitively, a countable basis will induce a countable cover of the space.
+\begin{probox}{Second Countable Spaces are Lindelof}{2ndCountableLindelof}
+    Every second countable space $X$ is Lindelof. The converse is true if $X$ is metrisable.
+\end{probox}
+
+\section{Compactness}
+We next introduce the notion of compact spaces, which are an attempt to generalise the notion of \textbf{closed and bounded} subsets in Euclidean spaces. The idea here is to define compactness as ``having no missing end point''.
+
 The intuition here is that if a space is not compact, i.e., it can extend indefinitely without an end, then there is a way to partition the space into infinitely many open subsets. On the other hand, if the space has a clearly defined boundary, then every possible partition must be finite.
 \begin{dfnbox}{Compact Space}{compact}
     Let $X$ be a topological space. $X$ is {\color{red} \textbf{compact}} if every open cover of $X$ contains a finite sub-cover for $X$.
@@ -1267,6 +1328,10 @@ The intuition here is that if a space is not compact, i.e., it can extend indefi
         $Y \subseteq X$ is a compact subspace if and only if for every collection $\mathcal{U}$ of open sets in $Y$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}}U$, there exists a finite sub-collection $\mathcal{U}' \subseteq \mathcal{U}$ such that~$Y \subseteq \bigcup_{U \in \mathcal{U}'}U$.
     \end{remark}
 \end{notebox}
+A compact space possesses many nice properties, one of which is with regard to the separability of the space. Recall that a normal space is regular and a regular space is Hausdorff, but to go in the converse direction is not so simple. However, for compact spaces, the converse direction will hold.
+\begin{probox}{Separability of Compact Spaces}{separabilityCompact}
+    If $X$ is a compact space, then $X$ is normal if and only if it is regular, and it is regular if and only if it is Hausdorff.
+\end{probox}
 Note that previously we have shown that a closed set contains all of its limit points. Therefore, it is intuitive that if a closed set is contained by a compact space, this closed set should be compact as well.
 \begin{probox}{Closed Subspaces of Compact Spaces Are Compact}{closedCompact}
     Every closed subspace of a compact space is compact.
@@ -1440,6 +1505,7 @@ We can establish an analogous connection between the density of points distribut
         However, for every $x_i \in X$, there exists some $V_i$ such that $x_i \notin \widebar{V_i}$, which is a contradiction.
     \end{proof}
 \end{probox}
+\subsection{Limit Point Compact Spaces}
 Let us re-visit the motivation of compactness: a space with no missing end points (i.e., end points which are infinitely far away). Now, another way to interpret this statement is that if we fix an infinite subset in the space, then we can always find a limit point of the subset in the space.
 \begin{dfnbox}{Limit Point Compactness}{limPtCompact}
     A topological space $X$ is {\color{red} \textbf{limit point compact}} if every infinite subset of $X$ has a limit point in $X$.
@@ -1466,6 +1532,7 @@ It is possible for a non-compact space to be limit point compact. However, a com
         and so $A$ is finite.
     \end{proof}
 \end{probox}
+\subsection{Sequentially Compact Spaces}
 We can further strengthen the condition by changing ``existence of limit points'' into convergence.
 \begin{dfnbox}{Sequential Compactness}{seqCompact}
     A topological space $X$ is {\color{red} \textbf{sequentially compact}} if every sequence in $X$ has a convergent subsequence.
@@ -1478,7 +1545,7 @@ Intuitively, sequential compactness should be a stronger result than limit point
         Let $X$ be sequentially compact and let $A \subseteq X$ be an infinite subset. Note that there exists a sequence $\left\{a_n\right\}_{n \in \N}$ in $A$, and so we can find a convergent subsequence $\left\{a_{n_i}\right\}_{i \in \N}$ such that $\lim_{i \to \infty}a_{n_i} = a \in X$. It is clear that $a$ is a limit point of $A$ and so $A$ is limit point compact.
     \end{proof}
 \end{probox}
-\section{Totally Bounded Spaces}
+\subsection{Totally Bounded Spaces}
 Suppose we construct an open cover for a space $X$, then intuitively, we could use some open sets which are ``big'' enough to cover the space, such that all the ``small'' subsets of the space can be contained by some single open set in the cover.
 \begin{dfnbox}{Lebesgue Number}{LebesgueNum}
     Let $\mathcal{U}$ be an open cover for a metric space $X$, then $\delta > 0$ is called a {\color{red} \textbf{Lebesgue number}} for $\mathcal{U}$ if for all $S \subseteq X$ with $\mathrm{diam}\left(S\right) < \delta$, there exists some $U \in \mathcal{U}$ such that $S \subseteq U$. 
@@ -1572,7 +1639,7 @@ Total boundedness has the following useful properties:
         \item Every subspace $X$ of $\left(\R^n, \ell_p\right)$ is totally bounded if and only if $X$ is bounded.
     \end{enumerate}
 \end{probox}
-\section{Complete Spaces}
+\subsection{Complete Spaces}
 In elementary real analysis, we examine the notion of convergence with Cauchy sequences. Recall that in $\R^n$, every Cauchy sequence is convergent. However, in general metric spaces, this might not be the case. We now generalise this idea to all metric spaces.
 \begin{dfnbox}{Complete Space}{complete}
     A metric space $X$ is {\color{red} \textbf{complete}} if every Cauchy sequence in $X$ is convergent.
@@ -1619,7 +1686,7 @@ With this very sophisticated result, we can now turn back and prove something wh
 \begin{corbox}{Heine-Borel Theorem}{HeineBorel}
     A subspace $G \subseteq \R^n$ is compact if and only if it is closed and bounded.
 \end{corbox}
-\section{Local Compactness}
+\subsection{Locally Compact Spaces}
 In the previous section in the study of compactness, we have been treating a space as a single entity. However, another perspective is to view the space as a collection of many singleton ``points''. This motivates us to define compactness point-wise.
 \begin{dfnbox}{Local Compactness}{localCompact}
     A topological space $X$ is {\color{red} \textbf{locally compact}} at $x \in X$ if there exists a compact set $C \subseteq X$ and an open set $U \subseteq X$ such that $x \in U \subseteq C$. We say that $X$ is locally compact if it is locally compact at every $x \in X$.
@@ -1669,7 +1736,7 @@ By using the above results, we propose the last conclusion:
 \begin{probox}{Locally Compact Hausdorff Spaces and Homeomorphisms}{characteriseLocallyCompactHausdorffHomeomorphism}
     A topological space $X$ is locally compact and Hausdorff if and only if there exists a compact Hausdorff space $Y$ such that $X$ is homeomorphic to some open subset $A \subseteq Y$.
 \end{probox}
-\section{Metric Completion}
+\subsection{Metric Completion}
 Consider $f \colon X \to Y$ to be a map. It is clear that we can write $f$ as a set of ordered pairs from $X \times Y$. By treating $X$ as an index set, every such map $f$ can be represented as a point from the product space 
 \begin{equation*}
     Y^X \coloneqq \prod_{x \in X}Y.
@@ -1798,4 +1865,42 @@ One may check that $S = f\bigl(\left(0, 1\right]\bigr)$ is path connected and th
     \widebar{S} = S \cup \left(\left\{0\right\} \times \left[-1, 1\right]\right),
 \end{equation*}
 which is still connected but not path connected.
+\section{Connected Components}
+Recall that in a graph, connectedness between vertices is an equivalence relation. Analogously, we can define a relation between two points in a topological space based on whether there exists a connected set containing both points.
+
+One may check that such a relation is indeed an equivalence relation. In particular, we can partition a space using the equivalence classes.
+\begin{dfnbox}{Connected Component}{cc}
+    Let $\sim$ be a binary relation on a topological space $X$ such that $x \sim y$ if and only if there exists a connected subset $C \subseteq X$ with $x, y \in C$. The {\color{red} \textbf{connected components}} of $X$ are the equivalence classes in the quotient $X \slash\sim$.
+\end{dfnbox}
+Intuitively, $X \slash \sim$ contains all maximal connected subsets of $X$, which leads to the following obvious result:
+\begin{probox}{Connected Components Are Connected}{ccConnected}
+    Every connected component of a topological space is connected.
+\end{probox}
+Similarly, we can define another equivalence relation using path connectedness.
+\begin{dfnbox}{Path Component}{pathComponent}
+    Let $\psim$ be a binary relation on a topological space $X$ such that $x \psim y$ if and only if there exists a path from $x$ to $y$ in $X$. The {\color{red} \textbf{path components}} of $X$ are the equivalence classes in the quotient $X \slash\psim$.
+\end{dfnbox}
+Again, one may check that $X \slash\psim$ contains all maximal path-connected subsets of $X$.
+\begin{probox}{Path Components Are Path Connected}{pathConnected}
+    Every path component of a topological space is path connected.
+\end{probox}
+Recall that path connectedness is a stronger version of connectedness, so it is natural that every path component is contained in some connected component.
+\begin{probox}{Connected Components Contain Path Components}{ccContainPath}
+    Every path component of a topological space is contained in some connected component.
+\end{probox}
+Similar to our discussion of compactness, we can define connectedness in a local perspective.
+\begin{dfnbox}{Local Connectedness}{localConnectedness}
+    A topological space $X$ is {\color{red} \textbf{locally (path) connected at $x \in X$}} if for all open sets $U \subseteq X$ containing $x$, there exists a (path) connected open set $V \subseteq X$ such that $x \in V \subseteq U$. The space $X$ is {\color{red} \textbf{locally (path) connected}} if it is locally connected at every $x \in X$.
+\end{dfnbox}
+It turns out that there is no need to differentiate between local connectedness and local path connectedness because the components induced by the two relations are the same in a local context.
+\begin{probox}{Connected Components in Locally Path Connected Spaces}{localConnectedEquiv}
+    If $X$ is a locally path connected topological space, then $X \slash \sim = X \slash \psim$.
+\end{probox}
+In the ideal case, since every point in a topological space is contained by some (path) connected component, the space is naturally locally (path) connected if each of these components is open. This motivates the following characterisation:
+\begin{probox}{Characterisation of Locally (Path) Connected Spaces}{localConnectedSpaces}
+    A topological space $X$ is locally (path) connected if and only if for any open subset~$U \subseteq X$, every (path) connected component of $U$ is open.
+\end{probox}
+\begin{probox}{Quotient Topology over Connected Components Is Discrete}{quotientConnectedDiscrete}
+    If $X$ is a locally path connected space and $\widetilde{X} \coloneqq X \slash \sim$ are the connected components of $X$, then the quotient topology on $\widetilde{X}$ is discrete.
+\end{probox}
 \end{document}

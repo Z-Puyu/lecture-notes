@@ -8,12 +8,22 @@
 \contentsline {section}{\numberline {1.7}Product Space}{25}{section.1.7}%
 \contentsline {section}{\numberline {1.8}Quotient Spaces}{32}{section.1.8}%
 \contentsline {chapter}{\numberline {2}Characterisation of Topological Spaces}{35}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Hausdorff Spaces}{35}{section.2.1}%
-\contentsline {section}{\numberline {2.2}First Countable Spaces}{36}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Compactness}{39}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Totally Bounded Spaces}{46}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Complete Spaces}{50}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Local Compactness}{51}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Metric Completion}{54}{section.2.7}%
-\contentsline {chapter}{\numberline {3}Connectivity of Topological Spaces}{57}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Connectedness}{57}{section.3.1}%
+\contentsline {section}{\numberline {2.1}Separation}{35}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}$T_1$ Spaces}{35}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Hausdorff Spaces}{36}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Regular Spaces}{36}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Normal Spaces}{37}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Countability}{38}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Second Countable Spaces}{38}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}First Countable Spaces}{38}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Lindelof Spaces}{41}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Compactness}{41}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Limit Point Compact Spaces}{48}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Sequentially Compact Spaces}{49}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Totally Bounded Spaces}{49}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Complete Spaces}{52}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}Locally Compact Spaces}{54}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}Metric Completion}{57}{subsection.2.3.6}%
+\contentsline {chapter}{\numberline {3}Connectivity of Topological Spaces}{60}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Connectedness}{60}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Connected Components}{62}{section.3.2}%

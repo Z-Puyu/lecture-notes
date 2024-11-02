@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  1 NOV 2024 19:48
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  2 NOV 2024 16:35
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1277,30 +1277,30 @@ Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified s
 \c@ROWcellindex@=\count369
 )
 \c@case=\count370
-LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 122.
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 123.
  (./Metric and Topological Spaces.aux)
 \openout1 = `"Metric and Topological Spaces.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 124.
-LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 125.
+LaTeX Font Info:    ... okay on input line 125.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1337,9 +1337,9 @@ LaTeX Font Info:    ... okay on input line 124.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 124.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 125.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 124.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 125.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1358,7 +1358,7 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 124.
+Package hyperref Info: Link coloring ON on input line 125.
 (./Metric and Topological Spaces.out) (./Metric and Topological Spaces.out)
 \@outlinefile=\write4
 \openout4 = `"Metric and Topological Spaces.out"'.
@@ -1398,107 +1398,134 @@ File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 134.
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 135.
 [2
 
 ] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 244--247
+Underfull \hbox (badness 10000) in paragraph at lines 245--248
 
  []
 
 [5] [6] [7] [8] [9] [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 510--513
+Underfull \hbox (badness 10000) in paragraph at lines 511--514
 
  []
 
 [12] [13] [14] [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 664--667
+Underfull \hbox (badness 10000) in paragraph at lines 665--668
 
  []
 
 [17]
 
-LaTeX Warning: Reference `clProps' on page 18 undefined on input line 677.
+LaTeX Warning: Reference `clProps' on page 18 undefined on input line 678.
 
 [18] [19]
-Underfull \hbox (badness 10000) in paragraph at lines 781--785
+Underfull \hbox (badness 10000) in paragraph at lines 782--786
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 787--793
+Underfull \hbox (badness 10000) in paragraph at lines 788--794
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 787--793
+Underfull \hbox (badness 10000) in paragraph at lines 788--794
 
  []
 
 [20] [21] [22] [23] [24]
-Underfull \hbox (badness 10000) in paragraph at lines 893--900
+Underfull \hbox (badness 10000) in paragraph at lines 894--901
 
  []
 
 [25] [26]
-Underfull \hbox (badness 10000) in paragraph at lines 939--942
+Underfull \hbox (badness 10000) in paragraph at lines 940--943
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 960--964
+Underfull \hbox (badness 10000) in paragraph at lines 961--965
 
  []
 
 [27]
-Overfull \hbox (3.51042pt too wide) in paragraph at lines 976--977
+Overfull \hbox (3.51042pt too wide) in paragraph at lines 977--978
 []\TU/STIXTwoText(0)/m/n/12 Notice that it is important to equip the product space with the product topology. Let $[] [] [] [] []
  []
 
 [28] [29] [30] [31] [32] [33] [34]
 Chapter 2.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 14.40152pt on input line 1166.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 10.00107pt on input line 1166.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
+(Font)              scaled to size 7.00075pt on input line 1166.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 14.39845pt on input line 1166.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 9.99893pt on input line 1166.
+LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 1166.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1179--1182
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1166.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 1166.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1166.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1175--1178
 
  []
 
 
-Underfull \hbox (badness 1168) in paragraph at lines 1179--1182
+Underfull \hbox (badness 1168) in paragraph at lines 1175--1178
 \TU/STIXTwoText(0)/m/n/12 We shall also prove that if $[]$ is infinite, then $[]$ is not Hausdorff. Take any
  []
 
 [35
 
-] [36]
-Underfull \hbox (badness 10000) in paragraph at lines 1232--1235
+] [36] [37] [38]
+Underfull \hbox (badness 10000) in paragraph at lines 1277--1280
 
  []
 
-[37]
-Underfull \hbox (badness 10000) in paragraph at lines 1246--1249
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 1291--1294
 
  []
 
-[38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] [56]
+[40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59]
 Chapter 3.
-[57
+[60
 
-] [58] [59] 
+] [61] [62] [63] [64] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 36941 strings out of 478630
- 771129 string characters out of 5847730
+ 37046 strings out of 478630
+ 774103 string characters out of 5847730
  1896012 words of memory out of 5000000
- 56429 multiletter control sequences out of 15000+600000
- 518882 words of font info for 102 fonts, out of 8000000 for 9000
+ 56514 multiletter control sequences out of 15000+600000
+ 522938 words of font info for 133 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (59 pages).
+Output written on Metric and Topological Spaces.pdf (64 pages).
