@@ -1163,21 +1163,21 @@ Equivalently, this means that $A = f^{-1}\bigl(f\left(A\right)\bigr)$.
 \chapter{Characterisation of Topological Spaces}
 In the previous chapter, we have discussed various fundamental concepts and properties of general topological spaces. In this chapter, the main focus is to characterise a number of topological spaces and categorise them into different types.
 \section{Separation}
+The \textit{separation axioms} are a series of conditions imposed on topological spaces to better specify the notion of \textit{disjoint} sets and \textit{distinguishable} points. The motivation comes from the fact that knowing two points are distinct is not enough to differentiate one from the other in a topological space setting. For example, if $x \neq y$ are \textit{distinct} points in a topological space $X$, it is completely possible that every open set containing $x$ also contains $y$ and vice versa. Therefore, though unequal, there is no practical way to seclude $x$ and $y$ into disjoint regions topologically.
 \subsection{$T_1$ Spaces}
-\begin{dfnbox}{$T_1$ Spaces}{T1}
-    A topological space $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open set $U \subseteq X$ such that $x \in U$ but $y \notin U$. 
+$T_1$ spaces define properly the notion of separation in a topological sense. Before we introduce the full definition, it might be useful to consider a few preliminary notions.
+\begin{dfnbox}{Distinguishable Points}{distingushi}
+    Two points $x$ and $y$ in a topological space are {\color{red} \textbf{topologically distinguishable}} if one of them has an open neighbourhood which does not contain the other.
 \end{dfnbox}
-We shall prove that the co-finite topology is always $T_1$.
-\begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
-    Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
-    \tcblower
-    \begin{proof}
-        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If $X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
-        \\\\
-        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any $x \in X$ and $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have $y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
-    \end{proof}
-\end{probox}
-Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some open sets to cover every point in the space other than $x$, which means that the isolated singleton $\left\{x\right\}$ is closed.
+Note that being distinguishable alone is not sufficient to ``separate'' two points. Topologically speaking, we think of ``separation'' as the ability to seclude two objects into disjoint open regions.
+\begin{dfnbox}{Separated Points}{separated}
+    Two points $x$ and $y$ in a topological space are {\color{red} \textbf{separated}} if there exists open neighbourhoods $U, V$ with $x \in U$ and $y \in V$ such that $x \notin V$ and $y \notin U$.
+\end{dfnbox}
+In other words, two points are separated if each has an open neighbourhood which does not contain the other.
+\begin{dfnbox}{$T_1$ Spaces}{T1}
+    A topological space $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open neighbourhood $U \subseteq X$ such that $x \in U$ but $y \notin U$. 
+\end{dfnbox}
+It is clear then that a $T_1$ space is a space in which every two distinct points are separated. Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some open sets to cover every point in the space other than $x$, which means that the isolated singleton $\left\{x\right\}$ is closed.
 \begin{probox}{Characterisation of $T_1$ Spaces}{T1Space}
     A topological space $X$ is $T_1$ if and only if for all $x \in X$, the singleton set $\left\{x\right\}$ is closed.
     \tcblower
@@ -1190,7 +1190,7 @@ Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some ope
     \end{proof}
 \end{probox}
 \subsection{Hausdorff Spaces}
-Note that $T_1$ spaces are essentially spaces in which for any two different points, we can find an open set to ``separate'' them by secluding the first point with the open set. However, notice that the second point might not be contained by an open set in the set-up, which can be strengthened.
+$T_1$ separation can be strengthened by requiring that distinct points have disjoint open neighbourhoods.
 \begin{dfnbox}{Hausdorff Space}{hausdorff}
     A topological space $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
 \end{dfnbox}
@@ -1204,6 +1204,16 @@ Therefore, the following result is easy to show:
 \begin{probox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
     Let $X$ be a metric space, then all finite sets in $X$ are closed.
 \end{probox}
+We shall prove that a finite co-finite topological space is always $T_1$.
+\begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
+    Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
+    \tcblower
+    \begin{proof}
+        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If $X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
+        \\\\
+        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any~$x \in X$ and $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have $y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
+    \end{proof}
+\end{probox}
 \subsection{Regular Spaces}
 Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq X$ to seclude $x$ from the rest of the space, then $X \setminus U$ is closed. In a more ideal situation, we may wish to aim for a secluding open set which is as small as possible. 
 \begin{dfnbox}{Regular Space}{regular}
@@ -1212,6 +1222,14 @@ Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq
 Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space $X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
 \begin{probox}{Characterisation of Regular Spaces}{regularSpace}
     A topological space $X$ is regular if and only if for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists an open set $V \subseteq X$ with $x \in V$ such that $\widebar{V} \subseteq U$.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is a regular space. Take any $x \in X$ with any open set $U \subseteq X$ containing $x$, then $B \coloneqq X \setminus U$ is a closed set not containing $x$. By Definition \ref{dfn:regular}, there exists disjoint open sets $V, W \subseteq X$ such that $x \in V$ and $B \subseteq W$. This means that 
+        \begin{equation*}
+            V \subseteq X \setminus W \subseteq X \setminus B = U.
+        \end{equation*}
+        Note that $X \setminus W$ is closed, so $\widebar{V} \subseteq X \setminus W \subseteq U$.
+    \end{proof}
 \end{probox}
 \subsection{Normal Spaces}
 Note that in a regular space, we are able to separate every point from an arbitrary closed set. A strengthened version of this property is that we can also separate every pair of disjoint closed sets in the space. 
@@ -1221,6 +1239,18 @@ Note that in a regular space, we are able to separate every point from an arbitr
 Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. We can characterise a normal space using the following result:
 \begin{probox}{Characterisation of Normal Spaces}{normalSpace}
     A topological space $X$ is normal if and only if for any closed set $A \subseteq X$ and any open set~$U \subseteq X$ with $A \subseteq U$, there exists some open set $V \subseteq X$ such that $A \subseteq V$ and $\widebar{V} \subseteq U$.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is normal. Take any closed subset $A \subseteq X$ and any open set $U$ with $A \subseteq U$. Note that $B \coloneqq X \setminus U$ is closed and $A \cap B = \varnothing$, so there exists disjoint open sets $W_A, W_B \subseteq X$ such that $A \subseteq W_A$ and $B \subseteq W_B$. Take $W \coloneqq X \setminus W_B \subseteq X \setminus B = U$, which is closed, then 
+        \begin{equation*}
+            W_A \subseteq X \setminus W_B = W \subseteq U.
+        \end{equation*}
+        Since $W_A$ is open, this means that $W_A \subseteq \mathring{W}$. Take $V \coloneqq \mathring{W}$, then 
+        \begin{equation*}
+            A \subseteq V \subseteq \overline{V} = W \subseteq U.
+        \end{equation*}
+        Conversely, suppose that for every closed $A \subseteq X$ and every open $U \subseteq X$ with $A \subseteq U$, there exists an open set $V \subseteq X$ with $A \subseteq V$ such that $\overline{V} \subseteq U$. Let $A, B \subseteq X$ be any disjoint closed sets with $A \cap B = \varnothing$ and take $U \coloneqq X \setminus B$, then there exists some open set $V \subseteq X$ with $A \subseteq V$ and $\overline{V} \subseteq U$. Take $W \coloneqq X \setminus \overline{V}$ which is open, then $B \subseteq W$ because $B \cap \overline{V} \subseteq B \cap U = \varnothing$. Therefore, $X$ is normal.
+    \end{proof}
 \end{probox}
 Recall that we have argued that every metric space is Hausdorff using a simple argument. In fact, we can directly prove a much stronger result that every metric space is normal.
 \begin{probox}{Every Metrisable Space Is Normal}{metricSpaceIsNormal}
