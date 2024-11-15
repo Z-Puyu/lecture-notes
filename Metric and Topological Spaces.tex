@@ -32,64 +32,35 @@
 \newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
 %If there's a superscript following the bar, then no negative kern may follow the bar;
 %an additional {} makes sure that the superscript is high enough in this case:
-\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
-%Use a separate algorithm for single symbols:
-\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
-\newcommand*\wide@bar@[3]{%
-  \begingroup
-  \def\mathaccent##1##2{%
-%Enable nesting of accents:
-    \let\mathaccent\save@mathaccent
-%If there's more than a single symbol, use the first character instead \left(see below\right):
-    \if#32 \let\macc@nucleus\first@char \fi
-%Determine the italic correction:
-    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
-    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
-    \dimen@\wd\tw@
-    \advance\dimen@-\wd\z@
-%Now \dimen@ is the italic correction of the symbol.
-    \divide\dimen@ 3
-    \@tempdima\wd\tw@
-    \advance\@tempdima-\scriptspace
-%Now \@tempdima is the width of the symbol.
-    \divide\@tempdima 10
-    \advance\dimen@-\@tempdima
-%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
-    \ifdim\dimen@>\z@ \dimen@0pt\fi
-%The bar will be shortened in the case \dimen@<0 !
-    \rel@kern{0.6}\kern-\dimen@
-    \if#31
-      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
-      \advance\dimen@0.4\dimexpr\macc@kerna
-%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
-      \let\final@kern#2%
-      \ifdim\dimen@<\z@ \let\final@kern1\fi
-      \if\final@kern1 \kern-\dimen@\fi
-    \else
-      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
-    \fi
-  }%
-  \macc@depth\@ne
-  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
-  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
-  \macc@set@skewchar\relax
-  \let\mathaccentV\macc@nested@a
-%The following initialises \macc@kerna and calls \mathaccent:
-  \if#31
-    \macc@nested@a\relax111{#1}%
-  \else
-%If the argument consists of more than one symbol, and if the first token is
-%a letter, use that letter for the computations:
-    \def\gobble@till@marker##1\endmarker{}%
-    \futurelet\first@char\gobble@till@marker#1\endmarker
-    \ifcat\noexpand\first@char A\else
-      \def\first@char{}%
-    \fi
-    \macc@nested@a\relax111{\first@char}%
-  \fi
-  \endgroup
+\newcount\tmpnum \newdimen\tmpdim
+{\lccode`\?=`\p \lccode`\!=`\t  \lowercase{\gdef\ignorept#1?!{#1}}}
+\edef\widecharS{\expandafter\ignorept\the\fontdimen1\textfont1}
+
+\def\widebar#1{\futurelet\next\widebarA#1\widebarA}
+\def\widebarA#1\widebarA{%
+   \def\tmp{0}\ifcat\noexpand\next A\def\tmp{1}\fi
+   \widebarE
+   \ifdim\tmp pt=0pt \overline{#1}%
+   \else {\mathpalette\widebarB{#1}}\fi
 }
-\makeatother
+\def\widebarB#1#2{%
+   \setbox0=\hbox{$#1\overline{#2}$}%
+   \tmpdim=\tmp\ht0 \advance\tmpdim by-.4pt
+   \tmpdim=\widecharS\tmpdim
+   \kern\tmpdim\overline{\kern-\tmpdim#2}%
+}
+\def\widebarC#1#2 {\ifx#1\end \else 
+   \ifx#1\next\def\tmp{#2}\widebarD 
+   \else\expandafter\expandafter\expandafter\widebarC
+   \fi\fi
+}
+\def\widebarD#1\end. {\fi\fi}
+\def\widebarE{\widebarC A1.4 J1.2 L.6 O.8 T.5 U.7 V.3 W.1 Y.2 
+   a.5 b.2 d1.1 h.5 i.5 k.5 l.3 m.4 n.4 o.6 p.4 r.5 t.4 v.7 w.7 x.8 y.8
+   \alpha1 \beta1 \gamma.6 \delta.8 \epsilon.8 \varepsilon.8 \zeta.6 \eta.4
+   \theta.8 \vartheta.8 \iota.5 \kappa.8 \lambda.5 \mu1 \nu.5 \xi.7 \pi.6
+   \varpi.9 \rho1 \varrho1 \sigma.7 \varsigma.7 \tau.6 \upsilon.7 \phi1
+   \varphi.6 \chi.7 \psi1 \omega.5 \cal1 \end. }
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -130,7 +101,7 @@
     Lecture Notes
 }
 \tableofcontents
-\chapter{Topology}
+\chapter{Topologies and Metrics}
 \section{Topological Spaces}
 \begin{dfnbox}{Topology}{topology}
     A {\color{red} \textbf{topology}} on a set $X$ is a collection $\mathcal{T} \subseteq \mathcal{P}\left(X\right)$ such that 
@@ -690,7 +661,7 @@ Take any $a \in \left(0, 1\right)$ such that $a \neq \frac{1}{n}$ for all $n \in
     a \in \left(\frac{1}{n_a + 1}, \frac{1}{n_a}\right),
 \end{equation*}
 and so the equality holds as desired.
-\section{Convergence}
+\section{Convergence and Continuity}
 Recall that in Definition \ref{dfn:limPt}, a limit point of $A$ is defined as a point $a$ such that any open set containing $a$ shares at least one other common point with $A$. Analogously, we may view such phenomenon as $a$ having a ``neighbour'' in $A$. 
 \begin{dfnbox}{Neighbourhood}{neighbourhood}
     Let $\left(X, \mathcal{T}\right)$ be a topological space. An open set $U \subseteq X$ is called a {\color{red} \textbf{neighbourhood}} of some $x \in X$ if $x \in U$.
@@ -709,7 +680,6 @@ In a metric space, we can make use of the metric to describe convergence in a mo
         Suppose that $x_i \to x$ as $i \to \infty$. For all $\epsilon > 0$, take the open ball $B_{\epsilon}\left(x\right) \subseteq X$. Clearly, $B_{\epsilon}\left(x\right)$ is a neighbourhood of $x$. By Definition \ref{dfn:convergence}, there exists some $N \in \N^+$ such that $x_i \in B_{\epsilon}\left(x\right)$ for all $i > N$, i.e., $d\left(x_i, x\right) < \epsilon$ for all $i > N$. Conversely, suppose that for every $\epsilon > 0$, there exists some $N \in \N^+$ such that $d\left(x_i, x\right) < \epsilon$ for all $i > N$. Let~$U \subseteq X$ be any neighbourhood containing $x$. Note that $U$ is open in~$X$, so by Theorem \ref{pro:equivalentConstruction}, there exists some open ball $B_r\left(x\right) \subseteq U$ such that $x \in B_r\left(x\right)$. Therefore, there exists some $M \in \N^+$ such that $d\left(x_i, x\right) < r$, i.e., $x_i \in B_r\left(x\right) \subseteq U$, for all $i > M$. Therefore, $x_i \to x$.
     \end{proof}
 \end{thmbox}
-\section{Continuity}
 We can also generalise the notion of \textit{continuity}. Recall that in real analysis, a function $f$ is continuous at $a$ if $\lim_{x \to a}f\left(x\right) = f\left(a\right)$. Therefore, if we fix any open neighbourhood $U$ for~$a$, we would expect the pre-image $f^{-1}\left(U\right)$ to be open.
 \begin{dfnbox}{Continuous Map}{continuous}
     Let $X$ and $Y$ be topological spaces. A map $f \colon X \to Y$ is {\color{red} \textbf{continuous}} if for any open set $U \subseteq Y$, the pre-image $f^{-1}\left(U\right)$ is open in $X$.
@@ -997,7 +967,7 @@ Intuitively, the subspace topology on product space should be the product of sub
         \begin{equation*}
             \mathcal{B} \coloneqq \left\{\left(U_X \times U_Y\right) \cap \left(A \times B\right) \colon U_X \in \mathcal{T}_X, U_Y \in \mathcal{T}_Y\right\}.
         \end{equation*}
-        It is clear that $\mathcal{B} = \mathcal{B}'$ (???).
+        It is clear that $\mathcal{B} = \mathcal{B}'$.
     \end{proof}
 \end{probox}
 \begin{probox}{Standard Topology Decomposition on Euclidean Spaces}{decompose}
@@ -1160,108 +1130,29 @@ Equivalently, this means that $A = f^{-1}\bigl(f\left(A\right)\bigr)$.
 \begin{dfnbox}{Quotient Space}{quotientSpace}
     Let $X$ be a topological space and $X^*$ be a partition of $X$. Let $p \colon X \to X^*$ be a surjective map such that $x \in p\left(x\right)$. If $\mathcal{T}^*$ is the quotient topology on $X^*$, then $\left(X^*, \mathcal{T}^*\right)$ is the {\color{red} \textbf{quotient space}} of $X$.
 \end{dfnbox}
-\chapter{Characterisation of Topological Spaces}
-In the previous chapter, we have discussed various fundamental concepts and properties of general topological spaces. In this chapter, the main focus is to characterise a number of topological spaces and categorise them into different types.
-\section{Separation}
-The \textit{separation axioms} are a series of conditions imposed on topological spaces to better specify the notion of \textit{disjoint} sets and \textit{distinguishable} points. The motivation comes from the fact that knowing two points are distinct is not enough to differentiate one from the other in a topological space setting. For example, if $x \neq y$ are \textit{distinct} points in a topological space $X$, it is completely possible that every open set containing $x$ also contains $y$ and vice versa. Therefore, though unequal, there is no practical way to seclude $x$ and $y$ into disjoint regions topologically.
-\subsection{$T_1$ Spaces}
-$T_1$ spaces define properly the notion of separation in a topological sense. Before we introduce the full definition, it might be useful to consider a few preliminary notions.
-\begin{dfnbox}{Distinguishable Points}{distingushi}
-    Two points $x$ and $y$ in a topological space are {\color{red} \textbf{topologically distinguishable}} if one of them has an open neighbourhood which does not contain the other.
-\end{dfnbox}
-Note that being distinguishable alone is not sufficient to ``separate'' two points. Topologically speaking, we think of ``separation'' as the ability to seclude two objects into disjoint open regions.
-\begin{dfnbox}{Separated Points}{separated}
-    Two points $x$ and $y$ in a topological space are {\color{red} \textbf{separated}} if there exists open neighbourhoods $U, V$ with $x \in U$ and $y \in V$ such that $x \notin V$ and $y \notin U$.
-\end{dfnbox}
-In other words, two points are separated if each has an open neighbourhood which does not contain the other.
-\begin{dfnbox}{$T_1$ Spaces}{T1}
-    A topological space $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open neighbourhood $U \subseteq X$ such that $x \in U$ but $y \notin U$. 
-\end{dfnbox}
-It is clear then that a $T_1$ space is a space in which every two distinct points are separated. Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some open sets to cover every point in the space other than $x$, which means that the isolated singleton $\left\{x\right\}$ is closed.
-\begin{probox}{Characterisation of $T_1$ Spaces}{T1Space}
-    A topological space $X$ is $T_1$ if and only if for all $x \in X$, the singleton set $\left\{x\right\}$ is closed.
-    \tcblower
-    \begin{proof}
-        Suppose that $X$ is $T_1$ and take any $x \in X$. Let $y \in X \setminus \left\{x\right\}$ be any point. Notice that there exists some open set $V_y \subseteq X$ such that $y \in V_y$ but $x \notin V_y$. Clearly, 
-        \begin{equation*}
-            X \setminus \left\{x\right\} = \bigcup_{y \in X \setminus \left\{x\right\}}V_y
-        \end{equation*}
-        is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \setminus \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
-    \end{proof}
-\end{probox}
-\subsection{Hausdorff Spaces}
-$T_1$ separation can be strengthened by requiring that distinct points have disjoint open neighbourhoods.
-\begin{dfnbox}{Hausdorff Space}{hausdorff}
-    A topological space $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
-\end{dfnbox}
-It is easy to see that every Hausdorff space is $T_1$. We can check that every metric space is Hausdorff, as for any $x \neq y$, we can always take 
-\begin{equation*}
-    r \coloneqq \frac{1}{3}d\left(x, y\right),
-\end{equation*}
-and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff. 
+\section{Homeomorphism}
+The relationship between a ``container'' space and a ``contained'' space in topological spaces can be quite peculiar. On one hand, we can define such relationship using the classic subset-superset relationship. On the other hand, we see that what defines a topological space is not so much about the actual elements contained in the space, but the structure exhibited by the space, which can be preserved under certain transformations.
 
-Therefore, the following result is easy to show:
-\begin{probox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
-    Let $X$ be a metric space, then all finite sets in $X$ are closed.
-\end{probox}
-We shall prove that a finite co-finite topological space is always $T_1$.
-\begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
-    Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
-    \tcblower
-    \begin{proof}
-        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If $X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
-        \\\\
-        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any~$x \in X$ and $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have $y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
-    \end{proof}
-\end{probox}
-\subsection{Regular Spaces}
-Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq X$ to seclude $x$ from the rest of the space, then $X \setminus U$ is closed. In a more ideal situation, we may wish to aim for a secluding open set which is as small as possible. 
-\begin{dfnbox}{Regular Space}{regular}
-    A topological space $X$ is {\color{red} \textbf{regular}} or {\color{red} \textbf{$T_3$}} if for any $x \in X$ and any closed set $B \in X$ with $x \notin B$, there exists disjoint open sets $U, V \subseteq X$ with $x \in U$ and $B \subseteq V$.
+In the context of topological spaces, this means that open spaces should be preserved.
+\begin{dfnbox}{Homeomorphism}{homeomorphism}
+    A function $h \colon X \to Y$ between topological spaces is a {\color{red} \textbf{homeomorphism}} if it is a bijective open map.
 \end{dfnbox}
-Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space $X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
-\begin{probox}{Characterisation of Regular Spaces}{regularSpace}
-    A topological space $X$ is regular if and only if for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists an open set $V \subseteq X$ with $x \in V$ such that $\widebar{V} \subseteq U$.
-    \tcblower
-    \begin{proof}
-        Suppose that $X$ is a regular space. Take any $x \in X$ with any open set $U \subseteq X$ containing $x$, then $B \coloneqq X \setminus U$ is a closed set not containing $x$. By Definition \ref{dfn:regular}, there exists disjoint open sets $V, W \subseteq X$ such that $x \in V$ and $B \subseteq W$. This means that 
-        \begin{equation*}
-            V \subseteq X \setminus W \subseteq X \setminus B = U.
-        \end{equation*}
-        Note that $X \setminus W$ is closed, so $\widebar{V} \subseteq X \setminus W \subseteq U$.
-    \end{proof}
-\end{probox}
-\subsection{Normal Spaces}
-Note that in a regular space, we are able to separate every point from an arbitrary closed set. A strengthened version of this property is that we can also separate every pair of disjoint closed sets in the space. 
-\begin{dfnbox}{Normal Space}{normal}
-    A topological space $X$ is {\color{red} \textbf{normal}} or {\color{red} \textbf{$T_4$}} if for any disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V \subseteq X$ such that $A \subseteq U$ and $B \subseteq V$.
+In other words, a bijection $h$ between topological spaces is a homeomorphism if both $h$ and $h^{-1}$ are continuous. Sometimes, $h$ is known as \textit{bi-continuous}. Roughly speaking, a homeomorphism is a reversible deformation such that open sets are still open before and after the deformation. 
+
+One merit of having a homeomorphism is that it helps construct a structure-preserving map that ``projects'' a space into another possibly bigger space.
+\begin{dfnbox}{Topological Embedding}{topologicalEmbedding}
+    Let $X$ and $Y$ be topological spaces. A continuous injective function $f \colon X \hookrightarrow Y$ is a {\color{red} \textbf{topological embedding}} if it is homeomorphic onto $f\left(X\right)$.
 \end{dfnbox}
-Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. We can characterise a normal space using the following result:
-\begin{probox}{Characterisation of Normal Spaces}{normalSpace}
-    A topological space $X$ is normal if and only if for any closed set $A \subseteq X$ and any open set~$U \subseteq X$ with $A \subseteq U$, there exists some open set $V \subseteq X$ such that $A \subseteq V$ and $\widebar{V} \subseteq U$.
-    \tcblower
-    \begin{proof}
-        Suppose that $X$ is normal. Take any closed subset $A \subseteq X$ and any open set $U$ with $A \subseteq U$. Note that $B \coloneqq X \setminus U$ is closed and $A \cap B = \varnothing$, so there exists disjoint open sets $W_A, W_B \subseteq X$ such that $A \subseteq W_A$ and $B \subseteq W_B$. Take $W \coloneqq X \setminus W_B \subseteq X \setminus B = U$, which is closed, then 
-        \begin{equation*}
-            W_A \subseteq X \setminus W_B = W \subseteq U.
-        \end{equation*}
-        Since $W_A$ is open, this means that $W_A \subseteq \mathring{W}$. Take $V \coloneqq \mathring{W}$, then 
-        \begin{equation*}
-            A \subseteq V \subseteq \overline{V} = W \subseteq U.
-        \end{equation*}
-        Conversely, suppose that for every closed $A \subseteq X$ and every open $U \subseteq X$ with $A \subseteq U$, there exists an open set $V \subseteq X$ with $A \subseteq V$ such that $\overline{V} \subseteq U$. Let $A, B \subseteq X$ be any disjoint closed sets with $A \cap B = \varnothing$ and take $U \coloneqq X \setminus B$, then there exists some open set $V \subseteq X$ with $A \subseteq V$ and $\overline{V} \subseteq U$. Take $W \coloneqq X \setminus \overline{V}$ which is open, then $B \subseteq W$ because $B \cap \overline{V} \subseteq B \cap U = \varnothing$. Therefore, $X$ is normal.
-    \end{proof}
-\end{probox}
-Recall that we have argued that every metric space is Hausdorff using a simple argument. In fact, we can directly prove a much stronger result that every metric space is normal.
-\begin{probox}{Every Metrisable Space Is Normal}{metricSpaceIsNormal}
-    Every metrisable space is normal.
-\end{probox}
-Notice that we get regularity from a normal space for free. Now in the converse direction, we wish to investigate what is the condition which will lead to normality from a regular space.
-\begin{probox}{Regular Spaces with Countable Bases Are Normal}{regWithCountableBasis}
-    A regular space with a countable basis is normal.
-\end{probox}
-\section{Countability}
-\subsection{Second Countable Spaces}
+The utility of topological embeddings is that they allow us to transform an unfamiliar or highly abstract topological space into something we are more comfortable with, without altering the topological structures of the space. Therefore, anything we do with the image will be reflected in the original space in the same way. A good candidate for this ``space that we are comfortable with'' is the Euclidean spaces.
+\begin{thmbox}{Embedding Theorem}{embedding}
+    Let $X$ be a $T_1$ space. If $\left\{f_{\alpha}\right\}_{\alpha \in \Lambda}$ is a family of continuous functions from $X$ to $\R$ such that for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists some $\alpha \in \Lambda$ with~$f_{\alpha}\left(x\right) > 0$ and $f_{\alpha}\left(X \setminus U\right) = \left\{0\right\}$, then the map $F \colon X \to \R^{\Lambda}$ defined by 
+    \begin{equation*}
+        \pi_{\alpha}\bigl(F\left(x\right)\bigr) = f_{\alpha}\left(x\right)
+    \end{equation*}
+    is a topological embedding.
+\end{thmbox}
+\chapter{Countability Axioms}
+\section{Second Countable Spaces}
 Note that a topological space can be completely captured by its basis, so an important property of a topological space is the countability of its basis. In fact, this has been demonstrated in the previous section where a regular space becomes normal if it has a countable basis. Roughly speaking, the countability of the basis represents how ``easy'' it is to generate all open sets in the space using some fixed open sets.
 \begin{dfnbox}{Second Countable Space}{2ndCountable}
     A topological space $X$ is {\color{red} \textbf{second countable}} if it has a countable basis.
@@ -1270,7 +1161,7 @@ We introduce the following interesting result for second countable spaces:
 \begin{probox}{Dense Countable Subspaces in Second Countable Spaces}{denseCountable}
     If $X$ is a second countable space, then there exists a countable subset $A \subseteq X$ such that $A$ is dense in $X$.
 \end{probox}
-\subsection{First Countable Spaces}
+\section{First Countable Spaces}
 We can also discuss countability in a ``local'' context. Consider a random point $x$ in some topological space. Suppose that $U$ is an open set containing $x$. Intuitively, we can reduce $U$ by taking an open subset of $U$ containing $x$. We do this repeatedly until we find some minimal open subset of $U$ containing $x$. Now, we can perform this operation to every open set containing $x$ in the space and collect all these minimal open subsets. The countability of this collection offers a different criterion of space categorisation.
 \begin{dfnbox}{Countable Basis}{countableBasis}
     Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis of $x$}} is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing~$x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$.
@@ -1327,7 +1218,7 @@ Lastly, we shall prove that both subspaces and product spaces preserve first and
 \begin{probox}{Cartesian Product and Subspace Preserve Countability}{cartesianProductSubspaceCountability}
     If $X$ is first or second countable, then every subset $A \subseteq X$ is first or second countable respectively. Furthermore, if $Y$ is also first or second countable respectively, then $X \times Y$ is first or second countable respectively.
 \end{probox}
-\subsection{Lindelof Spaces}
+\section{Lindelof Spaces}
 Now, based on some intuition, we see that certain spaces are ``tight'' in a sense that they have a clearly defined boundary, whereas some other spaces like $\R$ can extend indefinitely. One idea to measure the ``tightness'' of a topological space is to consider the number of open sets needed to cover the entire space.
 
 First, notice that given any topological space, we can always partition the space into a collection of open sets in the space.
@@ -1345,8 +1236,132 @@ Intuitively, a countable basis will induce a countable cover of the space.
 \begin{probox}{Second Countable Spaces are Lindelof}{2ndCountableLindelof}
     Every second countable space $X$ is Lindelof. The converse is true if $X$ is metrisable.
 \end{probox}
+\chapter{Separation Axioms}
+The \textit{separation axioms} are a series of conditions imposed on topological spaces to better specify the notion of \textit{disjoint} sets and \textit{distinguishable} points. The motivation comes from the fact that knowing two points are distinct is not enough to differentiate one from the other in a topological space setting. For example, if $x \neq y$ are \textit{distinct} points in a topological space $X$, it is completely possible that every open set containing $x$ also contains $y$ and vice versa. Therefore, though unequal, there is no practical way to seclude $x$ and $y$ into disjoint regions topologically.
+\section{$T_1$ Spaces}
+$T_1$ spaces define properly the notion of separation in a topological sense. Before we introduce the full definition, it might be useful to consider a few preliminary notions.
+\begin{dfnbox}{Distinguishable Points}{distingushi}
+    Two points $x$ and $y$ in a topological space are {\color{red} \textbf{topologically distinguishable}} if one of them has an open neighbourhood which does not contain the other.
+\end{dfnbox}
+Note that being distinguishable alone is not sufficient to ``separate'' two points. Topologically speaking, we think of ``separation'' as the ability to seclude two objects into disjoint open regions.
+\begin{dfnbox}{Separated Points}{separated}
+    Two points $x$ and $y$ in a topological space are {\color{red} \textbf{separated}} if there exists open neighbourhoods $U, V$ with $x \in U$ and $y \in V$ such that $x \notin V$ and $y \notin U$.
+\end{dfnbox}
+In other words, two points are separated if each has an open neighbourhood which does not contain the other.
+\begin{dfnbox}{$T_1$ Spaces}{T1}
+    A topological space $X$ is {\color{red} \textbf{$T_1$}} if for any $x, y \in X$ with $x \neq y$, there exists an open neighbourhood $U \subseteq X$ such that $x \in U$ but $y \notin U$. 
+\end{dfnbox}
+It is clear then that a $T_1$ space is a space in which every two distinct points are separated. Intuitively, if we fix any point $x$ in a $T_1$ space, then we can find some open sets to cover every point in the space other than $x$, which means that the isolated singleton $\left\{x\right\}$ is closed.
+\begin{probox}{Characterisation of $T_1$ Spaces}{T1Space}
+    A topological space $X$ is $T_1$ if and only if for all $x \in X$, the singleton set $\left\{x\right\}$ is closed.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is $T_1$ and take any $x \in X$. Let $y \in X \setminus \left\{x\right\}$ be any point. Notice that there exists some open set $V_y \subseteq X$ such that $y \in V_y$ but $x \notin V_y$. Clearly, 
+        \begin{equation*}
+            X \setminus \left\{x\right\} = \bigcup_{y \in X \setminus \left\{x\right\}}V_y
+        \end{equation*}
+        is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \setminus \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
+    \end{proof}
+\end{probox}
+\section{Hausdorff Spaces}
+$T_1$ separation can be strengthened by requiring that distinct points have disjoint open neighbourhoods.
+\begin{dfnbox}{Hausdorff Space}{hausdorff}
+    A topological space $X$ is {\color{red} \textbf{$T_2$}} or {\color{red} \textbf{Hausdorff}} if for any $x, y \in X$ with $x \neq y$, there exist open neighbourhoods $U, V \subseteq X$ with $x \in U$ and $y \in V$ such that $U \cap V = \varnothing$.
+\end{dfnbox}
+It is easy to see that every Hausdorff space is $T_1$. We can check that every metric space is Hausdorff, as for any $x \neq y$, we can always take 
+\begin{equation*}
+    r \coloneqq \frac{1}{3}d\left(x, y\right),
+\end{equation*}
+and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff. 
 
-\section{Compactness}
+Therefore, the following result is easy to show:
+\begin{probox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
+    Let $X$ be a metric space, then all finite sets in $X$ are closed.
+\end{probox}
+We shall prove that a finite co-finite topological space is always $T_1$.
+\begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
+    Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
+    \tcblower
+    \begin{proof}
+        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If $X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
+        \\\\
+        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any~$x \in X$ and $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have $y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
+    \end{proof}
+\end{probox}
+\section{Regular Spaces}
+Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq X$ to seclude $x$ from the rest of the space, then $X \setminus U$ is closed. In a more ideal situation, we may wish to aim for a secluding open set which is as small as possible. 
+\begin{dfnbox}{Regular Space}{regular}
+    A topological space $X$ is {\color{red} \textbf{regular}} or {\color{red} \textbf{$T_3$}} if for any $x \in X$ and any closed set $B \in X$ with $x \notin B$, there exists disjoint open sets $U, V \subseteq X$ with $x \in U$ and $B \subseteq V$.
+\end{dfnbox}
+Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space $X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
+\begin{probox}{Characterisation of Regular Spaces}{regularSpace}
+    A topological space $X$ is regular if and only if for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists an open set $V \subseteq X$ with $x \in V$ such that $\widebar{V} \subseteq U$.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is a regular space. Take any $x \in X$ with any open set $U \subseteq X$ containing $x$, then $B \coloneqq X \setminus U$ is a closed set not containing $x$. By Definition \ref{dfn:regular}, there exists disjoint open sets $V, W \subseteq X$ such that $x \in V$ and $B \subseteq W$. This means that 
+        \begin{equation*}
+            V \subseteq X \setminus W \subseteq X \setminus B = U.
+        \end{equation*}
+        Note that $X \setminus W$ is closed, so $\widebar{V} \subseteq X \setminus W \subseteq U$.
+    \end{proof}
+\end{probox}
+\section{Normal Spaces}
+Note that in a regular space, we are able to separate every point from an arbitrary closed set. A strengthened version of this property is that we can also separate every pair of disjoint closed sets in the space. 
+\begin{dfnbox}{Normal Space}{normal}
+    A topological space $X$ is {\color{red} \textbf{normal}} or {\color{red} \textbf{$T_4$}} if for any disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V \subseteq X$ such that $A \subseteq U$ and $B \subseteq V$.
+\end{dfnbox}
+Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. We can characterise a normal space using the following result:
+\begin{probox}{Characterisation of Normal Spaces}{normalSpace}
+    A topological space $X$ is normal if and only if for any closed set $A \subseteq X$ and any open set~$U \subseteq X$ with $A \subseteq U$, there exists some open set $V \subseteq X$ such that $A \subseteq V$ and $\widebar{V} \subseteq U$.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is normal. Take any closed subset $A \subseteq X$ and any open set $U$ with $A \subseteq U$. Note that $B \coloneqq X \setminus U$ is closed and $A \cap B = \varnothing$, so there exists disjoint open sets $W_A, W_B \subseteq X$ such that $A \subseteq W_A$ and $B \subseteq W_B$. Take $W \coloneqq X \setminus W_B \subseteq X \setminus B = U$, which is closed, then 
+        \begin{equation*}
+            W_A \subseteq X \setminus W_B = W \subseteq U.
+        \end{equation*}
+        Since $W_A$ is open, this means that $W_A \subseteq \mathring{W}$. Take $V \coloneqq \mathring{W}$, then 
+        \begin{equation*}
+            A \subseteq V \subseteq \overline{V} = W \subseteq U.
+        \end{equation*}
+        Conversely, suppose that for every closed $A \subseteq X$ and every open $U \subseteq X$ with $A \subseteq U$, there exists an open set $V \subseteq X$ with $A \subseteq V$ such that $\overline{V} \subseteq U$. Let $A, B \subseteq X$ be any disjoint closed sets with $A \cap B = \varnothing$ and take $U \coloneqq X \setminus B$, then there exists some open set $V \subseteq X$ with $A \subseteq V$ and $\overline{V} \subseteq U$. Take $W \coloneqq X \setminus \overline{V}$ which is open, then $B \subseteq W$ because $B \cap \overline{V} \subseteq B \cap U = \varnothing$. Therefore, $X$ is normal.
+    \end{proof}
+\end{probox}
+Recall that we have argued that every metric space is Hausdorff using a simple argument. In fact, we can directly prove a much stronger result that every metric space is normal.
+\begin{probox}{Every Metrisable Space Is Normal}{metricSpaceIsNormal}
+    Every metrisable space is normal.
+\end{probox}
+Notice that we get regularity from a normal space for free. Now in the converse direction, we wish to investigate what is the condition which will lead to normality from a regular space.
+\begin{probox}{Regular Spaces with Countable Bases Are Normal}{regWithCountableBasis}
+    A regular space with a countable basis is normal.
+\end{probox}
+\section{Separation by Continuous Functions}
+Recall that in Proposition \ref{pro:metricSpaceIsNormal}, we proved that every metrisable space is normal. This in turn demonstrates how metrisability is a very good property in topological spaces. In this chapter, we discuss various characterisations and properties of metrisable spaces.
+\begin{thmbox}{Urysohn's Metrisation Theorem}{urysohnMetrisation}
+    Every regular topological space with a countable basis is metrisable.
+\end{thmbox}
+Next, we make use of continuous functions to define an alternative notion of separability.
+\begin{dfnbox}{Separation by a Continuous Function}{separationByCont}
+    Let $X$ be a topological space. For any $A, B \subseteq X$, they are {\color{red} \textbf{separated by a continuous function}} if there exists a continuous function $f \colon X \to \left[0, 1\right]$ such that $f\left(A\right) = \left\{0\right\}$ and $f\left(B\right) = \left\{1\right\}$.
+\end{dfnbox}
+We see that separation by continuous functions is a stronger notion of separability as it offers a quantitative description for disjointness. With this, we can define the following characterisations:
+\begin{dfnbox}{Completely Regular Space}{completelyRegular}
+    A $T_1$ topological space $X$ is {\color{red} \textbf{completely regular}} if for every $x \in X$ and every closed set $A \subseteq X$ with $x \notin A$, $\left\{x\right\}$ and $A$ are separated by a continuous function.
+\end{dfnbox}
+Similarly, we can define \textit{completely normal spaces}:
+\begin{dfnbox}{Completely Normal Space}{completelyNormal}
+    A $T_1$ topological space $X$ is {\color{red} \textbf{completely normal}} if any disjoint closed sets $A, B \subseteq X$ are separated by a continuous function.
+\end{dfnbox}
+Since separability by continuous functions is a stronger condition, we expect the following to be true:
+\begin{probox}{Complete Regularity and Complete Normality}{completeRegAndNorm}
+    Every completely regular space is regular and every completely normal space is normal.
+\end{probox}
+Now, a truly marvellous aspect of normal spaces is that their normality is ``always complete''.
+\begin{lembox}{Urysohn's Lemma}{urysohnLemma}
+    Every normal space is completely normal.
+\end{lembox}
+
+\chapter{Compactness}
+\section{Compact Spaces}
 We next introduce the notion of compact spaces, which are an attempt to generalise the notion of \textbf{closed and bounded} subsets in Euclidean spaces. The idea here is to define compactness as ``having no missing end point''.
 
 The intuition here is that if a space is not compact, i.e., it can extend indefinitely without an end, then there is a way to partition the space into infinitely many open subsets. On the other hand, if the space has a clearly defined boundary, then every possible partition must be finite.
@@ -1399,7 +1414,11 @@ Intuitively, a continuous map should send a compact set to a compact image becau
     Let $f \colon X \to Y$ be continuous, if $X$ is compact, then $f\left(X\right)$ is compact.
     \tcblower
     \begin{proof}
-        Let $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover for $f\left(X\right)$. Note that $\left\{f^{-1}\left(U_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ is an open cover for $X$. Since $X$ is compact, there exists some finite $I \subseteq \Lambda$ such that $\left\{f^{-1}\left(U_i\right)\right\}_{i \in I}$ is a finite sub-cover for $X$. Clearly, $\left\{U_i\right\}_{i \in I}$ is a finite sub-cover for $f\left(X\right)$ and so $f\left(X\right)$ is compact.
+        Let $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover for $f\left(X\right)$. Note that for each $x \in X$, we have $f\left(x\right) \in U_{\lambda}$ for some $\lambda \in \Lambda$ and so $x \in f^{-1}\left(U_{\lambda}\right)$ which is open in $X$ because $f$ is continuous. Therefore, $\left\{f^{-1}\left(U_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ is an open cover for $X$. Since $X$ is compact, there exists some finite $I \subseteq \Lambda$ such that $\left\{f^{-1}\left(U_i\right)\right\}_{i \in I}$ is a finite sub-cover for $X$. For any $y \in f\left(X\right)$, there exists some $x_y \in X$ such that $f\left(x_y\right) = y$. Notice that there exists some $j \in I$ such that $x_y \in f^{-1}\left(U_j\right)$, so $y \in U_j$. Therefore, 
+        \begin{equation*}
+            f\left(X\right) \subseteq \bigcup_{i \in I}U_i
+        \end{equation*}
+        and so $f\left(X\right)$ is compact.
     \end{proof}
 \end{probox}
 Next, we consider the following observation: if $X \coloneqq \left(x_1, x_2\right)$ and $Y \coloneqq \left[y_1, y_2\right]$ are intervals in $\R$, let $N \coloneqq X \times Y$ be a rectangular region in $\R^2$. It is easy to see that if $N$ contains a line segment $\bigl(\left(x_0, y_1\right), \left(x_0, y_2\right)\bigr)$ for some $x_0 \in X$, then $N$ contains a ``tube'' 
@@ -1535,7 +1554,37 @@ We can establish an analogous connection between the density of points distribut
         However, for every $x_i \in X$, there exists some $V_i$ such that $x_i \notin \widebar{V_i}$, which is a contradiction.
     \end{proof}
 \end{probox}
-\subsection{Limit Point Compact Spaces}
+A natural thought is that the product space of compact spaces should be compact. However, it turns out the proof of this innocent claim is not so straightforward. We first define some preliminary concepts.
+\begin{dfnbox}{Partial Order and Total Order}{order}
+    A {\color{red} \textbf{partial order}} on a set $X$ is a binary relation $\leq$ on $X$ such that 
+    \begin{itemize}
+        \item $x \leq x$;
+        \item for any $x, y \in X$, if $x \leq y$ and $y \leq x$, then $x = y$;
+        \item if $x \leq y$ and $y \leq z$, then $x \leq z$.
+    \end{itemize}
+    A {\color{red} \textbf{total order}} on a set $X$ is a partial order on $X$ such that $x \leq y$ or $y \leq x$ for any $x, y \in X$.
+\end{dfnbox}
+Note that a partial order is not necessarily applicable to any pair of elements in the set. However, we can always purposefully choose a subset such that the restricted order becomes a total order. 
+\begin{dfnbox}{Chain}{chain}
+    Let $X$ be a set with a partial order $\leq$. A {\color{red} \textbf{chain}} in $X$ is a set $\mathcal{C} \subseteq \mathcal{P}\left(X\right)$ such that $\leq$ restricted to $\mathcal{C}$ is a total order.
+\end{dfnbox}
+An important result in set theory is \textit{Zorn's lemma}:
+\begin{lembox}{Zorn's Lemma}{zorn}
+    Let $X$ be a set and let $\leq$ be a partial order on $X$. If every chain $\mathcal{C}$ in $X$ has an upper bound in $X$, then $X$ contains a maximal element.
+\end{lembox}
+Zorn's lemma helps prove the following result:
+\begin{probox}{Maximal Collection with the Finite Intersection Property}{maximalFIP}
+    Let $X$ be a set and $\mathcal{A} \subseteq \mathcal{P}\left(X\right)$ have the finite intersection property, then there exists some maximal $\mathcal{D} \subseteq \mathcal{P}\left(X\right)$ with the finite intersection property such that $\mathcal{A} \subseteq \mathcal{D}$.
+\end{probox}
+Following this, we can show that such maximal containing collections exhibit certain special properties. 
+\begin{probox}{Characterisation of the Maximal Containing Collection}{charMaximal}
+    Let $X$ be a set and $\mathcal{A} \subseteq \mathcal{P}\left(X\right)$ be a collection with the finite intersection property. For each maximal collection $\mathcal{D} \subseteq \mathcal{P}\left(X\right)$ with $\mathcal{A} \subseteq \mathcal{D}$ with the finite intersection property,~$\mathcal{D}$ is closed under finite intersections and for every $A \subseteq X$, if $A \cap D \neq \varnothing$ for all $D \in \mathcal{D}$, then $A \in \mathcal{D}$.
+\end{probox}
+All of the above results combined together lead to the following important major theorem:
+\begin{thmbox}{Tychonoff's Theorem}{Tychonoff}
+    If $\left\{X_{\alpha}\right\}_{\alpha \in \Lambda}$ is a family of compact topological spaces, then $\prod_{\alpha \in \Lambda}X_{\alpha}$ is compact.
+\end{thmbox}
+\section{Limit Point and Sequentially Compact Spaces}
 Let us re-visit the motivation of compactness: a space with no missing end points (i.e., end points which are infinitely far away). Now, another way to interpret this statement is that if we fix an infinite subset in the space, then we can always find a limit point of the subset in the space.
 \begin{dfnbox}{Limit Point Compactness}{limPtCompact}
     A topological space $X$ is {\color{red} \textbf{limit point compact}} if every infinite subset of $X$ has a limit point in $X$.
@@ -1562,7 +1611,6 @@ It is possible for a non-compact space to be limit point compact. However, a com
         and so $A$ is finite.
     \end{proof}
 \end{probox}
-\subsection{Sequentially Compact Spaces}
 We can further strengthen the condition by changing ``existence of limit points'' into convergence.
 \begin{dfnbox}{Sequential Compactness}{seqCompact}
     A topological space $X$ is {\color{red} \textbf{sequentially compact}} if every sequence in $X$ has a convergent subsequence.
@@ -1575,7 +1623,7 @@ Intuitively, sequential compactness should be a stronger result than limit point
         Let $X$ be sequentially compact and let $A \subseteq X$ be an infinite subset. Note that there exists a sequence $\left\{a_n\right\}_{n \in \N}$ in $A$, and so we can find a convergent subsequence $\left\{a_{n_i}\right\}_{i \in \N}$ such that $\lim_{i \to \infty}a_{n_i} = a \in X$. It is clear that $a$ is a limit point of $A$ and so $A$ is limit point compact.
     \end{proof}
 \end{probox}
-\subsection{Totally Bounded Spaces}
+\section{Totally Bounded Spaces}
 Suppose we construct an open cover for a space $X$, then intuitively, we could use some open sets which are ``big'' enough to cover the space, such that all the ``small'' subsets of the space can be contained by some single open set in the cover.
 \begin{dfnbox}{Lebesgue Number}{LebesgueNum}
     Let $\mathcal{U}$ be an open cover for a metric space $X$, then $\delta > 0$ is called a {\color{red} \textbf{Lebesgue number}} for $\mathcal{U}$ if for all $S \subseteq X$ with $\mathrm{diam}\left(S\right) < \delta$, there exists some $U \in \mathcal{U}$ such that $S \subseteq U$. 
@@ -1669,7 +1717,7 @@ Total boundedness has the following useful properties:
         \item Every subspace $X$ of $\left(\R^n, \ell_p\right)$ is totally bounded if and only if $X$ is bounded.
     \end{enumerate}
 \end{probox}
-\subsection{Complete Spaces}
+\section{Complete Spaces}
 In elementary real analysis, we examine the notion of convergence with Cauchy sequences. Recall that in $\R^n$, every Cauchy sequence is convergent. However, in general metric spaces, this might not be the case. We now generalise this idea to all metric spaces.
 \begin{dfnbox}{Complete Space}{complete}
     A metric space $X$ is {\color{red} \textbf{complete}} if every Cauchy sequence in $X$ is convergent.
@@ -1716,7 +1764,7 @@ With this very sophisticated result, we can now turn back and prove something wh
 \begin{corbox}{Heine-Borel Theorem}{HeineBorel}
     A subspace $G \subseteq \R^n$ is compact if and only if it is closed and bounded.
 \end{corbox}
-\subsection{Locally Compact Spaces}
+\section{Compactification}
 In the previous section in the study of compactness, we have been treating a space as a single entity. However, another perspective is to view the space as a collection of many singleton ``points''. This motivates us to define compactness point-wise.
 \begin{dfnbox}{Local Compactness}{localCompact}
     A topological space $X$ is {\color{red} \textbf{locally compact}} at $x \in X$ if there exists a compact set $C \subseteq X$ and an open set $U \subseteq X$ such that $x \in U \subseteq C$. We say that $X$ is locally compact if it is locally compact at every $x \in X$.
@@ -1727,11 +1775,7 @@ It is easy to see that $\R^n$ is locally compact but $\Q$ is not locally compact
 
 We can also show that $\R^{\omega}$ with the product topology is not locally compact.
 
-Is there any connection between locally compact spaces and compact spaces? In fact, by going one step further, we may wish to find a way to transform a general space into a compact Hausdorff space. Such a transformation should preserve the structure of the pre-image space. In the context of topological spaces, this means that open spaces should be preserved.
-\begin{dfnbox}{Homeomorphism}{homeomorphism}
-    A function $h \colon X \to Y$ between topological spaces is a {\color{red} \textbf{homeomorphism}} if it is a bijective open map.
-\end{dfnbox}
-In other words, a bijection $h$ between topological spaces is a homeomorphism if both $h$ and $h^{-1}$ are continuous. Sometimes, $h$ is known as \textit{bi-continuous}. Roughly speaking, a homeomorphism is a reversible deformation such that open sets are still open before and after the deformation. In particular, a homeomorphism can be used to construct a compact Hausdorff space from a general topological space.
+Is there any connection between locally compact spaces and compact spaces? In fact, by going one step further, we may wish to find a way to transform a general space into a compact Hausdorff space. Such a transformation should preserve the structure of the pre-image space. 
 \begin{dfnbox}{Compactification}{compactification}
     Let $X$ be a topological space and $Y$ be a compact Hausdorff space, then $Y$ is a {\color{red} \textbf{compactification}} of $X$ if there exists a map $h \colon X \to Y$ which is homeomorphic onto $h\left(X\right)$ such that $\widebar{h\left(X\right)} = Y$. If $Y \setminus h\left(X\right)$ is a singleton set, then $Y$ is a {\color{red} \textbf{one-point compactification}} of $X$.
 \end{dfnbox}
@@ -1766,7 +1810,7 @@ By using the above results, we propose the last conclusion:
 \begin{probox}{Locally Compact Hausdorff Spaces and Homeomorphisms}{characteriseLocallyCompactHausdorffHomeomorphism}
     A topological space $X$ is locally compact and Hausdorff if and only if there exists a compact Hausdorff space $Y$ such that $X$ is homeomorphic to some open subset $A \subseteq Y$.
 \end{probox}
-\subsection{Metric Completion}
+\section{Metric Completion}
 Consider $f \colon X \to Y$ to be a map. It is clear that we can write $f$ as a set of ordered pairs from $X \times Y$. By treating $X$ as an index set, every such map $f$ can be represented as a point from the product space 
 \begin{equation*}
     Y^X \coloneqq \prod_{x \in X}Y.
@@ -1832,8 +1876,82 @@ To obtain a compactification, we require quite a number of conditions. However, 
         \left. f\right\rvert_{\phi\left(X\right)} = \phi' \circ \phi^{-1}.
     \end{equation*}
 \end{thmbox}
-\chapter{Connectivity of Topological Spaces}
-\section{Connectedness}
+\section{Equicontinuity}
+\begin{dfnbox}{Topology of Compact Convergence}{compactConv}
+    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. For each $f \in Y^X$ and each compact set $C \subseteq X$, define 
+    \begin{equation*}
+        B\left(f, C, \epsilon\right) \coloneqq \left\{g \in Y^X \colon \sup_{x \in C}\left\{d\bigl(f\left(x\right), g\left(x\right)\bigr)\right\} < \epsilon\right\}
+    \end{equation*}
+    where $\epsilon > 0$. The topology generated by
+    \begin{equation*}
+        \mathcal{B} \coloneqq \left\{B\left(f, C, \epsilon\right) \colon f \in Y^X, C \subseteq X \textrm{ is compact}, \epsilon > 0\right\}
+    \end{equation*} 
+    is called the {\color{red} \textbf{topology of compact convergence}} on $Y^X$.
+\end{dfnbox}
+This topology is so named due to the fact that $\left\{f_n\right\}_{n \in \N}$ in $Y^X$ converges to $f$ with respect to the topology if and only if $\left\{\left. f_n \right\rvert_C\right\}_{n \in \N}$ converges to $\left. f\right\rvert_C$ uniformly for any compact set $C \subseteq X$.
+\begin{dfnbox}{Compact-Open Topology}{compactOpen}
+    Let $X$ and $Y$ be topological spaces. For every compact set $C \subseteq X$ and open set $U \subseteq Y$, define 
+    \begin{equation*}
+        S\left(C, U\right) \coloneqq \left\{g \in C\left(X, Y\right) \colon g\left(C\right) \subseteq U\right\}.
+    \end{equation*}
+    The topology generated by the sub-basis
+    \begin{equation*}
+        \mathcal{S} \coloneqq \left\{S\left(C, U\right) \colon C \subseteq X \textrm{ is compact}, U \subseteq Y \textrm{ is open}\right\}
+    \end{equation*}
+    is the {\color{red} \textbf{compact-open topology}} on $C\left(X, Y\right)$.
+\end{dfnbox}
+The next result shows that every topology of compact convergence is actually a compact-open topology.
+\begin{probox}{Topology of Compact Convergence over Continuous Maps}{compactConvToCompactOpen}
+    Let $X$ is a topological space and $\left(Y, d\right)$ is a metric space. Let $\mathcal{T}_C$ be the topology of compact convergence and $\mathcal{T}_O$ be the compact-open topology on $C\left(X, Y\right)$, then $\mathcal{T}_C = \mathcal{T}_O$.
+\end{probox}
+\begin{dfnbox}{Compactly Generated Space}{compactGen}
+    A topological space $X$ is {\color{red} \textbf{compactly generated}} if $A$ is open in $X$ if and only if $A \cap C$ is open in $C$ for every compact set $C$ in $X$.
+\end{dfnbox}
+Intuitively, we can flip the condition in the above definition to base on closed sets.
+\begin{probox}{Alternative Definition for Compactly Generated Spaces}{altCompactGen}
+    A topological space $X$ is compactly generated if $A$ is closed in $X$ if and only if $A \cap C$ is closed in $C$ for every compact set $C$ in $X$.
+\end{probox}
+Let us now try to characterise compactly generated spaces.
+\begin{probox}{Sufficient Conditions for Compactly Generated Spaces}{suffCondCompactGen}
+    A topological space $X$ is compactly generated if it is locally compact or first countable.
+\end{probox}
+The name ``compactly generated'' suggests that such a space is completely characterised by its compact subsets. This has important implications on how we could characterise continuity over the space.
+\begin{probox}{Continuity in Compactly Generated Spaces}{contCompactGen}
+    Let $X$ and $Y$ be topological spaces. If $X$ is compactly generated, then a map $f \colon X \to Y$ is continuous if and only if for each compact set $C \subseteq X$, $\left.f\right\rvert_C$ is continuous.
+\end{probox}
+This leads to the following corollary:
+\begin{corbox}{The Set of Continuous Maps Is Closed}{contMapSetClosed}
+    Let $X$ be a compactly generated topological space and $\left(Y, d\right)$ be a metric space, then $C\left(X, Y\right) \subseteq Y^X$ is closed under the topology of compact convergence.
+\end{corbox}
+\begin{dfnbox}{Equicontinuity}{equicontinuity}
+    Let $X$ be a topological space, $\left(Y, d\right)$ be a metric space and $\mathcal{Y} \subseteq C\left(X, Y\right)$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous at $x_0 \in X$}} if for all $\epsilon > 0$, there exists an open set $U \subseteq Y$ such that for all $f \in \mathcal{Y}$, 
+    \begin{equation*}
+        d\bigl(f\left(x_0\right), f\left(x\right)\bigr) < \epsilon
+    \end{equation*}
+    for all $x \in U$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous}} if it is equicontinuous at every $x_0 \in X$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous}} if it is equicontinuous at every $x \in X$.
+\end{dfnbox}
+\begin{probox}{Sufficient Condition for Equicontinuity}{suffCondEquicontinuity}
+    Let $X$ be a topological space, $\left(Y, d\right)$ be a metric space and $\widebar{\rho}$ be the uniform metric on $C\left(X, Y\right)$. If $\mathcal{Y} \subseteq C\left(X, Y\right)$ is totally bounded with respect to $\widebar{\rho}$, then it is equicontinuous.
+\end{probox}
+\begin{probox}{Property of Equicontinuous Families}{equicontinuousFamilies}
+    Let $\mathcal{G} \subseteq C\left(X, Y\right)$ be an equicontinuous family. If $\mathcal{T}_C$ and $\mathcal{T}_O$ are the topology of compact convergence and the compact-open topology respectively, then $\mathcal{T}_C = \mathcal{T}_O$.
+\end{probox}
+\begin{probox}{Continuity of Evaluation}{contEvaluation}
+    Let $X$ be a locally compact Hausdorff space and $\left(Y, d\right)$ be a metric space. If $C\left(X, Y\right)$ is equipped with the compact-open topology, then the evaluation map $e \colon X \times C\left(X, Y\right) \to Y$ defined by 
+    \begin{equation*}
+        e\left(x, f\right) = f\left(x\right)
+    \end{equation*}
+    is continuous.
+\end{probox}
+\begin{thmbox}{Arzela-Ascoli Theorem}{ArzelaAscoli}
+    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. For each $\mathcal{Y} \subseteq C\left(X, Y\right)$, define 
+    \begin{equation*}
+        \mathcal{Y}_a \coloneqq \left\{f\left(a\right) \colon f \in \mathcal{Y}\right\}
+    \end{equation*}
+    for each $a \in X$. If $C\left(X, Y\right)$ is equipped with the compact-open topology, then $\widebar{\mathcal{Y}}$ is compact if it is equicontinuous and $\widebar{\mathcal{Y}_a}$ is compact for all $a \in X$. The converse is true if $X$ is locally compact and Hausdorff. 
+\end{thmbox}
+\chapter{Connectedness}
+\section{Connected Spaces}
 Colloquially, when we are talking about a space or ``region'', we can distinguish between a ``contiguous'' region and a ``disconnected'' region based on whether one has to ``jump'' across ``gaps'' in order to traverse in the region. In this section, we will formalise this notion of connectedness.
 \begin{dfnbox}{Separation}{separation}
     Let $X$ be a topological space. A {\color{red} \textbf{separation}} of $X$ is a pair of disjoint non-empty open subsets $U, V \subseteq X$ such that $U \cup V = X$. A space is {\color{red} \textbf{connected}} if it does not contain any separation.    
