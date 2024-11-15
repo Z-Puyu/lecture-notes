@@ -1291,7 +1291,7 @@ We shall prove that a finite co-finite topological space is always $T_1$.
 \section{Regular Spaces}
 Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq X$ to seclude $x$ from the rest of the space, then $X \setminus U$ is closed. In a more ideal situation, we may wish to aim for a secluding open set which is as small as possible. 
 \begin{dfnbox}{Regular Space}{regular}
-    A topological space $X$ is {\color{red} \textbf{regular}} or {\color{red} \textbf{$T_3$}} if for any $x \in X$ and any closed set $B \in X$ with $x \notin B$, there exists disjoint open sets $U, V \subseteq X$ with $x \in U$ and $B \subseteq V$.
+    A $T_1$ topological space $X$ is {\color{red} \textbf{regular}} or {\color{red} \textbf{$T_3$}} if for any $x \in X$ and any closed set $B \in X$ with $x \notin B$, there exists disjoint open sets $U, V \subseteq X$ with $x \in U$ and $B \subseteq V$.
 \end{dfnbox}
 Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space $X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
 \begin{probox}{Characterisation of Regular Spaces}{regularSpace}
@@ -1308,7 +1308,7 @@ Notice that every regular space is $T_1$. Roughly speaking, if we seclude a poin
 \section{Normal Spaces}
 Note that in a regular space, we are able to separate every point from an arbitrary closed set. A strengthened version of this property is that we can also separate every pair of disjoint closed sets in the space. 
 \begin{dfnbox}{Normal Space}{normal}
-    A topological space $X$ is {\color{red} \textbf{normal}} or {\color{red} \textbf{$T_4$}} if for any disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V \subseteq X$ such that $A \subseteq U$ and $B \subseteq V$.
+    A $T_1$ topological space $X$ is {\color{red} \textbf{normal}} or {\color{red} \textbf{$T_4$}} if for any disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V \subseteq X$ such that $A \subseteq U$ and $B \subseteq V$.
 \end{dfnbox}
 Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. We can characterise a normal space using the following result:
 \begin{probox}{Characterisation of Normal Spaces}{normalSpace}
