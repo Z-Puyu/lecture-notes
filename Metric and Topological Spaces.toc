@@ -1,30 +1,30 @@
 \contentsline {chapter}{\numberline {1}Topologies and Metrics}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Topological Spaces}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Metric Spaces}{6}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Subspace Topologies}{12}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Closed Sets}{14}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Convergence and Continuity}{18}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Product Space}{25}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Quotient Spaces}{32}{section.1.7}%
-\contentsline {section}{\numberline {1.8}Homeomorphism}{34}{section.1.8}%
-\contentsline {chapter}{\numberline {2}Countability Axioms}{36}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Second Countable Spaces}{36}{section.2.1}%
-\contentsline {section}{\numberline {2.2}First Countable Spaces}{36}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Lindelof Spaces}{39}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Separation Axioms}{40}{chapter.3}%
-\contentsline {section}{\numberline {3.1}$T_1$ Spaces}{40}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Hausdorff Spaces}{41}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Regular Spaces}{42}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Normal Spaces}{43}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Separation by Continuous Functions}{44}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Compactness}{46}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Compact Spaces}{46}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limit Point and Sequentially Compact Spaces}{54}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Totally Bounded Spaces}{55}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Complete Spaces}{58}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Compactification}{60}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Metric Completion}{62}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Equicontinuity}{64}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Connectedness}{68}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Connected Spaces}{68}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Connected Components}{70}{section.5.2}%
+\contentsline {section}{\numberline {1.3}Subspace Topologies}{16}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Closed Sets}{19}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Convergence and Continuity}{23}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Product Space}{31}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Quotient Spaces}{43}{section.1.7}%
+\contentsline {section}{\numberline {1.8}Topological Embeddings}{47}{section.1.8}%
+\contentsline {chapter}{\numberline {2}Countability Axioms}{49}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Second Countable Spaces}{49}{section.2.1}%
+\contentsline {section}{\numberline {2.2}First Countable Spaces}{49}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Lindelof Spaces}{52}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Separation Axioms}{53}{chapter.3}%
+\contentsline {section}{\numberline {3.1}$T_1$ Spaces}{53}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Hausdorff Spaces}{54}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Regular Spaces}{55}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Normal Spaces}{56}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Separation by Continuous Functions}{57}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Compactness}{59}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Compact Spaces}{59}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Limit Point and Sequentially Compact Spaces}{67}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Totally Bounded Spaces}{68}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Complete Spaces}{71}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Compactification}{73}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Metric Completion}{75}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Equicontinuity}{77}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Connectedness}{80}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Connected Spaces}{80}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Connected Components}{82}{section.5.2}%
