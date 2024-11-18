@@ -13,18 +13,18 @@
 \contentsline {section}{\numberline {2.3}Lindelof Spaces}{56}{section.2.3}%
 \contentsline {chapter}{\numberline {3}Separation Axioms}{58}{chapter.3}%
 \contentsline {section}{\numberline {3.1}$T_1$ Spaces}{58}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Hausdorff Spaces}{59}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Regular Spaces}{60}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Normal Spaces}{61}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Separation by Continuous Functions}{62}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Compactness}{64}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Compact Spaces}{64}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limit Point and Sequentially Compact Spaces}{72}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Totally Bounded Spaces}{73}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Complete Spaces}{76}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Compactification}{78}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Metric Completion}{80}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Equicontinuity}{82}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Connectedness}{85}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Connected Spaces}{85}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Connected Components}{87}{section.5.2}%
+\contentsline {section}{\numberline {3.2}Hausdorff Spaces}{60}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Regular Spaces}{62}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Normal Spaces}{63}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Separation by Continuous Functions}{66}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Compactness}{70}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Compact Spaces}{70}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Limit Point and Sequentially Compact Spaces}{78}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Totally Bounded Spaces}{79}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Complete Spaces}{82}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Compactification}{84}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Metric Completion}{86}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Equicontinuity}{88}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Connectedness}{91}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Connected Spaces}{91}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Connected Components}{93}{section.5.2}%

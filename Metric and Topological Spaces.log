@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 NOV 2024 16:30
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 NOV 2024 20:40
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1499,24 +1499,34 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [58
 
-] [59]
-Underfull \hbox (badness 10000) in paragraph at lines 1827--1830
+] [59] [60]
+Underfull \hbox (badness 10000) in paragraph at lines 1847--1850
 
  []
 
-[60] [61] [62] [63]
+[61] [62]
+Underfull \hbox (badness 10000) in paragraph at lines 1918--1923
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1918--1923
+
+ []
+
+[63] [64] [65] [66] [67] [68] [69]
 Chapter 4.
-[64
+[70
 
-] [65] [66] [67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80]
+] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86]
 
-LaTeX Warning: Reference `dfh:isometric' on page 81 undefined on input line 2401.
+LaTeX Warning: Reference `dfh:isometric' on page 87 undefined on input line 2568.
 
-[81] [82] [83] [84]
+[87] [88] [89] [90]
 Chapter 5.
-[85
+[91
 
-] [86] [87] [88] [89] 
+] [92] [93] [94] [95] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 
@@ -1529,12 +1539,12 @@ Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not 
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 37141 strings out of 478630
- 775571 string characters out of 5847730
- 1900012 words of memory out of 5000000
- 56612 multiletter control sequences out of 15000+600000
+ 37154 strings out of 478630
+ 775812 string characters out of 5847730
+ 1903012 words of memory out of 5000000
+ 56625 multiletter control sequences out of 15000+600000
  521813 words of font info for 127 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (89 pages).
+Output written on Metric and Topological Spaces.pdf (95 pages).

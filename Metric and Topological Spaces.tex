@@ -1792,7 +1792,7 @@ It is clear then that a $T_1$ space is a space in which every two distinct point
         is open, and so $\left\{x\right\}$ is closed. Conversely, suppose that for all $x \in X$, the set $\left\{x\right\}$ is closed. For any $x \in X$, take any $y \in X$ with $x \neq y$. Notice that $y \in X \setminus \left\{x\right\}$, which is open. Therefore, $X$ is $T_1$.
     \end{proof}
 \end{probox}
-Since $T_1$ spaces guarantee pair-wise distinguishability, it is ``easy'' to preserve the structure of a $T_1$ space under transformations. In fact, recall that in Definition \ref{dfn:topologicalEmbedding}, we defined a structure-preserving map to embed a space into a different space. In a $T_1$ space, we will prove that the existence of such a map is guaranteed, and that it is unique to an isometry.
+Since $T_1$ spaces guarantee pair-wise distinguishability, it is ``easy'' to preserve the structure of a $T_1$ space under transformations. In fact, recall that in Definition \ref{dfn:topologicalEmbedding}, we defined a structure-preserving map to embed a space into a different space. In a $T_1$ space, we will prove that the existence of such a map is guaranteed.
 \begin{thmbox}{Embedding Theorem}{embedding}
     Let $X$ be a $T_1$ space. If $\left\{f_{\alpha}\right\}_{\alpha \in \Lambda}$ is a family of continuous functions from $X$ to $\R$ such that for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists some $\alpha \in \Lambda$ with~$f_{\alpha}\left(x\right) > 0$ and $f_{\alpha}\left(X \setminus U\right) = \left\{0\right\}$, then the map $F \colon X \to \R^{\Lambda}$ defined by 
     \begin{equation*}
@@ -1801,7 +1801,29 @@ Since $T_1$ spaces guarantee pair-wise distinguishability, it is ``easy'' to pre
     is a topological embedding.
     \tcblower
     \begin{proof}
-        By Proposition \ref{pro:continuousProj}, $F$ is continuous because all of its component maps, the $f_{\alpha}$'s, are continuous.
+        By Proposition \ref{pro:continuousProj}, $F$ is continuous because all of its component maps, the~$f_{\alpha}$'s, are continuous. Take any $x, y \in X$ with $x \neq y$. Since $X$ is $T_1$, by Proposition \ref{pro:T1Space}, $X \setminus \left\{y\right\}$ is open and contains $x$. Therefore, there exists some $\alpha \in \Lambda$ with~$f_{\alpha}\left(x\right) > 0$ and $f_{\alpha}\left(y\right) = 0$ because $y \in X \setminus \left(X \setminus \left\{y\right\}\right)$. Therefore, $F\left(x\right) \neq F\left(y\right)$ and so $F$ is injective. In particular, this shows that $F$ is a continuous bijection onto~$F\left(X\right)$, so it suffices to further prove that $F$ is an open map. Take any open set $U \subseteq X$ and any $\mathbfit{z} \in F\left(U\right)$. Let $x \in U$ be such that $F\left(x\right) = \mathbfit{z}$. Note that there exists some $\alpha \in \Lambda$ such that $f_{\alpha}\left(x\right) > 0$ and $f\left(X \setminus U\right) = 0$. Define 
+        \begin{equation*}
+            V_{\mathbfit{z}} \coloneqq \pi_{\alpha}^{-1}\bigl(\left(0, \infty\right)\bigr) \subseteq \R^{\Lambda}, \qquad W_{\mathbfit{z}} = V_{\mathbfit{z}} \cap F\left(X\right).
+        \end{equation*}
+        Note that $V_{\mathbfit{z}}$ is open, so $W_{\mathbfit{z}} \subseteq F\left(X\right)$ is open in $F\left(X\right)$. Consider 
+        \begin{equation*}
+            \pi_{\alpha}\left(\mathbfit{z}\right) = f_{\alpha}\left(x\right) > 0,
+        \end{equation*}
+        so $\mathbfit{z} \in V_{\mathbfit{z}} \subseteq W_{\mathbfit{z}}$. For any $y \in X \setminus U$, we have 
+        \begin{equation*}
+            \pi_{\alpha}\bigl(F\left(y\right)\bigr) = f_{\alpha}\left(y\right) = 0,
+        \end{equation*}
+        so $F\left(y\right) \in F\left(X\right) \setminus V_{\mathbfit{z}}$, which implies that $F\left(X \setminus U\right) \subseteq F\left(X\right) \setminus V_{\mathbfit{z}}$. Since $F$ is injective, 
+        \begin{align*}
+            F\left(X\right) \setminus F\left(U\right) & = F\left(X \setminus U\right) \\
+            & \subseteq F\left(X\right) \setminus V_{\mathbfit{z}} \\
+            & = F\left(X\right) \setminus W_{\mathbfit{z}}.
+        \end{align*}
+        Therefore, $W_{\mathbfit{z}} \subseteq F\left(U\right)$, which implies that 
+        \begin{equation*}
+            F\left(U\right) = \bigcup_{\mathbfit{z} \in F\left(U\right)}W_{\mathbfit{z}}
+        \end{equation*}
+        which is open in $F\left(X\right)$. Therefore, $F$ is a topological embedding.
     \end{proof}
 \end{thmbox}
 \section{Hausdorff Spaces}
@@ -1813,20 +1835,57 @@ It is easy to see that every Hausdorff space is $T_1$. We can check that every m
 \begin{equation*}
     r \coloneqq \frac{1}{3}d\left(x, y\right),
 \end{equation*}
-and so the $r$-neighbourhoods of $x$ and $y$ will always be disjoint. It can also be easily checked that the discrete topology of any set is Hausdorff. 
-
-Therefore, the following result is easy to show:
+and so the $r$-neighbourhoods of $x$ and $y$ are always disjoint. One can also easily check that the discrete topology of any set is Hausdorff. Hence, the following result is easy to show:
 \begin{probox}{Finite Sets in Metric Spaces Are Closed}{finiteSetInMetric}
     Let $X$ be a metric space, then all finite sets in $X$ are closed.
 \end{probox}
-We shall prove that a finite co-finite topological space is always $T_1$.
-\begin{probox}{Co-finite Topology Is $T_1$}{T1Cofinite}
+As another example, we prove that a finite co-finite topological space is always Hausdorff.
+\begin{probox}{Separation in Co-finite Topology}{T1Cofinite}
     Let $X$ be a topological space with the co-finite topology $\mathcal{T}$, then $X$ is $T_1$. If $X$ is finite, then~$X$ is Hausdorff.
     \tcblower
     \begin{proof}
-        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If $X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
+        Take any $x, y \in X$ with $x \neq y$. Clearly, $x \in X \setminus \left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is $T_1$. If~$X$ is finite, then $X \setminus \left\{y\right\}$ is finite and so $\left\{y\right\} \in \mathcal{T}$. Therefore, $X$ is Hausdorff.
         \\\\
-        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any~$x \in X$ and $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have $y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
+        We shall also prove that if $X$ is infinite, then $X$ is not Hausdorff. Take any~$x \in X$ and any $U \in \mathcal{T}$ with $x \in U$, then $X \setminus U$ is finite. For all $y \in X$ with $y \neq x$, we have~$y \in X \setminus U$. However, for all $V \subseteq X \setminus U$, we have $V \notin \mathcal{T}$ because $X \setminus V$ is infinite. Therefore, $X$ is not Hausdorff.
+    \end{proof}
+\end{probox}
+Since finite product preserves open sets, it is expected that finite product of Hausdorff spaces is still Hausdorff.
+\begin{probox}{Finite Product Preserves Hausdorff Spaces}{finiteProductHausdorff}
+    That the product of two Hausdorff spaces is Hausdorff.
+    \tcblower
+    \begin{proof}
+        Let $X$ and $Y$ be Hausdorff spaces and take any $\left(x_1, y_1\right), \left(x_2, y_2\right) \in X \times Y$ such that $\left(x_1, y_1\right) \neq \left(x_2, y_2\right)$. Without loss of generality, assume $x_1 \neq x_2$, then there exists open sets $U_1, U_2 \subseteq X$ such that $U_1 \cap U_2 = \varnothing$, $x_1 \in U_1$ and $x_2 \in U_2$. Note that there exists some open sets $V_1, V_2 \subseteq Y$ such that $y_1 \in V_1$ and $y_2 \in V_2$, and so 
+        \begin{equation*}
+            \left(x_1, y_1\right) \in U_1 \times V_1 \quad \textrm{and} \quad \left(x_2, y_2\right) \in U_2 \times V_2.
+        \end{equation*}
+        Observe that $U_1 \times V_1$ and $U_2 \times V_2$ both are open in $X \times Y$ and that
+        \begin{equation*}
+            \left(U_1 \times V_1\right) \cap \left(U_2 \times V_2\right) = \varnothing,
+        \end{equation*}
+        so $X \times Y$ is Hausdorff.
+    \end{proof}
+\end{probox}
+An interesting characterisation of Hausdorff spaces makes use of a notion called ``diagonal'', which is an abstraction of the diagonal of polygons in geometry.
+\begin{dfnbox}{Diagonal}{diag}
+    Let $X$ be a topological space, then the {\color{red} \textbf{diagonal}} of $X$ is defined as 
+    \begin{equation*}
+        \Delta \coloneqq \left\{\left(x, x\right) \colon x \in X\right\}.
+    \end{equation*}
+\end{dfnbox}
+The characterisation states the following:
+\begin{probox}{Characterisation of Hausdorff Spaces with Closed Diagonals}{charHausdorffDiag}
+    A topological space $X$ is Hausdorff if and only if its diagonal is closed in $X \times X$ with the product topology.
+    \tcblower
+    \begin{proof}
+        Define 
+        \begin{equation*}
+            \Delta' \coloneqq X \times X \setminus \Delta = \left\{\left(x, y\right) \in X \times X \colon x \neq y\right\}.
+        \end{equation*}
+        Suppose that $X$ is Hausdorff, then for any $\left(x, y\right) \in \Delta'$, there exist open sets $U_x, U_y \subseteq X$ with $U_x \cap U_y = \varnothing$ such that $x \in U_x$ and $y \in U_y$. Therefore, $\left(x, y\right) \in U_x \times U_y$, which is open in $X \times X$. Notice that 
+        \begin{equation*}
+            \Delta' = \bigcup_{\left(x, y\right) \in \Delta'}U_x \times U_y,
+        \end{equation*}
+        so $\Delta'$ is open in $X \times X$. Therefore, $\Delta$ is closed. Conversely, suppose that $\Delta$ is closed, then $\Delta'$ is open. Take any $x, y \in X$ with $x \neq y$, then $\left(x, y\right) \in \Delta'$ and so there exist some open sets $V_x, V_y \subseteq X$ such that $\left(x, y\right) \in V_x \times V_y \subseteq \Delta'$. We claim that $V_x \cap V_y = \varnothing$. Suppose on contrary that there exists some $z \in V_x \cap V_y$, then $\left(z, z\right) \in V_x \times V_y \subseteq \Delta'$ and so $z \neq z$, which is not possible. Therefore, $V_x$ and $V_y$ are disjoint open sets in $X$ such that $x \in V_x$ and $y \in V_y$, and so $X$ is Hausdorff.
     \end{proof}
 \end{probox}
 \section{Regular Spaces}
@@ -1834,7 +1893,7 @@ Suppose we fix a point $x$ in a $T_1$ space $X$ and use an open set $U \subseteq
 \begin{dfnbox}{Regular Space}{regular}
     A $T_1$ topological space $X$ is {\color{red} \textbf{regular}} or {\color{red} \textbf{$T_3$}} if for any $x \in X$ and any closed set $B \in X$ with $x \notin B$, there exists disjoint open sets $U, V \subseteq X$ with $x \in U$ and $B \subseteq V$.
 \end{dfnbox}
-Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space $X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
+Notice that every regular space is $T_1$. Roughly speaking, if we seclude a point $x$ in a $T_1$ space~$X$ using an open set $U$, then the space is regular if we can ``shrink'' $U$ into a smaller open set $V$ and ``expand'' $X \setminus U$ in to a bigger set which is open.
 \begin{probox}{Characterisation of Regular Spaces}{regularSpace}
     A topological space $X$ is regular if and only if for any $x \in X$ and any open set $U \subseteq X$ with $x \in U$, there exists an open set $V \subseteq X$ with $x \in V$ such that $\widebar{V} \subseteq U$.
     \tcblower
@@ -1851,18 +1910,26 @@ Note that in a regular space, we are able to separate every point from an arbitr
 \begin{dfnbox}{Normal Space}{normal}
     A $T_1$ topological space $X$ is {\color{red} \textbf{normal}} or {\color{red} \textbf{$T_4$}} if for any disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V \subseteq X$ such that $A \subseteq U$ and $B \subseteq V$.
 \end{dfnbox}
-Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. We can characterise a normal space using the following result:
+Notice that every normal space is $T_1$. In fact, a normal space is regular, a regular space is Hausdorff, and a Hausdorff space is $T_1$. 
+\begin{probox}{Relationship between Separation Axioms}{relationshipSepAxioms}
+    Every $T_4$ space is $T_3$, every $T_3$ space is $T_2$ and every $T_2$ space is $T_1$.
+    \tcblower
+    \begin{proof}
+        Let $X$ be a topological space. Suppose that $X$ is $T_4$. Note that $X$ is $T_1$, so~$\left\{x\right\}$ is closed for all $x \in X$ by Proposition \ref{pro:T1Space}. Take any $x \in X$ and any closed set~$B \subseteq X$ with $x \notin B$, then $\left\{x\right\}$ and $B$ are disjoint closed sets. Therefore, there exist disjoint open sets $U, V \subseteq X$ such that $\left\{x\right\} \subseteq U$ and $B \subseteq V$ since $X$ is $T_4$. This means that~$x \in U$, which implies that $X$ is $T_3$.
+        \\\\
+        Suppose that $X$ is $T_3$, then $X$ is $T_1$. Take any $x, y \in X$ with $x \neq y$, then by Proposition \ref{pro:T1Space}, $\left\{y\right\}$ is closed in $X$ and clearly $x \notin \left\{y\right\}$. Therefore, there exist disjoint open sets $U, V \subseteq X$ such that $x \in U$ and $\left\{y\right\} \in V$. This means that $y \in V$ and so $X$ is~$T_2$.
+        \\\\
+        Suppose that $X$ is $T_2$, then for any $x, y \in X$ with $x \neq y$, there exist disjoint open sets $U, V \subseteq X$ such that $x \in U$ and $y \in V$. Notice that $y \notin U$ and so $X$ is $T_1$.
+    \end{proof}
+\end{probox}
+We can characterise a normal space using the following result:
 \begin{probox}{Characterisation of Normal Spaces}{normalSpace}
     A topological space $X$ is normal if and only if for any closed set $A \subseteq X$ and any open set~$U \subseteq X$ with $A \subseteq U$, there exists some open set $V \subseteq X$ such that $A \subseteq V$ and $\widebar{V} \subseteq U$.
     \tcblower
     \begin{proof}
-        Suppose that $X$ is normal. Take any closed subset $A \subseteq X$ and any open set $U$ with $A \subseteq U$. Note that $B \coloneqq X \setminus U$ is closed and $A \cap B = \varnothing$, so there exists disjoint open sets $W_A, W_B \subseteq X$ such that $A \subseteq W_A$ and $B \subseteq W_B$. Take $W \coloneqq X \setminus W_B \subseteq X \setminus B = U$, which is closed, then 
+        Suppose that $X$ is normal. Take any closed subset $A \subseteq X$ and any open set $U$ with $A \subseteq U$. Note that $B \coloneqq X \setminus U$ is closed and $A \cap B = \varnothing$, so there exists disjoint open sets $W_A, W_B \subseteq X$ such that $A \subseteq W_A$ and $B \subseteq W_B$. Since $W_A \cap W_B = \varnothing$, we have~$W_A \subseteq X \setminus W_B$. However, $X \setminus W_B$ is closed, and so $\widebar{W_A} \subseteq X \setminus W_B$. Take~$V \coloneqq W_A$, then $A \subseteq V$ and 
         \begin{equation*}
-            W_A \subseteq X \setminus W_B = W \subseteq U.
-        \end{equation*}
-        Since $W_A$ is open, this means that $W_A \subseteq \mathring{W}$. Take $V \coloneqq \mathring{W}$, then 
-        \begin{equation*}
-            A \subseteq V \subseteq \widebar{V} = W \subseteq U.
+            \widebar{V} = \widebar{W_A} \subseteq X \setminus W_B \subseteq X \setminus B = U.
         \end{equation*}
         Conversely, suppose that for every closed $A \subseteq X$ and every open $U \subseteq X$ with $A \subseteq U$, there exists an open set $V \subseteq X$ with $A \subseteq V$ such that $\widebar{V} \subseteq U$. Let $A, B \subseteq X$ be any disjoint closed sets with $A \cap B = \varnothing$ and take $U \coloneqq X \setminus B$, then there exists some open set $V \subseteq X$ with $A \subseteq V$ and $\widebar{V} \subseteq U$. Take $W \coloneqq X \setminus \widebar{V}$ which is open, then $B \subseteq W$ because $B \cap \widebar{V} \subseteq B \cap U = \varnothing$. Therefore, $X$ is normal.
     \end{proof}
@@ -1870,21 +1937,57 @@ Notice that every normal space is $T_1$. In fact, a normal space is regular, a r
 Recall that we have argued that every metric space is Hausdorff using a simple argument. In fact, we can directly prove a much stronger result that every metric space is normal.
 \begin{probox}{Every Metrisable Space Is Normal}{metricSpaceIsNormal}
     Every metrisable space is normal.
+    \tcblower
+    \begin{proof}
+        Let $\left(X, d\right)$ be a metric space and $A, B \subseteq X$ be disjoint closed sets in the metrisable topology. For each $a \in A$, there exists some $\epsilon_a > 0$ such that $B_{\epsilon_a}\left(a\right) \subseteq A$. Similarly, for each $b \in B$, there exists some $\epsilon_b > 0$ such that $B_{\epsilon_b}\left(b\right) \subseteq B$. Define 
+        \begin{equation*}
+            U \coloneqq \bigcup_{a \in A}B_{\epsilon_a}\left(a\right), \qquad V \coloneqq \bigcup_{b \in B}B_{\epsilon_b}\left(b\right),
+        \end{equation*}
+        then $A \subseteq U$ and $B \subseteq V$, where both $U$ and $V$ are open. We claim that $U \cap V = \varnothing$. Suppose on contrary that there exists some $x \in U \cap V$, then there exists some $\alpha \in A$ and $\beta \in B$ such that $x \in B_{\epsilon_{\alpha}}\left(\alpha\right) \cap B_{\epsilon_{\beta}}\left(\beta\right) \subseteq A \cap B = \varnothing$, which is a contradiction. Therefore, $X$ is normal.
+    \end{proof}
 \end{probox}
 Notice that we get regularity from a normal space for free. Now in the converse direction, we wish to investigate what is the condition which will lead to normality from a regular space.
-\begin{probox}{Regular Spaces with Countable Bases Are Normal}{regWithCountableBasis}
-    A regular space with a countable basis is normal.
+\begin{probox}{Second Countable Regular Spaces Are Normal}{regWithCountableBasis}
+    Every second countable regular space is normal.
+    \tcblower
+    \begin{proof}
+        Let $X$ be a second countable regular space and $A, B \subseteq X$ be disjoint closed sets. By Definition \ref{dfn:regular}, for every $a \in A$, there exists some open set $U_a \subseteq X$ with $a \in U_a$ but $B \cap U_a = \varnothing$. By Proposition \ref{pro:regularSpace}, there exists some open set $V_a \subseteq X$ such that 
+        \begin{equation*}
+            a \in V_a \subseteq \widebar{V_a} \subseteq U_a
+        \end{equation*}
+        for all $a \in A$. Fix a countable basis $\mathcal{B}$ for $X$, then there exists some $B_a \in \mathcal{B}$ such that~$a \in B_a \subseteq V_a$ for all $a \in A$. Define 
+        \begin{equation*}
+            \mathcal{U}_A \coloneqq \left\{B_a \in \mathcal{B} \colon a \in A\right\} \subseteq \mathcal{B},
+        \end{equation*}
+        then $\mathcal{U}_A$ is a countable open cover of $A$, where $B \cap \widebar{B_a} = \varnothing$ for all $B_a \in \mathcal{U}_A$. Similarly, we can construct a countable open cover $\mathcal{U}_B \subseteq \mathcal{B}$ for $B$ such that $A \cap \widebar{B_b} = \varnothing$ for all~$B_b \in \mathcal{U}_B$. Re-write 
+        \begin{equation*}
+            \mathcal{U}_A \coloneqq \left\{A_i \colon i \in I\right\}, \qquad \mathcal{U}_B \coloneqq \left\{B_j \colon j \in J\right\}
+        \end{equation*}
+        where $I, J \subseteq \N^+$. Without loss of generality, assume $I \subseteq J$. For each $i \in I$, define 
+        \begin{equation*}
+            A_i' \coloneqq A_i \setminus \bigcup_{j \leq i}\widebar{B_j}
+        \end{equation*}
+        and for each $j \in J$, define 
+        \begin{equation*}
+            B_j' \coloneqq B_j \setminus \bigcup_{i \leq j}\widebar{A_j}.
+        \end{equation*}
+        Consider 
+        \begin{equation*}
+            U_A \coloneqq \bigcup_{i \in I}A_i', \qquad U_B \coloneqq \bigcup_{j \in J}B_j',
+        \end{equation*}
+        which are both open. Notice that $\widebar{B_i} \cap A \neq \varnothing$ for all $i \in I$, so $A_i \cap A = A_i' \cap A$. Therefore,
+        \begin{align*}
+            A & = \bigcup_{i \in I}\left(A_i \cap A\right) = \bigcup_{i \in I}\left(A_i' \cap A\right) \subseteq \bigcup_{i \in I}A_i' = U_A.
+        \end{align*}
+        Similarly, $B \subseteq U_B$. We claim that $U_A \cap U_B = \varnothing$. Suppose on contrary that there exists some $x \in U_A \cap U_B$, then there exists some $i \in I$ and $j \in J$ such that $x \in A_i' \cap B_j'$. Without loss of generality, assume that $i \leq j$. This means that $B_j' \cap A_i = \varnothing$ but $A_i' \subseteq A_i$, which is not possible. Therefore, $X$ is normal.
+    \end{proof}
 \end{probox}
 \section{Separation by Continuous Functions}
-Recall that in Proposition \ref{pro:metricSpaceIsNormal}, we proved that every metrisable space is normal. This in turn demonstrates how metrisability is a very good property in topological spaces. In this chapter, we discuss various characterisations and properties of metrisable spaces.
-\begin{thmbox}{Urysohn's Metrisation Theorem}{urysohnMetrisation}
-    Every regular topological space with a countable basis is metrisable.
-\end{thmbox}
-Next, we make use of continuous functions to define an alternative notion of separability.
+Through a different perspective, if two sets are distinguishable, we can ``move'' from one set to another via a series of continuous transformations. This motivates us to define separation using continuous functions.
 \begin{dfnbox}{Separation by a Continuous Function}{separationByCont}
     Let $X$ be a topological space. For any $A, B \subseteq X$, they are {\color{red} \textbf{separated by a continuous function}} if there exists a continuous function $f \colon X \to \left[0, 1\right]$ such that $f\left(A\right) = \left\{0\right\}$ and $f\left(B\right) = \left\{1\right\}$.
 \end{dfnbox}
-We see that separation by continuous functions is a stronger notion of separability as it offers a quantitative description for disjointness. With this, we can define the following characterisations:
+We see that separation by continuous functions offers a quantitative description for disjointness. With this, we can define the following characterisations:
 \begin{dfnbox}{Completely Regular Space}{completelyRegular}
     A $T_1$ topological space $X$ is {\color{red} \textbf{completely regular}} if for every $x \in X$ and every closed set $A \subseteq X$ with $x \notin A$, $\left\{x\right\}$ and $A$ are separated by a continuous function.
 \end{dfnbox}
@@ -1892,14 +1995,78 @@ Similarly, we can define \textit{completely normal spaces}:
 \begin{dfnbox}{Completely Normal Space}{completelyNormal}
     A $T_1$ topological space $X$ is {\color{red} \textbf{completely normal}} if any disjoint closed sets $A, B \subseteq X$ are separated by a continuous function.
 \end{dfnbox}
-Since separability by continuous functions is a stronger condition, we expect the following to be true:
+As the names suggest, we expect the following to be true:
 \begin{probox}{Complete Regularity and Complete Normality}{completeRegAndNorm}
     Every completely regular space is regular and every completely normal space is normal.
+    \tcblower
+    \begin{proof}
+        Let $X$ be a completely regular space. Take any $x \in X$ and any closed set $A \subseteq X$ with $x \notin A$, then there exists a continuous function $f \colon X \to \left[0, 1\right]$ such that $f\left(x\right) = 0$ and $f\left(A\right) = \left\{1\right\}$. Clearly, 
+        \begin{equation*}
+            A \subseteq f^{-1}\biggl(\left(\frac{1}{2}, 1\right]\biggr), \qquad x \in f^{-1}\biggl(\left[0, \frac{1}{2}\right)\biggr),
+        \end{equation*}
+        where both pre-images are open in $X$. It is obvious that they are disjoint because otherwise there exists some $x \in X$ such that $f\left(x\right) > \frac{1}{2}$ and $f\left(x\right) < \frac{1}{2}$, which is ridiculous. The case where $X$ is completely normal is similar and is left to the reader as an exercise.
+    \end{proof}
 \end{probox}
-Now, a truly marvellous aspect of normal spaces is that their normality is ``always complete''.
+A truly marvellous aspect of normal spaces is that their normality is ``always complete''.
 \begin{lembox}{Urysohn's Lemma}{urysohnLemma}
     Every normal space is completely normal.
+    \tcblower
+    \begin{proof}
+        For each $n \in \N^+$, let $Q_n$ be an increasing sequence in $\Q \cap \left[0, 1\right]$ such that for every $x \in Q_n$, we have $x = \frac{y}{n}$ where $y$ and $n$ are co-prime. Define a sequence
+        \begin{equation*}
+            \left\{r_n\right\}_{n \in \N^+} \coloneqq \left\{1, 0\right\} \cup \bigcup_{n = 2}^{\infty}Q_n.
+        \end{equation*}
+        For every $n \in \N^+$, let $P_n \coloneqq \left\{r_1, r_2, \cdots, r_n\right\}$. Take any disjoint closed sets $A, B \subseteq X$ and define $U_1 \coloneqq X \setminus B$ which is an open set containing $A$. Since $X$ is normal, by Proposition \ref{pro:normalSpace}, there exists some open set $U_0 \subseteq X$ such that $A \subseteq U_0 \subseteq \widebar{U_0} \subseteq U_1$. Suppose that there exists some integer $n \geq 2$ such that for all $p, q \in P_n$ with $p < q$, we have $\widebar{U_p} \subseteq U_q$. Consider $\left\{r_{n + 1}\right\} = P_{n + 1} \setminus P_{n}$ and define 
+        \begin{equation*}
+            r' \coloneqq \max\left\{r \in P_n \colon r < r_{n + 1}\right\}, \qquad r'' \coloneqq \min\left\{r \in P_n \colon r > r_{n + 1}\right\}.
+        \end{equation*}
+        Notice that $r_{n + 1} \neq 0, 1$ and so both $r'$ and $r''$ are well-defined. Since $r' < r''$, we have~$\widebar{U}_{r'} \subseteq U_{r''}$. Since $X$ is normal, by Proposition \ref{pro:normalSpace}, there exists some open set~$U_r \subseteq X$ such that $\widebar{U}_{r'} \subseteq U_r \subseteq \widebar{U_r} \subseteq U_{r''}$. Therefore, for all $p, q \in P_{n + 1}$, we have~$\widebar{U_p} \subseteq U_q$ whenever $p < q$. Define $U_p = \varnothing$ for all $p < 0$ and $U_p = X$ for all $p > 1$, then by mathematical induction, there exists a family of open sets $\left\{U_p\right\}_{p \in \Q}$ in $X$ such that $\widebar{U_p} \subseteq U_q$ whenever $p < q$, $B \cap U_1 = \varnothing$ and~$A \subseteq U_0$. For every $x \in X$, define 
+        \begin{equation*}
+            A_x \coloneqq \left\{p \in Q \colon x \in U_p\right\},
+        \end{equation*}
+        then $\left(1, \infty\right) \subseteq A_x \subseteq \left[0, \infty\right)$. This means that $\inf A_x \in \left[0, 1\right]$ for all $x \in X$. Define a map $f \colon X \to \left[0, 1\right]$ by $f\left(x\right) = \inf A_x$. We claim that $f\left(x\right) \leq p$ for all $x \in \widebar{U_p}$ and that~$f\left(x\right) \geq p$ for all $x \notin U_p$. Suppose that $x \in \widebar{U_p}$, then for all $q \in \Q \cap \left(p, \infty\right)$, we have $x \in U_q$ and so $q \in A_x$. Therefore, 
+        \begin{equation*}
+            f\left(x\right) = \inf A_x \leq \inf\left\{q \in \Q \colon q > p\right\} = p.
+        \end{equation*}
+        On the other hand, if $x \notin U_p$, then for every $q < p$, we have $x \notin U_q$ and so $q \notin A_x$. Therefore, 
+        \begin{equation*}
+            f\left(x\right) = \inf A_x \geq \inf \left\{q \in \Q \colon q > p\right\} = p.
+        \end{equation*}
+        Now, for any $x \in A$, we have $x \in U_0$ and so $f\left(x\right) \leq 0$. Since $f\left(x\right) \in \left[0, 1\right]$, this means that $f\left(A\right) = \left\{0\right\}$. Similarly, we have $f\left(B\right) = \left\{1\right\}$. Let $\left(a, b\right) \in \R$ be any open interval. If for all $x \in X$, we have $f\left(x\right) \notin \left(a, b\right)$, then $f^{-1}\bigl(\left(a, b\right)\bigr) = \varnothing$ which is open. Otherwise, for every $x \in X$ with $f\left(x\right) \in \left(a, b\right)$, there exists $a', b' \in \Q$ such that 
+        \begin{equation*}
+            a < a' < f\left(x\right) < b' < b.
+        \end{equation*}
+        Let $U_x \coloneqq U_{b'} \setminus \widebar{U_{a'}} \neq \varnothing$, which is open in $X$. For every $y \in U_x$, we have~$y \in U_{b'} \subseteq \widebar{U_{b'}}$ and $y \notin U_{a'}$. Therefore, $a' \leq f\left(y\right) \leq b'$ and so 
+        \begin{equation*}
+            f\left(U_x\right) \subseteq \left[a', b'\right] \subseteq \left(a, b\right).
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            f^{-1}\bigl(\left(a, b\right)\bigr) = \bigcup_{x \in f^{-1}\bigl(\left(a, b\right)\bigr)}U_x,
+        \end{equation*}
+        which is open in $X$. Therefore, $f$ is continuous and so $X$ is completely normal.
+    \end{proof}
 \end{lembox}
+Recall that in Proposition \ref{pro:metricSpaceIsNormal}, we proved that every metrisable space is normal. This in turn demonstrates how metrisability is a very good property in topological spaces. 
+\begin{thmbox}{Urysohn's Metrisation Theorem}{urysohnMetrisation}
+    Every second countable regular topological space is metrisable.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:regWithCountableBasis}, $X$ is normal and so by Lemma \ref{lem:urysohnLemma}, $X$ is completely normal. Fix $\mathcal{B} \coloneqq \left\{B_i \colon i \in \N^+\right\}$ as a countable basis for $X$. Take 
+        \begin{equation*}
+            \Lambda \coloneqq \left\{\left(i, j\right) \in \Z^+ \times \Z^+ \colon \widebar{B_i} \subseteq B_j\right\}
+        \end{equation*}
+        which is countable. For each $\left(i, j\right) \in \Lambda$, notice that $\widebar{B_i}$ and $X \setminus B_j$ are disjoint closed sets, and so by Lemma \ref{lem:urysohnLemma}, there exists a map $f_{ij} \colon X \to \left[0, 1\right]$ such that $f\left(\widebar{B_i}\right) = \left\{1\right\}$ and $f\left(X \setminus B_j\right) = \left\{0\right\}$. Take any $x \in X$ and any open set $U \subseteq X$ with $x \in U$. Note that there exists some $B_j \in \mathcal{B}$ is such that $x \in B_j \subseteq U$. Since $X$ is regular, by Proposition \ref{pro:regularSpace}, there exists some open set $V \subseteq X$ such that $x \in V \subseteq \widebar{V} \subseteq B_j$. Note that there exists some $B_i \in \mathcal{B}$ such that $x \in B_i \subseteq V \subseteq \widebar{B_j}$ and so $\left(i, j\right) \in \Lambda$. Since $x \in B_i$, we have $f_{ij}\left(x\right) = 1$ and $f_{ij}\left(X \setminus U\right) = \left\{0\right\}$ because $X \setminus U \subseteq X \setminus B_j$. By Theorem \ref{thm:embedding}, the map $F \colon X \to \R^{\omega}$ defined by 
+        \begin{equation*}
+            \pi_{ij}\bigl(F\left(x\right)\bigr) = f_{ij}\left(x\right)
+        \end{equation*}
+        is a topological embedding and so it is homeomorphic onto $F\left(X\right) \subseteq \R^{\omega}$. Observe that $F\left(X\right)$ is metrisable. Let $d_F$ be the metric on $F\left(X\right)$, then $d \colon X \times X \to \R$ defined by 
+        \begin{equation*}
+            d\left(x, y\right) \coloneqq d_F\bigl(F\left(x\right), F\left(y\right)\bigr)
+        \end{equation*}
+        is a metric on $X$. Therefore, $X$ is metrisable.
+    \end{proof}
+\end{thmbox}
 
 \chapter{Compactness}
 \section{Compact Spaces}
