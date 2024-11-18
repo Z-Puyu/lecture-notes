@@ -802,6 +802,34 @@ Take any $a \in \left(0, 1\right)$ such that $a \neq \frac{1}{n}$ for all $n \in
     a \in \left(\frac{1}{n_a + 1}, \frac{1}{n_a}\right),
 \end{equation*}
 and so the equality holds as desired.
+
+Another way to interpret the closure of a set $A$ is that it contains all points in $A$ and all points which are ``arbitrarily close'' to some point in $A$. We now formalise this notion as \textit{density}.
+\begin{dfnbox}{Dense Set}{dense}
+    Let $X$ be a topological space and $A \subseteq X$ be any subset, then $A$ is {\color{red} \textbf{dense}} in $X$ if for any $x \in X$ and any open neighbourhood $U \subseteq X$ of $x$, we have $A \cap U \neq \varnothing$.
+\end{dfnbox}
+Naturally, everything in $\widebar{A}$ is either directly included by $A$ or ``almost'' included by $A$, so $A$ is dense in $\widebar{A}$. This motivates the following result:
+\begin{probox}{Equivalent Definitions for Dense Sets}{denseEquiv}
+    For any topological space $X$ and any subset $S \subseteq X$, then the following are equivalent:
+    \begin{itemize}
+        \item $S$ is dense in $X$;
+        \item $\mathring{X \setminus S} = \varnothing$;
+        \item $\widebar{S} = X$.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Note that it is equivalent to proving the equivalence of the following statements:
+        \begin{itemize}
+            \item $\widebar{S} \neq X$.
+            \item $\mathring{X \setminus S} \neq \varnothing$.
+            \item $S$ is not dense in $X$.
+        \end{itemize}
+        Suppose that $\widebar{S} \neq X$, then there exists some $x \in X \setminus \widebar{S} \subseteq X \setminus S$. Note that $\widebar{S}$ is closed, so $X \setminus \widebar{S}$ is open in $X$, which means that $X \setminus \widebar{S} \subseteq \mathring{X \setminus S}$. Therefore, $x \in \mathring{X \setminus S}$ and so~$\mathring{X \setminus S} \neq \varnothing$.
+        \\\\
+        Next, suppose that $\text{int}(X \setminus S) \neq \varnothing$, then there exists some non-empty open set $U \subseteq X \setminus S$. Fix some $x \in U \subseteq X$, then $U$ is a neighbourhood of $x$ but $U \cap S = \varnothing$. Therefore, $S$ is not dense.
+        \\\\
+        Lastly, it suffices to prove that if $\widebar{S} = X$, then $S$ is dense in $X$. Take any $x \in X$ and let $U \subseteq X$ be an arbitrary neighbourhood of $x$. If $x \in S$ then we are done. Otherwise, $x$ must be a limit point of $S$. Therefore, $U \cap \left(S \setminus \left\{x\right\}\right) \neq \varnothing$, which implies that $U \cap S \neq \varnothing$, and so $S$ is dense in $X$.
+    \end{proof}
+\end{probox}
 \section{Convergence and Continuity}
 Recall that in Definition \ref{dfn:limPt}, a limit point of $A$ is defined as a point $a$ such that any open set containing $a$ shares at least one other common point with $A$. Analogously, we may view such phenomenon as $a$ having a ``neighbour'' in $A$. 
 \begin{dfnbox}{Neighbourhood}{neighbourhood}
@@ -1507,7 +1535,11 @@ In the context of topological spaces, this means that open spaces should be pres
     A function $h \colon X \to Y$ between topological spaces is a {\color{red} \textbf{homeomorphism}} if it is a bijective open map.
 \end{dfnbox}
 In other words, a bijection $h$ between topological spaces is a homeomorphism if both $h$ and $h^{-1}$ are continuous. Sometimes, $h$ is known as \textit{bi-continuous}. Roughly speaking, a homeomorphism is a reversible deformation such that open sets are still open before and after the deformation. 
-
+\begin{notebox}
+    \begin{remark}
+        Since both bijective maps and open maps are preserved under composition, homeomorphism is preserved under composition.
+    \end{remark}
+\end{notebox}
 One merit of having a homeomorphism is that it helps construct a structure-preserving map that ``projects'' a space into another possibly bigger space.
 \begin{dfnbox}{Topological Embedding}{topologicalEmbedding}
     Let $X$ and $Y$ be topological spaces. A continuous injective function $f \colon X \hookrightarrow Y$ is a {\color{red} \textbf{topological embedding}} if it is homeomorphic onto $f\left(X\right)$.
@@ -1524,16 +1556,76 @@ In a metric space, we can further generalise the notion of a structure-preservin
 \end{dfnbox}
 \chapter{Countability Axioms}
 \section{Second Countable Spaces}
-Note that a topological space can be completely captured by its basis, so an important property of a topological space is the countability of its basis. In fact, this has been demonstrated in the previous section where a regular space becomes normal if it has a countable basis. Roughly speaking, the countability of the basis represents how ``easy'' it is to generate all open sets in the space using some fixed open sets.
+Note that a topological space can be completely captured by its basis, so an important property of a topological space is the countability of its basis. Roughly speaking, the countability of the basis represents how ``easy'' it is to generate all open sets in the space using some fixed open sets.
 \begin{dfnbox}{Second Countable Space}{2ndCountable}
     A topological space $X$ is {\color{red} \textbf{second countable}} if it has a countable basis.
 \end{dfnbox}
-We introduce the following interesting result for second countable spaces:
+\begin{notebox}
+    \begin{remark}
+        Equivalently, a topological space $X$ is second countable if and only if for every open set $S \subseteq X$, there exists a countable collection $\mathcal{U}_S$ of open sets in $X$ such that 
+        \begin{equation*}
+            S = \bigcup_{U \in \mathcal{U}_S}U.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+It is important to note that the countability of a space's basis does not depend on the countability of the space itself. For example, $\R^n$ is an uncountable space, but its standard topology has a countable basis 
+\begin{equation*}
+    \left\{B_r\left(\mathbfit{x}\right) \colon \mathbfit{x} \in \Q^n, r \in \Q\right\}.
+\end{equation*}
+Even for the uncountable product space $\R^{\omega}$, there exists a countable basis for the product topology, given by 
+\begin{equation*}
+    \left\{\prod_{i \in I}\left(a_i, b_i\right) \times \prod_{i \in \Z \setminus I} \colon \left(a_i, b_i\right) \in \Q^2, I \subseteq \Z \textrm{ is finite}\right\}.
+\end{equation*}
+Since a second countable space can be ``covered'' by countably many open sets, it is not surprising that the density of the space is at most countable.
 \begin{probox}{Dense Countable Subspaces in Second Countable Spaces}{denseCountable}
-    If $X$ is a second countable space, then there exists a countable subset $A \subseteq X$ such that $A$ is dense in $X$.
+    If $X$ is a second countable space, then there exists a countable subset $A \subseteq X$ such that $A$ is dense in $X$. The converse is true if $X$ is metrisable.
+    \tcblower
+    \begin{proof}
+        Suppose $X$ is second countable and let $\mathcal{B} \coloneqq \left\{B_i \colon i \in \N^+\right\}$ be a countable basis for $X$. For each $i \in \N^+$, fix some $x_i \in B_i$ and define $A \coloneqq \left\{x_i \colon i \in \N^+\right\}$. It is clear that~$A$ is countable. For every open set $U \subseteq X$, there exists some $n \in \N^+$ such that~$B_n \subseteq U$. Since $\left\{x_n\right\} \subseteq A \cap B_n$, we have $A \cap U \neq \varnothing$ and so $A$ is dense in $X$. Conversely, let $A \subseteq X$ be a countable dense subset. Define
+        \begin{equation*}
+            \mathcal{B} \coloneqq \left\{B_{\frac{1}{n}}\left(a\right) \colon a \in A, n \in \N^+\right\}
+        \end{equation*}
+        which is countable. We claim that $\mathcal{B}$ is a basis for the metrisable topology on $X$. Note that for any $x \in X$, then there exists some $\epsilon > 0$ such that $x \in B_{\epsilon}\left(x\right)$. Notice that there exists $N \in \N^+$ such that $\frac{1}{N} < \epsilon$. Since $A$ is dense in $X$, there exists some $a \in A$ such that $a \in B_{\frac{1}{N}}\left(x\right)$, which implies that $x \in B_{\frac{1}{N}}\left(a\right) \in \mathcal{B}$, and so $\mathcal{B}$ is a basis for the metrisable topology on $X$. Therefore, $X$ is second countable.
+    \end{proof}
 \end{probox}
+Intuitively, second countability is preserved in subspace topologies because we need fewer basic open sets to cover a subspace.
+\begin{probox}{Subspace Topologies Preserve Second Countability}{subspaceSecondCountability}
+    If $X$ is a second countable space, then every $Y \subseteq X$ is second countable with respect to the subspace topology.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{B}_X$ be a countable basis for $X$, then clearly 
+        \begin{equation*}
+            \mathcal{B}_Y \coloneqq \left\{B \cap Y \colon B \in \mathcal{B}_{X}\right\}
+        \end{equation*}
+        is a countable basis for $Y$. Therefore, $Y$ is second countable.
+    \end{proof}
+\end{probox}
+It is natural that second countability is preserved under finite product. However, countably infinite product spaces still preserve second countability.
+\begin{probox}{Countable Product Topologies Preserve Second Countability}{prodSecondCountability}
+    If $\left\{X_n\right\}_{n \in \N^+}$ is a family of second countable spaces and 
+    \begin{equation*}
+        X \coloneqq \prod_{n \in \N^+}X_n
+    \end{equation*}
+    is the countable product space equipped with the product topology, then $X$ is second countable.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{B}_i$ be a countable basis for $X_i$. Let $\mathcal{F}$ be the set of all finite subsets of $\N^+$, then by Proposition \ref{pro:prodBasis}, 
+        \begin{equation*}
+            \mathcal{B} \coloneqq \bigcup_{F \in \mathcal{F}}\left\{\prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_i \colon B_i \in \mathcal{B}_i\right\}
+        \end{equation*}
+        is a basis for $X$. Define  $f \colon \mathcal{B}_F \to \prod_{i \in F}\mathcal{B}_i$ by $f\left(U\right) = \left(B_i\right)_{i \in F}$ if and only if 
+        \begin{equation*}
+            U = \prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_i.
+        \end{equation*}
+        It is clear that $f$ is a bijection and so for all $F \in \mathcal{F}$,
+        \begin{equation*}
+            \left\{\prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_i \colon B_i \in \mathcal{B}_i\right\} \approx \prod_{i \in F}\mathcal{B}_i,
+        \end{equation*}
+        which is countable because it is a finite Cartesian product over countable sets. Therefore, $\mathcal{B}$ is countable because it is a countable union of countable sets. Therefore, $X$ is second countable.
+    \end{proof}
+\end{probox} 
 \section{First Countable Spaces}
-We can also discuss countability in a ``local'' context. Consider a random point $x$ in some topological space. Suppose that $U$ is an open set containing $x$. Intuitively, we can reduce $U$ by taking an open subset of $U$ containing $x$. We do this repeatedly until we find some minimal open subset of $U$ containing $x$. Now, we can perform this operation to every open set containing $x$ in the space and collect all these minimal open subsets. The countability of this collection offers a different criterion of space categorisation.
+We can also discuss countability in a ``local'' context. Consider a random point $x$ in some topological space. Suppose that $U$ is an open set containing $x$. Intuitively, we can reduce~$U$ by taking an open subset of $U$ containing $x$. We do this repeatedly until we find some minimal open subset of $U$ containing $x$. Now, we can perform this operation to every open set containing $x$ in the space and collect all these minimal open subsets. The countability of this collection offers a different criterion of space categorisation.
 \begin{dfnbox}{Countable Basis}{countableBasis}
     Let $X$ be a topological space. For all $x \in X$, a {\color{red} \textbf{countable basis of $x$}} is a countable collection $\mathcal{B}$ of open sets in $X$ containing $x$ such that for any open set $Y \subseteq X$ containing~$x$, there exists some $B \in \mathcal{B}$ with $B \subseteq Y$.
 \end{dfnbox}
@@ -1543,15 +1635,17 @@ The next definition is a ``local'' version of second countable spaces.
 \end{dfnbox}
 Intuitively, every second countable space is first countable. Suppose $\mathcal{U}$ is a countable basis for the space, then for each point $x$ in the space, we can simply take $\left\{U \in \mathcal{U} \colon x \in U\right\}$ as a countable basis of $x$.
 
-We claim that all metric spaces are first countable. Let $X$ be a metric space and take any $x \in X$, then we can take its countable basis as 
+We claim that all metric spaces are first countable, because for any metric space $X$ and any~$x \in X$, we can take its countable basis as 
 \begin{equation*}
     \mathcal{B} \coloneqq \left\{B_{\frac{1}{i}}\left(x\right) \colon i \in \Z^+\right\}.
 \end{equation*}
+This above example also helps show the existence of first countable spaces which are not second countable. Let $\R$ be equipped with the discrete metric, then the metrisable space induced has no countable basis because it has the discrete topology, but is obviously first countable.
+
 Consider some uncountable set $Y$ equipped with the co-finite topology. For any $y \in Y$, suppose it has a countable basis $\mathcal{B}$. Note that in the co-finite topology, a set is open if and only if its complement is finite. Therefore, there exists some finite set $F_i \subseteq Y$ such that there exists some $B_i \in \mathcal{B}$ such that $Y \setminus F_i = B_i$. Notice that 
 \begin{equation*}
     Y \setminus \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right) \neq \varnothing.
 \end{equation*}
-Take some $z \in Y \setminus \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right)$, then $U \coloneqq Y \setminus \left\{z\right\}$ is open such that $y \in U$. Note that for all $B_i \in \mathcal{B}$, we have $z \in B_i$. This means that $B_i \not\subseteq U$ for all $i \in \Z^+$ because otherwise $y \in U$ which is not possible. Therefore, $\mathcal{B}$ is not a countable basis.
+Take some $z \in Y \setminus \left(\left\{y\right\} \cup \bigcup_{i = 1}^{\infty}F_i\right)$, then $U \coloneqq Y \setminus \left\{z\right\}$ is open such that $y \in U$. Note that for all $B_i \in \mathcal{B}$, we have $z \in B_i$. This means that $B_i \not\subseteq U$ for all $i \in \Z^+$ because otherwise~$y \in U$, which is not possible. Therefore, $\mathcal{B}$ is not a countable basis.
 
 Suppose that $x$ is a random point in a topological space with a countable basis $\mathcal{B}$. Fix any~$B \in \mathcal{B}$, then $x \in B$. Notice that for any open set $U$ containing $x$, it is not possible that $U$ and $B$ are disjoint. Therefore, there exists some open subset of $B$ which contains $x$. This motivates the following natural question: can we always re-construct the countable basis such that for any pair of sets in the basis, one must be a subset of the other?
 \begin{probox}{Construction of Countable Basis}{constructCountable}
@@ -1575,19 +1669,63 @@ Based on this small proposition, we introduce the following result to help us id
         then $\left\{x_i\right\}_{i = \N^+}$ is a sequence in $A$. Let $U$ be any open set containing $x$, then there exists some $B_N \in \mathcal{B}$ such that $x \in B_N \subseteq U$. However, notice that for all $i \geq N$, we have~$x_i \in B_N \subseteq U$, and so $x_i \to x$.
     \end{proof}
 \end{probox}
-An alternative proposition makes use of continuous maps:
+In the above result, first countability is crucial for us to construct the desired sequence. We can re-write this result using continuous maps.
 \begin{probox}{Continuous Map Characterisation of First Countable Spaces}{characterise1stCountableContinuous}
     Let $X$ be a topological space. If $f \colon X \to Y$ is continuous, then for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. The converse is true if $X$ is first countable.
     \tcblower
     \begin{proof}
-        Suppose that $f \colon X \to Y$ is continuous. Let $U \subseteq Y$ be an open set such that $f\left(x\right) \in U$, then $x \in f^{-1}\left(U\right)$, which is open. Note that there exists some $N \in \N^+$ such that $x_i \in f^{-1}\left(U\right)$ for all $i \geq N$, i.e., $f\left(x_i\right) \in U$ for all $i \geq N$. Therefore, $f\left(x_i\right) \to f\left(x\right)$.
+        Suppose that $f \colon X \to Y$ is continuous. Let $U \subseteq Y$ be an open set such that~$f\left(x\right) \in U$, then $x \in f^{-1}\left(U\right)$, which is open. Notice that there exists some~$N \in \N^+$ such that $x_i \in f^{-1}\left(U\right)$ for all $i \geq N$, i.e., $f\left(x_i\right) \in U$ for all $i \geq N$. Therefore, $f\left(x_i\right) \to f\left(x\right)$.
         \\\\
         Conversely, suppose that for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. Take any $A \subseteq X$ with $x \in \widebar{A}$. Since $X$ is first countable, by Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{y_i\right\}_{i \in \N^+}$ in $A$ such that $y_i \to x$. This means that $f\left(y_i\right) \to f\left(x\right)$. Since $f\left(y_i\right) \in f\left(A\right)$, this means that $f\left(x\right) \in \widebar{f\left(A\right)}$, and so $f\left(\widebar{A}\right) \subseteq \widebar{f\left(A\right)}$. By Proposition \ref{pro:continuousMapProps}, $f$ is continuous.
     \end{proof}
 \end{probox}
-Lastly, we shall prove that both subspaces and product spaces preserve first and second countability.
-\begin{probox}{Cartesian Product and Subspace Preserve Countability}{cartesianProductSubspaceCountability}
-    If $X$ is first or second countable, then every subset $A \subseteq X$ is first or second countable respectively. Furthermore, if $Y$ is also first or second countable respectively, then $X \times Y$ is first or second countable respectively.
+Similar to second countable spaces, first countability should also be ``inherited'' in subspaces.
+\begin{probox}{Subspaces Preserve First Countability}{subspaceFirstCountability}
+    If $X$ is first countable, then every subspace $Y \subseteq X$ with the subspace topology is first countable.
+    \tcblower
+    \begin{proof}
+        Take any $y \in Y$ and let $V \subseteq Y$ be any open set in $Y$ containing $y$, then there exists some open set $U \subseteq X$ such that $V = U \cap Y$. Since $X$ is first countable, there exists a countable collection $\mathcal{B}$ of open sets in $X$ containing $y$ such that there exists some $B_y \in \mathcal{B}$ with $y \in B_y \subseteq U$. Define 
+        \begin{equation*}
+            \mathcal{B}' \coloneqq \left\{B \cap Y \colon B \in \mathcal{B}\right\},
+        \end{equation*}
+        then it is clear that $\mathcal{B}'$ is a countable collection of open sets in $Y$ containing $y$. Notice that $B_y \cap Y \in \mathcal{B}'$ is such that $y \in B_y \cap Y \subseteq V$, so $Y$ is first countable.
+    \end{proof}
+\end{probox}
+Without surprise, countable product will preserve first countability as expected.
+\begin{probox}{Countable Product Preserves First Countability}{prodFirstCountability}
+    If $\left\{X_n\right\}_{n \in \N^+}$ is a family of first countable spaces and 
+    \begin{equation*}
+        X \coloneqq \prod_{n \in \N^+}X_n,
+    \end{equation*}
+    then $X$ is first countable.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{B}_i$ be a basis for $X_i$ and define $X \coloneqq \prod_{i \in \N^+}X_i$. Let $\mathcal{F}$ be the set of all finite subsets of $\N^+$, then by Proposition \ref{pro:prodBasis},
+        \begin{equation*}
+            \mathcal{B} \coloneqq \bigcup_{F \in \mathcal{F}}\left\{\prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_i \colon B_i \in \mathcal{B}_i\right\}
+        \end{equation*}
+        is a basis for $X$. Take any $\mathbfit{x} \in X$. By first countability, for each $i \in \N^+$, there exists a countable basis $\mathcal{B}_{X_i} \subseteq \mathcal{B}_i$ at $\pi_{X_i}\left(\mathbfit{x}\right)$. Define
+        \begin{equation*}
+            \mathcal{B}_{\mathbfit{x}} \coloneqq \bigcup_{F \in \mathcal{F}}\left\{\prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_{i} \colon B_{i} \in \mathcal{B}_{X_i}\right\} \subseteq \mathcal{B},
+        \end{equation*}
+        which is countable. Let $U \subseteq X$ be any open set containing $\mathbfit{x}$, then there exists some~$F \in \mathcal{F}$ such that 
+        \begin{equation*}
+            \mathbfit{x} \in \prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_i \in \mathcal{B}.
+        \end{equation*}
+        By first countability, for each $i \in F$, there exists some $B_{X_i} \in \mathcal{B}_{X_i}$ such that 
+        \begin{equation*}
+            \pi_{X_i}^{-1}\left(\mathbfit{x}\right) \in B_{X_i} \subseteq B_i,
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            \mathbfit{x} \in \prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_{X_i} \in \mathcal{B}_{\mathbfit{x}}.
+        \end{equation*}
+        Notice that 
+        \begin{equation*}
+            \prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_{X_i} \subseteq \prod_{i \in \N^+ \setminus F}X_i \times \prod_{i \in F}B_{i} \subseteq U,
+        \end{equation*}
+        so $\mathcal{B}_{\mathbfit{x}}$ is a countable basis at $\mathbfit{x}$. Therefore, $X$ is first countable.
+    \end{proof}
 \end{probox}
 \section{Lindelof Spaces}
 Now, based on some intuition, we see that certain spaces are ``tight'' in a sense that they have a clearly defined boundary, whereas some other spaces like $\R$ can extend indefinitely. One idea to measure the ``tightness'' of a topological space is to consider the number of open sets needed to cover the entire space.
@@ -1604,8 +1742,28 @@ The first step here is to check if the space can be covered by countably many op
     A topological space $X$ is {\color{red} \textbf{Lindelof}} if every open cover of $X$ contains a countable sub-cover.
 \end{dfnbox}
 Intuitively, a countable basis will induce a countable cover of the space.
-\begin{probox}{Second Countable Spaces are Lindelof}{2ndCountableLindelof}
+\begin{probox}{Second Countable Spaces Are Lindelof}{2ndCountableLindelof}
     Every second countable space $X$ is Lindelof. The converse is true if $X$ is metrisable.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is second countable, then there exists a countable basis 
+        \begin{equation*}
+            \mathcal{B} \coloneqq \left\{B_i \colon i \in \N^+\right\}
+        \end{equation*}
+        for $X$ and define
+        \begin{equation*}
+            I \coloneqq \left\{i \in \N^+ \colon \textrm{there exists some } U \in \mathcal{U} \textrm{ such that } B_i \subseteq U\right\}.
+        \end{equation*}
+        For each $i \in I$, pick some $U_i \in \mathcal{U}$ with $B_i \subseteq U_i$. Note that for any $x \in X$, there exists some $U \in \mathcal{U}$ with $x \in U$. Since $\mathcal{B}$ is a basis, there exists some $i \in \N^+$ such that~$B_i \subseteq U$ with $x \in B_i$, which means that $i \in I$ and so $x \in B_i \subseteq U_i$. Therefore,~$\left\{U_i\right\}_{i \in I}$ is a countable sub-cover for $X$ and so $X$ is Lindelof. Conversely, suppose that $X$ is a metrisable Lindelof space and let 
+        \begin{equation*}
+            \mathcal{V}_n \coloneqq \left\{B_{\frac{1}{n}}\left(x\right) \colon x \in X\right\}
+        \end{equation*}
+        for each $n \in \N^+$, then clearly each $\mathcal{V}_n$ is an open cover for $X$. For each $n \in \N^+$, fix a countable sub-cover $\mathcal{V}'_n \subseteq \mathcal{V}_n$ and define 
+        \begin{equation*}
+            \mathcal{B} \coloneqq \bigcup_{n \in \N^+}\mathcal{V}'_n,
+        \end{equation*}
+        which is countable. For any open set $U \subseteq X$ and any $x \in U$, there exists some $\epsilon > 0$ such that $B_{\epsilon}\left(x\right) \subseteq U$. Take $N \in \N^+$ with $\frac{1}{N} < \frac{\epsilon}{2}$, then since $\mathcal{V}'_N$ covers $X$, there exists some $y \in X$ such that $x \in B_{\frac{1}{N}}\left(y\right) \in \mathcal{V}'_N \subseteq \mathcal{B}$. Observe that $y \in B_{\frac{\epsilon}{2}}\left(x\right) \subseteq U$, so this means that $\mathcal{B}$ is a basis for the metrisable topology on $X$ and so $X$ is second countable.
+    \end{proof}
 \end{probox}
 \chapter{Separation Axioms}
 The \textit{separation axioms} are a series of conditions imposed on topological spaces to better specify the notion of \textit{disjoint} sets and \textit{distinguishable} points. The motivation comes from the fact that knowing two points are distinct is not enough to differentiate one from the other in a topological space setting. For example, if $x \neq y$ are \textit{distinct} points in a topological space $X$, it is completely possible that every open set containing $x$ also contains $y$ and vice versa. Therefore, though unequal, there is no practical way to seclude $x$ and $y$ into disjoint regions topologically.
@@ -1704,9 +1862,9 @@ Notice that every normal space is $T_1$. In fact, a normal space is regular, a r
         \end{equation*}
         Since $W_A$ is open, this means that $W_A \subseteq \mathring{W}$. Take $V \coloneqq \mathring{W}$, then 
         \begin{equation*}
-            A \subseteq V \subseteq \overline{V} = W \subseteq U.
+            A \subseteq V \subseteq \widebar{V} = W \subseteq U.
         \end{equation*}
-        Conversely, suppose that for every closed $A \subseteq X$ and every open $U \subseteq X$ with $A \subseteq U$, there exists an open set $V \subseteq X$ with $A \subseteq V$ such that $\overline{V} \subseteq U$. Let $A, B \subseteq X$ be any disjoint closed sets with $A \cap B = \varnothing$ and take $U \coloneqq X \setminus B$, then there exists some open set $V \subseteq X$ with $A \subseteq V$ and $\overline{V} \subseteq U$. Take $W \coloneqq X \setminus \overline{V}$ which is open, then $B \subseteq W$ because $B \cap \overline{V} \subseteq B \cap U = \varnothing$. Therefore, $X$ is normal.
+        Conversely, suppose that for every closed $A \subseteq X$ and every open $U \subseteq X$ with $A \subseteq U$, there exists an open set $V \subseteq X$ with $A \subseteq V$ such that $\widebar{V} \subseteq U$. Let $A, B \subseteq X$ be any disjoint closed sets with $A \cap B = \varnothing$ and take $U \coloneqq X \setminus B$, then there exists some open set $V \subseteq X$ with $A \subseteq V$ and $\widebar{V} \subseteq U$. Take $W \coloneqq X \setminus \widebar{V}$ which is open, then $B \subseteq W$ because $B \cap \widebar{V} \subseteq B \cap U = \varnothing$. Therefore, $X$ is normal.
     \end{proof}
 \end{probox}
 Recall that we have argued that every metric space is Hausdorff using a simple argument. In fact, we can directly prove a much stronger result that every metric space is normal.
