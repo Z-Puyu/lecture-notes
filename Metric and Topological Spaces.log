@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  18 NOV 2024 20:40
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 NOV 2024 20:32
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1519,14 +1519,19 @@ Chapter 4.
 [70
 
 ] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86]
+Underfull \hbox (badness 10000) in paragraph at lines 2602--2606
 
-LaTeX Warning: Reference `dfh:isometric' on page 87 undefined on input line 2568.
+ []
 
-[87] [88] [89] [90]
+[87] [88] [89] [90] [91] [92] [93] [94]
+
+LaTeX Warning: Reference `dfh:isometric' on page 95 undefined on input line 2800.
+
+[95] [96] [97] [98]
 Chapter 5.
-[91
+[99
 
-] [92] [93] [94] [95] 
+] [100] [101] [102] [103] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 
@@ -1539,12 +1544,12 @@ Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not 
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 37154 strings out of 478630
- 775812 string characters out of 5847730
- 1903012 words of memory out of 5000000
- 56625 multiletter control sequences out of 15000+600000
+ 37170 strings out of 478630
+ 776101 string characters out of 5847730
+ 1905012 words of memory out of 5000000
+ 56641 multiletter control sequences out of 15000+600000
  521813 words of font info for 127 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,14n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (95 pages).
+Output written on Metric and Topological Spaces.pdf (103 pages).

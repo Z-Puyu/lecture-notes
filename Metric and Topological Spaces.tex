@@ -2081,10 +2081,28 @@ The intuition here is that if a space is not compact, i.e., it can extend indefi
         $Y \subseteq X$ is a compact subspace if and only if for every collection $\mathcal{U}$ of open sets in $Y$ such that $Y \subseteq \bigcup_{U \in \mathcal{U}}U$, there exists a finite sub-collection $\mathcal{U}' \subseteq \mathcal{U}$ such that~$Y \subseteq \bigcup_{U \in \mathcal{U}'}U$.
     \end{remark}
 \end{notebox}
-A compact space possesses many nice properties, one of which is with regard to the separability of the space. Recall that a normal space is regular and a regular space is Hausdorff, but to go in the converse direction is not so simple. However, for compact spaces, the converse direction will hold.
-\begin{probox}{Separability of Compact Spaces}{separabilityCompact}
-    If $X$ is a compact space, then $X$ is normal if and only if it is regular, and it is regular if and only if it is Hausdorff.
-\end{probox}
+Although compactness is motivated by the closed and bounded subsets in Euclidean spaces, we will see that in general, a closed and bounded subset in a topological space might not be compact.
+
+Consider $\Q$ with the standard topology and $Q \coloneqq \left[-\sqrt{2}, \sqrt{2}\right] \cap \Q$, which is closed and bounded. We claim that the subset is not compact.
+
+Consider $\left\{\left(-\sqrt{2} + \frac{1}{n}, \sqrt{2} - \frac{1}{n}\right) \colon n \in \N^+\right\}$. We claim that it is an open cover for $Q$. Take any $q \in Q$ and let 
+\begin{equation*}
+    \delta \coloneqq \min\left\{\sqrt{2} - q, q + \sqrt{2}\right\} > 0.
+\end{equation*}
+Clearly, there exists some $N \in \N^+$ such that $\frac{1}{N} < \delta$, and so $q \in \left(-\sqrt{2} + \frac{1}{N}, \sqrt{2} - \frac{1}{N}\right)$. Therefore, 
+\begin{equation*}
+    Q \subseteq \bigcup_{n \in \N^+}\left(-\sqrt{2} + \frac{1}{n}, \sqrt{2} - \frac{1}{n}\right).
+\end{equation*} 
+Let $S \subseteq \N^+$ be any finite subset and let $M \coloneqq \max S$, then 
+\begin{equation*}
+    \bigcup_{n \in S}\left(-\sqrt{2} + \frac{1}{n}, \sqrt{2} - \frac{1}{n}\right) = \left(-\sqrt{2} + \frac{1}{M}, \sqrt{2} - \frac{1}{M}\right).
+\end{equation*}
+However, there exists some rational number $q \in \left[\sqrt{2} - \frac{1}{M}, \sqrt{2}\right]$, which means that 
+\begin{equation*}
+    \left\{\left(-\sqrt{2} + \frac{1}{n}, \sqrt{2} - \frac{1}{n}\right) \colon n \in S\right\}
+\end{equation*}
+is not a sub-cover for any finite $S \subseteq \N^+$. Therefore, $Q$ is not compact.
+
 Note that previously we have shown that a closed set contains all of its limit points. Therefore, it is intuitive that if a closed set is contained by a compact space, this closed set should be compact as well.
 \begin{probox}{Closed Subspaces of Compact Spaces Are Compact}{closedCompact}
     Every closed subspace of a compact space is compact.
@@ -2099,8 +2117,31 @@ One may be tempted to think that compact subspaces must be closed. However, this
 \end{equation*}
 is a finite sub-cover for $Y$. Therefore, every subset of $X$ is compact. However, $Y \subseteq X$ is closed if and only if $Y$ is finite.
 \begin{probox}{Sets in Co-finite Topology Are Compact}{compactCofinite}
-    Let $X$ be a topological space equipped with the co-finite topology, then for every $U \subseteq X$, $U$ is compact and $U$ is closed if and only if $U$ is finite.
+    Let $X$ be a topological space equipped with the co-finite topology, then every $Y \subsetneq X$ is compact and it is closed if and only if it is finite.
+    \tcblower
+    \begin{proof}
+        Take any $Y \subsetneq X$ and let $\mathcal{U}$ be an open cover for $Y$. Fix some $U \in \mathcal{U}$, since $U$ is open in $X$ with respect to the co-finite topology, $X \setminus U$ is finite. Note that $Y \setminus U \subseteq X \setminus U$, so $Y \setminus U$ is finite. For each $y \in Y \setminus U$, there exists some $U_y \in \mathcal{U}$ such that $y \in U_y$, otherwise $\mathcal{U}$ does not cover $Y$. Therefore, 
+        \begin{equation*}
+            \left\{U\right\} \cup \left\{U_y \colon y \in Y \setminus U\right\}
+        \end{equation*}
+        is a finite sub-cover for $Y$. Therefore, every subset of $X$ is compact. If $Y$ is finite, then $X \setminus Y$ is open by definition of the co-finite topology, so $Y$ is closed. Conversely, suppose $Y \subsetneq X$ is closed, then $X \setminus Y$ is an non-empty open set, and so $Y$ is finite.
+    \end{proof}
 \end{probox}
+In fact, even the closure of a compact subspace may not be compact. A classic counter example makes use of the \textit{particular point topology}.
+\begin{dfnbox}{Particular Point Topology}{particularPoint}
+    For any set $X$, the {\color{red} \textbf{particular point topology}} on $X$ with respect to some $p \in X$ is defined as 
+    \begin{equation*}
+        \mathcal{T}_p \coloneqq \left\{U \subseteq X \colon p \in U\right\} \cup \left\{\varnothing\right\}.
+    \end{equation*}    
+\end{dfnbox}
+Fix some $n \in \N$ and define $\mathcal{T}_n$ to be the particular topology on $\N$ with respect to $n$. Note that for any open cover $\mathcal{U}$ for $\left\{n\right\}$, we can take any $U_0 \in \mathcal{U}$ to form a finite sub-cover $\left\{U_0\right\}$ because $n \in U_0$. Therefore, $\left\{n\right\}$ is compact. 
+
+We claim that $\widebar{\left\{n\right\}} = \N$ because if on contrary $\widebar{\left\{n\right\}} = \N \setminus X$ for some non-empty $X \in \mathcal{T}_n$, then $n \notin X$ which is not possible. Now consider 
+\begin{equation*}
+    \bigl\{\left\{m, n\right\} \colon m \in \N, m \neq n\bigr\},
+\end{equation*}
+which is an open cover for $\widebar{\left\{n\right\}}$ but clearly it does not contain a finite sub-cover. Therefore,~$\widebar{\left\{n\right\}}$ is not compact.
+
 To conclude closed-ness from compactness, we require some additional assumptions.
 \begin{probox}{Compact Subspaces of Hausdorff Spaces Are Closed}{compactClosed}
     Every compact subspace of a Hausdorff space is closed.
@@ -2117,12 +2158,28 @@ To conclude closed-ness from compactness, we require some additional assumptions
         is open in $X$. Therefore, $Y = X \setminus Z$ is closed in $X$.
     \end{proof}
 \end{probox}
+A compact space possesses many nice properties, one of which is with regard to the separability of the space. Recall that a normal space is regular and a regular space is Hausdorff, but to go in the converse direction is not so simple. However, for compact spaces, the converse direction will hold.
+\begin{probox}{Separability of Compact Spaces}{separabilityCompact}
+    If $X$ is a compact space, then $X$ is $T_4$ if and only if it is $T_3$, and it is $T_3$ if and only if it is Hausdorff.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:relationshipSepAxioms}, every $T_4$ space is $T_3$ and every $T_3$ space is Hausdorff, so it suffices to prove that $X$ being Hausdorff implies that $X$ is $T_3$ and $X$ being $T_3$ implies that $X$ is $T_4$. Suppose $X$ is Hausdorff. Take any $x \in X$ and any closed set~$B \subseteq X$ with~$x \notin B$. Note that for every $b \in B$, there exists disjoint open sets~$U_b, V_b \subseteq X$ such that $b \in U_b$ and $x \in V_b$. Note that $\left\{U_b \colon b \in B\right\}$ is an open cover of $B$. Since~$B$ is closed and $X$ is compact, by Proposition \ref{pro:closedCompact}, $B$ is compact and so there exists a finite subset $A \subseteq B$ such that $\left\{U_a \colon a \in A\right\}$ is a finite sub-cover of $B$. Define 
+        \begin{equation*}
+            V \coloneqq \bigcap_{a \in A} V_a, \qquad U \coloneqq \bigcup_{a \in A} U_a,
+        \end{equation*}
+        then both $U$ and $V$ are open in $X$ and $U \cap V = \varnothing$. Note that $x \in V$ and $B \subseteq U$, so~$X$ is $T_3$. Next, suppose that $X$ is $T_3$ and take any disjoint closed sets $A, B \subseteq X$. Since $X$ is compact, by Proposition \ref{pro:closedCompact}, both $A$ and $B$ are compact. For each $a \in A$, since $X$ is~$T_3$, there exists disjoint open sets $U_a, V_a \subseteq X$ such that $a \in U_a$ and $B \subseteq V_a$. Note that $\left\{U_a \colon a \in A\right\}$ is an open cover of $A$, and so there exists some finite subset $C \subseteq A$ such that $\left\{U_c \colon c \in C\right\}$ is a finite sub-cover of $A$. Define 
+        \begin{equation*}
+            U \coloneqq \bigcup_{c \in C} U_c, \qquad V \coloneqq \bigcap_{c \in C} V_c,
+        \end{equation*}
+        then both $U$ and $V$ are open in $X$ and $U \cap V = \varnothing$. Note that $A \subseteq U$ and $B \subseteq V$, so $X$ is $T_4$.
+    \end{proof}
+\end{probox}
 Intuitively, a continuous map should send a compact set to a compact image because open sets, and hence open covers, are preserved by the map.
 \begin{probox}{Continuous Map Induces Compact Image}{ContinuousCompact}
     Let $f \colon X \to Y$ be continuous, if $X$ is compact, then $f\left(X\right)$ is compact.
     \tcblower
     \begin{proof}
-        Let $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover for $f\left(X\right)$. Note that for each $x \in X$, we have $f\left(x\right) \in U_{\lambda}$ for some $\lambda \in \Lambda$ and so $x \in f^{-1}\left(U_{\lambda}\right)$ which is open in $X$ because $f$ is continuous. Therefore, $\left\{f^{-1}\left(U_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ is an open cover for $X$. Since $X$ is compact, there exists some finite $I \subseteq \Lambda$ such that $\left\{f^{-1}\left(U_i\right)\right\}_{i \in I}$ is a finite sub-cover for $X$. For any $y \in f\left(X\right)$, there exists some $x_y \in X$ such that $f\left(x_y\right) = y$. Notice that there exists some $j \in I$ such that $x_y \in f^{-1}\left(U_j\right)$, so $y \in U_j$. Therefore, 
+        Let $\left\{U_{\alpha}\right\}_{\alpha \in \Lambda}$ be an open cover for $f\left(X\right)$. Notice that for every $x \in X$, we have~$f\left(x\right) \in U_{\lambda}$ for some $\lambda \in \Lambda$ and so $x \in f^{-1}\left(U_{\lambda}\right)$ which is open in $X$ because $f$ is continuous. Therefore, $\left\{f^{-1}\left(U_{\alpha}\right)\right\}_{\alpha \in \Lambda}$ is an open cover for $X$. Since $X$ is compact, there exists some finite $I \subseteq \Lambda$ such that $\left\{f^{-1}\left(U_i\right)\right\}_{i \in I}$ is a finite sub-cover for $X$. For any $y \in f\left(X\right)$, there exists some $x_y \in X$ such that $f\left(x_y\right) = y$. Notice that there exists some $j \in I$ such that $x_y \in f^{-1}\left(U_j\right)$, so $y \in U_j$. Therefore, 
         \begin{equation*}
             f\left(X\right) \subseteq \bigcup_{i \in I}U_i
         \end{equation*}
@@ -2160,6 +2217,12 @@ for some $\delta > 0$. This is generalised to the following lemma:
         \end{equation*}
     \end{proof}
 \end{lembox}
+The compactness of $Y$ is crucial for the Tube lemma to hold. Consider 
+\begin{equation*}
+    S \coloneqq \left\{\left(x, y\right) \in \R^2 \colon \abs{x} < \frac{1}{y^2 + 1}\right\} \subseteq \R^2,
+\end{equation*}
+which is open and contains $\left\{0\right\} \times \R$, but does not contain a tube.
+
 Applying the Tube Lemma to Cartesian products yields the following result:
 \begin{corbox}{Compactness of Cartesian Product}{compactCartProd}
     If $X$ and $Y$ are compact topological spaces, then $X \times Y$ is compact.
@@ -2183,20 +2246,58 @@ Applying the Tube Lemma to Cartesian products yields the following result:
         Therefore, $\mathcal{A}'$ is a finite sub-cover for $X \times Y$ and so $X \times Y$ is compact.
     \end{proof}
 \end{corbox}
+Compactness is also related to the notion of a \textit{graph} of a function. We will first define this concept in topological terms.
+\begin{dfnbox}{Graph of A Function}{graph}
+    For any function $f \colon X \to Y$, the set 
+    \begin{equation*}
+        \Gamma_f = \left\{ \bigl(x, f(x)\bigr) \colon x \in X \right\} \subseteq X \times Y
+    \end{equation*}
+    is called the {\color{red} \textbf{graph}} of $f$.
+\end{dfnbox}
+Recall that in elementary real analysis, we have defined continuity at ``end points'' by the existence of one-side limits. This translates to the closure of the function's graph, and in fact is closely related to the compactness of the range.
+\begin{probox}{Closure of Graphs of Functions}{clFuncGraph}
+    Let $f \colon X \to Y$ be a function. If $X$ is any space and $Y$ is a compact Hausdorff space, then $\Gamma_f$ is closed if and only if $f$ is continuous.
+    \tcblower
+    \begin{proof}
+        Suppose that $\Gamma_f$ is closed. Let $V \subseteq Y$ be a closed set, then $X \times V$ is closed in~$X \times Y$. Define 
+        \begin{equation*}
+            G \coloneqq \Gamma_f \cap \left(X \times V\right) = f^{-1}\left(V\right) \times f\left(f^{-1}\left(V\right)\right).
+        \end{equation*}
+        Note that $G$ is closed in $X \times Y$. Take any $x \in X \setminus \pi_X\left(G\right)$, then $\left(x, y\right) \in \left(X \times Y\right) \setminus G$ for all $y \in Y$. Note that $\left(X \times Y\right) \setminus G$ is open and $Y$ is compact, so by Lemma \ref{lem:tube}, there exists some open set $W_x \subseteq X$ with $x \in W_x$ such that $W_x \times Y \subseteq \left(X \times Y\right) \setminus G$. Therefore,~$W_x \subseteq X \setminus \pi_X\left(G\right)$ and so 
+        \begin{equation*}
+            X \setminus \pi_X\left(G\right) = \bigcup_{x \in X \setminus \pi_X\left(G\right)}W_x,
+        \end{equation*}
+        which is open. Therefore, $\pi_X\left(G\right) = f^{-1}\left(V\right)$ is closed in $X$. Therefore, by Proposition \ref{pro:continuousMapProps}, $f$ is continuous. Conversely, suppose that $f$ is continuous, then it suffices to prove that $\Gamma_f = \overline{\Gamma_f}$. Suppose on contrary that $\Gamma_f \neq \overline{\Gamma_f}$. Take
+        \begin{equation*}
+            \left(x, y\right) \in \overline{\Gamma_f} \setminus \Gamma_f \subseteq X \times Y
+        \end{equation*}
+        such that $y \neq f\left(x\right)$. Since $Y$ is Hausdorff, there exists disjoint open sets $U, V \subseteq Y$ such that $y \in U$ and $f\left(x\right) \in V$. Let $W \coloneqq f^{-1}\left(V\right) \neq \varnothing$, which is open in $X$, and so~$W \times U$ is an open neighbourhood of $\left(x, y\right)$. Note that $\left(x, y\right)$ is a limit point of $\Gamma_f$, so
+        \begin{equation*}
+            \Gamma_f \cap \left(W \times U \setminus \left\{\left(x, y\right)\right\}\right) \neq \varnothing.
+        \end{equation*}
+        Take 
+        \begin{equation*}
+            \left(x', y'\right) \in \Gamma_f \cap \bigl(W \times U \setminus \left\{\left(x, y\right)\right\}\bigr),
+        \end{equation*}
+        then $y' = f\left(x'\right) \in U$. However, $f\left(x'\right) \in f\left(W\right) \subseteq V$, so $U \cap V \neq \varnothing$, which is a contradiction. Therefore, $\Gamma_f$ must be closed.
+    \end{proof}
+\end{probox}
+At another perspective, we can re-formulate the definition of compactness using closed sets. This require us to use something known as the \textit{finite intersection property}.
 \begin{dfnbox}{Finite Intersection Property}{finiteIntersect}
     Let $X$ be some set. A collection $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ has the {\color{red} \textbf{finite intersection property}} if for any finite sub-collection $\mathcal{G}' \subseteq \mathcal{G}$, we have 
     \begin{equation*}
         \bigcap_{G \in \mathcal{G}'}G \neq \varnothing.
     \end{equation*}
 \end{dfnbox}
-\begin{probox}{Characterisation of Compactness}{compactFiniteIntersect}
+The following result characterises compactness using the finite intersection property:
+\begin{probox}{Equivalent Definition of Compactness}{compactFiniteIntersect}
     Let $X$ be a topological space, then $X$ is compact if and only if for any collection of closed sets $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ with the finite intersection property, we have 
     \begin{equation*}
         \bigcap_{G \in \mathcal{G}}G \neq \varnothing.
     \end{equation*}
     \tcblower
     \begin{proof}
-        Suppose that for any collection $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ of closed sets in $X$ with the finite intersection property, we have $\bigcap_{G \in \mathcal{G}} \neq \varnothing$. Let $\mathcal{U}$ be an open cover of $X$ and consider 
+        Suppose that for any collection $\mathcal{G} \subseteq \mathcal{P}\left(X\right)$ of closed sets in $X$ with the finite intersection property, we have $\bigcap_{G \in \mathcal{G}}G \neq \varnothing$. Let $\mathcal{U}$ be an open cover of $X$ and consider 
         \begin{equation*}
             \mathcal{G} \coloneqq \left\{X \setminus U \colon U \in \mathcal{U}\right\}.
         \end{equation*}
@@ -2255,7 +2356,7 @@ We can establish an analogous connection between the density of points distribut
                 Note that $U \setminus \left\{x\right\}$ is open and non-empty because otherwise $\left\{x\right\}$ is open. Fix some $y \in U \setminus \left\{x\right\}$, then since $X$ is Hausdorff, we can find some disjoint open sets $W_{x}, W_{y} \subseteq X$ such that $x \in W_{x}$ and $y \in W_{y}$. Take $V \coloneqq W_y \cap U \subseteq U$, then $V$ is non-empty and open. Note that $X \setminus W_{x}$ is a closed set containing $V$, so $\widebar{V} \subseteq X \setminus W_{x_i}$. This means that $x \notin \widebar{V}$.
             \end{proof}
         \end{lembox}
-        By Lemma \ref{lem:closureNonIso}, there exists some open set $V_1 \subseteq X$ such that $x_1 \notin \widebar{V_1}$. For each $i = 2, 3, \cdots$, we can find some open set $V_i \subseteq V_{i - 1}$ such that $x_i \notin \widebar{V_i}$. By Corollary \ref{cor:nestedClosedInCompact}, we know that 
+        By Lemma \ref{lem:closureNonIso}, there exists some open set $V_1 \subseteq X$ such that $x_1 \notin \widebar{V_1}$. For each integer $i \geq 2$, we can find some open set $V_i \subseteq V_{i - 1}$ such that $x_i \notin \widebar{V_i}$. By Corollary \ref{cor:nestedClosedInCompact}, we know that 
         \begin{equation*}
             \bigcap_{i \in I}\widebar{V_i} \neq \varnothing.
         \end{equation*}
@@ -2270,7 +2371,7 @@ A natural thought is that the product space of compact spaces should be compact.
         \item for any $x, y \in X$, if $x \leq y$ and $y \leq x$, then $x = y$;
         \item if $x \leq y$ and $y \leq z$, then $x \leq z$.
     \end{itemize}
-    A {\color{red} \textbf{total order}} on a set $X$ is a partial order on $X$ such that $x \leq y$ or $y \leq x$ for any $x, y \in X$.
+    A {\color{red} \textbf{total order}} on a set $X$ is a partial order on $X$ such that for every $\left(x, y\right) \in X^2$, we have~$x \leq y$ or $y \leq x$.
 \end{dfnbox}
 Note that a partial order is not necessarily applicable to any pair of elements in the set. However, we can always purposefully choose a subset such that the restricted order becomes a total order. 
 \begin{dfnbox}{Chain}{chain}
@@ -2278,19 +2379,79 @@ Note that a partial order is not necessarily applicable to any pair of elements 
 \end{dfnbox}
 An important result in set theory is \textit{Zorn's lemma}:
 \begin{lembox}{Zorn's Lemma}{zorn}
-    Let $X$ be a set and let $\leq$ be a partial order on $X$. If every chain $\mathcal{C}$ in $X$ has an upper bound in $X$, then $X$ contains a maximal element.
+    Let $X$ be a set and let $\leq$ be a partial order on $X$. If every chain $\mathcal{C}$ in $X$ has an upper bound in $X$, then $X$ contains a $\leq$-maximal element.
 \end{lembox}
 Zorn's lemma helps prove the following result:
 \begin{probox}{Maximal Collection with the Finite Intersection Property}{maximalFIP}
     Let $X$ be a set and $\mathcal{A} \subseteq \mathcal{P}\left(X\right)$ have the finite intersection property, then there exists some maximal $\mathcal{D} \subseteq \mathcal{P}\left(X\right)$ with the finite intersection property such that $\mathcal{A} \subseteq \mathcal{D}$.
+    \tcblower
+    \begin{proof}
+        Define 
+        \begin{equation*}
+            \mathscr{P}_{\mathcal{A}} \coloneqq \left\{\mathcal{U} \subseteq \mathcal{P}\left(X\right) \colon \mathcal{A} \subseteq \mathcal{U} \textrm{ and } \mathcal{U} \textrm{ has the finite intersection property} \right\},
+        \end{equation*}
+        then $\mathscr{P}_{\mathcal{A}}$ is a partially ordered set by $\subseteq$. Let $\mathscr{C}_{\mathcal{A}} \subseteq \mathscr{P}_{\mathcal{A}}$ be any chain and define 
+        \begin{equation*}
+            \mathcal{U}_{\mathcal{A}} \coloneqq \bigcup_{\mathcal{U} \in \mathscr{C}_{\mathcal{A}}}\mathcal{U}.
+        \end{equation*}
+        Let $U_1, U_2, \cdots, U_n \in \mathcal{U}_{\mathcal{A}}$ for some $n \in \N^+$, then for each $i = 1, 2, \cdots, n$, there exists some $\mathcal{U}_i \in \mathscr{C}_{\mathcal{A}}$ such that $U_i \in \mathcal{U}_i$. Note that $\mathscr{C}_{\mathcal{A}}$ is totally ordered, so there exists some~$\mathcal{U}_0 \in \mathscr{C}_{\mathcal{A}}$ such that $\mathcal{U}_i \subseteq \mathcal{U}_0$ for all $i = 1, 2, \cdots, n$. Therefore, for all $i = 1, 2, \cdots, n$, we have $U_i \in \mathcal{U}_0 \in \mathscr{P}_{\mathcal{A}}$, and so 
+        \begin{equation*}
+            \bigcap_{i = 1}^nU_i \neq \varnothing.
+        \end{equation*}
+        Note that $\mathcal{A} \subseteq \mathcal{U}_{\mathcal{A}}$, so $\mathcal{U}_{\mathcal{A}} \in \mathscr{P}_{\mathcal{A}}$. Clearly, $\mathcal{U}_{\mathcal{A}}$ is an upper bound for $\mathscr{C}_{\mathcal{A}}$. By Lemma \ref{lem:zorn}, there exists a $\subseteq$-maximal element $\mathcal{D} \in \mathscr{P}_{\mathcal{A}}$.
+    \end{proof}
 \end{probox}
 Following this, we can show that such maximal containing collections exhibit certain special properties. 
 \begin{probox}{Characterisation of the Maximal Containing Collection}{charMaximal}
-    Let $X$ be a set and $\mathcal{A} \subseteq \mathcal{P}\left(X\right)$ be a collection with the finite intersection property. For each maximal collection $\mathcal{D} \subseteq \mathcal{P}\left(X\right)$ with $\mathcal{A} \subseteq \mathcal{D}$ with the finite intersection property,~$\mathcal{D}$ is closed under finite intersections and for every $A \subseteq X$, if $A \cap D \neq \varnothing$ for all $D \in \mathcal{D}$, then $A \in \mathcal{D}$.
+    Let $X$ be a set and $\mathcal{A} \subseteq \mathcal{P}\left(X\right)$ be a collection with the finite intersection property. For each maximal collection $\mathcal{D} \subseteq \mathcal{P}\left(X\right)$ with $\mathcal{A} \subseteq \mathcal{D}$ with the finite intersection property,~$\mathcal{D}$ is closed under finite intersection and for all $A \subseteq X$ with $A \cap D \neq \varnothing$ for all $D \in \mathcal{D}$, we have $A \in \mathcal{D}$.
+    \tcblower
+    \begin{proof}
+        Let $D_1, D_2, \cdots, D_n \in \mathcal{D}$ for some $n \in \N^+$ and define $D \coloneqq \bigcap_{i = 1}^nD_i$. Take any~$D_1', D_2', \cdots, D_m' \in \mathcal{D}$ for some $m \in \N^+$ and consider 
+        \begin{equation*}
+            D \cap \bigcap_{i = 1}^mD_i' = \left(\bigcap_{i = 1}^nD_i\right) \cap \left(\bigcap_{i = 1}^mD_i'\right) \neq \varnothing.
+        \end{equation*}
+        Therefore, $\mathcal{D} \cup \left\{D\right\}$ has a finite intersection property and $\mathcal{A} \subseteq \mathcal{D} \cup \left\{D\right\}$. By maximality of $\mathcal{D}$, we must have $D \in \mathcal{D}$, and so $\mathcal{D}$ is closed under finite intersection. Let $A \subseteq X$ be such that $A \cap D \neq \varnothing$ for all $D \in \mathcal{D}$, then for any $D_1, D_2, \cdots, D_k \in \mathcal{D}$ where $k \in \N^+$, we have 
+        \begin{equation*}
+            A \cap \bigcap_{i = 1}^kD_i \neq \varnothing,
+        \end{equation*}
+        which means that $\mathcal{D} \cup \left\{A\right\}$ contains $\mathcal{A}$ and has the finite intersection property. By maximality of $\mathcal{D}$, this means that $A \in \mathcal{D}$.
+    \end{proof}
 \end{probox}
 All of the above results combined together lead to the following important major theorem:
 \begin{thmbox}{Tychonoff's Theorem}{Tychonoff}
-    If $\left\{X_{\alpha}\right\}_{\alpha \in \Lambda}$ is a family of compact topological spaces, then $\prod_{\alpha \in \Lambda}X_{\alpha}$ is compact.
+    If $\left\{X_{\alpha}\right\}_{\alpha \in \Lambda}$ is a family of compact topological spaces, then $X \coloneqq \prod_{\alpha \in \Lambda}X_{\alpha}$ is compact.
+    \tcblower
+    \begin{proof}
+        Let $\mathcal{A} \subseteq \mathcal{P}\left(X\right)$ have the finite intersection property. By Proposition \ref{pro:maximalFIP}, there exists a maximal collection $\mathcal{D} \subseteq \mathcal{P}\left(X\right)$ containing $\mathcal{A}$, which has the finite intersection property. For every $\alpha \in \Lambda$, define 
+        \begin{equation*}
+            \left\{\widebar{\pi_{\alpha}\left(D\right)} \colon D \in \mathcal{D}\right\} \subseteq \mathcal{P}\left(X_{\alpha}\right),
+        \end{equation*}
+        which has the finite intersection property. Since $X_{\alpha}$ is compact, by Proposition \ref{pro:characteriseCompact}, 
+        \begin{equation*}
+            \Pi_{\alpha} \coloneqq \bigcap_{D \in \mathcal{D}}\widebar{\pi_{\alpha}\left(D\right)} \neq \varnothing.
+        \end{equation*} 
+        For each $\alpha \in \Lambda$, pick some $x_{\alpha} \in \Pi_{\alpha}$ and define $\mathbfit{x} \coloneqq \left(x_{\alpha}\right)_{\alpha \in \Lambda}$. Let $U \subseteq X$ be an open neighbourhood for $\mathbfit{x}$, then there exists an open neighbourhood $U_{\alpha} \subseteq X_{\alpha}$ for $x_{\alpha}$ for each $\alpha \in \Lambda$ such that $U = \prod_{\alpha \in \Lambda}U_{\alpha}$. Note that for all $D \in \mathcal{D}$,
+        \begin{equation*}
+            \widebar{\pi_{\alpha}\left(D\right)} \cap U_{\alpha} \neq \varnothing.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \pi_{\alpha}\left(D\right) \cap U_{\alpha} \neq \varnothing,
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            D \cap \pi_{\alpha}^{-1}\left(U_{\alpha}\right) \neq \varnothing.
+        \end{equation*}
+        By Proposition \ref{pro:charMaximal}, $\pi_{\alpha}^{-1}\left(U_{\alpha}\right) \in \mathcal{D}$ and for all finite $I \subseteq \Lambda$,
+        \begin{equation*}
+            U \subseteq \bigcap_{i \in I}\pi_{i}^{-1}\left(U_{i}\right) \in \mathcal{D}.
+        \end{equation*}
+        Therefore, for all $D \in \mathcal{D}$, we have $U \cap D \neq \varnothing$ and so $\mathbfit{x}$ is a limit point of every $D \in \mathcal{D}$. This means that 
+        \begin{equation*}
+            \mathbfit{x} \in \bigcap_{D \in \mathcal{D}}\widebar{D} \subseteq \bigcap_{A \in \mathcal{A}}\widebar{A} = \bigcap_{A \in \mathcal{A}}A \neq \varnothing.
+        \end{equation*}
+        By Proposition \ref{pro:characteriseCompact}, $X$ is compact.
+    \end{proof}
 \end{thmbox}
 \section{Limit Point and Sequentially Compact Spaces}
 Let us re-visit the motivation of compactness: a space with no missing end points (i.e., end points which are infinitely far away). Now, another way to interpret this statement is that if we fix an infinite subset in the space, then we can always find a limit point of the subset in the space.
@@ -2328,7 +2489,31 @@ Intuitively, sequential compactness should be a stronger result than limit point
     Any sequentially compact topological space is limit point compact, but the converse is not true.
     \tcblower
     \begin{proof}
-        Let $X$ be sequentially compact and let $A \subseteq X$ be an infinite subset. Note that there exists a sequence $\left\{a_n\right\}_{n \in \N}$ in $A$, and so we can find a convergent subsequence $\left\{a_{n_i}\right\}_{i \in \N}$ such that $\lim_{i \to \infty}a_{n_i} = a \in X$. It is clear that $a$ is a limit point of $A$ and so $A$ is limit point compact.
+        Let $X$ be sequentially compact and let $A \subseteq X$ be an infinite subset. Note that there exists a sequence $\left\{a_n\right\}_{n \in \N}$ in $A$, and so we can find a convergent subsequence~$\left\{a_{n_i}\right\}_{i \in \N}$ such that $\lim_{i \to \infty}a_{n_i} = a \in X$. It is clear that $a$ is a limit point of $A$ and so $A$ is limit point compact.
+    \end{proof}
+\end{probox}
+However, the converse of this statement is false.
+\begin{probox}{Limit Point Compactness Is Weaker}{limButNotSeq}
+    There exists a topological space $X$ which is limit point compact but not sequentially compact.
+    \tcblower
+    \begin{proof}
+        Take $X = \mathbb{R}$ and define
+        \begin{equation*}
+            \mathcal{R} \coloneqq \left\{\left(a, \infty\right) \colon a \in \mathbb{R}\right\}.
+        \end{equation*}
+        We first check that $\mathcal{R}$ is a basis for a topology on $\mathbb{R}$. It is clear that for any $x \in \mathbb{R}$, we have $x \in \left(x - 1, \infty\right) \in \mathcal{R}$. Take any $x \in \mathbb{R}$ and any $a, b \in \mathbb{R}$ with $x \in \left(a, \infty\right) \cap \left(b, \infty\right)$. Without loss of generality, assume that $a < b$ and so $x \in \left(b, \infty\right) \subseteq \left(a, \infty\right) \cap \left(b, \infty\right)$. Therefore, $\mathcal{R}$ is a basis. Let $A \subseteq \mathbb{R}$ be any infinite subset. Fix any $a \in A$, then there exists some $\left(a', \infty\right) \subseteq A$ such that $a \in \left(a', \infty\right)$. Take $\ell \coloneqq \frac{a + a'}{2}$, then for any open neighbourhood $U$ of $\ell$, there exists some $u < \ell$ such that $\ell \in \left(u, \infty\right) \subseteq U$. Therefore, 
+        \begin{equation*}
+            U \cap \left(A \setminus \left\{a\right\}\right) \subseteq \left(u, \infty\right) \cap \left(a', \infty\right) \neq \varnothing,
+        \end{equation*}
+        and so $\ell$ is a limit point of $A$. Therefore, $X$ is limit point compact. Consider the sequence $\left\{-n\right\}_{n \in \N}$. We claim that the sequence has no convergent subsequence. Suppose on contrary that $\left\{-n_k\right\}_{k \in \N}$ is a convergent subsequence with 
+        \begin{equation*}
+            \lim_{k \to \infty}-n_k = N,
+        \end{equation*}
+        then $\left(\left\lfloor N - 1 \right\rfloor, \infty\right)$ is an open neighbourhood of $N$ but for all $k > -\left\lfloor N - 1 \right\rfloor$, we have 
+        \begin{equation*}
+            -n_k \leq -k < \left\lfloor N - 1 \right\rfloor,
+        \end{equation*}
+        which is a contradiction. Therefore, $\left\{-n\right\}_{n \in \N}$ has no convergent subsequence and so~$X$ is not sequentially compact.
     \end{proof}
 \end{probox}
 \section{Totally Bounded Spaces}
@@ -2336,12 +2521,29 @@ Suppose we construct an open cover for a space $X$, then intuitively, we could u
 \begin{dfnbox}{Lebesgue Number}{LebesgueNum}
     Let $\mathcal{U}$ be an open cover for a metric space $X$, then $\delta > 0$ is called a {\color{red} \textbf{Lebesgue number}} for $\mathcal{U}$ if for all $S \subseteq X$ with $\mathrm{diam}\left(S\right) < \delta$, there exists some $U \in \mathcal{U}$ such that $S \subseteq U$. 
 \end{dfnbox}
-The existence of Lebesgue number is not guaranteed in general. However, it can be shown that Lebesgue number always exists for sequentially compact spaces.
+The existence of Lebesgue number is not guaranteed in general topological spaces. For example, for each~$n \in \Z$, define $A_n \colon \left(n, n + 1\right)$ and 
+\begin{equation*}
+    B_n \coloneqq \begin{cases}
+        \left(-1, 1\right) & \text{ if } n = 0 \\
+        \left(n - \frac{1}{n}, n + \frac{1}{n}\right) & \text{ otherwise}
+    \end{cases}.
+\end{equation*}
+Clearly, $\left\{A_n \colon n \in \Z\right\} \cup \left\{B_n \colon n \in \Z\right\}$ is an open cover for $\R$. However, for any $\delta > 0$, there exists some $N \in \Z^+$ such that $\frac{2}{N} < \delta$. Take 
+\begin{equation*}
+    S \coloneqq \left(N + 1 - \frac{1}{N}, N + 1 + \frac{1}{N}\right) \subseteq \R.
+\end{equation*}
+Clearly, $\mathrm{diam}\left(S\right) = \frac{2}{N} < \delta$. Note that $N \leq N + 1 - \frac{1}{N} < N + 1$ and $N + 1 < N + 1 + \frac{1}{N} \leq N + 2$, so there does not exist any $n \in \Z$ such that $S \subseteq A_n$. Since $N > 0$, we have $S \not\subseteq B_0$. Notice that if $n - \frac{1}{n} \leq N + 1 - \frac{1}{N}$, then $n + \frac{1}{n} < N + 1 + \frac{1}{N}$, so $S \not\subseteq B_n$ for all $n \in \Z$. Therefore,~$\delta$ is not a Lebesgue number and so $\left\{A_n \colon n \in \Z\right\} \cup \left\{B_n \colon n \in \Z\right\}$ is an open cover of $\R$ that does not have a Lebesgue number.
+
+However, it can be shown that Lebesgue number always exists for sequentially compact spaces.
 \begin{probox}{Sequentially Compact Spaces Guarantee Lebesgue Number}{seqCompactLeb}
     Every open cover of a sequentially compact metric space has a Lebesgue number.
     \tcblower
     \begin{proof}
-        Let $X$ be sequentially compact. Suppose on contrary that there exists some open cover $\mathcal{U}$ of $X$ without a Lebesgue number, then for all $n \in \N^+$, there exists some $S_n \subseteq X$ such that $\mathrm{diam}\left(S_n\right) < \frac{1}{n}$. For each $n \in \N^+$, pick some $x_n \in S_n$ to form a sequence, then this sequence has a convergent subsequence $\left\{x_{n_i}\right\}_{i \in \N^+}$. Let $\lim_{i \to \infty}x_{n_i} = x$ and $x \in U$ for some $U \in \mathcal{U}$, then there exists some $\epsilon > 0$ such that $B_{\epsilon}\left(x\right) \subseteq U$. Note that there exists some $N \in \N^+$ such that $\frac{1}{N} < \frac{\epsilon}{2}$ and $x_{n_i} \in B_{\frac{\epsilon}{2}}\left(x\right)$ for all $i > N$. Note that for all $i > N$, we have $n_i \geq i > N$, so 
+        Let $X$ be sequentially compact. Suppose on contrary that there exists some open cover $\mathcal{U}$ of $X$ without a Lebesgue number, then for every $n \in \N^+$, there exists some~$S_n \subseteq X$ with $\mathrm{diam}\left(S_n\right) < \frac{1}{n}$ but $S_n \not\subseteq U$ for all $U \in \mathcal{U}$. For each~$n \in \N^+$, pick some $x_n \in S_n$, then the sequence $\left\{x_n\right\}_{n \in \N^+}$ has a convergent subsequence $\left\{x_{n_i}\right\}_{i \in \N^+}$. Let 
+        \begin{equation*}
+            \lim_{i \to \infty}x_{n_i} = x \in U
+        \end{equation*}
+        for some $U \in \mathcal{U}$, then there exists some $\epsilon > 0$ such that $B_{\epsilon}\left(x\right) \subseteq U$. Note that there exists some $N \in \N^+$ such that $\frac{1}{N} < \frac{\epsilon}{2}$ and $x_{n_i} \in B_{\frac{\epsilon}{2}}\left(x\right)$ for all $i > N$. Note that for all~$i > N$, we have $n_i \geq i > N$, so 
         \begin{equation*}
             \mathrm{diam}\left(S_{n_i}\right) < \frac{1}{n_i} < \frac{1}{N} < \frac{\epsilon}{2}.
         \end{equation*}
@@ -2390,12 +2592,42 @@ A nice thing about Propositions \ref{pro:seqCompactLeb} and \ref{pro:seqCompactT
         \begin{equation*}
             B_i \cap \left(A \setminus \left\{x\right\}\right) \neq \varnothing.
         \end{equation*}
-        We claim that $B_i \cap \left(A \setminus \left\{x\right\}\right)$ is infinite. Suppose on contrary that it is finite,
+        We claim that $B_i \cap \left(A \setminus \left\{x\right\}\right)$ is infinite. Suppose on contrary that it is finite, then we can write 
+        \begin{equation*}
+            B_i \cap \left(A \setminus \left\{x\right\}\right) = \left\{a_1, a_2, \cdots, a_n\right\}
+        \end{equation*}
+        for some $n \in \N^+$. Since $X$ is $T_1$, for each $k = 1, 2, \cdots, n$, there exists some~$B_{j_k} \in \mathcal{B}$ such that $x \in B_{j_k}$ but $a_k \notin B_{j_k}$. Therefore, 
+        \begin{equation*}
+            B \coloneqq B_i \cap \bigcap_{k = 1}^nB_{j_k} \subseteq X
+        \end{equation*}
+        is open but $B \cap \left(A \setminus \left\{x\right\}\right) = \varnothing$, which is a contradiction. For each $i \in \N^+$, pick some~$x_{n_i} \in B_i \cap \left(A \setminus \left\{x\right\}\right)$, and so $\left\{x_{n_i}\right\}_{i \in \N^+}$ is a convergent subsequence. Therefore,~$X$ is sequentially compact.
+        \\\\
+        Suppose that $X$ is sequentially compact and let $\mathcal{U}$ be an open cover for $X$. By Proposition \ref{pro:seqCompactLeb}, $\mathcal{U}$ has a Lebesgue number $\delta > 0$. By Proposition \ref{pro:seqCompactTotalBound}, there exists a finite cover 
+        \begin{equation*}
+            \left\{B_{\frac{\delta}{3}}\left(x_i\right) \colon i = 1, 2, \cdots, n\right\}
+        \end{equation*}
+        for $X$. For every $i = 1, 2, \cdots, n$, we have 
+        \begin{equation*}
+            \mathrm{diam}\left(B_{\frac{\delta}{3}}\left(x_i\right)\right) = \frac{2\delta}{3} < \delta,
+        \end{equation*}
+        and so there exists some $U_i \in \mathcal{U}$ such that $B_{\frac{\delta}{3}}\left(x_i\right) \subseteq U_i$. Therefore, 
+        \begin{equation*}
+            \left\{U_i \colon i = 1, 2, \cdots, n\right\}
+        \end{equation*}
+        is a finite sub-cover for $X$ and so $X$ is compact.
     \end{proof}
 \end{probox} 
 By exploiting this equivalence in metric spaces, we can obtain the following result:
 \begin{probox}{Compact Spaces Induce Uniform Continuity}{compactUniContinuous}
     Let $\left(X, d_X\right)$ and $\left(Y, d_Y\right)$ be metric spaces and $f \colon X \to Y$ be continuous. If $X$ is compact, then $f$ is uniformly continuous.
+    \tcblower
+    \begin{proof}
+        For any $\epsilon > 0$, define 
+        \begin{equation*}
+            \mathcal{B}_{\epsilon} \coloneqq \left\{B_{\frac{\epsilon}{2}}\left(y\right) \colon y \in Y\right\}, \qquad \mathcal{F}_{\epsilon} \coloneqq \left\{f^{-1}\left(B\right) \colon B \in \mathcal{B}_{\epsilon}\right\}.
+        \end{equation*}
+        Note that $\mathcal{B}_{\epsilon}$ is an open cover for $Y$. Since $f$ is continuous, $\mathcal{F}_{\epsilon}$ is an open cover for $X$. Since $X$ is compact, by Proposition \ref{pro:metricCompact}, $X$ is sequentially compact and by Proposition \ref{pro:seqCompactLeb}, $\mathcal{F}_{\epsilon}$ has a Lebesgue number $\delta > 0$. For any $x_1, x_2 \in X$ with $d_X\left(x_1, x_2\right) < \delta$, there exists some open set $S \subseteq X$ such that $\mathrm{diam}\left(S\right) < \delta$ and $x_1, x_2 \in S$. Therefore, there exists some $B_{\frac{\epsilon}{2}}\left(y\right) \in \mathcal{B}_{\epsilon}$ such that $x_1, x_2 \in f^{-1}\left(B_{\frac{\epsilon}{2}}\left(y\right)\right)$. This means that~$d_Y\bigl(f\left(x_1\right), f\left(x_2\right)\bigr) < \epsilon$ and so $f$ is uniformly continuous.
+    \end{proof}
 \end{probox}
 An intuition regarding totally bounded spaces is that: since we can cover the entire space with finitely many balls, then the ``size'' of the space should not be too large.
 \begin{probox}{Totally Bounded Spaces Have Finite Diameter}{finDiam}
@@ -2413,17 +2645,17 @@ An intuition regarding totally bounded spaces is that: since we can cover the en
         Therefore, $\mathrm{diam}\left(X\right) \leq M + 2\epsilon$ is finite.
     \end{proof}
 \end{probox}
-Total boundedness has the following useful properties:
-\begin{probox}{Properties of Total Boundedness}{propsTotalBound}
-    \begin{enumerate}
-        \item If $\left(X, d\right)$ is a metric space and $\rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}$, then $\left(X, \rho\right)$ is totally bounded if and only if $\left(X, d\right)$ is totally bounded.
-        \item If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, i.e., there exists some $A > 1$ such that 
-        \begin{equation*}
-            \frac{1}{A}d\left(x, y\right) < d'\left(x, y\right) < Ad\left(x, y\right),
-        \end{equation*}
-        then $\left(X, d\right)$ is totally bounded if and only if $\left(X', d'\right)$ is totally bounded.
-        \item Every subspace $X$ of $\left(\R^n, \ell_p\right)$ is totally bounded if and only if $X$ is bounded.
-    \end{enumerate}
+Recall that every metric can be normalised to $\left[0, 1\right]$, so it is natural that a totally bounded metric space is still totally bounded after such normalisation.
+\begin{probox}{Normalisation Preserves Totally Bounded Spaces}{normaliseTotalBound}
+    If $\left(X, d\right)$ is a metric space and $\rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}$, then $\left(X, \rho\right)$ is totally bounded if and only if $\left(X, d\right)$ is totally bounded.
+\end{probox}
+Similarly, bi-Lipschitz spaces should also preserve totally bounded properties.
+\begin{probox}{Bi-Lipschitz Spaces Preserve Totally Bounded Spaces}{biLipschitzTotalBound}
+    If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, then $\left(X, d\right)$ is totally bounded if and only if $\left(X', d'\right)$ is totally bounded.
+\end{probox}
+Lastly, in Euclidean spaces, it is intuitive that every bounded space is totally bounded. We can push this result further by generalising to all $L^p$-metrics.
+\begin{probox}{Bounded Subspaces of $L^p$ Spaces Are Totally Bounded}{propsTotalBound}
+    Every subspace $X$ of $\left(\R^n, \ell_p\right)$ is totally bounded if and only if $X$ is bounded.
 \end{probox}
 \section{Complete Spaces}
 In elementary real analysis, we examine the notion of convergence with Cauchy sequences. Recall that in $\R^n$, every Cauchy sequence is convergent. However, in general metric spaces, this might not be the case. We now generalise this idea to all metric spaces.
