@@ -2866,7 +2866,7 @@ With this very sophisticated result, we can now turn back and prove something wh
 \section{Compactification}
 In the previous section in the study of compactness, we have been treating a space as a single entity. However, another perspective is to view the space as a collection of many singleton ``points''. This motivates us to define compactness point-wise.
 \begin{dfnbox}{Local Compactness}{localCompact}
-    A topological space $X$ is {\color{red} \textbf{locally compact}} at $x \in X$ if there exists a compact set $C \subseteq X$ and an open set $U \subseteq X$ such that $x \in U \subseteq C$. We say that $X$ is locally compact if it is locally compact at every $x \in X$.
+    A topological space $X$ is {\color{red} \textbf{locally compact}} at $x \in X$ if there exists a compact set $K \subseteq X$ and an open set $U \subseteq X$ such that $x \in U \subseteq K$. We say that $X$ is locally compact if it is locally compact at every $x \in X$.
 \end{dfnbox}
 An interpretation of local compactness at a point $x$ is that we can find a strictly wider compact neighbourhood that contains $x$.
 
@@ -2904,20 +2904,20 @@ In Hausdorff spaces, it is then relatively easy to construct a compactification.
         \begin{equation*}
             \mathcal{A} \coloneqq \left\{Y \setminus C \colon C \textrm{ is compact in } X\right\}.
         \end{equation*}
-        We claim that $\mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \mathcal{A}$ is a topology on $Y$. Let $C_1, C_2, \cdots, C_n$ be compact sets in~$X$, then $\bigcup_{i = 1}^nC_i$ is compact in $X$. Therefore, 
+        We claim that $\mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \mathcal{A}$ is a topology on $Y$. Let $K_1, K_2, \cdots, K_n$ be compact sets in~$X$, then $\bigcup_{i = 1}^nK_i$ is compact in $X$. Therefore, 
         \begin{equation*}
-            \bigcap_{i = 1}^n\left(Y \setminus C_i\right) = Y \setminus \bigcup_{i = 1}^nC_i \in \mathcal{A}.
+            \bigcap_{i = 1}^n\left(Y \setminus K_i\right) = Y \setminus \bigcup_{i = 1}^nK_i \in \mathcal{A}.
         \end{equation*}
-        Let $\left\{C_{\alpha}\right\}_{\alpha \in \Lambda}$ be a collection of compact sets in $X$, then $\bigcap_{\alpha \in \Lambda}C_{\alpha}$ is closed in $C_{\alpha}$ for any~$\alpha \in \Lambda$ and so compact in $X$. Therefore, 
+        Let $\left\{K_{\alpha}\right\}_{\alpha \in \Lambda}$ be a collection of compact sets in $X$, then $\bigcap_{\alpha \in \Lambda}K_{\alpha}$ is closed in $K_{\alpha}$ for any~$\alpha \in \Lambda$ and so compact in $X$. Therefore, 
         \begin{equation*}
-            \bigcup_{\alpha \in \Lambda}\left(Y \setminus C_{\alpha}\right) = Y \setminus \bigcap_{\alpha \in \Lambda}C_{\alpha} \in \mathcal{A}.
+            \bigcup_{\alpha \in \Lambda}\left(Y \setminus K_{\alpha}\right) = Y \setminus \bigcap_{\alpha \in \Lambda}K_{\alpha} \in \mathcal{A}.
         \end{equation*}
-        Take any $T \in \mathcal{T}_X$ and any compact set $C \subseteq X$, then $C \setminus T \subseteq C$ is closed and so compact in $X$. Therefore, 
+        Take any $T \in \mathcal{T}_X$ and any compact set $K \subseteq X$, then $K \setminus T \subseteq K$ is closed and so compact in $X$. Therefore, 
         \begin{align*}
-            T \cup \left(Y \setminus C\right) & = Y \setminus \left(C \setminus T\right) \in \mathcal{A}, \\
-            T \cap \left(Y \setminus C\right) & = T \setminus C \in \mathcal{T}_X.
+            T \cup \left(Y \setminus K\right) & = Y \setminus \left(K \setminus T\right) \in \mathcal{A}, \\
+            T \cap \left(Y \setminus K\right) & = T \setminus K \in \mathcal{T}_X.
         \end{align*}
-        It is obvious that $Y, \varnothing \in \mathcal{T}_Y$. Therefore, $\mathcal{T}_Y$ is a topology on $Y$. Define $h_Y \colon X \to Y$ by $h_Y\left(x\right) = x$, then clearly $h_Y$ is homeomorphic onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right) = \left\{p\right\}$ is a singleton set. Now, let $\mathcal{U} \subseteq \mathcal{T}_Y$ be an open cover for $Y$, then there exists some $U_0 \in \mathcal{U}$ such that $p \in U_0$. Notice that $U_0 \in \mathcal{A}$, so there exists some compact set $C_0 \subseteq X$ such that $U_0 = Y \setminus C_0$. Note that $\mathcal{U}$ is an open cover for $C_0$, so there exists a finite sub-cover $U_1, U_2, \cdots, U_n$ for $C_0$. Therefore, $U_0, U_1, \cdots, U_n$ is a finite sub-cover for $Y$, and so $Y$ is compact. Take any $x \in X$, then since $X$ is locally compact, there exists some open set~$U \in \mathcal{T}_X$ and compact set $C \subseteq X$ such that $x \in U \subseteq C$. Clearly, $p \in Y \setminus C$, which is open in $Y$ and disjoint from $U$. Therefore, $Y$ is Hausdorff.
+        It is obvious that $Y, \varnothing \in \mathcal{T}_Y$. Therefore, $\mathcal{T}_Y$ is a topology on $Y$. Define $h_Y \colon X \to Y$ by $h_Y\left(x\right) = x$, then clearly $h_Y$ is homeomorphic onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right) = \left\{p\right\}$ is a singleton set. Now, let $\mathcal{U} \subseteq \mathcal{T}_Y$ be an open cover for $Y$, then there exists some $U_0 \in \mathcal{U}$ such that $p \in U_0$. Notice that $U_0 \in \mathcal{A}$, so there exists some compact set $K_0 \subseteq X$ such that $U_0 = Y \setminus K_0$. Note that $\mathcal{U}$ is an open cover for $K_0$, so there exists a finite sub-cover $U_1, U_2, \cdots, U_n$ for $K_0$. Therefore, $U_0, U_1, \cdots, U_n$ is a finite sub-cover for $Y$, and so $Y$ is compact. Take any $x \in X$, then since $X$ is locally compact, there exists some open set~$U \in \mathcal{T}_X$ and compact set $K \subseteq X$ such that $x \in U \subseteq K$. Clearly, $p \in Y \setminus K$, which is open in $Y$ and disjoint from $U$. Therefore, $Y$ is Hausdorff.
         \\\\
         Conversely, suppose that $Y$ is a compact Hausdorff space $Y$ such that there exists a map $h_Y \colon X \to Y$ which is homeomorphic onto $h_Y\left(X\right)$ such that $Y \setminus h_Y\left(X\right) = \left\{p\right\}$ is a singleton set. Note that $h_Y\left(X\right) \subseteq Y$ must be Hausdorff. Since $h_Y$ is homeomorphic onto $h_Y\left(X\right)$, we know that $X$ is Hausdorff. Take any $x \in X$, then there exist disjoint open sets $U, V \subseteq Y$ such that $x \in U$ and $p \in V$. Note that $U \subseteq Y \setminus V$, which is closed and so compact since $Y$ is compact. Therefore, $X$ is locally compact.
     \end{proof}
@@ -2948,9 +2948,9 @@ Essentially, the above proposition is basically saying that if we add a new poin
                 h_{Y}\left(h_{Y'}^{-1}\left(y\right)\right) & \textrm{if } y \in h_{Y'}\left(X\right)
             \end{cases}.
         \end{equation*}
-        Let $U \subseteq Y'$ be any open set. If $p' \notin U$, then $U$ is open in $h_{Y'}\left(X\right)$. Therefore, $h_{Y'}^{-1}\left(U\right)$ is open in $X$, and so $f^{-1}\left(U\right) = h_Y\left(h_{Y'}^{-1}\left(U\right)\right)$ is open in $h_Y\left(X\right)$. Since $h_Y\left(X\right)$ is open in $Y$, this implies that $f^{-1}\left(U\right)$ is open in~$Y$. If $p' \in U$, define $C \coloneqq Y' \setminus U$ which is closed and therefore compact in $Y'$ by Proposition \ref{pro:closedCompact}. It is clear that $C$ is compact in $h_{Y'}\left(X\right)$. By Proposition \ref{pro:ContinuousCompact}, $f^{-1}\left(C\right) = h_Y\left(h_{Y'}^{-1}\left(C\right)\right)$ is compact in $h_Y\left(X\right)$ and so compact in $Y$. Since $Y$ is Hausdorff, by Proposition \ref{pro:compactClosed}, $f^{-1}\left(C\right)$ is closed in $Y$, and so 
+        Let $U \subseteq Y'$ be any open set. If $p' \notin U$, then $U$ is open in $h_{Y'}\left(X\right)$. Therefore, $h_{Y'}^{-1}\left(U\right)$ is open in $X$, and so $f^{-1}\left(U\right) = h_Y\left(h_{Y'}^{-1}\left(U\right)\right)$ is open in $h_Y\left(X\right)$. Since $h_Y\left(X\right)$ is open in $Y$, this implies that $f^{-1}\left(U\right)$ is open in~$Y$. If $p' \in U$, define $K \coloneqq Y' \setminus U$ which is closed and therefore compact in $Y'$ by Proposition \ref{pro:closedCompact}. It is clear that $K$ is compact in $h_{Y'}\left(X\right)$. By Proposition \ref{pro:ContinuousCompact}, $f^{-1}\left(K\right) = h_Y\left(h_{Y'}^{-1}\left(K\right)\right)$ is compact in $h_Y\left(X\right)$ and so compact in $Y$. Since $Y$ is Hausdorff, by Proposition \ref{pro:compactClosed}, $f^{-1}\left(K\right)$ is closed in $Y$, and so 
         \begin{equation*}
-            f^{-1}\left(U\right) = f^{-1}\left(Y' \setminus C\right) = Y \setminus f^{-1}\left(C\right),
+            f^{-1}\left(U\right) = f^{-1}\left(Y' \setminus K\right) = Y \setminus f^{-1}\left(K\right),
         \end{equation*}
         which is open in $Y$. Therefore, $f$ is continuous. Similarly, $f^{-1}$ is continuous, and so~$f$ is a homeomorphism.
     \end{proof}
@@ -2988,15 +2988,15 @@ Since compactification is closely related to Hausdorff spaces and locally compac
     \begin{proof}
         By Proposition \ref{pro:characteriseLocallyCompactHausdorff}, define $Y \coloneqq X \cup \left\{p\right\}$ to be compact and 
         \begin{equation*}
-            \mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \left\{Y \setminus C \colon C \textrm{ is compact in } X\right\}
+            \mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \left\{Y \setminus K \colon K \textrm{ is compact in } X\right\}
         \end{equation*}
-        as the topology on $Y$, where $\mathcal{T}_X$ is the topology on $X$. Take any $x \in X$ and any open set~$U \subseteq X$ with $x \in U$, then $C \coloneqq Y \setminus U$ is closed and so compact because $Y$ is compact. Note that $x \notin C$. By Proposition \ref{pro:separabilityCompact}, $Y$ is $T_3$. Therefore, there exist disjoint open sets~$V, W \subseteq Y$ such that $x \in V$ and $C \subseteq W$. Since $p \in C \subseteq W$, we have 
+        as the topology on $Y$, where $\mathcal{T}_X$ is the topology on $X$. Take any $x \in X$ and any open set~$U \subseteq X$ with $x \in U$, then $K \coloneqq Y \setminus U$ is closed and so compact because $Y$ is compact. Note that $x \notin K$. By Proposition \ref{pro:separabilityCompact}, $Y$ is $T_3$. Therefore, there exist disjoint open sets~$V, W \subseteq Y$ such that $x \in V$ and $K \subseteq W$. Since $p \in K \subseteq W$, we have 
         \begin{equation*}
             X \setminus W = Y \setminus W,
         \end{equation*}
         which is compact and so closed in $X$. Note that $V \subseteq Y \setminus W = X \setminus W$, so 
         \begin{equation*}
-            x \in V \subseteq \widebar{V} \subseteq X \setminus W \subseteq X \setminus C = U,
+            x \in V \subseteq \widebar{V} \subseteq X \setminus W \subseteq X \setminus K = U,
         \end{equation*}
         which implies that $X$ is locally compact. The converse is trivial and is left to the reader as an exercise.
     \end{proof}
@@ -3010,7 +3010,7 @@ This result can be utilised to check if a subspace of a locally compact space is
     \end{enumerate}
     \tcblower
     \begin{proof}
-        Suppose that $A$ is closed. For any $x \in A \subseteq X$, there exists an open set $U \subseteq X$ and a compact set $C \subseteq X$ such that $x \in U \subseteq C$. Note that $A \cap C$ is closed in $C$, so by Proposition \ref{pro:closedCompact}, $A \cap C$ is compact in $C$. Therefore, $A \cap C$ is compact in $X$, and so it is compact in $A$. Note that $A \cap U$ is open and $x \in A \cap U \subseteq A \cap C$, so $A$ is locally compact. 
+        Suppose that $A$ is closed. For any $x \in A \subseteq X$, there exists an open set $U \subseteq X$ and a compact set $K \subseteq X$ such that $x \in U \subseteq K$. Note that $A \cap K$ is closed in $K$, so by Proposition \ref{pro:closedCompact}, $A \cap K$ is compact in $K$. Therefore, $A \cap K$ is compact in $X$, and so it is compact in $A$. Note that $A \cap U$ is open and $x \in A \cap U \subseteq A \cap K$, so $A$ is locally compact. 
         \\\\
         Otherwise, suppose that $A$ is open and $X$ is Hausdorff, then for any $x \in A \subseteq X$, by Proposition \ref{pro:characteriseLocallyCompact}, there exists an open compact set $V \subseteq X$ for every open neighbourhood $U \subseteq X$ of $x$ such that $x \in V \subseteq U$. Note that $A \cap V$ is open and compact in $A$ and $A \cap U$ is open in $A$, so $x \in A \cap V \subseteq A \cap U$. By Proposition \ref{pro:characteriseLocallyCompact}, $A$ is locally compact.
     \end{proof}
@@ -3191,78 +3191,167 @@ We will show that a metric completion always exists, and it is in fact unique up
     \end{proof}
 \end{thmbox}
 \section{Equicontinuity}
+Recall that in Definition \ref{dfn:pointwiseAndUniform}, we defined the notion of uniform convergence. The idea of uniform convergence is that as $n \to \infty$, the sequence of functions will stay within a \textbf{small and confined} neighbourhood from the limit. In general topological spaces, this ``confined-ness'' can be described using compact sets.
+\begin{dfnbox}{Compact Convergence}{compactConvergence}
+    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. A sequence of functions~$\left\{f_n\right\}_{n \in \N^+}$ from $X$ to $Y$ is said to {\color{red} \textbf{converge compactly}} to $f \colon X \to Y$ if for every compact subset $K \subseteq X$, 
+    \begin{equation*}   
+        \lim_{n \to \infty}\sup_{x \in K}d\bigl(f_n\left(x\right), f\left(x\right)\bigr) = 0.
+    \end{equation*} 
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Equivalently, $\left\{f_n\right\}_{n \in \N^+}$ converges compactly to $f$ if and only if $\left\{\left.f_n\right\rvert_K\right\}_{n \in \N^+}$ converges uniformly to $\left.f\right\rvert_K$.
+    \end{remark}
+\end{notebox}
+Note that compact convergence alone does not guarantee that $\left\{f_n\right\}_{n \in \N^+}$ will converge in~$Y^X$. However, we can define a special type of topologies to establish the correspondence.
 \begin{dfnbox}{Topology of Compact Convergence}{compactConv}
-    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. For each $f \in Y^X$ and each compact set $C \subseteq X$, define 
+    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. For each $f \in Y^X$ and each compact set $K \subseteq X$, define 
     \begin{equation*}
-        B\left(f, C, \epsilon\right) \coloneqq \left\{g \in Y^X \colon \sup_{x \in C}\left\{d\bigl(f\left(x\right), g\left(x\right)\bigr)\right\} < \epsilon\right\}
+        B\left(f, K, \epsilon\right) \coloneqq \left\{g \in Y^X \colon d_{\sup}\left(\left.f\right\rvert_K, \left.g\right\rvert_K\right) < \epsilon\right\}
     \end{equation*}
     where $\epsilon > 0$. The topology generated by
     \begin{equation*}
-        \mathcal{B} \coloneqq \left\{B\left(f, C, \epsilon\right) \colon f \in Y^X, C \subseteq X \textrm{ is compact}, \epsilon > 0\right\}
+        \mathcal{B} \coloneqq \left\{B\left(f, K, \epsilon\right) \colon f \in Y^X, K \subseteq X \textrm{ is compact}, \epsilon > 0\right\}
     \end{equation*} 
     is called the {\color{red} \textbf{topology of compact convergence}} on $Y^X$.
 \end{dfnbox}
-This topology is so named because $\left\{f_n\right\}_{n \in \N}$ in $Y^X$ converges to $f$ with respect to the topology if and only if $\left\{\left. f_n \right\rvert_C\right\}_{n \in \N}$ converges to $\left. f\right\rvert_C$ uniformly for any compact set $C \subseteq X$.
+Intuitively, each basic open ball $B\left(f, K, \epsilon\right)$ can be thought of the collection of all the functions~$g \in Y^X$ which, when restricted to $K$, are within a distance of $\epsilon$ from $f$. This topology is so named because $\left\{f_n\right\}_{n \in \N}$ in $Y^X$ converges to $f$ with respect to the topology if and only if $\left\{\left. f_n \right\rvert_K\right\}_{n \in \N}$ converges to $\left. f\right\rvert_K$ uniformly for any compact set $K \subseteq X$. 
+
+Now, to describe the convergent behaviour of functions, we need to confine their images into some ``regions'' in the co-domain. The following definition provides one tool to do this.
 \begin{dfnbox}{Compact-Open Topology}{compactOpen}
-    Let $X$ and $Y$ be topological spaces. For every compact set $C \subseteq X$ and open set $U \subseteq Y$, define 
+    Let $X$ and $Y$ be topological spaces. For every compact set $K \subseteq X$ and open set $U \subseteq Y$, define 
     \begin{equation*}
-        S\left(C, U\right) \coloneqq \left\{g \in C\left(X, Y\right) \colon g\left(C\right) \subseteq U\right\}.
+        S\left(K, U\right) \coloneqq \left\{g \in \mathcal{C}\left(X, Y\right) \colon g\left(K\right) \subseteq U\right\}.
     \end{equation*}
     The topology generated by the sub-basis
     \begin{equation*}
-        \mathcal{S} \coloneqq \left\{S\left(C, U\right) \colon C \subseteq X \textrm{ is compact}, U \subseteq Y \textrm{ is open}\right\}
+        \mathcal{S} \coloneqq \left\{S\left(K, U\right) \colon K \subseteq X \textrm{ is compact}, U \subseteq Y \textrm{ is open}\right\}
     \end{equation*}
-    is the {\color{red} \textbf{compact-open topology}} on $C\left(X, Y\right)$.
+    is the {\color{red} \textbf{compact-open topology}} on $\mathcal{C}\left(X, Y\right)$.
 \end{dfnbox}
-The next result shows that every topology of compact convergence is actually a compact-open topology.
+Intuitively, the compact-open topology consists of continuous functions in $Y^X$ where the images of compact sets are contained in an open neighbourhood. With some well-defined metric, every topology of compact convergence restricted to continuous functions is actually a compact-open topology, which makes sense because we would expect a compactly convergent function to have images confined within open sets for every compact pre-image.
 \begin{probox}{Topology of Compact Convergence over Continuous Maps}{compactConvToCompactOpen}
-    Let $X$ is a topological space and $\left(Y, d\right)$ is a metric space. Let $\mathcal{T}_C$ be the topology of compact convergence and $\mathcal{T}_O$ be the compact-open topology on $C\left(X, Y\right)$, then $\mathcal{T}_C = \mathcal{T}_O$.
+    Let $X$ is a topological space and $\left(Y, d\right)$ is a metric space. Let $\mathcal{T}_K$ be the topology of compact convergence and $\mathcal{T}_O$ be the compact-open topology on $\mathcal{C}\left(X, Y\right)$, then $\mathcal{T}_K = \mathcal{T}_O$.
+    \tcblower
+    \begin{proof}
+        Take any $B\left(K, f, \epsilon\right) \subseteq \mathcal{T}_K$. For every $x \in X$, let $V_x \subseteq X$ be an open set defined by 
+        \begin{equation*}
+            V_x \coloneqq f^{-1}\left(B^d_{\frac{\epsilon}{3}}\bigl(f\left(x\right)\bigr)\right).
+        \end{equation*}
+        Since $f$ is continuous, by Proposition \ref{pro:continuousMapProps}, 
+        \begin{equation*}
+            f\left(\widebar{V_x}\right) \subseteq \widebar{f\left(V_x\right)} \subseteq B^d_{\frac{\epsilon}{2}}\bigl(f\left(x\right)\bigr).
+        \end{equation*}
+        Notice that $\left\{V_x \colon x \in K\right\}$ is an open cover for $K$. Since $K$ is compact, there exists a finite sub-cover $\left\{V_{x_1}, V_{x_2}, \cdots, V_{x_n}\right\}$ for $K$. Define $K_i \coloneqq K \cap \widebar{V_{x_i}}$ for each $i = 1, 2, \cdots, n$, which is closed and thus compact in $K$. Consider 
+        \begin{equation*}
+            U \coloneqq \bigcap_{i = 1}^nS\left(K_i, B^d_{\frac{\epsilon}{2}}\bigl(f\left(x_i\right)\bigr)\right),
+        \end{equation*}
+        which is a basic open set in $\mathcal{T}_O$. Note that for every $i = 1, 2, \cdots, n$, 
+        \begin{equation*}
+            f\left(K_i\right) \subseteq f\left(\widebar{V_{x_i}}\right) \subseteq B^d_{\frac{\epsilon}{2}}\bigl(f\left(x_i\right)\bigr),
+        \end{equation*}
+        which means that $f \in U$. For every $g \in U$ and every $x \in K$, we have $x \in K_i$ for all~$i = 1, 2, \cdots, n$, and so 
+        \begin{align*}
+            d\bigl(g\left(x\right), f\left(x\right)\bigr) & \leq d\bigl(g\left(x\right), f\left(x_i\right)\bigr) + d\bigl(f\left(x_i\right), f\left(x\right)\bigr) \\
+            & < \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+            & = \epsilon.
+        \end{align*}
+        Therefore, $d_{\sup}\left(\left.g\right\rvert_K, \left.f\right\rvert_K\right) < \epsilon$ and so $g \in B\left(K, f, \epsilon\right)$. Therefore, $f \in U \subseteq B\left(K, f, \epsilon\right)$, and so we have $\mathcal{T}_K \subseteq \mathcal{T}_O$. Take any compact set $K \subseteq X$ and any open set $U \subseteq Y$. For every~$f \in S\left(K, U\right)$, since $f$ is continuous, $f\left(K\right)$ is compact by Proposition \ref{pro:ContinuousCompact}. Define 
+        \begin{equation*}
+            \epsilon_f \coloneqq \inf\left\{d\left(x, y\right) \colon x \in f\left(K\right), y \in Y \setminus U\right\}.
+        \end{equation*}
+        We claim that $\epsilon_f > 0$. Suppose on contrary that $\epsilon_f = 0$, then for every $n \in \N^+$, there exists some $x_n \in f\left(K\right)$ and some $y_n \in Y \setminus U$ such that $d\left(x_n, y_n\right) < \frac{1}{n}$. Since $f\left(K\right)$ is a metrisable compact space, it is sequentially compact by Proposition \ref{pro:metricCompact}, and so there exists a convergent subsequence $\left\{x_{k_n}\right\}_{n \in \N^+}$ of $\left\{x_n\right\}_{n \in \N^+}$. Let $x \coloneqq \lim_{n \to \infty}x_{k_n}$. Consider 
+        \begin{equation*}
+            0 \leq d\left(x, y_{k_n}\right) \leq d\left(x, x_{k_n}\right) + d\left(x_{k_n}, y_{k_n}\right).
+        \end{equation*}
+        By Squeeze Theorem, this means that $x$ is a limit point of $Y \setminus U$. However, $Y \setminus U$ is closed, which means that $x \in \left(Y \setminus U\right) \cap f\left(K\right)$. This is not possible as~$f\left(K\right) \subseteq U$. Notice that for every $g \in B\left(K, f, \epsilon\right) \subseteq \mathcal{T}_K$, we have $d\bigl(f\left(x\right), g\left(x\right)\bigr) < \epsilon_f$ for all $x \in K$ and so $g\left(K\right) \subseteq U$ by the definition of $\epsilon_f$. Therefore, 
+        \begin{equation*}
+            f \in B\left(K, f, \epsilon_f\right) \subseteq S\left(K, U\right),
+        \end{equation*}
+        and so $\mathcal{T}_O \subseteq \mathcal{T}_K$. In conclusion, $\mathcal{T}_K = \mathcal{T}_O$.
+    \end{proof}
 \end{probox}
+Both compact-open topology and topology of compact convergence are deeply related with compact sets in a space. More strictly, we define a type of spaces in which the open sets are coherent in the space itself and in the compact subspaces.
 \begin{dfnbox}{Compactly Generated Space}{compactGen}
-    A topological space $X$ is {\color{red} \textbf{compactly generated}} if $A$ is open in $X$ if and only if $A \cap C$ is open in $C$ for every compact set $C$ in $X$.
+    A topological space $X$ is {\color{red} \textbf{compactly generated}} if $A$ is open in $X$ if and only if $A \cap K$ is open in $K$ for every compact set $K$ in $X$.
 \end{dfnbox}
 Intuitively, we can flip the condition in the above definition to base on closed sets.
 \begin{probox}{Alternative Definition for Compactly Generated Spaces}{altCompactGen}
-    A topological space $X$ is compactly generated if $A$ is closed in $X$ if and only if $A \cap C$ is closed in $C$ for every compact set $C$ in $X$.
+    A topological space $X$ is compactly generated if $A$ is closed in $X$ if and only if $A \cap K$ is closed in $K$ for every compact set $K$ in $X$.
 \end{probox}
 Let us now try to characterise compactly generated spaces.
 \begin{probox}{Sufficient Conditions for Compactly Generated Spaces}{suffCondCompactGen}
     A topological space $X$ is compactly generated if it is locally compact or first countable.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is locally compact. Take any $A \subseteq X$ such that $A \cap K$ is open in $K$ for every compact set $K \subseteq X$. For every $a \in A$, let $U_a \subseteq X$ be any open neighbourhood of $a$, then since $X$ is locally compact, there exists some compact set $K_a \subseteq X$ be a compact set such that $a \in U_a \subseteq K_a$, then 
+        \begin{equation*}
+            A \cap U_a = \left(A \cap K_a\right) \cap U_a
+        \end{equation*}
+        is open in $U_a$, and so $A \cap U_a$ is open in $X$. Notice that $a \in A \cap U_a \subseteq A$, so 
+        \begin{equation*}
+            A = \bigcup_{a \in A}\left(A \cap U_a\right)
+        \end{equation*}
+        is open in $X$. Therefore, $X$ is compactly generated.
+        \\\\
+        Suppose that $X$ is first countable and take $B \subseteq X$ such that $B \cap K$ is closed in~$K$ for every compact set $K \subseteq X$. Take any $b \in \widebar{B}$. Since $X$ is first countable, by Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{b_n\right\}_{n \in \N^+}$ in $B$ such that $\lim_{n \to \infty}b_n = b$. take
+        \begin{equation*}
+            K \coloneqq \left\{b_n \colon n \in \N^+\right\} \cup \left\{b\right\},
+        \end{equation*}
+        then $K$ is compact and so $B \cap K$ is closed. Therefore, since $b$ is a limit point for $B \cap K$, we have $b \in B \cap K$ and so $b \in B$. This means that $\widebar{B} = B$, and so $B$ is closed. By Proposition \ref{pro:altCompactGen}, $X$ is compactly generated.
+    \end{proof}
 \end{probox}
 The name ``compactly generated'' suggests that such a space is completely characterised by its compact subsets. This has important implications on how we could characterise continuity over the space.
 \begin{probox}{Continuity in Compactly Generated Spaces}{contCompactGen}
-    Let $X$ and $Y$ be topological spaces. If $X$ is compactly generated, then a map $f \colon X \to Y$ is continuous if and only if for each compact set $C \subseteq X$, $\left.f\right\rvert_C$ is continuous.
+    Let $X$ and $Y$ be topological spaces. If $X$ is compactly generated, then a map $f \colon X \to Y$ is continuous if and only if for each compact set $K \subseteq X$, $\left.f\right\rvert_K$ is continuous.
+    \tcblower
+    \begin{proof}
+        The converse direction is trivial, so it suffices to prove for the sufficiency. Suppose that $\left.f\right\rvert_K$ is continuous for any compact set $K \subseteq X$. Take any open set $V \subseteq Y$, then for any compact set $K \subseteq X$, 
+        \begin{equation*}
+            f^{-1}\left(V\right) \cap K = \left.f\right\rvert_K^{-1}\left(V\right),
+        \end{equation*}
+        which is open in $K$. Since $X$ is compactly generated, this means that $f^{-1}\left(V\right)$ is open in $X$, and so $f$ is continuous.
+    \end{proof}
 \end{probox}
 This leads to the following corollary:
 \begin{corbox}{The Set of Continuous Maps Is Closed}{contMapSetClosed}
-    Let $X$ be a compactly generated topological space and $\left(Y, d\right)$ be a metric space, then $C\left(X, Y\right) \subseteq Y^X$ is closed under the topology of compact convergence.
+    Let $X$ be a compactly generated topological space and $\left(Y, d\right)$ be a metric space, then $\mathcal{C}\left(X, Y\right) \subseteq Y^X$ is closed under the topology of compact convergence.
+    \tcblower
+    \begin{proof}
+        Let $f \in Y^X$ be any limit point of $\mathcal{C}\left(X, Y\right)$. It suffices to show that $f \in \mathcal{C}\left(X, Y\right)$, i.e., $f$ is continuous. Note that $B\left(K, f, \frac{1}{n}\right)$ is a basic open neighbourhood of $f$ in $Y^X$ for every compact set $K \subseteq X$ and every $n \in \N^+$. Therefore, 
+        \begin{equation*}
+            B\left(K, f, \frac{1}{n}\right) \cap \mathcal{C}\left(X, Y\right) \neq \varnothing.
+        \end{equation*}
+        This means that for each $n \in \N^+$, there exists some $f_n \in B\left(K, f, \frac{1}{n}\right) \cap \mathcal{C}\left(X, Y\right)$. Clearly, $\left\{\left.f_n\right\rvert_K\right\}_{n \in \N^+}$ converges to $\left.f\right\rvert_K$ uniformly, and so by Proposition \ref{pro:uniformThenContinuous}, $\left.f\right\rvert_K$ is continuous. By Proposition \ref{pro:contCompactGen}, $f$ is continuous.
+    \end{proof}
 \end{corbox}
+To aim for a finer control quantitatively for a family of functions, we investigate a way to describe the ``variation'' of the functions in a given neighbourhood. In the ideal scenario, all the functions in the family have the same variation, which is formally captured by the following definition:
 \begin{dfnbox}{Equicontinuity}{equicontinuity}
-    Let $X$ be a topological space, $\left(Y, d\right)$ be a metric space and $\mathcal{Y} \subseteq C\left(X, Y\right)$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous at $x_0 \in X$}} if for all $\epsilon > 0$, there exists an open set $U \subseteq Y$ such that for all $f \in \mathcal{Y}$, 
+    Let $X$ be a topological space, $\left(Y, d\right)$ be a metric space and $\mathcal{Y} \subseteq \mathcal{C}\left(X, Y\right)$. We say that~$\mathcal{Y}$ is {\color{red} \textbf{equicontinuous at $x_0 \in X$}} if for all $\epsilon > 0$, there exists an open set $U \subseteq Y$ such that for all $f \in \mathcal{Y}$, 
     \begin{equation*}
         d\bigl(f\left(x_0\right), f\left(x\right)\bigr) < \epsilon
     \end{equation*}
-    for all $x \in U$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous}} if it is equicontinuous at every $x_0 \in X$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous}} if it is equicontinuous at every $x \in X$.
+    for all $x \in U$. We say that $\mathcal{Y}$ is {\color{red} \textbf{equicontinuous}} if it is equicontinuous at every $x \in X$. 
 \end{dfnbox}
 \begin{probox}{Sufficient Condition for Equicontinuity}{suffCondEquicontinuity}
-    Let $X$ be a topological space, $\left(Y, d\right)$ be a metric space and $\widebar{\rho}$ be the uniform metric on $C\left(X, Y\right)$. If $\mathcal{Y} \subseteq C\left(X, Y\right)$ is totally bounded with respect to $\widebar{\rho}$, then it is equicontinuous.
+    Let $X$ be a topological space, $\left(Y, d\right)$ be a metric space and $\widebar{\rho}$ be the uniform metric on $\mathcal{C}\left(X, Y\right)$. If $\mathcal{Y} \subseteq \mathcal{C}\left(X, Y\right)$ is totally bounded with respect to $\widebar{\rho}$, then it is equicontinuous.
 \end{probox}
 \begin{probox}{Property of Equicontinuous Families}{equicontinuousFamilies}
-    Let $\mathcal{G} \subseteq C\left(X, Y\right)$ be an equicontinuous family. If $\mathcal{T}_C$ and $\mathcal{T}_O$ are the topology of compact convergence and the compact-open topology respectively, then $\mathcal{T}_C = \mathcal{T}_O$.
+    Let $\mathcal{G} \subseteq \mathcal{C}\left(X, Y\right)$ be an equicontinuous family. If $\mathcal{T}_K$ and $\mathcal{T}_O$ are the topology of compact convergence and the compact-open topology respectively, then $\mathcal{T}_K = \mathcal{T}_O$.
 \end{probox}
 \begin{probox}{Continuity of Evaluation}{contEvaluation}
-    Let $X$ be a locally compact Hausdorff space and $\left(Y, d\right)$ be a metric space. If $C\left(X, Y\right)$ is equipped with the compact-open topology, then the evaluation map $e \colon X \times C\left(X, Y\right) \to Y$ defined by 
+    Let $X$ be a locally compact Hausdorff space and $\left(Y, d\right)$ be a metric space. If $\mathcal{C}\left(X, Y\right)$ is equipped with the compact-open topology, then the evaluation map $e \colon X \times \mathcal{C}\left(X, Y\right) \to Y$ defined by 
     \begin{equation*}
         e\left(x, f\right) = f\left(x\right)
     \end{equation*}
     is continuous.
 \end{probox}
 \begin{thmbox}{Arzela-Ascoli Theorem}{ArzelaAscoli}
-    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. For each $\mathcal{Y} \subseteq C\left(X, Y\right)$, define 
+    Let $X$ be a topological space and $\left(Y, d\right)$ be a metric space. For each $\mathcal{Y} \subseteq \mathcal{C}\left(X, Y\right)$, define 
     \begin{equation*}
         \mathcal{Y}_a \coloneqq \left\{f\left(a\right) \colon f \in \mathcal{Y}\right\}
     \end{equation*}
-    for each $a \in X$. If $C\left(X, Y\right)$ is equipped with the compact-open topology, then $\widebar{\mathcal{Y}}$ is compact if it is equicontinuous and $\widebar{\mathcal{Y}_a}$ is compact for all $a \in X$. The converse is true if $X$ is locally compact and Hausdorff. 
+    for each $a \in X$. If $\mathcal{C}\left(X, Y\right)$ is equipped with the compact-open topology, then $\widebar{\mathcal{Y}}$ is compact if it is equicontinuous and $\widebar{\mathcal{Y}_a}$ is compact for all $a \in X$. The converse is true if $X$ is locally compact and Hausdorff. 
 \end{thmbox}
 \chapter{Connectedness}
 \section{Connected Spaces}

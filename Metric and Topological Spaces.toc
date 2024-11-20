@@ -25,6 +25,6 @@
 \contentsline {section}{\numberline {4.5}Compactification}{96}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Metric Completion}{102}{section.4.6}%
 \contentsline {section}{\numberline {4.7}Equicontinuity}{107}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Connectedness}{111}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Connected Spaces}{111}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Connected Components}{116}{section.5.2}%
+\contentsline {chapter}{\numberline {5}Connectedness}{114}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Connected Spaces}{114}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Connected Components}{119}{section.5.2}%
