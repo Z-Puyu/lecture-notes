@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  19 NOV 2024 20:32
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  20 NOV 2024 23:00
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1471,46 +1471,46 @@ Underfull \hbox (badness 10000) in paragraph at lines 1663--1666
  []
 
 [53]
-Underfull \hbox (badness 10000) in paragraph at lines 1677--1680
+Underfull \hbox (badness 10000) in paragraph at lines 1679--1682
 
  []
 
 [54] [55] [56] [57]
 Chapter 3.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 17.28183pt on input line 1770.
+(Font)              scaled to size 17.28183pt on input line 1772.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 10.00107pt on input line 1770.
+(Font)              scaled to size 10.00107pt on input line 1772.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 17.27815pt on input line 1770.
+(Font)              scaled to size 17.27815pt on input line 1772.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 1770.
+(Font)              scaled to size 9.99893pt on input line 1772.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1770.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1770.
+(hyperref)                removing `math shift' on input line 1772.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1770.
+(hyperref)                removing `subscript' on input line 1772.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1772.
 
 [58
 
 ] [59] [60]
-Underfull \hbox (badness 10000) in paragraph at lines 1847--1850
+Underfull \hbox (badness 10000) in paragraph at lines 1849--1852
 
  []
 
 [61] [62]
-Underfull \hbox (badness 10000) in paragraph at lines 1918--1923
+Underfull \hbox (badness 10000) in paragraph at lines 1920--1925
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1918--1923
+Underfull \hbox (badness 10000) in paragraph at lines 1920--1925
 
  []
 
@@ -1518,20 +1518,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 1918--1923
 Chapter 4.
 [70
 
-] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86]
-Underfull \hbox (badness 10000) in paragraph at lines 2602--2606
+] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]
+
+LaTeX Warning: Reference `pro:characteriseCompact' on page 82 undefined on input line 2431.
+
+
+LaTeX Warning: Reference `pro:characteriseCompact' on page 82 undefined on input line 2455.
+
+[82] [83] [84] [85] [86]
+Underfull \hbox (badness 10000) in paragraph at lines 2604--2608
 
  []
 
-[87] [88] [89] [90] [91] [92] [93] [94]
+[87] [88] [89] [90] [91] [92] [93]
+Underfull \hbox (badness 10000) in paragraph at lines 2827--2830
 
-LaTeX Warning: Reference `dfh:isometric' on page 95 undefined on input line 2800.
+ []
 
-[95] [96] [97] [98]
+[94]
+Underfull \hbox (badness 10000) in paragraph at lines 2841--2844
+
+ []
+
+[95] [96]
+Underfull \hbox (badness 10000) in paragraph at lines 2919--2923
+
+ []
+
+[97] [98] [99] [100]
+Underfull \hbox (badness 10000) in paragraph at lines 3013--3016
+
+ []
+
+[101] [102] [103] [104] [105] [106] [107] [108] [109] [110]
 Chapter 5.
-[99
+[111
 
-] [100] [101] [102] [103] 
+] [112] [113] [114] [115] [116] [117] [118] [119] [120] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Metric and Topological Spaces.aux)
 
@@ -1544,12 +1567,12 @@ Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not 
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 37170 strings out of 478630
- 776101 string characters out of 5847730
- 1905012 words of memory out of 5000000
- 56641 multiletter control sequences out of 15000+600000
+ 37189 strings out of 478630
+ 776453 string characters out of 5847730
+ 1919012 words of memory out of 5000000
+ 56660 multiletter control sequences out of 15000+600000
  521813 words of font info for 127 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,14n,131p,1216b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,17n,131p,1299b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Metric and Topological Spaces.pdf (103 pages).
+Output written on Metric and Topological Spaces.pdf (120 pages).

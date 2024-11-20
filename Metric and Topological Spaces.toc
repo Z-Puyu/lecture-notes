@@ -22,9 +22,9 @@
 \contentsline {section}{\numberline {4.2}Limit Point and Sequentially Compact Spaces}{83}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Totally Bounded Spaces}{85}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Complete Spaces}{90}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Compactification}{92}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Metric Completion}{94}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Equicontinuity}{96}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Connectedness}{99}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Connected Spaces}{99}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Connected Components}{101}{section.5.2}%
+\contentsline {section}{\numberline {4.5}Compactification}{96}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Metric Completion}{102}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Equicontinuity}{107}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Connectedness}{111}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Connected Spaces}{111}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Connected Components}{116}{section.5.2}%

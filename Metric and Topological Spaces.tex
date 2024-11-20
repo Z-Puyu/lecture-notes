@@ -1669,7 +1669,9 @@ Based on this small proposition, we introduce the following result to help us id
         then $\left\{x_i\right\}_{i = \N^+}$ is a sequence in $A$. Let $U$ be any open set containing $x$, then there exists some $B_N \in \mathcal{B}$ such that $x \in B_N \subseteq U$. However, notice that for all $i \geq N$, we have~$x_i \in B_N \subseteq U$, and so $x_i \to x$.
     \end{proof}
 \end{probox}
-In the above result, first countability is crucial for us to construct the desired sequence. We can re-write this result using continuous maps.
+In the above result, first countability is crucial for us to construct the desired sequence. 
+
+We can re-write this result using continuous maps.
 \begin{probox}{Continuous Map Characterisation of First Countable Spaces}{characterise1stCountableContinuous}
     Let $X$ be a topological space. If $f \colon X \to Y$ is continuous, then for any sequence $\left\{x_i\right\}_{i \in \N^+}$ with $x_i \to x$, then $f\left(x_i\right) \to f\left(x\right)$. The converse is true if $X$ is first countable.
     \tcblower
@@ -2645,43 +2647,127 @@ An intuition regarding totally bounded spaces is that: since we can cover the en
         Therefore, $\mathrm{diam}\left(X\right) \leq M + 2\epsilon$ is finite.
     \end{proof}
 \end{probox}
-Recall that every metric can be normalised to $\left[0, 1\right]$, so it is natural that a totally bounded metric space is still totally bounded after such normalisation.
-\begin{probox}{Normalisation Preserves Totally Bounded Spaces}{normaliseTotalBound}
-    If $\left(X, d\right)$ is a metric space and $\rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}$, then $\left(X, \rho\right)$ is totally bounded if and only if $\left(X, d\right)$ is totally bounded.
-\end{probox}
-Similarly, bi-Lipschitz spaces should also preserve totally bounded properties.
+Intuitively, bi-Lipschitz spaces should preserve totally bounded properties because they induce the same topology.
 \begin{probox}{Bi-Lipschitz Spaces Preserve Totally Bounded Spaces}{biLipschitzTotalBound}
     If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, then $\left(X, d\right)$ is totally bounded if and only if $\left(X', d'\right)$ is totally bounded.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:metricEquivalence}, $d$ and $d'$ induce the same topology, and so $\left(X, d\right)$ is totally bounded if and only if $\left(X, d'\right)$ is totally bounded.
+    \end{proof}
 \end{probox}
+Recall that every metric can be normalised to $\left[0, 1\right]$, so it is natural that a totally bounded metric space is still totally bounded after such normalisation.
+\begin{corbox}{Normalisation Preserves Totally Bounded Spaces}{normaliseTotalBound}
+    If $\left(X, d\right)$ is a metric space and $\rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}$, then $\left(X, \rho\right)$ is totally bounded if and only if $\left(X, d\right)$ is totally bounded.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:rho}, $\frac{1}{2}\rho\left(x, y\right) \leq \rho\left(x, y\right) < d\left(x, y\right) < 2\rho\left(x, y\right)$ for all $x, y \in X$. Therefore, $\left(X, \rho\right)$ and $\left(X, d\right)$ are bi-Lipschitz. By Proposition \ref{pro:biLipschitzTotalBound},  $\left(X, \rho\right)$ is totally bounded if and only if $\left(X, d\right)$ is totally bounded.
+    \end{proof}
+\end{corbox}
 Lastly, in Euclidean spaces, it is intuitive that every bounded space is totally bounded. We can push this result further by generalising to all $L^p$-metrics.
 \begin{probox}{Bounded Subspaces of $L^p$ Spaces Are Totally Bounded}{propsTotalBound}
     Every subspace $X$ of $\left(\R^n, \ell_p\right)$ is totally bounded if and only if $X$ is bounded.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:finDiam}, it is clear that every totally bounded subspace $X \subseteq \R^n$ is bounded. Therefore, by Corollary \ref{cor:LpMetricGenerateStandardTopology}, it suffices to prove that every bounded subspace $X$ of $\left(\R^n, \ell_{2}\right)$ is totally bounded. Since $X$ is bounded, there exists some closed ball $B_{M}\left(\mathbfit{x}_0\right)$ for some $\mathbfit{x}_0 \coloneqq \left(x_0, x_0, \cdots, x_0\right) \in \R^n$ such that 
+        \begin{equation*}
+            X \subseteq B_M\left(\mathbfit{x}_0\right) \subseteq \left[x_0 - M, x_0 + M\right]^n.
+        \end{equation*}
+        For any $\epsilon > 0$, consider 
+        \begin{equation*}
+            N \coloneqq \left\{\mathbfit{x}_0 + \frac{\epsilon}{2}\left(k_1, k_2, \cdots, k_n\right) \colon k_2, \cdots, k_n \in \Z,  \frac{\epsilon}{2}k_i \leq M \textrm{ for all } i = 1, 2, \cdots, n\right\}.
+        \end{equation*}
+        Note that $N$ is finite. Define 
+        \begin{equation*}
+            \mathcal{B}_{\epsilon} \coloneqq \left\{B_{\epsilon}\left(\mathbfit{x}_N\right) \colon \mathbfit{x}_N \in N\right\},
+        \end{equation*}
+        which is a finite cover for $X$. Therefore, $X$ is totally bounded.
+    \end{proof}
 \end{probox}
 \section{Complete Spaces}
-In elementary real analysis, we examine the notion of convergence with Cauchy sequences. Recall that in $\R^n$, every Cauchy sequence is convergent. However, in general metric spaces, this might not be the case. We now generalise this idea to all metric spaces.
+In elementary real analysis, we examine the notion of convergence with Cauchy sequences. Recall that in $\R^n$, every Cauchy sequence is convergent. However, in general metric spaces, this might not be the case. 
+
+For example, consider the sequence $\left\{a_n\right\}_{n \in \N^+}$ defined by 
+\begin{equation*}
+    a_n \coloneqq \left(1 + \frac{1}{n}\right)^n,
+\end{equation*}
+which is a Cauchy sequence. However, $\lim_{n \to \infty}a_n = \e$, so the sequence converges in $\R$ but not in $\Q$ with respect to the standard metric. 
+
+Informally, such behaviour is caused by the fact that there are ``break points'' in $\Q$ but not in $\R$, so in a sense $\R$ is a ``more complete'' space.
 \begin{dfnbox}{Complete Space}{complete}
     A metric space $X$ is {\color{red} \textbf{complete}} if every Cauchy sequence in $X$ is convergent.
 \end{dfnbox}
 To characterise a complete metric space, it is useful to examine the conditions under which a Cauchy sequence is convergent. 
 \begin{probox}{Convergence of Cauchy Sequences}{cauchyConverge}
     A Cauchy sequence converges if and only if it has a convergent subsequence.
+    \tcblower
+    \begin{proof}
+        Since every sequence is its own subsequence, it suffices to prove that a Cauchy sequence converges if it has a convergent subsequence. Let $\left\{a_n\right\}_{n \in \N^+}$ be a Cauchy sequence in a metric space $\left(X, d\right)$, then for any $\epsilon > 0$, there exists some $N_1 \in \N^+$ such that for all $p, q > N_1$, 
+        \begin{equation*}
+            d\left(a_p, a_q\right) < \frac{\epsilon}{2}.
+        \end{equation*}
+        Suppose that $\left\{a_{n_k}\right\}_{k \in \N^+}$ is a convergent subsequence. Let 
+        \begin{equation*}
+            L \coloneqq \lim_{k \to \infty}a_{n_k},
+        \end{equation*}
+        then for any $\epsilon > 0$, there exists some $N_2 \in \N^+$ such that $d\left(a_{n_k}, L\right) < \frac{\epsilon}{2}$ for all $k > N_2$. Take $N \coloneqq \max\left\{N_1, N_2\right\}$. Notice that for all $k > N$, we have $n_k \geq k > N$ and so
+        \begin{align*}
+            d\left(a_k, L\right) & \leq d\left(a_k, a_{n_k}\right) + d\left(a_{n_k}, L\right) \\
+            & < \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+            & = \epsilon.
+        \end{align*}
+        Therefore, $\lim_{n \to \infty}a_n = L$ and so $\left\{a_n\right\}_{n \in \N^+}$ converges.
+    \end{proof}
 \end{probox}
 Note that whether a sequence is Cauchy depends on the metric we choose to equip the space with. The following result shows an important connection between Cauchy sequences and bi-Lipschitz spaces.
 \begin{probox}{Bi-Lipschitz Spaces Preserve Cauchy Sequences}{CauchyBilipschitz}
     If $\left(X, d\right)$ and $\left(X', d'\right)$ are bi-Lipschitz, then a sequence is Cauchy in $\left(X, d\right)$ if and only if it is Cauchy in $\left(X', d'\right)$.
+    \tcblower
+    \begin{proof}
+        Since $\left(X, d\right)$ and $\left(X, d'\right)$ are bi-Lipschitz, there exists some $A > 1$ such that 
+        \begin{equation*}
+            \frac{1}{A}d\left(x, y\right) < d'\left(x, y\right) < Ad\left(x, y\right)
+        \end{equation*}
+        for all $x, y \in X$. Let $\left\{a_n\right\}_{n \in \N^+}$ be a Cauchy sequence in $\left(X, d\right)$, then for any $\epsilon > 0$, there exists some $N \in \N^+$ such that for all $m, n > N$, 
+        \begin{equation*}
+            d\left(a_m, a_n\right) < \frac{\epsilon}{A}.
+        \end{equation*}
+        Therefore, for all $m, n > N$, we have 
+        \begin{equation*}
+            d'\left(a_m, a_n\right) < Ad\left(a_m, a_n\right) < \epsilon,
+        \end{equation*}
+        which means that $\left\{a_n\right\}_{n \in \N^+}$ is Cauchy in $\left(X, d'\right)$. Conversely, let $\left\{b_n\right\}_{n \in \N^+}$ be a Cauchy sequence in $\left(X, d'\right)$, then for any $\epsilon' > 0$, there exists some $N' \in \N^+$ such that for all~$m, n > N'$, 
+        \begin{equation*}
+            d'\left(b_m, b_n\right) < \frac{\epsilon'}{A}.
+        \end{equation*}
+        Therefore, for all $m, n > N'$, we have 
+        \begin{equation*}
+            d\left(b_m, b_n\right) < Ad'\left(b_m, b_n\right) < \epsilon',
+        \end{equation*}
+        and so $\left\{b_n\right\}_{n \in \N^+}$ is Cauchy in $\left(X, d\right)$.
+    \end{proof}
 \end{probox}
-Using these concepts, we shall re-visit the Euclidean space $\R^n$. First, let us argue that $\R^n$ is complete with respect to the $\ell_p$-metric for $p \geq 1$.
+Using these concepts, we shall re-visit the Euclidean space $\R^n$. First, let us argue that $\R^n$ is complete with respect to the $L^p$-metric for $p \geq 1$.
 
 Take any Cauchy sequence $\left\{x_n\right\}_{n \in \N^+}$ in $\R^n$. It is useful to prove that every Cauchy sequence must be bounded. 
 \begin{probox}{Every Cauchy Sequence Is Bounded}{CauchyBounded}
     If $\left\{x_n\right\}_{n \in \N^+}$ is a Cauchy sequence in $\left(X, d\right)$, then there exists some $M > 0$ such that for all $n \in \N^+$, we have $d\left(x_n, 0\right) \leq M$.
+    \tcblower
+    \begin{proof}
+        Fix some $\epsilon > 0$, then there exists some $N \in \N^+$ such that for all $m, n \geq N$, we have $d\left(x_m, x_n\right) < \epsilon$. Take 
+        \begin{equation*}
+            M \coloneqq \max\left\{d\left(x_n, 0\right) \colon n = 1, 2, \cdots, N\right\} + \epsilon,
+        \end{equation*}
+        then for any integer $n > N$, we have 
+        \begin{align*}
+            d\left(x_n, 0\right) \leq d\left(0, x_N\right) + \left(x_N, x_n\right) \leq M, 
+        \end{align*}
+        and so $\left\{x_n\right\}_{n \in \N^+}$ is bounded.
+    \end{proof}
 \end{probox}
-With this result, it is easy to see that for all $n \in \N^+$, we have $x_n \in \widebar{B_M\left(0\right)}$ for some $M > 0$. Note that $\widebar{B_M\left(0\right)}$ is a compact ball in $\R^n$ and so it must be sequentially compact by Proposition \ref{pro:metricCompact}. Therefore, $\left\{x_n\right\}_{n \in \N^+}$ has a convergent subsequence and so it is convergent by Proposition \ref{pro:cauchyConverge}. Therefore, $\R^n$ is indeed complete with respect to the $\ell_p$-metric for $p \geq 1$.
+With this result, it is clear that for any Cauchy sequence $\left\{\mathbfit{x}_i\right\}_{i \in \N^+}$ in $\R^n$ and for all $i \in \N^+$, we have $\mathbfit{x}_i \in \widebar{B_M\left(\mathbf{0}\right)}$ for some $M > 0$. Note that $\widebar{B_M\left(\mathbf{0}\right)}$ is a compact ball in $\R^n$ and so it must be sequentially compact by Proposition \ref{pro:metricCompact}. Therefore, $\left\{\mathbfit{x}_i\right\}_{i \in \N^+}$ has a convergent subsequence and so it is convergent by Proposition \ref{pro:cauchyConverge}. Therefore, $\R^n$ is indeed complete with respect to the $L^p$-metric for $p \geq 1$.
 
-However, if we restrict the standard metric to $\Q$, then $\Q$ is not complete because we can find a Cauchy sequence in $\Q$ which converges to some $x \in \Q^c$.
-
-Lastly, we propose a more complex example:
-\begin{probox}{Completeness of Infinite Product Spaces}{infProductComp}
+Lastly, recall that in Proposition \ref{pro:infProdTopo}, we defined a metric over the infinite product space $\R^{\omega}$. We shall prove that this infinite product space is still complete.
+\begin{probox}{Completeness of Infinite Product Euclidean Space}{infProductComp}
     Let $d$ be the standard metric on $\R$ and define $\rho$ to be a metric on $\R$ by 
     \begin{equation*}
         \rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}.
@@ -2691,19 +2777,92 @@ Lastly, we propose a more complex example:
         D\left(\mathbfit{x}, \mathbfit{y}\right) = \sup\left\{\frac{\rho\bigl(\pi_k\left(\mathbfit{x}\right), \pi_k\left(\mathbfit{y}\right)\bigr)}{k} \colon k \in \Z^+\right\},
     \end{equation*}
     then $\left(\R^{\omega}, D\right)$ is complete.
+    \tcblower
+    \begin{proof}
+        Let $\left\{\mathbfit{a}_n\right\}_{n \in \N^+}$ be a Cauchy sequence in $\mathbb{R}^{\omega}$. Define 
+        \begin{equation*}
+            p_{k_n} \coloneqq \pi_k\left(\mathbfit{a}_n\right).
+        \end{equation*}
+        We claim that $\left\{p_{k_n}\right\}_{n \in \N^+}$ is convergent in $\left(\R, \rho\right)$ for all $k \in \N^+$. Take any $\epsilon > 0$ and any $k \in \N^+$, then there exists some $N_k \in \N^+$ such that for all $m, n > N_k$, we have~$D\left(\mathbfit{a}_m, \mathbfit{a}_n\right) < \frac{\epsilon}{k}$. Therefore,
+        \begin{equation*}
+            \rho\left(p_{k_m}, p_{k_n}\right) = \rho\bigl(\pi_k\left(\mathbfit{x}\right), \pi_k\left(\mathbfit{y}\right)\bigr) \leq kD\left(\mathbfit{a}_m, \mathbfit{a}_n\right) < \epsilon.
+        \end{equation*}
+        This means that $\left\{p_{k_n}\right\}_{n \in \N^+}$ is Cauchy in $\left(\R, \rho\right)$ for all $k \in \N^+$. Define 
+        \begin{equation*}
+            B \coloneqq \left\{y \in \R \colon \rho\left(x, y\right) \leq 1\right\}.
+        \end{equation*}
+        Note that $\rho\left(x, y\right) < 1$ for all $x, y \in \R$, so $p_{k_n} \in B$ for all $k, n \in \N^+$. Note that $B$ is compact and so sequentially compact in $\R$, which means that $\left\{p_{k_n}\right\}_{n \in \N^+}$ is convergent in $\left(\R, \rho\right)$. Define 
+        \begin{equation*}
+            L_k \coloneqq \lim_{n \to \infty}p_{k_n}.
+        \end{equation*}
+        We claim that $\left\{\mathbfit{a}_n\right\}_{n \in \N^+}$ converges to $\mathbfit{a}$ where
+        \begin{equation*}
+            \pi_k\left(\mathbfit{a}\right) = L_k. 
+        \end{equation*}
+        Observe that for any $\epsilon > 0$, there exists some $K \in \N^+$ such that $0 < \frac{1}{K} < \epsilon$, so for all~$k > K$, we have 
+        \begin{equation*}
+            \frac{\rho\left(p_{k_n}, L_k\right)}{k} \leq \frac{1}{k} < \frac{1}{K} < \epsilon
+        \end{equation*}
+        for all $n \in \N^+$. Notice that for all $k \in \N^+$, for all $\epsilon > 0$, there exists some $M_k \in \N^+$ such that for all~$n > M_k$, we have 
+        \begin{equation*}
+            \rho\left(p_{k_n}, L_k\right) < k\epsilon.
+        \end{equation*}
+        Define 
+        \begin{equation*}
+            M \coloneqq \max\left\{M_1, M_2, \cdots, M_K\right\},
+        \end{equation*}
+        then for all $n > M$, we have 
+        \begin{align*}
+            D\left(\mathbfit{a}_n, \mathbfit{a}\right) & = \sup\left\{\frac{\rho\left(p_{k_n}, L_k\right)}{k} \colon k \in \N^+\right\} \\
+            & < \epsilon.
+        \end{align*}
+        Therefore, $\left\{\mathbfit{a}_n\right\}_{n \in \N^+}$ converges to $\mathbfit{a}$ in $\mathbb{R}^{\omega}$. Therefore, $\mathbb{R}^{\omega}$ is complete.
+    \end{proof}
 \end{probox}
 Another thing we wish to investigate is whether completeness can be inherited through subspaces. It turns out that we only require some small additional condition to make this work.
 \begin{probox}{Closed Subspaces Preserve Completeness}{closedComp}
     A subspace of a complete metric space is complete if and only if it is closed.
+    \tcblower
+    \begin{proof}
+        Let $\left(X, d\right)$ be a complete metric space and $A \subseteq X$ be a subspace. Suppose that $A$ is closed, then $A = \widebar{A}$ contains all of its limit points. Let $\left\{a_n\right\}_{n \in \N^+}$ be any Cauchy sequence in $A \subseteq X$, then since $X$ is complete, the sequence is convergent. Let $a \coloneqq \lim_{n \to \infty}a_n$, then $a$ must be a limit point of $A$ and so $a \in \widebar{A} = A$, which means that $\left\{a_n\right\}_{n \in \N^+}$ is convergent in $A$. Therefore, $A$ is complete.
+        \\\\
+        Conversely, suppose that $A$ is complete, we shall prove that $A$ is closed by considering the contrapositive statement. Suppose that $A$ is not closed, then there exists some $a \in \widebar{A} \setminus A$ which is a limit point of $A$. Notice that $B_{\frac{1}{n}}\left(a\right) \cap A \neq \varnothing$ for all~$n \in \N^+$. For each $n \in \N^+$, pick some $a_n \in B_{\frac{1}{n}}\left(a\right) \cap A$. Note that for any $\epsilon > 0$, there exists some $N \in \N^+$ such that for all $n \geq N$, we have $\frac{1}{n} < \frac{\epsilon}{2}$, and so for all $m, n \geq N$, we have 
+        \begin{equation*}
+            d\left(a_m, a_n\right) \leq d\left(a_m, a\right) + d\left(a, a_n\right) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+        \end{equation*}
+        Therefore, $\left\{a_n\right\}_{n \in \N^+}$ is a Cauchy sequence in $A$ but it does not converge in $A$, which means that $A$ is not complete.
+    \end{proof}
 \end{probox}
 In an elementary level, something we commonly say is that an interval is compact if and only if it is closed and bounded. By now, it should become clear that completeness is a generalisation for closed-ness, and that totally boundedness is a generalisation for boundedness.
-\begin{probox}{Characterisation of Compact Spaces}{characteriseCompact}
+\begin{probox}{Characterisation of Compact Metric Spaces}{characteriseMetricCompact}
     A metric space $\left(X, d\right)$ is compact if and only it is complete and totally bounded.
+    \tcblower
+    \begin{proof}
+        Suppose that $\left(X, d\right)$ is compact, then by Proposition \ref{pro:metricCompact}, $X$ is sequentially compact and so every Cauchy sequence in $X$ has a convergent subsequence in $X$. By Proposition \ref{pro:cauchyConverge}, this means that every Cauchy sequence in $X$ is convergent and so~$X$ is complete. Notice that for any $\epsilon > 0$, there exists an open cover for $X$ with open balls of radius $\epsilon$. Since $X$ is compact, there exists a finite sub-cover with open balls of radius $\epsilon$ and so $X$ is totally bounded.
+        \\\\
+        Conversely, suppose that $\left(X, d\right)$ is complete and totally bounded. Let $\left\{x_n\right\}_{n \in \N^+}$ be any sequence in $X$. Since $X$ is totally bounded, there exists some $y_0 \in X$ such that 
+        \begin{equation*}
+            B_1\left(y_0\right) \cap \left\{x_n\right\}_{n \in \N^+} \neq \varnothing.
+        \end{equation*}
+        Similarly, for each $n \in \N^+$, there exists some $y_n \in X$ such that 
+        \begin{equation*}
+            B_{2^{-n}}\left(y_n\right) \cap \left(B_{2^{-\left(n - 1\right)}}\left(y_{n - 1}\right) \cap \left\{x_n\right\}_{n \in \N^+}\right) \neq \varnothing.
+        \end{equation*}
+        Pick some $x_{k_n} \in B_{2^{-n}}\left(y_n\right)$ where $k_n \in \N^+$. For any $\epsilon > 0$, there exists some $N \in \N^+$ such that for all $n \geq N$, we have $2^{-n} < \epsilon$. Therefore, for any $m, n > N$, we have 
+        \begin{equation*}
+            d\left(x_m, x_n\right) \leq 2^{-N} < \epsilon,
+        \end{equation*}
+        and so $\left\{x_{k_n}\right\}_{n \in \N^+}$ is a Cauchy subsequence. Since $X$ is complete, the subsequence is convergent and so $X$ is sequentially compact. By Proposition \ref{pro:metricCompact}, $X$ is compact.
+    \end{proof}
 \end{probox}
 With this very sophisticated result, we can now turn back and prove something which appears to be very na\"{i}ve (but surprisingly hard to prove):
-\begin{corbox}{Heine-Borel Theorem}{HeineBorel}
+\begin{thmbox}{Heine-Borel Theorem}{HeineBorel}
     A subspace $G \subseteq \R^n$ is compact if and only if it is closed and bounded.
-\end{corbox}
+    \tcblower
+    \begin{proof}
+        Note that $\R^n$ is complete. By Proposition \ref{pro:closedComp}, $G$ is complete if and only if it is closed. By Proposition \ref{pro:propsTotalBound}, $G$ is totally bounded if and only if it is bounded. By Proposition \ref{pro:characteriseMetricCompact}, $G$ is compact if and only if it is complete and totally bounded, and so $G$ is compact if and only if it is closed and bounded.
+    \end{proof}
+\end{thmbox}
 \section{Compactification}
 In the previous section in the study of compactness, we have been treating a space as a single entity. However, another perspective is to view the space as a collection of many singleton ``points''. This motivates us to define compactness point-wise.
 \begin{dfnbox}{Local Compactness}{localCompact}
@@ -2711,32 +2870,136 @@ In the previous section in the study of compactness, we have been treating a spa
 \end{dfnbox}
 An interpretation of local compactness at a point $x$ is that we can find a strictly wider compact neighbourhood that contains $x$.
 
-It is easy to see that $\R^n$ is locally compact but $\Q$ is not locally compact because $\Q^c$ is dense.
+Clearly, $\R^n$ is locally compact because every $\mathbfit{x} \in \R^n$ is contained in $B_{\epsilon}\left(\mathbfit{x}\right) \subseteq \widebar{B_{\epsilon}\left(\mathbfit{x}\right)}$ which is compact for any $\epsilon > 0$. 
 
-We can also show that $\R^{\omega}$ with the product topology is not locally compact.
+However, $\Q$ with respect to the standard topology is not locally compact. Let $U \subseteq \Q$ be any open set, then there exists $a, b \in \Q$ with $a < b$ such that $\left(a, b\right) \cap \Q \subseteq U$. Since $\Q$ is dense in~$\R$, there exists some $x \in \Q^c$ such that there is a sequence $\left\{x_n\right\}_{n \in \N^+}$ in $\Q$ converging to $x$. This means that every convergent subsequence of $\left\{x_n\right\}_{n \in \N^+}$ converges to $x$. Therefore, for any subset $C \subseteq \Q$ with $U \subseteq C$, it contains a sequence which does not have any convergent subsequence in itself. Therefore, $C$ is not compact, and so $\Q$ is not locally compact.
+
+We can also show that $\R^{\omega}$ with the product topology is not locally compact. Let $U \subseteq \R^{\omega}$ be open. We claim that every set $C \subseteq \R^{\omega}$ containing $U$ is not compact. Suppose on contrary that there exists some compact $C \subseteq \R^{\omega}$ with $U \subseteq C$. By Propositions \ref{pro:metricSpaceIsNormal} and \ref{pro:relationshipSepAxioms}, since~$\R^{\omega}$ is metrisable, it is $T_4$ and therefore Hausdorff. By Proposition \ref{pro:compactClosed}, this means that $C$ is closed in $\R^{\omega}$. By Proposition \ref{pro:prodTopoBasis}, there exists some finite subset $I \subseteq \N^+$ and $\left(a_i, b_i\right) \subseteq \R$ for each $i \in I$ such that 
+\begin{equation*}
+    B \coloneqq \prod_{i \in I}\left(a_i, b_i\right) \times \prod_{i \in \N^+ \setminus I}\R \subseteq U \subseteq C.
+\end{equation*}
+This implies that 
+\begin{equation*}
+    \widebar{B} = \prod_{i \in I}\left[a_i, b_i\right] \times \prod_{i \in \N^+ \setminus I}\R \subseteq C.
+\end{equation*}
+By Proposition \ref{pro:closedCompact}, $\widebar{B}$ is compact. However, the sequence $\left\{\mathbfit{x}_n\right\}_{n \in \N^+}$ in $\widebar{B}$ defined by 
+\begin{equation*}
+    \pi_{i}\left(\mathbfit{x}_n\right) = \begin{cases}
+        a_i & \textrm{if } i \in I \\
+        n & \textrm{if } i \in \N^+ \setminus I
+    \end{cases}
+\end{equation*}
+does not have any convergent subsequence in $\widebar{B}$. Therefore, $\widebar{B}$ is not sequentially compact, which is a contradiction.
 
 Is there any connection between locally compact spaces and compact spaces? In fact, by going one step further, we may wish to find a way to transform a general space into a compact Hausdorff space. Such a transformation should preserve the structure of the pre-image space. 
 \begin{dfnbox}{Compactification}{compactification}
     Let $X$ be a topological space and $Y$ be a compact Hausdorff space, then $Y$ is a {\color{red} \textbf{compactification}} of $X$ if there exists a map $h \colon X \to Y$ which is homeomorphic onto $h\left(X\right)$ such that $\widebar{h\left(X\right)} = Y$. If $Y \setminus h\left(X\right)$ is a singleton set, then $Y$ is a {\color{red} \textbf{one-point compactification}} of $X$.
 \end{dfnbox}
 In Hausdorff spaces, it is then relatively easy to construct a compactification.
-\begin{probox}{Compactification of Hausdorff Spaces}{compactificationHausdorff}
-    Let $X$ be a Hausdorff space and $Y$ be a compact Hausdorff space. If a map $h_Y \colon X \to Y$ is homeomorphic onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set, then $Y$ is a compactification of $X$.
-\end{probox}
-It is worth noting that compactification may not be unique in general. However, for locally compact Hausdorff spaces, a compactification is always guaranteed.    
 \begin{probox}{Characterisation of Locally Compact Hausdorff Spaces}{characteriseLocallyCompactHausdorff}
     A topological space $X$ is locally compact and Hausdorff if and only if there exists a compact Hausdorff space $Y$ and a map $h_Y \colon X \to Y$ such that $h_Y$ is homeomorphic onto~$h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set.
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is locally compact and Hausdorff. Fix a topology $\mathcal{T}_X$ on $X$ and let $Y \coloneqq X \cup \left\{p\right\}$ for some $p \notin X$ and define 
+        \begin{equation*}
+            \mathcal{A} \coloneqq \left\{Y \setminus C \colon C \textrm{ is compact in } X\right\}.
+        \end{equation*}
+        We claim that $\mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \mathcal{A}$ is a topology on $Y$. Let $C_1, C_2, \cdots, C_n$ be compact sets in~$X$, then $\bigcup_{i = 1}^nC_i$ is compact in $X$. Therefore, 
+        \begin{equation*}
+            \bigcap_{i = 1}^n\left(Y \setminus C_i\right) = Y \setminus \bigcup_{i = 1}^nC_i \in \mathcal{A}.
+        \end{equation*}
+        Let $\left\{C_{\alpha}\right\}_{\alpha \in \Lambda}$ be a collection of compact sets in $X$, then $\bigcap_{\alpha \in \Lambda}C_{\alpha}$ is closed in $C_{\alpha}$ for any~$\alpha \in \Lambda$ and so compact in $X$. Therefore, 
+        \begin{equation*}
+            \bigcup_{\alpha \in \Lambda}\left(Y \setminus C_{\alpha}\right) = Y \setminus \bigcap_{\alpha \in \Lambda}C_{\alpha} \in \mathcal{A}.
+        \end{equation*}
+        Take any $T \in \mathcal{T}_X$ and any compact set $C \subseteq X$, then $C \setminus T \subseteq C$ is closed and so compact in $X$. Therefore, 
+        \begin{align*}
+            T \cup \left(Y \setminus C\right) & = Y \setminus \left(C \setminus T\right) \in \mathcal{A}, \\
+            T \cap \left(Y \setminus C\right) & = T \setminus C \in \mathcal{T}_X.
+        \end{align*}
+        It is obvious that $Y, \varnothing \in \mathcal{T}_Y$. Therefore, $\mathcal{T}_Y$ is a topology on $Y$. Define $h_Y \colon X \to Y$ by $h_Y\left(x\right) = x$, then clearly $h_Y$ is homeomorphic onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right) = \left\{p\right\}$ is a singleton set. Now, let $\mathcal{U} \subseteq \mathcal{T}_Y$ be an open cover for $Y$, then there exists some $U_0 \in \mathcal{U}$ such that $p \in U_0$. Notice that $U_0 \in \mathcal{A}$, so there exists some compact set $C_0 \subseteq X$ such that $U_0 = Y \setminus C_0$. Note that $\mathcal{U}$ is an open cover for $C_0$, so there exists a finite sub-cover $U_1, U_2, \cdots, U_n$ for $C_0$. Therefore, $U_0, U_1, \cdots, U_n$ is a finite sub-cover for $Y$, and so $Y$ is compact. Take any $x \in X$, then since $X$ is locally compact, there exists some open set~$U \in \mathcal{T}_X$ and compact set $C \subseteq X$ such that $x \in U \subseteq C$. Clearly, $p \in Y \setminus C$, which is open in $Y$ and disjoint from $U$. Therefore, $Y$ is Hausdorff.
+        \\\\
+        Conversely, suppose that $Y$ is a compact Hausdorff space $Y$ such that there exists a map $h_Y \colon X \to Y$ which is homeomorphic onto $h_Y\left(X\right)$ such that $Y \setminus h_Y\left(X\right) = \left\{p\right\}$ is a singleton set. Note that $h_Y\left(X\right) \subseteq Y$ must be Hausdorff. Since $h_Y$ is homeomorphic onto $h_Y\left(X\right)$, we know that $X$ is Hausdorff. Take any $x \in X$, then there exist disjoint open sets $U, V \subseteq Y$ such that $x \in U$ and $p \in V$. Note that $U \subseteq Y \setminus V$, which is closed and so compact since $Y$ is compact. Therefore, $X$ is locally compact.
+    \end{proof}
 \end{probox}
-Clearly, this compactification is always a one-point compactification. Furthermore, we can show that such a compactification is unique up to a homeomorphism.
-\begin{thmbox}{Existence and Uniqueness of One-Point Compactification}{existenceUniquenessOnePt}
-   Every locally compact and Hausdorff space $X$ has a one-point compactification $Y$ with respect to a map $h_Y$. Furthermore, if $Y'$ is another one-point compactification of $X$ with respect to the map $h_{Y'}$, then there exists a homeomorphism $f \colon Y \to Y'$ such that 
+Essentially, the above proposition is basically saying that if we add a new point to a locally compact Hausdorff space, the space will become a compact Hausdorff space. Intuitively, this new point can be anything, so all such spaces should be homeomorphic to each other by just re-mapping the new points.
+\begin{probox}{Uniqueness of One-Point Compactification}{existenceUniquenessOnePt}
+   If $X$ is a locally compact Hausdorff space and $Y$ and $Y'$ are compact Hausdorff spaces such that there exist maps $h_Y \colon X \to Y$ and $h_{Y'} \colon X \to Y'$ homeomorphic onto $h_Y\left(X\right)$ and $h_{Y'}\left(X\right)$ respectively such that $Y \setminus h_Y\left(X\right)$ and $Y' \setminus h_{Y'}\left(X\right)$ are singleton sets, then there exists a homeomorphism $f \colon Y \to Y'$ such that 
     \begin{equation*}
         \left.f\right\rvert_{h_Y\left(X\right)} = h_{Y'} \circ \left.h_{Y}^{-1}\right\rvert_{h_Y\left(X\right)}.
     \end{equation*}
-\end{thmbox}
+    \tcblower
+    \begin{proof}
+        Note that both $h_Y\left(X\right)$ and $h_{Y'}\left(X\right)$ are open in $Y$. Let 
+        \begin{equation*}
+            \left\{p\right\} = Y \setminus h_Y\left(X\right), \qquad \left\{p'\right\} = Y' \setminus h_{Y'}\left(X\right)
+        \end{equation*}
+        and define $f \colon Y \to Y'$ by 
+        \begin{equation*}
+            f\left(y\right) = \begin{cases}
+                p' & \textrm{if } y = p \\
+                h_{Y'}\left(h_Y^{-1}\left(y\right)\right) & \textrm{if } y \in h_Y\left(X\right)
+            \end{cases}.
+        \end{equation*}
+        Clearly, $f$ is a bijection with 
+        \begin{equation*}
+            f^{-1}\left(y\right) = \begin{cases}
+                p & \textrm{if } y = p' \\
+                h_{Y}\left(h_{Y'}^{-1}\left(y\right)\right) & \textrm{if } y \in h_{Y'}\left(X\right)
+            \end{cases}.
+        \end{equation*}
+        Let $U \subseteq Y'$ be any open set. If $p' \notin U$, then $U$ is open in $h_{Y'}\left(X\right)$. Therefore, $h_{Y'}^{-1}\left(U\right)$ is open in $X$, and so $f^{-1}\left(U\right) = h_Y\left(h_{Y'}^{-1}\left(U\right)\right)$ is open in $h_Y\left(X\right)$. Since $h_Y\left(X\right)$ is open in $Y$, this implies that $f^{-1}\left(U\right)$ is open in~$Y$. If $p' \in U$, define $C \coloneqq Y' \setminus U$ which is closed and therefore compact in $Y'$ by Proposition \ref{pro:closedCompact}. It is clear that $C$ is compact in $h_{Y'}\left(X\right)$. By Proposition \ref{pro:ContinuousCompact}, $f^{-1}\left(C\right) = h_Y\left(h_{Y'}^{-1}\left(C\right)\right)$ is compact in $h_Y\left(X\right)$ and so compact in $Y$. Since $Y$ is Hausdorff, by Proposition \ref{pro:compactClosed}, $f^{-1}\left(C\right)$ is closed in $Y$, and so 
+        \begin{equation*}
+            f^{-1}\left(U\right) = f^{-1}\left(Y' \setminus C\right) = Y \setminus f^{-1}\left(C\right),
+        \end{equation*}
+        which is open in $Y$. Therefore, $f$ is continuous. Similarly, $f^{-1}$ is continuous, and so~$f$ is a homeomorphism.
+    \end{proof}
+\end{probox}
+It is no surprise that such a space $Y$ is a one-point compactification for $X$, provided that $X$ is not already compact.
+\begin{probox}{Compactification of Hausdorff Spaces}{compactificationHausdorff}
+    Let $X$ be a non-compact locally compact Hausdorff space and $Y$ be a compact Hausdorff space. If a map $h_Y \colon X \to Y$ is homeomorphic onto $h_Y\left(X\right)$ and $Y \setminus h_Y\left(X\right)$ is a singleton set, then $Y$ is a one-point compactification of $X$.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:existenceUniquenessOnePt}, it suffices to consider $h_Y\left(x\right) = x$ and 
+        \begin{equation*}
+            \mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \left\{Y \setminus C \colon C \textrm{ is compact in } X\right\}
+        \end{equation*}
+        as the topology on $Y$, where $\mathcal{T}_X$ is the topology on $X$. Let $Y = X \cup \left\{p\right\}$ for some $p \notin X$. We claim that $p$ is a limit point of $X$. Suppose on contrary that $p$ is not a limit point of $X$, then there exists some open set $U \subseteq Y$ with $p \in U$ but $U \cap X = \varnothing$. This means that $U = \left\{p\right\}$, and so $X = Y \setminus U$ is compact, which is a contradiction.
+    \end{proof}
+\end{probox}
+One-point compactification has important geometric implications. Define 
+\begin{equation*}
+    \mathbb{S}^2 \coloneqq \left\{\mathbfit{x} \in \R^3 \colon \norm{\mathbfit{x}} = 1\right\}
+\end{equation*}
+to be the $2$-dimensional unit sphere and 
+\begin{equation*}
+    \mathbb{D} \coloneqq \left\{\mathbfit{x} \in \R^2 \colon \norm{\mathbfit{x}} < 1\right\}
+\end{equation*}
+to be the open unit disc, we can prove that both $\widebar{\mathbb{D}}$ and $\mathbb{S}^2$ are the one-point compactification for $\mathbb{D}$. In fact, since $\mathbb{D} \approx \R^2$ due to the existence of the bijection $f \colon \R^2 \to \mathbb{D}$ by
+\begin{equation*}
+    f\left(\mathbfit{v}\right) = \frac{\mathbfit{v}}{1 + \norm{\mathbfit{v}}},
+\end{equation*}
+both $\widebar{\mathbb{D}}$ and $\mathbb{S}^2$ are the one-point compactification for $\R^n$ for all $n \in \N^+$.
+
 Since compactification is closely related to Hausdorff spaces and locally compact spaces, it is not surprising that we can make use of it to check if a Hausdorff space is locally compact.
 \begin{probox}{Characterisation of Locally Compact Spaces}{characteriseLocallyCompact}
     A Hausdorff space $X$ is locally compact if and only if for any $x \in X$ and any open set~$U \subseteq X$ with $x \in U$, there exists an open compact set $V \subseteq X$ such that $x \in V \subseteq U$.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:characteriseLocallyCompactHausdorff}, define $Y \coloneqq X \cup \left\{p\right\}$ to be compact and 
+        \begin{equation*}
+            \mathcal{T}_Y \coloneqq \mathcal{T}_X \cup \left\{Y \setminus C \colon C \textrm{ is compact in } X\right\}
+        \end{equation*}
+        as the topology on $Y$, where $\mathcal{T}_X$ is the topology on $X$. Take any $x \in X$ and any open set~$U \subseteq X$ with $x \in U$, then $C \coloneqq Y \setminus U$ is closed and so compact because $Y$ is compact. Note that $x \notin C$. By Proposition \ref{pro:separabilityCompact}, $Y$ is $T_3$. Therefore, there exist disjoint open sets~$V, W \subseteq Y$ such that $x \in V$ and $C \subseteq W$. Since $p \in C \subseteq W$, we have 
+        \begin{equation*}
+            X \setminus W = Y \setminus W,
+        \end{equation*}
+        which is compact and so closed in $X$. Note that $V \subseteq Y \setminus W = X \setminus W$, so 
+        \begin{equation*}
+            x \in V \subseteq \widebar{V} \subseteq X \setminus W \subseteq X \setminus C = U,
+        \end{equation*}
+        which implies that $X$ is locally compact. The converse is trivial and is left to the reader as an exercise.
+    \end{proof}
 \end{probox}
 This result can be utilised to check if a subspace of a locally compact space is locally compact.
 \begin{corbox}{Local Compactness of Subspaces}{localCompactSubspace}
@@ -2745,11 +3008,21 @@ This result can be utilised to check if a subspace of a locally compact space is
         \item $A$ is closed, or
         \item $A$ is open and $X$ is Hausdorff.
     \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Suppose that $A$ is closed. For any $x \in A \subseteq X$, there exists an open set $U \subseteq X$ and a compact set $C \subseteq X$ such that $x \in U \subseteq C$. Note that $A \cap C$ is closed in $C$, so by Proposition \ref{pro:closedCompact}, $A \cap C$ is compact in $C$. Therefore, $A \cap C$ is compact in $X$, and so it is compact in $A$. Note that $A \cap U$ is open and $x \in A \cap U \subseteq A \cap C$, so $A$ is locally compact. 
+        \\\\
+        Otherwise, suppose that $A$ is open and $X$ is Hausdorff, then for any $x \in A \subseteq X$, by Proposition \ref{pro:characteriseLocallyCompact}, there exists an open compact set $V \subseteq X$ for every open neighbourhood $U \subseteq X$ of $x$ such that $x \in V \subseteq U$. Note that $A \cap V$ is open and compact in $A$ and $A \cap U$ is open in $A$, so $x \in A \cap V \subseteq A \cap U$. By Proposition \ref{pro:characteriseLocallyCompact}, $A$ is locally compact.
+    \end{proof}
 \end{corbox}
 By using the above results, we propose the last conclusion:
-\begin{probox}{Locally Compact Hausdorff Spaces and Homeomorphisms}{characteriseLocallyCompactHausdorffHomeomorphism}
+\begin{corbox}{Locally Compact Hausdorff Spaces and Homeomorphisms}{characteriseLocallyCompactHausdorffHomeomorphism}
     A topological space $X$ is locally compact and Hausdorff if and only if there exists a compact Hausdorff space $Y$ such that $X$ is homeomorphic to some open subset $A \subseteq Y$.
-\end{probox}
+    \tcblower
+    \begin{proof}
+        Suppose that there exists a compact Hausdorff space $Y$ such that $X$ is homeomorphic to some open subset $A \subseteq Y$. Note that by Corollary \ref{cor:localCompactSubspace}, $A$ is locally compact and so is $X$. Conversely, suppose that $X$ is locally compact, then by Proposition \ref{pro:existenceUniquenessOnePt}, there exists a compact Hausdorff space $Y \coloneqq X \cup \left\{p\right\}$ for some $p \notin X$ such that $X$ is homeomorphic to $X \subseteq Y$ which is open in $Y$.
+    \end{proof}
+\end{corbox}
 \section{Metric Completion}
 Consider $f \colon X \to Y$ to be a map. It is clear that we can write $f$ as a set of ordered pairs from $X \times Y$. By treating $X$ as an index set, every such map $f$ can be represented as a point from the product space 
 \begin{equation*}
@@ -2773,9 +3046,11 @@ Clearly, $Y^X$ is a topological space when equipped with the product topology. T
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        The uniform topology on $\R^{\Lambda}$ is finer than the product topology and coarser than the box topology. If $\Lambda$ is infinite, then the three topologies are pair-wise unequal.
+        The uniform topology on $\R^{\Lambda}$ is finer than the product topology and coarser than the box topology. 
     \end{remark}
 \end{notebox}
+Note that the uniform topology, product topology and box topology are pair-wise unequal on $\R^{\omega}$.
+
 Note that $\widebar{\rho}$ is a metric on $Y^X$ because for any two maps $f, g \in Y^X$, we have 
 \begin{equation*}
     \widebar{\rho}\left(f, g\right) = \sup\left\{\rho\bigl(f\left(x\right), g\left(x\right)\bigr) \colon x \in X\right\},
@@ -2785,28 +3060,135 @@ i.e., we measure the distance between maps by taking the maximum distance betwee
 The following result examines the completeness of the uniform metric spaces:
 \begin{probox}{Completeness of the Uniform Metric Spaces}{uniformCompleteness}
     If $\left(Y, d\right)$ is a complete metric space, then $\left(Y^{\Lambda}, \widebar{\rho}\right)$ is complete for any index set $\Lambda$.
+    \tcblower
+    \begin{proof}
+        Note that $\left(Y, d\right)$ and $\left(Y, \rho\right)$ are bi-Lipschitz, so it suffices to prove that $\left(Y, \rho\right)$ being complete implies that $\left(Y^{\Lambda}, \widebar{\rho}\right)$ is complete. Suppose that $\left(Y, \rho\right)$ is complete and let~$\left\{f_n\right\}_{n \in \N^+}$ be a Cauchy sequence. Note that for any $m, n \in \N^+$ and every $\alpha \in \Lambda$, 
+        \begin{equation*}
+            \widebar{\rho}\left(f_m, f_n\right) = \sup\left\{\rho\bigl(f_m\left(\lambda\right), f_n\left(\lambda\right)\bigr) \colon \lambda \in \Lambda\right\} \geq \rho\bigl(f_m\left(\alpha\right), f_n\left(\alpha\right)\bigr),
+        \end{equation*}
+        so $\left\{f_n\left(\alpha\right)\right\}_{n \in \N^+}$ is a Cauchy sequence in $\left(Y, \rho\right)$. Since $\left(Y, \rho\right)$ is complete, there exists some $y_{\alpha} \in Y$ for each $\alpha \in \Lambda$ such that 
+        \begin{equation*}
+            \lim_{n \to \infty}f_n\left(\alpha\right) = y_{\alpha}.
+        \end{equation*}
+        Take $f \in Y^{\Lambda}$ with $f\left(\alpha\right) = y_{\alpha}$. Note that for every $\epsilon > 0$, there exists some $N_1 \in \N^+$ such that for all $m, n > N_1$, we have 
+        \begin{equation*}
+            \rho\bigl(f_m\left(\alpha\right), f_n\left(\alpha\right)\bigr) \leq \widebar{\rho}\left(f_m, f_n\right) < \frac{\epsilon}{2}
+        \end{equation*}
+        for all $\alpha \in \Lambda$. Notice that there exists $N_2 \in \N^+$ such that for all $m > N_2$, we have~$\rho\bigl(f_m\left(\alpha\right), y_{\alpha}\bigr) < \frac{\epsilon}{2}$. Therefore, whenever $m, n > \max\left\{N_1, N_2\right\}$, 
+        \begin{align*}
+            \widebar{\rho}\left(f_n, f\right) & \leq \rho\bigl(f_n\left(\alpha\right), f\left(\alpha\right)\bigr) \\
+            & \leq \rho\bigl(f_n\left(\alpha\right), f_m\left(\alpha\right)\bigr) + \rho\bigl(f_m\left(\alpha\right), y_{\alpha}\bigr) \\
+            & < \epsilon,
+        \end{align*}
+        and so $\lim_{n \to \infty}f_n = f$. Therefore, $\left(Y^{\Lambda}, \widebar{\rho}\right)$ is complete.
+    \end{proof}
 \end{probox}
 Usually, given a topological space $X$ and a metric space $\left(Y, d\right)$, we denote $\mathcal{C}\left(X, Y\right)$ to be the set of all continuous maps from $X$ to $Y$ and $\mathcal{B}\left(X, Y\right)$ to be the set of all bounded maps (i.e., maps $f \colon X \to Y$ such that $\mathrm{diam}\bigl(f\left(X\right)\bigr)$ is finite) from $X$ to $Y$.
 \begin{probox}{Closedness and Completness of $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$}{closedCompCandB}
     Both $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$ are closed with respect to the uniform topology on $Y^{\Lambda}$. If~$\left(Y, d\right)$ is complete, then both $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$ are complete.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:uniformCompleteness}, $\left(Y^X, \widebar{\rho}\right)$ is complete. By Proposition \ref{pro:closedComp}, it suffices to prove that both $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$ are closed in $\left(Y^X, \widebar{\rho}\right)$. Note that both $\mathcal{C}\left(X, Y\right)$ and $\mathcal{B}\left(X, Y\right)$ are metrisable and so they are first countable. Let $f \in \widebar{\mathcal{C}\left(X, Y\right)} \setminus \mathcal{C}\left(X, Y\right)$ be a limit point. By Proposition \ref{pro:characterise1stCountableClosure}, there exists a sequence $\left\{f_n\right\}_{n \in \N^+}$ in $\mathcal{C}\left(X, Y\right)$ such that $\lim_{n \to \infty}f_n = f$. Note that this means that $\left\{f_n\right\}_{n \in \N^+}$ converges uniformly. By Proposition \ref{pro:uniformThenContinuous}, $f$ is continuous and so $f \in \mathcal{C}\left(X, Y\right)$. Therefore, $\mathcal{C}\left(X, Y\right)$ is closed. Similarly, if $g \in \widebar{\mathcal{B}\left(X, Y\right)}$, then there exists a sequence $\left\{g_n\right\}_{n \in \N^+}$ in $\mathcal{B}\left(X, Y\right)$ which converges uniformly to $g$, which means that there exists some $N \in \N^+$ such that for all $x \in X$,
+        \begin{equation*}
+            \rho\bigl(g_N\left(x\right), g\left(x\right)\bigr) \leq \widebar{\rho}\left(g_N, g\right) < \frac{1}{2}.
+        \end{equation*}
+        Since $\rho\left(x, y\right) = \frac{d\left(x, y\right)}{1 + d\left(x, y\right)}$, we have 
+        \begin{equation*}
+            d\bigl(g_N\left(x\right), g\left(x\right)\bigr) < \frac{\frac{1}{2}}{1 - \frac{1}{2}} = 1
+        \end{equation*}
+        for all $x \in X$. Notice that there exists some $M > 0$ such that $d\bigl(g_N\left(a\right), g_N\left(b\right)\bigr) < M$ for all $a, b \in X$. Therefore, for all $a, b \in X$,
+        \begin{align*}
+            d\bigl(g\left(a\right), g\left(b\right)\bigr) & \leq d\bigl(g\left(a\right), g_N\left(a\right)\bigr) + d\bigl(g_N\left(a\right), g_N\left(b\right)\bigr) + d\bigl(g_N\left(b\right), g\left(b\right)\bigr) \\
+            & < M + 2,
+        \end{align*}
+        which implies that $g \in \mathcal{B}\left(X, Y\right)$, and so $\mathcal{B}\left(X, Y\right)$ is closed.
+    \end{proof}
 \end{probox}
 For any two bounded maps $f, g \in \mathcal{B}\left(X, Y\right)$, it is clear that $d\bigl(f\left(x\right), g\left(x\right)\bigr)$ is bounded. Therefore, it makes sense to talk about its supremum.
 \begin{dfnbox}{Supremum Metric}{supMetric}
     The {\color{red} \textbf{supremum metric}} on $\mathcal{B}\left(X, Y\right)$ is defined by 
     \begin{equation*}
-        \rho\left(f, g\right) = \sup\left\{d\bigl(f\left(x\right), g\left(x\right)\bigr) \colon x \in X\right\}.
+        d_{\sup}\left(f, g\right) = \sup\left\{d\bigl(f\left(x\right), g\left(x\right)\bigr) \colon x \in X\right\}.
     \end{equation*}
 \end{dfnbox}
-Recall that in Definition \ref{dfh:isometric}, we defined an analogous notion of homeomorphic maps in metric spaces which preserves distances. While an isometry preserves distances, it does not necessarily retain the ``size'' of the spaces. Therefore, as a further step, we may wish to construct a ``good'' isometry such that the image of the domain is not too far away from the co-domain.
+With some computation, one can show that 
+\begin{equation*}
+    \widebar{\rho}\left(f, g\right) = \frac{d_{\sup}\left(f, g\right)}{1 + d_{\sup}\left(f, g\right)},
+\end{equation*}
+and so if $\left(Y, d\right)$ is complete, this implies that $\bigl(\mathcal{B}\left(X, Y\right), d_{\sup}\bigr)$ is complete.
+
+Notice that if $X$ is compact, then every continuous function has a compact range and so 
+\begin{equation*}
+    C\left(X, Y\right) \subseteq \mathcal{B}\left(X, Y\right).
+\end{equation*}
+Since $\mathcal{C}\left(X, Y\right)$ is closed in $Y^X$, this means that $\mathcal{C}\left(X, Y\right)$ is closed in $\mathcal{B}\left(X, Y\right)$. In this case, we can restrict $d_{\sup}$ to make $\bigl(\mathcal{C}\left(X, Y\right), d_{\sup}\bigr)$ complete as well when $\left(Y, d\right)$ is complete.
+
+Recall that in Definition \ref{dfn:isometric}, we defined an analogous notion of homeomorphic maps in metric spaces which preserves distances. While an isometry preserves distances, it does not necessarily retain the ``size'' of the spaces. Therefore, as a further step, we may wish to construct a ``good'' isometry such that the image of the domain is not too far away from the co-domain.
 \begin{dfnbox}{Metric Completion}{metricCompletion}
     Let $\left(X, d_X\right)$ be a metric space. The {\color{red} \textbf{metric completion}} of $X$ is a complete metric space~$\left(Y, d_Y\right)$ with an isometric embedding $\phi \colon X \to Y$ such that $\widebar{\phi\left(X\right)} = Y$.
 \end{dfnbox}
 We will show that a metric completion always exists, and it is in fact unique up to isometry.
 \begin{thmbox}{Existence and Uniqueness of Metric Completion}{existenceUniquenessMetricCompletion}
-    For every metric space $\left(X, d_X\right)$, there exists a complete metric space $\left(Y, d_Y\right)$ and an isometric embedding $\phi \colon X \to Y$ such that $\phi\left(X\right)$ is dense in $Y$. Furthermore, for any complete metric space $\left(Y, d_Y\right)$ and any isometric embedding $\phi' \colon X \to Y'$ with~$\widebar{\phi'\left(X\right)} = Y'$, there exists an isometry $f \colon Y \to Y'$ such that 
+    For every metric space $\left(X, d_X\right)$, there exists a complete metric space $\left(Y, d_Y\right)$ and an isometric embedding $\phi \colon X \to Y$ such that $\phi\left(X\right)$ is dense in $Y$. Furthermore, for any complete metric space $\left(Y', d_{Y'}\right)$ and any isometric embedding $\phi' \colon X \to Y'$ with~$\widebar{\phi'\left(X\right)} = Y'$, there exists an isometry $f \colon Y \to Y'$ such that 
     \begin{equation*}
         \left. f\right\rvert_{\phi\left(X\right)} = \phi' \circ \phi^{-1}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Fix some $x_0 \in X$. For every $a \in X$, define $\phi_{a} \colon X \to \R$ by 
+        \begin{equation*}
+            \phi_a\left(x\right) = d_X\left(x, a\right) - d_X\left(x, x_0\right).
+        \end{equation*}
+        Note that 
+        \begin{align*}
+            d\left(x, a\right) + d\left(a, x_0\right) & \geq d\left(x, x_0\right), \\
+            d\left(x, x_0\right) + d\left(a, x_0\right) & \geq d\left(x, a\right),
+        \end{align*}
+        so we have 
+        \begin{equation*}
+            -d\left(a, x_0\right) \leq d\left(x, a\right) - d\left(x, x_0\right) \leq d\left(a, x_0\right).
+        \end{equation*}
+        Therefore, for every $x \in X$, we have $\abs{\phi_a\left(x\right)} \leq d\left(a, x_0\right)$, and so $\phi_a \in \mathcal{B}\left(X, Y\right)$. Define a map $\phi \colon \left(X, d_X\right) \to \bigl(\mathcal{B}\left(X, Y\right), d_{\sup}\bigr)$ by $\phi\left(a\right) = \phi_a$. Take any $a, b \in X$ and consider 
+        \begin{align*}
+            d_{\sup}\left(\phi_a, \phi_b\right) & = \sup\left\{\abs{\phi_a\left(x\right), \phi_b\left(x\right)} \colon x \in X\right\} \\ 
+            & = \sup\left\{\abs{d_X\left(x, a\right) - d_X\left(x, b\right)} \colon x \in X\right\} \\
+            & \leq d_X\left(a, b\right) \\
+            & = \abs{d_X\left(b, a\right) - d_X\left(b, b\right)} \\ 
+            & \leq \sup\left\{\abs{d_X\left(x, a\right) - d_X\left(x, b\right)} \colon x \in X\right\} \\
+            & = d_{\sup}\left(\phi_a, \phi_b\right).
+        \end{align*}
+        Therefore, $d_{\sup}\left(\phi_a, \phi_b\right) = d_X\left(a, b\right)$ and so $d_{\sup}$ is an isometric embedding. Take 
+        \begin{equation*}
+            Y \coloneqq \widebar{\phi\left(X\right)} \quad\textrm{and}\quad d_Y \coloneqq \left.d_{\sup}\right\rvert_{\widebar{\phi\left(X\right)}},
+        \end{equation*}
+        then by Propositions \ref{pro:closedComp} and \ref{pro:closedCompCandB}, $Y$ is complete and $\phi$ is an isometry onto $Y$. Take any complete metric space $\left(Y', d_{Y'}\right)$ and any isometric embedding $\phi' \colon X \to Y'$ such that $\widebar{\phi'\left(X\right)} = Y'$. Let $\mathcal{S}$ be the collection of all Cauchy sequences on $\phi\left(X\right)$ and define~$\sim$ to be an equivalence relation on $\mathcal{S}$ such that $\left\{a_n\right\}_{n \in \N^+} \sim \left\{b_n\right\}_{n \in \N^+}$ if and only if $\lim_{n \to \infty}a_n = \lim_{n \to \infty}b_n$. Consider $\mathcal{A} \coloneqq \mathcal{S} \slash \sim$ and define $m \colon \mathcal{A}^2 \to \R$ by 
+        \begin{equation*}
+            m\left(\left[\left\{a_n\right\}_{n \in \N^+}\right]_{\sim}, \left[\left\{b_n\right\}_{n \in \N^+}\right]_{\sim}\right) = d_Y\left(\lim_{n \to \infty}a_n, \lim_{n \to \infty}b_n\right).
+        \end{equation*}
+        One may check that $m$ is a metric. Define $g \colon \mathcal{A} \to Y$ by 
+        \begin{equation*}
+            g\left(\left[\left\{a_n\right\}_{n \in \N^+}\right]_{\sim}\right) = \lim_{n \to \infty}a_n.
+        \end{equation*}
+        One may check that $g$ is an isometry. Define $\mathcal{A}'$, $m'$ and $g'$ on $\phi'\left(X\right)$ similarly and consider $F \colon \mathcal{A} \to \mathcal{A}'$ defined by 
+        \begin{equation*}
+            F\left(\left[\left\{x_n\right\}_{n \in \N^+}\right]_{\sim}\right) = \left[\left\{\phi'\bigl(\phi\left(x_n\right)\bigr)\right\}_{n \in \N^+}\right]_{\sim} \coloneqq \Phi_x.
+        \end{equation*}
+        One can check that $F$ is well-defined because $\phi' \circ \phi \colon \phi\left(X\right) \to \phi'\left(X\right)$ is an isometry. Consider 
+        \begin{align*}
+            m'\left(\Phi_a, \Phi_b\right) & = d_Y\left(\lim_{n \to \infty}\phi'\bigl(\phi\left(a_n\right)\bigr), \lim_{n \to \infty}\phi'\bigl(\phi\left(b_n\right)\bigr)\right) \\
+            & = \lim_{n \to \infty}d_Y\Bigl(\phi'\bigl(\phi\left(a_n\right)\bigr), \phi'\bigl(\phi\left(b_n\right)\bigr)\Bigr) \\
+            & = \lim_{n \to \infty}d_Y\left(a_n, b_n\right) \\
+            & = d_Y\left(\lim_{n \to \infty}a_n, \lim_{n \to \infty}b_n\right) \\
+            & = m\left(\left[\left\{a_n\right\}_{n \in \N^+}\right]_{\sim}, \left[\left\{b_n\right\}_{n \in \N^+}\right]_{\sim}\right).
+        \end{align*}
+        Define $f \coloneqq g' \circ F \circ g^{-1}$, then $f$ is an isometry. For each $y \in \phi\left(X\right)$, we have 
+        \begin{align*}
+            f\left(x\right) & = g'\Bigl(F\left(\left[\left\{x\right\}_{n \in \N^+}\right]_{\sim}\right)\Bigr) \\
+            & = g'\left(\left[\left\{\phi'\bigl(\phi\left(x\right)\bigr)\right\}_{n \in \N^+}\right]_{\sim}\right) \\
+            & = \phi'\bigl(\phi\left(x\right)\bigr).
+        \end{align*}
+        Therefore, $\left. f\right\rvert_{\phi\left(X\right)} = \phi' \circ \phi^{-1}$.
+    \end{proof}
 \end{thmbox}
 \section{Equicontinuity}
 \begin{dfnbox}{Topology of Compact Convergence}{compactConv}
@@ -2820,7 +3202,7 @@ We will show that a metric completion always exists, and it is in fact unique up
     \end{equation*} 
     is called the {\color{red} \textbf{topology of compact convergence}} on $Y^X$.
 \end{dfnbox}
-This topology is so named due to the fact that $\left\{f_n\right\}_{n \in \N}$ in $Y^X$ converges to $f$ with respect to the topology if and only if $\left\{\left. f_n \right\rvert_C\right\}_{n \in \N}$ converges to $\left. f\right\rvert_C$ uniformly for any compact set $C \subseteq X$.
+This topology is so named because $\left\{f_n\right\}_{n \in \N}$ in $Y^X$ converges to $f$ with respect to the topology if and only if $\left\{\left. f_n \right\rvert_C\right\}_{n \in \N}$ converges to $\left. f\right\rvert_C$ uniformly for any compact set $C \subseteq X$.
 \begin{dfnbox}{Compact-Open Topology}{compactOpen}
     Let $X$ and $Y$ be topological spaces. For every compact set $C \subseteq X$ and open set $U \subseteq Y$, define 
     \begin{equation*}
@@ -2893,10 +3275,26 @@ In other words, a separation is a bipartition of a space with non-empty open set
 Now, consider a disconnected space $X$ formed by two connected non-empty spaces $A$ and $B$. Intuitively, both $A$ and $B$ are also closed because their closure are equal to themselves. This inspires the following characterisation of a connected space:
 \begin{probox}{Characterisation of Connected Spaces}{connectedSpaces}
     A topological space $X$ is connected if and only if the only sets which are both open and closed in $X$ are $X$ and $\varnothing$.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive statement, i.e., a topological space $X$ is disconnected if and only if there exists some non-empty proper subset of $X$ which is both closed and open. Suppose that there exists some non-empty $U \subseteq X$ which is both open and closed such that $X \setminus U \neq \varnothing$. Note that $X \setminus U$ is open and disjoint from~$U$ and that $U \cup \left(X \setminus U\right) = X$, so $X$ is disconnected. Conversely, suppose that~$X$ is disconnected, then there exists disjoint non-empty open subsets $U, V \subseteq X$ such that $U \cup V = X$. Note that $U = X \setminus V \neq \varnothing$ and $V = X \setminus U \neq \varnothing$, so both $U$ and $V$ are also closed proper subsets of $X$.
+    \end{proof}
 \end{probox}
 Intuitively, if we can find a separation in a space $X$, then any connected subspace of $X$ should not be ``cut off'' by the separation.
 \begin{probox}{Property of Conencted Subspaces}{connectedSubspaces}
     If $U, V$ are a separation of a topological space $X$ and $Y \subseteq X$ is a connected subspace, then either $Y \subseteq U$ or $Y \subseteq V$.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive statement. Let $U, V$ be a separation of $X$, then $U = X \setminus V$. Suppose that $Y \not\subseteq U$ and $Y \not\subseteq V$, then it suffices to prove that $Y$ is not connected. Since $Y \not\subseteq U$, then 
+        \begin{equation*}
+            Y \cap \left(X \setminus U\right) = Y \cap V \neq \varnothing.
+        \end{equation*}
+        Similarly, $Y \cap U \neq \varnothing$. Since $U \cup V = X$, we have 
+        \begin{equation*}
+            \left(Y \cap U\right) \cup \left(Y \cap V\right) = Y.
+        \end{equation*}
+        Note that both $Y \cap U$ and $Y \cap V$ are open in $Y$, so they form a separation of $Y$. Therefore,~$Y$ is not connected, and so if $Y$ is connected, then either $Y \subseteq U$ or $Y \subseteq V$.
+    \end{proof}
 \end{probox}
 Naturally, connectedness should be transitive, i.e., if two connected subsets are not disjoint, then their union should be connected. 
 \begin{probox}{Connectedness of the Union of Connected Subspaces}{connectedUnion}
@@ -2905,18 +3303,57 @@ Naturally, connectedness should be transitive, i.e., if two connected subsets ar
         \bigcap_{\alpha \in \Lambda}A_{\alpha} \neq \varnothing,
     \end{equation*}
     then $\bigcup_{\alpha \in \Lambda}A_{\alpha}$ is connected.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $\bigcup_{\alpha \in \Lambda}$ is disconnected, then there exists non-empty disjoint open sets $U, V \subseteq X$ such that $\bigcup_{\alpha \in \Lambda}A_{\alpha} \subseteq U \cup V$. Without loss of generality, suppose that $U \cap \bigcap_{\alpha \in \Lambda}A_{\alpha} \neq \varnothing$ and take $p \in U \cap \bigcap_{\alpha \in \Lambda}A_{\alpha}$. Note that $p \in A_{\alpha}$ for all~$\alpha \in \Lambda$, so $p \in A_{\alpha} \cap U \neq \varnothing$ for all $\alpha \in \Lambda$. We consider two cases. If there exists some $a \in A_{\alpha} \setminus U$ for some $\alpha \in \Lambda$, then $a \in V$. However, since $A_{\alpha}$ is connected, this means that there exists some $b \in A_{\alpha} \setminus \left(U \cup V\right)$, which implies that 
+        \begin{equation*}
+            \bigcup_{\alpha \in \Lambda}A_{\alpha} \not\subseteq U \cup V
+        \end{equation*}
+        and is a contradiction. If $A_{\alpha} \subseteq U$ for all $\alpha \in \Lambda$, then \begin{equation*}
+            \bigcup_{\alpha \in \Lambda}A_{\alpha} \subseteq U
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            \bigcup_{\alpha \in \Lambda}A_{\alpha} \cap V = \varnothing.
+        \end{equation*}
+        Since $A_{\alpha} \neq \varnothing$ for all $\alpha \in \Lambda$, this means that $V = \varnothing$, which is a contradiction.
+    \end{proof}
 \end{probox}
 By intuition, if we slightly expand the boundary of a connected subset, then the resultant set should remain connected. 
 \begin{probox}{Slightly Larger Supersets of Connected Sets Are Connected}{connectedSlightlyLarger}
     If $A$ is connected in a topological space $X$ and $A \subseteq B \subseteq \widebar{A}$ for some $B \subseteq X$, then $B$ is connected.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $B$ is disconnected, then there exist disjoint non-empty open sets $U, V \subseteq X$ such that $B \subseteq U \cup V$. By Proposition \ref{pro:connectedSubspaces}, without loss of generality, assume that $A \subseteq U$, then $B \subseteq \widebar{A} \subseteq \widebar{U}$. Note that $V \subseteq X \setminus \widebar{U}$, so $V \cap B = \varnothing$, which is a contradiction.
+    \end{proof}
 \end{probox}
 Recall that continuous maps preserve open sets, so it is also natural that the image of a connected set under a continuous map is also connected.
 \begin{probox}{Continuous Maps Preserve Connectedness}{connectedContinuous}
     If $f \colon X \to Y$ is continuous and $A \subseteq X$ is connected, then $f\left(A\right)$ is connected.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive statement. Suppose that $f\left(A\right)$ is disconnected, then there exists non-empty disjoint open sets $U, V \subseteq Y$ such that 
+        \begin{equation*}
+            f\left(A\right) = \bigl(U \cap f\left(A\right)\bigr) \cup \bigl(V \cap f\left(A\right)\bigr).
+        \end{equation*}
+        Note that $f^{-1}\left(U\right)$ and $f^{-1}\left(V\right)$ are disjoint non-empty open sets in $X$ and 
+        \begin{equation*}
+            A \subseteq f^{-1}\left(U\right) \cup f^{-1}\left(V\right),
+        \end{equation*}
+        so $A$ is disconnected.
+    \end{proof}
 \end{probox}
 Lastly, if we take the Cartesian product of two connected spaces, then this should not result in any new ``gap''.
 \begin{probox}{Cartesian Products of Connected Spaces Are Connected}{connectedCartesian}
     If $X$ and $Y$ are connected topological spaces, then $X \times Y$ is connected.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive statement. Suppose that $X \times Y$ is disconnected, then there exists non-empty disjoint open sets $U, V \subseteq X \times Y$ such that 
+        \begin{equation*}
+            X \times Y = U \cup V.
+        \end{equation*}
+        Note that there exists non-empty open sets $U_X, V_X \subseteq X$ and non-empty open sets~$U_Y, V_Y \subseteq Y$ such that $U = U_X \times U_Y$ and $V = V_X \times V_Y$. We claim that $U_X$ and $V_X$ are disjoint or $U_Y$ and $V_Y$ are disjoint because otherwise $U$ and $V$ are not disjoint. Without loss of generality, assume that $U_X$ and $V_X$ are disjoint. Notice that for every $\left(x, y\right) \in U \cup Y$, either $x \in U_X$ or $x \in V_X$, so $X = U_X \cup V_X$ and is disconnected.
+    \end{proof}
 \end{probox}
 For those with background in graph theory, the discussion by now should have been clear that connectedness in topological spaces is a generalisation of connectedness in graphs. For example:
 \begin{enumerate}
@@ -2931,6 +3368,10 @@ Therefore, it is not surprising that we can generalise the notion of a \textit{p
 Clearly, path connectedness is a stronger version of connectedness.
 \begin{probox}{Path Connectedness Implies Connectedness}{pathConnectedImpliesConnected}
     A space is connected if it is path connected.
+    \tcblower
+    \begin{proof}
+        We shall prove the contrapositive statement. Let $X$ be a disconnected space, then there exists non-empty disjoint open sets $U, V \subseteq X$ such that $X = U \cup V$. Take some $u \in U$ and some $v \in V$. Suppose on contrary that there exists a continuous map~$f \colon \left[a, b\right] \to X$ such that $f\left(a\right) = u$ and $f\left(b\right) = v$. Notice that $f^{-1}\left(U\right)$ and~$f^{-1}\left(V\right)$ are disjoint non-empty open sets, so there exists some $x \in \left[a, b\right]$ such that there is no $y \in X$ with $f\left(x\right) = y$, which is not possible. Therefore, $X$ is not path connected.
+    \end{proof}
 \end{probox}
 One might wonder if the converse of the above result is true. Intuitively, it should not be true. Specifically, we consider the following counter example known as the \textit{topologist's sine curve}: define 
 \begin{equation*}
@@ -2945,6 +3386,37 @@ One may check that $S = f\bigl(\left(0, 1\right]\bigr)$ is path connected and th
     \widebar{S} = S \cup \left(\left\{0\right\} \times \left[-1, 1\right]\right),
 \end{equation*}
 which is still connected but not path connected.
+\begin{probox}{Topologist's Sine Curve Is Not Path Connected}{notPathConnected}
+    Let $S$ be defined as
+    \begin{equation*}
+        S = \left\{ (x, y) \in \mathbb{R}^2 : y = \sin \left( \frac{2 \pi}{x} \right), 0 < x \leq 1 \right\}
+    \end{equation*}
+    and define
+    \begin{equation*}
+        \widebar{S} = S \cup \left(\left\{0\right\} \times \left[-1, 1\right]\right),
+    \end{equation*}
+    then $\widebar{S}$ is not path connected.
+    \tcblower
+    \begin{proof}
+        It suffices to show that there exists two points in $\widebar{S}$ such that there is no path between them. We shall prove that there is no path from $\left(0, 0\right)$ to any point $\left(x, y\right) \in S$. Suppose on contrary that there exists some $f \colon \left[a, b\right] \to \widebar{S}$ which is continuous such that $f\left(a\right) = \left(0, 0\right)$ and $f\left(b\right) = \left(x, y\right)$, then $f^{-1}\left(\left\{0\right\} \times \left[-1, 1\right]\right)$ is closed in $\left[a, b\right]$. Take 
+        \begin{equation*}
+            M \coloneqq \max f^{-1}\left(\left\{0\right\} \times \left[-1, 1\right]\right)
+        \end{equation*}
+        and consider $g \colon \left[M, b\right] \to \widebar{S}$. Notice that there exists some $y_0 \in \left[-1, 1\right]$ such that~$g\left(M\right) = \left(0, y_0\right)$ and $g\bigl(\left(M, b\right]\bigr) \subseteq S$. Without loss of generality, assume $y_0 \geq 0$. Write $g\left(t\right) = \bigl(x\left(t\right), y\left(t\right)\bigr)$, then $x\left(M\right) = 0$ and for all $t \in \left(M, b\right]$, we have $x\left(t\right) > 0$ and $y\left(t\right) = \sin\frac{2\pi}{x\left(t\right)}$. Note that 
+        \begin{equation*}
+            \lim_{t \to 0^+}y\left(t\right) = y_0 \geq 0
+        \end{equation*}
+        because $y$ is a continuous projection. For each $n \in \N^+$, there exists some $z_n$ with 
+        \begin{equation*}
+            0 < z_n < x\left(\frac{1}{n}\right)
+        \end{equation*}
+        such that $\sin\frac{2\pi}{z_n} = \left(-1\right)^n$. Note that $x$ is continuous because it is a projection, so there exists some $t_n \in \left(0, \frac{1}{n}\right)$ such that $x\left(t_n\right) = z_n$. This means that $\left\{t_n\right\}_{n \in \N^+}$ is a sequence such that $y\left(t_n\right) = \left(-1\right)^n$ for all $n \in \N^+$. Now, notice that for any $\delta > 0$, there exists some $N \in \N^+$ such that $\frac{1}{N} < \delta$ and there exists some $k > N$ such that 
+        \begin{equation*}
+            \abs{y\left(t_k\right) - y_0} > \frac{1 - y_0}{2} > 0,
+        \end{equation*}
+        which means that $y\left(t\right)$ does not converge to $y_0$ as $t \to 0^+$ and is a contradiction. Therefore, $\widebar{S}$ must not be path connected.
+    \end{proof}
+\end{probox}
 \section{Connected Components}
 Recall that in a graph, connectedness between vertices is an equivalence relation. Analogously, we can define a relation between two points in a topological space based on whether there exists a connected set containing both points.
 
@@ -2955,6 +3427,14 @@ One may check that such a relation is indeed an equivalence relation. In particu
 Intuitively, $X \slash \sim$ contains all maximal connected subsets of $X$, which leads to the following obvious result:
 \begin{probox}{Connected Components Are Connected}{ccConnected}
     Every connected component of a topological space is connected.
+    \tcblower
+    \begin{proof}
+        Let $C \subseteq X$ be a connected component and fix some $x_0 \in C$. For each $x \in C$, there exists some connected subset $A_x \subseteq C$ with $x_0, x \in A_x$. Therefore, 
+        \begin{equation*}
+            x_0 \in \bigcap_{x \in C}A_x \neq \varnothing.
+        \end{equation*}
+        Notice that $C = \bigcup_{x \in C}A_x$, so by Proposition \ref{pro:connectedUnion}, $C$ is connected.
+    \end{proof}
 \end{probox}
 Similarly, we can define another equivalence relation using path connectedness.
 \begin{dfnbox}{Path Component}{pathComponent}
@@ -2963,24 +3443,94 @@ Similarly, we can define another equivalence relation using path connectedness.
 Again, one may check that $X \slash\psim$ contains all maximal path-connected subsets of $X$.
 \begin{probox}{Path Components Are Path Connected}{pathConnected}
     Every path component of a topological space is path connected.
+    \tcblower
+    \begin{proof}
+        Let $X$ be a topological space and $P \subseteq X$ be a path component in $X$. By definition, $P = \left[x_0\right]_{\psim}$ for some $x_0 \in X$, where $\left[x_0\right]_{\psim}$ is the equivalence class of $x_0$ under the equivalence relation $\psim$. Take any $x, y \in P$, then $x \psim x_0$ and $y \psim x_0$. By transitivity, we have $x \psim y$ and so there exists a path from $x$ to $y$. Therefore, $P$ is path connected. 
+    \end{proof}
 \end{probox}
 Recall that path connectedness is a stronger version of connectedness, so it is natural that every path component is contained in some connected component.
 \begin{probox}{Connected Components Contain Path Components}{ccContainPath}
     Every path component of a topological space is contained in some connected component.
+    \tcblower
+    \begin{proof}
+        Let $P$ be a path component of a topological space $X$. By Proposition \ref{pro:pathConnected}, $P$ is path connected and by Proposition \ref{pro:pathConnectedImpliesConnected}, $P$ is connected. Note that for every $x \in P$, we have $x \sim x_0$ and so $P \subseteq \left[x_0\right]_{\sim}$, where $\left[x_0\right]_{\sim}$ is the equivalence class of $x_0$ under the equivalence relation $\sim$, which is a connected component of $X$.
+    \end{proof}
 \end{probox}
 Similar to our discussion of compactness, we can define connectedness in a local perspective.
 \begin{dfnbox}{Local Connectedness}{localConnectedness}
     A topological space $X$ is {\color{red} \textbf{locally (path) connected at $x \in X$}} if for all open sets $U \subseteq X$ containing $x$, there exists a (path) connected open set $V \subseteq X$ such that $x \in V \subseteq U$. The space $X$ is {\color{red} \textbf{locally (path) connected}} if it is locally connected at every $x \in X$.
 \end{dfnbox}
-It turns out that there is no need to differentiate between local connectedness and local path connectedness because the components induced by the two relations are the same in a local context.
-\begin{probox}{Connected Components in Locally Path Connected Spaces}{localConnectedEquiv}
-    If $X$ is a locally path connected topological space, then $X \slash \sim = X \slash \psim$.
+Even though local connectedness is ``local'', connectedness does not imply local connectedness.
+\begin{probox}{Topologist's Sine Curve Is Not Locally Connected}{notLocallyConnected}
+    Let $S$ be defined as
+    \begin{equation*}
+        S = \left\{ (x, y) \in \mathbb{R}^2 : y = \sin \left( \frac{2 \pi}{x} \right), 0 < x \leq 1 \right\}
+    \end{equation*}
+    and define
+    \begin{equation*}
+        \widebar{S} = S \cup \left(\left\{0\right\} \times \left[-1, 1\right]\right),
+    \end{equation*}
+    then $\widebar{S}$ is not locally connected.
+    \tcblower
+    \begin{proof}
+        It suffices to show that there exists an open subset $U \subseteq \widebar{S}$ which contains some~$\mathbfit{p} \in \widebar{S}$ such that all open subsets of $U$ are disconnected. Take $\mathbfit{p} \coloneqq \left(0, 0\right)$ and consider
+        \begin{equation*}
+            U \coloneqq B_{\frac{1}{2}}\left(\mathbfit{p}\right) \cap \widebar{S}
+        \end{equation*}
+        which is open in $\widebar{S}$ containing $\mathbfit{p}$. Let $W \subseteq U$ be any open set containing $\mathbfit{p}$, then there exists some open set 
+        \begin{equation*}
+            V \subseteq B_{\frac{1}{2}}\left(\mathbfit{p}\right)
+        \end{equation*}
+        such that $W = V \cap \widebar{S}$. Note that $V$ contains some $B_{\epsilon}\left(\mathbfit{p}\right)$ where $0 < \epsilon < \frac{1}{2}$. Take 
+        \begin{equation*}
+            \delta \coloneqq \frac{\sqrt{2}}{2}\epsilon,
+        \end{equation*}
+        then $V$ contains the open square $\left(-\delta, \delta\right)^2$. Define 
+        \begin{equation*}
+            D_{\delta} \coloneqq \left\{x \in \left(0, \delta\right) \colon \abs{\sin\frac{2\pi}{x}} < \delta\right\},
+        \end{equation*}
+        then 
+        \begin{equation*}
+            W = \left\{\left(0, y\right) \in \R^2 \colon -\delta < y < \delta\right\} \cup \left\{\left(x, \sin\frac{2\pi}{x}\right) \in \R^2 \colon x \in D_{\delta}\right\}.
+        \end{equation*}
+        We claim that $W$ is disconnected. Notice that there exists some $x_0 \in \left(0, \delta\right)$ such that~$\sin\frac{2\pi}{x} = 1$. Consider 
+        \begin{align*}
+            X_1 & \coloneqq W \cap \left(\left(-\infty, x_0\right) \times \R^2\right), \\
+            X_2 & \coloneqq W \cap \left(\left(x_0, +\infty\right) \times \R^2\right).
+        \end{align*}
+        Since $\left\{\left(0, y\right) \in \R^2 \colon -\delta < y < \delta\right\} \subseteq X_1$, we know that $X_1 \neq \varnothing$. Since there exists some $x' \in \left(x_0, \delta\right)$ such that $\abs{\sin\frac{2\pi}{x}} < \delta$, we know that $X_2 \neq \varnothing$. Furthermore, 
+        \begin{equation*}
+            \left(\left\{x_0\right\} \times \R\right) \cap W = \varnothing,
+        \end{equation*}
+        so $X_1 \cup X_2 = W$. Since both $X_1$ and $X_2$ are open, $W$ is disconnected. Therefore, $\widebar{S}$ is not locally connected. 
+    \end{proof}
 \end{probox}
 In the ideal case, since every point in a topological space is contained by some (path) connected component, the space is naturally locally (path) connected if each of these components is open. This motivates the following characterisation:
 \begin{probox}{Characterisation of Locally (Path) Connected Spaces}{localConnectedSpaces}
     A topological space $X$ is locally (path) connected if and only if for any open subset~$U \subseteq X$, every (path) connected component of $U$ is open.
+    \tcblower
+    \begin{proof}
+        Let $U \subseteq X$ be any open set and $C \subseteq U$ be a (path) connected component. Since $X$ is locally (path) connected, then for each $c \in C \subseteq U$, there exists a (path) connected open set $V_c \subseteq X$ such that $c \in V_c \subseteq U$. Note that $V_c \subseteq C$, so $C = \bigcup_{c \in C}V_c$ is open. Conversely, suppose that for any open subset $U \subseteq X$, every (path) connected component of $U$ is open. Take any $x \in X$, then there exists some open set $U$ containing $x$. Since the (path) connected components of $U$ form a partition, there exists some open (path) connected component $C_x \subseteq U$ with $x \in C_x$. By Propositions \ref{pro:ccConnected} and \ref{pro:pathConnected}, $C_x$ is (path) connected and so $X$ is locally (path) connected.
+    \end{proof}
 \end{probox}
+It turns out that there is no need to differentiate between local connectedness and local path connectedness because the components induced by the two relations are the same in a local context.
+\begin{probox}{Connected Components in Locally Path Connected Spaces}{localConnectedEquiv}
+    If $X$ is a locally path connected topological space, then $X \slash \sim = X \slash \psim$.
+    \tcblower
+    \begin{proof}
+        Suppose that $P$ is a path component of $X$ but not a connected component. Note that by Proposition \ref{pro:ccContainPath}, there exists some connected component $C \subseteq X$ such that~$Q \coloneqq C \setminus P \neq \varnothing$. By Proposition \ref{pro:localConnectedSpaces}, since $X$ is locally path connected, both $P$ and $C$ are open, and so $Q$ is also open. Therefore, $C = P \cup Q$ where $P$ and $Q$ are disjoint non-empty open sets, which is a contradiction because $C$ is connected by Proposition \ref{pro:ccConnected}. 
+    \end{proof}
+\end{probox}
+Note that connectedness is an equivalence relation which induces a partition of the space by its connected components, so it is natural to link connectedness to quotient topologies.
 \begin{probox}{Quotient Topology over Connected Components Is Discrete}{quotientConnectedDiscrete}
     If $X$ is a locally path connected space and $\widetilde{X} \coloneqq X \slash \sim$ are the connected components of $X$, then the quotient topology on $\widetilde{X}$ is discrete.
+    \tcblower
+    \begin{proof}
+        Since the quotient topology is unique, it suffices to prove that the discrete topology $\mathcal{P}\left(\widetilde{X}\right)$ is a quotient topology with respect to $p \colon X \to \widetilde{X}$ such that $x \in p\left(x\right)$, which is equivalent to proving that $p$ is a quotient map with respect to $\mathcal{P}\left(\widetilde{X}\right)$. Take any open set $\mathcal{S} \in \mathcal{P}\left(\widetilde{X}\right)$, then $p^{-1}\left(\mathcal{S}\right) = \bigcup_{C \in \mathcal{S}}C$. Note that each $C \in \mathcal{S}$ is a connected component of $X$. Since $X$ is locally path connected, then each $C \in \mathcal{S}$ is a path component of $X$. Note that $X$ is open in $X$, so every $C \in \mathcal{S}$ is open in $X$. This implies that $p^{-1}\left(\mathcal{S}\right)$ is open in $X$. Conversely, take any open set $U \subseteq X$, then 
+        \begin{equation*}
+            p\left(U\right) = \left\{C \in \widetilde{X} \colon C \cap U \neq \varnothing\right\} \in \mathcal{P}\left(\widetilde{X}\right),
+        \end{equation*}
+        which is clearly open in $\widetilde{X}$. Therefore, $p$ is a quotient map and so $\mathcal{P}\left(\widetilde{X}\right)$ is the quotient topology.
+    \end{proof}
 \end{probox}
 \end{document}
