@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 NOV 2024 16:27
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  22 NOV 2024 13:57
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1408,56 +1408,56 @@ Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on inp
 [2
 
 ] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 216--219
+Underfull \hbox (badness 10000) in paragraph at lines 220--223
 
  []
 
-[5] [6] [7] [8] [9] [10] [11]
+[5] [6] [7]
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 467.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 368.
 
-[12] [13] [14] [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 613--616
+[8] [9] [10] [11] [12] [13] [14] [15] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 628--631
 
  []
 
 [17] [18] [19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 777--780
+Underfull \hbox (badness 10000) in paragraph at lines 792--795
 
  []
 
-[22]
-Underfull \hbox (badness 10000) in paragraph at lines 826--831
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 826--831
-
- []
-
-[23] [24] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 927--931
+[22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 841--846
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 933--939
+Underfull \hbox (badness 10000) in paragraph at lines 841--846
+
+ []
+
+[24] [25] [26]
+Underfull \hbox (badness 10000) in paragraph at lines 942--946
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 933--939
+Underfull \hbox (badness 10000) in paragraph at lines 948--954
 
  []
 
-[26] [27] [28] [29] [30] [31] [32] [33]
-Underfull \hbox (badness 10000) in paragraph at lines 1127--1130
+
+Underfull \hbox (badness 10000) in paragraph at lines 948--954
 
  []
 
-[34]
-Underfull \hbox (badness 10000) in paragraph at lines 1148--1152
+[27] [28] [29] [30] [31] [32] [33] [34]
+Underfull \hbox (badness 10000) in paragraph at lines 1142--1145
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1163--1167
 
  []
 
@@ -1466,51 +1466,51 @@ Chapter 2.
 [50
 
 ] [51] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 1663--1666
+Underfull \hbox (badness 10000) in paragraph at lines 1674--1677
 
  []
 
 [53]
-Underfull \hbox (badness 10000) in paragraph at lines 1679--1682
+Underfull \hbox (badness 10000) in paragraph at lines 1690--1693
 
  []
 
 [54] [55] [56] [57]
 Chapter 3.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 17.28183pt on input line 1772.
+(Font)              scaled to size 17.28183pt on input line 1783.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 10.00107pt on input line 1772.
+(Font)              scaled to size 10.00107pt on input line 1783.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 17.27815pt on input line 1772.
+(Font)              scaled to size 17.27815pt on input line 1783.
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 1772.
+(Font)              scaled to size 9.99893pt on input line 1783.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1772.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1772.
+(hyperref)                removing `math shift' on input line 1783.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1772.
+(hyperref)                removing `subscript' on input line 1783.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1783.
 
 [58
 
 ] [59] [60]
-Underfull \hbox (badness 10000) in paragraph at lines 1849--1852
+Underfull \hbox (badness 10000) in paragraph at lines 1860--1863
 
  []
 
 [61] [62]
-Underfull \hbox (badness 10000) in paragraph at lines 1920--1925
+Underfull \hbox (badness 10000) in paragraph at lines 1931--1936
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1920--1925
+Underfull \hbox (badness 10000) in paragraph at lines 1931--1936
 
  []
 
@@ -1520,43 +1520,48 @@ Chapter 4.
 
 ] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]
 
-LaTeX Warning: Reference `pro:characteriseCompact' on page 82 undefined on input line 2431.
+LaTeX Warning: Reference `pro:characteriseCompact' on page 82 undefined on input line 2442.
 
 
-LaTeX Warning: Reference `pro:characteriseCompact' on page 82 undefined on input line 2455.
+LaTeX Warning: Reference `pro:characteriseCompact' on page 82 undefined on input line 2466.
 
 [82] [83] [84] [85] [86]
-Underfull \hbox (badness 10000) in paragraph at lines 2604--2608
+Underfull \hbox (badness 10000) in paragraph at lines 2615--2619
 
  []
 
-[87] [88] [89] [90] [91] [92] [93]
-Underfull \hbox (badness 10000) in paragraph at lines 2827--2830
+[87] [88] [89] [90] [91] [92]
+Overfull \hbox (11.989pt too wide) in paragraph at lines 2780--2832
+[]\TU/STIXTwoText(0)/m/n/12 Lastly, recall that in Proposition [][]1.6.15[][], we defined a metric over the infinite product space $[][]$.
+ []
+
+[93]
+Underfull \hbox (badness 10000) in paragraph at lines 2838--2841
 
  []
 
 [94]
-Underfull \hbox (badness 10000) in paragraph at lines 2841--2844
+Underfull \hbox (badness 10000) in paragraph at lines 2852--2855
 
  []
 
 [95] [96]
-Underfull \hbox (badness 10000) in paragraph at lines 2919--2923
+Underfull \hbox (badness 10000) in paragraph at lines 2930--2934
 
  []
 
 [97] [98] [99] [100]
-Underfull \hbox (badness 10000) in paragraph at lines 3013--3016
+Underfull \hbox (badness 10000) in paragraph at lines 3024--3027
 
  []
 
 [101] [102] [103] [104] [105] [106] [107]
-Underfull \hbox (badness 10000) in paragraph at lines 3232--3273
+Underfull \hbox (badness 10000) in paragraph at lines 3243--3284
 
  []
 
 [108] [109]
-Underfull \hbox (badness 10000) in paragraph at lines 3306--3310
+Underfull \hbox (badness 10000) in paragraph at lines 3317--3321
 
  []
 
@@ -1577,10 +1582,10 @@ Package rerunfilecheck Info: File `"Metric and Topological Spaces".out' has not 
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 37197 strings out of 478630
- 776604 string characters out of 5847730
+ 37200 strings out of 478630
+ 776648 string characters out of 5847730
  1919012 words of memory out of 5000000
- 56668 multiletter control sequences out of 15000+600000
+ 56671 multiletter control sequences out of 15000+600000
  521813 words of font info for 127 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,17n,131p,1299b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
