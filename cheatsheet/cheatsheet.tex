@@ -43,7 +43,7 @@
 \begin{document}
     \begin{multicols*}{3}
         \begin{itemize}
-            \setlength\itemsep{0.25em}
+            \setlength\itemsep{0.1em}
             \item \textbf{Co-finite}: open $\iff$ \textbf{complements of finite sets}.
             \item \textbf{Co-countable}: open $\iff$ \textbf{complements of countable sets}.
             \item $\mathcal{B}$ gen. the coarsest containing itself.
@@ -103,7 +103,7 @@
         \end{itemize}
         \textbf{Countability}
         \begin{itemize}
-            \setlength\itemsep{0.25em}
+            \setlength\itemsep{0.1em}
             \item 2nd countable $\implies\exists$ dense countable subset. $\impliedby$ is true if $X$ is metrisable.
             \item $\bigl(\R, \mathcal{P}\left(\R\right)\bigr)$ is 1st but not 2nd countable.
             \item Uncountable co-finite have no countable basis.
@@ -115,7 +115,7 @@
         \end{itemize}
         \textbf{Separation}
         \begin{itemize}
-            \setlength\itemsep{0.25em}
+            \setlength\itemsep{0.1em}
             \item Co-finite topo. is $T_1$ and $T_2$ if $X$ is finite.
             \item $T_1 \iff \left\{x\right\}$ is closed $\forall x \in X$.
             \item \textbf{Embedding thm}: $\forall x$ and $\forall$ open $U$ s.t. $x \in U$, $\exists\alpha \in \Lambda$ s.t. $f_{\alpha}\left(x\right) > 0$ and $f_{\alpha}\left(X \setminus U\right) = \left\{0\right\}$, then $F\left(x\right) = \bigl(f_{\alpha}\left(x\right)\bigr)_{\alpha \in \Lambda}$ is embedding.
@@ -132,7 +132,7 @@
         \end{itemize}
         \textbf{Compactness}
         \begin{itemize}
-            \setlength\itemsep{0.25em}
+            \setlength\itemsep{0.1em}
             \item $\left[-\sqrt{2}, \sqrt{2}\right] \cap \Q$: closed and bounded, not cpt.
             \item Closed subset of cpt space is cpt.
             \item Cpt subset of $T_2$ space is closed.
@@ -196,21 +196,21 @@
         \end{itemize}
         \textbf{Connectedness}
         \begin{itemize}
-            \setlength\itemsep{0.25em}
-            \item Connected iff only $X$ and $\varnothing$ are clopen.
-            \item $X = \left(U, V\right)$, $Y \subseteq X$ connected $\implies Y \subseteq U$ or $Y \subseteq V$.
-            \item Connected sets with $\cap \neq \varnothing$ has connected $\cup$.
-            \item $A$ connected and $A \subseteq B \subseteq \overline{A} \implies B$ connected.
-            \item Cont. $f$ maps connected to connected.
-            \item Prod. of connected is connected.
-            \item Path connected $\implies$ connected.
+            \setlength\itemsep{0.1em}
+            \item Connected iff only $X$ and $\varnothing$ are clopen (contrapositive).
+            \item $X = \left(U, V\right)$, $Y \subseteq X$ connected $\implies Y \subseteq U$ or $Y \subseteq V$ (contrapositive).
+            \item Connected sets with $\cap \neq \varnothing$ has connected $\cup$ (suppose not and condition on $A_{\alpha} \setminus U$).
+            \item $A$ connected and $A \subseteq B \subseteq \overline{A} \implies B$ connected (suppose not).
+            \item Cont. $f$ maps connected to connected (contrapositive).
+            \item Prod. of connected is connected (contrapositive).
+            \item Path connected $\implies$ connected (contrapositive, suppose exists cont. $f$).
             \item Path component $\subseteq $ cc.
             \item \textbf{Locally connected}: $\forall$ open $U$ s.t. $x \in U$, $\exists$ open connected $V$ s.t. $x \in V \subseteq U$.
-            \item $S$: graph of $\sin\frac{2\pi}{x}$ at $\left(0, 1\right]$. $\overline{S} = S \cup \left\{0\right\} \times \left[-1, 1\right]$ is connected, but not path/locally connected.
+            \item $S$: graph of $\sin\frac{2\pi}{x}$ at $\left(0, 1\right]$. $\overline{S} = S \cup \left\{0\right\} \times \left[-1, 1\right]$ is connected, but not path/locally connected (no $(0, 0)$-$(x, y)$ path: $\max f^{-1}(\left\{0\right\} \times [-1, 1]) \mapsto y_0 \coloneqq \lim y\left(t\right)$; not locally connected: $0.5$-ball at $\mathbf{0}$ contains a $\delta$-square, $\exists x \in (0, \delta)$ s.t. $\sin = 1$, split there).
             \item Locally connected iff every cc of every open set is open.
-            \item CCs and path components are the same in locally path connected space.
-            \item Quotient topo. on $\tilde{X}$: cc's of locally path connected space, is discrete.
-            \item Locally path connected $\implies$ locally connected.
+            \item CCs and path components are the same in locally path connected space (suppose not but a path cc $\subseteq$ a cc).
+            \item Quotient topo. on $\tilde{X}$: cc's of locally path connected space, is discrete (prove $\mathcal{P}\left(\tilde{X}\right)$ is a quotient topo.).
+            \item Locally path connected $\implies$ locally connected (counter e.g. empty graph).
         \end{itemize}
     \end{multicols*}
 \end{document}
