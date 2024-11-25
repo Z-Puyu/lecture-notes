@@ -1,10 +1,73 @@
 \documentclass[math]{amznotes}
+\usepackage{faktor} 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{accents}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+\renewcommand{\mathring}[1]{\accentset{\circ}{#1}}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcount\tmpnum \newdimen\tmpdim
+{\lccode`\?=`\p \lccode`\!=`\t  \lowercase{\gdef\ignorept#1?!{#1}}}
+\edef\widecharS{\expandafter\ignorept\the\fontdimen1\textfont1}
+
+\def\widebar#1{\futurelet\next\widebarA#1\widebarA}
+\def\widebarA#1\widebarA{%
+   \def\tmp{0}\ifcat\noexpand\next A\def\tmp{1}\fi
+   \widebarE
+   \ifdim\tmp pt=0pt \overline{#1}%
+   \else {\mathpalette\widebarB{#1}}\fi
+}
+\def\widebarB#1#2{%
+   \setbox0=\hbox{$#1\overline{#2}$}%
+   \tmpdim=\tmp\ht0 \advance\tmpdim by-.4pt
+   \tmpdim=\widecharS\tmpdim
+   \kern\tmpdim\overline{\kern-\tmpdim#2}%
+}
+\def\widebarC#1#2 {\ifx#1\end \else 
+   \ifx#1\next\def\tmp{#2}\widebarD 
+   \else\expandafter\expandafter\expandafter\widebarC
+   \fi\fi
+}
+\def\widebarD#1\end. {\fi\fi}
+\def\widebarE{\widebarC A1.4 J1.2 L.6 O.8 T.5 U.7 V.3 W.1 Y.2 
+   a.5 b.2 d1.1 h.5 i.5 k.5 l.3 m.4 n.4 o.6 p.4 r.5 t.4 v.7 w.7 x.8 y.8
+   \alpha1 \beta1 \gamma.6 \delta.8 \epsilon.8 \varepsilon.8 \zeta.6 \eta.4
+   \theta.8 \vartheta.8 \iota.5 \kappa.8 \lambda.5 \mu1 \nu.5 \xi.7 \pi.6
+   \varpi.9 \rho1 \varrho1 \sigma.7 \varsigma.7 \tau.6 \upsilon.7 \phi1
+   \varphi.6 \chi.7 \psi1 \omega.5 \cal1 \end. }
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -20,13 +83,22 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
 \newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+\newcommand{\psim}{\mathop{\mathrel{\accentset{p}{\sim}}}}
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 \fancyhead[L]{
@@ -37,7 +109,7 @@
 }
 \tableofcontents
 
-\chapter{Sets and Classes}
+\chapter{Axiomatic Set Theory}
 \section{Classes}
 \textit{Russell's Paradox} states the following:
 \begin{genbox}{Russell's Paradox}
@@ -77,10 +149,7 @@ There are clearly two types of classes --- the ones which are also sets and the 
 \end{dfnbox}
 Like sets, we can define subclasses:
 \begin{dfnbox}{Subclass}{subclass}
-    Let $\mathbb{A}$ and $\mathbb{B}$ be classes. We say that $\mathbb{A}$ is a {\color{red} \textbf{subclass}} of $\mathbb{B}$ if every member of $\mathbb{A}$ is also a member of $\mathbb{B}$, i.e.,
-    \begin{displaymath}
-        \mathbb{A} \subseteq \mathbb{B} \iff (X \in \mathbb{A} \implies X \in \mathbb{B}).
-    \end{displaymath}
+    Let $\mathbb{A}$ and $\mathbb{B}$ be classes, then $\mathbb{A}$ is a {\color{red} \textbf{subclass}} of $\mathbb{B}$ if for every $X \in \mathbb{A}$, we have $X \in \mathbb{B}$.
 \end{dfnbox}
 We shall also define the operations applicable to classes:
 \begin{dfnbox}{Intersection, Union and Difference}{classOps}
@@ -96,7 +165,7 @@ Finally, we shall introduce the universal class:
 \begin{dfnbox}{Universal Class}{univClass}
     The {\color{red} \textbf{universal class}} is the class of all sets, denoted by
     \begin{displaymath}
-        V \coloneqq \left\{X \colon X = X\right\}.
+        \mathbb{V} \coloneqq \left\{X \colon X = X\right\}.
     \end{displaymath}
 \end{dfnbox}
 \begin{notebox}
@@ -104,11 +173,11 @@ Finally, we shall introduce the universal class:
         It is easy to prove that the universal class is \textbf{unique}.
     \end{remark}
 \end{notebox}
+In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy. 
 
-\chapter{Axiomatic Set Theory}
-In Na\"\i ve Set Theory, we define a set as ``a collection of mathematical objects which satisfy certain definable properties''. However, such a definition is problematic (e.g. it leads to the Russell's Paradox). Thus, instead of viewing a set as a clearly defined mathematical object, we can think a set as an object entirely defined by a set of axioms to which it complies. In this sense, we avoid paradoxes by making the notion of a set undefined but only specify rigorously the axioms a set must satisfy. The following sections discuss each of the axioms in ZF set theory.
+The following sections discuss each of the axioms in Zermelo-Fraenkel set theory. These seemingly innocent axioms are used to answer the important question: \textbf{what is a set} (and what is not a set)?
 \section{Extensionality}
-\begin{axibox}{Extensionality}{extensionAxi}
+\begin{axibox}{Axiom of Extensionality}{extensionAxi}
     Let $X$ and $Y$ be sets, then $X = Y$ if for all $u$, $u \in X$ if and only if $u \in Y$.
 \end{axibox}
 An immediate result from Axiom \ref{axi:extensionAxi} is that there exists a set $X$ such that $X = X$, i.e. every set equals itself. Moreover, we can also prove the following:
@@ -116,16 +185,12 @@ An immediate result from Axiom \ref{axi:extensionAxi} is that there exists a set
     The set which has no elements is unique.
     \tcblower   
     \begin{proof}
-        Let $X$ be a set with no elements. Note that this means that for all $u$, $u \notin X$.
-        \\\\
-        Let $Y$ be another set. Note that the statement $u \in X \implies u \in Y$ is vacuously true. Suppose that $Y$ has no elements, then similarly for all $u$, the statement~$u \in Y \implies u \in X$ is also vacuously true. 
-        \\\\
-        Therefore, for all $u$, we have proven that $u \in X$ if and only if $u \in Y$. By Axiom \ref{axi:extensionAxi}, this means that $X = Y$, i.e. the set with no elements is unique.
+        Let $X$ be a set with no elements. Notice that this implies that for all $u$, we have $u \notin X$. Let~$Y$ be another set. Note that the statement $u \in X \implies u \in Y$ is vacuously true. Suppose that $Y$ has no elements, then similarly for all $u$, the statement~$u \in Y \implies u \in X$ is also vacuously true. Therefore, for all $u$, we have proven that $u \in X$ if and only if $u \in Y$. By Axiom \ref{axi:extensionAxi}, this means that $X = Y$, i.e. the set with no elements is unique.
     \end{proof}
 \end{thmbox}
-This set with no elements is known as the {\color{red} \textbf{empty set}}, denoted by $\varnothing$.
+This set with no elements is known as the \textit{empty set}, denoted by $\varnothing$.
 \section{Pairing}
-\begin{axibox}{Pairing}{pairAxi}
+\begin{axibox}{Axiom of Pairing}{pairAxi}
     For all $u$ and $v$, there exists a set $X$ such that for all $z$, $z \in X$ if and only if $z = u$ or~$z = v$.
 \end{axibox}
 \begin{notebox}
@@ -139,12 +204,12 @@ This allows us to formally define the notion of a \textit{pair} as follows:
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        In particular, we can define the {\color{red} \textbf{singleton}} $\{a\}$ to be the pair $\{a, a\}$.
+        In particular, we can define the \textbf{singleton} $\{a\}$ to be the pair $\{a, a\}$.
     \end{remark}
 \end{notebox}
 Furthermore, given any $a$ and $b$, we can prove by Extensionality that the the pair $\{a, b\}$ is unique:
 \begin{thmbox}{Uniqueness of Pairs}{uniquePairs}
-    For all $a$, $b$, the pair $\{a, b\}$ is unique.
+    For all $a$ and $b$, the pair $\{a, b\}$ is unique.
     \tcblower   
     \begin{proof}
         Let $C \coloneqq \{a, b\}$ and $D \coloneqq \{a, b\}$. Suppose $x \in C$, then $x = a$ or $x = b$, which means $x \in D$. Similarly, suppose $y \in D$, we can prove that $y \in C$. Therefore, for all~$x$, we have $x \in C$ if and only if $x \in D$. By Axiom \ref{axi:extensionAxi}, this means that $C = D$, i.e., the pair $\{a, b\}$ is unique.
@@ -161,7 +226,7 @@ Again, one can use Extensionality to prove that such an ordered pair is always u
         (a_1, a_2, \cdots, a_n) = \bigl((a_1, a_2, \cdots, a_{n - 1}), a_n\bigr).
     \end{displaymath}
 \end{dfnbox}
-By Extensionality, we can similarly prove that two ordered $n$-tuples $(a_1, a_2, \cdots, a_n)$ and $(b_1, b_2, \cdots, b_n)$ if and only if $a_i = b_i$ for $i = 1, 2, \cdots, n$.
+By Extensionality, we can similarly prove that any two ordered $n$-tuples $(a_1, a_2, \cdots, a_n)$ and~$(b_1, b_2, \cdots, b_n)$ are equal if and only if $a_i = b_i$ for $i = 1, 2, \cdots, n$.
 \section{Separtion}
 \begin{axibox}{Axiom Schema of Separation}{schemaSeparation}
     If $P$ is a property with parameter $p$, then for all $X$ and $p$ there exists a set 
@@ -176,31 +241,32 @@ Informally, this means that for every set $X$, we can form another set $Y$ by ta
 where $\varphi$ is some formula and $\mathbfit{p}$ is an ordered $n$-tuple of parameters.
 
 Alternatively, we can write Axiom Schema \ref{axi:schemaSeparation} in the following form:
-
-    Let $\mathbb{C} = \left\{u \colon \varphi(u, \mathbfit{p})\right\}$ be a class, then for all sets $X$ there exists a set $Y$ such that $\mathbb{C} \cap X = Y$.
-
-    Consequently, the intersection and the difference between two sets is a set, which can be defined as
+\begin{quote}
+    Let $\mathbb{C} = \left\{u \colon \varphi(u, \mathbfit{p})\right\}$ be a class, then for any set $X$, there exists some set $Y$ such that $\mathbb{C} \cap X = Y$.
+\end{quote}
+Consequently, the intersection and the difference between two sets is a set, which can be defined as
+\begin{displaymath}
+    X \cap Y \coloneqq \left\{u \in X \colon u \in Y\right\} \quad \textrm{and} \quad X - Y \coloneqq \left\{u \in X \colon u \notin Y\right\}. 
+\end{displaymath}
+Suppose that there exists some set $X$ such that $X = X$, we can use Separtion to define the empty set as
+\begin{displaymath}
+    \varnothing \coloneqq \left\{u \colon u \neq u\right\}.
+\end{displaymath}
+Given some formula $P\left(x, p\right)$, it is possible that in a set $X$, there is no element such that~$P\left(x, p\right)$ is true. In this case, we say that the set induced by $P$ is \textit{disjoint} from $X$.
+\begin{dfnbox}{Disjoint}{disjoint}
+    Two sets $X$ and $Y$ are called {\color{red} \textbf{disjoint}} if $X \cap Y = \varnothing$.
+\end{dfnbox}
+Next, intersection can be executed repeatedly over any collection of sets. 
+\begin{dfnbox}{Unary Intersection}{unaryIntersect}
+    Let $\mathbb{C}$ be a non-empty class of sets, we define the {\color{red} \textbf{unary intersection}} of $\mathbb{C}$ to be
     \begin{displaymath}
-        X \cap Y \coloneqq \left\{u \in X \colon u \in Y\right\} \quad \textrm{and} \quad X - Y \coloneqq \left\{u \in X \colon u \notin Y\right\}. 
+        \bigcap \mathbb{C} \coloneqq \left\{u \colon u \in X \textrm{ for all } X \in \C \right\}.
     \end{displaymath}
-    Suppose that there exists some set $X$ such that $X = X$, we can use Separtion to define the empty set as
-    \begin{displaymath}
-        \varnothing \coloneqq \left\{u \colon u \neq u\right\}.
-    \end{displaymath}
-    We shall define other notions related to Separation Axioms:
-    \begin{dfnbox}{Disjoint}{disjoint}
-        Two sets $X$ and $Y$ are called {\color{red} \textbf{disjoint}} if $X \cap Y = \varnothing$.
-    \end{dfnbox}
-    \begin{dfnbox}{Unary Intersection}{unaryIntersect}
-        Let $\mathbb{C}$ be a non-empty class of sets, we define the {\color{red} \textbf{unary intersection}} of $\mathbb{C}$ to be
-        \begin{displaymath}
-            \bigcap \mathbb{C} \coloneqq \left\{u \colon u \in X \textrm{ for all } X \in C\right\}.
-        \end{displaymath}
-    \end{dfnbox}   
-    Note that the unary intersection helps us define the intersection of two sets as 
-    \begin{equation*}
-        X \cap Y = \bigcap\{X, Y\}.
-    \end{equation*} 
+\end{dfnbox}   
+Note that the unary intersection helps us define the intersection of two sets as 
+\begin{equation*}
+    X \cap Y = \bigcap\{X, Y\}.
+\end{equation*} 
 \section{Union}
 \begin{axibox}{Axiom of Union}{unionAxi}
     For all $X$, there exists a set $Y = \bigcup X$ whose elements are all the elements of all elements of $X$, i.e.
@@ -210,7 +276,7 @@ Alternatively, we can write Axiom Schema \ref{axi:schemaSeparation} in the follo
 \end{axibox}
 \begin{notebox}
     \begin{remark}
-        We often call $\bigcup X$ the {\color{red} \textbf{unary union}} of $X$.
+        We often call $\bigcup X$ the \textit{unary union} of $X$.
     \end{remark}
 \end{notebox}
 The unary union defines the union of two sets as 
@@ -244,11 +310,11 @@ This allows us to define the notion of the \textit{Cartesian product} (or simply
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        Note that $X \times Y$ is a set because $X \times Y \subseteq \mathcal{P}(X \cup Y)$.
+        Note that $X \times Y$ is a set because $X \times Y \subseteq \mathcal{P}\bigl(\mathcal{P}(X \cup Y)\bigr)$.
     \end{remark}
 \end{notebox}
 The above offers a new way to define $n$-tuples, as we can define Cartesian products of countably many sets recursively.
-\begin{dfnbox}{Cartesian Product of Countably Many Sets}
+\begin{dfnbox}{Countable Cartesian Product}{countableProd}
     Let $n \in \N^+$ and let $X$ be a set, we define
     \begin{displaymath}
         X^n \coloneqq \prod_{i = 1}^n X = \left(\prod_{i = 1}^{n - 1} X\right) \times X.
@@ -257,7 +323,7 @@ The above offers a new way to define $n$-tuples, as we can define Cartesian prod
 \subsection{Relations}
 Colloquially, we may want to express the idea that a collection of $n$ objects are related by some rules. Observe that such a \textit{relation} between $n$ objects can be precisely abstracted as an ordered $n$-tuple, which motivates the following definition:
 \begin{dfnbox}{Relation}{relation}
-    An {\color{red} \textbf{$n$-ary relation}} $R$ is a set of $n$-tuples. We say that $R$ is an $n$-ary relation on $X$ if $R \subseteq X^n$. Conventionally, to say that $x_1, x_2, \cdots, x_n$ are related by the rules defined by $R$, we use the notation $R(x_1, x_2, \cdots, x_n)$. Note that this notation is equivalent to 
+    An {\color{red} \textbf{$n$-ary relation}} $R$ is a set of $n$-tuples. We say that $R$ is an $n$-ary relation on $X$ if $R \subseteq X^n$. Conventionally, to say that $x_1, x_2, \cdots, x_n$ are related by the rules defined by~$R$, we use the notation $R(x_1, x_2, \cdots, x_n)$. Note that this notation is equivalent to 
     \begin{displaymath}
         (x_1, x_2, \cdots, x_n) \in R.
     \end{displaymath}
@@ -297,7 +363,7 @@ There are some special relations which possess certain useful properties. For no
     \end{equation*}
     Furthermore, the {\color{red} \textbf{quotient}} of $X$ by $\equiv$ is defined as 
     \begin{equation*}
-        X/\equiv \coloneqq \bigl\{[x] \colon x \in X\bigr\}.
+        X\bign\slash\equiv \coloneqq \bigl\{[x] \colon x \in X\bigr\}.
     \end{equation*}
 \end{dfnbox}
 With a bit of observation, one can check that the equivalence classes of any set $X$ are pairwise disjoint. Therefore, the quotient of a set is a \textit{partition} of the set.
@@ -343,12 +409,14 @@ We may also define new functions from some existing function(s).
         \restrict{f}{X} \coloneqq \left\{(x, y) \in f \colon x \in X\right\}.
     \end{displaymath}
 \end{dfnbox}
+The reverse of restriction is called \textit{extension}:
 \begin{dfnbox}{Extension}{extension}
     Let $f$, $g$ be functions. $g$ is called an {\color{red} \textbf{extension}} of $f$ if $f \subseteq g$, i.e.,
     \begin{displaymath}
         \mathrm{dom}(f) \subseteq \mathrm{dom}(g) \quad \textrm{and} \quad g(x) = f(x) \quad \textrm{for all } x \in \mathrm{dom}(f).
     \end{displaymath}
 \end{dfnbox}
+Furthermore, we can chain up functions as a pipeline:
 \begin{dfnbox}{Composition}{composition}
     Let $f$ and $g$ be functions such that $\mathrm{ran}(g) \subseteq \mathrm{dom}(f)$. The {\color{red} \textbf{composition}} of $f$ and $g$ is the function denoted by $f \circ g$ with $\mathrm{dom}(f \circ g) = \mathrm{dom}(g)$ such that
     \begin{displaymath}
@@ -405,7 +473,7 @@ Similar to Axiom \ref{axi:schemaSeparation}, the Replacement Schema states that 
     \end{remark}
 \end{notebox}
 Furthermore, we can use Axiom \ref{axi:axiReg} to prove the following seemingly trivial result:
-\begin{thmbox}{}{}
+\begin{thmbox}{Countering Russell's Paradox}{Russell}
     There is no set $A$ such that $A \in A$.
     \tcblower   
     \begin{proof}
@@ -424,7 +492,7 @@ Furthermore, we can use Axiom \ref{axi:axiReg} to prove the following seemingly 
 \end{thmbox}
 Additionally, we also introduce the Axiom of Choice:
 \begin{axibox}{Axiom of Choice}{axiChoice}
-    For every $X$ with $\varnothing \notin X$, there exists a {\color{red} \textbf{choice function}}
+    For every $X$ with $\varnothing \notin X$, there exists a choice function
     \begin{displaymath}
         f \colon X \to \bigcup X
     \end{displaymath}
