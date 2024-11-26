@@ -1,5 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage[a4paper,margin=0.5cm,landscape]{geometry}
+\usepackage[a4paper,margin=0.65cm,landscape]{geometry}
 \usepackage{multicol}
 \setlength{\columnseprule}{1pt}
 \usepackage[utf8]{inputenc}
@@ -43,7 +43,7 @@
 \begin{document}
     \begin{multicols*}{3}
         \begin{itemize}
-            \setlength\itemsep{0.1em}
+            \setlength\itemsep{0.11em}
             \item \textbf{Co-finite}: open $\iff$ \textbf{complements of finite sets}.
             \item \textbf{Co-countable}: open $\iff$ \textbf{complements of countable sets}.
             \item $\mathcal{B}$ gen. the coarsest containing itself.
@@ -63,24 +63,24 @@
             \item TFAE:
             \begin{enumerate}
                 \item $f$ is cont.;
-                \item for all $A \subseteq X$, $f\left(\overline{A}\right) \subseteq \overline{f\left(A\right)}$;
+                \item $\forall A \subseteq X$, $f\left(\overline{A}\right) \subseteq \overline{f\left(A\right)}$ (prove $\overline{A} \subseteq f^{-1}\left(\overline{f\left(A\right)}\right)$ cuz closed);
                 \item for any closed set $B \subseteq Y$, $f^{-1}\left(B\right)$ is closed in $X$;
                 \item $\forall x \in X$ and any open $V \subseteq Y$ with $f\left(x\right) \in V$, there is an open set $U \subseteq X$ s.t. $x \in U$ and $f\left(U\right) \subseteq V$.
             \end{enumerate}
             \item \textbf{Dense}: $\forall$ open $U$ containing $x \in X$, $U \cap A \neq \varnothing$.
-            \item Dense $\iff \mathring{X \setminus A} = \varnothing \iff \overline{A} = X$.
+            \item Dense $\iff \mathring{X \setminus A} = \varnothing \iff \overline{A} = X$ (contra+).
             \item \textbf{Pasting lemma}: if $X = A \cup B$ for closed $A, B$ and $f = g$ for all $x \in A \cap B$, then $h = x \in A ? f : \left(x \in B ? g\right)$ is cont. if $f \colon A \to Y$ and $g \colon B \to Y$ are.
             \item \textbf{Pull-back} topo.: $\left\{f^{-1}\left(U\right) \colon U \textrm{ is open}\right\}$ is the coarsest topo. ensuring cont. $f$. (quotient)
             \item \textbf{Uniform continuity}: $\forall \epsilon > 0$, there exists some $\delta > 0$ s.t. $d_X\left(x, y\right) < \delta \implies d_Y\bigl(f\left(x\right), f\left(y\right)\bigr) < \epsilon$.
-            \item $f$ is uniformly cont. $\iff \forall \left\{x_i\right\}_i^{\infty}, \left\{y_i\right\}_{i}^{\infty}$ s.t. $\lim_{i \to \infty}d_X\left(x_i, y_i\right) = 0$, $\lim_{i \to \infty}d_Y\bigl(f\left(x_i\right), f\left(y_i\right)\bigr) = 0$.
-            \item Limit of uniformly convergent sequence is cont..
-            \item $x \mapsto x^n$ converges to $\mathbf{1}_{x = 1}$ pointwise but not uniformly.
+            \item $f$ is uni. cont. $\iff \forall \left\{x_i\right\}_i^{\infty}, \left\{y_i\right\}_{i}^{\infty}$ s.t. $\lim_{i \to \infty}d_X\left(x_i, y_i\right) = 0$, $\lim_{i \to \infty}d_Y\bigl(f\left(x_i\right), f\left(y_i\right)\bigr) = 0$.
+            \item Limit of uni. convergent sequence is cont..
+            \item $x \mapsto x^n$ converges to $\mathbf{1}_{x = 1}$ pointwise but not uni..
             \item \textbf{Prod.} topo.: $\mathcal{S} \coloneqq \left\{\pi_{X_{\alpha}}^{-1}\left(U_{\alpha}\right) \colon \alpha \in \Lambda, U_{\alpha} \in \mathcal{T}_{\alpha}\right\}$.
             \item Prod. topo. is the coarsest for cont. $\pi_{\alpha}$'s.
             \item $x \mapsto (x)^{\N}$ is not cont. in the box topo..
             \item $f$ is cont. iff all components are cont..
             \item Subspace topo. of prod. topo. equals prod. topo. of subspace topologies.
-            \item Standard topo. on $\R^n$ is the prod. topo. by standard topologies on $\R^{m_i}$'s.
+            \item Standard topo. on $\R^n$ is the prod. topo. by standard topologies on $\R^{m_i}$'s ($\implies$: project each open ball using radius $t = r - \norm{\bm{x - y}}$ and take finite prod. of projections; $\impliedby$: choose open ball with radius $r \coloneqq \min_{1 \leq i \leq k}r_i$ and bound each component. Use BOX topo.).
             \item Prod. space basic open set: all but finitely many factors are not $X_i$.
             \item Box topo. is finer: e.g. $\prod_{i \in \N}U_i$.
             \item $d_1 = \sum_{i = 1}^n d_{X_i}\left(x_i, y_i\right)$ and $d_{\infty} = \max d_{X_i}\left(x_i, y_i\right)$ both induce the prod. topo..
@@ -115,7 +115,7 @@
         \end{itemize}
         \textbf{Separation}
         \begin{itemize}
-            \setlength\itemsep{0.1em}
+            \setlength\itemsep{0.11em}
             \item Co-finite topo. is $T_1$ and $T_2$ if $X$ is finite.
             \item $T_1 \iff \left\{x\right\}$ is closed $\forall x \in X$.
             \item \textbf{Embedding thm}: $\forall x$ and $\forall$ open $U$ s.t. $x \in U$, $\exists\alpha \in \Lambda$ s.t. $f_{\alpha}\left(x\right) > 0$ and $f_{\alpha}\left(X \setminus U\right) = \left\{0\right\}$, then $F\left(x\right) = \bigl(f_{\alpha}\left(x\right)\bigr)_{\alpha \in \Lambda}$ is embedding.
@@ -132,7 +132,7 @@
         \end{itemize}
         \textbf{Compactness}
         \begin{itemize}
-            \setlength\itemsep{0.1em}
+            \setlength\itemsep{0.11em}
             \item $\left[-\sqrt{2}, \sqrt{2}\right] \cap \Q$: closed and bounded, not cpt.
             \item Closed subset of cpt space is cpt.
             \item Cpt subset of $T_2$ space is closed.
@@ -140,31 +140,31 @@
             \item Closure of particular point is not cpt.
             \item Cpt $\implies (T_4 \iff T_3 \iff T_2)$
             \item Cont. $f$ maps cpt set to cpt set.
-            \item \textbf{Tube lemma}: If $Y$ is cpt and $N \subseteq X \times Y$ is open and contains $\left\{x_0\right\} \times Y$, then $\exists W \supseteq \left\{x_0\right\}$ open s.t. $W \times Y \subseteq N$.
+            \item \textbf{Tube lemma}: If $Y$ is cpt and $N \subseteq X \times Y$ open, contains $\left\{x_0\right\} \times Y$, then $\exists W \supseteq \left\{x_0\right\}$ open s.t. $W \times Y \subseteq N$.
             \item $Y$ is cpt $T_2 \implies \Gamma_f$ closed $\iff f$ is cont..
             \item $X$ cpt iff $\forall$ set of closed sets $\mathcal{G}$ with f.i.p, $\bigcap\mathcal{G} \neq \varnothing$.
             \item $x$ is \textbf{isolated} $\iff \left\{x\right\}$ is open.
             \item If $U \neq \varnothing$ is open in a $T_2$ space and $x$ is not isolated, then $\exists$ non-empty open $V \subseteq U$ s.t. $x \notin \overline{V}$.
             \item Non-empty $T_2$ space $\approx \R$ if has no isolated point.
             \item \textbf{Tychonoff's thm}: prod. of cpt is cpt.
-            \item \textbf{Lim pt cpt}: every infinite $Y \subseteq X$ has a lim pt in $X$. Cpt $\implies$ lim pt cpt.
+            \item \textbf{Lim pt cpt}: every infinite $Y \subseteq X$ has a lim pt in $X$. Cpt $\implies$ lim pt cpt (set with no lim pt is finite).
             \item Let $Y$ be trivial and $\Z^+$ be discrete, then $Y \times \Z^+$ is lim pt cpt but not cpt.
             \item \textbf{Seq cpt}: every sequence has a convergent subsequence. Seq cpt $\implies$ lim pt cpt.
-            \item Metric space: cpt iff lim pt cpt iff seq cpt
-            \item $\R$ with basis $\left(a, \infty\right)$'s is seq cpt but not lim pt cpt.
-            \item \textbf{Lebesgue number}: $\forall S \subseteq X$ with $\mathrm{diam}\left(S\right) < \delta$, $\exists U \in \mathcal{U}$ s.t. $S \subseteq U$. 
-            \item Every open cover of seq cpt metric space has a Lebesgue number.
+            \item $\R$ basis $\left(a, \infty\right)$'s is lim pt ($\frac{a + a'}{2}$) but not seq ($\left\{-n\right\}$) cpt.
+            \item \textbf{Leb num}: $\forall S$ with $\mathrm{diam}\left(S\right) < \delta$, $\exists U \in \mathcal{U}$ s.t. $S \subseteq U$. 
+            \item $\left(n, n + 1\right)$-$\left(\pm 1\right)$-$\left(n \pm \frac{1}{n}\right)$ has no Leb num.
+            \item Every open cover of seq cpt metric space has a Leb num (suppose not, $\frac{1}{n}$ are not Leb num, pick a seq).
             \item \textbf{Totally bounded}: $\forall \epsilon > 0$, $\exists$ finite cover by $B_{\epsilon}\left(x_i\right)$.
-            \item Every seq cpt metric space is totally bounded.
-            \item In a metric space, cpt iff lim pt cpt iff seq cpt.
-            \item $f \colon X \to Y$ is cont. between metric spaces. If $X$ is cpt, then $f$ is uniformly cont..
-            \item Totally bounded $\implies \mathrm{diam}\left(X\right) < \infty$.
-            \item $X \subseteq \left(\R^n, d_p\right)$ is totally bounded iff $X$ is bounded.
+            \item Every seq cpt metric space is totally bounded (contra+ by recursive seq).
+            \item Metric space: cpt iff lim pt cpt iff seq cpt ($T_1$, fix a seq with nested countable basis; Leb num \& finite $\frac{\delta}{3}$-balls).
+            \item $f \colon X \to Y$ is cont. in metric spaces. If $X$ is cpt, then $f$ is uni. cont. ($\frac{\epsilon}{2}$-ball cover $Y$, $X$ seq cpt, Leb num).
+            \item Totally bounded then $\mathrm{diam}\left(X\right) < \infty$ (max centre dist).
+            \item $X \subseteq \R^n$ is totally bounded iff $X$ is bounded ($\frac{\epsilon}{2}$-net).
             \item $\left(1 + \frac{1}{n}\right)^n$ converges to $\e$.
             \item \textbf{Complete}: every Cauchy seq is convergent.
-            \item $\left(\R^{\omega}, D\right)$ is complete.
-            \item Subspace of complete metric space is complete iff closed.
-            \item Cpt iff complete and totally bounded.
+            \item $\left(\R^{\omega}, D\right)$ is complete (Cauchy's components are Cauchy).
+            \item Subspace of complete metric space is complete iff closed (not closed $\implies$ not complete).
+            \item Cpt iff complete and totally bounded (cover with $2^{-n}$-balls, fix Cauchy subseq, prove seq cpt).
             \item \textbf{Heine-Borel Thm}: cpt in $\R^n$ iff closed and bounded.
             \item \textbf{Locally cpt}: $\exists$ cpt $K$ and open $U$ s.t. $x \in U \subseteq K$.
             \item $X$ is locally cpt $T_2$ iff $\exists$ cpt $T_2$ $Y$ and $h_Y \colon X \to Y$ homeomorphic onto $h_Y\left(X\right)$ and $Y = h_Y\left(X\right) \cup \left\{p\right\}$.
@@ -196,14 +196,14 @@
         \end{itemize}
         \textbf{Connectedness}
         \begin{itemize}
-            \setlength\itemsep{0.1em}
-            \item Connected iff only $X$ and $\varnothing$ are clopen (contrapositive).
-            \item $X = \left(U, V\right)$, $Y \subseteq X$ connected $\implies Y \subseteq U$ or $Y \subseteq V$ (contrapositive).
+            \setlength\itemsep{0.11em}
+            \item Connected iff only $X$ and $\varnothing$ are clopen (contra+).
+            \item $X = \left(U, V\right)$, $Y \subseteq X$ connected $\implies Y \subseteq U$ or $Y \subseteq V$ (contra+).
             \item Connected sets with $\cap \neq \varnothing$ has connected $\cup$ (suppose not and condition on $A_{\alpha} \setminus U$).
             \item $A$ connected and $A \subseteq B \subseteq \overline{A} \implies B$ connected (suppose not).
-            \item Cont. $f$ maps connected to connected (contrapositive).
-            \item Prod. of connected is connected (contrapositive).
-            \item Path connected $\implies$ connected (contrapositive, suppose exists cont. $f$).
+            \item Cont. $f$ maps connected to connected (contra+).
+            \item Prod. of connected is connected (contra+).
+            \item Path connected $\implies$ connected (contra+, suppose exists cont. $f$).
             \item Path component $\subseteq $ cc.
             \item \textbf{Locally connected}: $\forall$ open $U$ s.t. $x \in U$, $\exists$ open connected $V$ s.t. $x \in V \subseteq U$.
             \item $S$: graph of $\sin\frac{2\pi}{x}$ at $\left(0, 1\right]$. $\overline{S} = S \cup \left\{0\right\} \times \left[-1, 1\right]$ is connected, but not path/locally connected (no $(0, 0)$-$(x, y)$ path: $\max f^{-1}(\left\{0\right\} \times [-1, 1]) \mapsto y_0 \coloneqq \lim y\left(t\right)$; not locally connected: $0.5$-ball at $\mathbf{0}$ contains a $\delta$-square, $\exists x \in (0, \delta)$ s.t. $\sin = 1$, split there).
