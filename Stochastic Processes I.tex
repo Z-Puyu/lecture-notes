@@ -10,7 +10,12 @@
 
 \usepackage{scalerel}[2014/03/10]
 \usepackage{stackengine}
-
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
 \renewcommand\widetilde[1]{\ThisStyle{%
   \setbox0=\hbox{$\SavedStyle#1$}%
   \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
@@ -231,7 +236,7 @@ Notice that by given the condition on the occurrence of $F$, we have effectively
 \begin{dfnbox}{Conditional Probability}{condProb}
     Let $P$ be a probability measure on a sample space $S$. For any events $E, F \subseteq S$, the {\color{red} \textbf{conditional probability}} of $E$ given $F$ is defined as 
     \begin{equation*}
-        P\left(E \mid F\right) = \frac{P\left(E \cap F\right)}{P\left(F\right)}.
+        P\left(E \,\middle\vert\ F\right) = \frac{P\left(E \cap F\right)}{P\left(F\right)}.
     \end{equation*}
 \end{dfnbox}
 Clearly, the above definition is equivalent to $P\left(E \cap F\right) = P\left(F\right)P\left(E \mid F\right)$, which is natural in a sense that if we wish both $E$ and $F$ to happen, we just need $F$ to happen first and $E$ to happen given the occurrence of $F$. This can be generalised into the following result:
@@ -428,7 +433,7 @@ then $P\left(X \in A\right) = pP\left(Y \in A\right) + \left(1 - p\right)P\left(
 \subsection{Expectation}
 Recall that we have defined expectations for discrete and continuous random variables in elementary probability theory. In terms of measure theory, the two formulae can be unified as the Lebesgue integral
 \begin{equation*}
-    \mathbb{E}[X] = \int_{S}\!X\left(\omega\right)\,\d P\left(\omega\right).
+    \mathbb{E}\left[X\right] = \int_{S}\!X\left(\omega\right)\,\d P\left(\omega\right).
 \end{equation*}
 In the discrete case, we have 
 \begin{equation*}
@@ -444,24 +449,24 @@ In the real-valued continuous case, we have
 \end{equation*}
 The following result gives a way to approximate probabilities by the expectation of a random variable:
 \begin{thmbox}{Markov's Inequality}{MarkovIneq}
-    If $X$ is a non-negative random variable, then $P\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$ for all $a > 0$.
+    If $X$ is a non-negative random variable, then $P\left(X \geq a\right) \leq \frac{\mathbb{E}\left[X\right]}{a}$ for all $a > 0$.
     \tcblower
     \begin{proof}
         It suffices to prove for the continuous case. Notice that 
         \begin{align*}
-            \mathbb{E}[X] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            \mathbb{E}\left[X\right] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
             & \geq \int_{a}^{\infty}\!xf_X\left(x\right)\,\d x \\
             & \geq a\int_{0}^{\infty}\!f_X\left(x\right)\,\d x \\
             & = P\left(X \geq a\right).
         \end{align*}
-        Therefore, $P\left(X \geq a\right) \leq \frac{\mathbb{E}[X]}{a}$.
+        Therefore, $P\left(X \geq a\right) \leq \frac{\mathbb{E}\left[X\right]}{a}$.
     \end{proof}
 \end{thmbox}
-Note that $\mathbb{E}[X]$ is a real number while $\mathbb{E}[X \mid Y]$ is a \textbf{random variable} formed as a function of $Y$. In a way, $Y$ partitions the sample space into regions where $\mathbb{E}[X \mid Y = y_i]$ gives the expectation of $X$ in the region induced by $Y = y_i$ for each $y_i \in \mathcal{Y}$. In general, the following result holds:
+Note that $\mathbb{E}\left[X\right]$ is a real number while $\mathbb{E}\left[X \mid Y\right]$ is a \textbf{random variable} formed as a function of $Y$. In a way, $Y$ partitions the sample space into regions where $\mathbb{E}\left[X \mid Y = y_i\right]$ gives the expectation of $X$ in the region induced by $Y = y_i$ for each $y_i \in \mathcal{Y}$. In general, the following result holds:
 \begin{thmbox}{Law of Iterated Expectations}{iterExpectations}
-    Let $X$ and $Y$ be random variables, then $\mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr] = \mathbb{E}[X]$.
+    Let $X$ and $Y$ be random variables, then $\mathbb{E}\bigl[\mathbb{E}\left[X \mid Y\right]\bigr] = \mathbb{E}\left[X\right]$.
 \end{thmbox}
-The above formula can be interpreted as the fact that $\mathbb{E}[X \mid Y]$ is a best estimator for $X$.
+The above formula can be interpreted as the fact that $\mathbb{E}\left[X \mid Y\right]$ is a best estimator for $X$.
 \subsection{Variance}
 Note that the expectation is insufficient in describing a random variable because probability mass on exceptionally large values can influence the expectation significantly. For example, let $X_n$ be a random variable with $\Pr\left(X_n = n\right) = \frac{1}{n}$ and $\Pr\left(X_n = 0\right) = 1 - \frac{1}{n}$. Notice that by taking the limit, $\lim_{n \to \infty}\Pr\left(X_n = 0\right) = 1$ but $\mathbb{E}\left[X_n\right] = 1$ for all $n \in \N^+$. Therefore, we define the \textit{variance} as another parameter to specify a distribution.
 \begin{dfnbox}{Variance}{var}
@@ -477,18 +482,18 @@ The following result is important:
 \begin{thmbox}{Chebyshev's Inequality}{ChebyshevIneq}
     For any real-valued random variable $X$ with finite variance, 
     \begin{equation*}
-        P\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
+        P\left(\abs{X - \mathbb{E}\left[X\right]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
     \end{equation*}
     for all $a > 0$.
     \tcblower
     \begin{proof}
-        Define $g\left(X\right) \colon \left(X - \mathbb{E}[X]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
+        Define $g\left(X\right) \colon \left(X - \mathbb{E}\left[X\right]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
         \begin{equation*}
-            P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}[g\left(X\right)]}{a^2\mathrm{Var}\left(X\right)}.
+            P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}\left[g\left(X\right)\right]}{a^2\mathrm{Var}\left(X\right)}.
         \end{equation*}
-        Note that $\mathbb{E}[g\left(X\right)] = \mathrm{Var}\left(X\right)$, so 
+        Note that $\mathbb{E}\left[g\left(X\right)\right] = \mathrm{Var}\left(X\right)$, so 
         \begin{equation*}
-            P\left(\abs{X - \mathbb{E}[X]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
+            P\left(\abs{X - \mathbb{E}\left[X\right]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
         \end{equation*}
     \end{proof}
 \end{thmbox}
@@ -496,7 +501,7 @@ The following result is important:
     \begin{remark}
         In general, 
         \begin{equation*}
-            P\left(\abs{X - \mathbb{E}[X]} > a\right) \leq \frac{\mathrm{Var}\left(X\right)}{a^2}.
+            P\left(\abs{X - \mathbb{E}\left[X\right]} > a\right) \leq \frac{\mathrm{Var}\left(X\right)}{a^2}.
         \end{equation*}
     \end{remark}
 \end{notebox}
@@ -514,7 +519,7 @@ Given any random variables $X$ and $Y$, they are not necessarily independent in 
     \end{remark}
 \end{notebox}
 \chapter{Markov Chains}
-\section{Markov Chains}
+\section{Stochastic Processes}
 \begin{dfnbox}{Stochastic Process}{stochastic}
     A {\color{red} \textbf{stochastic process}} is a collection of random variables $\left\{X\left(t\right) \colon t \in T\right\}$ where $T$ is an {\color{red} \textbf{index set}} and $X\left(t\right)$ is known as the {\color{red} \textbf{current state}}. The set of all possible states is known as the {\color{red} \textbf{state space}}.
 \end{dfnbox}
@@ -534,7 +539,7 @@ In this course, we focus on discrete-time discrete-state stochastic processes. O
 \begin{dfnbox}{Markovian Property}{markovian}
     Let $\left\{X_n \colon n \in T\right\}$ be a discrete-time stochastic process over some probability space~$\left(S, \mathcal{F}, P\right)$. The stochastic process is called {\color{red} \textbf{Markovian}} if 
     \begin{equation*}
-        P\bigl(X_{n + 1} = x_{n + 1} \mid X_0^n = \left(x_0, x_1, \cdots, x_n\right)\bigr) = P\left(X_{n + 1} = x_{n + 1} \mid X_n = x_n\right)
+        P\bigl(X_{n + 1} = x_{n + 1} \,\bigm\vert\, X_0^n = \left(x_0, x_1, \cdots, x_n\right)\bigr) = P\left(X_{n + 1} = x_{n + 1} \mid X_n = x_n\right)
     \end{equation*}
     for all $n \in \N$.
 \end{dfnbox}
@@ -580,7 +585,6 @@ Theorem \ref{thm:Bayes} leads to the following important result:
         \end{align*}
     \end{proof}
 \end{corbox}
-\section{Transition Probabilities}
 Consider a discrete-time discrete-state stochastic process $\left\{X_n \colon n \in T\right\}$ with state space $S$ over some probability space $\left(S, \mathcal{F}, P\right)$. Here, the $\sigma$-algebra $\mathcal{F}$ can be generated using simple events $\left\{\omega \in S \colon X_n\left(\omega\right) = s\right\}$ for all $n \in T$ and $s \in S$. Notice that this means that we need to find the joint distribution 
 \begin{equation*}
     p_{X_{n_1}^{n_k}}\left(s_1, s_2, \cdots, s_k\right)
@@ -746,8 +750,9 @@ if $\pi$ is a stationary distribution. To see this, we consider the following pr
         Therefore, $\abs{\lambda} \leq 1$.
     \end{proof}
 \end{probox}
-\section{Intercommunicating Classes}
-One important property of the state space in Markov chains is the reachability between states.
+One important question is whether a stationary distribution exists for a Markov chain, and if it exists, whether it is unique. To investigate such problems, we first need to impose some regularity conditions to Markov chains.
+
+To visualise such regularity, it is helpful to model a Markov chain as a digraph using its state space as the vertex set. The following definition helps us to define the edges.
 \begin{dfnbox}{Accessibility}{access}
     Let $X$ be a Markov chain with probability transition matrix $\mathbfit{P}$. A state $j$ is said to be {\color{red} \textbf{accessible}} from another state $i$ if $P^{\left(m\right)}_{ij} > 0$ for some $m \in \N$.
 \end{dfnbox}
@@ -778,9 +783,9 @@ Therefore, the ideal case is that every pair of states are mutually reachable.
 \end{dfnbox}
 It is clear that intercommunication is an \textbf{equivalence relation} on the state space, the proof of which is easy enough to be left as an exercise to the reader. 
 
-Now, the state space will be partitioned by the quotient with $\leftrightarrow$. Each equivalence class, denoted by $\mathcal{C}$, is a closed walk with states as the vertices. Clearly it suffices to study the Markov chain on a sink class to investigate the long-term behaviour.
+Now, the state space will be partitioned by the quotient with $\leftrightarrow$. Each equivalence class, denoted by $\mathcal{C}$, is a closed walk with states as the vertices. More precisely, if we model the Markov chain as a digraph $D$ such that $V\left(D\right)$ is the state space and $E\left(D\right) \coloneqq \left\{\left(x, y\right) \colon x \to y\right\}$, then each $V \in V\left(D\right)\bign\slash \leftrightarrow$ induces a \textbf{strongly connected component} of $D$. 
 
-In particular, we may consider a Markov chain such that the entire state space intercommunicates.
+Clearly it suffices to study the Markov chain on a sink class to investigate the long-term behaviour. In particular, we may consider a Markov chain such that the entire state space intercommunicates.
 \begin{dfnbox}{Irreducibility}{irreducible}
     A Markov chain is {\color{red} \textbf{irreducible}} if its state space is an equivalence class under $\leftrightarrow$.
 \end{dfnbox}
@@ -795,8 +800,8 @@ Irreducible Markov chains can be further classified to \textit{transient} ones a
 \end{dfnbox}
 By this definition, we have $P^{\left(n\right)}_{ii} = \left(\mathbfit{P}^n\right)_{ii}$ for stationary chains. Note that $3$ cases could be possible when a state $i$ is re-visited in $n$ steps:
 \begin{enumerate}
-    \item starting from $i$, the chain self-loop at $i$ for $n$ times;
-    \item starting from $i$, the chain visits some different states and re-visit $i$ for the first time at the $n$-th step;
+    \item starting from $i$, the chain self-loops at $i$ for $n$ times;
+    \item starting from $i$, the chain visits some different states and re-visits $i$ for the first time at the $n$-th step;
     \item starting from $i$, the chain re-visits $i$ for several times and happens to reach $i$ again at the $n$-th step.
 \end{enumerate}
 However, we should observe that the key to computing the probability for either case is to find the time taken for the chain to re-visit the starting state \textbf{for the first time}.
@@ -811,7 +816,7 @@ However, we should observe that the key to computing the probability for either 
         We define $f^{\left(0\right)}_{ii} = 0$.
     \end{remark}
 \end{notebox}
-Clearly, $f_{ii}^{\left(n\right)} \leq P_{ii}^{\left(n\right)}$ for all $n \in \N$. 
+Clearly, $f_{ii}^{\left(n\right)} \leq P_{ii}^{\left(n\right)}$ for all $n \in \N$. In general, the following formula is a way to compute the return probability using first return probability:
 \begin{thmbox}{Formula for Return Probability}{returnProbFormula}
     Let $X$ be a Markov chain and $i$ be a state, then 
     \begin{equation*}
@@ -830,9 +835,9 @@ Clearly, $f_{ii}^{\left(n\right)} \leq P_{ii}^{\left(n\right)}$ for all $n \in \
         \end{align*}
     \end{proof}
 \end{thmbox}
-Notice that since $f_{ii}^{\left(0\right)} = 0$, we only need $P_{ii}^{\left(1\right)}, \cdots, P_{ii}^{\left(n - 1\right)}$ to compute $P_{ii}^{\left(n\right)}$.
+Notice that since $f_{ii}^{\left(0\right)} = 0$, we only need $P_{ii}^{\left(1\right)}, \cdots, P_{ii}^{\left(n - 1\right)}$ to compute $P_{ii}^{\left(n\right)}$ iteratively.
 
-It is intuitive to classify the states based on whether we can ascertain that the Markov chain can return to the state in finite time.
+It is natural to classify the states based on whether we can ascertain that the Markov chain can return to the state in finite time.
 \begin{dfnbox}{Transient and Recurrent States}{transientAndRecur}
     Let 
     \begin{equation*}
@@ -917,8 +922,8 @@ We can related this result to Definition \ref{dfn:returnProb} to derive a charac
         \end{equation*}
         Therefore, 
         \begin{align*}
-            \mathbb{E}\left[N_i \mid X_0 = i\right] & = \mathbb{E}\left[\sum_{n = 1}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \mid X_0 = i\right] \\
-            & = \sum_{n = 1}^{\infty}\mathbb{E}\left[\mathbf{1}_{\left\{X_n = i\right\}} \mid X_0 = i\right] \\
+            \mathbb{E}\left[N_i \mid X_0 = i\right] & = \mathbb{E}\left[\sum_{n = 1}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \,\middle\vert\, X_0 = i\right] \\
+            & = \sum_{n = 1}^{\infty}\mathbb{E}\left[\mathbf{1}_{\left\{X_n = i\right\}} \,\middle\vert\, X_0 = i\right] \\
             & = \sum_{n = 1}^{\infty}P\left(X_n = i \mid X_0 = i\right) \\
             & = \sum_{n = 1}^{\infty}P^{\left(n\right)}_{ii}.
         \end{align*}
@@ -957,15 +962,119 @@ Therefore, for each intercommunicating class in a Markov chain, we can classify 
 \begin{dfnbox}{Recurrent and Transient Markov Chains}{recurTransMarkov}
     An irreducible Markov chain with a countable state space is called {\color{red} \textbf{recurrent}} if one of its states is recurrent, and {\color{red} \textbf{transient}} if one of its states is transient.
 \end{dfnbox}
+Intuitively, in a recurrent class, the chain will return to each state indefinitely and in a transient class, the chain will eventually ``escape'' from the class.
+\begin{thmbox}{Path Properties}{path}
+    Let $X$ be an irreducible Markov chain with a countable state space $S$, initial distribution $\mu$ and probability transition matrix $\mathbfit{P}$. If $X$ is recurrent, then 
+    \begin{equation*}
+        P\left(\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} > M\right) = 1
+    \end{equation*}
+    for all $M \in \R$ and all $i \in S$. If $X$ is transient, then there exists some $M_i \in \R$ for each $i \in S$ such that 
+    \begin{equation*}
+        P\left(\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \leq M_i\right) = 1
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Suppose that $X$ is recurrent and fix some $x \in S$. For every $i \in S$ with $i \neq x$, since $X$ is irreducible, we have $i \leftrightarrow x$ and so there exists some $n_i > 0$ such that $P\left(X_{n_i} = i \mid X_0 = x\right) > 0$. Without loss of generality, we can take $n_i$ to be the least integer with such property. By Proposition \ref{pro:expectedReturnNum}, we have 
+        \begin{equation*}
+            \mathbb{E}\left[\sum_{n = n_i}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \,\middle\vert\, X_{n_i} = i\right] > M
+        \end{equation*}
+        for all $M \in \R$. This means that 
+        \begin{align*}
+            \mathbb{E}\left[\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}}\right] & = \mathbb{E}\left[\mathbb{E}\left[\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \,\middle\vert\, X_{0}\right]\right] \\
+            & = \sum_{x \in S}P\left(X_{n_i} = i \mid X_0 = x\right)\mathbb{E}\left[\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \,\middle\vert\, X_{0} = i\right] \\
+            & > M
+        \end{align*}
+        for all $M \in \R$. Therefore, for all $M \in \R$,
+        \begin{equation*}
+            P\left(\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} > M\right) = 1.
+        \end{equation*}
+        If $X$ is transient, by Proposition \ref{pro:characteriseStates}, there exists some $M_i \in \R$ for each $i \in S$ such that 
+        \begin{equation*}
+            \sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i \mid X_0 = i\right\}} \leq M_i.
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            \sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \leq \sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i \mid X_0 = i\right\}} \leq M_i.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 Now we states a result about finite-state irreducible chains:
-\begin{probox}{Recurrence of Finite-State Irreducible Markov Chains}{finiteMarkovRecur}
+\begin{corbox}{Recurrence of Finite-State Irreducible Markov Chains}{finiteMarkovRecur}
     All finite-state irreducible Markov chains are recurrent.
-\end{probox}
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that $X$ is a finite-state irreducible transient Markov chain with state space $S$, then by Theorem \ref{thm:path}, there exists some $M \in \R$ such that 
+        \begin{equation*}
+            \sum_{i \in S}\sum_{n = 0}^{\infty}\mathbf{1}_{\left\{X_n = i\right\}} \leq M,
+        \end{equation*}
+        which is not possible because this implies that $X_{M + 1} \neq S$.
+    \end{proof}
+\end{corbox}
 We now briefly discuss the \textbf{long-run behaviour} of reducible Markov chains. Note that if $X$ is a reducible Markov chain, then we can decompose the state space of $X$ into intercommunicating classes $\mathcal{C}_1, \mathcal{C}_2, \cdots$. It is clear that 
 \begin{equation*}
     \lim_{n \to \infty}P\left(X_n \in \mathcal{C}_k\right) = 0
 \end{equation*}
-if $\mathcal{C}_k$ is transient. If $\mathcal{C}_k$ is recurrent, we say that $P\left(X_n \in \mathcal{C}_k\right)$ is the \textit{entering probability}. Note that for a recurrent $\mathcal{C}_k$, we can restrict $X$ to $\mathcal{C}_k$ as the new state space to construct an irreducible recurrent Markov chain. If $\pi$ is a stationary of the restricted chain and $p$ is the entering probability to $\mathcal{C}_k$, then for the original chain we have 
+if $\mathcal{C}_k$ is transient. 
+\begin{probox}{\small Limiting Distribution of Transient Irreducible Markov Chains}{limitDistTrans}
+    Let $X$ be an irreducible transient Markov chain with state space $S$ and transition probability matrix $\mathbfit{P}$, then for any $x, y \in S$, we have 
+    \begin{equation*}
+        \lim_{n \to \infty}P^{(n)}_{xy} = 0 \quad\textrm{and}\quad \lim_{n \to \infty}P\left(X_n = y\right) = 0.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:expectedReturnNum}, there exists some $M_{xy} \in \R^+$ such that 
+        \begin{equation*}
+            \mathbb{E}\left[\sum_{n = 0}^{\infty}\mathbf{1}_{X_n = y} \,\middle\vert\, X_0 = x\right] = \sum_{n = 0}^{\infty}P^{(n)}_{xy} < M_{xy}.
+        \end{equation*}
+        Therefore, $\sum_{n = 0}^{\infty}P^{(n)}_{xy}$ converges for all $x, y \in S$, which means that 
+        \begin{equation*}
+            \lim_{n \to \infty}P^{(n)}_{xy} = 0.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            \lim_{n \to \infty}P\left(X_n = y\right) & = \lim_{n \to \infty}\sum_{x \in S}P\left(X_0 = x\right)P^{(n)}_{xy} \\
+            & = \sum_{x \in S}P\left(X_0 = x\right)\lim_{n \to \infty}P^{(n)}_{xy} \\
+            & = 0.
+        \end{align*}
+    \end{proof}
+\end{probox}
+Now consider the general case. Suppose that $\pi$ is a limiting distribution, i.e., 
+\begin{equation*}
+    \pi \coloneqq \lim_{n \to \infty}\mu\mathbfit{P}^n
+\end{equation*}
+for some initial distribution $\mu$, then it is clear that $\pi\mathbfit{P} = \pi$. Informally, this means that $\pi$ will not change with time.
+\begin{dfnbox}{Stationary Measure and Stationary Distribution}{stationary}
+    Let $X$ be a Markov chain with a countable state space $S$ and transition probability matrix $\mathbfit{P}$, a measure $\mu \colon S \to \left[0, \infty\right)$ is called a {\color{red} \textbf{stationary measure}} if $\mu\mathbfit{P} = \mu$ and 
+    \begin{equation*}
+        \sum_{x \in S}\mu\left(x\right) \in \left(0, \infty\right].
+    \end{equation*}
+    If $\mu$ is a probability measure, then it is a {\color{red} \textbf{stationary distribution}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that if $\mu$ is a stationary measure such that $\sum_{x \in S}\mu\left(x\right) = C$ is finite, then we can normalise it by $\yhwidehat{\mu} \coloneqq \frac{\mu}{C}$ to obtain a stationary distribution on $X$.
+    \end{remark}
+\end{notebox}
+Note that a stationary distribution might not be a limiting distribution. Consider a two-state Markov chain with 
+\begin{equation*}
+    \mathbfit{P} = \begin{bmatrix}
+        0 & 1 \\
+        1 & 0
+    \end{bmatrix}.
+\end{equation*}
+It is easy to see that $\pi \coloneqq \left(\frac{1}{2}, \frac{1}{2}\right)$ is the only stationary distribution, but if we have initial distribution $\mu \coloneqq \left(\frac{1}{2}, \frac{1}{2}\right)$, the distribution will not converge to $\pi$.
+
+Clearly, if a Markov chain has a finite state space $S$, we can find the stationary distribution by taking 
+\begin{equation*}
+    \mathbfit{Q} \coloneqq \begin{bmatrix}
+        \mathbfit{P} & \mathbfit{I}_{n \times 1}
+    \end{bmatrix}
+\end{equation*}
+and solving the linear system $\mathbfit{x}\mathbfit{Q} = \left[\begin{smallmatrix}
+    \mathbfit{x} & 1
+\end{smallmatrix}\right]$, so every finite-state Markov chain has a stationary distribution, but it may not be unique.
+
+If $\mathcal{C}_k$ is a recurrent class, we say that $P\left(X_n \in \mathcal{C}_k\right)$ is the \textit{entering probability}. Note that for a recurrent $\mathcal{C}_k$, we can restrict $X$ to $\mathcal{C}_k$ as the new state space to construct an irreducible recurrent Markov chain. If $\pi$ is a stationary distribution of the restricted chain and $p$ is the entering probability to $\mathcal{C}_k$, then for the original chain we have 
 \begin{equation*}
     P\left(X_n = i\right) = \pi_ip.
 \end{equation*}
@@ -1046,21 +1155,433 @@ It is easy to see that all regular Markov chains must be irreducible. We claim t
 \end{probox}
 We now state the main theorem for regular Markov chains:
 \begin{thmbox}{Main Theorem for Regular Markov Chains}{main}
-    Let $\mathbfit{P}$ be a regular transition probability matrix for some regular Markov chain with state space $S \coloneqq \left\{1, 2, \cdots, N\right\}$, then 
-    \begin{enumerate}
-        \item the limit $\pi_j \coloneqq \lim_{n \to \infty}P^{\left(n\right)}_{ij}$ exists and is independent of $i$;
-        \item $\sum_{i = 1}^{N}\pi_i = 1$ and $\pi \coloneqq \begin{pmatrix}
+    Let $\mathbfit{P}$ be a regular transition probability matrix for some regular Markov chain with state space $S \coloneqq \left\{1, 2, \cdots, N\right\}$, then there exists a unique probability distribution 
+    \begin{equation*}
+        \pi \coloneqq \begin{pmatrix}
             \pi_1, \pi_2, \cdots, \pi_N
-        \end{pmatrix}$ satisfies $\pi\mathbfit{P} = \pi$;
-        \item $\pi$ is unique.
-    \end{enumerate}
+        \end{pmatrix}
+    \end{equation*}
+    such that $\pi\mathbfit{P} = \pi$ and 
+    \begin{equation*}
+        \pi_j = \lim_{n \to \infty}P^{\left(n\right)}_{ij} = \sum_{k \in S}\pi_kP_{kj}
+    \end{equation*}
+    for all $i \in S$.
 \end{thmbox}
-The distribution $\pi$ obtained from the above theorem is known as the \textit{limiting distribution}. Notice that 
+\begin{notebox}
+    \begin{remark}
+        In particular, $\pi\mathbfit{P} = \pi$ is known as the \textit{global balance equations}.
+    \end{remark}
+\end{notebox}
+In practice, it is not so easy to solve the system $\pi\mathbfit{P} = \pi$, so we often consider the following system instead:
+\begin{dfnbox}{Local Balance Equations}{localBalance}
+    Let $\pi$ be a distribution on a Markov chain $X$ with probability transition matrix $\mathbfit{P}$. The {\color{red} \textbf{local balance equations}} are given by 
+    \begin{equation*}
+        \pi_iP_{ij} = \pi_jP_{ji}
+    \end{equation*}
+    for all $i, j$ in the state space.
+\end{dfnbox}
+It can be proven that local balance equations are stronger than global balance equations.
+
+The distribution $\pi$ obtained from the above theorem is known as the \textit{limiting distribution}. Clearly, a limiting distribution is a stationary distribution. Notice that 
 \begin{align*}
     \lim_{n \to \infty}P\left(X_n = j\right) & = \sum_{i = 1}^{N} \lim_{n \to \infty}P\left(X_n = j \mid X_0 = i\right)P\left(X_0 = i\right) \\
     & = \sum_{i = 1}^{N}\pi_jP\left(X_0 = i\right) \\
     & = \pi_j\sum_{i = 1}^{N}P\left(X_0 = i\right) \\
     & = \pi_j.
 \end{align*}
-Therefore, $\pi_j$ gives the marginal probability of $X_n = j$ in the long-run.
+Therefore, $\pi_j$ gives the marginal probability of $X_n = j$ in the long-run. Furthermore, $\pi_j$ is intuitively the proportion of time where $X_n = j$. Formally, we have 
+\begin{align*}
+    \mathbb{E}\left[\frac{1}{n}\sum_{k = 0}^{n - 1}\mathbf{1}_{\left\{X_k = j\right\}} \,\middle\vert\, X_0 = i\right] & = \frac{1}{n}\sum_{k = 0}^{n - 1}\mathbb{E}\left[\mathbf{1}_{\left\{X_k = j\right\}} \,\middle\vert\, X_0 = i\right] \\
+    & = \frac{1}{n}\sum_{k = 0}^{n - 1}P\left(X_k = j \mid X_0 = i\right).
+\end{align*}
+Next, let us consider irreducible Markov chains with infinitely many states.
+\begin{dfnbox}{Null Recurrent and Positive Recurrent Markov Chains}{nullVSPositiveRecur}
+    Let $X$ be an irreducible Markov chain with a countable state space $S$. Let 
+    \begin{equation*}
+        R_i \coloneqq \min\left\{n \in \N^+ \colon X_n = i\right\}
+    \end{equation*}
+    be the first return time of $i \in S$, then $i$ is called {\color{red} \textbf{positive recurrent}} if $\mathbb{E}\left[R_i \mid X_0 = i\right]$ is finite, and {\color{red} \textbf{null recurrent}} otherwise. A Markov chain is {\color{red} \textbf{positive recurrent}} if all of its states are positive recurrent, and {\color{red} \textbf{null recurrent}} if all of its states are null recurrent.
+\end{dfnbox}
+Similar to the recurrence and transience of states, we can prove that both null and positive recurrence are a class property.
+\begin{probox}{Null and Positive Recurrence as a Class Property}{nullVSPositiveRecurrence}
+    If $x$ and $y$ are two recurrent states such that $x\leftrightarrow y$, then either both are null recurrent or both are positive recurrent.
+\end{probox}
+Clearly, any irreducible recurrent Markov chain is either null recurrent or positive recurrent. We shall first study irreducible positive recurrent Markov chains.
+\begin{dfnbox}{Ergodic Markov Chain}{ergodic}
+    An {\color{red} \textbf{ergodic}} Markov chain is an irreducible aperiodic positive recurrent Markov chain.
+\end{dfnbox}
+We can prove that an ergodic Markov chain exhibits the following limiting behaviour:
+\begin{thmbox}{Basic Limit Theorem}{basicLimThm}
+    Let $X$ be an ergodic Markov chain with state space $S$ and transition probability matrix $\mathbfit{P}$. Define 
+    \begin{equation*}
+        m_i \coloneqq \mathbb{E}\left[R_i \mid X_0 = i\right] = \sum_{n = 1}^{\infty}nf^{(n)}_{ii},
+    \end{equation*}
+    where $R_i$ is the first return time to $i \in S$, then for any $i, j \in S$, the limit $\lim_{n \to \infty}P_{ij}^{(n)}$ exists and 
+    \begin{equation*}
+        \lim_{n \to \infty}P_{ij}^{(n)} = \lim_{n \to \infty}P_{jj}^{(n)} = \frac{1}{m_j} = \pi_j,
+    \end{equation*}
+    where $\pi$ is a probability distribution with $\pi\mathbfit{P} = \pi$.
+\end{thmbox}
+Usually, it is easier to compute $\pi$ first, from which we can then derive $m_j$ for each state $j$. Additionally, for null recurrent Markov chains, we can prove the following limit theorem:
+\begin{probox}{Long-Run Limits of Null Recurrent Markov Chains}{nullRecurLimThm}
+    Let $X$ be a null recurrent Markov chain with state space $S$ and transition probability matrix $\mathbfit{P}$, then for all $i, j \in S$, we have $\lim_{n \to \infty}P^{(n)}_{ij} = 0$.
+\end{probox}
+We can summarise the above results into the following theorem:
+\begin{thmbox}{Limit Theorem for Markov Chains}{limThm}
+    Let $X$ be an irreducible recurrent Markov chain with state space $S$ and define 
+    \begin{equation*}
+        m_i \coloneqq \mathbb{E}\left[R_i \mid X_0 = i\right] = \sum_{n = 1}^{\infty}nf^{(n)}_{ii},
+    \end{equation*}
+    where $R_i$ is the first return time to $i$, then for any $i, j \in S$, 
+    \begin{equation*}
+        \lim_{n \to \infty}\frac{1}{n}\sum_{k = 1}^{n}P^{(k)}_{ij} = \frac{1}{m_j}.
+    \end{equation*}
+    If $X$ is aperiodic, then 
+    \begin{equation*}
+        \lim_{n \to \infty}P^{(n)}_{ij} = \frac{1}{m_j}
+    \end{equation*}
+    and if $X$ is periodic with period $d$, then 
+    \begin{equation*}
+        \lim_{n \to \infty}P^{(nd)}_{jj} = \frac{d}{m_j}.
+    \end{equation*}
+\end{thmbox}
+\section{Markov Chain Monte Carlo}
+\textit{Monte Carlo algorithms} are computer algorithms which utilise repeated random sampling. By repeating the simulation to obtain identical and independent samples, we can obtain a \textit{sample mean} for the random variable of interest, which is an unbiased estimator for the true mean of the random variable.
+
+Suppose the random variable of interest has distribution $p$ and we wish to obtain many independent samples distributed according to $p$, then we can simply set up a Markov chain for which $p$ is a stationary distribution. Note that this means that we need a transition probability matrix $\mathbfit{P}$ such that $p\mathbfit{P} = p$. However, this equation is too difficult to solve.
+
+To deal with this, we take inspiration from \textbf{hill-climbing algorithm}. Suppose we construct any initial transition probability matrix $\mathbfit{Q}$, such that the corresponding Markov chain is aperiodic and irreducible, then we can aim at a function $g$ such that $pg\left(\mathbfit{Q}\right) = p$. Recall that if $p$ and $g\left(\mathbfit{Q}\right)$ satisfy the local balance equations, they will definitely satisfy the global balance equations. Therefore, consider any $i, j$ from the state space such that
+\begin{equation*}
+    p_iQ_{ij} \neq p_jQ_{ji}.    
+\end{equation*}
+Take $p_{\min} \coloneqq \min\left\{p_iQ_{ij}, p_jQ_{ji}\right\}$ and fix some function $\alpha$ such that
+\begin{equation*}
+    p_iQ_{ij}\alpha\left(i, j\right) = p_{\min} = p_jQ_{ji}\alpha\left(j, i\right).    
+\end{equation*}
+By observation, we have 
+\begin{equation*}
+    \alpha\left(i, j\right) = \frac{p_{\min}}{p_iQ_{ij}} = \min\left\{\frac{p_jQ_{ji}}{p_iQ_{ij}}, 1\right\}.
+\end{equation*}
+Next, to make sure that the matrix still have row sum as $1$ after each iteration, we adjust its diagonal where the local balance equations always hold. This means that 
+\begin{equation*}
+    P_{ii} = Q_{ii} + \sum_{k \neq i}Q_{ik}\bigl(1 - \alpha\left(i, k\right)\bigr) = 1 - \sum_{k \neq i}P_{ik}.
+\end{equation*}
+Theoretically, we could apply this procedure to all pairs of states, but that is computationally unrealistic. Instead, suppose we have a sequence of random variables $\left\{X_n\right\}_{n \in \N}$ where 
+\begin{equation*}
+    P\left(Y_{n + 1} = X_{n + 1} \mid Y_n = X_n\right) = P_{X_nX_{n + 1}},
+\end{equation*}
+then it can be proven that the distribution of $Y$ converges to $p$. Therefore, for some sufficiently large $M \in \N^+$, we can be confident that $X_M \sim p$ approximately. 
+\begin{tecbox}{Hastings-Metropolis Algorithm}{HastingsMetropolis}
+    \begin{itemize}
+        \item Suppose $p$ is our target distribution with sample space $S$.
+        \item Let $M$ be the maximum depth of iterations.
+        \item Choose an irreducible Markov chain with state space $S$ and transition probability matrix $\mathbfit{Q}$ which is symmetric.
+        \item Select some $X_0 \in S$.
+        \item At the $n$-th iteration:
+        \begin{itemize}
+            \item Generate some $Y \sim q$ where $q_j = Q_{X_nj}$ for all $j \in S$.
+            \item Generate some $U \sim \mathrm{U}\left(0, 1\right)$.
+            \item Compute $\alpha\left(X_n, Y\right) \coloneqq \min\left\{\frac{p_YQ_{YX_n}}{p_{X_n}Q_{X_nY}}, 1\right\}$.
+            \item If $U < \alpha\left(X_n, Y\right)$, set $X_{n + 1} = Y$; else set $X_{n + 1} = X_n$.
+        \end{itemize}
+        \item Return $Z \coloneqq X_M \sim p$ approximately.
+    \end{itemize}
+\end{tecbox}
+Notice that 
+\begin{align*}
+    P\left(Z_{n + 1} = X_{n + 1} \mid Z_n = X_n\right) & = Q_{X_nX_{n + 1}}\alpha\left(X_n, X_{n + 1}\right) = P_{X_nX_{n + 1}}, \\
+    P\left(Z_{n + 1} = X_n \mid Z_n = X_n\right) & = Q_{X_nX_n} + \sum_{i \neq X_n}Q_{X_ni}\bigl(1 - \alpha\left(X_n, i\right)\bigr).
+\end{align*}
+Another interesting thing to notice here is that what we need to run the algorithm is the ratio $\frac{p_i}{p_j}$ over all pairs of states, and not the distribution $p$ itself. This means that if $p = c\mathbfit{b}$ for some vector $\mathbfit{b}$ (known as a \textit{kernel function}) and a \textit{normalising constant} $c \in \R$, we can compute $\frac{p_i}{p_j} = \frac{b_i}{b_j}$ without knowing $c$.
+\begin{notebox}
+    \begin{remark}
+        We can modify Algorithm \ref{tec:HastingsMetropolis} to apply to continuous random variables by changing the one-step transition probabilities with the one-step transition density functions.
+    \end{remark}
+\end{notebox}
+\section{Branching Processes}
+One special type of Markov chains is the \textit{branching processes}, which can be used to simulate population dynamics. Consider a family of random variables $\left\{X_n\right\}_{n \in \N}$, where at the end of each time period (known as a \textit{generation}), every individual generates $\xi \sim F$ offsprings independently, then 
+\begin{equation*}
+    X_{n + 1} = \sum_{i = 1}^{X_n}\xi_i,
+\end{equation*}
+which is a random sum.
+\begin{dfnbox}{Branching Process}{branch}
+    Let $\left\{\xi_i^{(n)}\right\}_{i, n \in \N}$ be a family of independent and identically distributed random variables. A stochastic process where 
+    \begin{equation*}
+        X_{n + 1} = \sum_{i = 1}^{X_n}\xi_i^{(n)}
+    \end{equation*}
+    for all $n \in \N^+$ is called a {\color{red} \textbf{branching process}}.
+\end{dfnbox}
+Given the initial value $X_0$, it suffices to specify $\xi$ in order to specify a branching process. It is clear that a branching process is a Markov chain because the $\xi_i^{(n)}$'s are independent of $X_n$. Notice that 
+\begin{equation*}
+    P\left(X_{n + 1} = j \mid X_n = i\right) = P\left(\sum_{k = 1}^{i}\xi_k = j\mid X_n = i\right),
+\end{equation*}
+so the Markov chain is time-homogeneous. Furthermore, this means that if $\mathbfit{P}$ is the transition probability matrix, then 
+\begin{equation*}
+    P_{ij} = P\left(\sum_{k = 1}^{i}\xi_k = j\right).
+\end{equation*}
+\begin{dfnbox}{Probability Generating Function}{pgf}
+    Let $X$ be a non-negative integer-valued discrete random variable, then its {\color{red} \textbf{probability generating function}} is a map $\phi_X \colon \R \to \R$ defined as 
+    \begin{equation*}
+        \phi_X\left(t\right) \coloneqq \mathbb{E}\left[t^X\right] = \sum_{k \in \N}P\left(X = k\right)t^k.
+    \end{equation*}
+\end{dfnbox}
+Notice that
+\begin{equation*}
+    \phi_X^{(n)}\left(t\right) = \sum_{k = n}^{\infty}k!P\left(X = k\right)t^{k - n},
+\end{equation*}
+so it is clear that 
+\begin{equation*}
+    P\left(X = x\right) = \frac{\phi_X^{(x)}\left(0\right)}{x!}.
+\end{equation*}
+Using the properties of expectation, it is easy to prove the following result:
+\begin{probox}{\small Probability Generating Function of Sum of Random Variables}{pgfsum}
+    If $X$ and $Y$ are independent non-negative integer-valued discrete random variables, then 
+    \begin{equation*}
+        \phi_{X + Y} = \phi_X\phi_Y.
+    \end{equation*}
+\end{probox}
+Consider a branching process with respect to $\xi$ whose distribution is known, then we can write out $\phi_{\xi}$ explicitly. We will use this to specify a branching process.
+\begin{probox}{Specification of Branching Processes}{branchSpec}
+    Let $X$ be a branching process with respect to $\xi$ with probability generating function $\phi_{\xi}$, then
+    \begin{equation*}
+        \phi_{X_{n + 1} \mid X_n}\left(t\right) = \phi_{\xi}\left(t\right)^{X_n}
+    \end{equation*}
+    for all $t \in \R$.
+    \tcblower
+    \begin{proof}
+        Let $X_n = x$, then for all $t \in \R$,
+        \begin{align*}
+            \phi_{X_{n + 1} \mid X_n = x}\left(t\right) & = \mathbb{E}\left[t^{X_{n + 1}} \,\middle\vert\, X_n = x\right] \\
+            & = \mathbb{E}\left[t^{\sum_{i = 1}^{x}\xi_i}\right] \\
+            & = \mathbb{E}\left[\prod_{i = 1}^{x}t^{\xi_i}\right] \\
+            & = \prod_{i = 1}^{x}\mathbb{E}\left[t^{\xi_i}\right] \\
+            & = \prod_{i = 1}^{x}\phi_{\xi_i}\left(t\right).
+        \end{align*}
+        Since the $\xi_i$'s are independent, we have 
+        \begin{equation*}
+            \phi_{X_{n + 1} \mid X_n}\left(t\right) = \phi_{\xi}\left(t\right)^{X_n}
+        \end{equation*}
+        for all $t \in \R$.
+    \end{proof}
+\end{probox}
+Furthermore, we can remove the condition altogether by conditioning on the initial distribution of $X_0$ only instead.
+\begin{corbox}{Specification of Branching Processes in Initial Distribution}{branchSpecInit}
+    Let $X$ be a branching process with respect to $\xi$ with probability generating function $\phi_{\xi}$, then
+    \begin{equation*}
+        \phi_{X_n \mid X_0}\left(t\right) = \phi_{\xi}^{n}\left(t\right)^{X_0}
+    \end{equation*}
+    for all $t \in \R$.
+    \tcblower
+    \begin{proof}
+        Let $X_0 = k$. Notice that for all $t \in \R$, 
+        \begin{align*}
+            \phi_{X_n \mid X_0 = k}\left(t\right) & = \mathbb{E}\left[t^{X_n} \,\middle\vert\, X_0 = k\right] \\ 
+            & = \mathbb{E}\left[\mathbb{E}\left[\prod_{i = 1}^{X_{n - 1}}t^{\xi_i} \,\middle\vert\, X_{n - 1}\right] \,\middle\vert\, X_0 = k\right] \\
+            & = \mathbb{E}\left[\prod_{i = 1}^{X_{n - 1}}\mathbb{E}\left[t^{\xi_i}\right]\,\middle\vert\, X_0 = k\right] \\
+            & = \mathbb{E}\left[\phi_{\xi}\left(t\right)^{X_{n - 1}} \,\middle\vert\, X_0 = k\right] \\
+            & = \phi_{X_{n - 1} \mid X_0 = k}\bigl(\phi_{\xi}\left(t\right)\bigr).
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            \phi_{X_n \mid X_0 = k}\left(t\right) = \phi_{X_1 \mid X_0 = k}\bigl(\phi_{\xi}^{n - 1}\left(t\right)\bigr).
+        \end{equation*}
+        By Proposition \ref{pro:branchSpec}, 
+        \begin{equation*}
+            \phi_{X_1 \mid X_0 = k}\bigl(\phi_{\xi}^{n - 1}\left(t\right)\bigr) = \prod_{i = 1}^k\phi_{\xi}\bigl(\phi_{\xi}^{n - 1}\left(t\right)\bigr),
+        \end{equation*}
+        which implies that 
+        \begin{equation*}
+            \phi_{X_n \mid X_0}\left(t\right) = \phi_{\xi}^{n}\left(t\right)^{X_0}
+        \end{equation*}
+        for all $t \in \R$.
+    \end{proof}
+\end{corbox}
+Using the same idea of recursion, we can find the expectation and variance of a branching process.
+\begin{probox}{Expectation and Variance of Branching Processes}{branchExpVar}
+    Let $X$ be a branching process with respect to $\xi$ with $\mathbb{E}\left[\xi\right] = \mu$ and $\mathrm{Var}\left(\xi\right) = \sigma^2$, then
+    \begin{equation*}
+        \mathbb{E}\left[X_n \mid X_0\right] = \mu^nX_0 \quad\textrm{and}\quad \mathrm{Var}\left(X_n \mid X_0\right) = \begin{cases}
+            \frac{1 - \mu^n}{1 - \mu}\left(\mu^{n - 1}\sigma^2\right)X_0 & \quad\textrm{if } \mu \neq 1 \\
+            n\left(\mu^{n - 1}\sigma^2\right)X_0 & \quad\textrm{if } \mu = 1
+        \end{cases}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{align*}
+            \mathbb{E}\left[X_n \mid X_0\right] & = \mathbb{E}\left[\sum_{i = 1}^{X_{n - 1}}\xi_i^{(n - 1)} \,\middle\vert\, X_0\right] \\
+            & = \mathbb{E}\left[X_{n - 1}\xi \mid X_0\right] \\
+            & = \mu\mathbb{E}\left[X_{n - 1} \mid X_0\right],
+        \end{align*}
+        so $\mathbb{E}\left[X_n \mid X_0\right] = \mu^{n}\mathbb{E}\left[X_0 \mid X_0\right] = \mu^nX_0$. Consider 
+        \begin{align*}
+            \mathrm{Var}\left(X_n\right) & = \mathbb{E}\left[\left(X_n - \mathbb{E}\left[X_n\right]\right)^2\right] \\
+            & = \mathbb{E}\left[\left(X_n - \mu\mathbb{E}\left[X_{n - 1}\right]\right)^2\right] \\
+            & = \mathbb{E}\left[\bigl[\left(X_n - \mu X_{n - 1}\right) + \left(\mu X_{n - 1} - \mu\mathbb{E}\left[X_{n - 1}\right]\right)\bigr]^2\right]. 
+        \end{align*}
+        Let $\mathbb{E}\left[X_{n - 1}\right] = \mu'$, then 
+        \begin{align*}
+            \mathbb{E}\left[\left(X_n - \mu X_{n - 1}\right)^2\right] & = \sum_{x = 0}^{\infty}\mathbb{E}\left[\left(X_n - \mu X_{n - 1}\right)^2 \,\middle\vert\, X_{n - 1} = x\right]P\left(X_{n - 1} = x\right) \\
+            & = \sum_{x = 0}^{\infty}\mathbb{E}\left[\left(\sum_{i = 1}^x\xi_i - \mu x\right)^2 \,\middle\vert\, X_{n - 1} = x\right]P\left(X_{n - 1} = x\right) \\
+            & = \sum_{x = 0}^{\infty}x\sigma^2P\left(X_{n - 1} = x\right) \\
+            & = \sigma^2\mu', \\
+            \mathbb{E}\left[\left(\mu X_{n - 1} - \mu\mu'\right)^2\right] & = \mu^2\mathbb{E}\left[\left(X_{n - 1} - \mu'\right)^2\right] \\
+            & = \mu^2\mathrm{Var}\left(X_{n - 1}\right), \\
+            \mathbb{E}\left[\left(X_n - \mu X_{n - 1}\right)\left(\mu X_{n - 1} - \mu\mu'\right)\right] & = \mu\sum_{x = 0}^{\infty}\left(x - \mu'\right)\mathbb{E}\left[X_n - x\mu \mid X_{n - 1} = x\right]P\left(X_{n - 1} = x\right) \\
+            & = 0.
+        \end{align*}
+        Therefore, $\mathrm{Var}\left(X_n \mid X_0\right) = \mu^2\mathrm{Var}\left(X_{n - 1} \mid X_0\right) + \sigma^2\mathbb{E}\left[X_{n - 1} \mid X_0\right]$, and so 
+        \begin{align*}
+            \mathrm{Var}\left(X_n \mid X_0\right) & = \mu^{2n}\mathrm{Var}\left(X_0 \mid X_0\right) + \sigma^2\sum_{i = n - 1}^{2n - 2}\mu^iX_0 \\
+            & = \sigma^2X_0\sum_{i = n - 1}^{2n - 2}\mu^i.
+        \end{align*}
+        If $\mu = 1$, then $\mathrm{Var}\left(X_n \mid X_0\right) = n\sigma^2X_0$. Otherwise, 
+        \begin{equation*}
+            \mathrm{Var}\left(X_n \mid X_0\right) = \frac{1 - \mu^n}{1 - \mu}\left(\mu^{n - 1}\sigma^2\right)X_0.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Note that for any branching process, $0$ is always an absorbing state, so the probability that the population becomes extinct by the $n$-th generation is $P\left(X_n = 0\right)$.
+\begin{dfnbox}{Extinction Probability}{extinct}
+    Let $X$ be a branching process, then {\color{red} \textbf{extinction probability}} is the probability that there is no offspring at the $n$-th generation, given by $u_n^{(k)} \coloneqq P\left(X_n = 0 \mid X_0 = k\right)$.
+\end{dfnbox}
+Alternatively, let $T \coloneqq \min\left\{t \in \N \colon X_t = 0\right\}$ be the time of extinction, the extinction probability is also given by $P\left(T \leq n \mid X_0\right)$. Applying first-step analysis yields
+\begin{align*}
+    u_n^{(k)} & = \sum_{i \in S}P\left(T \leq n \mid X_1 = i\right)P\left(X_1 = i \mid X_0 = k\right) \\
+    & = \sum_{i \in S}P\left(T \leq n - 1 \mid X_0 = i\right)P_{ki} \\
+    & = \sum_{i \in S}P_{ki}u_{n - 1}^{(i)}.
+\end{align*}
+Note that this is a huge system. To simplify the calculations, consider the branching process with $X_0 = k$ as $k$ independent branching processes with $X_0 = 1$ and let $T_i$ be the extinction time for the $i$-th process. Clearly, $\left\{T \leq n\right\} = \bigcap_{i = 1}^k\left\{T_i \leq n\right\}$. Therefore, 
+\begin{equation*}
+    u_n^{(k)} = \prod_{i = 1}^kP\left(T_i \leq n \mid X_0 = 1\right) = \left(u_n^{(1)}\right)^k.
+\end{equation*}
+For the sake of simplicity, we denote $u_n \coloneqq u_n^{(1)}$, then $u_n^{(k)} = u_n^k$. Clearly,
+\begin{equation*}
+    u_n = \sum_{i \in S}P\left(X_1 = i \mid X_0 = 1\right)u_{n - 1}^{(i)} = \sum_{i \in S}P\left(\xi = i\right)u_{n - 1}^i.
+\end{equation*}
+Recall that $\phi_{\xi}\left(t\right) = \sum_{i \in S}P\left(\xi = i\right)t^i$, so we actually have $u_n = \phi_{\xi}\left(u_{n - 1}\right)$. This obviously means that 
+\begin{align*}
+    u_n & = \phi^{n - 1}_{\xi}\left(u_1\right) \\
+    & = \phi^{n - 1}_{\xi}\bigl(P\left(T \leq 1 \mid X_0 = 1\right)\bigr) \\
+    & = \phi^{n - 1}_{\xi}\bigl(P\left(X_1 = 0 \mid X_0 = 1\right)\bigr) \\
+    & = \phi^{n - 1}_{\xi}\bigl(P\left(\xi = 0\right)\bigr).
+\end{align*}
+So we obtain a general formula.
+\begin{probox}{Formula for Extinction Probability}{extinctFormula}
+    Let $u_n^{(k)}$ be the extinction probability by the $n$-th generation of a branching process $X$ with respect to $\xi$ with $X_0 = k$, then
+    \begin{equation*}
+        u_n^{(k)} = \phi^{n - 1}_{\xi}\bigl(P\left(\xi = 0\right)\bigr)^k,
+    \end{equation*}
+    where $\phi_{\xi}$ is the probability generating function of $\xi$.
+\end{probox}
+Furthermore, we can define 
+\begin{equation*}
+    u_{\infty}^{(k)} \coloneqq \lim_{n \to \infty}u_n^{(k)} = \lim_{n \to \infty}u_n^{k} = u_{\infty}^k
+\end{equation*}
+as the probability that the population will eventually extinct in finite time. Notice that 
+\begin{equation*}
+    1 \geq P\left(T \leq n + 1 \mid X_0 = 1\right) \geq P\left(T \leq n \mid X_0 = 1\right) \geq 0,
+\end{equation*}
+so by the monotone convergence theorem, $u_{\infty} \coloneqq \lim_{n \to \infty}u_n$ always exists. By our first-step analysis, $u_n = \phi_{\xi}\left(u_{n - 1}\right)$ so if we take the limit on both sides, we have 
+\begin{equation*}
+    u_{\infty} = \lim_{n \to \infty}\phi_{\xi}\left(u_{n - 1}\right).
+\end{equation*}
+Since $\phi_{\xi}$ is continuous, 
+\begin{equation*}
+    u_{\infty} = \phi_{\xi}\left(\lim_{n \to \infty}u_{n - 1}\right) = \phi_{\xi}\left(u_{\infty}\right).
+\end{equation*}
+With some differentiation, it is easy to see that $\phi_{\xi}$ is a strictly convex function on $\left(0, 1\right]$ and so the equation has at most $2$ solutions.
+
+In particular, if $P\left(\xi = 0\right) = 0$, then there is nothing to be calculated in the first place because the population will never become extinct as long as $X_0 > 0$. By definition, it is easy to see that $\phi_{\xi}\left(1\right) = 1$, so $u_{\infty} = 1$ is always a solution. However, it can be proven that if $\phi'\left(1\right) > 1$, then the other solution in $\left[0, 1\right)$ is the actual probability of extinction in finite time.
+\begin{probox}{Probability of Extinction in Finite Time}{extinctInfinite}
+    Let $X$ be a branching process with respect to $\xi$ and define $u_{\infty}^{(k)} \coloneqq \lim_{n \to \infty}u_n^{(k)}$ as the probability that the population eventually becomes extinct in finite time, then 
+    \begin{itemize}
+        \item if $P\left(\xi = 0\right) = 0$, then $u_{\infty}^{(k)} = 1$;
+        \item if $P\left(\xi = 0\right) > 0$, then 
+        \begin{itemize}
+            \item if $\mathbb{E}\left[\xi\right] \leq 1$, then $u_{\infty}^{(k)} = 1$;
+            \item otherwise, $u_{\infty} \in \left[0, 1\right)$ satisfies
+            \begin{equation*}
+                u_{\infty} = \phi_{\xi}\left(u_{\infty}\right)
+            \end{equation*}
+            where $\phi_{\xi}$ is the probability generating function of $\xi$.
+        \end{itemize}
+    \end{itemize}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        When $P\left(\xi = 0\right) > 0$, the branching process is called \textit{subcritical}, \textit{critical} and \textit{supercritical} if $\mathbb{E}\left[\xi\right] < 1$, $\mathbb{E}\left[\xi\right] = 1$ and $\mathbb{E}\left[\xi\right] > 1$, respectively.
+    \end{remark}
+\end{notebox}
+\section{Poisson Process}
+Another important type of stochastic processes is the \textit{Poisson process}, which is used to count the number of discrete events in a given interval and is closely related to both the Poisson distribution and the exponential distribution.
+\begin{dfnbox}{Poisson Process}
+    A {\color{red} \textbf{Poisson process}} with {\color{red} \textbf{rate}} or {\color{red} \textbf{intensity}} $\lambda > 0$ is a discrete-time integer-valued stochastic process $\left\{X\left(t\right) \colon t \in \N\right\}$ such that $X\left(0\right) = 0$ and
+    \begin{itemize}
+        \item for any $t_0, t_1, \cdots, t_n \in \N$ with $t_0 = 0$, $\left\{X\left(t_i\right) - X\left(t_{i - 1}\right) \colon i = 1, 2, \cdots, n\right\}$ are mutually independent;
+        \item for any $s \in \N$ and $t \in \N^+$, we have $X\left(s + t\right) - X\left(s\right) \sim \mathrm{Pois}\left(\lambda t\right)$.
+    \end{itemize}
+\end{dfnbox}
+An immediate result from the definition is that $X\left(t\right) \sim \mathrm{Pois}\left(\lambda t\right)$ for all $t \in \N^+$. Recall that for a Poisson random variable, we have $\mathbb{E}\left[X\left(t\right)\right] = \mathrm{Var}\bigl(X\left(t\right)\bigr) = \lambda t$. Intuitively, the Poisson process counts the number of events in unit intervals such that $X\left(t\right)$ is the number of events up to time $t$. Now, each unit interval can be divided infinitesimally such that we can approximate the distribution using binomial random variables.
+\begin{thmbox}{Law of Rare Events}{rareEvents}
+    Let $X_n \sim \mathrm{Bin}\left(n, p_n\right)$ be a binomial random variable where $\lim_{n \to \infty}np_n = \lambda$, then as~$n \to \infty$, $X_n \sim \mathrm{Pois}\left(\lambda\right)$ approximately.
+    \tcblower
+    \begin{proof}
+        Consider 
+        \begin{align*}
+            \lim_{n \to \infty}P\left(X_n = x\right) & = \lim_{n \to \infty}\binom{n}{x}p_n^x\left(1 - p_n\right)^{n - x} \\
+            & \approx \lim_{n \to \infty}\frac{\prod_{i = 1}^{x}\left(n - i + 1\right)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1 - \frac{\lambda}{n}\right)^n\lim_{n \to \infty}\left(1 - \frac{\lambda}{n}\right)^{-x} \\
+            & = \lim_{n \to \infty}\frac{\prod_{i = 1}^{x}\left(n - i + 1\right)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1 - \frac{\lambda}{n}\right)^n \\
+            & \approx \lim_{n \to \infty}\frac{n^x\lambda^x}{x!n^x}\left(1 - \frac{\lambda}{n}\right)^n \\
+            & = \frac{\lambda^x}{x!}\e^{-\lambda}.
+        \end{align*}
+        Therefore, $\lim_{n \to \infty}X_n \sim \mathrm{Pois}\left(\lambda\right)$ approximately.
+    \end{proof}
+\end{thmbox}
+The term \textit{rare events} refers to the situation where the probability of two events occurring at the same time for some small interval $h$ is $o\left(h\right)$, i.e., $\lim_{h \to 0}\frac{p}{h} = 0$.
+\begin{dfnbox}{Poisson Point Process}{poissonPP}
+    Let $N\bigl(\left(s, t\right]\bigr)$ be the number of events in the interval $\left(s, t\right]$. It is called a {\color{red} \textbf{Poisson point process}} of {\color{red} \textbf{intensity}} $\lambda$ if 
+    \begin{itemize}
+        \item for any $t_0, t_1, \cdots, t_n \in \R$ with $t_0 = 0$ and $t_i < t_{i + 1}$, $\left\{N\bigl(\left(t_i, t_{i + 1}\right]\bigr) \colon i = 1, 2, \cdots, n\right\}$ are mutually independent;
+        \item $P\Bigl(N\bigl(\left(t, t + h\right]\bigr) \geq 1\Bigr) = \lambda h + o\left(h\right)$ as $h \to 0$.
+        \item $P\Bigl(N\bigl(\left(t, t + h\right]\bigr) \geq 2\Bigr) = o\left(h\right)$ as $h \to 0$.
+    \end{itemize}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        If the intensity $\lambda$ is dependent on $t$, then the Poisson point process is non-homogeneous and non-stationary.
+    \end{remark}
+\end{notebox}
+We can use a Poisson process to derive the exponential distribution by considering the waiting time of events.
+\begin{dfnbox}{Waiting Time}{waitingTime}
+    Let $X\left(t\right)$ be a Poisson process of rate $\lambda$, then the {\color{red} \textbf{waiting time}} for the $n$-th event is defined as $W_n$ such that $X\left(W_n - 1\right) = n - 1$ and $X\left(W_n\right) = n$. The {\color{red} \textbf{sojourn time}} between two consecutive events is defined as $S_n \colon W_{n + 1} - W_n$.
+\end{dfnbox}
+Let us consider the event $\left\{W_1 \leq t\right\}$, i.e., the event where the first event occurs by time $t$, then 
+\begin{equation*}
+    P\left(W_1 \leq t\right) = P\bigl(X\left(t\right) \geq 1\bigr) = 1 - P\bigl(X\left(t\right) = 0\bigr) = 1 - \e^{-\lambda t}.
+\end{equation*}
+It is clear that $W_1 \sim \mathrm{Exp}\left(\lambda\right)$. This is generalised as the following:
+\begin{thmbox}{Gamma Distribution of Waiting Times}{gammaWaitingTime}
+    Let $W_n$ be the waiting time for the $n$-th event in a Poisson process $X\left(t\right)$ where $n \in \N^+$, then we have~$W_n \sim \mathrm{Gamma}\left(n, \lambda\right)$ where 
+    \begin{equation*}
+        f_{W_n}\left(t\right) = \frac{\lambda^n t^{n - 1}}{\left(n - 1\right)!}\e^{-\lambda t}.
+    \end{equation*}
+\end{thmbox}
+Recall that the exponential distribution is memoryless, so it is obvious that the sojourn time~$S_n = W_1$ for each $n \in \N$.
+\begin{thmbox}{Exponential Distribution of Sojourn Times}{expSojournTime}
+    Let $S_n$ be the sojourn time after the $n$-th event in a Poisson process of rate $\lambda$, then we have~$S_n \sim \mathrm{Exp}\left(\lambda\right)$ for all $n \in \N$ where $f_{S_n}\left(t\right) = \lambda \e^{-\lambda t}$.
+\end{thmbox}
+It can be proven that given $X\left(t\right) = 1$, the time at which this first event occurs is uniformly distributed, i.e., $W_1 \mid X\left(t\right) = 1 \sim \mathrm{U}\left(0, t\right)$. In the generalised case where $X\left(t\right) = n$, we can apply Bayes's rule to obtain 
+\begin{align*}
+    f\bigl(w_1, w_2, \cdots, w_n \mid X\left(t\right) = n\bigr) & = \frac{P\left(S_n > t - w_n\right)\prod_{i = 1}^nf_{S_{i - 1}}\left(w_i - w_{i - 1}\right)}{\frac{\left(\lambda t\right)^n\e^{-\lambda t}}{n!}} \\
+    & = \frac{n!\e^{-\lambda\left(t - w_n\right)}\prod_{i = 1}^n\lambda\e^{-\lambda\left(w_i - w_{i - 1}\right)}}{\left(\lambda t\right)^n\e^{-\lambda t}} \\
+    & = \frac{n!}{t^n}.
+\end{align*}
+It can be shown that this is the joint distribution of $n$ independent uniform random variables. If we focus on the $k$-th event, we can prove the following result:
+\begin{thmbox}{Arriving Time}{arrivingTime}
+    Let $X\left(t\right)$ be a Poisson process. Given $X\left(t\right) = n$, the waiting time to the $k$-th event, defined by $W_k \mid X\left(t\right) = n$, has the probability density function 
+    \begin{equation*}
+        f_k\left(x\right) = \frac{n!x^{k - 1}\left(t - x\right)^{n - k}}{\left(n - k\right)!\left(k - 1\right)!t^n}.
+    \end{equation*}
+\end{thmbox}
 \end{document}

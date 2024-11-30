@@ -6,8 +6,9 @@
 \contentsline {subsection}{\numberline {1.3.2}Variance}{13}{subsection.1.3.2}%
 \contentsline {subsection}{\numberline {1.3.3}Correlation}{14}{subsection.1.3.3}%
 \contentsline {chapter}{\numberline {2}Markov Chains}{15}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Markov Chains}{15}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Transition Probabilities}{17}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Stationary Distribution}{20}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Intercommunicating Classes}{22}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Regularity}{30}{section.2.5}%
+\contentsline {section}{\numberline {2.1}Stochastic Processes}{15}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Stationary Distribution}{20}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Regularity}{32}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Markov Chain Monte Carlo}{38}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Branching Processes}{39}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Poisson Process}{46}{section.2.6}%
