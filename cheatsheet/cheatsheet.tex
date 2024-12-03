@@ -49,6 +49,7 @@
             \begin{align*}
                 E\left[f\left(X_n\right)\right] & = \sum_{i = 1}^{s}E\left[f\left(X_n\right) \mid X_0 = x_i\right]\lambda_i = \sum_{i = 1}^{s}\lambda_i\left(\bm{P}^n\mu\right)_i = \lambda\bm{P}^n\mu.
             \end{align*}
+            \item $\bm{P}\mathbf{1} = \mathbf{1}$ so $1$ is an eigenvalue of $\bm{P}^{\mathrm{T}} \implies \exists$ stationary distr.
             \item \textbf{Stationary distribution}: $\pi = \pi\bm{P}$.
             \item If $\lambda$ is an eigenvalue of $\bm{P}$, then $\abs{\lambda} \leq 1$.
             \item \textbf{Absorbing state}: for all $j \neq i$, we have $P_{ij} = 0$.
@@ -74,8 +75,7 @@
             \item If $i \leftrightarrow j$, then $d\left(i\right) = d\left(j\right)$.
             \item $\forall i \in S$, $\exists N \in \mathbb{N}$ s.t. $\forall n \geq N$, $P_{ii}^{\left(n \cdot d\left(i\right)\right)} > 0$ and $P_{ji}^{\left(m + n \cdot d\left(i\right)\right)} > 0$ whenever $P_{ji}^{\left(m\right)} > 0$.
             \item If $\bm{P}$ is the TPM for a finite-state irreducible aperiodic chain, then $\exists N \in \mathbb{N}^+$ such that $\bm{P}^{\left(N\right)}$ has all positive entries (definition for regular chain).
-            \item Irreducible, aperiodic, finite-state $\implies$ regular chain.
-            \item Regular $\implies$ irreducible.
+            \item Irreducible, aperiodic, finite-state $\implies$ regular. Regular $\implies$ irreducible.
             \item $\bm{P}^{\left(k\right)}$ is regular $\implies \bm{P}^{\left(n\right)}$ is regular $\forall n \geq k$.
             \item Let $\bm{P}$ be a regular TPM for some regular Markov chain with finite state space, then there is a unique stationary distribution $\pi$ with $\pi_j = \lim_{n \to \infty}P^{\left(n\right)}_{ij}$ for all $i, j$. $\pi_j = P\left(X_n = j\right)$ is the proportion of time where $X_n = j$ in the long-run.
             \item Local bal.: $\pi_iP_{ij} = \pi_jP_{ji}$ for all $i, j \implies$ global bal..
@@ -108,6 +108,7 @@
                 \end{align*}
             \end{itemize}
             \item Random walk: $\frac{\xi_i + 1}{2} \sim \mathrm{Bernoulli}\left(p\right)$, $\frac{X_n + n}{2} \mid X_0 = 0 \sim \mathrm{Bin}\left(n, p\right)$.
+            \item \textbf{Page rank}: by stationary distr., $\pi_{n + 1} = \lambda\pi_n\bm{P} + (1 - \lambda)\pi_n$ if perturbation is needed.
             \item Hastings-Metropolis: 
             \begin{itemize}
                 \item $p$ is target distribution with sample space $S$ and $M$ is the max depth of iterations.
@@ -123,7 +124,8 @@
             \item $P\left(Z_{n + 1} = j \mid Z_n = i\right) = Q_{ij}\alpha\left(i, j\right) = P_{ij}$
             \item $P\left(Z_{n + 1} = i \mid Z_n = i\right) = Q_{ii} + \sum_{k \neq i}Q_{ik}\bigl(1 - \alpha_{ik}\bigr) = P_{ii}$
             \item If $p = c\bm{b}$ where $\bm{b}$ is a kernel function, only need $\frac{b_i}{b_j}$.
-            \item Prob. gen. func. $\phi_X\left(t\right) \coloneqq \mathbb{E}\left[t^X\right] = \sum_{k}P\left(X = k\right)t^k$.
+            \item Prob. gen. func. $\phi_X\left(t\right) \coloneqq \mathbb{E}\left[t^X\right] = \sum_{k}P\left(X = k\right)t^k$. $\mathbb{E}\left[X\right] = \phi'\left(1\right)$ and $\mathbb{E}\left[X^2\right] = \phi''\left(1\right) + \phi'(1)$.
+            \item Random sum: $\mathrm{Var}(S) = \mu_N\mathrm{Var}(X) + \sigma^2_N\mathbb{E}[X]$.
             \item $\phi_X^{(n)}\left(t\right) = \sum_{k = n}^{\infty}k!P\left(X = k\right)t^{k - n}$, so $P\left(X = x\right) = \frac{\phi_X^{(x)}\left(0\right)}{x!}$
             \item $\phi_{X + Y} = \phi_X\phi_Y$ if independent.
             \item $\phi_{X_{n + 1} \mid X_n = x}\left(t\right) = \mathbb{E}\left[t^{X_{n + 1}} \,\middle\vert\, X_n = x\right] = \mathbb{E}\left[\prod_{i = 1}^{x}t^{\xi_i}\right] = \prod_{i = 1}^{x}\phi_{\xi_i}\left(t\right)$
