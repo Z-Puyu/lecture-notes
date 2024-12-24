@@ -498,16 +498,16 @@ An interesting application of Theorem \ref{thm:rankNull} gives the following cor
 \section{Duality}
 Let $V$ and $W$ be vector spaces and define $\mathcal{L}(V, W)$ to be the set of all linear transformations from $V$ to $W$. One may check that $\mathcal{L}(V, W)$ is a vector space.
 \begin{dfnbox}{Dual Space}{dualSpace}
-    Let $V$ be a vector space over $\F$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\widehat{V} \coloneqq \mathcal{L}(V, \F)$. The elements of $\widehat{V}$ are called {\color{red} \textbf{dual vectors}}.
+    Let $V$ be a vector space over $\F$. The {\color{red} \textbf{dual space}} of $V$ is defined as $\yhwidehat{V} \coloneqq \mathcal{L}(V, \F)$. The elements of $\yhwidehat{V}$ are called {\color{red} \textbf{dual vectors}}.
 \end{dfnbox}
 \begin{notebox}
-    \textbf{Author's Note}: in almost all fields of mathematics, the conventional notation for the dual space of $V$ is $V^*$, but somehow the lecturer of this course decides (yet again) to use a confusing syntax by writing it as $\widehat{V}$.
+    \textbf{Author's Note}: in almost all fields of mathematics, the conventional notation for the dual space of $V$ is $V^*$, but somehow the lecturer of this course decides (yet again) to use a confusing syntax by writing it as $\yhwidehat{V}$.
 \end{notebox}
-An intuitive example for an element of $\widehat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
+An intuitive example for an element of $\yhwidehat{V}$ is as follows: let $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ be a basis for $V$. For any $\mathbfit{v} \in V$, we can write
 \begin{equation*}
     \mathbfit{v} = \sum_{i = 1}^{n}a_i\mathbfit{z}_i
 \end{equation*}
-for $a_1, a_2, \cdots, a_n \in \F$. Now, define a mapping $\zeta^i \colon V \to \F$ as $\zeta^i(\mathbfit{v}) = a_i$, then clearly $\zeta^i \in \widehat{V}$ for $i = 1, 2, \cdots, n$.
+for $a_1, a_2, \cdots, a_n \in \F$. Now, define a mapping $\zeta^i \colon V \to \F$ as $\zeta^i(\mathbfit{v}) = a_i$, then clearly $\zeta^i \in \yhwidehat{V}$ for $i = 1, 2, \cdots, n$.
 
 In particular, we see that
 \begin{equation*}
@@ -518,7 +518,7 @@ In particular, we see that
 \end{equation*}
 Intuitively, this means that for each $\mathbfit{v} \in V$, we have $z^{-1}(\mathbfit{v}) = \sum_{i = 1}^{n}a_i\zeta^i(\mathbfit{z}_i)$.
 \begin{dfnbox}{Dual Basis}{dualBasis}
-    Let $V$ be a vector space with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$. The {\color{red} \textbf{dual basis}} of $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is defined as the set of all $\zeta^i \in \widehat{V}$ such that 
+    Let $V$ be a vector space with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$. The {\color{red} \textbf{dual basis}} of $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is defined as the set of all $\zeta^i \in \yhwidehat{V}$ such that 
     \begin{equation*}
         \zeta^i(\mathbfit{z}_j) = \begin{cases}
             1 & \textrm{if } i = j \\
@@ -526,7 +526,7 @@ Intuitively, this means that for each $\mathbfit{v} \in V$, we have $z^{-1}(\mat
         \end{cases}.
     \end{equation*}
 \end{dfnbox}
-Let $\zeta$ be a dual basis and $\alpha \in \widehat{V}$ be a linear mapping over a finite-dimensional vector space $V$ with $\dim(V) = n$. For any $\mathbfit{v} \in V$ with respect to basis $z$, define a mapping $\beta \colon V \to \F$ by 
+Let $\zeta$ be a dual basis and $\alpha \in \yhwidehat{V}$ be a linear mapping over a finite-dimensional vector space $V$ with $\dim(V) = n$. For any $\mathbfit{v} \in V$ with respect to basis $z$, define a mapping $\beta \colon V \to \F$ by 
 \begin{equation*}
     \beta(\mathbfit{v}) = \left(\sum_{i = 1}^{n}\alpha(\mathbfit{z}_i)\zeta^i\right)(\mathbfit{v}).
 \end{equation*}
@@ -540,7 +540,7 @@ Since $z$ is a basis for $V$, this implies that for any $\mathbfit{v} \in V$, we
 
 Consider
 \begin{equation*}
-    \sum_{i = 1}^{n}p_i\zeta^i = 0_{\widehat{V}},
+    \sum_{i = 1}^{n}p_i\zeta^i = 0_{\yhwidehat{V}},
 \end{equation*}
 which is the zero mapping from $V$ to $\{0\}$, this means that for any $\mathbfit{v} \in V$, we have
 \begin{align*}
@@ -551,7 +551,7 @@ which is the zero mapping from $V$ to $\{0\}$, this means that for any $\mathbfi
 \end{align*}
 However, since the $a_i$'s are arbitrary, we have $p_i = 0$ for all $i = 1, 2, \cdots, n$. Therefore, $\zeta$ is linearly independent. This means that $\zeta$ is indeed a basis. Clearly, this also implies that any finite-dimensional vector space has the same dimension as its dual space. 
 \begin{probox}{Dimension of Dual Space}{dualHasEqualDim}
-    Let $V$ be any finite-dimensional vector space, then $\dim(V) = \dim\left(\widehat{V}\right)$.
+    Let $V$ be any finite-dimensional vector space, then $\dim(V) = \dim\left(\yhwidehat{V}\right)$.
 \end{probox}
 Furthermore, note that for any dual vector $\phi = \sum_{i = 1}^{n}p_i\zeta^i$, we have
 \begin{equation*}
@@ -561,7 +561,7 @@ Therefore, any dual vector with respect to basis $z$ can be written as
 \begin{equation*}
     \phi = \sum_{i = 1}^{n}\phi(\mathbfit{z}_i)\zeta^i.
 \end{equation*}
-Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical basis of $\F^n$ to be the set of unit vectors with a single non-zero entry. Similarly, we can define the canonical basis for the dual space $\widehat{\F^n} \coloneqq \mathcal{L}(\F^n, \F)$.
+Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical basis of $\F^n$ to be the set of unit vectors with a single non-zero entry. Similarly, we can define the canonical basis for the dual space $\yhwidehat{\F^n} \coloneqq \mathcal{L}(\F^n, \F)$.
 \begin{dfnbox}{Canonical Dual Basis}{canonicalDualBasis}
     Write each $\mathbfit{v} \in \F^n$ as
     \begin{equation*}
@@ -574,15 +574,15 @@ Recall that in Definition \ref{dfn:canonicalBasis}, we defined the canonical bas
     \end{equation*}
     The {\color{red} \textbf{canonical dual basis}} of $\F^n$ is defined as $\left\{\epsilon^i \colon i = 1, 2, \cdots, n\right\}$ such that $\epsilon^i(\mathbfit{v}) = v_i$ for all $\mathbfit{v} \in \F^n$.
 \end{dfnbox}
-Consider any $p \in \widehat{\F^n}$, then we can write
+Consider any $p \in \yhwidehat{\F^n}$, then we can write
 \begin{equation*}
     p = \sum_{i = 1}^{n}q_i\epsilon^i
 \end{equation*} 
-where $q_i \in \F$ for $i = 1, 2, \cdots, n$ and $\epsilon^i$'s are the dual canonical basis. Recall that a basis of an $n$-dimensional vector space $V$ is actually a mapping from $\F^n$ to $V$, so it follows that the dual basis is in fact a mapping $\zeta \colon \widehat{\F^n} \to \widehat{V}$. We claim that this $\zeta$ is in fact just a mapping that satisfies 
+where $q_i \in \F$ for $i = 1, 2, \cdots, n$ and $\epsilon^i$'s are the dual canonical basis. Recall that a basis of an $n$-dimensional vector space $V$ is actually a mapping from $\F^n$ to $V$, so it follows that the dual basis is in fact a mapping $\zeta \colon \yhwidehat{\F^n} \to \yhwidehat{V}$. We claim that this $\zeta$ is in fact just a mapping that satisfies 
 \begin{equation*}
     \zeta(p)\bigl(z(\mathbfit{a})\bigr) = p(\mathbfit{a})
 \end{equation*}
-for any $p \in \widehat{\F^n}$ and $\mathbfit{a} \in \F^n$. 
+for any $p \in \yhwidehat{\F^n}$ and $\mathbfit{a} \in \F^n$. 
 
 To prove that our new definition is consistent with Definition \ref{dfn:dualBasis}, it suffices to show that $\zeta(\epsilon^i) = \zeta^i$. Notice that
 \begin{align*}
@@ -604,82 +604,82 @@ then
     & = a_i \\
     & = \zeta^i(\mathbfit{v}).
 \end{align*}
-Therefore, $\zeta(\epsilon^i) = \zeta^i$. Let $\phi \in \widehat{V}$ be a mapping, then
+Therefore, $\zeta(\epsilon^i) = \zeta^i$. Let $\phi \in \yhwidehat{V}$ be a mapping, then
 \begin{align*}
     \phi & = \sum_{i = 1}^{n}a_i\zeta^i \\
     & = \sum_{i = 1}^{n}a_i\zeta(\epsilon^i) \\
     & = \zeta\left(\sum_{i = 1}^{n}a_i\epsilon^i\right) \\
     & = \zeta(p)
 \end{align*}
-for some $p \in \widehat{\F^n}$. Therefore, $\zeta$ is surjective. One may check that $\zeta$ is injective. Moreover, note that for $p, q \in \widehat{\F^n}$,
+for some $p \in \yhwidehat{\F^n}$. Therefore, $\zeta$ is surjective. One may check that $\zeta$ is injective. Moreover, note that for $p, q \in \yhwidehat{\F^n}$,
 \begin{align*}
     \bigl(m\zeta(p) + n\zeta(q)\bigr)\bigl(z(\mathbfit{a})\bigr) & = m\zeta(p)\bigl(z(\mathbfit{a})\bigr) + n\zeta(q)\bigl(z(\mathbfit{a})\bigr) \\
     & = mp(\mathbfit{a}) + nq(\mathbfit{a}) \\
     & = (mp + nq)(\mathbfit{a}) \\
     & = \zeta(mp + nq)\bigl(z(\mathbfit{a})\bigr).
 \end{align*}
-Therefore, $\zeta$ is a linear mapping and so it is an isomorphism. Indeed, this implies that $\zeta$ is a basis for $\widehat{V}$.
+Therefore, $\zeta$ is a linear mapping and so it is an isomorphism. Indeed, this implies that $\zeta$ is a basis for $\yhwidehat{V}$.
 
 Naturally, it feels justified to define a ``dual space of the dual space'' of $V$, namely 
 \begin{equation*}
-    \widehat{\widehat{V}} \coloneqq \mathcal{L}\left(\widehat{V}, \F\right) = \mathcal{L}\bigl(\mathcal{L}(V, \F), \F\bigr).
+    \yhwidehat{\yhwidehat{V}} \coloneqq \mathcal{L}\left(\yhwidehat{V}, \F\right) = \mathcal{L}\bigl(\mathcal{L}(V, \F), \F\bigr).
 \end{equation*}
 We can in fact prove that this space is isomorphic to $V$ itself. 
 \begin{probox}{Double Dual Space}{doubleDual}
     Let $V$ be a finite-dimensional vector space, then the double-dual space 
     \begin{equation*}
-        \widehat{\widehat{V}} \coloneqq \mathcal{L}\left(\widehat{V}, \F\right) = \mathcal{L}\bigl(\mathcal{L}(V, \F), \F\bigr)
+        \yhwidehat{\yhwidehat{V}} \coloneqq \mathcal{L}\left(\yhwidehat{V}, \F\right) = \mathcal{L}\bigl(\mathcal{L}(V, \F), \F\bigr)
     \end{equation*}
     is isomorphic to $V$.
     \tcblower
     \begin{proof}
-        Define a mapping $K \colon V \to \widehat{\widehat{V}}$ by $K(\mathbfit{v}) = f$ where $f \colon \widehat{V} \to V$ is such that $f(\alpha) = \alpha(\mathbfit{v})$. It suffices to prove that $K$ is an isomorphism. First, note that for any $\mathbfit{u}, \mathbfit{v} \in V$ and any $c \in \F$,
+        Define a mapping $K \colon V \to \yhwidehat{\yhwidehat{V}}$ by $K(\mathbfit{v}) = f$ where $f \colon \yhwidehat{V} \to V$ is such that $f(\alpha) = \alpha(\mathbfit{v})$. It suffices to prove that $K$ is an isomorphism. First, note that for any $\mathbfit{u}, \mathbfit{v} \in V$ and any $c \in \F$,
         \begin{align*}
             K(c\mathbfit{v} + \mathbfit{u})(\alpha) & = \alpha(c\mathbfit{v} + \mathbfit{u}) \\
             & = c\alpha(\mathbfit{v}) + \alpha(\mathbfit{u}) \\
             & = cK(\mathbfit{v})(\alpha) + K(\mathbfit{u})(\alpha) \\
             & = \bigl(cK(\mathbfit{v}) + K(\mathbfit{u})\bigr)(\alpha)
         \end{align*}
-        for all $\alpha \in \widehat{V}$. Therefore, $K$ is a homomorphism. Let $K(\mathbfit{v}) = 0_{\widehat{V} \to V}$ be the zero mapping, then 
+        for all $\alpha \in \yhwidehat{V}$. Therefore, $K$ is a homomorphism. Let $K(\mathbfit{v}) = 0_{\yhwidehat{V} \to V}$ be the zero mapping, then 
         \begin{equation*}
             K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v}) = 0
         \end{equation*}
-        for all $\alpha \in \widehat{V}$. This implies that $\mathbfit{v} = \zero$, and so $\mathrm{null}(K) = 0$ since $V$ is finite-dimensional. By Proposition \ref{pro:injectTest}, $K$ is injective, and so by Corollary \ref{cor:bijectiveReflexiveMap}, $K$ is bijective. Therefore, $K$ is an isomorphism and so $\widehat{\widehat{V}} \cong V$.
+        for all $\alpha \in \yhwidehat{V}$. This implies that $\mathbfit{v} = \zero$, and so $\mathrm{null}(K) = 0$ since $V$ is finite-dimensional. By Proposition \ref{pro:injectTest}, $K$ is injective, and so by Corollary \ref{cor:bijectiveReflexiveMap}, $K$ is bijective. Therefore, $K$ is an isomorphism and so $\yhwidehat{\yhwidehat{V}} \cong V$.
     \end{proof}
 \end{probox}
-Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\widehat{V}$ to $\F$. We can verify that $\mathbfit{v}$ is linear, because
+Therefore, this means that it is perfectly legal to view each $\mathbfit{v} \in V$ as a mapping from $\yhwidehat{V}$ to $\F$. We can verify that $\mathbfit{v}$ is linear, because
 \begin{align*}
     \mathbfit{v}(m\alpha + n\beta) & = m\alpha(\mathbfit{v}) + n\beta(\mathbfit{v}) \\
     & = m\mathbfit{v}(\alpha) + n\mathbfit{v}(\beta).
 \end{align*}
-Therefore, we can in some sense view a vector space and its dual space the \textit{dual} of each other. Consider a mapping $T \colon V \to V$ for some vector space $V$, the duality between $V$ and~$\widehat{V}$ tempts us to think that there exists some mapping $S \colon \widehat{V} \colon \widehat{V}$ with a certain correspondence to $T$.
+Therefore, we can in some sense view a vector space and its dual space the \textit{dual} of each other. Consider a mapping $T \colon V \to V$ for some vector space $V$, the duality between $V$ and~$\yhwidehat{V}$ tempts us to think that there exists some mapping $S \colon \yhwidehat{V} \colon \yhwidehat{V}$ with a certain correspondence to $T$.
 \begin{dfnbox}{Transpose}{tranpose}
-    Let $T \colon V \to V$ be a linear transformation. The {\color{red} \textbf{transpose}} of $T$ is defined as the mapping~$\widehat{T} \colon \widehat{V} \to \widehat{V}$ such that 
+    Let $T \colon V \to V$ be a linear transformation. The {\color{red} \textbf{transpose}} of $T$ is defined as the mapping~$\yhwidehat{T} \colon \yhwidehat{V} \to \yhwidehat{V}$ such that 
     \begin{equation*}
-        \widehat{T}(\alpha)(\mathbfit{v}) = \alpha\bigl(T(\mathbfit{v})\bigr)
+        \yhwidehat{T}(\alpha)(\mathbfit{v}) = \alpha\bigl(T(\mathbfit{v})\bigr)
     \end{equation*}
-    for any $\alpha \in \widehat{V}$. 
+    for any $\alpha \in \yhwidehat{V}$. 
 \end{dfnbox}
-We can verify that the transpose is still linear, because for any $\alpha, \beta \in \widehat{V}$ and any $c \in \F$, we have 
+We can verify that the transpose is still linear, because for any $\alpha, \beta \in \yhwidehat{V}$ and any $c \in \F$, we have 
 \begin{align*}
-    \widehat{T}(c\alpha + \beta)(\mathbfit{v}) & = (c\alpha + \beta)\bigl(T(\mathbfit{v})\bigr) \\
+    \yhwidehat{T}(c\alpha + \beta)(\mathbfit{v}) & = (c\alpha + \beta)\bigl(T(\mathbfit{v})\bigr) \\
     & = c\alpha\bigl(T(\mathbfit{v})\bigr) + \beta\bigl(T(\mathbfit{v})\bigr) \\
-    & = c\widehat{T}(\alpha)(\mathbfit{v}) + \widehat{T}(\beta)(\mathbfit{v}) \\
-    & = \left(c\widehat{T}(\alpha) + \widehat{T}(\beta)\right)(\mathbfit{v})
+    & = c\yhwidehat{T}(\alpha)(\mathbfit{v}) + \yhwidehat{T}(\beta)(\mathbfit{v}) \\
+    & = \left(c\yhwidehat{T}(\alpha) + \yhwidehat{T}(\beta)\right)(\mathbfit{v})
 \end{align*}
-for all $\mathbfit{v} \in V$, which implies that $\widehat{T}(c\alpha + \beta) = c\widehat{T}(\alpha) + \widehat{T}(\beta)$.
+for all $\mathbfit{v} \in V$, which implies that $\yhwidehat{T}(c\alpha + \beta) = c\yhwidehat{T}(\alpha) + \yhwidehat{T}(\beta)$.
 
 In fact, the very action of taking the transpose is a linear transformation!
 \begin{probox}{Linearity of Transposition}{linearTranspose}
-    Let $\tau$ be a mapping over $\mathcal{L}(V, V)$ for some finite-dimensional vector space $V$ such that $\tau(T) = \widehat{T}$, then $\tau$ is a linear transformation.
+    Let $\tau$ be a mapping over $\mathcal{L}(V, V)$ for some finite-dimensional vector space $V$ such that $\tau(T) = \yhwidehat{T}$, then $\tau$ is a linear transformation.
     \tcblower
     \begin{proof}
         Take any $\alpha, \beta \in \mathcal{V, V}$ and any $c \in \F$. For any $\gamma \in \mathcal{L}(V, V)$ and any $\mathbfit{v} \in V$, consider 
         \begin{align*}
-            \tau(c\alpha + \beta)(\gamma)(\mathbfit{v}) & = \left(\widehat{c\alpha + \beta}\right)(\gamma)(\mathbfit{v}) \\
+            \tau(c\alpha + \beta)(\gamma)(\mathbfit{v}) & = \left(\yhwidehat{c\alpha + \beta}\right)(\gamma)(\mathbfit{v}) \\
             & = \gamma\bigl((c\alpha + \beta)(\mathbfit{v})\bigr) \\
             & = c\gamma\bigl(\alpha(\mathbfit{v})\bigr) + \gamma\bigl(\beta(\mathbfit{v})\bigr) \\
-            & = c\widehat{\alpha}(\gamma)(\mathbfit{v}) + \widehat{\beta}(\gamma)(\mathbfit{v}) \\
+            & = c\yhwidehat{\alpha}(\gamma)(\mathbfit{v}) + \yhwidehat{\beta}(\gamma)(\mathbfit{v}) \\
             & = c\tau(\alpha)(\gamma)(\mathbfit{v}) + \tau(\beta)(\gamma)(\mathbfit{v}).
         \end{align*}
         Since $\mathbfit{v}$ is arbitrary, this means that $\tau(c\alpha + \beta)(\gamma) = c\tau(\alpha)(\gamma) + \tau(\beta)(\gamma)$ for all $\gamma \in \mathcal{L}(V, V)$, and so $\tau(c\alpha + \beta) = c\tau(\alpha) + \tau(\beta)$. Therefore, $\tau$ is a linear transformation.
@@ -689,7 +689,7 @@ The above is essentially saying that the transpose of a linear combination equal
 \section{Tensor Product}
 An important concept related to dual spaces is the \textit{tensor product}. It is sometimes referred to as an operation and other times as a space itself.
 \begin{dfnbox}{Tensor Product between Vector Spaces and Their Dual}{tensorProd}
-    Let $V$ be a vector space with the dual space $\widehat{V}$. For any $\mathbfit{v} \in V$ and $\alpha \in \widehat{V}$, their {\color{red} \textbf{tensor product}} is defined as a mapping $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ such that
+    Let $V$ be a vector space with the dual space $\yhwidehat{V}$. For any $\mathbfit{v} \in V$ and $\alpha \in \yhwidehat{V}$, their {\color{red} \textbf{tensor product}} is defined as a mapping $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ such that
     \begin{equation*}
         (\mathbfit{v} \otimes \alpha)(\mathbfit{u}) = \alpha(\mathbfit{u})\mathbfit{v}.
     \end{equation*}
@@ -699,16 +699,16 @@ We can see that $\mathbfit{v} \otimes \alpha$ is linear with respect to both $\m
     \bigl((\mathbfit{u + v}) \otimes \alpha\bigr)(\mathbfit{w}) & = \alpha(\mathbfit{w})(\mathbfit{u + v}) = \alpha(\mathbfit{w})\mathbfit{u} + \alpha(\mathbfit{w})\mathbfit{v} = (\mathbfit{u} \otimes \alpha + \mathbfit{v} \otimes \alpha)(\mathbfit{v}), \\
     \bigl(\mathbfit{v} \otimes (\alpha + \beta)\bigr)(\mathbfit{w}) & = (\alpha + \beta)(\mathbfit{w})\mathbfit{v} = \alpha(\mathbfit{w})\mathbfit{v} + \beta(\mathbfit{w})\mathbfit{v} = (\mathbfit{v} \otimes \alpha + \mathbfit{v} \otimes \beta)(\mathbfit{w}).
 \end{align*}
-In particular, let $\beta \in \widehat{V}$, then clearly $\beta \circ (\mathbfit{v} \otimes \alpha) \in \widehat{V}$. Define a mapping $T$ over $\widehat{V}$ by
+In particular, let $\beta \in \yhwidehat{V}$, then clearly $\beta \circ (\mathbfit{v} \otimes \alpha) \in \yhwidehat{V}$. Define a mapping $T$ over $\yhwidehat{V}$ by
 \begin{equation*}
     T(\beta) = \beta \circ (\mathbfit{v} \otimes \alpha),
 \end{equation*}
-then we can see that $T \in \mathcal{L}\left(\widehat{V}, \widehat{V}\right)$. In fact, for any $\mathbfit{u} \in V$, consider
+then we can see that $T \in \mathcal{L}\left(\yhwidehat{V}, \yhwidehat{V}\right)$. In fact, for any $\mathbfit{u} \in V$, consider
 \begin{align*}
     T(\beta)(\mathbfit{u}) & = \bigl(\beta \circ (\mathbfit{v} \otimes \alpha)\bigr)(\mathbfit{u}) \\
     & = \beta\bigl((\mathbfit{v} \otimes \alpha)(\mathbfit{u})\bigr).
 \end{align*}
-By Definition \ref{dfn:tranpose}, $T$ is the transpose of $\mathbfit{v} \otimes \alpha$ for any $\mathbfit{v} \in V$ and $\alpha \in \widehat{V}$. Furthermore, note that $\alpha(\mathbfit{u}) \in \F$, we see that
+By Definition \ref{dfn:tranpose}, $T$ is the transpose of $\mathbfit{v} \otimes \alpha$ for any $\mathbfit{v} \in V$ and $\alpha \in \yhwidehat{V}$. Furthermore, note that $\alpha(\mathbfit{u}) \in \F$, we see that
 \begin{align*}
     T(\beta)(\mathbfit{u}) & = \beta\bigl((\mathbfit{v} \otimes \alpha)(\mathbfit{u})\bigr) \\
     & = \beta\bigl(\alpha(\mathbfit{u})\mathbfit{v}\bigr) \\
@@ -787,28 +787,28 @@ It is not difficult to see that from Proposition \ref{pro:tenserProdBasis}, the 
 \end{notebox}
 Recall that we have defined transpose without using matrices. Now let us verify that our definition stays consistent with the elementary definition of matrix transposition.
 \begin{probox}{Matrix Representation of Transpose Mappings}{matrixTranspose}
-    Let $T \colon V \to V$ be a linear mapping with matrix representation $\mathbfit{T}$. Let $\widehat{T}$ be the transpose of $T$, then the matrix representation of $\widehat{T}$ is such that $\widehat{T}^{i}_j = T^j_i$.
+    Let $T \colon V \to V$ be a linear mapping with matrix representation $\mathbfit{T}$. Let $\yhwidehat{T}$ be the transpose of $T$, then the matrix representation of $\yhwidehat{T}$ is such that $\yhwidehat{T}^{i}_j = T^j_i$.
     \tcblower
     \begin{proof}
-        Define $K \colon V \to \widehat{\widehat{V}}$ by $K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v})$, then $K(\mathbfit{v}) = \alpha \mapsto \alpha(\mathbfit{v})$. Consider the following lemma:
+        Define $K \colon V \to \yhwidehat{\yhwidehat{V}}$ by $K(\mathbfit{v})(\alpha) = \alpha(\mathbfit{v})$, then $K(\mathbfit{v}) = \alpha \mapsto \alpha(\mathbfit{v})$. Consider the following lemma:
         \begin{lembox}{Transpose of Tensor Products}{tensorTrans}
-            Let $V$ be a finite-dimensional space. For any $\mathbfit{v} \in V$ and $\alpha \in \widehat{V}$, we have 
+            Let $V$ be a finite-dimensional space. For any $\mathbfit{v} \in V$ and $\alpha \in \yhwidehat{V}$, we have 
             \begin{equation*}
-                \widehat{\mathbfit{v} \otimes \alpha} = \alpha \otimes K(\mathbfit{v}).
+                \yhwidehat{\mathbfit{v} \otimes \alpha} = \alpha \otimes K(\mathbfit{v}).
             \end{equation*}
             \tcblower
             \begin{proof}
-                Let $f \colon \mathbfit{v} \otimes \alpha$, for any $\beta \in \widehat{V}$ and any $\mathbfit{w} \in V$, consider 
+                Let $f \colon \mathbfit{v} \otimes \alpha$, for any $\beta \in \yhwidehat{V}$ and any $\mathbfit{w} \in V$, consider 
                 \begin{align*}
-                    \widehat{f}(\beta)(\mathbfit{w}) & = \beta\bigl(f(\mathbfit{w})\bigr) \\
+                    \yhwidehat{f}(\beta)(\mathbfit{w}) & = \beta\bigl(f(\mathbfit{w})\bigr) \\
                     & = \beta\bigl(\alpha(\mathbfit{w})\mathbfit{v}\bigr) \\
                     & = \alpha(\mathbfit{w})\beta(\mathbfit{v}), \\
                     \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)(\mathbfit{w}) & = \bigl(K(\mathbfit{v})(\beta)\alpha\bigr)(\mathbfit{w}) \\
                     & = \alpha(\mathbfit{w})\beta(\mathbfit{v}).
                 \end{align*}     
-                Therefore, $\widehat{f}(\beta) =  \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)$ for all $\beta \in \widehat{V}$, which implies that 
+                Therefore, $\yhwidehat{f}(\beta) =  \bigl(\alpha \otimes K(\mathbfit{v})\bigr)(\beta)$ for all $\beta \in \yhwidehat{V}$, which implies that 
                 \begin{equation*}
-                    \mathbfit{v} \otimes \alpha = \widehat{f} = \alpha \otimes K(\mathbfit{v}).
+                    \mathbfit{v} \otimes \alpha = \yhwidehat{f} = \alpha \otimes K(\mathbfit{v}).
                 \end{equation*}
             \end{proof}
         \end{lembox}
@@ -819,15 +819,15 @@ Recall that we have defined transpose without using matrices. Now let us verify 
                 0 & \textrm{otherwise}
             \end{cases}.
         \end{equation*}
-        Therefore, all of the $K(\mathbfit{z}_i)$'s forms a dual basis for $\widehat{V}$. By Proposition \ref{pro:tenserProdBasis} and Definition \ref{dfn:linTransMat}, we know that 
+        Therefore, all of the $K(\mathbfit{z}_i)$'s forms a dual basis for $\yhwidehat{V}$. By Proposition \ref{pro:tenserProdBasis} and Definition \ref{dfn:linTransMat}, we know that 
         \begin{equation*}
-            \widehat{T} = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\widehat{T}^i_j\left(\zeta^i \otimes K(\mathbfit{z}_j)\right), \qquad T = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\mathbfit{z}_j \otimes \zeta^i\right).
+            \yhwidehat{T} = \sum_{i = 1}^{n}\sum_{j = 1}^{n}\yhwidehat{T}^i_j\left(\zeta^i \otimes K(\mathbfit{z}_j)\right), \qquad T = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\mathbfit{z}_j \otimes \zeta^i\right).
         \end{equation*}
         By Proposition \ref{pro:linearTranspose}, we know that 
         \begin{equation*}
-            \widehat{T} = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\widehat{\mathbfit{z}_j \otimes \zeta^i}\right).
+            \yhwidehat{T} = \sum_{j = 1}^{n}\sum_{i = 1}^{n}T^j_i\left(\yhwidehat{\mathbfit{z}_j \otimes \zeta^i}\right).
         \end{equation*}
-        By Lemma \ref{lem:tensorTrans}, $\widehat{\mathbfit{z}_j \otimes \zeta^i} = \zeta^i \otimes K(\mathbfit{z}_j)$, so $\widehat{T}^i_j = T^j_i$. 
+        By Lemma \ref{lem:tensorTrans}, $\yhwidehat{\mathbfit{z}_j \otimes \zeta^i} = \zeta^i \otimes K(\mathbfit{z}_j)$, so $\yhwidehat{T}^i_j = T^j_i$. 
     \end{proof}
 \end{probox}
 Let $V$ be a finite-dimensional vector space with $\dim(V) = n$ and let $\mathcal{M}_{n \times n}$ be the vector space of all $n \times n$ matrices. Define $M_z \colon \mathcal{L}(V, V) \to \mathcal{M}_{n \times n}$ that maps each $T \in \mathcal{L}(V, V)$ to its matrix representation $\mathbfit{T}$. Intuitively, it is an isomorphism.
@@ -846,7 +846,7 @@ When the context is clear, we can be a bit sloppy and regard $M_z$ just as $\mat
 
 We can augment $\mathcal{L}(V, V)$ with the $\circ$ operation. For any $S, T \in \mathcal{L}(V, V)$, clearly $S \circ T \in \mathcal{L}(V, V)$, so $\mathcal{L}(V, V)$ is an algebra. This means that it is justified to write $S \circ T$ as a product $ST$.
 
-Let $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \widehat{V}$, for any $\mathbfit{w} \in V$, consider
+Let $\mathbfit{u}, \mathbfit{v} \in V$ and $\alpha, \beta \in \yhwidehat{V}$, for any $\mathbfit{w} \in V$, consider
 \begin{align*}
     \bigl((\mathbfit{u} \otimes \alpha) \circ (\mathbfit{v} \otimes \beta)\bigr)(\mathbfit{w}) & = (\mathbfit{u} \otimes \alpha)\bigl(\beta(\mathbfit{w})\mathbfit{v}\bigr) \\
     & = \alpha\bigl(\beta(\mathbfit{w})\mathbfit{v}\bigr)\mathbfit{u} \\
@@ -879,7 +879,7 @@ Intuitively, the matrix of a composite map can be obtained via matrix multiplica
     \end{proof}
 \end{probox}
 \section{Change of Basis}\label{sectionChangeBasis}
-Let $z$ be a basis for a vector space $V$. For any $\mathbfit{v} \in V$, define $\mathbfit{v}^*_z \coloneqq z^{-1}(\mathbfit{v})$. Clearly $\mathbfit{v}^*_z \in \F^n$. We can view $\mathbfit{v}^*_z$ as the ``coordinates'' of $\mathbfit{v}$ with respect to $z$. Suppose $\alpha \in \widehat{V}$, we define some $\alpha^*_z \in \widehat{\F^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$. In particular, suppose the $i$-th component of $\alpha$ is $\alpha_i$, we notice that
+Let $z$ be a basis for a vector space $V$. For any $\mathbfit{v} \in V$, define $\mathbfit{v}^*_z \coloneqq z^{-1}(\mathbfit{v})$. Clearly $\mathbfit{v}^*_z \in \F^n$. We can view $\mathbfit{v}^*_z$ as the ``coordinates'' of $\mathbfit{v}$ with respect to $z$. Suppose $\alpha \in \yhwidehat{V}$, we define some $\alpha^*_z \in \yhwidehat{\F^n}$ by $\alpha^*_z \coloneqq \alpha \circ z$. In particular, suppose the $i$-th component of $\alpha$ is $\alpha_i$, we notice that
 \begin{equation*}
     \alpha^*_z(\mathbfit{e}_i) = \alpha\bigl(z(\mathbfit{e}_i)\bigr) = \alpha(\mathbfit{z}_i) = \alpha_i.
 \end{equation*}
@@ -1459,25 +1459,25 @@ Using bilinear maps, we shall state the real definition of tensor products.
 \begin{dfnbox}{Tensor Product}{tensor}
     Let $V$ and $W$ be vector spaces. The {\color{red} \textbf{tensor product}} of $V$ and $W$ is a vector space $V \otimes W$ with a bilinear map $\otimes \colon V \times W \to V \otimes W$ such that for every bilinear map $h \colon V \times W \to Z$, there is a unique map $\widetilde{h} \colon V \otimes W \to Z$ with $h = \widetilde{h} \circ \otimes$.
 \end{dfnbox}
-Now looking back at our Definition \ref{dfn:tensorProd}, we consider the vector space $V \otimes \widehat{V}$. For every $\mathbfit{u} \in V$, define $h_{\mathbfit{u}} \colon V \times \widehat{V} \to V$ to be a bilinear map such that $h_{\mathbfit{u}}(\mathbfit{v}, \alpha) = \alpha(\mathbfit{v})\mathbfit{u}$. By Definition \ref{dfn:tensor}, there is a unique map $\widetilde{h}_{\mathbfit{u}} \colon V \otimes \widehat{V} \to V$ such that 
+Now looking back at our Definition \ref{dfn:tensorProd}, we consider the vector space $V \otimes \yhwidehat{V}$. For every $\mathbfit{u} \in V$, define $h_{\mathbfit{u}} \colon V \times \yhwidehat{V} \to V$ to be a bilinear map such that $h_{\mathbfit{u}}(\mathbfit{v}, \alpha) = \alpha(\mathbfit{v})\mathbfit{u}$. By Definition \ref{dfn:tensor}, there is a unique map $\widetilde{h}_{\mathbfit{u}} \colon V \otimes \yhwidehat{V} \to V$ such that 
 \begin{equation*}
     \widetilde{h}_{\mathbfit{u}}(\mathbfit{v} \otimes \alpha) = h_{\mathbfit{u}}(\mathbfit{v}, \alpha) = \alpha(\mathbfit{v})\mathbfit{u}.
 \end{equation*}
 Clearly, by taking $\mathbfit{v} \otimes \alpha \in \mathcal{L}(V, V)$ and define $\widetilde{h}_{\mathbfit{u}}(\mathbfit{v} \otimes \alpha) = (\mathbfit{v} \otimes \alpha)(\mathbfit{u})$, the only possible way for the definition to stay consistent is $(\mathbfit{v} \otimes \alpha)(\mathbfit{u}) = \alpha(\mathbfit{v})\mathbfit{u}$.
 \begin{dfnbox}{Tensor Product between Dual Vectors}{dualVecTensor}
-    Let $V$ be a finite-dimensional vector space. For any $\alpha, \beta \in \widehat{V}$, their {\color{red} \textbf{tensor product}} is defined as the mapping 
+    Let $V$ be a finite-dimensional vector space. For any $\alpha, \beta \in \yhwidehat{V}$, their {\color{red} \textbf{tensor product}} is defined as the mapping 
     \begin{equation*}
         \alpha \otimes \beta \colon V \times V \to \F
     \end{equation*}
     such that $(\alpha \otimes \beta)(\mathbfit{u}, \mathbfit{v}) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$.
 \end{dfnbox}
-We shall also check that this definition stays consistent with the universal property in Definition \ref{dfn:tensor}. For each $\mathbfit{u}, \mathbfit{v} \in V$, define $h_{\mathbfit{u}, \mathbfit{v}} \colon \widehat{V} \times \widehat{V} \to \F$ by $h_{\mathbfit{u}, \mathbfit{v}}(\alpha, \beta) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$. Now, there is a unique map $\widetilde{h}_{\alpha, \beta} \colon \widehat{V} \otimes \widehat{V} \to \F$ such that 
+We shall also check that this definition stays consistent with the universal property in Definition \ref{dfn:tensor}. For each $\mathbfit{u}, \mathbfit{v} \in V$, define $h_{\mathbfit{u}, \mathbfit{v}} \colon \yhwidehat{V} \times \yhwidehat{V} \to \F$ by $h_{\mathbfit{u}, \mathbfit{v}}(\alpha, \beta) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$. Now, there is a unique map $\widetilde{h}_{\alpha, \beta} \colon \yhwidehat{V} \otimes \yhwidehat{V} \to \F$ such that 
 \begin{equation*}
     \widetilde{h}_{\mathbfit{u}, \mathbfit{v}}(\alpha \otimes \beta) = h_{\mathbfit{u}, \mathbfit{v}}(\alpha, \beta) = \alpha(\mathbfit{u})\beta(\mathbfit{v}).
 \end{equation*}
-If we take $\otimes \colon \widehat{V} \times \widehat{V} \to \mathcal{L}\left(V^2, \F\right)$, clearly $\widetilde{h}_{\mathbfit{u}, \mathbfit{v}}(\alpha \otimes \beta) = (\alpha \otimes \beta)(\mathbfit{u}, \mathbfit{v}) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$.
+If we take $\otimes \colon \yhwidehat{V} \times \yhwidehat{V} \to \mathcal{L}\left(V^2, \F\right)$, clearly $\widetilde{h}_{\mathbfit{u}, \mathbfit{v}}(\alpha \otimes \beta) = (\alpha \otimes \beta)(\mathbfit{u}, \mathbfit{v}) = \alpha(\mathbfit{u})\beta(\mathbfit{v})$.
 
-It is easy to see that for any basic vectors $\zeta^i, \zeta^j$ for $\widehat{V}$, the mapping $\zeta^i \otimes \zeta^j$ is a bilinear form over $V$.
+It is easy to see that for any basic vectors $\zeta^i, \zeta^j$ for $\yhwidehat{V}$, the mapping $\zeta^i \otimes \zeta^j$ is a bilinear form over $V$.
 \begin{probox}{Basis of the Bilinear Form Space}{bilBasis}
     Let $\mathbb{B}(V)$ be the set of all bilinear forms over a vector space $V$ with a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ and a dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$, then the set 
     \begin{equation*}
@@ -1503,16 +1503,16 @@ It is easy to see that for any basic vectors $\zeta^i, \zeta^j$ for $\widehat{V}
         for any $\mathbfit{z}_p, \mathbfit{z}_q$, so $h = b$, which implies that $\mathbb{B}(V) = \mathrm{span}\left\{\zeta^i \otimes \zeta^j \colon i \neq j \right\}$. One may easily check that $h$ is the zero mapping if and only if $b_{ij} = 0$ for all $i, j$, so $\left\{\zeta^i \otimes \zeta^j \colon i \neq j \right\}$ is a basis for $\mathbb{B}(V)$.
     \end{proof}
 \end{probox}
-In this sense, $\mathbb{B}(V) = \mathcal{L}(V^2, \F)$. However, intuitively for each mapping $(\mathbfit{u}, \mathbfit{v}) \mapsto c$, this is equivalent to finding some $T_{\mathbfit{u}} \in \widehat{V}$ for each $\mathbfit{u} \in V$ and apply the mapping to $\mathbfit{v}$.
+In this sense, $\mathbb{B}(V) = \mathcal{L}(V^2, \F)$. However, intuitively for each mapping $(\mathbfit{u}, \mathbfit{v}) \mapsto c$, this is equivalent to finding some $T_{\mathbfit{u}} \in \yhwidehat{V}$ for each $\mathbfit{u} \in V$ and apply the mapping to $\mathbfit{v}$.
 \begin{probox}{Every Bilinear Maps to a Unique Dual Vector}{BisLVV*}
-    For any finite-dimensional vector space $V$, we have $\mathbb{B}(V) \cong \mathcal{L}\left(V, \widehat{V}\right)$.
+    For any finite-dimensional vector space $V$, we have $\mathbb{B}(V) \cong \mathcal{L}\left(V, \yhwidehat{V}\right)$.
     \tcblower
     \begin{proof}
-        Take any $b \in \mathbb{B}(V)$. Define a mapping $f \colon \mathbb{B}(V) \to  \mathcal{L}\left(V, \widehat{V}\right)$ by $f(b) = b^{\#}$, where $b^{\#}(\mathbfit{v})(\mathbfit{u}) = b(\mathbfit{u}, \mathbfit{v})$. Suppose there are $b_1, b_2 \in \mathbb{B}(V)$ with $b_1 \neq b_2$, then there exists $\mathbfit{u}, \mathbfit{v} \in V$ such that 
+        Take any $b \in \mathbb{B}(V)$. Define a mapping $f \colon \mathbb{B}(V) \to  \mathcal{L}\left(V, \yhwidehat{V}\right)$ by $f(b) = b^{\#}$, where $b^{\#}(\mathbfit{v})(\mathbfit{u}) = b(\mathbfit{u}, \mathbfit{v})$. Suppose there are $b_1, b_2 \in \mathbb{B}(V)$ with $b_1 \neq b_2$, then there exists $\mathbfit{u}, \mathbfit{v} \in V$ such that 
         \begin{equation*}
             b_1^{\#}(\mathbfit{v})(\mathbfit{u}) = b_1(\mathbfit{u}, \mathbfit{v}) \neq b_2(\mathbfit{u}, \mathbfit{v}) = b_2^{\#}(\mathbfit{v})(\mathbfit{u}),
         \end{equation*}
-        which implies that $b_1^{\#}(\mathbfit{v}) \neq b_2^{\#}(\mathbfit{v})$, and so $b_1^{\#} \neq b_2^{\#}$. Therefore, the $f$ is injective. Now, take any $b^{\#} \in \mathcal{L}\left(V, \widehat{V}\right)$, let $b$ be a bilinear form with $b(\mathbfit{u}, \mathbfit{v}) = b^{\#}(\mathbfit{v})(\mathbfit{u})$, then by definition clearly $f(b) = b^{\#}$. Therefore, $f$ is surjective, and so $\mathbb{B}(V) \cong \mathcal{L}\left(V, \widehat{V}\right)$.
+        which implies that $b_1^{\#}(\mathbfit{v}) \neq b_2^{\#}(\mathbfit{v})$, and so $b_1^{\#} \neq b_2^{\#}$. Therefore, the $f$ is injective. Now, take any $b^{\#} \in \mathcal{L}\left(V, \yhwidehat{V}\right)$, let $b$ be a bilinear form with $b(\mathbfit{u}, \mathbfit{v}) = b^{\#}(\mathbfit{v})(\mathbfit{u})$, then by definition clearly $f(b) = b^{\#}$. Therefore, $f$ is surjective, and so $\mathbb{B}(V) \cong \mathcal{L}\left(V, \yhwidehat{V}\right)$.
     \end{proof}
 \end{probox}
 We can write 
@@ -1716,20 +1716,20 @@ Recall that in $\R^n$, one can construct a coordinate system using a set of $n$ 
         Every inner product space has an orthonormal basis.
     \end{probox}
     \section{Riesz Representation}
-    Recall that in Proposition \ref{pro:BisLVV*}, we have demonstrated that every bilinear form over a vector space $V$ defines a mapping from $V$ to $\widehat{V}$. This mapping becomes very special if we construct it with respect to an inner product.
+    Recall that in Proposition \ref{pro:BisLVV*}, we have demonstrated that every bilinear form over a vector space $V$ defines a mapping from $V$ to $\yhwidehat{V}$. This mapping becomes very special if we construct it with respect to an inner product.
     \begin{thmbox}{Riesz Representation Theorem}{Riesz}
-        For any inner product space $(V, g)$, let the mapping $\Gamma \colon V \to \widehat{V}$ be such that
+        For any inner product space $(V, g)$, let the mapping $\Gamma \colon V \to \yhwidehat{V}$ be such that
         \begin{equation*}
             \Gamma(\mathbfit{u})(\mathbfit{v}) = g(\mathbfit{v}, \mathbfit{u}),
         \end{equation*}
-        then for every $\alpha \in \widehat{V}$, there is a unique $\mathbfit{u}_{\alpha} \in V$ such that $\alpha = \Gamma\left(\mathbfit{u}_{\alpha}\right)$.
+        then for every $\alpha \in \yhwidehat{V}$, there is a unique $\mathbfit{u}_{\alpha} \in V$ such that $\alpha = \Gamma\left(\mathbfit{u}_{\alpha}\right)$.
         \tcblower
         \begin{proof}
             $\Gamma$ is clearly a homomorphism, so this is equivalent to proving that $\Gamma$ is an isomorphism. Let $\Gamma(\mathbfit{u}_0) = 0$, then $g(\mathbfit{v}, \mathbfit{u}_0) = 0$ for all $\mathbfit{v} \in V$. Therefore, $g(\zero, \mathbfit{u}_0) = 0$, which implies that $\mathbfit{u}_0 = \zero$. This means that $\mathrm{null}(\Gamma) = 0$ and so $\Gamma$ is injective. By Theorem \ref{thm:rankNull}, 
             \begin{equation*}
-                \mathrm{rank}(\Gamma) = \dim(V) = \dim\left(\widehat{V}\right),
+                \mathrm{rank}(\Gamma) = \dim(V) = \dim\left(\yhwidehat{V}\right),
             \end{equation*}
-            and so $\mathrm{range}(\Gamma) = \widehat{V}$, which means that $\Gamma$ is surjective. Therefore, $\Gamma$ is an isomorphism.
+            and so $\mathrm{range}(\Gamma) = \yhwidehat{V}$, which means that $\Gamma$ is surjective. Therefore, $\Gamma$ is an isomorphism.
         \end{proof}
     \end{thmbox}
     The above theorem essentially says that in any inner product space $(V, g)$, the dual vectors can be expressed in terms of the vectors in $V$ through $g$. Immediately, we see that if $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ is an orthonormal basis, then the corresponding dual basis can be expressed as $\zeta^i = \Gamma\left(\mathbfit{z}_i\right)$ because 
@@ -1756,11 +1756,11 @@ Recall that in $\R^n$, one can construct a coordinate system using a set of $n$ 
         Let $T$ be an operator on an inner product space $(V, g)$, then $\Gamma \circ T$ defines a bilinear form over $V$, where $\Gamma$ is the Riesz isomorphism. 
         \tcblower
         \begin{proof}
-            By Proposition \ref{pro:BisLVV*}, since $\Gamma \circ T \in \mathcal{L}\left(V, \widehat{V}\right)$, there is a unique bilinear form $b_T \colon V \times V \to V$ defined by 
+            By Proposition \ref{pro:BisLVV*}, since $\Gamma \circ T \in \mathcal{L}\left(V, \yhwidehat{V}\right)$, there is a unique bilinear form $b_T \colon V \times V \to V$ defined by 
             \begin{equation*}
                 b_T(\mathbfit{u}, \mathbfit{v}) = (\Gamma \circ T)(\mathbfit{v})(\mathbfit{u}) = \Gamma\bigl(T(\mathbfit{v})\bigr)(\mathbfit{u}) = g\bigl(\mathbfit{u}, T(\mathbfit{v})\bigr).
             \end{equation*}
-            Conversely, for any bilinear form $b \in \mathbb{B}(V)$, we can similarly construct $b^{\#}_T \colon V \to \widehat{V}$ by $b^{\#}_T(\mathbfit{v})(\mathbfit{u}) = b(\mathbfit{u}, \mathbfit{v})$. Therefore, $\Gamma^{-1} \circ b^{\#}_T \in \mathcal{L}(V, V)$ is an operator over $V$. 
+            Conversely, for any bilinear form $b \in \mathbb{B}(V)$, we can similarly construct $b^{\#}_T \colon V \to \yhwidehat{V}$ by $b^{\#}_T(\mathbfit{v})(\mathbfit{u}) = b(\mathbfit{u}, \mathbfit{v})$. Therefore, $\Gamma^{-1} \circ b^{\#}_T \in \mathcal{L}(V, V)$ is an operator over $V$. 
         \end{proof}
     \end{probox}
     In fact, for any operator $T$ over an inner product space $(V, g)$, we can write down the components of $b_T$ explicitly. Fix a basis $\left\{\mathbfit{z}_1, \mathbfit{z}_2, \cdots, \mathbfit{z}_n\right\}$ for $V$, then 
@@ -1800,7 +1800,7 @@ Recall that in $\R^n$, one can construct a coordinate system using a set of $n$ 
         \end{align*}
         for all $\alpha, \beta \in \C$.
     \end{dfnbox}
-    If we denote the set of all sesquilinear forms over a vector space $V$ as $\mathbb{S}(V)$, then just like Proposition \ref{pro:BisLVV*}, $\mathbb{S}(V) \cong \mathrm{Maps}\left(V, \widehat{V}\right)$. This is because for every $s \in \mathbb{S}(V)$, we can also define some $s^{\#} \in \mathrm{Maps}\left(V, \widehat{V}\right)$ such that $s^{\#}(\mathbfit{v})(\mathbfit{u}) = s(\mathbfit{u}, \mathbfit{v})$. However, notice that now, $s^{\#}$ is no longer linear. Instead, it is said to be \textit{conjugate-linear}.
+    If we denote the set of all sesquilinear forms over a vector space $V$ as $\mathbb{S}(V)$, then just like Proposition \ref{pro:BisLVV*}, $\mathbb{S}(V) \cong \mathrm{Maps}\left(V, \yhwidehat{V}\right)$. This is because for every $s \in \mathbb{S}(V)$, we can also define some $s^{\#} \in \mathrm{Maps}\left(V, \yhwidehat{V}\right)$ such that $s^{\#}(\mathbfit{v})(\mathbfit{u}) = s(\mathbfit{u}, \mathbfit{v})$. However, notice that now, $s^{\#}$ is no longer linear. Instead, it is said to be \textit{conjugate-linear}.
     \begin{dfnbox}{Conjugate-Linear Map}{conjLin}
         Let $V$ and $W$ be vector spaces over $\C$, then a map $f \colon V \to W$ is said to be {\color{red} \textbf{conjugate-linear}} if 
         \begin{equation*}
@@ -1808,7 +1808,7 @@ Recall that in $\R^n$, one can construct a coordinate system using a set of $n$ 
         \end{equation*}
         for all $a, b \in \C$ and all.
     \end{dfnbox}
-    Therefore, every sesquilinear map over a complex vector space $V$ defines a unique conjugate-linear map from $V$ to $\widehat{V}$. In the other direction, given any conjugate-linear map $s^{\#} \colon V \to \widehat{V}$, we can define some sesquilinear form $s \colon V \times V \to \C$ by $s(\mathbfit{u}, \mathbfit{v}) = s^{\#}(\mathbfit{v})(\mathbfit{u})$.
+    Therefore, every sesquilinear map over a complex vector space $V$ defines a unique conjugate-linear map from $V$ to $\yhwidehat{V}$. In the other direction, given any conjugate-linear map $s^{\#} \colon V \to \yhwidehat{V}$, we can define some sesquilinear form $s \colon V \times V \to \C$ by $s(\mathbfit{u}, \mathbfit{v}) = s^{\#}(\mathbfit{v})(\mathbfit{u})$.
 
     Luckily, the matrix representation of a sesquilinear form can be computed in the exact same way as a bilinear form by taking $s\left(\mathbfit{z}_i, \mathbfit{z}_j\right)$ as the $(i, j)$ entry. However, under a change of basis by $\mathbfit{y}_i = \sum_{j = 1}^{n}P^j_i\mathbfit{z}_j$, the new components are given by 
     \begin{align*}
@@ -1838,7 +1838,7 @@ Recall that in $\R^n$, one can construct a coordinate system using a set of $n$ 
     \begin{dfnbox}{Unitary Matrix}{uniMat}
         A matrix $\mathbfit{P}$ is said to be a {\color{red} \textbf{unitary matrix}} if $\widebar{\mathbfit{P}^{\mathrm{T}}}\mathbfit{P} = \I$.
     \end{dfnbox}
-    Similar to $s^{\#} \in \mathrm{Maps}\left(V, \widehat{V}\right)$ defined uniquely by each sesquilinear form $s$ over $V$, the Riesz isomorphism $\Gamma \colon V \to \widehat{V}$ is now a conjugate-linear map instead of a linear one. In fact, we say that it is now a \textit{conjugate isomorphism}. However, note that unlike in a well-ordered field, now $\Gamma(\mathbfit{u})(\mathbfit{v}) = \widebar{\Gamma(\mathbfit{v})(\mathbfit{u})}$ due to conjugate-symmetric-ness. Similarly, we can convert an operator $T$ to a sesquilinear form $s_T$ over a complex vector space, but now the matrix representation is given by 
+    Similar to $s^{\#} \in \mathrm{Maps}\left(V, \yhwidehat{V}\right)$ defined uniquely by each sesquilinear form $s$ over $V$, the Riesz isomorphism $\Gamma \colon V \to \yhwidehat{V}$ is now a conjugate-linear map instead of a linear one. In fact, we say that it is now a \textit{conjugate isomorphism}. However, note that unlike in a well-ordered field, now $\Gamma(\mathbfit{u})(\mathbfit{v}) = \widebar{\Gamma(\mathbfit{v})(\mathbfit{u})}$ due to conjugate-symmetric-ness. Similarly, we can convert an operator $T$ to a sesquilinear form $s_T$ over a complex vector space, but now the matrix representation is given by 
     \begin{equation*}
         M_z\left(s_T\right)^i_j = \sum_{k = 1}^{n}M_z(g)^i_k\widebar{M_z(T)^k_j}.
     \end{equation*}
@@ -1948,7 +1948,7 @@ Obviously, the set of all multilinear form of degree $k$ over $V$ is a vector sp
 \end{dfnbox}
 Again, the set of all two-forms over a vector space $V$ is a vector space itself. Recall that the inner product is just a special type of symmetric bilinear forms. Correspondingly here, the two-form is related to something called the \textit{exterior product}.
 \begin{dfnbox}{Wedge Product}{wedge}
-    Let $V$ be a finite-dimensional vector space. For every $\alpha, \beta \in \widehat{V}$, their {\color{red} \textbf{wedge product}} or {\color{red} \textbf{exterior product}} is defined as 
+    Let $V$ be a finite-dimensional vector space. For every $\alpha, \beta \in \yhwidehat{V}$, their {\color{red} \textbf{wedge product}} or {\color{red} \textbf{exterior product}} is defined as 
     \begin{equation*}
         \alpha \wedge \beta \coloneqq \alpha \otimes \beta - \beta \otimes \alpha.
     \end{equation*}
@@ -2036,22 +2036,22 @@ Furthermore, the space of $n$-forms over an $n$-dimensional vector space $V$ can
 \end{equation*}
 for some dual basis $\left\{\zeta^1, \zeta^2, \cdots, \zeta^n\right\}$.
 
-Recall that in Definition \ref{dfn:tranpose}, we defined the transposition of linear transformations. Applying this to $m$-forms, we can similarly define, for each linear operator $T$ on $V$, an operator $\widehat{T}$ on the space of $m$-forms over $V$ by
+Recall that in Definition \ref{dfn:tranpose}, we defined the transposition of linear transformations. Applying this to $m$-forms, we can similarly define, for each linear operator $T$ on $V$, an operator $\yhwidehat{T}$ on the space of $m$-forms over $V$ by
 \begin{equation*}
-    \widehat{T}(\Psi)\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_m\right) = \Psi\bigl(T(\mathbfit{v}_1), T(\mathbfit{v}_2), \cdots, T(\mathbfit{v}_m)\bigr).
+    \yhwidehat{T}(\Psi)\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_m\right) = \Psi\bigl(T(\mathbfit{v}_1), T(\mathbfit{v}_2), \cdots, T(\mathbfit{v}_m)\bigr).
 \end{equation*}
-Now, if $V$ happens to be $m$-dimensional, then $\widehat{T}(\Psi)$ has to be some scalar multiple of $\Psi$ because the space of $m$-forms now becomes one-dimensional.
+Now, if $V$ happens to be $m$-dimensional, then $\yhwidehat{T}(\Psi)$ has to be some scalar multiple of $\Psi$ because the space of $m$-forms now becomes one-dimensional.
 \section{Determinant}
 \begin{dfnbox}{Determinant}{determinant}
     For each operator $T$ on a finite-dimensional vector space $V$, we define the {\color{red} \textbf{determinant}} of $T$ to be a scalar $\Delta(T)$ such that 
     \begin{equation*}
-        \widehat{T}(\Omega) = \Delta(T)\Omega
+        \yhwidehat{T}(\Omega) = \Delta(T)\Omega
     \end{equation*}
     for every $n$-form $\Omega$ over $V$.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        Clearly, $\Delta(T)$ is the unique eigenvalue of $\widehat{T}$.
+        Clearly, $\Delta(T)$ is the unique eigenvalue of $\yhwidehat{T}$.
     \end{remark}
 \end{notebox}
 Now we propose the following way to compute $\Delta(T)$ for any operator:
@@ -2068,7 +2068,7 @@ Now we propose the following way to compute $\Delta(T)$ for any operator:
         \end{equation*}
         for each $i = 1, 2, \cdots, n$ where $a_1, a_2, \cdots, a_{i - 1}$ are constants and $I(i)$ is the index of the eigenvalue associated to $\mathbfit{t}_i$. Take any $n$-form $\Omega$ over $V$ and consider 
         \begin{align*}
-            \Delta(T)\Omega & = \widehat{T}(\Omega)\left(\mathbfit{t}_1, \mathbfit{t}_2, \cdots, \mathbfit{t}_n\right) \\
+            \Delta(T)\Omega & = \yhwidehat{T}(\Omega)\left(\mathbfit{t}_1, \mathbfit{t}_2, \cdots, \mathbfit{t}_n\right) \\
             & = \Omega\bigl(T(\mathbfit{t}_1), T(\mathbfit{t}_2), \cdots, T(\mathbfit{t}_n)\bigr) \\
             & = \Omega\left(\lambda_{I(1)}\mathbfit{t}_1, \lambda_{I(2)}\mathbfit{t}_2, \cdots, \lambda_{I(n)}\mathbfit{t}_n\right) \\
             & = \prod_{i = 1}^k\lambda_i^{m_i}\Omega\left(\mathbfit{t}_1, \mathbfit{t}_2, \cdots, \mathbfit{t}_n\right).
@@ -2092,10 +2092,10 @@ We can show that the determinant stays consistent under operator composition.
     \begin{proof}
         Let $\Omega$ be any $\dim(V)$-form on $V$. Notice that 
         \begin{align*}
-            \Delta(TS)\Omega\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\right) & = \widehat{TS}(\Omega)\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\right) \\
+            \Delta(TS)\Omega\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\right) & = \yhwidehat{TS}(\Omega)\left(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\right) \\
             & = \Omega\Bigl(TS(\mathbfit{v}_1), TS(\mathbfit{v}_2), \cdots, TS\bigl(\mathbfit{v}_{\dim(V)}\bigr)\Bigr) \\
-            & = \widehat{T}(\Omega)\Bigl(S(\mathbfit{v}_1), S(\mathbfit{v}_2), \cdots, S\bigl(\mathbfit{v}_{\dim(V)}\bigr)\Bigr) \\
-            & = \Delta(T)\widehat{S}(\Omega)\bigl(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\bigr) \\
+            & = \yhwidehat{T}(\Omega)\Bigl(S(\mathbfit{v}_1), S(\mathbfit{v}_2), \cdots, S\bigl(\mathbfit{v}_{\dim(V)}\bigr)\Bigr) \\
+            & = \Delta(T)\yhwidehat{S}(\Omega)\bigl(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\bigr) \\
             & = \Delta(T)\Delta(S)(\Omega)\bigl(\mathbfit{v}_1, \mathbfit{v}_2, \cdots, \mathbfit{v}_{\dim(V)}\bigr).
         \end{align*}
         Therefore, $\Delta(TS) = \Delta(T)\Delta(S)$.
