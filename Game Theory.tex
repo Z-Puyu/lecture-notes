@@ -1,0 +1,231 @@
+\documentclass[math, code]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{yhmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+\usepackage{nicematrix}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead \left(see below\right):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\begin{document}
+\fancyhead[L]{
+    Game Theory
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Games of Complete Information}
+\section{Static Games of Complete Information}
+We start with a classic story:
+\begin{genbox}{Prisoners' Dilemma}
+    Two suspects are arrested and charged with a crime. The police lack sufficient evidence to convict the suspects, unless at least one confesses. The suspects are held in separate cells and told:
+    \begin{itemize}
+        \item If only one of you confesses and testifies against your
+        partner, then the person who confesses will go free while
+        the person who does not confess will be convicted and
+        given a $20$-year jail sentence.
+        \item If both of you confess, then both will be convicted and sent to prison for $5$ years.
+        \item Finally, if neither of you confesses, then both of you will be convicted of a minor offence and sentenced to $1$ year in jail .
+    \end{itemize} 
+    What should the suspects do?    
+\end{genbox}
+To investigate the situation, we can represent the prisoners' decisions using a matrix:
+\begin{equation*}
+    \begin{bNiceMatrix}[first-row,first-col]
+        & \textrm{Holdout} & \textrm{Confess} \\
+        \textrm{Holdout} & \left(-1, -1\right) & \left(-20, 0\right) \\
+        \textrm{Confess} & \left(0, -20\right) & \left(-5, -5\right)
+    \end{bNiceMatrix}.
+\end{equation*}
+With some observation, it is easy to see that no matter what they other prisoner chooses to do, the best decision for the prisoner is to confess. Note that in this representation, we represent a \textit{strategy} with an ordered pair consisting of the decisions made by the two prisoners respectively. Extending this idea to a higher dimension, we see that every strategy of a game is formed by an ordered $n$-tuple, where each factor represents a decision taken by the corresponding player.
+\begin{dfnbox}{Strategy Space}{strategy}
+    In an $n$-player game, the {\color{red} \textbf{strategy space}} of the $i$-th player, denoted by $S_i$, is the set of all possible decisions for the player.
+\end{dfnbox}
+In the above example, for each strategy $\left(i, j\right)$, we then place the years of imprisonment, or the \textit{payoff}, for the two prisoners following that strategy in the corresponding matrix entry. Intuitively, for an $n$-player game in general, we can assign a payoff value for each strategy in $\prod_{i = 1}^nS_i$, the set of all strategies. 
+\begin{dfnbox}{Payoff Function}{payoff}
+    Let $S_i$ be the strategy space of the $i$-th player in an $n$-player game, the {\color{red} \textbf{payoff function}} for the $i$-th player is a map $u_i \colon \prod_{j = 1}^nS_j \to \R$.
+\end{dfnbox}
+This gives us a convenient way to represent a game quantitatively.
+\begin{dfnbox}{Normal-Form of Games}{normalForm}
+    Let $G$ be an $n$-player game. Let $S_i$ be the strategy space and $u_i$ be the payoff function of the $i$-th player, then the {\color{red} \textbf{normal-form}}, or {\color{red} \textbf{strategic form}} of $G$ is defined as 
+    \begin{equation*}
+        G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}.
+    \end{equation*}
+\end{dfnbox}
+It is important to note that the payoff a player depends not only on his own action but also on the actions of others. This inter-dependence is the
+essence of games.
+\begin{notebox}
+    \begin{remark}
+        For $2$-player games, the payoff can be represented in a matrix.
+    \end{remark}
+\end{notebox}
+Given any game, our goal is to derive the optimal strategy for the players. Before that, we shall discuss some criteria under which a strategy cannot be optimal. For the sake of notational simplicity, we denote 
+\begin{equation*}
+    \mathbfit{s}_{-i} \coloneqq \left(s_1, \cdots, s_{i - 1}, s_{i + 1}, \cdots, s_n\right)
+\end{equation*}
+and 
+\begin{equation*}
+    \mathbfit{s} \coloneqq \left(s_1, s_2, \cdots, s_n\right) = \left(s_i, s_{-i}\right).
+\end{equation*}
+Analogously, we denote
+\begin{equation*}
+    S_{-i} \coloneqq \prod_{j = 1}^{i - 1}S_j \times \prod_{j = i + 1}^nS_j.
+\end{equation*}
+\begin{dfnbox}{Dominated and Dominant Strategies}{dominate}
+    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form game and $s_i, s_i' \in S_i$ be two strategies for the $i$-th player. We say that $s_i$ is {\color{red} \textbf{strictly dominated}} by $s_i'$ or that $s_i'$ is {\color{red} \textbf{strictly dominant}} over $s_i$ if 
+    \begin{equation*}
+        u_i\left(s_i, \mathbfit{s}_{-i}\right) < u_i\left(s'_i, \mathbfit{s}_{-i}\right) \quad \textrm{for all } \mathbfit{s}_{-i} \in S_{-i}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In other words, $s_i$ is strictly dominated by $s_i'$ if and only if it is a strictly worse decision no matter what the other players decide to do.
+    \end{remark}
+\end{notebox}
+If a strategy $s$ is strictly dominated by any other strategy, then it is not a rational strategy because it can never be optimal.
+
+Assuming that in an $n$-player game, every player knows exactly what the strategies are and their respective payoffs, then we can proceed with the following reasoning:
+\begin{itemize}
+    \item Suppose that $s_{i_0}$ is strictly dominated by any other strategy of player $i$, then if the player is rational, the strategy will never be played.
+    \item Therefore, we can reduce the strategy space to $\left\{\mathbfit{s} \in \prod_{i = 1}^nS_i \colon s_i \neq s_{i_0}\right\}$.
+    \item Apply the same reasoning on the reduced strategy space iteratively. If at each iteration there exists such a strictly dominated strategy, then we can successfully obtain the optimal strategy for the $n$-players.
+\end{itemize}
+However, in most games, we might not be able to find such a strictly dominated strategy. Therefore, we have to think from a conditional context: given a set of strategies played by the other players, what is the \textit{best response} for the current player?
+\begin{dfnbox}{Best-Response Correspondence}{bestResponse}
+    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form game. The {\color{red} \textbf{best-response correspondence}} for player $i$ is a map $R_i \colon S_{-i} \colon \mathcal{P}\left(S_i\right)$ defined by 
+    \begin{equation*}
+        R_i\left(\mathbfit{s}_{-i}\right) \coloneqq \argmax_{s_i \in S_i}u_i\left(s_i, \mathbfit{s}_{-i}\right).
+    \end{equation*}
+\end{dfnbox}
+Now, given $\mathbfit{s}_{-i}$, the actions played by the other players, $R_i\left(\mathbfit{s}_{-i}\right)$ tells us what the best responses are for player $i$ for his own profit. In other words, player $i$ has \textbf{no incentive} to choose any strategy in $S_i \setminus R_i\left(\mathbfit{s}_{-i}\right)$. If such a situation holds for all the players, then it is clear that the game has reached an \textit{equilibrium} where no player is incentivised to deviated from the current strategy.
+\begin{dfnbox}{Nash Equilibrium}{NashEqui}
+    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form $n$-player game, then the strategies~$\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ are a {\color{red} \textbf{Nash equilibrium}} if 
+    \begin{equation*}
+        s_i^* \in R_i\left(\mathbfit{s}_{-i}^*\right) \quad\textrm{for all } i = 1, 2, \cdots, n, 
+    \end{equation*}
+    or equivalently, 
+    \begin{equation*}
+        u_i\left(s_i^*, \mathbfit{s}_{-i}^*\right) = \max_{s_i \in S_i}u_i\left(s_i, \mathbfit{s}_{-i}^*\right) \quad\textrm{for all } i = 1, 2, \cdots, n.
+    \end{equation*}
+\end{dfnbox}
+\end{document}

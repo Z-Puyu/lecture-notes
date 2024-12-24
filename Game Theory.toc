@@ -1,0 +1,2 @@
+\contentsline {chapter}{\numberline {1}Games of Complete Information}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Static Games of Complete Information}{2}{section.1.1}%
