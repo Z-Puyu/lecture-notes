@@ -1,4 +1,4 @@
-\documentclass[math, code]{amznotes}
+\documentclass[math]{amznotes}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -205,14 +205,16 @@ Analogously, we denote
 If a strategy $s$ is strictly dominated by any other strategy, then it is not a rational strategy because it can never be optimal.
 
 Assuming that in an $n$-player game, every player knows exactly what the strategies are and their respective payoffs, then we can proceed with the following reasoning:
-\begin{itemize}
-    \item Suppose that $s_{i_0}$ is strictly dominated by any other strategy of player $i$, then if the player is rational, the strategy will never be played.
-    \item Therefore, we can reduce the strategy space to $\left\{\mathbfit{s} \in \prod_{i = 1}^nS_i \colon s_i \neq s_{i_0}\right\}$.
-    \item Apply the same reasoning on the reduced strategy space iteratively. If at each iteration there exists such a strictly dominated strategy, then we can successfully obtain the optimal strategy for the $n$-players.
-\end{itemize}
+\begin{tecbox}{Iterated Elimination of Strictly Dominated Strategies (IESDS)}{IESDS}
+    \begin{itemize}
+        \item Suppose that $s_{i_0}$ is strictly dominated by any other strategy of player $i$, then if the player is rational, the strategy will never be played.
+        \item Therefore, we can reduce the strategy space to $\left\{\mathbfit{s} \in \prod_{i = 1}^nS_i \colon s_i \neq s_{i_0}\right\}$.
+        \item Apply the same reasoning on the reduced strategy space iteratively. If at each iteration there exists such a strictly dominated strategy, then we can successfully obtain the optimal strategy for the $n$-players.
+    \end{itemize}
+\end{tecbox}
 However, in most games, we might not be able to find such a strictly dominated strategy. Therefore, we have to think from a conditional context: given a set of strategies played by the other players, what is the \textit{best response} for the current player?
 \begin{dfnbox}{Best-Response Correspondence}{bestResponse}
-    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form game. The {\color{red} \textbf{best-response correspondence}} for player $i$ is a map $R_i \colon S_{-i} \colon \mathcal{P}\left(S_i\right)$ defined by 
+    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form game. The {\color{red} \textbf{best-response correspondence}} for player $i$ is a map $R_i \colon S_{-i} \to \mathcal{P}\left(S_i\right)$ defined by 
     \begin{equation*}
         R_i\left(\mathbfit{s}_{-i}\right) \coloneqq \argmax_{s_i \in S_i}u_i\left(s_i, \mathbfit{s}_{-i}\right).
     \end{equation*}
@@ -228,4 +230,103 @@ Now, given $\mathbfit{s}_{-i}$, the actions played by the other players, $R_i\le
         u_i\left(s_i^*, \mathbfit{s}_{-i}^*\right) = \max_{s_i \in S_i}u_i\left(s_i, \mathbfit{s}_{-i}^*\right) \quad\textrm{for all } i = 1, 2, \cdots, n.
     \end{equation*}
 \end{dfnbox}
+Now, define 
+\begin{equation*}
+    G\left(R_i\right) \coloneqq \left\{\left(s_i, \mathbfit{s}_{-i}\right) \colon s_i \in R_i\left(\mathbfit{s}_{-i}\right), \mathbfit{s}_{-i} \in S_{-i}\right\}
+\end{equation*}
+as the \textbf{graph} of $R_i$, then one can check that $\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ are a Nash equilibrium if and only if 
+\begin{equation*}
+    \left(s_1^*, s_2^*, \cdots, s_n^*\right) \in \bigcap_{i = 1}^n G\left(R_i\right).
+\end{equation*}
+Next, let us consider a simple case of bi-matrix games. Take any guess $\left(s_1, s_2\right) \in S_1 \times S_2$. We can compute $R_2\left(s_1\right)$ and $R_1\left(s_2\right)$, and $\left(s_1, s_2\right)$ are a Nash equilibrium if and only if $s_1 \in R_1\left(s_2\right)$ and $s_2 \in R_2\left(s_1\right)$ by Definition \ref{dfn:NashEqui}.
+
+Therefore, we can simply repeat this calculation for every pair $\left(s_1, s_2\right) \in S_1 \times S_2$ and deduce the set $G\left(R_1\right) \cap G\left(R_2\right)$, which consists of all Nash equilibria.
+\begin{probox}{Relation between Nash Equilibrium and IESDS}{iesdsNash}
+    Let $G = \left(S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right)$ be an $n$-player normal-form game. If the strategies $\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ are a Nash equilibrium, then each $s_i^*$ cannot be eliminated by IESDS.
+    \tcblower
+    \begin{proof}
+        Suppose on contrary that there exists some $s_i^*$ which is eliminated by IESDS. Without loss of generality, assume $s_i^*$ to be the first in $\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ to be eliminated. By Technique \ref{tec:IESDS}, there exists some $s_i' \in S_i$ with $s_i' \neq s_i^*$ such that 
+        \begin{equation*}
+            u_i\left(s_i^*, \mathbfit{s}_{-i}\right) < u_i\left(s_i', \mathbfit{s}_{-i}\right)
+        \end{equation*}
+        for all $\mathbfit{s}_{-i} \in S_{-i}$. In particular, this means that 
+        \begin{equation*}
+            u_i\left(s_i^*, \mathbfit{s}_{-i}^*\right) < u_i\left(s_i', \mathbfit{s}_{-i}^*\right).
+        \end{equation*}
+        However, by Definition \ref{dfn:NashEqui}, we have $u_i\left(s_i^*, \mathbfit{s}_{-i}^*\right) = \max_{s_i \in S_i}u_i\left(s_i, \mathbfit{s}_{-i}^*\right)$, which is a contradiction.
+    \end{proof}
+\end{probox}
+Let $S$ be the resultant strategy space obtained from IESDS and $N$ be the set of all Nash equilibria of a game, then the above proposition essentially means that $N \subseteq S$. 
+
+Note that this does not mean that Proposition \ref{pro:iesdsNash} establishes the \textbf{existence} of Nash equilibria for any game. However, we can indeed conclude a little bit about the uniqueness of Nash equilibrium under some circumstances.
+\begin{probox}{Uniqueness of Nash Equilibrium from IESDS}{IESDSNash}
+    Let $G = \left(S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right)$ be an $n$-player normal-form game with finite strategy spaces. If $\left(s_1^*, s_2^*, \cdots, s_n^*\right) \in S$ are the only strategies which are not eliminated by IESDS, then it is the unique Nash equilibrium.
+    \tcblower
+    \begin{proof}
+        The uniqueness is obvious from Proposition \ref{pro:iesdsNash}, so it suffices to prove that the strategies $\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ are indeed a Nash equilibrium. Suppose on contrary that it is not a Nash equilibrium, then there exists some $s_i^*$ such that $s_i^* \notin R_i\left(\mathbfit{s}_{-i}^*\right)$. Take some $b_i \in R_i\left(\mathbfit{s}_{-i}^*\right)$, then 
+        \begin{equation*}
+            u_i\left(b_i, \mathbfit{s}_{-i}^*\right) > u_i\left(s_i^*, \mathbfit{s}_{-i}^*\right).
+        \end{equation*}
+        However, since $b_i$ is eliminated, it must be strictly dominated by some $t_i \in S_i$ such that $t_i \neq b_i$. Therefore, we have 
+        \begin{equation*}
+            u_i\left(t_i, \mathbfit{s}_{-i}^*\right) > u_i\left(b_i, \mathbfit{s}_{-i}^*\right)
+        \end{equation*}
+        because $\mathbfit{s}_{-i}^*$ are strategies which are not eliminated, but this is a contradiction since~$t_i$ is a better response than $b_i$.
+    \end{proof}
+\end{probox}
+So far, in our analysis we have been assuming that the players in a game make decisions \textbf{deterministically}, i.e., the player always choose a single strategy as the response. However, in real-life scenarios, there could be some random factors involved in decision-making.
+\begin{dfnbox}{Mixed Strategy}{mixedStrategy}
+    Let $G = \left(S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right)$ be an $n$-player normal-form game with finite strategy spaces. Suppose $S_i = \left\{s_{i1}, s_{i2}, \cdots, s_{ik}\right\}$, then each $s_{ij} \in S_i$ is a {\color{red} \textbf{pure strategy}} for player $i$ and a probability distribution $p_i \coloneqq \left(p_{i1}, p_{i2}, \cdots, p_{ik}\right)$ is said to be a {\color{red} \textbf{mixed strategy}} such that the probability of player $i$ playing $s_{ij}$ is $p_{ij}$.
+\end{dfnbox}
+As an example, we consider two players, $i$ and $j$, with $M$ and $N$ pure strategies respectively. Let $p_i$ and~$p_j$ be mixed strategies for $i$ and $j$ respectively, then the \textbf{expected payoff} of player~$i$ playing any pure strategy $s_{ik}$ is 
+\begin{equation*}
+    v_i\left(s_{ik}, p_j\right) \coloneqq \sum_{n = 1}^{N}p_{jn}u_i\left(s_{ik}, s_{jn}\right).
+\end{equation*}
+With this, we can compute the \textbf{expected payoff} for the mixed strategy $p_i$ as 
+\begin{align*}
+    v_i\left(p_i, p_j\right) & \coloneqq \sum_{m = 1}^{M}p_{im}v_i\left(s_{im}, p_j\right) \\
+    & = \sum_{m = 1}^{M}\sum_{n = 1}^{N}p_{im}p_{jn}u_i\left(s_{im}, s_{jn}\right).
+\end{align*}
+Similarly, the expected payoff for $p_j$ is 
+\begin{equation*}
+    v_j\left(p_j, p_i\right) = \sum_{n = 1}^{N}\sum_{m = 1}^{M}p_{jn}p_{im}u_j\left(s_{jn}, s_{im}\right).
+\end{equation*}
+Now we can extend the notion of Nash equilibrium to mixed strategies using expected payoffs.
+\begin{dfnbox}{Nash Equilibrium for Mixed Strategies}{NashEquiMixed}
+    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form $n$-player game, then the probability distributions $\left(p_1^*, p_2^*, \cdots, p_n^*\right)$ are a {\color{red} \textbf{Nash equilibrium}} if 
+    \begin{equation*}
+        v_i\left(p_i^*, \mathbfit{p}_{-i}^*\right) \geq v_i\left(p_i, \mathbfit{p}_{-i}^*\right)
+    \end{equation*}
+    for any probability distribution $p_i$ on $S_i$.
+\end{dfnbox}
+Intuitively, if a pure strategy $s_{ik}$ is eliminated by IESDS, then any mixed strategy that is good enough probably should not favour playing the strategy. Indeed, we have the following result:
+\begin{probox}{Zero Probability of Strategies Eliminated by IESDS}{zeroProbIESDS}
+    Let $\left(p_1^*, p_2^*, \cdots, p_n^*\right)$ be any mixed strategy Nash equilibrium. If $s_{ik}$ is eliminated by IESDS, then $p_{ik}^* = 0$.
+\end{probox}
+Lastly, combining the two scenarios of Nash equilibria, the following theorem states formally the existence of Nash equilibria:
+\begin{thmbox}{Nash's Theorem}{Nash}
+    Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form $n$-player game with finite strategy spaces, then there exists at least one Nash equilibrium if mixed strategies are allowed.
+\end{thmbox}
+\section{Dynamic Games of Complete Information}
+In static games, the players move independently and the strategy of one player will not affect the context in which another player would make decisions. However, there are many games where this is not true. For example, in a turn-based game, the sequence in which the players move makes a significant impact on the strategy of each player. Furthermore, such games consist of multiple stages and so a player has to observe the past actions in order to predict the best decision.
+
+Note that now, the extent to which a player can observe the past is important as this impacts how much information the player can acquire to make a decision in his or her own profit.
+\subsection{Perfect Information}
+We will first discuss the first case where the information about the past moves are fully available.
+\begin{dfnbox}{Dynamic Games of Complete and Perfect Information}{dynamicGame}
+    A {\color{red} \textbf{dynamic game}} of {\color{red} \textbf{complete}} and {\color{red} \textbf{perfect}} information is a game where 
+    \begin{itemize}
+        \item the players move in sequence,
+        \item all previous moves are observed before the next move is taken, and
+        \item payoffs are common knowledge to all players.
+    \end{itemize}
+\end{dfnbox}
+Such games can be presented with a \textit{game tree} consisting of game states after each possible sequence of moves. A game state can be modelled by an ordered $n$-tuple $\left(x_{k1}, x_{k2}, \cdots, x_{kn}\right)$ denoting the payoffs off all players after $k$ moves. In this respect, the initial state can be represented by $\mathbf{0}$. Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be such a dynamic game. 
+
+Let $\mathbf{0}$ be the root of the game tree. For each payoff vector $\mathbfit{u}_{h - 1}$ in height $h - 1$, the $h$-th player takes a move in the \textit{feasible set} $A_h$ to modify the payoffs to a new payoff vector~$\mathbfit{u}_h$ and create an edge $s_h \coloneqq \mathbfit{u}_{h - 1}$-$\mathbfit{u}_h$. Consider the leaves of the tree formed this way at height~$n$. Note that every strategy is uniquely represented as the $\mathbf{0}$-$\mathbfit{u}$ path for some leaf $\mathbfit{u}$, where the projection~$\pi_i\left(\mathbfit{u}\right) = u_i\left(s_1, s_2, \cdots, s_n\right)$ is the payoff corresponding to the strategy.
+
+The optimal strategy of a dynamic game of complete and perfect information can be obtained from a recursive algorithm.
+\begin{tecbox}{Backward Induction}{backwardInduction}
+    
+\end{tecbox}
 \end{document}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  13 DEC 2024 16:53
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  30 DEC 2024 15:52
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -798,101 +798,6 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip76
 \thm@headsep=\skip77
 \dth@everypar=\toks49
-) (c:/texlive/2023/texmf-dist/tex/latex/minted/minted.sty
-Package: minted 2022/12/12 v2.7 Yet another Pygments shim for LaTeX
- (c:/texlive/2023/texmf-dist/tex/latex/fvextra/fvextra.sty
-Package: fvextra 2022/11/30 v1.5 fvextra - extensions and patches for fancyvrb
- (c:/texlive/2023/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
-\FV@CodeLineNo=\count362
-\FV@InFile=\read4
-\FV@TabBox=\box132
-\c@FancyVerbLine=\count363
-\FV@StepNumber=\count364
-\FV@OutFile=\write4
-) (c:/texlive/2023/texmf-dist/tex/latex/upquote/upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
-) (c:/texlive/2023/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2023/01/19 line numbers on paragraphs v5.1
-Invalid UTF-8 byte or sequence at line 290 replaced by U+FFFD.
-\linenopenalty=\count365
-\output=\toks50
-\linenoprevgraf=\count366
-\linenumbersep=\dimen318
-\linenumberwidth=\dimen319
-\c@linenumber=\count367
-\c@pagewiselinenumber=\count368
-\c@LN@truepage=\count369
-\c@internallinenumber=\count370
-\c@internallinenumbers=\count371
-\quotelinenumbersep=\dimen320
-\bframerule=\dimen321
-\bframesep=\dimen322
-\bframebox=\box133
-\linenoamsmath@ams@eqpen=\count372
-LaTeX Info: Redefining \\ on input line 3131.
-)
-\c@FV@TrueTabGroupLevel=\count373
-\c@FV@TrueTabCounter=\count374
-\FV@TabBox@Group=\box134
-\FV@TmpLength=\skip78
-\c@FV@HighlightLinesStart=\count375
-\c@FV@HighlightLinesStop=\count376
-\FV@LoopCount=\count377
-\FV@NCharsBox=\box135
-\FV@BreakIndent=\dimen323
-\FV@BreakIndentNChars=\count378
-\FV@BreakSymbolSepLeft=\dimen324
-\FV@BreakSymbolSepLeftNChars=\count379
-\FV@BreakSymbolSepRight=\dimen325
-\FV@BreakSymbolSepRightNChars=\count380
-\FV@BreakSymbolIndentLeft=\dimen326
-\FV@BreakSymbolIndentLeftNChars=\count381
-\FV@BreakSymbolIndentRight=\dimen327
-\FV@BreakSymbolIndentRightNChars=\count382
-\c@FancyVerbLineBreakLast=\count383
-\FV@LineBox=\box136
-\FV@LineIndentBox=\box137
-\c@FV@BreakBufferDepth=\count384
-\FV@LineWidth=\dimen328
-) (c:/texlive/2023/texmf-dist/tex/latex/ifplatform/ifplatform.sty
-Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
- (c:/texlive/2023/texmf-dist/tex/generic/catchfile/catchfile.sty
-Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
-) (c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-)) (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.sty (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.tex
-\integerpart=\count385
-\decimalpart=\count386
-)
-Package: xstring 2023/01/14 v1.85 String manipulations (CT)
-) (c:/texlive/2023/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip79
-\fb@frw=\dimen329
-\fb@frh=\dimen330
-\FrameRule=\dimen331
-\FrameSep=\dimen332
-) (c:/texlive/2023/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count387
-\float@exts=\toks51
-\float@box=\box138
-\@float@everytoks=\toks52
-\@floatcapt=\box139
-)
-\minted@appexistsfile=\read5
-\minted@bgbox=\box140
-\minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count388
-\c@minted@pygmentizecounter=\count389
-\@float@every@listing=\toks53
-\c@listing=\count390
-)
-runsystem(if not exist _minted-Game_Theory mkdir _minted-Game_Theory)...executed.
-
- (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
-Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
 )
 
 Package fontspec Info: Font family 'STIXTwoText(0)' created for font
@@ -1192,11 +1097,11 @@ LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `normal'
 LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `bold'
 (Font)                  TU/XITSMath(0)/m/n --> TU/XITSMath(0)/b/n on input line 80.
 Package hyperref Info: Option `colorlinks' set `true' on input line 109.
-\c@amzboxcounter=\count391
+\c@amzboxcounter=\count362
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks54
-\inpenc@posthook=\toks55
+\inpenc@prehook=\toks50
+\inpenc@posthook=\toks51
 
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
@@ -1212,77 +1117,77 @@ LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 ) (c:/texlive/2023/texmf-dist/tex/latex/nicematrix/nicematrix.sty
 Package: nicematrix 2023/03/06 v6.16 Enhanced arrays with the help of PGF/TikZ
-\g__nicematrix_env_int=\count392
-\g__nicematrix_NiceMatrixBlock_int=\count393
-\l__nicematrix_note_in_caption_int=\count394
-\l__nicematrix_columns_width_dim=\dimen333
-\l__nicematrix_col_width_dim=\dimen334
-\g__nicematrix_row_total_int=\count395
-\g__nicematrix_col_total_int=\count396
-\g__nicematrix_last_row_node_int=\count397
-\l__nicematrix_key_nb_rows_int=\count398
-\g__nicematrix_blocks_wd_dim=\dimen335
-\g__nicematrix_blocks_ht_dim=\dimen336
-\g__nicematrix_blocks_dp_dim=\dimen337
-\l__nicematrix_width_dim=\dimen338
-\l__nicematrix_tabular_width_dim=\dimen339
-\l__nicematrix_rule_width_dim=\dimen340
-\l__nicematrix_old_iRow_int=\count399
-\l__nicematrix_old_jCol_int=\count400
-\g__nicematrix_total_X_weight_int=\count401
-\l__nicematrix_X_columns_dim=\dimen341
-\l__nicematrix_x_initial_dim=\dimen342
-\l__nicematrix_y_initial_dim=\dimen343
-\l__nicematrix_x_final_dim=\dimen344
-\l__nicematrix_y_final_dim=\dimen345
-\l__nicematrix_tmpc_dim=\dimen346
-\l__nicematrix_tmpd_dim=\dimen347
-\g__nicematrix_width_last_col_dim=\dimen348
-\g__nicematrix_width_first_col_dim=\dimen349
-\l__nicematrix_row_min_int=\count402
-\l__nicematrix_row_max_int=\count403
-\l__nicematrix_col_min_int=\count404
-\l__nicematrix_col_max_int=\count405
-\g__nicematrix_static_num_of_col_int=\count406
-\l__nicematrix_rounded_corners_dim=\dimen350
-\l__nicematrix_line_width_dim=\dimen351
-\g__nicematrix_block_box_int=\count407
-\l__nicematrix_submatrix_extra_height_dim=\dimen352
-\l__nicematrix_submatrix_left_xshift_dim=\dimen353
-\l__nicematrix_submatrix_right_xshift_dim=\dimen354
-\l__nicematrix_first_row_int=\count408
-\l__nicematrix_first_col_int=\count409
-\l__nicematrix_last_row_int=\count410
-\l__nicematrix_last_col_int=\count411
-\c@tabularnote=\count412
-\c@nicematrix_draft=\count413
-\l__nicematrix_cell_space_top_limit_dim=\dimen355
-\l__nicematrix_cell_space_bottom_limit_dim=\dimen356
-\l__nicematrix_xdots_inter_dim=\dimen357
-\l__nicematrix_xdots_shorten_start_dim=\dimen358
-\l__nicematrix_xdots_shorten_end_dim=\dimen359
-\l__nicematrix_xdots_radius_dim=\dimen360
-\l__nicematrix_notes_above_space_dim=\dimen361
-\l__nicematrix_left_margin_dim=\dimen362
-\l__nicematrix_right_margin_dim=\dimen363
-\l__nicematrix_extra_left_margin_dim=\dimen364
-\l__nicematrix_extra_right_margin_dim=\dimen365
-\c__nicematrix_max_l_dim=\dimen366
-\l__nicematrix_position_int=\count414
-\l__nicematrix_start_int=\count415
-\l__nicematrix_multiplicity_int=\count416
-\l__nicematrix_brace_yshift_dim=\dimen367
+\g__nicematrix_env_int=\count363
+\g__nicematrix_NiceMatrixBlock_int=\count364
+\l__nicematrix_note_in_caption_int=\count365
+\l__nicematrix_columns_width_dim=\dimen318
+\l__nicematrix_col_width_dim=\dimen319
+\g__nicematrix_row_total_int=\count366
+\g__nicematrix_col_total_int=\count367
+\g__nicematrix_last_row_node_int=\count368
+\l__nicematrix_key_nb_rows_int=\count369
+\g__nicematrix_blocks_wd_dim=\dimen320
+\g__nicematrix_blocks_ht_dim=\dimen321
+\g__nicematrix_blocks_dp_dim=\dimen322
+\l__nicematrix_width_dim=\dimen323
+\l__nicematrix_tabular_width_dim=\dimen324
+\l__nicematrix_rule_width_dim=\dimen325
+\l__nicematrix_old_iRow_int=\count370
+\l__nicematrix_old_jCol_int=\count371
+\g__nicematrix_total_X_weight_int=\count372
+\l__nicematrix_X_columns_dim=\dimen326
+\l__nicematrix_x_initial_dim=\dimen327
+\l__nicematrix_y_initial_dim=\dimen328
+\l__nicematrix_x_final_dim=\dimen329
+\l__nicematrix_y_final_dim=\dimen330
+\l__nicematrix_tmpc_dim=\dimen331
+\l__nicematrix_tmpd_dim=\dimen332
+\g__nicematrix_width_last_col_dim=\dimen333
+\g__nicematrix_width_first_col_dim=\dimen334
+\l__nicematrix_row_min_int=\count373
+\l__nicematrix_row_max_int=\count374
+\l__nicematrix_col_min_int=\count375
+\l__nicematrix_col_max_int=\count376
+\g__nicematrix_static_num_of_col_int=\count377
+\l__nicematrix_rounded_corners_dim=\dimen335
+\l__nicematrix_line_width_dim=\dimen336
+\g__nicematrix_block_box_int=\count378
+\l__nicematrix_submatrix_extra_height_dim=\dimen337
+\l__nicematrix_submatrix_left_xshift_dim=\dimen338
+\l__nicematrix_submatrix_right_xshift_dim=\dimen339
+\l__nicematrix_first_row_int=\count379
+\l__nicematrix_first_col_int=\count380
+\l__nicematrix_last_row_int=\count381
+\l__nicematrix_last_col_int=\count382
+\c@tabularnote=\count383
+\c@nicematrix_draft=\count384
+\l__nicematrix_cell_space_top_limit_dim=\dimen340
+\l__nicematrix_cell_space_bottom_limit_dim=\dimen341
+\l__nicematrix_xdots_inter_dim=\dimen342
+\l__nicematrix_xdots_shorten_start_dim=\dimen343
+\l__nicematrix_xdots_shorten_end_dim=\dimen344
+\l__nicematrix_xdots_radius_dim=\dimen345
+\l__nicematrix_notes_above_space_dim=\dimen346
+\l__nicematrix_left_margin_dim=\dimen347
+\l__nicematrix_right_margin_dim=\dimen348
+\l__nicematrix_extra_left_margin_dim=\dimen349
+\l__nicematrix_extra_right_margin_dim=\dimen350
+\c__nicematrix_max_l_dim=\dimen351
+\l__nicematrix_position_int=\count385
+\l__nicematrix_start_int=\count386
+\l__nicematrix_multiplicity_int=\count387
+\l__nicematrix_brace_yshift_dim=\dimen352
 )
 \symyhlargesymbols=\mathgroup9
  (c:/texlive/2023/texmf-dist/tex/latex/scalerel/scalerel.sty
 Package: scalerel 2016/12/29 v1.8 Routines for constrained scaling and stretching of objects, relative to a reference object or in absolute terms
-\thesrwidth=\skip80
-\thesrheight=\skip81
-\srblobheight=\skip82
-\srblobdepth=\skip83
-\mnxsrwidth=\skip84
-\LMex=\skip85
-\LMpt=\skip86
+\thesrwidth=\skip78
+\thesrheight=\skip79
+\srblobheight=\skip80
+\srblobdepth=\skip81
+\mnxsrwidth=\skip82
+\LMex=\skip83
+\LMpt=\skip84
 ) (c:/texlive/2023/texmf-dist/tex/latex/stackengine/stackengine.sty
 Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient ways
  (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.sty (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.tex
@@ -1295,7 +1200,7 @@ Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 104 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 105 replaced by U+FFFD.
-\loi_cnt_foreach_nest=\count417
+\loi_cnt_foreach_nest=\count388
 Invalid UTF-8 byte or sequence at line 139 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 146 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 192 replaced by U+FFFD.
@@ -1323,7 +1228,7 @@ Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 354 replaced by U+FFFD.
-\loi_nestcnt=\count418
+\loi_nestcnt=\count389
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
 Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
@@ -1389,25 +1294,21 @@ Invalid UTF-8 byte or sequence at line 541 replaced by U+FFFD.
 )
 Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified sep char (CT)
 )
-\c@@stackindex=\count419
-\@boxshift=\skip87
-\stack@tmplength=\skip88
-\temp@stkl=\skip89
-\@stackedboxwidth=\skip90
-\@addedbox=\box141
-\@anchorbox=\box142
-\@insetbox=\box143
-\se@backgroundbox=\box144
-\stackedbox=\box145
-\@centerbox=\box146
-\c@ROWcellindex@=\count420
+\c@@stackindex=\count390
+\@boxshift=\skip85
+\stack@tmplength=\skip86
+\temp@stkl=\skip87
+\@stackedboxwidth=\skip88
+\@addedbox=\box132
+\@anchorbox=\box133
+\@insetbox=\box134
+\se@backgroundbox=\box135
+\stackedbox=\box136
+\@centerbox=\box137
+\c@ROWcellindex@=\count391
 )
-\c@case=\count421
+\c@case=\count392
 LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 126.
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Game_Theory.aex <nul: /p x=^%~$PATH:i>> Game_Theory.aex)...executed.
-
-runsystem(del Game_Theory.aex)...executed.
-
  (./Game Theory.aux)
 \openout1 = `"Game Theory.aux"'.
 
@@ -1490,14 +1391,14 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 
 Package hyperref Info: Link coloring ON on input line 128.
 (./Game Theory.out) (./Game Theory.out)
-\@outlinefile=\write6
-\openout6 = `"Game Theory.out"'.
+\@outlinefile=\write4
+\openout4 = `"Game Theory.out"'.
 
-\c@lstlisting=\count422
-\c@tabularnotesi=\count423
-\enitdp@tabularnotes=\count424
-\c@tabularnotes*i=\count425
-\enitdp@tabularnotes*=\count426
+\c@lstlisting=\count393
+\c@tabularnotesi=\count394
+\enitdp@tabularnotes=\count395
+\c@tabularnotes*i=\count396
+\enitdp@tabularnotes*=\count397
  (./Game Theory.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
@@ -1524,53 +1425,56 @@ LaTeX Font Info:    Trying to load font information for OMX+yhex on input line 2
 File: OMXyhex.fd 
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 ))
-\tf@toc=\write7
-\openout7 = `"Game Theory.toc"'.
+\tf@toc=\write5
+\openout5 = `"Game Theory.toc"'.
 
  [1
 
 
 ]
 Chapter 1.
-\g__nicematrix_max_cell_width_dim=\dimen368
-\c@iRow=\count427
-\c@jCol=\count428
-\l__nicematrix_cell_box=\box147
-\l__nicematrix_the_array_box=\box148
-\l__nicematrix_left_delim_dim=\dimen369
-\l__nicematrix_right_delim_dim=\dimen370
-\g__nicematrix_dp_row_zero_dim=\dimen371
-\g__nicematrix_ht_row_zero_dim=\dimen372
-\g__nicematrix_ht_row_one_dim=\dimen373
-\g__nicematrix_dp_ante_last_row_dim=\dimen374
-\g__nicematrix_ht_last_row_dim=\dimen375
-\g__nicematrix_dp_last_row_dim=\dimen376
-\g__nicematrix_ddots_int=\count429
-\g__nicematrix_iddots_int=\count430
-\g__nicematrix_delta_x_one_dim=\dimen377
-\g__nicematrix_delta_y_one_dim=\dimen378
-\g__nicematrix_delta_x_two_dim=\dimen379
-\g__nicematrix_delta_y_two_dim=\dimen380
-\l__nicematrix_initial_i_int=\count431
-\l__nicematrix_initial_j_int=\count432
-\l__nicematrix_final_i_int=\count433
-\l__nicematrix_final_j_int=\count434
+\g__nicematrix_max_cell_width_dim=\dimen353
+\c@iRow=\count398
+\c@jCol=\count399
+\l__nicematrix_cell_box=\box138
+\l__nicematrix_the_array_box=\box139
+\l__nicematrix_left_delim_dim=\dimen354
+\l__nicematrix_right_delim_dim=\dimen355
+\g__nicematrix_dp_row_zero_dim=\dimen356
+\g__nicematrix_ht_row_zero_dim=\dimen357
+\g__nicematrix_ht_row_one_dim=\dimen358
+\g__nicematrix_dp_ante_last_row_dim=\dimen359
+\g__nicematrix_ht_last_row_dim=\dimen360
+\g__nicematrix_dp_last_row_dim=\dimen361
+\g__nicematrix_ddots_int=\count400
+\g__nicematrix_iddots_int=\count401
+\g__nicematrix_delta_x_one_dim=\dimen362
+\g__nicematrix_delta_y_one_dim=\dimen363
+\g__nicematrix_delta_x_two_dim=\dimen364
+\g__nicematrix_delta_y_two_dim=\dimen365
+\l__nicematrix_initial_i_int=\count402
+\l__nicematrix_initial_j_int=\count403
+\l__nicematrix_final_i_int=\count404
+\l__nicematrix_final_j_int=\count405
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 161.
 [2
 
-] [3] [4] [5] 
+] [3] [4] [5] [6] [7] [8] [9] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Game Theory.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Game Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 41658 strings out of 478630
- 904408 string characters out of 5847730
- 1871012 words of memory out of 5000000
- 61099 multiletter control sequences out of 15000+600000
- 518850 words of font info for 98 fonts, out of 8000000 for 9000
+ 38903 strings out of 478630
+ 842035 string characters out of 5847730
+ 1873012 words of memory out of 5000000
+ 58394 multiletter control sequences out of 15000+600000
+ 518890 words of font info for 103 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,12n,131p,1198b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Game Theory.pdf (5 pages).
+Output written on Game Theory.pdf (9 pages).
