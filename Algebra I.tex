@@ -1,10 +1,99 @@
-\documentclass[math, code]{amznotes}
+\documentclass[math]{amznotes}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{nicematrix}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead \left(see below\right):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -20,6 +109,12 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
 \newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
@@ -28,6 +123,7 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 \fancyhead[L]{
@@ -39,12 +135,52 @@
 \tableofcontents
 
 \chapter{Introduction to Groups}
-\section{Axioms of Groups}
-In this section, we will introduce the fundamental axioms which define the abstract mathematical notion of groups, as well as some simple results derived from these axioms.
-\begin{dfnbox}{Group}{grp}
-    A {\color{red} \textbf{group}} is a set $G$ with an {\color{red} \textbf{associative}} map $\star \colon G \times G \to G$ such that there exists some $e \in G$ with $a \star e = e \star a = a$ for all $a \in G$ and another map $(\quad)^{-1} \colon G \to G$ such that $a \star a^{-1} = a^{-1} \star a = e$.
+\section{Groups}
+A group is a higher abstraction for a structure which supports a certain arithmetic operation. To fully specify a group, we need to abstract the notion of an ``arithmetic operation''.
+\begin{dfnbox}{Binary Operation}{binOp}
+    A {\color{red} \textbf{binary operation}} $\star$ on a set $G$ is a function $f \colon G \times G \to G$. 
 \end{dfnbox}
-In Definition \ref{dfn:grp}, the map $\star$ is often called \textit{multiplication} by convention, the element $e$ is known as the \textit{identity} element of $G$, and the map $(\quad)^{-1}$ is known as the \textit{inversion} map.
+Conventionally, the notations $a \star b$ and $\star\bigl(\left(a, b\right)\bigr)$ are equivalent. For the sake of simplicity, we will not use the latter.
+
+Recall that there are some commonly used properties of operations. We shall abstract those as well. First, we pay attention to whether the order of execution matters in a sequence of repeated applications of an operation.
+\begin{dfnbox}{Associativity}{assoc}
+    A binary operation $\star$ on $G$ is {\color{red} \textbf{associative}} if for all $a, b, c \in G$, we have
+    \begin{equation*}
+        a \star \left(b \star c\right) = \left(a \star b\right) \star c.
+    \end{equation*}
+\end{dfnbox}
+Similarly, we will next focus on whether the order of operands matters when an operation is applied.
+\begin{dfnbox}{Commutativity}{commute}
+    Let $G$ be a set with a binary operation $\star$, then $a, b \in G$ {\color{red} \textbf{commute}} if $a \star b = b \star a$. We say that $\star$ or $G$ is {\color{red} \textbf{commutative}} if all elements in $G$ commute pair-wisely with respect to $\star$.
+\end{dfnbox}
+Note that both addition and multiplication are associative and commutative over $\N$, but subtraction is not. In fact, subtraction is not even a binary operation over $\N$ because $\N$ is not closed under subtraction.
+
+A more complex example is cross product in $\R^n$, which is neither associative nor commutative. Recall that we used the word ``closed'' when arguing that subtraction is not a binary operation over $\N$. We shall further formalise this notion.
+\begin{dfnbox}{Closure}{cl}
+    Let $\star$ be a binary operation on $G$, then $H \subseteq G$ is {\color{red} \textbf{closed under $\star$}} if for all $a, b \in H$, we have $a \star b \in H$.
+\end{dfnbox}
+In particular, this means that $\star$ on $G$ is still a binary operation on any $H \subseteq G$ which is closed under $\star$. Intuitively, both associativity and commutativity can be inherited by these subsets.
+\begin{probox}{Presevation of Associativity and Commutativity}{assocComm}
+    Let $\star$ be a binary operation on $G$ and $H \subseteq G$ be closed under $\star$, then 
+    \begin{itemize}
+        \item if $\star$ is associative on $G$, then $\star$ is associative on $H$;
+        \item if $\star$ is commutative on $G$, then $\star$ is commutative on $H$.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Left as exercise to the reader.
+    \end{proof}
+\end{probox}
+Next, we will introduce the fundamental axioms which define the abstract mathematical notion of groups, as well as some simple results derived from these axioms.
+\begin{dfnbox}{Group}{grp}
+    A {\color{red} \textbf{group}} is a pair $\left(G, \star\right)$ where $G$ is a set and $\star$ is a binary operation on $G$ such that 
+    \begin{itemize}
+        \item $\star$ is associative;
+        \item there exists some $e \in G$ with $a \star e = e \star a = a$ for all $a \in G$, where $e$ is known as an {\color{red} \textbf{identity}} of $G$; 
+        \item for all $a \in G$, there exists some $a^{-1} \in G$ such that $a \star a^{-1} = a^{-1} \star a = e$, where~$a^{-1}$ is known as the {\color{red} \textbf{inverse}} of $a$.
+    \end{itemize}
+\end{dfnbox}
+In Definition \ref{dfn:grp}, the map $\star$ is often called \textit{multiplication} by convention. Moreover, we can define a map $\,^{-1} \colon G \to G$ known as the \textit{inversion} map as an alternative way to construct the inverses.
 
 Therefore, a group can be defined as a set in which:
 \begin{enumerate}
@@ -52,26 +188,77 @@ Therefore, a group can be defined as a set in which:
     \item every element has an inverse in the set itself, and
     \item there exists an identity element which equals the product of any element multiplied by its inverse and multiplied by which any element equals itself.
 \end{enumerate}
-A group can be finite or infinite. A group defined over $G$ is finite if and only if $G$ is finite, where $\abs{G}$ is known as the \textit{order} of the group. 
-
 The very first thing to take note here is that the order of multiplication matters in groups! In other words, $a \star b \neq b \star a$ in general.
 \begin{dfnbox}{Abelian Group}{abelian}
-    A group $G$ is called an {\color{red} \textbf{Abelian}} or {\color{red} \textbf{commutative}} group if $a \star b = b \star a$ for all $a, b \in G$.
+    A group $G$ is called an {\color{red} \textbf{Abelian}} or {\color{red} \textbf{commutative}} group if it is commutative.
 \end{dfnbox}
-Another important thing to remember here is that, although we call the map $\star$ ``multiplication'' conventionally, it does not have to be referring to the multiplication between real numbers or vectors or anything that we commonly take to be able to be multiplied together in elementary mathematics. In fact, we will see that by taking $\Z$ as the set and addition $+$ as the multiplication map, we get a group that satisfies Definition \ref{dfn:grp} perfectly!
+Another important thing to remember here is that, although we call the map $\star$ ``multiplication'' conventionally, it does not have to be referring to the multiplication between real numbers or vectors or anything that we commonly take to be able to be multiplied together in elementary mathematics. 
 
-We shall prove two trivial results directly from the definition.
-\begin{thmbox}{Uniqueness of Identity and Inverse of Groups}{uniqueIdAndInv}
-    Let $G$ be a group under $\star$ with identity $e$, then $e$ is unique and for all $a \in G$, $a^{-1}$ is unique.
+In fact, we will see that by taking $\Z$ as the set and addition $+$ as the multiplication map, we get a group that satisfies Definition \ref{dfn:grp} perfectly! Furthermore, this group $\left(\Z, +\right)$, known as the \textit{additive group} of $\Z$, is an Abelian group. The same holds for $\left(\Q, +\right)$, $\left(\R, +\right)$, and~$\left(\C, +\right)$.
+
+Consider $\left(\Q \setminus \left\{0\right\}, +\right)$, which is not a group due to the missing identity. However, we can turn it into a group, specifically into a \textit{multiplicative group}, by changing the operation to $\times$. In fact, $\left(\Q \setminus \left\{0\right\}, \times\right)$ is also Abelian. The same holds for $\left(\R \setminus \left\{0\right\}, \times\right)$ and $\left(\C \setminus \left\{0\right\}, \times\right)$.
+\begin{notebox}
+    \begin{remark}
+        Writing $\frac{b}{a}$ is not a good notation in the context of this course because it could mean either $a^{-1} \star b$ or $b \star a^{-1}$, which are completely different for non-Abelian groups.
+    \end{remark}
+\end{notebox}
+Note that further $\left(\Z \setminus \left\{0\right\}, \times\right)$ is not a group because all elements except $1$ do not have inverses. Therefore, we define $\Z^{\times} \coloneqq \{-1, 1\}$ which under $\times$ is a multiplicative group.
+
+A group can be finite or infinite. To define those we need to define a measurement for the ``size'' of a group.
+\begin{dfnbox}{Order of a Group}{order}
+    Let $\left(G, \star\right)$ be a group, then $\abs{G}$ is known as the \textit{order} of the group. $G$ is said to be a {\color{red} \textbf{finite}} group if $G$ is finite, and {\color{red} \textbf{infinite}} group otherwise.
+\end{dfnbox}
+Let us consider some extreme cases here. Note that a group cannot be empty, so the most extreme case is a singleton group.
+\begin{probox}{Singleton Sets Are Abelian Groups}{AbelianSingleton}
+    Every singleton set $\left\{e\right\}$ is an Abelian group under any binary operation. In particular, the only binary operation under which the set is a group is $\left(e, e\right) \mapsto e$.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{probox}
+Next is a more complex example based on the \textit{roots of unity}.
+\begin{dfnbox}{Root of Unity}{rootOfUnity}
+    An {\color{red} \textbf{$n$-th root of unity}} is a complex number $z \in \C$ such that $z^n = 1$.
+\end{dfnbox}
+We can collect all such roots and realise that they form a group.
+\begin{probox}{$n$-th Root of Unity Group}{nthRootGrp}
+    Let $\Z_n \coloneqq \left\{0, 2, \cdots, n - 1\right\}$ and define 
+    \begin{equation*}
+        U_n \coloneqq \left\{\exp\left(\frac{2k\pi\im}{n}\right) \colon k \in \Z_n\right\},
+    \end{equation*}
+    then $\left(U_n, \cdot\right)$ is a group.
+    \tcblower
+    \begin{proof}
+        We first prove that $U_n$ is closed under multiplication. Take any $z_1, z_2 \in U_n$, then there exist $k_1, k_2 \in \Z_n$ such that $z_1 = \exp\left(\frac{2k_1\pi\im}{n}\right)$ and $z_2 = \exp\left(\frac{2k_2\pi\im}{n}\right)$. Notice that there exists some $q \in \N$ and $r \in \Z_n$ such that $k_1 + k_2 = nq + r$, so
+        \begin{align*}
+            z_1 \cdot z_2 & = \exp\left(\frac{2\left(k_1 + k_2\right)\pi\im}{n}\right) \\
+            & = \exp\left(\frac{2\left(nq + r\right)\pi\im}{n}\right) \\
+            & = \exp\left(2q\pi\im + \frac{2r\pi\im}{n}\right) \\
+            & = \exp\left(2q\pi\im\right)\exp\left(\frac{2r\pi\im}{n}\right).
+        \end{align*}
+        Observe that $\exp\left(2q\pi\im\right) = 1$, so $z_1 \cdot z_2 = \exp\left(\frac{2r\pi\im}{n}\right) \in U_n$. It is obvious that multiplication is associative over $\C$ and $1 \in U_n$ is an identity, so it suffices to prove the existence of inverses. Take any $z \in U_n$, then there exists some $k \in \Z_n$ such that $z = \exp\left(\frac{2k\pi\im}{n}\right)$. Consider 
+        \begin{align*}
+            z' & \coloneqq \exp\left(\frac{-2k\pi\im}{n}\right) \\
+            & = \exp\left(2\pi\im\right)\exp\left(\frac{-2k\pi\im}{n}\right) \\
+            & = \exp\left(\frac{2\left(n - k\right)\pi\im}{n}\right).
+        \end{align*}
+        Note that $n - k \in \Z_n$ and $z' \cdot z = z \cdot z' = 1$, so $z' = z^{-1}$. Therefore, $\left(U_n, \cdot\right)$ is a group.
+    \end{proof}
+\end{probox}
+We shall prove some trivial results directly from the definition of groups.
+\begin{thmbox}{Uniqueness of Identity and Inverse in Groups}{uniqueIdAndInv}
+    Let $G$ be a group under $\star$ with identity $e$, then $e$ is unique and for all $a \in G$, $a^{-1}$ is unique. Furthermore, 
+    \begin{itemize}
+        \item $\left(a^{-1}\right)^{-1} = a$ for all $a \in G$;
+        \item $\left(a \star b\right)^{-1} = b^{-1} \star a^{-1}$ for all $a, b \in G$.
+    \end{itemize}
     \tcblower
     \begin{proof}
         Suppose there exists $f \in G$ such that $a \star f = f \star a = a$ for all $a \in G$. Since $e \in G$, we have $e \star f = e$, but $e$ is the identity and $f \in G$, so $f \star e = f$. Therefore,
         \begin{equation*}
             f = f \star e = e \star f = e,
         \end{equation*}
-        which means that $e$ is unique.
-        \\\\
-        Suppose that there is some $a \in G$ such that there is some $b \in G$ with $a \star b = b \star a = e$, then
+        which means that $e$ is unique. Suppose that there is some $a \in G$ such that there is some $b \in G$ with $a \star b = b \star a = e$, then
         \begin{align*}
             b & = b \star e \\
             & = b \star \left(a \star a^{-1}\right) \\
@@ -83,20 +270,78 @@ We shall prove two trivial results directly from the definition.
     \end{proof}
 \end{thmbox}
 Theorem \ref{thm:uniqueIdAndInv} shows that if the map $\star$ is such that an identity exists in the set $G$, then it is unique, which also uniquely determines the inversion map as there cannot be different $a, b \in G$ such that $ac = bc = e$ for some $c \in G$. In other words, \textbf{a group is uniquely determined by the multiplication map} given a set $G$.
-
-We will now introduce some simple groups. First, it is easy to see that any singleton set $\{e\}$ is a group with $e$ being the identity and the inverse of itself. One can check that the only valid multiplication map is the map $(e, e) \mapsto e$.
-
-$\Z, \Q, \R, \C$ under $+$ are known as \textit{additive groups}. $\Q^{\times} \coloneqq \Q - \{0\},\R^{\times} \coloneqq \R - \{0\}, \C^{\times} \coloneqq \C - \{0\}$ under $\times$ are known as \textit{multiplicative groups}. Note that $\Z - \{0\}$ under $\times$ is not a group because there is no inverse for any $n \in \Z$ with $\abs{n} > 1$. So we define $\Z^{\times} \coloneqq \{-1, 1\}$ which under $\times$ is a multiplicative group.
-
-\begin{notebox}
-    \begin{remark}
-        In general, if $A$ is a ring, then $A$ under $+$ is an additive group and the set
+\begin{thmbox}{Generalised Associative Law}{assocLaw}
+    Let $\left(G, \star\right)$ be a group, then $a_1 \star a_2 \star \cdots \star a_n$ is well-defined for any $a_1, a_2, \cdots, a_n \in G$ and all $n \in \N^+$ and $n \geq 3$.
+    \tcblower
+    \begin{proof}
+        We shall proceed with induction on $n$. The case where $n = 3$ is immediate from Definition \ref{dfn:grp}. Suppose that there exists some $k \in \N^+$ with $k \geq 3$ such that 
         \begin{equation*}
-            A^{\times} \coloneqq \left\{a \in A \colon \exists b \in A \textrm{ such that } ab = ba = 1_A\right\}
+            a_1 \star a_2 \star \cdots \star a_k
         \end{equation*}
-        under $\times$ is a multiplicative group. 
-    \end{remark}
-\end{notebox}
+        is well-defined for any $a_1, a_2, \cdots, a_k \in G$. Take any $a_1, a_2, \cdots, a_{k + 1} \in G$ and write 
+        \begin{equation*}
+            a_1 \star a_2 \star \cdots \star a_k = K \in G,
+        \end{equation*}
+        then clearly $K \star a_{k + 1} \in G$ and so $a_1 \star a_2 \star \cdots \star a_{k + 1}$ is well-defined.
+    \end{proof}
+\end{thmbox}
+The above results justify some short-hand notations in a group $G$. 
+\begin{itemize}
+    \item We denote the identity of any group by $1$.
+    \item If the binary operation is clear, we can omit it by writing $a \star b = a \cdot b = ab$.
+    \item For all $a \in G$ and any $n \in \Z$, 
+    \begin{equation*}
+        a^n = \begin{cases}
+            \underbrace{a \cdot a \cdot \cdots \cdot a}_{n \text{ terms}} & \textrm{if } $n > 0$ \\
+            1 & \textrm{if } $n = 0$ \\
+            \underbrace{a^{-1} \cdot a^{-1} \cdot \cdots \cdot a^{-1}}_{n \textrm{ terms}} & \textrm{if } $n < 0$ \\
+        \end{cases}
+    \end{equation*}
+\end{itemize}
+Note that the last notation here can be confusing when our group is an additive group, so we may consider the following alternative instead:
+\begin{equation*}
+    n \cdot a = \begin{cases}
+        \underbrace{a + a + \cdots + a}_{n \text{ terms}} & \textrm{if } $n > 0$ \\
+        0 & \textrm{if } $n = 0$ \\
+        \underbrace{a^{-1} + a^{-1} + \cdots + a^{-1}}_{n \textrm{ terms}} & \textrm{if } $n < 0$ \\
+    \end{cases}
+\end{equation*}
+\begin{thmbox}{Left and Right Cancellation Laws}{cancelLaw}
+    Let $G$ be a group, then for any $a, b, u, v \in G$,
+    \begin{itemize}
+        \item if $au = av$, then $u = v$;
+        \item if $ub = vb$, then $u = v$.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Suppose that $au = av$, then 
+        \begin{equation*}
+            u = 1 \cdot u = \left(a^{-1}a\right)u = a^{-1}\left(au\right) = a^{-1}\left(av\right) = \left(a^{-1}a\right)v = 1 \cdot v = v.
+        \end{equation*}
+        The other case is similar.
+    \end{proof}
+\end{thmbox}
+A direct consequence of the cancellation laws is the following:
+\begin{corbox}{Existence and Uniqueness of Solutions in Groups}{uniqueSolGrp}
+    Let $G$ be a group, then for any $a, b, x, y \in G$, the equations $ax = b$ and $ya = b$ have unique solutions.
+    \tcblower
+    \begin{proof}
+        The uniqueness is obvious from Theorem \ref{thm:cancelLaw}, so it suffices to prove the existence. Take $x = a^{-1}b$, the obviously
+        \begin{equation*}
+            ax = a\left(a^{-1}b\right) = \left(aa^{-1}\right)b = 1 \cdot b = b.
+        \end{equation*}
+        Therefore, $x = a^{-1}b$ is a solution to the equation $ax = b$. The other case is similar.
+    \end{proof}
+\end{corbox}
+A further consequence leads to the following way to identify the identity and inverses in a group:
+\begin{corbox}{Characterisation of Identity and Inverses}{charIdAndInv}
+    Let $G$ be a group. For any $a, b \in G$, if $ab = 1$ or $ba = 1$, then $b = a^{-1}$ and if $ab = a$ or~$ba = a$, then $b = 1$.
+    \tcblower
+    \begin{proof}
+        Suppose that $ab = 1$, then by Corollary \ref{cor:uniqueSolGrp} we have $b = a^{-1} \cdot 1 = a^{-1}$. Similarly, suppose that $ab = a$, then we have $b = a^{-1}a = 1$. The other cases are similar.
+    \end{proof}
+\end{corbox}
+
 As an extension, for any $n \in \Z^+$, the quotient set $\Z/n\Z$ under $+$ is an additive group and the set $(Z/n\Z)^{\times}$ under $\times$ is a multiplicative group.
 
 We can do a bit of nesting with the definitions. First, we shall prove a preliminary theorem.

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  30 JAN 2024 13:29
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  15 JAN 2025 15:13
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -798,101 +798,6 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip76
 \thm@headsep=\skip77
 \dth@everypar=\toks49
-) (c:/texlive/2023/texmf-dist/tex/latex/minted/minted.sty
-Package: minted 2022/12/12 v2.7 Yet another Pygments shim for LaTeX
- (c:/texlive/2023/texmf-dist/tex/latex/fvextra/fvextra.sty
-Package: fvextra 2022/11/30 v1.5 fvextra - extensions and patches for fancyvrb
- (c:/texlive/2023/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
-\FV@CodeLineNo=\count362
-\FV@InFile=\read4
-\FV@TabBox=\box132
-\c@FancyVerbLine=\count363
-\FV@StepNumber=\count364
-\FV@OutFile=\write4
-) (c:/texlive/2023/texmf-dist/tex/latex/upquote/upquote.sty
-Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
-) (c:/texlive/2023/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2023/01/19 line numbers on paragraphs v5.1
-Invalid UTF-8 byte or sequence at line 290 replaced by U+FFFD.
-\linenopenalty=\count365
-\output=\toks50
-\linenoprevgraf=\count366
-\linenumbersep=\dimen318
-\linenumberwidth=\dimen319
-\c@linenumber=\count367
-\c@pagewiselinenumber=\count368
-\c@LN@truepage=\count369
-\c@internallinenumber=\count370
-\c@internallinenumbers=\count371
-\quotelinenumbersep=\dimen320
-\bframerule=\dimen321
-\bframesep=\dimen322
-\bframebox=\box133
-\linenoamsmath@ams@eqpen=\count372
-LaTeX Info: Redefining \\ on input line 3131.
-)
-\c@FV@TrueTabGroupLevel=\count373
-\c@FV@TrueTabCounter=\count374
-\FV@TabBox@Group=\box134
-\FV@TmpLength=\skip78
-\c@FV@HighlightLinesStart=\count375
-\c@FV@HighlightLinesStop=\count376
-\FV@LoopCount=\count377
-\FV@NCharsBox=\box135
-\FV@BreakIndent=\dimen323
-\FV@BreakIndentNChars=\count378
-\FV@BreakSymbolSepLeft=\dimen324
-\FV@BreakSymbolSepLeftNChars=\count379
-\FV@BreakSymbolSepRight=\dimen325
-\FV@BreakSymbolSepRightNChars=\count380
-\FV@BreakSymbolIndentLeft=\dimen326
-\FV@BreakSymbolIndentLeftNChars=\count381
-\FV@BreakSymbolIndentRight=\dimen327
-\FV@BreakSymbolIndentRightNChars=\count382
-\c@FancyVerbLineBreakLast=\count383
-\FV@LineBox=\box136
-\FV@LineIndentBox=\box137
-\c@FV@BreakBufferDepth=\count384
-\FV@LineWidth=\dimen328
-) (c:/texlive/2023/texmf-dist/tex/latex/ifplatform/ifplatform.sty
-Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
- (c:/texlive/2023/texmf-dist/tex/generic/catchfile/catchfile.sty
-Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
-) (c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-)) (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.sty (c:/texlive/2023/texmf-dist/tex/generic/xstring/xstring.tex
-\integerpart=\count385
-\decimalpart=\count386
-)
-Package: xstring 2023/01/14 v1.85 String manipulations (CT)
-) (c:/texlive/2023/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip79
-\fb@frw=\dimen329
-\fb@frh=\dimen330
-\FrameRule=\dimen331
-\FrameSep=\dimen332
-) (c:/texlive/2023/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count387
-\float@exts=\toks51
-\float@box=\box138
-\@float@everytoks=\toks52
-\@floatcapt=\box139
-)
-\minted@appexistsfile=\read5
-\minted@bgbox=\box140
-\minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count388
-\c@minted@pygmentizecounter=\count389
-\@float@every@listing=\toks53
-\c@listing=\count390
-)
-runsystem(if not exist _minted-Algebra_I mkdir _minted-Algebra_I)...executed.
-
- (c:/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
-Library (tcolorbox): 'tcbminted.code.tex' version '6.0.1'
 )
 
 Package fontspec Info: Font family 'STIXTwoText(0)' created for font
@@ -955,6 +860,38 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
 (Font)                  OT1/cmr/bx/n --> TU/STIXTwoText(1)/b/n on input line 74.
 
+Package fontspec Info: Font family 'JetBrainsMonoNL-Regular.ttf(0)' created
+(fontspec)             for font 'JetBrainsMonoNL-Regular.ttf' with options
+(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=WordSpace].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[JetBrainsMonoNL-Regular.ttf]/OT:language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+
+
+Package fontspec Info: Font family 'JetBrainsMonoNL-Regular.ttf(1)' created
+(fontspec)             for font 'JetBrainsMonoNL-Regular.ttf' with options [].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[JetBrainsMonoNL-Regular.ttf]/OT:language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular.ttf(1)/m/n on input line 76.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> TU/JetBrainsMonoNL-Regular.ttf(1)/b/n on input line 76.
+
 Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(0)' created for
 (fontspec)             font 'STIXTwoMath-Regular.otf' with options
 (fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math].
@@ -979,13 +916,13 @@ Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(1)' created for
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 75.
+(Font)              `operators' in the math version `normal' on input line 76.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/STIXTwoMath-Regular.otf(1)/m/n on input line 75.
+(Font)                  OT1/cmr/m/n --> TU/STIXTwoMath-Regular.otf(1)/m/n on input line 76.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 75.
+(Font)              `operators' in the math version `bold' on input line 76.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/STIXTwoMath-Regular.otf(1)/b/n on input line 75.
+(Font)                  OT1/cmr/bx/n --> TU/STIXTwoMath-Regular.otf(1)/b/n on input line 76.
 
 Package fontspec Info: STIXTwoMath-Regular scale = 1.0001.
 
@@ -1032,13 +969,13 @@ Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(2)' created for
 (fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 75.
+(Font)              `symbols' in the math version `normal' on input line 76.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> TU/STIXTwoMath-Regular.otf(2)/m/n on input line 75.
+(Font)                  OMS/cmsy/m/n --> TU/STIXTwoMath-Regular.otf(2)/m/n on input line 76.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 75.
+(Font)              `symbols' in the math version `bold' on input line 76.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> TU/STIXTwoMath-Regular.otf(2)/b/n on input line 75.
+(Font)                  OMS/cmsy/b/n --> TU/STIXTwoMath-Regular.otf(2)/b/n on input line 76.
 
 Package fontspec Info: STIXTwoMath-Regular scale = 0.9999.
 
@@ -1073,78 +1010,332 @@ Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(3)' created for
 (fontspec)             =8.04pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 75.
+(Font)              `largesymbols' in the math version `normal' on input line 76.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> TU/STIXTwoMath-Regular.otf(3)/m/n on input line 75.
+(Font)                  OMX/cmex/m/n --> TU/STIXTwoMath-Regular.otf(3)/m/n on input line 76.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 75.
+(Font)              `largesymbols' in the math version `bold' on input line 76.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> TU/STIXTwoMath-Regular.otf(3)/b/n on input line 75.
+(Font)                  OMX/cmex/m/n --> TU/STIXTwoMath-Regular.otf(3)/b/n on input line 76.
 
-Package fontspec Info: Font family 'STIXTwoMath-Regular.otf(4)' created for
-(fontspec)             font 'STIXTwoMath-Regular.otf' with options
-(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=STIXTwoMath-Regular.otf,Style=MathScript},{Size=-7.5,Font=STIXTwoMath-Regular.otf,Style=MathScriptScript}},StylisticSet={01}].
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Warning: OpenType feature 'Variant=01' (ss01) not available
+(fontspec)                for font 'texgyretermes-math' with script 'Math' and
+(fontspec)                language 'Default'.
+
+
+Package fontspec Info: Font family 'texgyretermes-math.otf(0)' created for
+(fontspec)             font 'texgyretermes-math.otf' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=texgyretermes-math.otf,Style=MathScript},{Size=-7.5,Font=texgyretermes-math.otf,Style=MathScriptScript}},StylisticSet={01}].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <10.2->"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;"<7.5-10.2>"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=0;"<-7.5>"[STIXTwoMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=1;"
+(fontspec)             <10.2->"[texgyretermes-math.otf]/OT:script=math;language=dflt;"<7.5-10.2>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.5>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 \sym__um_fam1=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
-(Font)                  TU/STIXTwoMath-Regular.otf(4)/m/n --> TU/STIXTwoMath-Regular.otf(4)/m/n on input line 76.
+(Font)                  TU/texgyretermes-math.otf(0)/m/n --> TU/texgyretermes-math.otf(0)/m/n on input line 77.
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
-(Font)                  TU/STIXTwoMath-Regular.otf(4)/m/n --> TU/STIXTwoMath-Regular.otf(4)/b/n on input line 76.
-Package hyperref Info: Option `colorlinks' set `true' on input line 107.
-\c@amzboxcounter=\count391
+(Font)                  TU/texgyretermes-math.otf(0)/m/n --> TU/texgyretermes-math.otf(0)/b/n on input line 77.
+
+Package fontspec Info: Font family 'texgyretermes-math.otf(1)' created for
+(fontspec)             font 'texgyretermes-math.otf' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=texgyretermes-math.otf,Style=MathScript},{Size=-7.5,Font=texgyretermes-math.otf,Style=MathScriptScript}}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->"[texgyretermes-math.otf]/OT:script=math;language=dflt;"<7.5-10.2>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.5>"[texgyretermes-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+\sym__um_fam2=\mathgroup5
+LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `normal'
+(Font)                  TU/texgyretermes-math.otf(1)/m/n --> TU/texgyretermes-math.otf(1)/m/n on input line 78.
+LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `bold'
+(Font)                  TU/texgyretermes-math.otf(1)/m/n --> TU/texgyretermes-math.otf(1)/b/n on input line 78.
+
+Package fontspec Info: Font family 'XITSMath(0)' created for font 'XITS Math'
+(fontspec)             with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.5-10.2,Font=XITS
+(fontspec)             Math,Style=MathScript},{Size=-7.5,Font=XITS
+(fontspec)             Math,Style=MathScriptScript}}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <10.2->"XITS
+(fontspec)             Math/OT:script=math;language=dflt;"<7.5-10.2>"XITS
+(fontspec)             Math/OT:script=math;language=dflt;+ssty=0;"<-7.5>"XITS
+(fontspec)             Math/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"XITS
+(fontspec)             Math/B/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+\sym__um_fam3=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `normal'
+(Font)                  TU/XITSMath(0)/m/n --> TU/XITSMath(0)/m/n on input line 80.
+LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `bold'
+(Font)                  TU/XITSMath(0)/m/n --> TU/XITSMath(0)/b/n on input line 80.
+Package hyperref Info: Option `colorlinks' set `true' on input line 109.
+\c@amzboxcounter=\count362
 ) (c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks54
-\inpenc@posthook=\toks55
+\inpenc@prehook=\toks50
+\inpenc@posthook=\toks51
 
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
 ) (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\symAMSa=\mathgroup5
-\symAMSb=\mathgroup6
+\symAMSa=\mathgroup7
+\symAMSb=\mathgroup8
 LaTeX Font Info:    Redeclaring math delimiter \ulcorner on input line 74.
 LaTeX Font Info:    Redeclaring math delimiter \urcorner on input line 75.
 LaTeX Font Info:    Redeclaring math delimiter \llcorner on input line 76.
 LaTeX Font Info:    Redeclaring math delimiter \lrcorner on input line 77.
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+) (c:/texlive/2023/texmf-dist/tex/latex/nicematrix/nicematrix.sty
+Package: nicematrix 2023/03/06 v6.16 Enhanced arrays with the help of PGF/TikZ
+\g__nicematrix_env_int=\count363
+\g__nicematrix_NiceMatrixBlock_int=\count364
+\l__nicematrix_note_in_caption_int=\count365
+\l__nicematrix_columns_width_dim=\dimen318
+\l__nicematrix_col_width_dim=\dimen319
+\g__nicematrix_row_total_int=\count366
+\g__nicematrix_col_total_int=\count367
+\g__nicematrix_last_row_node_int=\count368
+\l__nicematrix_key_nb_rows_int=\count369
+\g__nicematrix_blocks_wd_dim=\dimen320
+\g__nicematrix_blocks_ht_dim=\dimen321
+\g__nicematrix_blocks_dp_dim=\dimen322
+\l__nicematrix_width_dim=\dimen323
+\l__nicematrix_tabular_width_dim=\dimen324
+\l__nicematrix_rule_width_dim=\dimen325
+\l__nicematrix_old_iRow_int=\count370
+\l__nicematrix_old_jCol_int=\count371
+\g__nicematrix_total_X_weight_int=\count372
+\l__nicematrix_X_columns_dim=\dimen326
+\l__nicematrix_x_initial_dim=\dimen327
+\l__nicematrix_y_initial_dim=\dimen328
+\l__nicematrix_x_final_dim=\dimen329
+\l__nicematrix_y_final_dim=\dimen330
+\l__nicematrix_tmpc_dim=\dimen331
+\l__nicematrix_tmpd_dim=\dimen332
+\g__nicematrix_width_last_col_dim=\dimen333
+\g__nicematrix_width_first_col_dim=\dimen334
+\l__nicematrix_row_min_int=\count373
+\l__nicematrix_row_max_int=\count374
+\l__nicematrix_col_min_int=\count375
+\l__nicematrix_col_max_int=\count376
+\g__nicematrix_static_num_of_col_int=\count377
+\l__nicematrix_rounded_corners_dim=\dimen335
+\l__nicematrix_line_width_dim=\dimen336
+\g__nicematrix_block_box_int=\count378
+\l__nicematrix_submatrix_extra_height_dim=\dimen337
+\l__nicematrix_submatrix_left_xshift_dim=\dimen338
+\l__nicematrix_submatrix_right_xshift_dim=\dimen339
+\l__nicematrix_first_row_int=\count379
+\l__nicematrix_first_col_int=\count380
+\l__nicematrix_last_row_int=\count381
+\l__nicematrix_last_col_int=\count382
+\c@tabularnote=\count383
+\c@nicematrix_draft=\count384
+\l__nicematrix_cell_space_top_limit_dim=\dimen340
+\l__nicematrix_cell_space_bottom_limit_dim=\dimen341
+\l__nicematrix_xdots_inter_dim=\dimen342
+\l__nicematrix_xdots_shorten_start_dim=\dimen343
+\l__nicematrix_xdots_shorten_end_dim=\dimen344
+\l__nicematrix_xdots_radius_dim=\dimen345
+\l__nicematrix_notes_above_space_dim=\dimen346
+\l__nicematrix_left_margin_dim=\dimen347
+\l__nicematrix_right_margin_dim=\dimen348
+\l__nicematrix_extra_left_margin_dim=\dimen349
+\l__nicematrix_extra_right_margin_dim=\dimen350
+\c__nicematrix_max_l_dim=\dimen351
+\l__nicematrix_position_int=\count385
+\l__nicematrix_start_int=\count386
+\l__nicematrix_multiplicity_int=\count387
+\l__nicematrix_brace_yshift_dim=\dimen352
+)
+\symyhlargesymbols=\mathgroup9
+ (c:/texlive/2023/texmf-dist/tex/latex/scalerel/scalerel.sty
+Package: scalerel 2016/12/29 v1.8 Routines for constrained scaling and stretching of objects, relative to a reference object or in absolute terms
+\thesrwidth=\skip78
+\thesrheight=\skip79
+\srblobheight=\skip80
+\srblobdepth=\skip81
+\mnxsrwidth=\skip82
+\LMex=\skip83
+\LMpt=\skip84
+) (c:/texlive/2023/texmf-dist/tex/latex/stackengine/stackengine.sty
+Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient ways
+ (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.sty (c:/texlive/2023/texmf-dist/tex/generic/listofitems/listofitems.tex
+Invalid UTF-8 byte or sequence at line 50 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 50 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 52 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 52 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 52 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 96 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 104 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 105 replaced by U+FFFD.
+\loi_cnt_foreach_nest=\count388
+Invalid UTF-8 byte or sequence at line 139 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 146 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 192 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 209 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 209 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 222 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 222 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 223 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 223 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 224 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 226 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 226 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 238 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 243 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 243 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 260 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 284 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 310 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 310 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 324 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 337 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 337 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 339 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 350 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 354 replaced by U+FFFD.
+\loi_nestcnt=\count389
+Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 367 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 375 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 375 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 375 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 375 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 377 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 378 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 398 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 398 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 399 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 399 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 399 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 399 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 399 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 399 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 409 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 410 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 410 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 410 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 410 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 411 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 411 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 411 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 411 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 411 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 411 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 414 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 422 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 422 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 426 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 428 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 433 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 433 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 441 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 441 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 442 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 443 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 443 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 443 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 446 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 446 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 446 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 448 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 448 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 451 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 455 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 455 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 458 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 458 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 472 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 475 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 492 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 508 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 508 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 509 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 509 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 519 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 541 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 541 replaced by U+FFFD.
+)
+Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified sep char (CT)
+)
+\c@@stackindex=\count390
+\@boxshift=\skip85
+\stack@tmplength=\skip86
+\temp@stkl=\skip87
+\@stackedboxwidth=\skip88
+\@addedbox=\box132
+\@anchorbox=\box133
+\@insetbox=\box134
+\se@backgroundbox=\box135
+\stackedbox=\box136
+\@centerbox=\box137
+\c@ROWcellindex@=\count391
 )
 \c@case=\count392
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Algebra_I.aex <nul: /p x=^%~$PATH:i>> Algebra_I.aex)...executed.
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 126.
+ (./Algebra I.aux
 
-runsystem(del Algebra_I.aex)...executed.
+LaTeX Warning: Label `dfn:order' multiply defined.
 
- (./Algebra I.aux)
+)
 \openout1 = `"Algebra I.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 128.
+LaTeX Font Info:    ... okay on input line 128.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1181,13 +1372,9 @@ LaTeX Font Info:    ... okay on input line 32.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 32.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 128.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 32.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 32.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 32.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 128.
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
 (unicode-math)                `mathtools' package.
@@ -1206,12 +1393,16 @@ Package unicode-math Warning: I'm going to overwrite the following commands
 (unicode-math)                colon-like commands, using them will lead to
 (unicode-math)                inconsistencies.
 
-Package hyperref Info: Link coloring ON on input line 32.
+Package hyperref Info: Link coloring ON on input line 128.
 (./Algebra I.out) (./Algebra I.out)
-\@outlinefile=\write6
-\openout6 = `"Algebra I.out"'.
+\@outlinefile=\write4
+\openout4 = `"Algebra I.out"'.
 
 \c@lstlisting=\count393
+\c@tabularnotesi=\count394
+\enitdp@tabularnotes=\count395
+\c@tabularnotes*i=\count396
+\enitdp@tabularnotes*=\count397
  (./Algebra I.toc
 LaTeX Font Info:    Font shape `TU/STIXTwoMath-Regular.otf(2)/m/n' will be
 (Font)              scaled to size 12.00128pt on input line 2.
@@ -1232,44 +1423,44 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
  (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for OMX+yhex on input line 2.
+ (c:/texlive/2023/texmf-dist/tex/latex/yhmath/OMXyhex.fd
+File: OMXyhex.fd 
+File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 ))
-\tf@toc=\write7
-\openout7 = `"Algebra I.toc"'.
+\tf@toc=\write5
+\openout5 = `"Algebra I.toc"'.
 
  [1
 
 
 ]
 Chapter 1.
-Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 44.
-
-Underfull \hbox (badness 10000) in paragraph at lines 71--75
-
- []
-
+Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 140.
 [2
 
-] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 110--114
+] [3] [4] [5] [6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 355--359
 
  []
 
-[4] [5] [6] [7] 
+[8] [9] [10] [11] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Algebra I.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `"Algebra I".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 38936 strings out of 478630
- 819300 string characters out of 5847730
- 1875012 words of memory out of 5000000
- 58420 multiletter control sequences out of 15000+600000
- 516087 words of font info for 77 fonts, out of 8000000 for 9000
+ 38671 strings out of 478630
+ 836557 string characters out of 5847730
+ 1877012 words of memory out of 5000000
+ 58169 multiletter control sequences out of 15000+600000
+ 518082 words of font info for 95 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 114i,12n,128p,1196b,2766s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 114i,12n,131p,1196b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Algebra I.pdf (7 pages).
+Output written on Algebra I.pdf (11 pages).

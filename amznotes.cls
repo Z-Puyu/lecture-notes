@@ -72,9 +72,11 @@
   ItalicFont = *-Italic,
   BoldItalicFont = *-SemiBoldItalic,
 ]
+\setmonofont{JetBrainsMonoNL-Regular.ttf}
 \setmathfont{STIXTwoMath-Regular.otf}[math-style = ISO]
-\setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
-% \setmonofont{JetBrainsMono-Regular}
+\setmathfont{texgyretermes-math.otf}[range={scr,bfscr},StylisticSet=01]
+\setmathfont{texgyretermes-math.otf}[range={bb}]
+\setmathfont[range=\int]{XITS Math}
 
 % ------------------------------------------------------------
 % PAGE LAYOUT
