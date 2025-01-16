@@ -2,9 +2,98 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{nicematrix}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead \left(see below\right):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -20,8 +109,22 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
 \newcommand{\e}{\mathrm{e}}
-\newcommand{\dif}{\mathrm{d}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
 \begin{document}
 \fancyhead[L]{
     MA2116 Probability
@@ -31,7 +134,7 @@
 }
 \tableofcontents
 
-\chapter{How to Count}
+\chapter{Combinatorics}
 \section{Basic Counting Principles}
 An important motivation to study combinatorics is to count the \textbf{number of ways} in which an event may occur. Intuitively, we have two approaches to count.
 
@@ -97,10 +200,205 @@ Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$
 \begin{notebox}
     In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
 \end{notebox}
+Next, consider the following naïve question:
+\begin{quote}
+    If $\abs{A} = a$ and $\abs{B} = b$, what is $\abs{A \cup B}$?
+\end{quote}
+The solution is simple: we first count how many elements are in $A$ and then count how many elements are in $B$, but note that there are some elements which might be in both sets and are thus counted twice, so we need to subtract these elements away.
+\begin{probox}{Cardinality of the Union of Two Finite Sets}{2PIE}
+    Let $A$ and $B$ be two finite sets, then
+    \begin{equation*}
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
+    \end{equation*}
+    In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
+\end{probox}
+Proposition \ref{pro:2PIE} can be generalised for a finite sequence of finite sets.
+\begin{thmbox}{Principle of Inclusion and Exclusion (PIE)}{PIE}
+    Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
+    \begin{equation*}
+        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{r = 1}^{j}E_{k_r}}\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider
+        \begin{equation}\label{eq:1}
+            \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right). \tag{*}
+        \end{equation}
+        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that~$f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
+        \\\\
+        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$. In particular, $f_{E \cap E_i}(x) = f_{E_i}(x)$ for all $i = 1, 2, \cdots, n$. Expanding (\ref{eq:1}), we have
+        \begin{equation*}
+            f_E(x) = \bigl[f_E(x)\bigr]^n = \sum_{j = 1}^{n} \left\{(-1)^{j + 1}\left[\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\left(\prod_{r = 1}^{j}f_{E_{k_r}}(x)\right)\right]\right\}.
+        \end{equation*}
+        Summing up $f_E(x)$ over all $x$ leads to the identity in the original statement.
+    \end{proof}
+\end{thmbox}
+We can generalise this further. Note that every set is uniquely determined by some formula~$\phi$ with some parameter $p$. This means that the statement $x \in X$ is logically equivalent to ``$x$ satisfies a property $\phi(x, p)$''. This leads to the general principle of inclusion and exclusion.
+\begin{thmbox}{General Principle of Inclusion and Exclusion (GPIE)}{GenPIE}
+    Let $S$ be a finite set with $\abs{S} = n$ and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that~$E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that~$\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
+    \begin{equation*}
+        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
+    \end{equation*}
+    then
+    \begin{equation*}
+        E(m) = \sum_{k = m}^{q}\left[(-1)^{k - m}\begin{pmatrix}
+            k \\
+            m
+        \end{pmatrix}\omega(k)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $x \in S$ be an arbitrary element which satisfies exactly $t$ properties. If $t < m$ or $q < t$, then $x$ contributes a count of $0$ to both sides. If $t = m$, then $x$ contributes a count of $1$ to $E(m)$ and to $\omega(m)$ and contributes a count of $0$ to $\omega(k)$ for all $k > m$.
+        \\\\
+        If $q \geq t > m$, then $x$ contributes a count of $0$ to the left-hand side. On the right-hand side, $x$ is counted $\left(\begin{smallmatrix}
+            t \\
+            k
+        \end{smallmatrix}\right)$ times for $k = m, m + 1, \cdots, t$. So the total contribution of $x$ to the right-hand side is
+        \begin{align*}
+            \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                k \\
+                m
+            \end{pmatrix}\right] & = \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k - m
+            \end{pmatrix}\right] \\
+            & = \sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = \begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = 0.
+        \end{align*}
+        Therefore, every $x \in S$ contributes an equal count to both sides of the identity, so the identity holds.
+    \end{proof}
+\end{thmbox}
+In particular, we see that 
+\begin{equation*}
+    E(0) = \sum_{i = 0}^{q}\left[(-1)^i\omega(i)\right].
+\end{equation*}
+The PIE can be used to study derangements, the concept of which arises from the following question:
+\begin{quote}
+    Given an increasing sequence of consecutive integers from $1$ to $n$ inclusive. How many permutations of the sequence are there such that the integer at index $i$ in the permuted sequence is not $i$?
+\end{quote}
+Here we give a rigorous definition along with a generalised notion of \textit{fixed points}.
+\begin{dfnbox}{Derangement}{derangement}
+    Let $N_n = [n] - \{0\}$. A {\color{red} \textbf{derangement}} of $N_n$, denoted by $D_n$, is defined as the permutation $a_1a_2\cdots a_n$ of $N_n$ such that $a_i \neq i$ for all $i = 1, 2, \cdots, n$. We say that an~$r$-permutation of $N_n$ has a {\color{red} \textbf{fixed point}} at $i$ if $a_i = i$. The number of $r$-permutations of~$N_n$ with $k$ fixed points is $D(n, r, k)$.
+\end{dfnbox}
+With some careful computation, we arrive at the following formula:
+\begin{thmbox}{A Formula for $D(n, r, k)$}{dnrk}
+    For $n \geq r \geq k \geq -$ and $r \geq 1$,
+    \begin{equation*}
+        D(n, r, k) = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
+            r - k \\
+            i
+        \end{pmatrix}(n - k - i)!.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $a_1a_2\cdots a_r$ be a permutation and let $P_i$ be a property satisfied by a permutation with $a_i = i$, then $D(n, r, k) = E(k)$. Suppose $A$ is a permutation with at least $t$ fixed points, then the rest $(r - t)$ digits form an $(r - t)$-permutation of $(n - t)$ integers. Therefore, 
+        \begin{equation*}
+            \omega(t) = \begin{pmatrix}
+                r \\
+                t
+            \end{pmatrix}\frac{(n - t)!}{(n - r)!}.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE},
+        \begin{align*}
+            D(n, r, k) & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                k + i \\
+                k
+            \end{pmatrix}\omega(k + i)\right] \\
+            & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                k + i \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                r \\
+                k + i
+            \end{pmatrix}\frac{(n - k - i)!}{(n - r)!}\right] \\
+            & = \frac{1}{(n - r)!}\sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                r \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                r - k \\
+                i
+            \end{pmatrix}(n - k - i)!\right] \\
+            & = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
+                r - k \\
+                i
+            \end{pmatrix}(n - k - i)!.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+Using Theorem \ref{thm:dnrk}, we see that the number of derangements is just
+\begin{equation*}
+    D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}.
+\end{equation*}
+Relating this to probability, we see that given a sequence of $n$ integers, the probability of us having a derangement is given by:
+\begin{equation*}
+    \lim_{n \to \infty}P(\textrm{Having a derangement}) = \lim_{n \to \infty}\frac{D_n}{n!} = \mathrm{e}^{-1}.
+\end{equation*}
+Another application of the PIE is to investigate a standardised method to count the number of prime numbers between $2$ and $n$ inclusive. We will first introduce an ancient algorithm discovered by Greek mathematician Eratosthenes.
+\begin{tecbox}{Sieve of Eratosthenes}{sieve}
+    Let $n \in \N$ and $n \geq 2$.
+    \begin{itemize}
+        \item Define $L$ to be the list of all integers from $2$ to $n$ inclusive, arranged in ascending order.
+        \item For every $i \in L$, while $i \leq \sqrt{n}$:
+        \begin{itemize}
+            \item If $i$ is a prime, remove all multiples of $i$ from $L$.
+        \end{itemize}
+        \item All remaining integers in $L$ are primes.
+    \end{itemize}
+\end{tecbox}
+To extend the problem further, we can instead consider counting the number of positive integers up to $n$ inclusive which are \textbf{co-prime} to $n$.
+\begin{thmbox}{Euler $\varphi$-Function}{eulerPhi}
+    Let $n \in \N^+$ and $\varphi(n)$ be the number of positive integers which are smaller than $n$ and co-prime to $n$. If $p_1, p_2, \cdots, p_k$ are distinct prime numbers such that
+    \begin{equation*}
+        n = \prod_{i = 1}^{k}p_i^{m_i}
+    \end{equation*} 
+    for positive $m_i$'s, then
+    \begin{equation*}
+        \varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $S_t$ be the set of positive integers at most $n$ which are divisible by at least $t$ of the $k$ primes. For $t = 1, 2, \cdots, k$, consider
+        \begin{equation*}
+            \abs{S_t} = \sum_{i_1 < i_2 < \cdots < i_t}\left\lfloor\frac{n}{\prod_{j = 1}^{t}p_{i_j}}\right\rfloor = \sum_{i_1 < i_2 < \cdots < i_t}\frac{n}{\prod_{j = 1}^{t}p_{i_j}}
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE},
+        \begin{align*}
+            \varphi(n) & = n - \abs{\left(\bigcup_{t = 1}^{k}S_t\right)} \\
+            & = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
 \section{Permutations}
-A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textit{permutation}.
+\subsection{Linear Permutations}
+A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
-Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $(n - 1)$ choices. 
+Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
 
 Continue choosing elements in this way, we realise that if we choose the terms sequentially, when we reach the $k$-th term we will be left with $n - k + 1$ options as the previous~$(k - 1)$ terms have taken away $(k - 1)$ elements. By Theorem \ref{thm:MP}, we know that the number of sequences which can be formed is given by $\prod_{i = 1}^{r}(n - r + i)$.
 \begin{dfnbox}{Permutations}{permutations}
@@ -109,16 +407,71 @@ Continue choosing elements in this way, we realise that if we choose the terms s
         P^n_r = \prod_{i = 1}^{r}(n - r + i) = \frac{n!}{(n - r)!}.
     \end{equation*}
 \end{dfnbox}
-\subsection{Permutations with Idential Objects}
-\begin{thmbox}{Generalised Formula for Permutations}{}
-    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then the number of permutations for these $k$ objects are given by
+With some algebraic manipulations, it is easy to derive the following formula, which we, however, will prove in a combinatorial manner.
+\begin{probox}{An Identity for Permutations}{permutationId}
+    Let $n, r \in \N$ with $r \leq n$, then $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
+    \tcblower
+    \begin{proof}
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ represent $(n + 1)$ distinct objects. Consider a permutation of $S$:
+        \\\\
+        If $n + 1$ is not inside the permutation, this is equivalent to an $r$-permutation of~$S - \{n + 1\}$, so there are $P^n_r$ such permutations.
+        \\\\
+    If $n + 1$ is inside the permutation, it means we need to first find an $(r - 1)$-permuation of $S - \{n + 1\}$, which has $P^n_{r - 1}$ ways to do. After that, we need to insert~$n + 1$ into each of these $(r - 1)$-permutations. Note that for each of such permutations, there are $r$ positions into which we can place $n + 1$. Therefore, the total number of $r$-permuations of $S$ derived in this manner is $rP^n_{r - 1}$.
+        \\\\
+        Therefore, there are $P^n_{r} + rP^n_{r - 1}$ $r$-permutations of $S$, i.e. $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$. 
+    \end{proof}
+\end{probox}
+Consider the following scenario: suppose $T_1, T_2, \cdots T_n$ are distinct labels and $a_1, a_2, \cdots, a_r$ are $r$ distinct objects. If we wish to associate each object with one label, then each of the ways to do so is a permutation, the terms of which are taken from the $T_i$'s. Notice that under this setting, the $T_i$'s are allowed to be repeated in a permutation. To reason such problems, we first introduce the notion of a \textit{multi-set}.
+\begin{dfnbox}{Multi-set}{multiset}
+    The {\color{red} \textbf{multi-set}} is defined to be
+    \begin{equation*}
+        M \coloneqq \left\{r_1 \cdot a_1, r_2 \cdot a_2, \cdots, r_n \cdot a_n\right\},
+    \end{equation*}
+    where $a_i$ has $r_i$ identical copies.
+\end{dfnbox}
+Observe that in a permutation of such a multi-set $M$, the object $a_i$ is repeated $r_i$ times. This brings us to the following formula:
+\begin{probox}{Generalised Formula for Permutations}{genPnr}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then each permutation for these objects, corresponds to a unique permutation of the multi-set
+    \begin{displaymath}
+        M = \left\{n_1 \cdot A_1, n_2 \cdot A_2, \cdots, n_k \cdot A_k\right\},
+    \end{displaymath}
+    and the total number of permutations is given by
     \begin{equation*}
         \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
     \end{equation*}
-\end{thmbox}
+\end{probox}
+We may also consider the special case where we want to form an $r$-permutation with $k$ objects, where each object can repeat an arbitrary number of times. Notice that this is equivalent to finding the permutations of the multi-set
+\begin{displaymath}
+    M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_k\right\}.
+\end{displaymath}
+In this case, we can simply iterate through each of the slots in the $r$-permutation and choose the object to be placed there. Trivially, there are always $k$ choices for each slot.
+\begin{probox}{A Special Case}{pnrSpe}
+    Consider the multi-set
+    \begin{displaymath}
+        M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}.
+    \end{displaymath}
+    The number of $r$-permutations formed using the elements from $M$ is given by $n^r$.
+\end{probox}
+\subsection{Circular Permutations}
+Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
+
+However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the \textbf{relative positions} of the objects matter.
+
+Let $\mathbfit{x}_i$ be an arbitrary straight-line permutations of the $n$ objects and let $\mathbfit{y}_i$ be the corresponding circular permutation of the $n$ objects.
+
+Note that if we translate every element in $\mathbfit{x}_i$ by $k$ positions, this will result in a different straight-line permutation $\mathbfit{x}_j$ but does not change the corresponding circular permutation because the relative positions of the objects remain unchanged.
+
+Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same set of $n$ distinct objects, every circular permutation is mapped to $n$ straight-line permutations.
+\begin{dfnbox}{Circular Permutations}{circPermutation}
+    Let $A$ be a finite set such that $\abs{A} = n$, a circular $r$ permutation of $A$ is a way to arrange~$r$ elements of $A$ around a circular locus, denoted as $Q^n_r$ and given by
+    \begin{equation*}
+        Q^n_r = \frac{P^n_r}{r} = \frac{n!}{r(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
 \section{Combinations}
+Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection. Note that if we want to find a selection of $r$ elements from a set $A$ where the order of selected elements does not matter, it is equivalent to finding a subset of $A$ containing $r$ elements. This motivates us to give the following definition:
 \begin{dfnbox}{Combinations}{combinations}
-    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-combination of $A$ is a way to choose $r$ elements from $A$ regardless of the order of selection, denoted as $C^n_r$ and given by
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-combination of $A$ is a set $B \subseteq A$ with~$\abs{B} = r$. The number of combinations of $A$ is given by
     \begin{equation*}
         C^n_r = \frac{P^n_r}{P^r_r} = \frac{n!}{r!(n - r)!} = \begin{pmatrix}
             n \\
@@ -135,59 +488,397 @@ Continue choosing elements in this way, we realise that if we choose the terms s
         \end{enumerate}
     \end{remark}
 \end{notebox}
+Similar to permutations, we have the following important identity:
 \begin{thmbox}{Pascal's Triangle}{pascalTri}
     Let $n$ be an integer with $n \geq 2$ and let $r$ be an integer with $0 \leq r \leq n$, then
     \begin{equation*}
-        C^n_r = C^{n - 1}_{r - 1} + C^{n - 1}_r.
+        C^{n + 1}_r = C^{n}_{r - 1} + C^{n}_r.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ be $(n + 1)$ distinct objects. Consider any $r$-combination $T$ of $S$. If $n + 1 \notin T$, this is equivalent to an $r$-combination of~$S - \{n + 1\}$, so there are $C^n_r$ such permutations. If $n + 1 \in T$, it suffices to find an $(r - 1)$-combination of $S - \{n + 1\}$, which has $C^n_{r - 1}$ ways to do. Therefore, there are $C^n_{r} + C^n_{r - 1}$ $r$-combinations of $S$, i.e. $C^{n + 1}_r = C^n_r + C^n_{r - 1}$. 
+    \end{proof}
 \end{thmbox}
-
-\section{Binomial and Multinomial Coefficients}
-Consider the expansion of $(x + y)^n$ where $n \in \N$. Note that this expansion is a linear combination of terms in the form of $x^ky^{n - k}$ where $k = 0, 1, 2, \cdots, n$. 
-
-Thus, fix any $k$, to determine how many copies of $x^ky^{n - k}$ there are, it suffices to compute~$C^n_k$. Therefore, in the expanded form of $(x + y)^n$, the coefficient is exactly $C^n_r$.
-\begin{thmbox}{Binomial Expansion}{binomialEx}
-    Let $n \in \N$, then
+A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, if we are given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$. Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearly
+\begin{equation*}
+    \abs{\mathcal{P}(A)} = \sum_{i = 0}^{n}\abs{A_i} = \sum_{i = 0}^{n}C^n_i.
+\end{equation*}
+We can expand the above expression algebraically and realise that it simplifies to $2^n$. However, in a combinatorial perspective, we can prove this result in a more succinct manner:
+\begin{thmbox}{General Formula for $\abs{\mathcal{P}(A)}$}{cardPowerset}
+    Let $A$ be a finite set. If $\abs{A} = n$, then $\abs{\mathcal{P}(A)} = 2^n$.
+    \tcblower
+    \begin{proof}
+        Let $S$ be an arbitrary subset of $A$. Consider an arbitrary element $a \in A$, then either $a \in S$ or $a \notin S$. Let $a_i \in A$ for $i = 1, 2, \cdots, n$. For all $S \in \mathcal{P}(A)$, We replace $a_i$ by $1$ if $a_i \in S$, and by $0$ otherwise. Let $B$ be the set of all binary sequences of length $n$. It is clear that there exists a bijection between $\mathcal{P}(A)$ and $B$, and so $\abs{\mathcal{P}(A)} = \abs{B}$. For each binary sequence of length $n$, each of its digits is either $0$ or $1$. By Theorem \ref{thm:MP}, this means that there are in total $2^n$ such binary sequences. Therefore,
+        \begin{equation*}
+            \abs{\mathcal{P}(A)} = \abs{B} = 2^n.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Given a set of $n$ distinct objects, we wish to find the number of combinations taken from the set where any element is allowed to be selected for multiple times. To reason about such problems, we introduce the following notion of a \textit{multi-subset}.
+\begin{dfnbox}{Multi-subset}{multisubset}
+    Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$ be a multi-set where $n \in \N$. An $r$-element {\color{red} \textbf{multi-subset}} of $M$ is the set
+    \begin{displaymath}
+        \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}
+    \end{displaymath}
+    where each of the $m_i$'s is a non-negative integer such that $\sum_{i = 1}^{n}m_i = r$. We denote the number of $r$-element multi-subsets of $M$ by $H^n_r$.
+\end{dfnbox}
+Intuitively, we can view each of the $a_i$'s as a ``box'' which holds $m_i$ balls. Therefore, if we can find the ways to distribute a total of $r$ balls into the $n$ ``boxes'', each of the distribution will then correspond to a multi-subset of $M$!
+\begin{probox}{A Formula for $H^n_r$}{hnrFormula}
+    Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$, then the number of $r$-element multi-subsets of $M$ is given by
     \begin{equation*}
-        (x + y)^n = \sum_{k = 0}^n \left[\begin{pmatrix}
+        H^n_r = C^{r + n - 1}_r.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider a binary string formed using $r$ zeros. Note that we can insert a number of ones into the binary string to partition the zeros into different sections. Now, suppose we insert $(n - 1)$ ones into the binary string, it will result in a binary string containing $r$ zeros and $(n - 1)$ ones, such that the zeros are partitioned into $n$ sections.
+        \\\\
+        We can then number the sections using $1, 2, 3, \cdots, n$. For the $i$-th section, the number of zeros is recorded as $m_i$. Notice that in this case, each of the binary strings will correspond to a multi-subset in the form of 
+        \begin{displaymath}
+            \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}.
+        \end{displaymath}
+        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and~$(n - 1)$ ones. Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
+    \end{proof}
+\end{probox}
+
+\section{Distribution Problems}
+Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
+\begin{enumerate}
+    \item distribute $r$ distinct objects into $n$ identical collections;
+    \item distribute $r$ distinct objects into $n$ distinct collections;
+    \item distribute $r$ identical objects into $n$ identical collections;
+    \item distribute $r$ identical objects into $n$ distinct collections.
+\end{enumerate}
+These $4$ basic models of distribution problems give rise to many variations. We will only discuss the first two types of distribution problems here. The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
+\begin{probox}{Distinct Objects into Singleton Distinct Collections}{distToDistNonEmpty}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
+\end{probox}
+We then consider the case where each collection can contain any number of objects.
+\begin{probox}{Distinct Objects into Distinct Collections}{distToDist}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
+    \begin{equation*}
+        \frac{(n + r - 1)!}{(n - 1)!}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+For distributing distinct objects into identical collections, the reasoning becomes a bit more complicated. We first consider a scenario where the collections are circular.
+\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
+    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
+        \begin{enumerate}
+            \item $s(r, 0) = 0$ if $r \geq 1$.
+            \item $s(r, r) = 1$ if $r \geq 0$.
+            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
+            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
+\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
+    For $r, n \in \N^+$ and $r \leq n$, we have
+    \begin{equation*}
+        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set $\left\{x_1, x_2, \cdots, x_r\right\}$ to be the $r$ distinct objects. We consider two cases. If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
+        \\\\
+        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects. By Theorem \ref{thm:AP}, the total number of distributions is 
+        \begin{equation*}
+            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Next, we consider the case where the collections arrange their elements linearly.
+\begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
+    The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some trivial results:
+        \begin{itemize}
+            \item $S(0, 0)$ = 1.
+            \item $S(r, 0) = S(0, n) = 0$ for all $r, n \in \N^+$.
+            \item $S(r, n) > 0$ for all $r, n \in \N$ with $r \geq n \geq 1$.
+            \item $S(r, n) = 0$ if $n > r \geq 1$.
+            \item $S(r, 1) = S(r, r) = 1$ for all $r \in \N^+$.
+        \end{itemize}
+    \end{remark}
+\end{notebox}
+Based on the above trivial results, we can use the following recurrence relation to derive a general formula for $S(r, n)$ for any $r$ and $n$.
+\begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
+    For all $r, n \in \N$ with $r \geq n$,
+    \begin{equation*}
+        S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the first object. If the first object is alone in a collection, it is equivalent to distributing $(r - 1)$ distinct objects into $(n - 1)$ identical collections such that no collection is empty, which can be done in $S(r - 1, n - 1)$ ways. If the first object is not alone, we first distribute the rest $(r - 1)$ distinct objects into the $n$ identical collections in $S(r - 1, n)$ ways, and then choose a collection to place the first object into in $n$ ways, which can be done in $nS(r - 1, n)$ ways. Therefore, 
+        \begin{equation*}
+            S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+The Stirling numbers of the second kind are closely related to the problem of set partition.
+\begin{dfnbox}{Partition}{partition}
+    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with~$S_1 \neq S_2$, we have $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
+\end{dfnbox}
+Note that in a set, the elements are pairwise distinct. Therefore, a partition of $A$ into $i$ disjoint subsets is equivalent to a distribution of $\abs{A}$ distinct objects into $i$ identical collections. Therefore, the number of different partitions of $A$ is just
+\begin{equation*}
+    \sum_{i = 1}^{\abs{A}}S(\abs{A}, i).
+\end{equation*}
+To find an exact formula for $S(r, n)$, we consider the following proposition:
+\begin{probox}{Number of Surjective Mappings}{numSurj}
+    Let $F(r, n)$ where $r, n \in \N^+$ deonote the number of surjective mappings
+    \begin{equation*}
+        f \colon [r] - \{0\} \to [n] - \{0\},
+    \end{equation*}
+    then
+    \begin{equation*}
+        F(r, n) = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
             n \\
             k
-        \end{pmatrix}x^ky^{n - k}\right].
+        \end{pmatrix}(n - k)^r\right].
     \end{equation*}
-\end{thmbox}
-We can extend the idea of binomial coefficients onto multinomial expansions, i.e. expressions in the form of $\left(\sum_{i = 1}^{r}x_i\right)^n$.
+    \tcblower
+    \begin{proof}
+        Note that $f$ is a mapping from a domain of $r$ elements to a co-domain of $n$ elements. Let $M_k$ be the set of such mappings by which at least $k$ elements in the co-domain do not have pre-images. Note that for each element in the domain, its image can be any of the remaining $(n - k)$ elements. Therefore, 
+        \begin{equation*}
+            \abs{M_k} = \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE}, 
+        \begin{equation*}
+            F(r, n) = \abs{\left(\bigcup_{k = 0}^nM_k\right)'} = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r\right].
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Note that $F(r, n)$ is just the number of ways to distribute $r$ distinct elements into $n$ collections where the order of the collections matters, so $F(r, n) = n!S(r, n)$. This gives rise to some corollaries, for example:
+\begin{align*}
+    S(r, n) =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r
+\end{align*}
+Since $S(r, n) = 0$ if $n > r \geq 1$, we have
+\begin{equation*}
+    \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r = 0 \quad \textrm{if }n > r \geq 1.
+\end{equation*}
 
-Note that the binomial coefficient $C^n_r$ is essentially equivalent to dividing $n$ distinct elements into two groups with $r$ and $(n - r)$ members respectively. Now we consider dividing~$n$ distinct elements into $r$ groups with $n_1, n_2, \cdots, n_r$ members respectively for each group.
-
-Notice that we can simply permute the $n$ distinct elements and assign them sequentially into the $r$ groups, i.e. the first $n_1$ elements will go into the first group and so on.
-
-Since the order of elements within each group does not matter, we need to remove repeated selections by dividing by $\prod_{i = 1}^{r}(n_i!)$. So we have the following definition:
-\begin{dfnbox}{Multinomial Coefficients}{multinomialCoeff}
-    The {\color{red} \textbf{multinomial coefficient}} is defined by
+\section{Binomial and Multinomial Coefficients}
+In previous sections on combinations, we have already introduced the ways to choose $r$ items from a collection of $n$ distinct items, the number of which is given by
+\begin{displaymath}
+    C^n_r = \begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix}.
+\end{displaymath} 
+In this section, we will see that there is a clear relation between the number of $r$-combinations to the \textit{binomial expansion}.
+\begin{thmbox}{Binomial Expansion}{binomial}
+    Let $n \in \N$, then
     \begin{equation*}
+        (x + y)^n = \sum_{i = 0}^{n}\left[\begin{pmatrix}
+            n \\
+            i
+        \end{pmatrix}x^{n - i}y^i\right].
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Note that 
+        \begin{equation*}
+            (x + y)^n = \prod_{i = 1}^{n}(x + y).
+        \end{equation*}
+        Let the coefficient of $x^{n - r}y^r$ be $k$, where $r$ is an integer with $0 \leq r \leq n$. Notice that $k$ is exactly the number of ways to choose $(n - r)$ copies of $x$'s from the distinct $n$ terms of $(x + y)$, which is given by
+        \begin{equation*}
+            \begin{pmatrix}
+                n \\
+                n - r
+            \end{pmatrix} = \begin{pmatrix}
+                n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+        Therefore, summing up the terms, we have
+        \begin{equation*}
+            (x + y)^n = \sum_{i = 0}^{n}\left[\begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}x^{n - i}y^i\right].
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+There are many nice algebraic properties about the binomial coefficient $\left(\begin{smallmatrix}
+    n \\
+    r
+\end{smallmatrix}\right)$. Beside Theorem \ref{thm:pascalTri}, the following can be proven with a few simple algebraic manipulations:
+\begin{enumerate}
+    \item $\begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix} = \frac{n}{r}\begin{pmatrix}
+        n - 1 \\
+        r - 1
+    \end{pmatrix}$.
+    \item $\begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix} = \frac{n - r + 1}{r}\begin{pmatrix}
+        n \\
+        r - 1
+    \end{pmatrix}$.
+    \item $\begin{pmatrix}
+        n \\
+        m
+    \end{pmatrix}\begin{pmatrix}
+        m \\
+        r
+    \end{pmatrix} = \begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix}\begin{pmatrix}
+        n - r \\
+        m - r
+    \end{pmatrix}$.
+\end{enumerate}
+One important identity for binomial coefficients is as follows:
+\begin{thmbox}{Vandermonde's Identity}{vadermonde}
+    Let $m, n, r \in \N$, then
+    \begin{equation*}
+        \sum_{i = 0}^{r}\left[\begin{pmatrix}
+            m \\
+            i
+        \end{pmatrix}\begin{pmatrix}
+            n \\
+            r - i
+        \end{pmatrix}\right] = \begin{pmatrix}
+            m + n \\
+            r
+        \end{pmatrix}.
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            X = \left\{a_1, a_2, \cdots, a_m, b_1, b_2, \cdots, b_n\right\}.
+        \end{displaymath}
+        Clearly, $\abs{X} = m + n$. Let $A \subseteq X$ such that $\abs{A} = r$, we consider the number of such $A$'s.
+        \\\\
+        Let $i$ be an integer with $0 \leq i \leq r$. If $A$ contains exactly $i$ elements from the $a_j$'s, then it will contain exactly $(r - 1)$ elements from the $b_j$'s. Therefore, the number of $A$'s for each $i = 1, 2, \cdots, r$ is given by
+        \begin{equation*}
+            \begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}.
+        \end{equation*}
+        However, we know that the total number of such $A$'s is just $C^{m + n}_r$, so we have
+        \begin{equation*}
+            \sum_{i = 0}^{r}\left[\begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}\right] = \begin{pmatrix}
+                m + n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurrence relation for the binomial coefficients. Thus in theory, it is possible to generate any binomial coefficient recursively. The following theorem illustrates this.
+\begin{thmbox}{Chu Shih-Chieh (CSC) Identity}{CSC}
+    Let $r, n, k \in \N$ with $n \geq r$, then
+    \begin{equation*}
+        \sum_{i = 0}^{n - r}\begin{pmatrix}
+            r + i \\
+            r
+        \end{pmatrix} = \begin{pmatrix}
+            n + 1 \\
+            r + 1
+        \end{pmatrix}, \qquad \sum_{i = 0}^{k}\begin{pmatrix}
+            r + i \\
+            i
+        \end{pmatrix} = \begin{pmatrix}
+            r + k + 1 \\
+            k
+        \end{pmatrix}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            X = \left\{x \in \N^+ \colon x \leq n + 1\right\}.
+        \end{displaymath}
+        We will count the number of $(r + 1)$-element subsets of $X$ in the following way:
+        \\\\
+        Fix $k$ to be the smallest element in some $Y \subseteq X$, then it suffices to choose $r$ elements from $X - \left\{x \in \N^+ \colon x \leq k\right\}$. Note that the maximum for $k$ is $n - r + 1$, and so there are $n - r + 1$ disjoint cases. Therefore, it is easy to see that the total number of subsets is given by
+        \begin{displaymath}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix}.
+        \end{displaymath}
+        However, we know that this is equivalent to choosing $(r + 1)$ elements directly from $X$, so
+        \begin{equation*}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix} = \begin{pmatrix}
+                n + 1 \\
+                r + 1
+            \end{pmatrix}.
+        \end{equation*}
+        Note that $C^{r + i}_r = C^{r + i}_i$ and $C^{n + 1}_{r + 1} = C^{n + 1}_{n - r}$. Therefore, by setting $k = n - r$, it is obvious by symmetry that
+        \begin{equation*}
+            \sum_{i = 0}^{k}\begin{pmatrix}
+                r + i \\
+                i
+            \end{pmatrix} = \begin{pmatrix}
+                r + k + 1 \\
+                k
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Binomial coefficients can be generalised as \textit{multinomial coefficients}, which has a nice correspondence to a special variant of distribution problems.
+\begin{dfnbox}{Multinomial Coefficient}{multinomialCoeff}
+    Let $m, n \in \N$, with $m \geq 1$. The {\color{red} \textbf{multinomial coefficient}}
+    \begin{displaymath}
         \begin{pmatrix}
             n \\
-            n_1, n_2, \cdots, n_k
-        \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{k}\left(n_i!\right)}
-    \end{equation*}
+            n_1, n_2, \cdots, n_m
+        \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{m}n_i!}
+    \end{displaymath}
+    is the number of ways to distribute $n$ distinct objects into $m$ distinct collections such that there are exactly $n_i$ objects in the $i$-th collection.
 \end{dfnbox}
+Observe that the binomial coefficients are just a special case for multinomial coefficients with~$m = 2$ and $n_1 + n_2 = n$. Respectively, multinomial coefficients also generalise binomial expansion.
 \begin{thmbox}{Multinomial Expansion}{multinomialEx}
-    Let $n \in \N$, then 
+    For $m, n \in \N+$, we have
     \begin{equation*}
-        \left(\sum_{i = 1}^{r}x_i\right)^n = \sum_{
-            \substack{
-                n_1, n_2, \cdots, n_r \in \N \\
-                \sum_{j = 1}^rn_j = n
-            }
-        } \left[\begin{pmatrix}
+        \left(\sum_{i = 1}^{m}x_i\right)^n = \sum_{\substack{\sum_{j = 1}^{m}n_j = n}} \begin{pmatrix}
             n \\
-            n_1, n_2, \cdots, n_r
-        \end{pmatrix}\prod_{i = 1}^{r}x_i^{n_i}\right]
+            n_1, n_2, \cdots, n_m
+        \end{pmatrix}\prod_{i = 1}^{m}x_i^{n_i}.
     \end{equation*}
 \end{thmbox}
-
-\chapter{Axioms of Probability}
-\section{Sample Space and Events}
+\chapter{Probability Axioms}
+\section{Classical and Axiomatic Probability}
 \begin{dfnbox}{Sample Space}{sampleSpace}
     Consider an experiment whose outcome is {\color{red} \textbf{not}} predictable, then the set of all possible outcomes of the experiment is called the {\color{red} \textbf{sample space}} of the experiment, denoted by $S$.
 \end{dfnbox}
@@ -196,6 +887,7 @@ Since the order of elements within each group does not matter, we need to remove
         Note that $S \neq \varnothing$.
     \end{remark}
 \end{notebox}
+Naturally, an \textit{event} is nothing but a collection of outcomes.
 \begin{dfnbox}{Events}{event}
     Let $S$ be a sample space, a set $E \subseteq S$ is known as an {\color{red} \textbf{event}}.
 \end{dfnbox}
@@ -207,9 +899,7 @@ Since the order of elements within each group does not matter, we need to remove
 Note that since sample spaces and events are sets, we can apply operations onto events precisely in the same way for sets.
 
 By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called \textit{mutually exclusive}.
-
-\section{Probability}
-\begin{dfnbox}{Probability}{probability}
+\begin{dfnbox}{Classical Definition of Probability}{probability}
     Let $E$ be any event of an experiment and let $n(E)$ be the number of occurrences of $E$ in the first $n$ repetitions of the experiment, then the {\color{red} \textbf{probability}} of $E$ is
     \begin{equation*}
         P(E) = \lim_{n \to \infty}\frac{n(E)}{n},
@@ -219,7 +909,7 @@ By convention, the intersection of two events $E$ and $F$ is preferably written 
 However, notice that from the above, the notion of probability may not be well-defined as~$n(E)$ is not a function, which means that the limit is not defined.
 
 To avoid this problem, we shall use an axiomatic definition instead, i.e., we define probability to be such that if it exists and is well-defined, then it satisfies a series of axioms. 
-\begin{dfnbox}{Axioms of Probability}{probAxi}
+\begin{dfnbox}{Axiomatic Definition of Probability}{probAxi}
     Let $S$ be a sample space and let $P(E)$ be a real number defined for every $E \subseteq S$. If
     \begin{itemize}
         \item $0 \leq P(E) \leq 1$,
@@ -271,8 +961,6 @@ We now follow up with proofs for two seemingly intuitive results.
         \end{equation*}
     \end{proof}
 \end{thmbox}
-
-\section{Inclusion-Exclusion Principle}
 It is easy to compute the probability of a countable union of mutually exclusive events. However, it may get tricky when an event is the union of events which are not mutually exclusive. Intuitively, we can sum up the probabilities of all individual events and subtract the portions which are double-counted. This approach is rigorously summarised as follows:
 \begin{thmbox}{Inclusion-Exclusion Principle}{in-exPrinciple}
     Let $S$ be a sample space and let $E_1, E_2, \cdots, E_n$ be a sequence of events. In general, we have
@@ -295,23 +983,117 @@ It is easy to compute the probability of a countable union of mutually exclusive
         For any $x \in S$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that $f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, $g(x) = 0$.
     \end{proof}
 \end{thmbox}
+One can check that the above principle gives rise to the following inequality:
 \begin{thmbox}{Boole's Inequality}{boole}
     Let $E_1, E_2, \cdots, E_n, \cdots$ be a countable sequence of events, then
     \begin{equation*}
         P\left(\bigcup_{i = 1}^\infty E_i\right) \leq \sum_{i = 1}^{\infty}P(E_i).
     \end{equation*}
     In particular, equality is achieved if and only if the $E_i$'s are mutually exclusive.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{thmbox}
-\begin{thmbox}{Probability in a Finite Sample Space}
+Lastly, combining everything we have learnt so far, we can derive the following formula for finite sample spaces, which complies with our intuition:
+\begin{thmbox}{Probability in a Finite Sample Space}{finiteProb}
     Let $S$ be a sample space which is finite and let $E \subseteq S$ be an event, then 
     \begin{equation*}
         P(E) = \frac{\abs{E}}{\abs{S}}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{thmbox}
+\section{Measure-Theoretic Probability}The above definition for probability, though intuitive, is not very solid when it comes to an infinite sample space and continuous cases. In this section, we would establish the theories of probability using a more modern and rigorous structure.
 
-\chapter{Conditional Probability}
+In a na\"{i}ve attempt to devise a probability model, if the sample space $S$ is countable, then it suffices to define a \textit{probability mass function} $P \colon S \to \R$ such that $\sum_{\omega \in S}P\left(\omega\right) = 1$. Naturally, the probability for an event $E \subseteq S$ is defined as $P\left(E\right) = \sum_{\omega \in E}P\left(\omega\right)$. This summation is compatible with the infinite case because if we have countably many pairwise disjoint events $E_1, E_2, \cdots$, we can compute 
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}P\left(E_i\right) = \lim_{n \to \infty}\sum_{i = 1}^{n}E_i,
+\end{equation*}
+which is clearly convergent by monotone-convergent theorem.
+
+However, when $S$ is uncountable, this construction leads to weird behaviours. For example, suppose $S$ is the sample space for the experiment of tossing a fair coin for uncountably many times. It is clear that for any $\omega \in S$, we have 
+\begin{equation*}
+    P\left(\omega\right) = \lim_{n \to \infty}\frac{1}{2^{n}} = 0,
+\end{equation*}
+but at the same time we must have 
+\begin{equation*}
+    1 = P\left(S\right) = \sum_{\omega \in S}P\left(\omega\right) = 0,
+\end{equation*}
+which is ridiculous. Therefore, we need to find a better way to construct the probability model. Notice that here the incompatibility arises because we build our model by considering the probabilities of individual outcomes. Our next attempt try to bypass this issue by considering the probabilities of events only.
+
+Since the set of all events in a sample space $S$ is simply $\mathcal{P}\left(S\right)$, let us instead consider a more generalisable algebraic structure for this collection of subsets.
+\begin{dfnbox}{Set Algebra}{setAlgebra}
+    Let $X$ be a set. A {\color{red} \textbf{set algebra}} over $X$ is a family $\mathcal{F} \subseteq \mathcal{P}\left(X\right)$ such that 
+    \begin{itemize}
+        \item $X \backslash F \in \mathcal{F}$ for all $F \in \mathcal{F}$ (closed under complementation);
+        \item $X \in \mathcal{F}$;
+        \item $X_1 \cup X_2 \in \mathcal{F}$ for any $X_1, X_2 \in \mathcal{F}$ (closed under binary union).
+    \end{itemize}
+\end{dfnbox}
+There are several immediate implications from the above definition. 
+
+First, by closure under complementation, we know that an algebra over any set $X$ must contain the empty set. 
+
+Second, by De Morgan's Law, one can easily check that if the first $2$ axioms hold, the closure under binary union is equivalent to 
+\begin{itemize}
+    \item $X_1 \cap X_2 \in \mathcal{F}$ for any $X_1, X_2 \in \mathcal{F}$;
+    \item $\bigcup_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$;
+    \item $\bigcap_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$.
+\end{itemize}
+$\left(X, \mathcal{F}\right)$ is known as a \textit{field of sets}, where the elements of $X$ are called \textit{points} and those of~$\mathcal{F}$, \textit{complexes} or \textit{admissible sets} of $X$. In probability theory, what we are interested in is a special type of set algebras known as $\sigma$-\textit{algebras}.
+\begin{dfnbox}{$\sigma$-Algebra}{sigmaAlgebra}
+    A {\color{red} \textbf{$\sigma$-Algebra}} over a set $A$ is a non-empty set algebra over $A$ that is closed under countable union.
+\end{dfnbox}
+Of course, by the same argument as above, we known that any $\sigma$-algebra is closed under countable intersection as well. Roughly speaking, we could now define the probability of an event $E \subseteq S$ as the ratio of the size of $E$ to that of $S$. The remaining question now is: how do we define the size of a set (and in particular, an infinite set) properly?
+\begin{dfnbox}{Measure}{measure}
+    Let $X$ be a set and $\Sigma$ be a $\sigma$-algebra over $X$. A {\color{red} \textbf{measure}} over $\Sigma$ is a function 
+    \begin{equation*}
+        \mu \colon \Sigma \to \R \cup \{-\infty, +\infty\}
+    \end{equation*}
+    such that 
+    \begin{itemize}
+        \item $\mu\left(E\right) \geq 0$ for all $E \in \Sigma$ (non-negativity);
+        \item $\mu\left(\varnothing\right) = 0$;
+        \item $\mu\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}\mu\left(E_i\right)$ for any countable collection of pairwise disjoint elements of $\Sigma$ (countable additivity or $\sigma$-additivity).
+    \end{itemize}
+    The triple $\left(X, \Sigma, \mu\right)$ is known as a {\color{red} \textbf{measure space}} and the pair $\left(X, \Sigma\right)$, a {\color{red} \textbf{measurable space}}.
+\end{dfnbox}
+One thing to note here is that if at least one $E \in \Sigma$ has a finite measure, then $\mu\left(\varnothing\right) = 0$ is automatically guaranteed for obvious reasons.
+\begin{dfnbox}{Probability Measure}{prob}
+    Let $\mathcal{F}$ be a $\sigma$-algebra over a sample space $S$. A {\color{red} \textbf{probability measure}} over $S$ is a measure~$P \colon \mathcal{F} \to \left[0, 1\right]$ such that $P\left(S\right) = 1$.
+\end{dfnbox}
+Obviously, the above definition immediately guarantees that 
+\begin{enumerate}
+    \item $P\left(A^c\right) = 1 - P\left(A\right)$;
+    \item $P\left(A\right) \leq P\left(B\right)$ if $P\left(A\right) \subseteq P\left(A\right)$;
+    \item $P\left(A \cup B\right) \leq P\left(A\right) + P\left(B\right)$.
+\end{enumerate}
+The third result follows from a direct application of the principle of inclusion and exclusion. By induction, one can easily check that 
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^{n}E_i\right) \leq \sum_{i = 1}^{n}P\left(E_i\right)
+\end{equation*}
+for any finitely many events. The following proposition extends this result to countable collections of events:
+\begin{probox}{Union Bound of Countable Collections of Events}{unionBound}
+    Let $\left(S, \mathcal{F}, P\right)$ be a probability space and $E_1, E_2, \cdots, E_n, \cdots \in \mathcal{F}$ is any countable sequence of events, then 
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^{\infty}E_i\right) \leq \sum_{i = 1}^{\infty}P\left(E_i\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define $F_1 \coloneqq E_1$ and $F_k \coloneqq E_k \backslash \bigcup_{i = 1}^{k - 1}E_i$ for $k \geq 2$. Clearly, the $F_i$'s are pairwise disjoint. By Definition \ref{dfn:sigmaAlgebra}, the $F_i$'s are elements of $\mathcal{F}$. Note that $P\left(F_i\right) \leq \mathbb{E_i}$ for all~$i \in \N^+$, so 
+        \begin{align*}
+            P\left(\bigcup_{i = 1}^{\infty}E_i\right) & = P\left(\bigcup_{i = 1}^{\infty}F_i\right) \\
+            & = \sum_{i = 1}^{\infty}P\left(F_i\right) \\
+            & \leq \sum_{i = 1}^{\infty}P\left(E_i\right).
+        \end{align*}
+    \end{proof}
+\end{probox}
+Intuitively, the equality is attained if and only if the events are pairwise disjoint. 
 \section{Conditional Probability}
-Given a sample space $S$, we may wish to find the probability of two events $E$ and $F$ both occurring, $P(EF)$. However, suppose that we already know that event $F$ \textbf{has occurred}, then necessarily, the sample space we consider would no longer be $S$. Essentially, this condition of $F$ having occurred has restricted our sample space to $F$. Thus, we give the following definition:
+In a sample space $S$, we may wish to find the probability of two events $E$ and $F$ both occurring, $P(EF)$. However, if we already know that event $F$ \textbf{has occurred}, then necessarily, the sample space we consider would no longer be $S$. Essentially, this condition of $F$ having occurred has restricted our sample space to $F$. Thus, we give the following definition:
 \begin{dfnbox}{Conditional Probability}{condProb}
     Let $S$ be a sample space and $E, F \subseteq S$ be two events. If $P(F) \geq 0$, then the {\color{red} \textbf{conditional probability}} is the probability that $E$ occurs given that $F$ has occurred, denoted by
     \begin{equation*}
@@ -324,7 +1106,7 @@ Given a sample space $S$, we may wish to find the probability of two events $E$ 
         Note that $P(E|F) = P(EF|F)$.
     \end{remark}
 \end{notebox}
-It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F$ both occurring is the product of the probability of $F$ occurring and the probability of $E$ occurring given the occurrence of $F$. This complies with our intuition. We can generalise this for a countable number of events:
+It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F$ both occurring is the product of the probability of $F$ occurring and the probability of $E$ occurring given the occurrence of $F$. This complies with our intuition in a sense that if we wish both $E$ and $F$ to happen, we just need $F$ to happen first and $E$ to happen given the occurrence of $F$. We can generalise this for a countable number of events:
 \begin{probox}{Multiplication Rule}{multRule}
     Let $S$ be a sample space and let $E_i \subseteq S$ for $i = 1, 2, \cdots, n$ be $n$ events, where $n \geq 2$. Suppose that $P\left(\bigcap_{i = 1}^{n - 1}E_i\right) > 0$, then 
     \begin{equation*}
@@ -350,28 +1132,37 @@ It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F
         \end{align*}
     \end{proof}
 \end{probox}
-\section{Bayes's Formula}
 Consider a sample space $S$ and two events $E, F \subseteq S$. Suppose that $E$ occurs, then either $F$ has occurred or $F$ has never occurred (i.e. $F^{\mathrm{c}}$ occurred). Therefore, it is easy to see that
 \begin{equation*}
     P(E) = P(EF) + P(EF^{\mathrm{c}}) = P(E|F) + P(E|F^{\mathrm{c}}).
 \end{equation*}
 We can extend the above argument for more than two events. Suppose that $F_1, F_2, \cdots, F_n$ are $n$ mutually exclusive events such that $\bigcup_{i = 1}^n F_i = S$, then obviously $\left\{F_1, F_2, \cdots, F_n\right\}$ is a \textit{partition} of $S$.
 
-Consider any event $E$ and let $e \in E$. Clearly, $e$ must be in one and only one of $F_1, F_2, \cdots, F_n$. It then follows that $\left\{E \cap F_1, E \cap F_2, \cdots, E \cap F_n\right\}$ is a partition of $E$. Generalising this further to a countably infinite number of mutually exclusive events $F_1, F_2, \cdots$ such that $\bigcup_{i = 1}^\infty F_i = S$, we arrive at the following formula:
+Consider any event $E$ and let $e \in E$. Clearly, $e$ must be in one and only one of $F_1, F_2, \cdots, F_n$. It then follows that $\left\{E \cap F_1, E \cap F_2, \cdots, E \cap F_n\right\}$ is a partition of $E$. This can be formalised into the following result:
+\begin{thmbox}{Law of Total Probabilities}{totalProb}
+    Let $F_1, F_2, \cdots, F_n$ be a partition of a sample space $S$ with probability measure $P$. For any event $A \subseteq S$, 
+    \begin{equation*}
+        P\left(A\right) = \sum_{i = 1}^{n}P\left(A \mid F_i\right)P\left(F_i\right).
+    \end{equation*}
+\end{thmbox} 
+For a countably infinite number of mutually exclusive events $F_1, F_2, \cdots$ such that $\bigcup_{i = 1}^\infty F_i = S$, we arrive at the following formula:
 \begin{equation*}
     P(E) = \sum_{i = 1}^{\infty}P(E|F_i)P(F_i).
 \end{equation*}
 This leads to the \textit{Bayes's Formula}:
 \begin{thmbox}{Bayes's Formula}{BayesFormula}
-    Let $F_1, F_2, \cdots$ be a countably infinite sequence of events over a sample space $S$ such that $\bigcup_{i = 1}^\infty F_i = S$. For any event $E \subseteq S$, we have
+    Let $F_1, F_2, \cdots$ be a countably infinite sequence of events from a sample space $S$ such that~$\bigcup_{i = 1}^\infty F_i = S$. For any event $E \subseteq S$, we have
     \begin{equation*}
         P(F_j|E) = \frac{P(E|F_j)P(F_j)}{\sum_{i = 1}^{\infty}P(E|F_i)P(F_i)}.
     \end{equation*}
 \end{thmbox}
-\section{Indepedent Events}
 Note that in general, for two events $E$ and $F$, $P(E|F) \neq P(E)$, i.e., the occurrence of $F$ may affect the occurrence of $E$. However, in some cases, we notice that the occurrence of $E$ is \textit{independent} of $F$, and so we introduce the following definition:
-\begin{dfnbox}{Independent Events}{indEvents}
-    Let $S$ be a sample space and let $E, F \subseteq S$ be two events. We say that $E$ and $F$ are {\color{red} \textbf{independent}} if $P(EF) = P(E)P(F)$, and {\color{red} \textbf{dependent}} otherwise.
+\begin{dfnbox}{Independent Events}{Independence}
+    Let $S$ be a sample space with probability measure $P$. Two events $E, F \subseteq S$ are {\color{red} \textbf{independent}} if $P\left(E \mid F\right) = P\left(E\right)$, or equivalently, $P\left(E \cap F\right) = P\left(E\right)P\left(F\right)$. A collection of events $E_1, E_2, \cdots, E_n$ are said to be {\color{red} \textbf{jointly independent}} if for any $I \subseteq \left\{1, 2, \cdots, n\right\}$, 
+    \begin{equation*}
+        P\left(\bigcap_{i \in I}E_i\right) = \prod_{i \in I}P\left(E_i\right),
+    \end{equation*}
+    or equivalently, $P\left(E_1 \mid E_2, \cdots, E_n\right) = P\left(E_1\right)$.
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
@@ -383,7 +1174,7 @@ Note that in general, for two events $E$ and $F$, $P(E|F) \neq P(E)$, i.e., the 
     \end{remark}
 \end{notebox}
 Intuitively, given independent events $E$ and $F$, we may believe that if the occurrence of $E$ does not affect the occurrence of $F$, then naturally the occurrence of $E$ should also not affect the ``not-occurring'' of $F$, i.e., the following is true:
-\begin{probox}{}{independentComp}
+\begin{probox}{Characterisation of Independent Events}{independentComp}
     $E$ and $F$ are independent events if and only if $E$ and $F^{\mathrm{c}}$ are independent events.
     \tcblower
     \begin{proof}
@@ -400,6 +1191,18 @@ Intuitively, given independent events $E$ and $F$, we may believe that if the oc
         and so $E$ and $F^{\mathrm{c}}$ are independent.
     \end{proof}
 \end{probox} 
+Note that $E$ and $F$ are independent if and only if $E, F, E^c, F^c$ are pairwise independent. Moreover, for any jointly independent collection of events $E_1, E_2, \cdots, E_n$ and any disjoint index sets $I, J \subseteq \left\{1, 2, \cdots, n\right\}$,
+\begin{equation*}
+    P\left(\bigcap_{i \in I}E_i \cap \bigcap_{j \in J}E_j^c\right) = \left(\prod_{i \in I}P\left(E_i\right)\right)\left(\prod_{j \in J}P\left(E_j^c\right)\right).
+\end{equation*}
+\begin{notebox}
+    \begin{remark}
+        Joint independence is a strictly stronger result than pairwise independence, i.e., there exists pairwise independent events $E_1, E_2, E_3$ such that 
+        \begin{equation*}
+            P\left(E_1 \cap E_2 \cap E_3\right) \neq P\left(E_1\right)P\left(E_2\right)P\left(E_3\right).
+        \end{equation*}
+    \end{remark}
+\end{notebox}
 
 \chapter{Random Variables}
 
@@ -808,7 +1611,7 @@ It is not surprising that a function of a continuous random variable is still a 
 \begin{thmbox}{Function of Continuous Random Variables}{funcCRV}
     Let $X$ be a continuous random variable and $Y = g(X)$. If $g$ is strictly monotonic and differentiable, then 
     \begin{equation*}
-        f_Y(y) = f_X\left(g^{-1}(y)\right)\abs{\frac{\dif}{\dif y}g^{-1}(y)}.
+        f_Y(y) = f_X\left(g^{-1}(y)\right)\abs{\frac{\d}{\d y}g^{-1}(y)}.
     \end{equation*}
 \end{thmbox}
 Let $X$ be a continuous random variable with probability density function $f_X$ such that $f_X(x) = 0$ for all $x \in \R - [a, b]$. We divide $[a, b]$ into $n$ intervals $[x_{i - 1}, x_i]$ for $i = 1, 2, 3, \cdots, n$ with equal length $\symrm{\Delta} x = \frac{b - a}{n}$. Thus,
@@ -957,9 +1760,9 @@ We have seen that the exponential random variable can be used to model the waiti
 
 Let $N(t)$ be a Poisson process with rate $\lambda$, so $P\bigl(N(t) = n\bigr) = \frac{\e^{-\lambda t\left(\lambda t\right)^n}}{n!}$. Let $T_n$ be the waiting time till the $n$-th event with $f_k$ being the probability density function, then
 \begin{align*}
-    f_k(t) & = \frac{\dif}{\dif t}\bigl(1 - P(T_n > t)\bigr) \\
-    & = \frac{\dif}{\dif t}\Bigl(1 - P\bigl(N(t) < k\bigr)\Bigr) \\
-    & = \frac{\dif}{\dif t}\left(1 - \e^{-\lambda t}\sum_{i = 0}^{k - 1}\frac{(\lambda t)^i}{i!}\right) \\
+    f_k(t) & = \frac{\d}{\d t}\bigl(1 - P(T_n > t)\bigr) \\
+    & = \frac{\d}{\d t}\Bigl(1 - P\bigl(N(t) < k\bigr)\Bigr) \\
+    & = \frac{\d}{\d t}\left(1 - \e^{-\lambda t}\sum_{i = 0}^{k - 1}\frac{(\lambda t)^i}{i!}\right) \\
     & = \frac{\lambda\e^{-\lambda t}(\lambda t)^{k - 1}}{(k - 1)!}.
 \end{align*}
 \begin{dfnbox}{Gamma Random Variable}{gamma}
@@ -972,8 +1775,8 @@ Let $N(t)$ be a Poisson process with rate $\lambda$, so $P\bigl(N(t) = n\bigr) =
 \begin{dfnbox}{Gamma Function}{gammaFunc}
     Let $\alpha > 0$, the {\color{red} \textbf{gamma function}} is defined as
     \begin{align*}
-        \Gamma(\alpha) & = \int_{0}^{\infty}\!\lambda\e^{-\lambda t}(\lambda t)^{\alpha - 1}\,\dif t \\
-        & = \int_{0}^{\infty}\!\lambda\e^{-x}x^{\alpha - 1}\,\dif x.
+        \Gamma(\alpha) & = \int_{0}^{\infty}\!\lambda\e^{-\lambda t}(\lambda t)^{\alpha - 1}\,\d t \\
+        & = \int_{0}^{\infty}\!\lambda\e^{-x}x^{\alpha - 1}\,\d x.
     \end{align*}
     In particular, if $X$ is a continuous random variable with probability density function
     \begin{equation*}
@@ -1006,7 +1809,7 @@ In real life, sometimes we may not know the exact probability distribution of a 
     \end{equation*}
     where 
     \begin{equation*}
-        B(a, b) = \int_{0}^{1}\!x^{a - 1}(1 - x)^{b - 1}\,\dif x = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a + b)}.
+        B(a, b) = \int_{0}^{1}\!x^{a - 1}(1 - x)^{b - 1}\,\d x = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a + b)}.
     \end{equation*}
 \end{dfnbox}
 If $a = b = 1$, we see that
