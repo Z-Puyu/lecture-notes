@@ -395,7 +395,6 @@ To extend the problem further, we can instead consider counting the number of po
     \end{proof}
 \end{thmbox}
 \section{Permutations}
-\subsection{Linear Permutations}
 A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
 Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
@@ -452,7 +451,6 @@ In this case, we can simply iterate through each of the slots in the $r$-permuta
     \end{displaymath}
     The number of $r$-permutations formed using the elements from $M$ is given by $n^r$.
 \end{probox}
-\subsection{Circular Permutations}
 Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
 
 However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the \textbf{relative positions} of the objects matter.
@@ -1114,9 +1112,7 @@ It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F
     \end{equation*}
     \tcblower
     \begin{proof}
-        The case where $n = 2$ is immediate from Definition \ref{dfn:condProb}.
-        \\\\
-        Suppose that there is some $k \in \N$ and $k \geq 2$ such that
+        The case where $n = 2$ is immediate from Definition \ref{dfn:condProb}. Suppose that there is some $k \in \N$ and $k \geq 2$ such that
         \begin{equation*}
             P\left(\bigcap_{i = 1}^{k}E_i\right) = P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right),
         \end{equation*}
@@ -1155,6 +1151,10 @@ This leads to the \textit{Bayes's Formula}:
     \begin{equation*}
         P(F_j|E) = \frac{P(E|F_j)P(F_j)}{\sum_{i = 1}^{\infty}P(E|F_i)P(F_i)}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{thmbox}
 Note that in general, for two events $E$ and $F$, $P(E|F) \neq P(E)$, i.e., the occurrence of $F$ may affect the occurrence of $E$. However, in some cases, we notice that the occurrence of $E$ is \textit{independent} of $F$, and so we introduce the following definition:
 \begin{dfnbox}{Independent Events}{Independence}
@@ -1178,8 +1178,6 @@ Intuitively, given independent events $E$ and $F$, we may believe that if the oc
     $E$ and $F$ are independent events if and only if $E$ and $F^{\mathrm{c}}$ are independent events.
     \tcblower
     \begin{proof}
-        Since $F = \left(F^{\mathrm{c}}\right)^{\mathrm{c}}$, it suffices to prove for one direction. 
-        \\\\
         Notice that $EF \cup EF^{\mathrm{c}} = E(F \cup F^{\mathrm{c}}) = E$, so
         \begin{equation*}
             P(E) = P(EF) + P(EF^{\mathrm{c}}) = P(E)P(F) + P(EF^{\mathrm{c}}).
@@ -1188,7 +1186,7 @@ Intuitively, given independent events $E$ and $F$, we may believe that if the oc
         \begin{equation*}
             P(EF^{\mathrm{c}}) = P(E) - P(E)P(F) = P(E)(1 - P(F)) = P(E)P(F^{\mathrm{c}}),
         \end{equation*}
-        and so $E$ and $F^{\mathrm{c}}$ are independent.
+        and so $E$ and $F^{\mathrm{c}}$ are independent. The other direction is trivial because $F = \left(F^{\mathrm{c}}\right)^{\mathrm{c}}$
     \end{proof}
 \end{probox} 
 Note that $E$ and $F$ are independent if and only if $E, F, E^c, F^c$ are pairwise independent. Moreover, for any jointly independent collection of events $E_1, E_2, \cdots, E_n$ and any disjoint index sets $I, J \subseteq \left\{1, 2, \cdots, n\right\}$,
@@ -1205,29 +1203,169 @@ Note that $E$ and $F$ are independent if and only if $E, F, E^c, F^c$ are pairwi
 \end{notebox}
 
 \chapter{Random Variables}
-
 \section{Random Variables}
 In many contexts, we might wish to generalise a formula to compute the probability of the occurrence of a certain event. However, in cases where the events are abstract or unquantifiable (e.g. the event ``tomorrow is rainy''), it becomes hard to formulate a well-defined mapping from a sample space to $[0, 1]$. Thus, to model all events easily using functions and mappings, we introduce the notion of \textit{random variables}.
-\begin{dfnbox}{Random Variable}{randVar}
-    Let $\Omega$ be a sample space, the {\color{red} \textbf{random variable}}
-    \begin{displaymath}
-        X \colon \Omega \to \R
-    \end{displaymath}
-    is a real-valued function such that for any event $E \subseteq \Omega$, 
-    \begin{equation*}
-        P(E) = P(X[E]) = P(X \in X[E]),
-    \end{equation*}
-    where
-    \begin{displaymath}
-        X[E] \coloneqq \left\{X(\omega) \colon \omega \in \Omega\right\}
-    \end{displaymath}
-    is the image of the event $E$ under $X$.
+
+A random variable can be viewed as a function that maps the outcomes in a sample space to some measurable co-domain. We first introduce a few preliminary definitions.
+\begin{dfnbox}{Probability Space}{probSpace}
+    A {\color{red} \textbf{probability space}} is a tuple $\left(S, \mathcal{F}, P\right)$ where $S$ is a sample space, $\mathcal{F}$ is a $\sigma$-algebra on $S$ and $P$ is a probability measure on $S$.
 \end{dfnbox}
+It can be troublesome to consider different sample spaces for different experiments. Therefore, we define the \textit{abstract probability space} as $\left(\Omega, \mathcal{F}, P\right)$ with a uniform random variable~$Z$ such that for every outcome measured by a random variable $X$ in a sample space $S$, there exists a function~$f \colon \Omega \to S$ such that $X = f\left(Z\right)$. For convenience, we often choose $\Omega = \left[0, 1\right]$ and $P$ to be the uniform measure on $\left[0, 1\right]$.
+
+One important property of a probability space is \textbf{countable additivity}. 
+\begin{probox}{Countable Additivity in Probability Spaces}{countableAdd}
+    Let $\left(\Omega, P\right)$ be a probability space. If $\left\{A_i\right\}_{i \in \N^+}$ is a family of subsets of $\Omega$ such that $A_i \subseteq A_{i + 1}$ for all $i \in \N^+$, then 
+    \begin{equation*}
+        P\left(\bigcup_{i \in \N^+}A_i\right) = \lim_{n \to \infty}P\left(A_n\right).
+    \end{equation*}
+    If $\left\{B_i\right\}_{i \in \N^+}$ is a family of subsets of $\Omega$ such that $B_{i + 1} \subseteq B_i$ for all $i \in \N^+$, then 
+    \begin{equation*}
+        P\left(\bigcap_{i \in \N^+}B_i\right) = \lim_{n \to \infty}P\left(B_n\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define $A_0 \coloneqq \varnothing$, then 
+        \begin{equation*}
+            \left\{A_{i + 1} \setminus A_i \colon i \in \N\right\}
+        \end{equation*}
+        is a countable collection of pairwise disjoint subsets of $\Omega$. Therefore, 
+        \begin{align*}
+            P\left(\bigcup_{i \in \N^+}A_i\right) & = P\left(\bigcup_{i \in \N}\left(A_{i + 1} \setminus A_i\right)\right) \\
+            & = \sum_{i = 0}^{\infty}P\left(A_{i + 1}\setminus A_i\right) \\
+            & = \lim_{n \to \infty}\sum_{i = 0}^{n}P\left(A_{i + 1}\setminus A_i\right) \\
+            & = \lim_{n \to \infty}P\left(\bigcup_{i = 0}^n\left(A_{i + 1}\setminus A_i\right)\right) \\
+            & = \lim_{n \to \infty}P\left(A_n\right).
+        \end{align*}
+        Define $C_i \coloneqq \Omega \setminus B_i$. Since $B_{i + 1} \subseteq B_i$ for all $i \in \N^+$, we have $C_{i} \subseteq C_{i + 1}$ for all $i \in \N^+$. Therefore, 
+        \begin{align*}
+            P\left(\bigcup_{i \in \N^+}B_i\right) & = P\left(\bigcup_{i \in \N^+}\left(\Omega\setminus C_i\right)\right) \\
+            & = \sum_{i = 1}^{\infty}P\left(\Omega \setminus C_i\right) \\
+            & = 1 - \sum_{i = 1}^{\infty}P\left(C_i\right) \\
+            & = 1 - P\left(\bigcup_{i \in \N^+} C_i\right) \\
+            & = 1 - \lim_{n \to \infty}P\left(C_n\right) \\
+            & = 1 - \lim_{n \to \infty}P\left(\Omega \setminus B_n\right) \\
+            & = 1 - \lim_{n \to \infty}\left(1 - P\left(B_n\right)\right) \\
+            & = \lim_{n \to \infty}P\left(B_n\right).
+        \end{align*}
+    \end{proof}
+\end{probox}
+It is important that the co-domain of a random variable is measurable. For this purpose, we construct some structure to generalise open intervals in $\R$.
+\begin{dfnbox}{Borel Algebra}{borelAlgebra}
+    Let $X$ be a topological space. A {\color{red} \textbf{Borel set}} on $X$ is a set which can be formed via countable union, countable intersection and relative complementation of open sets in $X$. The smallest $\sigma$-algebra over $X$ containing all Borel sets on $X$ is known as the {\color{red} \textbf{Borel algebra}} over $X$.
+\end{dfnbox}
+Note that the Borel set over $\R$ is just the family of all open intervals. Clearly, the Borel algebra over $X$ contains all open sets in $X$ according to the above axioms from Definition \ref{dfn:sigmaAlgebra}. This helps us define the following:
+\begin{dfnbox}{Random Variable}{RV}
+    Let $\left(\Omega, \mathcal{F}, P\right)$ be the abstract probability space and $\left(\mathcal{X}, \mathcal{B}\right)$ be a measurable space where~$\mathcal{B}$ is the Borel algebra over $\mathcal{X}$. A {\color{red} \textbf{random variable}} is a function $X \colon \Omega \to \mathcal{X}$ such that 
+    \begin{equation*}
+        \left\{\omega \in S \colon X\left(\omega\right) \in B\right\} \in \mathcal{F} 
+    \end{equation*}
+    for all $B \in \mathcal{B}$. The probability measure $P_X$ on $\mathcal{X}$ induced by $P$ with 
+    \begin{equation*}
+        P_X\left(A\right) \coloneqq P\left(X \in A\right) \coloneqq P\bigl(\left\{\omega \in \Omega \colon X\left(\omega\right) \in A\right\}\bigr)
+    \end{equation*}
+    is known as the {\color{red} \textbf{distribution}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Rigorously, such a random variable $X$ is a \textit{measurable function} or \textit{measurable mapping} from $\left(\Omega, \mathcal{F}\right)$ to $\left(\mathcal{X}, \mathcal{B}\right)$.
+    \end{remark}
+\end{notebox}
+We shall verify that $P_X$ as defined above is indeed a probability measure. Notice that we have $P_X\left(A\right) \in \left[0, 1\right]$ for all $A \subseteq \mathcal{X}$ and that $P_X\left(\mathcal{X}\right) = 1$ and $P_X\left(\varnothing\right) = 0$. Let $\left\{A_i\right\}_{i \in \N}$ be a family of pairwise disjoint events. Consider 
+\begin{align*}
+    X^{-1}\left(\bigcup_{i \in \N}A_i\right) & = \left\{\omega \in \Omega \colon X\left(\omega\right) \in \bigcup_{i \in \N}A_i\right\} \\
+    & = \bigcup_{i \in \N}\left\{\omega \in \Omega \colon X\left(\omega\right) \in A_i\right\} \\
+    & = \bigcup_{i \in \N}X^{-1}\left(A_i\right).
+\end{align*}
+Therefore, 
+\begin{align*}
+    P_X\left(\bigcup_{i \in \N}A_i\right) & = P\left(\bigcup_{i \in \N}X^{-1}\left(A_i\right)\right) \\
+    & = \sum_{i \in \N}P\left(X^{-1}\left(A_i\right)\right) \\
+    & = \sum_{i \in \N}P_X\left(A\right).
+\end{align*}
+Alternatively, let $\Omega$ be a sample space, the random variable 
+\begin{displaymath}
+    X \colon \Omega \to \R
+\end{displaymath}
+is a real-valued function such that for any event $E \subseteq \Omega$, 
+\begin{equation*}
+    P(E) = P(X[E]) = P(X \in X[E]),
+\end{equation*}
+where
+\begin{displaymath}
+    X[E] \coloneqq \left\{X(\omega) \colon \omega \in \Omega\right\}
+\end{displaymath}
+is the image of the event $E$ under $X$.
+
+A random variable describes the random outcome of an ``experiment'' or ``phenomenon''. When we perform a series of experiments (for example, model the weather for $n$ consecutive days), it is reasonable to use one random variable to capture the outcome for each experiment. In this way, we obtain a collection of random variables denoted as 
+\begin{equation*}
+    X_i^n \coloneqq \left(X_1, X_2, \cdots, X_n\right).
+\end{equation*}
+Clearly, if $X$ is a real-valued random variable, we have $\left\{\omega \in S \colon X\left(\omega\right) > x\right\} \in \mathcal{F}$. Moreover, we claim that 
+\begin{equation*}
+    \left\{\omega \in S \colon X\left(\omega\right) < x\right\} = \bigcup_{y < x}\left\{\omega \in S \colon X\left(\omega\right) \leq y\right\}.
+\end{equation*}
+The proof is quite straightforward and is left to the reader as an exercise. By Definition \ref{dfn:sigmaAlgebra}, this means that 
+\begin{equation*}
+    \left\{\omega \in S \colon X\left(\omega\right) < x\right\} \cup \left\{\omega \in S \colon X\left(\omega\right) > x\right\} \in \mathcal{F}.
+\end{equation*}
+Therefore, $\left\{\omega \in S \colon X\left(\omega\right) = x\right\} \in \mathcal{F}$. This argument justifies the probabilities $P\left(X < x\right)$ and $P\left(X = x\right)$. 
+
+When a collection of many random variables is concerned, we may consider their \textit{joint distribution}.
+\begin{dfnbox}{Joint Distribution}{joint}
+    Let $\left(\Omega, \mathcal{F}, P\right)$ be the abstract probability space and $X_i \colon \Omega \to \mathcal{X}_i$ be random variables for $i = 1, 2, \cdots, n$. The {\color{red} \textbf{joint distribution}} of $X \coloneqq \left(X_1, X_2, \cdots, X_n\right)$ is the probability measure $P_{X}$ with domain $\mathcal{X}_1 \times \mathcal{X}_2 \times \cdots \times \mathcal{X}_n$ such that 
+    \begin{align*}
+        P_{X}\left(A_1 \times A_2 \times \cdots \times A_n\right) & \coloneqq P\bigl(\left\{\omega \in \Omega \colon X_1\left(\omega\right) \in A_1, X_2\left(\omega\right) \in A_2, \cdots, X_n\left(\omega\right) \in A_n\right\}\bigr) \\
+        & = P\left(X_1 \in A_1, X_2 \in A_2, \cdots, X_n \in A_n\right).
+    \end{align*}
+\end{dfnbox}
+Now we can define independence between random variables in a manner similar to Definition \ref{dfn:Independence}.
+
+In this course, we focus on real-valued random variables, which can be fully determined by their \textit{distribution functions}.
+\begin{dfnbox}{Distribution Function}{distribution}
+    Let $X$ be a real-valued random variable over the abstract probability space, the {\color{red} \textbf{distribution function}} of $X$ is a function $F_X \colon \Omega \to \left[0, 1\right]$ such that 
+    \begin{equation*}
+        F_X\left(x\right) = P\left(X \leq x\right).
+    \end{equation*}
+\end{dfnbox}
+Note that for all $a < b \in \R$, 
+\begin{equation*}
+    P\bigl(X \in \left(a, b\right]\bigr) = F_X\left(b\right) - F_X\left(a\right).
+\end{equation*}
+It can be shown from here that $F_X$ fully determines the distribution of $X$ (which is non-trivial). By using Proposition \ref{pro:countableAdd}, we can prove the following result with some analysis tools:
+\begin{probox}{Properties of Distribution Functions}{distrProps}
+    If $F_X$ is a distribution function of a real-valued random variable $X$, then 
+    \begin{enumerate}
+        \item $F_X$ is non-decreasing;
+        \item $\lim_{x \to -\infty}F_X\left(x\right) = 0$ and $\lim_{x \to +\infty}F_X\left(x\right) = 1$;
+        \item for all $x \in \R$, $F_X\left(x\right) = \lim_{y \to x^+}F_X\left(y\right)$ and $F_X\left(x^-\right) \coloneqq \lim_{y \to x^-}F_X\left(y\right)$ exists. In particular, $P\left(X = x\right) = F_X\left(x\right) - F_X\left(x^-\right)$.
+    \end{enumerate}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Conversely, every function $F \colon \R \to \left[0, 1\right]$ satisfying the above properties induces a probability measure $P$ on $\R$ with $P\bigl(\left(-\infty, x\right]\bigr) = F_X\left(x\right)$.
+    \end{remark}
+\end{notebox}
+In computer programs, a random number is often generated via the uniform random variable $Z$ over $\left[0, 1\right]$. $Z$ can be used to generate a random variable $X$ associated to any given distribution function $F$.
+\begin{thmbox}{Distribution Simulation}{simulate}
+    Let $F \colon \R \to \left[0, 1\right]$ be any distribution function. Define $F' \colon \left[0, 1\right] \to \R$ by
+    \begin{equation*}
+        F'\left(y\right) = \inf \left\{x \in \R \colon F\left(x\right) \geq y\right\}.
+    \end{equation*}
+    Let $Z$ be the uniform random variable on $\left[0, 1\right]$, then $X \coloneqq F'\left(Z\right)$ is a random variable with distribution function $F$.
+    \tcblower
+    \begin{proof}
+        Notice that for all $x \in \R$, we have $P\left(X \leq x\right) = P\left(F^{-1}\left(Z\right) \leq x\right)$. One may check that $F^{-1}\left(z\right) \leq x$ if and only if $z \leq F\left(x\right)$, so 
+        \begin{equation*}
+            P\left(X \leq x\right) = P\bigl(Z \leq F\left(x\right)\bigr) = F\left(x\right).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 \section{Discrete Random Variables}
 Intuitively, there are certain events whose outcomes are finite or can be enumerated. In such cases, we may associate these events with a \textit{discrete random variable}.
 \begin{dfnbox}{Discrete Random Variable (DRV)}{DRV}
     Let $X$ be a random variable over a sample space $S$, if $\mathrm{ran}(X)$ is countable, then $X$ is called a {\color{red} \textbf{discrete random variable}}.
 \end{dfnbox}
+Among finitely many outcomes, the probability for each outcome is well-defined.
 \begin{dfnbox}{Probability Mass Function (PMF)}{PMF}
     Let $X$ be a discrete random variable over a sample space $S$, the function
     \begin{displaymath}
@@ -1252,14 +1390,13 @@ Note that $p_X$ essentially gives the probability of \textbf{singleton} events i
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        Suppose that $X(s_i) = a_i$ for all $s_i \in S$ such that $a_i < a_j$ whenever $i < j$, then $F_X$ is a non-decreasing {\color{red} \textbf{step function}}, i.e., for all $a$ such that $a_i \leq a < a_{i + 1}$,
+        Suppose that $X(s_i) = a_i$ for all $s_i \in S$ such that $a_i < a_j$ whenever $i < j$, then~$F_X$ is a non-decreasing \textit{step function}, i.e., for all $a$ such that $a_i \leq a < a_{i + 1}$,
         \begin{equation*}
             F_X(a) = \sum_{x \leq a}p_X(x) = \sum_{k = 1}^{i}p_X(a_k).
         \end{equation*}
     \end{remark}
 \end{notebox}
-\subsection{Expectation of Discrete Random Variables}
-Suppose $X$ is a discrete random variable with range $\left\{x_1, x_2, \cdots, x_m\right\}$ and PMF $p_X$. By repeating an experiment of $X$ for $n$ times, we can approximate the total number of occurrences of $X = x_i$ by $np_X(x_i)$. Therefore, the average value of $X$ can be approximated by
+Suppose $X$ is a discrete random variable with range $\left\{x_1, x_2, \cdots, x_m\right\}$ and PMF $p_X$. By repeating an experiment of $X$ for $n$ times, we can approximate the total number of occurrences of~$X = x_i$ by $np_X(x_i)$. Therefore, the average value of $X$ can be approximated by
 \begin{equation*}
     \frac{\sum_{i = 1}^{m}nx_ip_X(x_i)}{n}.
 \end{equation*}
@@ -1273,21 +1410,21 @@ Intuitively, the above limit represents the \textit{expected value} of $X$ when 
 \begin{dfnbox}{Expectation of Discrete Random Variables}{DRVExp}
     Let $X$ be a discrete random variable. The {\color{red} \textbf{expectation}} (or {\color{red} \textbf{mean}}, {\color{red} \textbf{expected value}}) of~$X$ is defined to be
     \begin{equation*}
-        E[X] = \sum_{i = 1}^{m}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{m}\left[x_iP(X = x_i)\right]
+        \mathbb{E}[X] = \sum_{i = 1}^{m}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{m}\left[x_iP(X = x_i)\right]
     \end{equation*}
     if $\abs{\mathrm{ran}(X)} = m$, and
     \begin{equation*}
-        E[X] = \sum_{i = 1}^{\infty}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{\infty}\left[x_iP(X = x_i)\right]
+        \mathbb{E}[X] = \sum_{i = 1}^{\infty}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{\infty}\left[x_iP(X = x_i)\right]
     \end{equation*}
     if $\mathrm{ran}(X)$ is countably infinite.
 \end{dfnbox}
 By convention, we use $\mu$ to denote expectation, so $X[E]$ can be written as $\mu_X$.
 
 For a discrete random variable $X$, we can define a function $g \colon \mathrm{ran}(X) \to \R$. It is easy to see that $g(X)$ is also a discrete random variable. Therefore, we may have the following result:
-\begin{thmbox}{Expectation of Functions}{funcExp}
+\begin{probox}{Expectation of Functions}{funcExp}
     Let $X$ be a discrete random variable and define $Y = g(X)$, then
     \begin{equation*}
-        E[Y] = E[g(X)] = \sum_{x}\left[g(x)P(X = x)\right].
+        \mathbb{E}[Y] = \mathbb{E}[g(X)] = \sum_{x}\left[g(x)P(X = x)\right].
     \end{equation*}
     \tcblower
     \begin{proof}
@@ -1297,46 +1434,44 @@ For a discrete random variable $X$, we can define a function $g \colon \mathrm{r
         \end{equation*}
         Therefore,
         \begin{align*}
-            E[Y] & = \sum_{y}\left[yP(Y = y)\right] \\
+            \mathbb{E}[Y] & = \sum_{y}\left[yP(Y = y)\right] \\
             & = \sum_{y}\left[y\!\sum_{g(x) = y}\!P(X = x)\right] \\
             & = \sum_{y}\left[\sum_{g(x) = y}\!g(x)P(X = x)\right] \\
             & = \sum_{x}\left[g(x)P(X = x)\right].
         \end{align*}
     \end{proof}
-\end{thmbox}
+\end{probox}
 Two simple corollaries to the above theorem are:
 \begin{align*}
-    E[aX + b] & = aE[X] + b \\
-    E[X + Y] & = E[X] + E[Y].
+    \mathbb{E}[aX + b] & = a\mathbb{E}[X] + b \\
+    \mathbb{E}[X + Y] & = \mathbb{E}[X] + \mathbb{E}[Y].
 \end{align*}
 In later sections, we will prove that the same rule applies to continuous random variables as well. The above theorem gives rise to the following notion of \textit{moments}:
 \begin{dfnbox}{Moment}{moment}
-    Let $X$ be a random variable. $E[X^n]$ is called the $n$-th {\color{red} \textbf{moment}} of $X$.
+    Let $X$ be a random variable. $\mathbb{E}[X^n]$ is called the $n$-th {\color{red} \textbf{moment}} of $X$.
 \end{dfnbox}
-Following Theorem \ref{thm:funcExp}, it is easy to see that if $X$ is discrete, then
+Following Proposition \ref{pro:funcExp}, it is easy to see that if $X$ is discrete, then
 \begin{equation*}
-    E[X^n] = \sum_{i = 1}^{\infty}x_i^np_X(x_i).
+    \mathbb{E}[X^n] = \sum_{i = 1}^{\infty}x_i^np_X(x_i).
 \end{equation*}
-
-\subsection{Variance}
 Note that given two different discrete random variables $X$ and $Y$, their probability mass functions can be different but they can still have identical expectations. For example, consider $p_X$ to be identically $0$ and $p_Y$ to be such that $p_Y(0) = 1$ and $p_Y(y) = 0$ for all $y \neq 0$.
 
-This motivates us to find other properties to classify and characterise random variables. One of these properties is the \textbf{spread} of the possible values taken by a random variable with respect to its mean, i.e., consider the random variable $X$ with $E[X] = \mu$, we wish to determine $E[\abs{X - \mu}]$ or equivalently $E[(X - \mu)^2]$. This spread is known as the \textit{variance} of a random variable.
+This motivates us to find other properties to classify and characterise random variables. One of these properties is the \textbf{spread} of the possible values taken by a random variable with respect to its mean, i.e., consider the random variable $X$ with $\mathbb{E}[X] = \mu$, we wish to determine $\mathbb{E}[\abs{X - \mu}]$ or equivalently $\mathbb{E}[(X - \mu)^2]$. This spread is known as the \textit{variance} of a random variable.
 \begin{dfnbox}{Variance}{var}
-    Let $X$ be a random variable with $E[X] = \mu$, the {\color{red} \textbf{variance}} of $X$ is defined to be
+    Let $X$ be a random variable with $\mathbb{E}[X] = \mu$, the {\color{red} \textbf{variance}} of $X$ is defined to be
     \begin{equation*}
-        \mathrm{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2.
+        \mathrm{Var}(X) = \mathbb{E}[(X - \mu)^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2.
     \end{equation*}
 \end{dfnbox}
 By convention, we use $\sigma^2$ to denote variance, so $\mathrm{Var}(X)$ can be written as $\sigma_X^2$.
 
-The formula for $\mathrm{Var}(X)$ can be derived via Theorem \ref{thm:funcExp}:
+The formula for $\mathrm{Var}(X)$ can be derived via Proposition \ref{pro:funcExp}:
 \begin{align*}
-    \mathrm{Var}(X) & = E[(X - \mu)^2] \\
-    & = E[X^2 - 2\mu X + \mu^2] \\
-    & = E[X^2] - 2\mu E[X] + \mu^2 \\
-    & = E[X^2] - 2(E[X])^2 + (E[X])^2 \\
-    & = E[X^2] - (E[X])^2.
+    \mathrm{Var}(X) & = \mathbb{E}[(X - \mu)^2] \\
+    & = \mathbb{E}[X^2 - 2\mu X + \mu^2] \\
+    & = \mathbb{E}[X^2] - 2\mu \mathbb{E}[X] + \mu^2 \\
+    & = \mathbb{E}[X^2] - 2(\mathbb{E}[X])^2 + (\mathbb{E}[X])^2 \\
+    & = \mathbb{E}[X^2] - (\mathbb{E}[X])^2.
 \end{align*}
 Another term we hear often is \textit{standard deviation}, which is defined as follows:
 \begin{dfnbox}{Standard Deviation}{sd}
@@ -1355,11 +1490,11 @@ Note that we have computed the general formula for any linear combination of dis
     for all $a, b \in \R$.
     \tcblower
     \begin{proof}
-        By using Theorem \ref{thm:funcExp}, we have
+        By using Proposition \ref{pro:funcExp}, we have
         \begin{align*}
-            \mathrm{Var}(aX + b) & = E[(aX + b)^2] - (E[aX + b])^2 \\
-            & = a^2 E[X^2] + 2ab E[X] + b^2 - \left[a(E[X])^2 + 2abE[X] + b^2\right] \\
-            & = a^2\left[E[X^2] - (E[X])^2\right] \\
+            \mathrm{Var}(aX + b) & = \mathbb{E}[(aX + b)^2] - (\mathbb{E}[aX + b])^2 \\
+            & = a^2 \mathbb{E}[X^2] + 2ab \mathbb{E}[X] + b^2 - \left[a(\mathbb{E}[X])^2 + 2ab\mathbb{E}[X] + b^2\right] \\
+            & = a^2\left[\mathbb{E}[X^2] - (\mathbb{E}[X])^2\right] \\
             & = a^2\mathrm{Var}(X).
         \end{align*}
         Therefore,
@@ -1404,14 +1539,14 @@ Now, consider $n$ \textbf{independent} trials of an experiment with a probabilit
         In particular, if $X$ is a Bernoulli random variable, then $X \sim \mathrm{B}(1, p)$.
     \end{remark}
 \end{notebox}
-Suppose $X \sim \mathrm{B}(n, p)$. Let $N$ be the average number of successes in the $n$ trials, it is expected that $p \approx \frac{N}{n}$. Therefore, we may conjure that $N \approx np$.
-\begin{thmbox}{Expectation and Variance of Binomial Distribution}{BExpVar}
-    Let $X \sim B(n, p)$, then $E[X] = np$ and $\mathrm{Var}(X) = np(1 - p)$.
+Suppose $X \sim \mathrm{B}(n, p)$. Let $N$ be the average number of successes in the $n$ trials, it is expected that $p \approx \frac{N}{n}$. Therefore, we may conjure that $\mathbb{E}\left[X\right] = np$.
+\begin{probox}{Expectation and Variance of Binomial Distribution}{BExpVar}
+    Let $X \sim \mathrm{B}(n, p)$, then $\mathbb{E}[X] = np$ and $\mathrm{Var}(X) = np(1 - p)$.
     \tcblower
     \begin{proof}
         Note that $iC^n_i = nC^{n - 1}_{i - 1}$, so
         \begin{align*}
-            E[X] & = \sum_{i = 0}^{n}\left[i \begin{pmatrix}
+            \mathbb{E}[X] & = \sum_{i = 0}^{n}\left[i \begin{pmatrix}
                 n \\
                 i
             \end{pmatrix}p^i(1 - p)^{n - i}\right] \\
@@ -1428,7 +1563,7 @@ Suppose $X \sim \mathrm{B}(n, p)$. Let $N$ be the average number of successes in
                 j
             \end{pmatrix}p^j(1 - p)^{n - 1 - j}\right] \\
             & = np, \\
-            \mathrm{Var}(X) & = E[X^2] - (E[X])^2 \\
+            \mathrm{Var}(X) & = \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \\
             & = \sum_{i = 0}^{n}\left[i^2\begin{pmatrix}
                 n \\
                 i
@@ -1450,7 +1585,7 @@ Suppose $X \sim \mathrm{B}(n, p)$. Let $N$ be the average number of successes in
             & = np(1 - p).
         \end{align*}
     \end{proof}
-\end{thmbox}
+\end{probox}
 Let $X \sim \mathrm{B}(n, p)$, consider
 \begin{align*}
     \frac{p_X(i + 1)}{p_X(i)} & = \frac{\frac{n!}{(i + 1)!(n - i - 1)!}p^{i + 1}(1 - p)^{n - i - 1}}{\frac{n!}{i!(n - i)!}p^i(1 - p)^{n - i}} \\
@@ -1465,19 +1600,23 @@ Suppose $p_X(i + 1) < p_X(i)$, then $(n - i)p < (i + 1)(1 - p)$. This implies th
 \end{itemize}
 
 \subsection{Poisson Random Variable}
-Suppose that $X \sim \mathrm{B}(n, p)$ such that $n$ is large and $p$ is small. Let $\lambda = np$, then
-\begin{align*}
-    p_X(i) & = \begin{pmatrix}
-        n \\
-        i
-    \end{pmatrix}p^i(1 - p)^{n - i} \\
-    & = \frac{\prod_{j = 0}^{i - 1}(n - j)}{i!}\left(\frac{\lambda}{n}\right)^i\left(1 - \frac{\lambda}{n}\right)^{n - i} \\
-    & = \frac{\prod_{j = 0}^{i - 1}(n - j)}{n^i}\cdot\frac{\lambda^i}{i!}\cdot\frac{\left(1 - \frac{\lambda}{n}\right)^n}{\left(1 - \frac{\lambda}{n}\right)^i}
-\end{align*}
-Therefore,
-\begin{equation*}
-    \lim_{n \to \infty}p_X(i) = e^{-\lambda}\frac{\lambda^i}{i!}.
-\end{equation*}
+Suppose that we want to count the number of events in unit intervals such that $X\left(t\right)$ is the number of events up to time $t$. Now, each unit interval can be divided infinitesimally such that we can approximate the distribution using binomial random variables.
+\begin{thmbox}{Law of Rare Events}{rareEvents}
+    Let $X_n \sim \mathrm{B}\left(n, p_n\right)$ be a binomial random variable where $\lim_{n \to \infty}np_n = \lambda$, then we have $\lim_{n \to \infty}P\left(X_n = x\right) \approx \frac{\lambda^x}{x!}\e^{-\lambda}$
+    \tcblower
+    \begin{proof}
+        Consider 
+        \begin{align*}
+            \lim_{n \to \infty}P\left(X_n = x\right) & = \lim_{n \to \infty}\binom{n}{x}p_n^x\left(1 - p_n\right)^{n - x} \\
+            & \approx \lim_{n \to \infty}\frac{\prod_{i = 1}^{x}\left(n - i + 1\right)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1 - \frac{\lambda}{n}\right)^n\lim_{n \to \infty}\left(1 - \frac{\lambda}{n}\right)^{-x} \\
+            & = \lim_{n \to \infty}\frac{\prod_{i = 1}^{x}\left(n - i + 1\right)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1 - \frac{\lambda}{n}\right)^n \\
+            & \approx \lim_{n \to \infty}\frac{n^x\lambda^x}{x!n^x}\left(1 - \frac{\lambda}{n}\right)^n \\
+            & = \frac{\lambda^x}{x!}\e^{-\lambda}.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+The term \textit{rare events} refers to the situation where the probability of two events occurring at the same time for some small interval $h$ is $o\left(h\right)$, i.e., $\lim_{h \to 0}\frac{p}{h} = 0$.
+
 Note that this means that we can use $e^{-\lambda}\frac{\lambda^i}{i!}$ as a good approximation for $p_X(i)$ when $n$ is large and $p$ is small! In this case, $\lambda$ is the expected frequency of occurrences of the event corresponding to $X = 1$ within a unit interval.
 \begin{dfnbox}{Poisson Random Variable}{poisson}
     A random variable $X$ is a {\color{red} \textbf{Poisson random variable}} if 
@@ -1488,28 +1627,31 @@ Note that this means that we can use $e^{-\lambda}\frac{\lambda^i}{i!}$ as a goo
 \end{dfnbox}
 Note that for $X \sim \mathrm{Po}(\lambda)$, we can find some $Y \sim \mathrm{B}(n, p)$ where $n$ is large and $p$ is small such that $np = \lambda$. Therefore, it is expected that 
 \begin{align*}
-    E[X] & \approx E[Y] = \lambda, \\
+    \mathbb{E}[X] & \approx \mathbb{E}[Y] = \lambda, \\
     \mathrm{Var}(X) & \approx \mathrm{Var}(Y) = np(1 - p) \approx \lambda.
 \end{align*}
-\begin{thmbox}{Expectation and Variance of Poisson Random Variables}{poExpVar}
-    If $X \sim \mathrm{Po}(\lambda)$ where $\lambda > 0$, then $E[X] = \mathrm{Var}(X) = \lambda$.
-\end{thmbox}
-\begin{dfnbox}{Weakly Dependent}{weakDepend}
+\begin{probox}{Expectation and Variance of Poisson Random Variables}{poExpVar}
+    If $X \sim \mathrm{Po}(\lambda)$ where $\lambda > 0$, then $\mathbb{E}[X] = \mathrm{Var}(X) = \lambda$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+To further examine the properties of Poisson random variables, we introduce the notion of \textit{weak dependence}.
+\begin{dfnbox}{Weak Dependence}{weakDepend}
     Let $E$ and $F$ be two events. If $P(E) \approx P(E\mid F)$, we say that $E$ and $F$ are {\color{red} \textbf{weakly dependent}}.
 \end{dfnbox}
 Let $i = 1, 2, 3, \cdots, n$ and $p_i$ be the probability of event $i$ occurring. If the $i$'s are independent or weakly dependent, then we can approximate for large $n$ that the rate of occurrences of these events is $\sum_{i = 1}^{n}p_i$. Let $X$ be the number of events which occur, then 
 \begin{equation*}
     X \sim \mathrm{Po}\left(\sum_{i = 1}^{n}p_i\right).
 \end{equation*}
-\begin{thmbox}{Poisson Process}{poissonProcess}
-    Let $E$ be an event which occurs randomly. Assume that
-    \begin{enumerate}
-        \item there are $\lambda$ occurrences per unit interval;
-        \item no two occurrences happen at the same point;
-        \item numbers of occurrences in disjoint intervals are independent.
-    \end{enumerate}
-    Let $N(t)$ be the number of occurrences of $E$ in an interval of length $t$, then $N(t) \sim \mathrm{Po}(\lambda t)$.
-\end{thmbox}
+\begin{dfnbox}{Poisson Process}
+    A {\color{red} \textbf{Poisson process}} with {\color{red} \textbf{rate}} or {\color{red} \textbf{intensity}} $\lambda > 0$ is a sequence of discrete random variables $\left\{X\left(t\right) \colon t \in \N\right\}$ such that $X\left(0\right) = 0$ and
+    \begin{itemize}
+        \item for any $t_0, t_1, \cdots, t_n \in \N$ with $t_0 = 0$, $\left\{X\left(t_i\right) - X\left(t_{i - 1}\right) \colon i = 1, 2, \cdots, n\right\}$ are mutually independent;
+        \item for any $s \in \N$ and $t \in \N^+$, we have $X\left(s + t\right) - X\left(s\right) \sim \mathrm{Po}\left(\lambda t\right)$.
+    \end{itemize}
+\end{dfnbox}
 
 \subsection{Geometric Random Variable}
 Suppose we perform some experiment with a probability of success of $p$. Let $X$ be the number of failures before the first success occurs, then clearly,
@@ -1527,11 +1669,16 @@ Note that both $\bigl(P(X = x)\bigr)$ and $\bigl(P(Y = y)\bigr)$ form geometric 
         p_X(n) = (1 - p)^{n - 1}p.
     \end{equation*}
 \end{dfnbox}
-\begin{thmbox}{Expectation and Variance of Geometric Random Variables}{expVarGeo}
-    If $X \sim \mathrm{Geo}(p)$, then $E[X] = \frac{1}{p}$ and $\mathrm{Var}(X) = \frac{1 - p}{p^2}$.
-\end{thmbox}
-\subsection{Negative Binomial Random Variable}{negBinDRV}
-Suppose we perform some experiment with a probability of success of $p$. Let $X$ be the number of trials needed to achieve the $r$-th success, then clearly, for $X = n$, we need $(r - 1)$ successes (i.e., $(n - r)$ failures) in the first $(n - 1)$ trials and the $r$-th trial to be a success. Therefore,
+The expectation and variance of geometric random variables are given as follows:
+\begin{probox}{Expectation and Variance of Geometric Random Variables}{expVarGeo}
+    If $X \sim \mathrm{Geo}(p)$, then $\mathbb{E}[X] = \frac{1}{p}$ and $\mathrm{Var}(X) = \frac{1 - p}{p^2}$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+\subsection{Negative Binomial Random Variable}
+Suppose we perform some experiment with a probability of success of $p$. Let~$X$ be the number of trials needed to achieve the $r$-th success, then clearly, for $X = n$, we need $(r - 1)$ successes (i.e., $(n - r)$ failures) in the first $(n - 1)$ trials and the $r$-th trial to be a success. Therefore,
 \begin{equation*}
     P(X = n) = C^{n - 1}_{r - 1}p^{r - 1}(1 - p)^{n - r}p = C^{n - 1}_{r - 1}p^r(1 - p)^{n - r}.
 \end{equation*}
@@ -1545,11 +1692,16 @@ Suppose we perform some experiment with a probability of success of $p$. Let $X$
     \end{equation*}
     where $0 < p < 1$ and $n \geq r$, denoted as $X \sim \mathrm{NB}(r, p)$.
 \end{dfnbox}
+The expectation and variance of negative binomial random variables are given as follows:
 \begin{thmbox}{Expection and Variance of Negative Binomial Variables}{expVarNegBin}
     Let $X \sim \mathrm{NB}(r, p)$, then
     \begin{equation*}
-        E[X] = \frac{r}{p}, \qquad \mathrm{Var}(X) = \frac{r(1 - p)}{p^2}.
+        \mathbb{E}[X] = \frac{r}{p}, \qquad \mathrm{Var}(X) = \frac{r(1 - p)}{p^2}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{thmbox}
 
 \subsection{Hypergeometric Random Variable}
@@ -1567,7 +1719,7 @@ Suppose a collection contains $N$ objects, $m$ of which are of type A. If $n$ ob
     \end{pmatrix}}.
 \end{equation*}
 \begin{dfnbox}{Hypergeometric Random Variable}{hGeo}
-    A random variable $X$ is called a {\color{red} \textbf{hypergeometric random variable}} with parameters $(n, N, m)$ if
+    A random variable $X$ is called a {\color{red} \textbf{hypergeometric random variable}} with parameters~$(n, N, m)$ if
     \begin{equation*}
         p_X(x) = \frac{\begin{pmatrix}
             m \\
@@ -1582,11 +1734,16 @@ Suppose a collection contains $N$ objects, $m$ of which are of type A. If $n$ ob
     \end{equation*}
     where $0 \leq m, n \leq N$.
 \end{dfnbox}
+The expectation and variance of hypergeometric random variables are given as follows:
 \begin{thmbox}{\small Expection and Variance of Hypergeometric Random Variables}{expVarHGeo}
     Let $X$ be a hypergeometric random variable with parameters $(n, N, m)$, then
     \begin{equation*}
-        E[X] = np, \qquad \mathrm{Var}(X) = np(1 - p)\left(1 - \frac{n - 1}{N - 1}\right).
+        \mathbb{E}[X] = np, \qquad \mathrm{Var}(X) = np(1 - p)\left(1 - \frac{n - 1}{N - 1}\right).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{thmbox}
 
 \section{Continuous Random Variables}
@@ -1614,23 +1771,23 @@ It is not surprising that a function of a continuous random variable is still a 
         f_Y(y) = f_X\left(g^{-1}(y)\right)\abs{\frac{\d}{\d y}g^{-1}(y)}.
     \end{equation*}
 \end{thmbox}
-Let $X$ be a continuous random variable with probability density function $f_X$ such that $f_X(x) = 0$ for all $x \in \R - [a, b]$. We divide $[a, b]$ into $n$ intervals $[x_{i - 1}, x_i]$ for $i = 1, 2, 3, \cdots, n$ with equal length $\symrm{\Delta} x = \frac{b - a}{n}$. Thus,
+Let $X$ be a continuous random variable with probability density function $f_X$ such that for all $x \in \R - [a, b]$, we have $f_X(x) = 0$. We can divide $[a, b]$ into $n$ intervals $[x_{i - 1}, x_i]$ for each~$i = 1, 2, 3, \cdots, n$ with equal length $\symrm{\Delta} x = \frac{b - a}{n}$. Thus,
 \begin{equation*}
     P(x_{i - 1} < X < x_i) \approx \symrm{\Delta}xf_X(x_i).
 \end{equation*}
 Let $Y$ be a discrete random variable with $P(Y = x_i) = \symrm{\Delta}xf_X(x_i)$, then 
 \begin{equation*}
-    E[X] \approx E[Y] = \sum_{i = 1}^{n}x_i\symrm{\Delta}xf_X(x_i).
+    \mathbb{E}[X] \approx \mathbb{E}[Y] = \sum_{i = 1}^{n}x_i\symrm{\Delta}xf_X(x_i).
 \end{equation*}
 When $n \to \infty$, i.e., $\symrm{\Delta}x \to 0$, we have
 \begin{equation*}
-    \lim_{\symrm{\Delta}x \to 0}E[Y] = \int_{a}^{b}\!xf_X(x)\,\mathrm{d}x.
+    \lim_{\symrm{\Delta}x \to 0}\mathbb{E}[Y] = \int_{a}^{b}\!xf_X(x)\,\mathrm{d}x.
 \end{equation*}
 By letting $a \to -\infty$ and $b \to \infty$, we have arrived at the following definition:
 \begin{dfnbox}{Expectation of Continuous Random Variables}{expCRV}
     Let $X$ be a continuous random variable with probability density function $f_X$, then
     \begin{equation*}
-        E[X] = \int_{-\infty}^{\infty}\!xf_X(x)\,\mathrm{d}x.
+        \mathbb{E}[X] = \int_{-\infty}^{\infty}\!xf_X(x)\,\mathrm{d}x.
     \end{equation*}
 \end{dfnbox}
 Let $Y$ be a continuous random variable with probability density function $f$, consider
@@ -1638,11 +1795,11 @@ Let $Y$ be a continuous random variable with probability density function $f$, c
     \int_{0}^{\infty}\!P(Y > y)\,\mathrm{d}y & = \int_{0}^{\infty}\!\int_{y}^{\infty}\!f(x)\,\mathrm{d}x\,\mathrm{d}y \\
     & = \int_{0}^{\infty}\!\int_{0}^{x}\!f(x)\,\mathrm{d}y\,\mathrm{d}x \\ 
     & = \int_{0}^{\infty}\!xf(x)\,\mathrm{d}y\,\mathrm{d}x \\ 
-    & = E[Y].
+    & = \mathbb{E}[Y].
 \end{align*}
 Therefore, set $Y = g(X)$, then similar to discrete random variables, we have
 \begin{equation*}
-    E\left[g(X)\right] = \int_{-\infty}^{\infty}\!g(x)f_X(x)\,\mathrm{d}x.
+    \mathbb{E}\left[g(X)\right] = \int_{-\infty}^{\infty}\!g(x)f_X(x)\,\mathrm{d}x.
 \end{equation*}
 
 \subsection{Uniform Random Variable}
@@ -1665,9 +1822,13 @@ Let $X \sim \mathrm{U}(a, b)$, then the cumulative density function is
         1, & \quad\textrm{otherwise}
     \end{cases}.
 \end{equation*}
-\begin{thmbox}{Expectation and Variance of Uniform Random Variables}{expVarUni}
-    Let $X \sim \mathrm{U}(a, b)$, then $E[X] = \frac{a + b}{2}$ and $\mathrm{Var}(X) = \frac{(b - a)^2}{12}$.
-\end{thmbox}
+\begin{probox}{Expectation and Variance of Uniform Random Variables}{expVarUni}
+    Let $X \sim \mathrm{U}(a, b)$, then $\mathbb{E}[X] = \frac{a + b}{2}$ and $\mathrm{Var}(X) = \frac{(b - a)^2}{12}$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
 
 \subsection{Normal Random Variable}
 \begin{dfnbox}{Normal Random Variable}{normal}
@@ -1685,9 +1846,10 @@ Let $X \sim \mathcal{N}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma}$, so
 \begin{equation*}
     \Phi_X(x) = P\left(X < x\right) = P\left(\frac{X - \mu}{\sigma} < \frac{x - \mu}{\sigma}\right) = \Phi\left(\frac{x - \mu}{\sigma}\right)
 \end{equation*}
-\begin{thmbox}{Expection and Variance of Normal Random Variables}{expVarNormal}
-    Let $Z \sim \mathcal{N}(\mu, \sigma^2)$, then $E[Z] = \mu$ and $\mathrm{Var}(Z) = \sigma^2$.
-\end{thmbox}
+We shall state without proof the expectation and variance of normal random variables as follows:
+\begin{probox}{Expection and Variance of Normal Random Variables}{expVarNormal}
+    Let $Z \sim \mathcal{N}(\mu, \sigma^2)$, then $\mathbb{E}[Z] = \mu$ and $\mathrm{Var}(Z) = \sigma^2$.
+\end{probox}
 
 \subsection{Exponential Random Variable}
 Let $N(t) \sim \mathrm{Po}(t\lambda)$ be the number of occurrences of an event in an interval of length $t$. Suppose $X$ is the time before the first occurrence of the event, then
@@ -1699,16 +1861,21 @@ In other words, if $F_X$ is the cumulative distribution function of $X$, then $F
     A continuous random variable $X$ is an {\color{red} \textbf{exponential random variable}} if 
     \begin{equation*}
         f_X(x) = \begin{cases}
-            \lambda\mathrm{e}^{-\lambda x}, & \quad\textrm{if } x \geq 0 \\
-            0, & \quad\textrm{otherwise}
+            \lambda\mathrm{e}^{-\lambda x} & \quad\textrm{if } x \geq 0 \\
+            0 & \quad\textrm{otherwise}
         \end{cases},
     \end{equation*}
     where $\lambda > 0$, denoted as $X \sim \mathrm{Exp}\left(\lambda\right)$.
 \end{dfnbox}
-\begin{thmbox}{Expection and Variance of Exponential Random Variables}{expVarExp}
-    Let $X \sim \mathrm{Exp}(\lambda)$, then $E[X] = \frac{1}{\lambda}$ and $\mathrm{Var}(X) = \frac{1}{\lambda^2}$.
-\end{thmbox}
-Informally, an exponential random variable models the \textbf{waiting time} before an event occurs. Suppose we have already waited for $s$ unit of time for the occurrence, we may wish to know the probability of us having to wait for another $t$ unit of time. To solve such questions, we need to understand the \textit{memoryless} property.
+The expectation and variance of exponential random variables are as follows:
+\begin{probox}{Expection and Variance of Exponential Random Variables}{expVarExp}
+    Let $X \sim \mathrm{Exp}(\lambda)$, then $\mathbb{E}[X] = \frac{1}{\lambda}$ and $\mathrm{Var}(X) = \frac{1}{\lambda^2}$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Informally, an exponential random variable models the \textbf{waiting time} before the first event occurs or between the occurrences of two consecutive events. Suppose we have already waited for $s$ unit of time for the occurrence, we may wish to know the probability of us having to wait for another $t$ unit of time. To solve such questions, we need to understand the \textit{memoryless} property.
 \begin{dfnbox}{Memoryless Property}{memoryless}
     Let $X$ be a random variable, we say that $X$ is {\color{red} \textbf{memoryless}} if
     \begin{equation*}
@@ -1766,12 +1933,13 @@ Let $N(t)$ be a Poisson process with rate $\lambda$, so $P\bigl(N(t) = n\bigr) =
     & = \frac{\lambda\e^{-\lambda t}(\lambda t)^{k - 1}}{(k - 1)!}.
 \end{align*}
 \begin{dfnbox}{Gamma Random Variable}{gamma}
-    A continuous random variable $X$ is called a {\color{red} \textbf{gamma}} random variable with parameters $(n, \lambda)$ where $\lambda > 0$ if 
+    A continuous random variable $X$ is called a {\color{red} \textbf{gamma}} random variable with parameters~$(n, \lambda)$ where $\lambda > 0$ if 
     \begin{equation*}
         f(t) = \frac{\lambda\e^{-\lambda t}(\lambda t)^{n - 1}}{(n - 1)!}
     \end{equation*}
     for all $t \geq 0$.
 \end{dfnbox}
+The gamma random variable is closely related to the \textit{gamma function}.
 \begin{dfnbox}{Gamma Function}{gammaFunc}
     Let $\alpha > 0$, the {\color{red} \textbf{gamma function}} is defined as
     \begin{align*}
@@ -1793,12 +1961,13 @@ Let $N(t)$ be a Poisson process with rate $\lambda$, so $P\bigl(N(t) = n\bigr) =
         \end{enumerate}
     \end{remark}
 \end{notebox}
-\begin{thmbox}{Expectation and Variance of Gamma Random Variables}{expVarGamma}
+We shall state the following result without proof:
+\begin{probox}{Expectation and Variance of Gamma Random Variables}{expVarGamma}
     Let $X$ be a gamma random variable with parameters $(\alpha, \lambda)$, then 
     \begin{equation*}
-        E[X] = \frac{\alpha}{\lambda}, \qquad \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}.
+        \mathbb{E}[X] = \frac{\alpha}{\lambda}, \qquad \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}.
     \end{equation*}
-\end{thmbox}
+\end{probox}
 
 \subsection{Beta Random Variable}
 In real life, sometimes we may not know the exact probability distribution of a random variable and wish to deduce its probability distribution based on experiments. In other words, suppose there are $a$ successes and $b$ failures of an experiment, we wish to know what is the \textbf{most likely} probability of success.
@@ -1820,12 +1989,13 @@ so $X$ is uniform on $(0, 1)$. In particular, we also see that
 \begin{equation*}
     \frac{B(a + 1, b)}{B(a, b)} = \frac{a}{a + b}.
 \end{equation*}
-\begin{thmbox}{Expectation and Variance of Beta Random Variables}{expVarBeta}
+We shall state the following result without proof:
+\begin{probox}{Expectation and Variance of Beta Random Variables}{expVarBeta}
     Let $X$ be a beta random variable with parameters $(a, b)$, then 
     \begin{equation*}
-        E[X] = \frac{a}{a + b}, \qquad \mathrm{Var}(X) = \frac{ab}{(a + b)^2(a + b + 1)}.
+        \mathbb{E}[X] = \frac{a}{a + b}, \qquad \mathrm{Var}(X) = \frac{ab}{(a + b)^2(a + b + 1)}.
     \end{equation*}
-\end{thmbox}
+\end{probox}
 
 \section{Jointly Distributed Random Variables}
 Sometimes, the outcomes of the events we wish to study cannot be expressed with a single random variable. In general, if $X_1, X_2, \cdots, X_n$ are random variables, we may be interested to know
@@ -1836,7 +2006,7 @@ Take $C = \prod_{i = 1}^{n}(-\infty, x_i]$, then $(X_1, X_2, \cdots, X_n) \in C$
 \begin{dfnbox}{Joint Cumulative Distribution Function}{jointCDF}
     Let $X_1, X_2, \cdots, X_n$ be random variables, then their {\color{red} \textbf{joint cumulative distribution function}} is defined as
     \begin{equation*}
-        F_{\mathbfit{X}}(x_1, x_2, \cdots, x_n) = P(X_1 \leq x_1, X_2 \leq x_2, \cdots, X_n \leq x_n).
+        F_{X}(x_1, x_2, \cdots, x_n) = P(X_1 \leq x_1, X_2 \leq x_2, \cdots, X_n \leq x_n).
     \end{equation*}
 \end{dfnbox}
 One may be tempted to think that $P(X \leq x, Y \leq y) = P(X \leq x)P(Y \leq y)$, but in general this is not true!
@@ -1859,9 +2029,7 @@ Combining the two equations we have
     P(x_1 \leq X \leq x_2, y_1 \leq Y \leq y_2) & = P(x \leq x_2, y_1 \leq Y \leq y_2) - P(x \leq x_1, y_1 \leq Y \leq y_2) \\
     & = F_{X, Y}(x_2, y_2) - F_{X, Y}(x_2, y_1) - F_{X, Y}(x_1, y_2) + F_{X, Y}(x_1, y_1).
 \end{align*}
-Note that with this identity we can compute $P\bigl((X, Y) \in C\bigr)$ for all Borel sets $C$. A \textit{Borel set} is a set generated by countable unions and countable intersections of intervals.
-
-Consider jointly distributed discrete random variables. We first introduce the following intuitive definition:
+Note that with this identity we can compute $P\bigl((X, Y) \in C\bigr)$ for all Borel sets $C$. Consider jointly distributed discrete random variables. We first introduce the following intuitive definition:
 \begin{dfnbox}{Joint Probability Mass Function}{jointPMF}
     Let $X_1, X_2, \cdots, X_n$ be discrete random variables. Their {\color{red} \textbf{joint probability mass function}} is defined to be
     \begin{equation*}
@@ -1899,7 +2067,7 @@ These are known as \textit{marginal probability density functions}.
     \end{align*}
 \end{dfnbox}
 Lastly, we state the notion of \textit{joint distribution of functions}.
-\begin{thmbox}{Joint Distribution of Functions}{jointDistrFunc}
+\begin{probox}{Joint Distribution of Functions}{jointDistrFunc}
     Let $X_1$ and $X_2$ be jointly continuous random variables. Let $Y_1 = g_1(X_1, X_2)$ and $Y_2 = g_2(X_1, X_2)$. If for all $y_1, y_2$, the linear system
     \begin{equation*}
         \begin{bmatrix}
@@ -1918,9 +2086,19 @@ Lastly, we state the notion of \textit{joint distribution of functions}.
     \begin{equation*}
         f_{Y_1, Y_2}(y_1, y_2) = f_{X_1, X_2}(x_1, x_2)\abs{J(x_1, x_2)}^{-1}.
     \end{equation*}
-\end{thmbox}
-\subsection{Independent Random Variables}
-Recall that we have previously defined the notion of independent events (Definition \ref{dfn:indEvents}). Observe that an event can be precisely expressed as $X \in A$ for some random variable $X$ and set $A$, which motivates us to define independence of random variables.
+\end{probox}
+In general, we have:
+\begin{probox}{Expectation of Jointly Distributed Random Variables}{expFuncJoint}
+    Let $X$ and $Y$ be jointly distributed random variables. If $X$ and $Y$ are discrete, then 
+    \begin{equation*}
+        \mathbb{E}[g(X, Y)] = \sum_{x}\sum_{y}g(x, y)p_{X, Y}(x, y).
+    \end{equation*}
+    If $X$ and $Y$ are continuous, then 
+    \begin{equation*}
+        \mathbb{E}[g(X, Y)] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\!g(x, y)f_{X, Y}(x, y)\,\mathrm{d}x\,\mathrm{d}y.
+    \end{equation*}
+\end{probox}
+Recall that we have previously defined the notion of independent events. Observe that an event can be precisely expressed as $X \in A$ for some random variable $X$ and set $A$, which motivates us to define independence of random variables.
 \begin{dfnbox}{Independent Random Variables}{indRV}
     Two random variables $X$ and $Y$ are {\color{red} \textbf{independent}} if for any sets $A$ and $B$,
     \begin{equation*}
@@ -1933,20 +2111,27 @@ Recall that we have previously defined the notion of independent events (Definit
     \end{remark}
 \end{notebox}
 Since the cumulative distribution functions are closely related to the probability mass and probability density, we can then check for independence using them instead. We first consider the discrete case.
-\begin{thmbox}{Independence of Discrete Random Variables}{indDRV}
-    Let $X$ and $Y$ be discrete random variables with probability mass functions $p_X$ and $p_Y$. $X$ and $Y$ are independent if and only if $p_{X, Y}(x, y) = p_X(x)p_Y(y)$.
-\end{thmbox}
-Based on Theorem \ref{thm:indDRV}, one may check that if $X$ and $Y$ are independent discrete random variables, then 
+\begin{probox}{Independence of Discrete Random Variables}{indDRV}
+    Let $X$ and $Y$ be discrete random variables with probability mass functions $p_X$ and $p_Y$, then~$X$ and $Y$ are independent if and only if $p_{X, Y}(x, y) = p_X(x)p_Y(y)$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Based on Proposition \ref{pro:indDRV}, one may check that if $X$ and $Y$ are independent discrete random variables, then 
 \begin{align*}
-    E[XY] & = E[X]E[Y], \qquad \mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
+    \mathbb{E}[XY] & = \mathbb{E}[X]\mathbb{E}[Y], \qquad \mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
 \end{align*}
 In the continuous case, we have a similar conclusion.
 \begin{thmbox}{Independence of Continuous Random Variables}{indCRV}
-    Let $X$ and $Y$ be continuous random variables with probability density functions $f_X$ and $f_Y$. $X$ and $Y$ are independent if and only if $f_{X, Y}(x, y) = f_X(x)f_Y(y)$.
+    Let $X$ and $Y$ be continuous random variables with probability density functions $f_X$ and~$f_Y$. $X$ and $Y$ are independent if and only if $f_{X, Y}(x, y) = f_X(x)f_Y(y)$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{thmbox}
 The above theorems and definitions can be easily extended to a countable number of independent random variables.
 
-\subsection{Sums of Independent Random Variables}
 Suppose $X$ and $Y$ are independent \textbf{integer-valued} discrete random variables, then clearly
 \begin{align*}
     p_{X + Y}(n) & = P(X + Y = n) \\
@@ -1963,6 +2148,35 @@ On the other hand, if $X$ and $Y$ are independent continuous random variables, w
 \end{align*}
 We say that $F_{X + Y}$ is the \textit{convolution} $F_X * F_Y$.
 
+By Proposition \ref{pro:expFuncJoint}, it is easy to see that if $X_1, X_2, \cdots, X_n$ are random variables,
+\begin{equation*}
+    \mathbb{E}\left[\sum_{i = 1}^{n}X_i\right] = \sum_{i = 1}^{n}\mathbb{E}[X_i].
+\end{equation*}
+Using the expectation of the sum of random variables, we can also prove Theorem \ref{thm:boole} but for the finite cases:
+\begin{thmbox}{Boole's Inequality for Finitely Many Events}{boole}
+    Let $A_1, A_2, \cdots, A_n$ be events, then 
+    \begin{equation*}
+        \sum_{i = 1}^{n}P(A_i) \geq P\left(\bigcup_{i = 1}^{n}A_i\right).
+    \end{equation*}
+    \tcblower       
+    \begin{proof}
+        Define
+        \begin{equation*}
+            X_i = \begin{cases}
+                1, & \quad\textrm{if } A_i \textrm{ occurs} \\
+                0, & \quad\textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        Let $X = \sum_{i = 1}^{n}X_i$ and $Y = \max\{X_1, X_2, \cdots, X_n\}$. Note that $Y = 1$ if and only if at least one of the $A_i$'s occurs, so 
+        \begin{equation*}
+            \mathbb{E}[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
+        \end{equation*}
+        Note that $\mathbb{E}[X] = \sum_{i = 1}^{n}P(A_i)$ and that $X \geq Y$, so
+        \begin{equation*}
+            \sum_{i = 1}^{n}P(A_i) = \mathbb{E}[X] \geq \mathbb{E}[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 Now, we proceed to discussing some special cases.
 
 Let $X$ and $Y$ be independent uniform random variables on $(a, b)$. Note that $f_Y(y) = \frac{1}{b - a}$ for all $y \in (a, b)$, so
@@ -1970,7 +2184,7 @@ Let $X$ and $Y$ be independent uniform random variables on $(a, b)$. Note that $
     f_{X + Y}(n) & = \int_{a}^{b}\!f_X(n - y)f_Y(y)\,\mathrm{d}y \\
     & = \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y.
 \end{align*}
-Note that $f_X(n - y) = \frac{1}{b - a}$ if and only if $a < n - y < b$, i.e., $n - b < y < n - a$. Otherwise, $f_X(n - y) = 0$. If $2a < n < a + b$, we have $(a, b) \cap (n - b, n - a) = (a, n - a)$, so
+Note that $f_X(n - y) = \frac{1}{b - a}$ if and only if $a < n - y < b$, i.e., $n - b < y < n - a$. Otherwise, we have $f_X(n - y) = 0$. If $2a < n < a + b$, we have $(a, b) \cap (n - b, n - a) = (a, n - a)$, so
 \begin{align*}
     \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y & = \frac{1}{b - a}\int_{a}^{n - a}\!\frac{1}{b - a}\,\mathrm{d}y \\
     & = \frac{n - 2a}{(b - a)^2}.
@@ -1997,14 +2211,26 @@ Let $X$ and $Y$ be independent gamma random variables with parameters $(\alpha, 
 \end{align*}
 Therefore, $X + Y$ is a gamma random variable with parameters $(\alpha + \beta, \lambda)$.
 
-Lastly, we shall state the following theorem without proof:
-\begin{thmbox}{Sum of Normal Random Variables Is Normal}{sumOfNormal}
+Lastly, we shall state the following result without proof:
+\begin{probox}{Sum of Normal Random Variables Is Normal}{sumOfNormal}
     Let $X \sim N\left(\mu_X, \sigma_X^2\right)$ and $Y \sim N\left(\mu_Y, \sigma_Y^2\right)$, then 
     \begin{equation*}
         X + Y \sim N\left(\mu_X + \mu_Y, \sigma_X^2 + \sigma_Y^2\right).
     \end{equation*}
-\end{thmbox}
+\end{probox}
 
+So far we have been discussing the sum of finitely many random variables. It turns out that in the infinite case, the following applies:
+\begin{thmbox}{Expectation of Infinite Sum of Random Variables}{expInfSum}
+    Let $X_1, X_2, \cdots$ be infinitely many random variables, if 
+    \begin{itemize}
+        \item $X_i \geq 0$ for all $i \in \N^+$, or
+        \item the series $\sum_{i = 1}^{\infty}\mathbb{E}\left[\abs{X_i}\right]$ converges,
+    \end{itemize}
+    then 
+    \begin{equation*}
+        \mathbb{E}\left[\sum_{i = 1}^{\infty}X_i\right] = \sum_{i = 1}^{\infty}\mathbb{E}[X_i].
+    \end{equation*}
+\end{thmbox}
 \section{Conditional Distribution}
 Recall that previously, we have defined the conditional probability
 \begin{equation*}
@@ -2034,7 +2260,7 @@ Let $X$ and $Y$ be discrete random variables, we can similarly see that
 \end{notebox}
 We can similar define for the continuous case:
 \begin{dfnbox}{Conditional Probability Density Function}{condPDF}
-    Let $X$ and $Y$ be jointly continuous random variables with probability density functions $f_X$ and $f_Y$ respectively, the {\color{red} \textbf{conditional probability density function}} of $X$ given $Y = y$ is defined as
+    Let $X$ and $Y$ be jointly continuous random variables with probability density functions $f_X$ and $f_Y$ respectively, the {\color{red} \textbf{conditional probability density function}} of $X$ given~$Y = y$ is defined as
     \begin{equation*}
         f_{X \mid Y}(x \mid y) = \frac{f_{X, Y}(x, y)}{f_Y(y)}.
     \end{equation*}
@@ -2060,75 +2286,27 @@ What if $X$ is continuous but $Y$ is discrete? In this case, we have
 \begin{align*}
     f_{X \mid Y}(x \mid y) = \frac{P(Y = y \mid X = x)}{P(Y = y)}f_X(x).
 \end{align*}
-
-\chapter{Expectation}
-\section{Sums of Random Variables}
-In general, we have:
-\begin{thmbox}{\small Expectation of Functions of Jointly Distributed Random Variables}{expFuncJoint}
-    Let $X$ and $Y$ be jointly distributed random variables. If $X$ and $Y$ are discrete, then 
+\section{Generating Functions}
+Capturing the distribution of a random variable could be difficult as the probabilities might be quite irregular. Luckily, a type of tools known as generating functions provide a succinct way to describe such information.
+\begin{dfnbox}{Probability Generating Function}{pgf}
+    Let $X$ be an $\N$-valued discrete random variable, then its {\color{red} \textbf{probability generating function}} is a map $\phi_X \colon T \to \R$ defined as 
     \begin{equation*}
-        E[g(X, Y)] = \sum_{x}\sum_{y}g(x, y)p_{X, Y}(x, y).
+        \phi_X\left(t\right) \coloneqq \mathbb{E}\left[t^X\right] = \sum_{k \in \N}P\left(X = k\right)t^k,
     \end{equation*}
-    If $X$ and $Y$ are continuous, then 
-    \begin{equation*}
-        E[g(X, Y)] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\!g(x, y)f_{X, Y}(x, y)\,\mathrm{d}x\,\mathrm{d}y.
-    \end{equation*}
-\end{thmbox}
-Based on the above, it is easy to see that if $X_1, X_2, \cdots, X_n$ are random variables,
-\begin{equation*}
-    E\left[\sum_{i = 1}^{n}X_i\right] = \sum_{i = 1}^{n}E[X_i].
-\end{equation*}
-\begin{dfnbox}{Sample Mean}{mean}
-    Let $X_1, X_2, \cdots, X_n$ be independent random variables. The {\color{red} \textbf{sample mean}} is defined as
-    \begin{equation*}
-        \overline{X} = \frac{1}{n}\sum_{i = 1}^{n}X_i.
-    \end{equation*}
+    where $T \subseteq \R$ is the set of all values of $t$ such that the sum converges.
 \end{dfnbox}
-Clearly, if $X_i = \mu$ for all $i = 1, 2, \cdots, n$,
+Notice that
 \begin{equation*}
-    E\left[\overline{X}\right] = \frac{1}{n}\sum_{i = 1}^{n}E[X_i] = \mu.
+    \phi_X^{(n)}\left(t\right) = \sum_{k = n}^{\infty}k!P\left(X = k\right)t^{k - n},
 \end{equation*}
-This means that given a random sample, its sample mean is an \textit{unbiased estimate} of its expectation.
-
-Using the expectation of the sum of random variables, we can also prove the following inequality:
-\begin{thmbox}{Boole's Inequality}{boole}
-    Let $A_1, A_2, \cdots, A_n$ be events, then 
-    \begin{equation*}
-        \sum_{i = 1}^{n}P(A_i) \geq P\left(\bigcup_{i = 1}^{n}A_i\right).
-    \end{equation*}
-    \tcblower       
-    \begin{proof}
-        Define
-        \begin{equation*}
-            X_i = \begin{cases}
-                1, & \quad\textrm{if } A_i \textrm{ occurs} \\
-                0, & \quad\textrm{otherwise}
-            \end{cases}.
-        \end{equation*}
-        Let $X = \sum_{i = 1}^{n}X_i$ and $Y = \max\{X_1, X_2, \cdots, X_n\}$. Note that $Y = 1$ if and only if at least one of the $A_i$'s occurs, so 
-        \begin{equation*}
-            E[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
-        \end{equation*}
-        Note that $E[X] = \sum_{i = 1}^{n}P(A_i)$ and that $X \geq Y$, so
-        \begin{equation*}
-            \sum_{i = 1}^{n}P(A_i) = E[X] \geq E[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
-        \end{equation*}
-    \end{proof}
-\end{thmbox}
-So far we have been discussing the sum of finitely many random variables. It turns out that in the infinite case, the following applies:
-\begin{thmbox}{Expectation of Infinite Sum of Random Variables}{expInfSum}
-    Let $X_1, X_2, \cdots$ be infinitely many random variables, if 
-    \begin{itemize}
-        \item $X_i \geq 0$ for all $i \in \N^+$, or
-        \item the series $\sum_{i = 1}^{\infty}E\left[\abs{X_i}\right]$ converges,
-    \end{itemize}
-    then 
-    \begin{equation*}
-        E\left[\sum_{i = 1}^{\infty}X_i\right] = \sum_{i = 1}^{\infty}E[X_i].
-    \end{equation*}
-\end{thmbox}
-
-\section{Moments}
+so it is clear that 
+\begin{equation*}
+    P\left(X = x\right) = \frac{\phi_X^{(x)}\left(0\right)}{x!},
+\end{equation*}
+hence the name ``probability generating function''. Moreover, we have $\phi_X\left(0\right) = P\left(X = 0\right)$ and $\phi\left(1\right) = 1$. Using the properties of expectation, it is easy to prove the following result:
+\begin{probox}{\small Probability Generating Function of Sum of Random Variables}{pgfsum}
+    If $X$ and $Y$ are independent $\N$-valued discrete random variables, then $\phi_{X + Y} = \phi_X\phi_Y$.
+\end{probox}
 Consider $n$ events $A_1, A_2, \cdots, A_n$. Define
 \begin{equation*}
     X_i = \begin{cases}
@@ -2136,7 +2314,11 @@ Consider $n$ events $A_1, A_2, \cdots, A_n$. Define
         0, & \quad\textrm{otherwise}
     \end{cases},
 \end{equation*}
-then $X = \sum_{i = 1}^{n}X_i$ is the number of events which have occurred. Observe that $E[X] = \sum_{i = 1}^{n}P(A_i)$. Define the event
+then $X = \sum_{i = 1}^{n}X_i$ is the number of events which have occurred. Observe that 
+\begin{equation*}
+    \mathbb{E}[X] = \sum_{i = 1}^{n}P(A_i).
+\end{equation*}
+Define the event
 \begin{equation*}
     E_{m, k} = \bigcap_{i = 1}^{k}A_{m_i}
 \end{equation*}
@@ -2152,43 +2334,54 @@ where $1 \leq m_i \leq n$ for any $i = 1, 2, \cdots, k$, then the number of such
 \end{equation*}
 Therefore, 
 \begin{align*}
-    E\left[\begin{pmatrix}
+    \mathbb{E}\left[\begin{pmatrix}
         X \\
         k
-    \end{pmatrix}\right] & = E\left[\sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right)\right] \\
+    \end{pmatrix}\right] & = \mathbb{E}\left[\sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right)\right] \\
     & = \sum_{m_1 < m_2 < \cdots < m_k}P\left(E_{m, k}\right).
 \end{align*}
-Notice that $E\left[\left(\begin{smallmatrix}
+Notice that $\mathbb{E}\left[\left(\begin{smallmatrix}
     X \\
     k
-\end{smallmatrix}\right)\right]$ is a linear combination of the first $k$-th momenets of $X$. We would like to find a way to quickly compute the $n$-th moment of a random variable.
-
-Let $X$ be a discrete random variable, then 
+\end{smallmatrix}\right)\right]$ is a linear combination of the first $k$-th moments of $X$. We would like to find a way to quickly compute the $n$-th moment of a random variable. Let $X$ be a discrete random variable, then 
 \begin{equation*}
-    E\left[X^n\right] = \sum_{x}x^np_X(x).
+    \mathbb{E}\left[X^n\right] = \sum_{x}x^np_X(x).
 \end{equation*}
 Note that by Maclaurin Series, we have
 \begin{equation*}
     g(t) = \sum_{n = 0}^{\infty}\frac{g^{(n)(0)}}{n!}t^n
 \end{equation*}
-for any function $g$. A motivation is to construct $g$ such that $g^{(n)}(0) = E\left[X^n\right]$. Therefore,
+for any function $g$. A motivation is to construct $g$ such that $g^{(n)}(0) = \mathbb{E}\left[X^n\right]$. Therefore,
 \begin{align*}
-    g(t) & = \sum_{n = 0}^{\infty}\frac{E\left[X^n\right]}{n!}t^n \\
+    g(t) & = \sum_{n = 0}^{\infty}\frac{\mathbb{E}\left[X^n\right]}{n!}t^n \\
     & = \sum_{n = 0}^{\infty}\frac{\sum_{x}x^np_X(x)}{n!}t^n \\
     & = \sum_{x}\left(p_X(x)\sum_{n = 0}^{\infty}\frac{(tx)^n}{n!}\right) \\
     & = \sum_{x}\e^{tx}p_X(x) \\
-    & = E\left[\e^{tX}\right].
+    & = \mathbb{E}\left[\e^{tX}\right].
 \end{align*}
-\begin{dfnbox}{Moment Generating Function}{momentGenFunc}
-    Let $X$ be a random variable, the {\color{red} \textbf{moment generating function}} of $X$ is defined as 
+\begin{dfnbox}{Moment Generating Function}{mgf}
+    Let $X$ be an $\N$-valued random variable, then its {\color{red} \textbf{moment generating function}} is a map $M_X \colon T \to \R$ defined as 
     \begin{equation*}
-        M_X(t) = E\left[\e^{tX}\right]
+        M_X\left(t\right) = \mathbb{E}\left[\e^{tX}\right] = \sum_{k \in \N}P\left(X = k\right)\e^{tk},
     \end{equation*}
-    such that 
-    \begin{equation*}
-        E\left[X^n\right] = M_X^{(n)}(0) \quad\textrm{for all } n \in \N.
-    \end{equation*}
+    where $T \subseteq \R$ is the set of all values of $t$ such that the sum converges.
 \end{dfnbox}
+By observation, we see that 
+\begin{equation*}
+    M_X^{(n)}\left(0\right) = \sum_{k \in \N}k^nP\left(X = k\right)
+\end{equation*}
+yields the $n$-th moment of $X$. However, notice that $M_X\left(t\right) = \phi_X\left(e^t\right)$, so actually 
+\begin{equation*}
+    \mathbb{E}\left[X^n\right] = \left.\frac{\d^n\phi\left(\e^t\right)}{\d t^n}\right\rvert_{t = 0}.
+\end{equation*}
+Next, we state a result without proof on the use of generating functions to study the convergence of distributions.
+\begin{probox}{Convergence of Generating Functions}{gfConverge}
+    Let $\left\{X_i\right\}_{i \in \N}$ be a family of $\N$-valued random variables such that $\phi_i$ is the probability generating function for $X_i$ and $X$ be an $\N$-valued random variable with probability generating function $\phi$. If there exists some $a \in \R$ such that $\left\{\phi_i\right\}_{i \in \N}$ converges to $\phi$ point-wisely, then 
+    \begin{equation*}
+        \lim_{n \to \infty}P\left(X_n = k\right) = P\left(X = k\right)
+    \end{equation*}
+    for all $k \in \N$.
+\end{probox}
 It can be proven that for any random variable $X$, $M_X$ is unique. In other words, if two random variables have the same moment generating function, they must be the same random variable.
 \begin{thmbox}{Uniqueness of Moment Generating Function}{uniqueMomentGenFunc}
     Let $X$ and $Y$ be random variables. If
@@ -2198,31 +2391,97 @@ It can be proven that for any random variable $X$, $M_X$ is unique. In other wor
     then $X$ and $Y$ have the same distribution.
 \end{thmbox}
 By properties of exponential functions, the following theorem can also be easily proven:
-\begin{probox}{\small Moment Generating Function of Sum of Independent Random Variables}{momentSumIndRV}
+\begin{probox}{\small Moments of Sum of Independent Random Variables}{momentSumIndRV}
     Let $X_1, X_2, \cdots, X_n$ be independent random variables, then 
     \begin{equation*}
         M_{\sum_{i = 1}^{n}X_i}(t) = \prod_{i = 1}^{n}M_{X_i}(t).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{probox}
 However, note that the converse of Proposition \ref{pro:momentSumIndRV} is not true in general.
 \begin{dfnbox}{Joint Moment Generating Function}{jointMomentGenFunc}
-    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{joint moment generating function}} of $X$ and $Y$ is defined as
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{joint moment generating function}} of $X$ and~$Y$ is defined as
     \begin{equation*}
-        M_{X, Y}(s, t) = E\left[\e^{sX + tY}\right].
+        M_{X, Y}(s, t) = \mathbb{E}\left[\e^{sX + tY}\right].
     \end{equation*}
 \end{dfnbox}
 Observe that in the joint case, $M_X(s) = M_{X, Y}(s, 0)$ and $M_Y(t) = M_{X, Y}(0, t)$. $X$ and $Y$ are independent if and only if $M_{X, Y}(s, t) = M_X(s)M_Y(t)$.
-\section{Covariance and Correlations}
-\subsection{Covariance}
-Suppose that $X$ and $Y$ are independent random variables. We have seen that
+Note that in reality, many random variables are not integer-valued. Therefore, we should extend the notion of generating functions to the general case.
+\begin{dfnbox}{Laplace Transform of Random Variables}{laplace}
+    Let $X$ be a non-negative random variable. The {\color{red} \textbf{Laplace transform}} of $X$ is defined as a map $\Lambda \colon \R^+_0 \to \R$ such that $\Lambda\left(\lambda\right) \coloneqq \mathbb{E}\left[\e^{-\lambda X}\right]$.  
+\end{dfnbox}
+One may check that the properties of a Laplace transform is analogous to those of generating functions:
+\begin{enumerate}
+    \item $\Lambda_X\left(\lambda\right) \in \left[0, 1\right]$ for all $\lambda \geq 0$;
+    \item $\Lambda_X\left(0\right) = 1$ and $\Lambda_X$ is decreasing in $\lambda$;
+    \item $\Lambda^{(n)}_X\left(0\right) = \left(-1\right)^n\mathbb{E}\left[X^n\right]$, so $\Lambda_X$ determines the moments;
+    \item if $\left\{\Lambda_n\right\}_{n \in \N}$ is a family of Laplace transforms for random variables $\left\{X_n\right\}_{n \in \N}$ respectively, then $\left\{\Lambda_n\right\}_{n \in \N}$ converging to $\Lambda$, the Laplace transform of a random variable $X$, point-wisely on $\left[0, a\right]$ for some $a \in \R$ implies that $\left\{p_{X_n}\right\}_{n \in \N}$ converges point-wisely to $p_X$ on $\R^+_0$.
+\end{enumerate}
+Note that we choose $\lambda \geq 0$ which will ensure that $\mathbb{E}\left[\e^{-\lambda X}\right]$ is finite if $X$ is non-negative. However, for general random variables which can take negative values, we need to use a different construction.
+\begin{dfnbox}{Fourier Transform of Random Variables}{fourier}
+    Let $X$ be a real-valued random variable. The {\color{red} \textbf{Fourier transform}} of $X$ is defined as a map $\varphi_X \colon \R \to \R$ such that $\varphi_X\left(t\right) \coloneqq \mathbb{E}\left[\e^{\im tX}\right]$.
+\end{dfnbox}
+One may check that the properties of a Fourier transform is analogous to those of Laplace transforms:
+\begin{enumerate}
+    \item $\abs{\varphi_X\left(t\right)} \in \left[0, 1\right]$ for all $t \in \R$;
+    \item $\varphi_X\left(0\right) = 1$;
+    \item $\varphi^{(n)}_X\left(0\right) = \im^n\mathbb{E}\left[X^n\right]$, so $\varphi_X$ determines the moments;
+    \item if $\left\{\varphi_n\right\}_{n \in \N}$ is a family of Laplace transforms for random variables $\left\{X_n\right\}_{n \in \N}$ respectively, then $\left\{\varphi_n\right\}_{n \in \N}$ converging to $\varphi$, the Fourier transform of a random variable $X$, point-wisely on $\left[-a, a\right]$ for some $a > 0$ implies that $\left\{p_{X_n}\right\}_{n \in \N}$ converges point-wisely to $p_X$ on $\R$.
+\end{enumerate}
+
+\chapter{Methodologies for Data Analysis}
+\section{Sampling}
+Note that the expectation and variance are crucial to understand the behaviour of a random variable. However, in the real world, the data based on which we can observe a random variable is always finite. Therefore, it becomes a curious problem as to how we can make some judgement about the behaviour of the random variable based on limited data as accurately as possible.
+
+First, let us define quantitatively what we mean by an ``accurate'' judgement.
+\begin{dfnbox}{Unbiased Estimator}{unbiasedEstimator}
+    Let $x$ be an unknown quantity to be estimated and $X$ be a random variable representing the observed values obtained for $x$. We say that $X$ is an {\color{red} \textbf{unbiased estimator}} of $x$ if $\mathbb{E}\left[X\right] = x$.
+\end{dfnbox}
+When it comes to estimating the mean of a random variable, a common practice is to take a large number of samples and compute the average value over the samples.
+\begin{dfnbox}{Sample Mean}{mean}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables. The {\color{red} \textbf{sample mean}} is defined as
+    \begin{equation*}
+        \overline{X} = \frac{1}{n}\sum_{i = 1}^{n}X_i.
+    \end{equation*}
+\end{dfnbox}
+Clearly, if $X_i = \mu$ for all $i = 1, 2, \cdots, n$,
 \begin{equation*}
-    E[XY] = E[X]E[Y].
+    \mathbb{E}\left[\overline{X}\right] = \frac{1}{n}\sum_{i = 1}^{n}\mathbb{E}[X_i] = \mu.
 \end{equation*}
-This motivates us to consider the quantity $E[XY] - E[X]E[Y]$.
+This means that given a random sample, its sample mean is an \textit{unbiased estimate} of its expectation, so our conventional data collection method does have a theoretical back-up.
+
+Next, let us try to estimate the variance of a random variable. An immediate idea is to take each data point from our samples and compute its distance away from the sample mean.
+\begin{dfnbox}{Deviation}{deviation}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{deviation}} is defined as
+    \begin{equation*}
+        X_i - \overline{X} = X_i - \frac{1}{n}\sum_{i = 1}^{n}X_i.
+    \end{equation*}
+\end{dfnbox}
+Similar to the sample mean, we would wish the deviation gives an unbiased estimate for the variance. However, 
+\begin{equation*}
+    \mathbb{E}\left[X_i - \overline{X}\right] = \frac{n - 1}{n}\sigma^2.
+\end{equation*}
+Therefore, we need to eliminate the bias from the deviation.
+\begin{dfnbox}{Sample Variance}{sampleVar}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{sample variance}} is defined as
+    \begin{equation*}
+        S^2 = \sum_{i = 1}^{n}\frac{X_i - \overline{X}}{n - 1}.
+    \end{equation*}
+\end{dfnbox}
+One may check via some direct computation that the sample variance gives an unbiased estimate for the variance.
+\section{Correlation}
+We our data set involves multiple random variables, we wish to examine the relationship between them. Suppose that $X$ and $Y$ are independent random variables. We know that
+\begin{equation*}
+    \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y].
+\end{equation*}
+This motivates us to consider the quantity $\mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$ in the general case to determine ``how dependent'' two random variables are.
 \begin{dfnbox}{Covariance}{covar}
     Let $X$ and $Y$ be random variables. The {\color{red} \textbf{covariance}} of $X$ and $Y$ is defined as
     \begin{equation*}
-        \mathrm{Cov}(X, Y) = E[XY] - E[X]E[Y].
+        \mathrm{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y].
     \end{equation*}
 \end{dfnbox}
 \begin{notebox}
@@ -2251,7 +2510,7 @@ Let $X$ and $Y$ be random variables, then by the above properties, we have
     & = \mathrm{Var}(X) + \mathrm{Var}(Y) + 2\mathrm{Cov}(X, Y).
 \end{align*}
 In general, we have the following formula:
-\begin{probox}{}{}
+\begin{probox}{Identity of Variances}{varId}
     Let $X_1, X_2, \cdots, X_n$ be random variables, then
     \begin{equation*}
         \mathrm{Var}\left(\sum_{i = 1}^{n}X_i\right) = \sum_{i = 1}^{n}\mathrm{Var}(X_i) + 2\sum_{i < j}\mathrm{Cov}(X_i, X_j).
@@ -2260,28 +2519,14 @@ In general, we have the following formula:
     \begin{equation*}
         \mathrm{Var}\left(\sum_{i = 1}^{n}X_i\right) = \sum_{i = 1}^{n}\mathrm{Var}(X_i).
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{probox}
-\begin{dfnbox}{Deviation}{deviation}
-    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{deviation}} is defined as
-    \begin{equation*}
-        X_i - \overline{X} = X_i - \frac{1}{n}\sum_{i = 1}^{n}X_i.
-    \end{equation*}
-\end{dfnbox}
-Similar to the sample mean, we would wish the deviation gives an unbiased estimate for the variance. However, 
-\begin{equation*}
-    E\left[X_i - \overline{X}\right] = \frac{n - 1}{n}\sigma^2.
-\end{equation*}
-Therefore, we need to eliminate the bias from the deviation.
-\begin{dfnbox}{Sample Variance}{sampleVar}
-    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{sample variance}} is defined as
-    \begin{equation*}
-        S^2 = \sum_{i = 1}^{n}\frac{X_i - \overline{X}}{n - 1}.
-    \end{equation*}
-\end{dfnbox}
-\subsection{Correlation}
 Intuitively, we view covariance $\mathrm{Cov}(X, Y)$ as a measure of the degree of spread of the joint distribution of $X$ and $Y$. Naturally, we can make use of it to measure how related are $X$ and~$Y$.
 \begin{dfnbox}{Correlation}{correlation}
-    Let $X$ and $Y$ be random variables with positive variances. The {\color{red} \textbf{correlation}} of $X$ and $Y$ is defined as
+    Let $X$ and $Y$ be random variables with positive variances. The {\color{red} \textbf{correlation}} of $X$ and~$Y$ is defined as
     \begin{equation*}
         \rho(X, Y) = \frac{\mathrm{Cov}(X, Y)}{\sqrt{\mathrm{Var}(X)\mathrm{Var}(Y)}}.
     \end{equation*}
@@ -2292,141 +2537,248 @@ It is easy to see that for $c > 0$, $\rho(\pm cX, Y) = \pm\rho(X, Y)$. Suppose $
     \rho(X, Y) = \rho\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right) = \mathrm{Cov}\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right).
 \end{equation*}
 The above property leads to the following result:
-\begin{thmbox}{Boundedness of Correlation}{boundedCorrelation}
+\begin{probox}{Boundedness of Correlation}{boundedCorrelation}
     Let $X$ and $Y$ be random variables, then 
     \begin{equation*}
         -1 \leq \rho(X, Y) \leq 1.
     \end{equation*}
-\end{thmbox}
-Note that $\mathrm{Var}(X) = 0$ if and only if $X$ is a constant, i.e., $P(X = c) = 1$ and $P(X = x) = 0$ for all $x \neq c$. Therefore, $\rho(X, Y) = \pm 1$ if and only if $Y = \pm aX + b$ for some constants $a$, $b$ with $a > 0$.
-\section{Conditional Expectation and Variance}
-\subsection{Conditional Expectation}
-Recall that in Definitions \ref{dfn:condPMF} and \ref{dfn:condPDF}, we have defined conditional distribution of a random variable $X$ given $Y = y$. We will study the notion of \textit{conditional expectation} now.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Note that $\mathrm{Var}(X) = 0$ if and only if $X$ is a constant, i.e., $P(X = c) = 1$ and $P(X = x) = 0$ for all $x \neq c$. Therefore, $\rho(X, Y) = \pm 1$ if and only if $Y = \pm aX + b$ for some constants $a$, $b$ with~$a > 0$.
+\section{Prediction}
+Often, we wish to predict future behaviour of a random variable. To achieve that, we first study the notions of \textit{condition expectation and variance}. 
 \begin{dfnbox}{Conditional Expectation}{condExp}
     Let $X$ and $Y$ be random variables. The {\color{red} \textbf{conditional expectation}} of $X$ given $Y = y$ is defined as
     \begin{equation*}
-        E\left[X \mid Y = y\right] = \sum_{x}xp_{X \mid Y}(x \mid y)
+        \mathbb{E}\left[X \mid Y = y\right] = \sum_{x}xp_{X \mid Y}(x \mid y)
     \end{equation*}
     if $X$ and $Y$ are discrete, and
     \begin{equation*}
-        E\left[X \mid Y = y\right] = \int_{-\infty}^{\infty}\!\frac{f_{X, Y}(x, y)}{f_Y(y)}\,\mathrm{d}x
+        \mathbb{E}\left[X \mid Y = y\right] = \int_{-\infty}^{\infty}\!\frac{f_{X, Y}(x, y)}{f_Y(y)}\,\mathrm{d}x
     \end{equation*}
     if $X$ and $Y$ are jointly continuous.
 \end{dfnbox}
-All properties of expectation are still satisfied by conditional expectation. In particular, notice that $E\left[X \mid Y\right]$ is a function in $Y$, so it is a random variable by itself. Let $Z = E[X \mid Y]$, what is the expectation of $Z$?
-\begin{probox}{}{}
+All properties of expectation are still satisfied by conditional expectation. In particular, notice that $\mathbb{E}\left[X \mid Y\right]$ is a function in $Y$, so it is a random variable by itself. Let $Z = \mathbb{E}[X \mid Y]$, what is the expectation of $Z$?
+\begin{thmbox}{Law of Total Expectation}{lawExpect}
     Let $X$ and $Y$ are random variables, then
     \begin{equation*}
-        E\bigl[E[X \mid Y]\bigr] = E[X].
+        \mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr] = \mathbb{E}[X].
     \end{equation*}
-\end{probox}
-\subsection{Conditional Variance}
+    \tcblower
+    \begin{proof}
+        We will only prove the discrete case. Let $f\left(Y\right) = \mathbb{E}\left[X \mid Y\right]$, then by Proposition \ref{pro:funcExp}, we have 
+        \begin{align*}
+            \mathbb{E}\bigl[\mathbb{E}\left[X \mid Y\right]\bigr] & = \mathbb{E}\left[f\left(Y\right)\right] \\
+            & = \sum_{y \in \mathrm{ran}\left(Y\right)}f\left(y\right)P\left(Y = y\right) \\
+            & = \sum_{y \in \mathrm{ran}\left(Y\right)}\mathbb{E}\left[X \mid Y = y\right]P\left(Y = y\right) \\
+            & = \sum_{y \in \mathrm{ran}\left(Y\right)}\sum_{x \in \mathrm{ran}\left(X\right)}xP\left(X = x \mid Y = y\right)P\left(Y = y\right) \\
+            & = \sum_{x \in \mathrm{ran}\left(X\right)}x\sum_{y \in \mathrm{ran}\left(Y\right)}P\left(X = x \mid Y = y\right)P\left(Y = y\right) \\
+            & = \sum_{x \in \mathrm{ran}\left(X\right)}xP\left(X = x\right) \\
+            & = \mathbb{E}\left[X\right].
+        \end{align*}
+        The continuous case is similar.
+    \end{proof}
+\end{thmbox}
 Similarly, we can define \textit{conditional variance}.
 \begin{dfnbox}{Conditional Variance}{condVar}
     Let $X$ and $Y$ be random variables. The {\color{red} \textbf{condtional variance}} of $X$ given $Y$ is defined as
     \begin{equation*}
-        \mathrm{Var}(X \mid Y) = E\bigl[(X - E[X \mid Y])^2 \mid Y\bigr].
+        \mathrm{Var}(X \mid Y) = \mathbb{E}\bigl[(X - \mathbb{E}[X \mid Y])^2 \mid Y\bigr].
     \end{equation*}
 \end{dfnbox}
-Notice that $\mathrm{Var}(X \mid Y)$ is also a random variable as it is a function of $Y$. Since $\mathrm{Var}(X \mid Y) = E\left[X^2 \mid Y\right] - \bigl(E[X \mid Y]\bigr)^2$, we have
+Notice that $\mathrm{Var}(X \mid Y)$ is also a random variable as it is a function of $Y$. Since 
+\begin{equation*}
+    \mathrm{Var}(X \mid Y) = \mathbb{E}\left[X^2 \mid Y\right] - \bigl(\mathbb{E}[X \mid Y]\bigr)^2,
+\end{equation*}
+we have
 \begin{align*}
-    E\left[\mathrm{Var}(X \mid Y)\right] & = E\Bigl[E\left[X^2 \mid Y\right]\Bigr] - E\left[\bigl(E[X \mid Y]\bigr)^2\right] \\
-    & = E\left[X^2\right] - E\left[\bigl(E[X \mid Y]\bigr)^2\right], \\
-    \mathrm{Var}\bigl(\mathrm{Var}(X \mid Y)\bigr) & = E\left[(E[X \mid Y])^2\right] - \left(E\bigl[E[X \mid Y]\bigr]\right)^2.
+    \mathbb{E}\left[\mathrm{Var}(X \mid Y)\right] & = \mathbb{E}\Bigl[\mathbb{E}\left[X^2 \mid Y\right]\Bigr] - \mathbb{E}\left[\bigl(\mathbb{E}[X \mid Y]\bigr)^2\right] \\
+    & = \mathbb{E}\left[X^2\right] - \mathbb{E}\left[\bigl(\mathbb{E}[X \mid Y]\bigr)^2\right], \\
+    \mathrm{Var}\bigl(\mathrm{Var}(X \mid Y)\bigr) & = \mathbb{E}\left[(\mathbb{E}[X \mid Y])^2\right] - \left(\mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr]\right)^2.
 \end{align*}
 With some manipulations we can prove the following proposition:
-\begin{probox}{}{}
+\begin{thmbox}{Law of Total Variance}{lawVar}
     Let $X$ and $Y$ be random variables, then
     \begin{equation*}
-        \mathrm{Var}(X) = E[\mathrm{Var}(X \mid Y)] + \mathrm{Var}(E[X \mid Y]).
+        \mathrm{Var}(X) = \mathbb{E}[\mathrm{Var}(X \mid Y)] + \mathrm{Var}(\mathbb{E}[X \mid Y]).
     \end{equation*}
-\end{probox}
-\subsection{Prediction}
-In many situations, we seek to \textbf{predict} the outcome of an event. Specifically, given $X = x$, we wish to find a function $g \colon \mathrm{Range}(X) \to \mathrm{Range}(Y)$ such that $g(x) = \hat{y}$ is the prediction for $Y$. In an ideal case, we would want $g(X)$ to be the \textbf{closest} to $Y$. In other words, we would minimise $g(X) - Y$. To eliminate the inconvenience of a negative difference, we would choose a $g$ such that $E\left[\bigl(Y - g(X)\bigr)^2\right]$ is minimised.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+In many situations, we seek to \textbf{predict} the outcome of an event. Specifically, given $X = x$, we wish to find a function $g \colon \mathrm{Range}(X) \to \mathrm{Range}(Y)$ such that $g(x) = \yhwidehat{y}$ is the prediction for $Y$. In an ideal case, we would want $g(X)$ to be the \textbf{closest} to $Y$. In other words, we would minimise $g(X) - Y$. To eliminate the inconvenience of a negative difference, we would choose a $g$ such that $\mathbb{E}\left[\bigl(Y - g(X)\bigr)^2\right]$ is minimised.
 
-Let us consider a simpler case. When $g(x) = c$, to minimise $E\left[(Y - c)^2\right]$, consider
+Let us consider a simpler case. When $g(x) = c$, to minimise $\mathbb{E}\left[(Y - c)^2\right]$, consider
 \begin{align*}
-    E\left[(Y - c)^2\right] & = c^2 - 2cE[Y] + E\left[Y^2\right] \\
-    & = \left(c - E[Y]\right)^2 + \mathrm{Var}(Y).
+    \mathbb{E}\left[(Y - c)^2\right] & = c^2 - 2c\mathbb{E}[Y] + \mathbb{E}\left[Y^2\right] \\
+    & = \left(c - \mathbb{E}[Y]\right)^2 + \mathrm{Var}(Y).
 \end{align*}
-Therefore, we need $c = E[Y]$. Since $c = g(x)$, this implies that $g(x) = E[Y \mid X = x]$. This is summarised into the following theorem:
+Therefore, we need $c = \mathbb{E}[Y]$. Since $c = g(x)$, this implies that $g(x) = \mathbb{E}[Y \mid X = x]$. This is summarised into the following theorem:
 \begin{thmbox}{Best Predictor}{bestPredict}
     Let $X$ and $Y$ be random variables. Given $X$, the best predictor of $Y$ is the function 
     \begin{equation*}
-        g(X) = E[Y \mid X].
+        g(X) = \mathbb{E}[Y \mid X].
     \end{equation*}
 \end{thmbox}
-Essentially, this implies that for all function $f$ of $X$, $E\left[\bigl(Y - f(X)\bigr)^2\right] \geq E\left[\bigl(Y - E[Y \mid X]\bigr)^2\right]$.
-
-However, in some cases we do not know the exact joint distribution of $X$ and $Y$ and so we cannot find $E[Y \mid X]$. Therefore, we may attempt to predict $Y$ with a linear function of $X$ which can be easily formulated. Hence, we will find constants $a$ and $b$ such that $E\left[(Y - a - bX)^2\right]$ is minimised.
-
-Let $E[X] = \mu_X$, $E[Y] = \mu_Y$, $\mathrm{Var}(X) = \sigma_X^2$, $\mathrm{Var}(Y) = \sigma_Y^2$. Define
+Essentially, this implies that for all function $f$ of $X$, 
 \begin{equation*}
-    X' = \frac{X - \mu_X}{\sigma_X}, \qquad Y' = \frac{Y - \mu_Y}{\sigma_Y}.
+    \mathbb{E}\left[\bigl(Y - f(X)\bigr)^2\right] \geq \mathbb{E}\left[\bigl(Y - \mathbb{E}[Y \mid X]\bigr)^2\right].
 \end{equation*}
-Then, $E\left[X'\right] = E\left[Y'\right] = 0$ and $\mathrm{Var}(X') = \mathrm{Var}(Y') = 1$. Note that
-\begin{equation*}
-    Y - a - bX = \sigma_Y\left(Y' - \frac{a + b\mu_X - \mu_Y}{\sigma_Y} - \frac{b\sigma_X}{\sigma_Y}X'\right).    
-\end{equation*}
-Therefore, setting $\frac{a + b\mu_X - \mu_Y}{\sigma_Y} = a'$ and $\frac{b\sigma_X}{\sigma_Y} = b'$, we have 
-\begin{align*}
-    E\left[(Y - a - bX)^2\right] & = \sigma_Y^2E\left[\left(Y' - a' - b'X'\right)^2\right] \\
-    & = \sigma_Y^2E\left[Y'^2 + a'^2 + b'^2X'^2 - 2a'Y' + 2a'b'X' - 2b'X'Y'\right] \\
-    & = \sigma_Y^2\left(1 + a'^2 + b'^2 - 2b'\rho(X, Y)\right) \\
-    & = \sigma_Y^2\left(a'^2 + \bigl(b' - \rho(X, Y)\bigr)^2 + 1 - \rho(X, Y)^2\right).
-\end{align*}
-Therefore, we need $a' = 0$ and $b' = \rho(X, Y)$, i.e.,
-\begin{align*}
-    a = \mu_Y - b\mu_X, \qquad b = \rho(X, Y)\frac{\sigma_Y}{\sigma_X}.
-\end{align*}
-Therefore, 
-\begin{align*}
-    a + bX & = \mu_Y - b\mu_X + bX \\
-    & = \mu_Y + b(X - \mu_X) \\
-    & = \mu_Y + \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)
-\end{align*}
-and the minimum of $E\left[(Y - a - bX)^2\right]$ is $\sigma_Y^2\left(1 - \rho(X, Y)^2\right)$.
+However, in some cases we do not know the exact joint distribution of $X$ and $Y$ and so we cannot find $\mathbb{E}[Y \mid X]$. Therefore, we may attempt to predict $Y$ with a linear function of $X$ which can be easily formulated. Hence, we will need to find constants $a$ and $b$ such that~$\mathbb{E}\left[(Y - a - bX)^2\right]$ is minimised.
 \begin{thmbox}{Best Linear Predictor}{bestLinPredict}
     Let $X$ and $Y$ be random variables with means $\mu_X$ and $\mu_Y$, and variances $\sigma_X^2$ and $\sigma_Y^2$ respectively. Given $X$, the best linear predictor of $Y$ is
     \begin{equation*}
-        g(X) = E\left[\left(Y - \mu_Y - \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)\right)\right].
+        g(X) = \mathbb{E}\left[\left(Y - \mu_Y - \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)\right)\right].
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $a + bX$ be the best linear predictor for $Y$. Define
+        \begin{equation*}
+            X' = \frac{X - \mu_X}{\sigma_X}, \qquad Y' = \frac{Y - \mu_Y}{\sigma_Y}.
+        \end{equation*}
+        Then, $\mathbb{E}\left[X'\right] = \mathbb{E}\left[Y'\right] = 0$ and $\mathrm{Var}(X') = \mathrm{Var}(Y') = 1$. Note that
+        \begin{equation*}
+            Y - a - bX = \sigma_Y\left(Y' - \frac{a + b\mu_X - \mu_Y}{\sigma_Y} - \frac{b\sigma_X}{\sigma_Y}X'\right).    
+        \end{equation*}
+        Therefore, setting $\frac{a + b\mu_X - \mu_Y}{\sigma_Y} = a'$ and $\frac{b\sigma_X}{\sigma_Y} = b'$, we have 
+        \begin{align*}
+            \mathbb{E}\left[(Y - a - bX)^2\right] & = \sigma_Y^2\mathbb{E}\left[\left(Y' - a' - b'X'\right)^2\right] \\
+            & = \sigma_Y^2\mathbb{E}\left[Y'^2 + a'^2 + b'^2X'^2 - 2a'Y' + 2a'b'X' - 2b'X'Y'\right] \\
+            & = \sigma_Y^2\left(1 + a'^2 + b'^2 - 2b'\rho(X, Y)\right) \\
+            & = \sigma_Y^2\left(a'^2 + \bigl(b' - \rho(X, Y)\bigr)^2 + 1 - \rho(X, Y)^2\right).
+        \end{align*}
+        Therefore, we need $a' = 0$ and $b' = \rho(X, Y)$, i.e.,
+        \begin{align*}
+            a = \mu_Y - b\mu_X, \qquad b = \rho(X, Y)\frac{\sigma_Y}{\sigma_X}.
+        \end{align*}
+        Therefore, 
+        \begin{align*}
+            a + bX & = \mu_Y - b\mu_X + bX \\
+            & = \mu_Y + b(X - \mu_X) \\
+            & = \mu_Y + \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X).
+        \end{align*}
+    \end{proof}
 \end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, the minimum of $\mathbb{E}\left[(Y - a - bX)^2\right]$ is $\sigma_Y^2\left(1 - \rho(X, Y)^2\right)$.
+    \end{remark}
+\end{notebox}
 \chapter{Limit Theorems}
-\section{Chebyshev's Inequality}
-Let $X$ be a non-negative random variable and $a > 0$. Define $I$ to be the indicator of $X$, i.e., $I = 0$ if and only if $X < a$, and $I = 1$ otherwise. Observe that if $X \geq a$, $aI = a \leq X$ and if $X < a$, $aI = 0 \leq X$. Therefore, $X \geq aI$ for all $a$ and so $E[X] \geq aE[I] = aP(X \geq a)$.
-\begin{thmbox}{Markov's Inequality}{markovIneq}
-    If $X$ is a non-negative random variables, then for any $a > 0$, $P(X \geq a) \leq \frac{E[X]}{a}$.
+\section{Bounding Probabilities}
+Let $X$ be a non-negative random variable and $a > 0$. Define $I$ to be the indicator of $X$, i.e.,
+\begin{equation*}
+    I = \begin{cases}
+        0 & \textrm{if } X < a \\
+        1 & \textrm{if } X \geq a
+    \end{cases}.
+\end{equation*}
+Observe that if $X \geq a$, $aI = a \leq X$ and if $X < a$, $aI = 0 \leq X$. Therefore, $X \geq aI$ for all $a$ and so $\mathbb{E}[X] \geq a\mathbb{E}[I] = aP(X \geq a)$.
+
+This is generalised to the following result, which gives a way to approximate probabilities by the expectation of a random variable:
+\begin{thmbox}{Markov's Inequality}{MarkovIneq}
+    If $X$ is a non-negative random variable, then $P\left(X \geq a\right) \leq \frac{\mathbb{E}\left[X\right]}{a}$ for all $a > 0$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove for the continuous case. Notice that 
+        \begin{align*}
+            \mathbb{E}\left[X\right] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq \int_{a}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq a\int_{0}^{\infty}\!f_X\left(x\right)\,\d x \\
+            & = P\left(X \geq a\right).
+        \end{align*}
+        Therefore, $P\left(X \geq a\right) \leq \frac{\mathbb{E}\left[X\right]}{a}$.
+    \end{proof}
 \end{thmbox}
-We can generalise this result. Suppose $X$ is a random variable with mean $\mu$ and variance $\sigma^2$. Recall that $\sigma^2 = E\bigl[(X - \mu)^2\bigr]$. Set $Y = (X - \mu)^2 \geq 0$. Now we can apply Theorem \ref{thm:markovIneq} to $Y$ and derive the following:
-\begin{thmbox}{Chebyshev's Inequality}{chebyshevIneq}
-    Let $X$ be any random variable with mean $\mu$ and variance $\sigma^2$, then for any $a > 0$,
+Note that the bound given by Markov's inequality is a rather loose bound and we can generalise this result. Suppose $X$ is a random variable with mean $\mu$ and variance~$\sigma^2$. Recall that $\sigma^2 = \mathbb{E}\bigl[(X - \mu)^2\bigr]$. Set $Y = (X - \mu)^2 \geq 0$. Now we can apply Theorem \ref{thm:MarkovIneq} to~$Y$ and derive the following:
+\begin{thmbox}{Chebyshev's Inequality}{ChebyshevIneq}
+    For any real-valued random variable $X$ with finite variance, 
     \begin{equation*}
-        P\bigl(\abs{X - \mu} \geq a\bigr) \leq \frac{\sigma^2}{a^2}.
+        P\left(\abs{X - \mathbb{E}\left[X\right]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
     \end{equation*}
+    for all $a > 0$.
+    \tcblower
+    \begin{proof}
+        Define $g\left(X\right) \coloneqq \left(X - \mathbb{E}\left[X\right]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
+        \begin{equation*}
+            P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}\left[g\left(X\right)\right]}{a^2\mathrm{Var}\left(X\right)}.
+        \end{equation*}
+        Note that $\mathbb{E}\left[g\left(X\right)\right] = \mathrm{Var}\left(X\right)$, so 
+        \begin{equation*}
+            P\left(\abs{X - \mathbb{E}\left[X\right]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
+        \end{equation*}
+    \end{proof}
 \end{thmbox}
-Using Theorem \ref{thm:chebyshevIneq}, we can get the following result:
-\begin{corbox}{}{}
-    If $X$ is a random variable with $\mathrm{Var}(X) = 0$, then $P(X = E[X]) = 1$.
+\begin{notebox}
+    \begin{remark}
+        In general, 
+        \begin{equation*}
+            P\left(\abs{X - \mathbb{E}\left[X\right]} > a\right) \leq \frac{\mathrm{Var}\left(X\right)}{a^2}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+Using Theorem \ref{thm:ChebyshevIneq}, we can get the following highly intuitive result:
+\begin{corbox}{Zero-Variance Random Variables Are Constant}{zeroVar}
+    If $X$ is a random variable with $\mathrm{Var}(X) = 0$, then $P(X = \mathbb{E}[X]) = 1$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
 \end{corbox}
-Recall that if $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then $E\left[\overline{X}\right] = E[X_i]$ and $\mathrm{Var}\left(\overline{X}\right) = \frac{\mathrm{Var}(X_i)}{n}$. Applying the above theorems we will have the following conclusion:
-\begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeN}
-    If $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then for any $\epsilon > 0$, we have
+\section{Law of Large Numbers}
+Recall that if $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then $\mathbb{E}\left[\overline{X}\right] = \mathbb{E}[X_i]$ and $\mathrm{Var}\left(\overline{X}\right) = \frac{\mathrm{Var}(X_i)}{n}$. Applying the above theorems we will have the following conclusion:
+\begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeNum}
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
     \begin{equation*}
-        \lim_{n \to \infty}P\left(\abs{\frac{\overline{X}}{n}} \geq \epsilon\right) = 0.
+        \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $\mathbb{E}\left[\frac{1}{n}\sum_{i = 1}^nX_i\right] = \mu$ and that 
+        \begin{equation*}
+            \mathrm{Var}\left(\frac{1}{n}\sum_{i = 1}^nX_i\right) = \frac{\sum_{i = 1}^{n}\mathrm{Var}\left(X_i\right)}{n^2} = \frac{\sigma^2}{n}.
+        \end{equation*}
+        By Theorem \ref{thm:ChebyshevIneq}, we have 
+        \begin{equation*}
+            0 \leq \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \frac{\sigma^2}{n\epsilon^2}.
+        \end{equation*}
+        By Squeeze Theorem, this clearly implies that 
+        \begin{equation*}
+            \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Alternatively, we may phrase Theorem \ref{thm:weakLawLargeNum} as ``$\frac{1}{n}\sum_{i = 1}^nX_i$ converges to $\mu$ in probability''. When a sequence $\{S_n\}_{n = 1}^{\infty}$ converges to $b$ in probability, we write $S_n \xrightarrow{\mathrm{p}} b$. 
+\begin{notebox}
+    \begin{remark}
+        Essentially, what Theorem \ref{thm:weakLawLargeNum} says is that when $n$ is large, the sample mean from $n$ measurements of the same data converges to the expectation of the distribution.
+    \end{remark}
+\end{notebox}
+Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng\left(\epsilon\right)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
+\begin{equation*}
+    \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \exp\bigl(-ng\left(\epsilon\right) + o\left(n\right)\bigr).
+\end{equation*}
+Equivalently, this would imply that there exists a function $g \colon \R \to \R$ with $g\left(\epsilon\right) > 0$ for every~$\epsilon > 0$ such that 
+\begin{equation*}
+    \liminf_{n \to \infty}-\frac{1}{n}\log\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \geq g\left(\epsilon\right) + o\left(1\right).
+\end{equation*}
+There is a strong version for the law, which shall be stated without proof:
+\begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeNum}
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$, then 
+    \begin{equation*}
+        \mathrm{Pr}\left(\lim_{n \to \infty}\frac{1}{n}\sum_{i = 1}^{n}X_i = \mu\right) = 1.
     \end{equation*}
 \end{thmbox}
+Sometimes, Theorem \ref{thm:weakLawLargeNum} is known as simply the ``Law of Large Numbers'' whereas Theorem \ref{thm:strongLawLargeNum} is known as the ``Law of Truly Large Numbers''. By applying Theorem \ref{thm:weakLawLargeNum}, we can prove a classical result known as \textit{Central Limit Theorem}, which will be stated and the interested ones might want to try to prove it on their own.
 \begin{thmbox}{Central Limit Theorem}{CLT}
-    Let $X_1, X_2, \cdots, X_n$ be independent random variables with identical distribution. Let $E[X_i] = \mu$ and $\mathrm{Var}(X_i) = \sigma^2$, then the distribution of
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with identical distribution, whose mean is $\mu$ and variance $\sigma^2$, then the distribution of
     \begin{equation*}
         \frac{\sum_{i = 0}^{n}X_i - n\mu}{\sigma\sqrt{n}}
     \end{equation*}
-    tends to standard normal distribution as $n \to \infty$.
-\end{thmbox}
-\begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeN}
-    If $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then for any $\epsilon > 0$, we have
-    \begin{equation*}
-        P\left(\lim_{n \to \infty}\frac{\overline{X}}{n} = \mu\right) = 1.
-    \end{equation*}
+    converges to the standard normal distribution as $n \to \infty$.
 \end{thmbox}
 \end{document}
