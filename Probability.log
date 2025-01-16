@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  16 JAN 2025 20:57
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.19)  16 JAN 2025 22:05
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1335,6 +1335,18 @@ Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified s
 LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 126.
  (./Probability.aux
 
+LaTeX Warning: Label `pro:2PIE' multiply defined.
+
+
+LaTeX Warning: Label `thm:PIE' multiply defined.
+
+
+LaTeX Warning: Label `eq:1' multiply defined.
+
+
+LaTeX Warning: Label `thm:GenPIE' multiply defined.
+
+
 LaTeX Warning: Label `dfn:expCRV' multiply defined.
 
 
@@ -1500,70 +1512,80 @@ Underfull \hbox (badness 10000) in paragraph at lines 531--534
 
  []
 
-[14] [15]
-Underfull \hbox (badness 10000) in paragraph at lines 587--590
-
- []
-
-[16] [17] [18]
-Overfull \hbox (7.3802pt too wide) in paragraph at lines 686--720
+[14]
+Overfull \hbox (7.3802pt too wide) in paragraph at lines 547--581
 \TU/STIXTwoText(0)/m/n/12 In this section, we will see that there is a clear relation between the number of $[]$-combinations
  []
 
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 774--778
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 635--639
 
  []
 
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 825--829
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 686--690
 
  []
 
-[21] [22]
+[17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 770--774
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 795--801
+
+ []
+
+[19] [20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 885--888
+
+ []
+
+[22] [23] [24] [25] [26]
 Chapter 2.
-[23
+[27
 
-] [24] [25] [26] [27] [28] [29] [30] [31] [32]
+] [28] [29] [30] [31] [32] [33] [34] [35] [36]
 Chapter 3.
-[33
+[37
 
-] [34] [35] [36] [37] [38] [39] [40] [41]
+] [38] [39] [40] [41] [42] [43] [44] [45]
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1519.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1645.
 
-[42] [43] [44] [45] [46] [47]
+[46] [47] [48] [49] [50] [51]
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1736.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1862.
 
-[48] [49] [50] [51]
+[52] [53] [54] [55]
 
-Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1869.
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 1995.
 
-[52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69]
+[56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70] [71] [72] [73]
 Chapter 4.
-[70
+[74
 
-] [71] [72] [73] [74] [75] [76]
+] [75] [76] [77] [78] [79] [80]
 Chapter 5.
-[77
+[81
 
-] [78] [79] [80] 
+] [82] [83] [84] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Probability.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Probability.out' has not changed.
-(rerunfilecheck)             Checksum: C9FE3B1918E0950959B157E554B55E68;5878.
+(rerunfilecheck)             Checksum: CD88B2C6CF4762CA063BA8D168A2ACE4;6164.
  ) 
 Here is how much of TeX's memory you used:
- 38976 strings out of 478630
- 841569 string characters out of 5847730
- 1896012 words of memory out of 5000000
- 58464 multiletter control sequences out of 15000+600000
+ 38989 strings out of 478630
+ 841779 string characters out of 5847730
+ 1898012 words of memory out of 5000000
+ 58477 multiletter control sequences out of 15000+600000
  518882 words of font info for 102 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  114i,18n,131p,1196b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Probability.pdf (80 pages).
+Output written on Probability.pdf (84 pages).

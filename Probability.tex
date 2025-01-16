@@ -537,145 +537,6 @@ Intuitively, we can view each of the $a_i$'s as a ``box'' which holds $m_i$ ball
         One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and~$(n - 1)$ ones. Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
     \end{proof}
 \end{probox}
-
-\section{Distribution Problems}
-Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
-\begin{enumerate}
-    \item distribute $r$ distinct objects into $n$ identical collections;
-    \item distribute $r$ distinct objects into $n$ distinct collections;
-    \item distribute $r$ identical objects into $n$ identical collections;
-    \item distribute $r$ identical objects into $n$ distinct collections.
-\end{enumerate}
-These $4$ basic models of distribution problems give rise to many variations. We will only discuss the first two types of distribution problems here. The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
-\begin{probox}{Distinct Objects into Singleton Distinct Collections}{distToDistNonEmpty}
-    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
-\end{probox}
-We then consider the case where each collection can contain any number of objects.
-\begin{probox}{Distinct Objects into Distinct Collections}{distToDist}
-    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
-    \begin{equation*}
-        \frac{(n + r - 1)!}{(n - 1)!}.
-    \end{equation*}
-    \tcblower
-    \begin{proof}
-        Left as an exercise to the reader.
-    \end{proof}
-\end{probox}
-For distributing distinct objects into identical collections, the reasoning becomes a bit more complicated. We first consider a scenario where the collections are circular.
-\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
-    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Some obvious results:
-        \begin{enumerate}
-            \item $s(r, 0) = 0$ if $r \geq 1$.
-            \item $s(r, r) = 1$ if $r \geq 0$.
-            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
-            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
-        \end{enumerate}
-    \end{remark}
-\end{notebox}
-One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
-\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
-    For $r, n \in \N^+$ and $r \leq n$, we have
-    \begin{equation*}
-        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
-    \end{equation*}
-    \tcblower   
-    \begin{proof}
-        Consider the set $\left\{x_1, x_2, \cdots, x_r\right\}$ to be the $r$ distinct objects. We consider two cases. If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
-        \\\\
-        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects. By Theorem \ref{thm:AP}, the total number of distributions is 
-        \begin{equation*}
-            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
-        \end{equation*}
-    \end{proof}
-\end{thmbox}
-Next, we consider the case where the collections arrange their elements linearly.
-\begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
-    The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Some trivial results:
-        \begin{itemize}
-            \item $S(0, 0)$ = 1.
-            \item $S(r, 0) = S(0, n) = 0$ for all $r, n \in \N^+$.
-            \item $S(r, n) > 0$ for all $r, n \in \N$ with $r \geq n \geq 1$.
-            \item $S(r, n) = 0$ if $n > r \geq 1$.
-            \item $S(r, 1) = S(r, r) = 1$ for all $r \in \N^+$.
-        \end{itemize}
-    \end{remark}
-\end{notebox}
-Based on the above trivial results, we can use the following recurrence relation to derive a general formula for $S(r, n)$ for any $r$ and $n$.
-\begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
-    For all $r, n \in \N$ with $r \geq n$,
-    \begin{equation*}
-        S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
-    \end{equation*}
-    \tcblower
-    \begin{proof}
-        Consider the first object. If the first object is alone in a collection, it is equivalent to distributing $(r - 1)$ distinct objects into $(n - 1)$ identical collections such that no collection is empty, which can be done in $S(r - 1, n - 1)$ ways. If the first object is not alone, we first distribute the rest $(r - 1)$ distinct objects into the $n$ identical collections in $S(r - 1, n)$ ways, and then choose a collection to place the first object into in $n$ ways, which can be done in $nS(r - 1, n)$ ways. Therefore, 
-        \begin{equation*}
-            S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
-        \end{equation*}
-    \end{proof}
-\end{thmbox}
-The Stirling numbers of the second kind are closely related to the problem of set partition.
-\begin{dfnbox}{Partition}{partition}
-    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with~$S_1 \neq S_2$, we have $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
-\end{dfnbox}
-Note that in a set, the elements are pairwise distinct. Therefore, a partition of $A$ into $i$ disjoint subsets is equivalent to a distribution of $\abs{A}$ distinct objects into $i$ identical collections. Therefore, the number of different partitions of $A$ is just
-\begin{equation*}
-    \sum_{i = 1}^{\abs{A}}S(\abs{A}, i).
-\end{equation*}
-To find an exact formula for $S(r, n)$, we consider the following proposition:
-\begin{probox}{Number of Surjective Mappings}{numSurj}
-    Let $F(r, n)$ where $r, n \in \N^+$ deonote the number of surjective mappings
-    \begin{equation*}
-        f \colon [r] - \{0\} \to [n] - \{0\},
-    \end{equation*}
-    then
-    \begin{equation*}
-        F(r, n) = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
-            n \\
-            k
-        \end{pmatrix}(n - k)^r\right].
-    \end{equation*}
-    \tcblower
-    \begin{proof}
-        Note that $f$ is a mapping from a domain of $r$ elements to a co-domain of $n$ elements. Let $M_k$ be the set of such mappings by which at least $k$ elements in the co-domain do not have pre-images. Note that for each element in the domain, its image can be any of the remaining $(n - k)$ elements. Therefore, 
-        \begin{equation*}
-            \abs{M_k} = \begin{pmatrix}
-                n \\
-                k
-            \end{pmatrix}(n - k)^r.
-        \end{equation*}
-        By Theorem \ref{thm:GenPIE}, 
-        \begin{equation*}
-            F(r, n) = \abs{\left(\bigcup_{k = 0}^nM_k\right)'} = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
-                n \\
-                k
-            \end{pmatrix}(n - k)^r\right].
-        \end{equation*}
-    \end{proof}
-\end{probox}
-Note that $F(r, n)$ is just the number of ways to distribute $r$ distinct elements into $n$ collections where the order of the collections matters, so $F(r, n) = n!S(r, n)$. This gives rise to some corollaries, for example:
-\begin{align*}
-    S(r, n) =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
-        n \\
-        k
-    \end{pmatrix}(n - k)^r
-\end{align*}
-Since $S(r, n) = 0$ if $n > r \geq 1$, we have
-\begin{equation*}
-    \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
-        n \\
-        k
-    \end{pmatrix}(n - k)^r = 0 \quad \textrm{if }n > r \geq 1.
-\end{equation*}
-
 \section{Binomial and Multinomial Coefficients}
 In previous sections on combinations, we have already introduced the ways to choose $r$ items from a collection of $n$ distinct items, the number of which is given by
 \begin{displaymath}
@@ -875,6 +736,271 @@ Observe that the binomial coefficients are just a special case for multinomial c
         \end{pmatrix}\prod_{i = 1}^{m}x_i^{n_i}.
     \end{equation*}
 \end{thmbox}
+\section{Principle of Inclusion and Exclusion (PIE)}
+Consider the following naïve question:
+\begin{quote}
+    If $\abs{A} = a$ and $\abs{B} = b$, what is $\abs{A \cup B}$?
+\end{quote}
+The solution is simple: we first count how many elements are in $A$ and then count how many elements are in $B$, but note that there are some elements which might be in both sets and are thus counted twice, so we need to subtract these elements away.
+\begin{probox}{Cardinality of the Union of Two Finite Sets}{2PIE}
+    Let $A$ and $B$ be two finite sets, then
+    \begin{equation*}
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
+    \end{equation*}
+    In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
+\end{probox}
+Proposition \ref{pro:2PIE} can be generalised for a finite sequence of finite sets.
+\begin{thmbox}{Principle of Inclusion and Exclusion}{PIE}
+    Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
+    \begin{equation*}
+        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{r = 1}^{j}E_{k_r}}\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider
+        \begin{equation}\label{eq:1}
+            \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right). \tag{*}
+        \end{equation}
+        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that~$f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
+        \\\\
+        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$. In particular, $f_{E \cap E_i}(x) = f_{E_i}(x)$ for all $i = 1, 2, \cdots, n$. Expanding (\ref{eq:1}), we have
+        \begin{equation*}
+            f_E(x) = \bigl[f_E(x)\bigr]^n = \sum_{j = 1}^{n} \left\{(-1)^{j + 1}\left[\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\left(\prod_{r = 1}^{j}f_{E_{k_r}}(x)\right)\right]\right\}.
+        \end{equation*}
+        Summing up $f_E(x)$ over all $x$ leads to the identity in the original statement.
+    \end{proof}
+\end{thmbox}
+We can generalise this further. Note that every set is uniquely determined by some formula~$\phi$ with some parameter $p$. This means that the statement $x \in X$ is logically equivalent to ``$x$ satisfies a property $\phi(x, p)$''. This leads to the general principle of inclusion and exclusion.
+\begin{thmbox}{General Principle of Inclusion and Exclusion}{GenPIE}
+    Let $S$ be a finite set with $\abs{S} = n$ and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that~$E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that~$\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
+    \begin{equation*}
+        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
+    \end{equation*}
+    then
+    \begin{equation*}
+        E(m) = \sum_{k = m}^{q}\left[(-1)^{k - m}\begin{pmatrix}
+            k \\
+            m
+        \end{pmatrix}\omega(k)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $x \in S$ be an arbitrary element which satisfies exactly $t$ properties. If $t < m$ or $q < t$, then $x$ contributes a count of $0$ to both sides. If $t = m$, then $x$ contributes a count of $1$ to $E(m)$ and to $\omega(m)$ and contributes a count of $0$ to $\omega(k)$ for all $k > m$.
+        \\\\
+        If $q \geq t > m$, then $x$ contributes a count of $0$ to the left-hand side. On the right-hand side, $x$ is counted $\left(\begin{smallmatrix}
+            t \\
+            k
+        \end{smallmatrix}\right)$ times for $k = m, m + 1, \cdots, t$. So the total contribution of $x$ to the right-hand side is
+        \begin{align*}
+            \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                k \\
+                m
+            \end{pmatrix}\right] & = \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k - m
+            \end{pmatrix}\right] \\
+            & = \sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = \begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = 0.
+        \end{align*}
+        Therefore, every $x \in S$ contributes an equal count to both sides of the identity, so the identity holds.
+    \end{proof}
+\end{thmbox}
+In particular, we see that 
+\begin{equation*}
+    E(0) = \sum_{i = 0}^{q}\left[(-1)^i\omega(i)\right].
+\end{equation*}
+
+\section{Distribution Problems}
+Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
+\begin{enumerate}
+    \item distribute $r$ distinct objects into $n$ identical collections;
+    \item distribute $r$ distinct objects into $n$ distinct collections;
+    \item distribute $r$ identical objects into $n$ identical collections;
+    \item distribute $r$ identical objects into $n$ distinct collections.
+\end{enumerate}
+These $4$ basic models of distribution problems give rise to many variations. We will only discuss the first two types of distribution problems here. The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
+\begin{probox}{Distinct Objects into Singleton Distinct Collections}{distToDistNonEmpty}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
+\end{probox}
+We then consider the case where each collection can contain any number of objects.
+\begin{probox}{Distinct Objects into Distinct Collections}{distToDist}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
+    \begin{equation*}
+        \frac{(n + r - 1)!}{(n - 1)!}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
+\end{probox}
+For distributing distinct objects into identical collections, the reasoning becomes a bit more complicated. We first consider a scenario where the collections are circular.
+\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
+    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
+        \begin{enumerate}
+            \item $s(r, 0) = 0$ if $r \geq 1$.
+            \item $s(r, r) = 1$ if $r \geq 0$.
+            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
+            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
+\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
+    For $r, n \in \N^+$ and $r \leq n$, we have
+    \begin{equation*}
+        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set $\left\{x_1, x_2, \cdots, x_r\right\}$ to be the $r$ distinct objects. We consider two cases. If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
+        \\\\
+        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects. By Theorem \ref{thm:AP}, the total number of distributions is 
+        \begin{equation*}
+            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Next, we consider the case where the collections arrange their elements linearly.
+\begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
+    The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some trivial results:
+        \begin{itemize}
+            \item $S(0, 0)$ = 1.
+            \item $S(r, 0) = S(0, n) = 0$ for all $r, n \in \N^+$.
+            \item $S(r, n) > 0$ for all $r, n \in \N$ with $r \geq n \geq 1$.
+            \item $S(r, n) = 0$ if $n > r \geq 1$.
+            \item $S(r, 1) = S(r, r) = 1$ for all $r \in \N^+$.
+        \end{itemize}
+    \end{remark}
+\end{notebox}
+Based on the above trivial results, we can use the following recurrence relation to derive a general formula for $S(r, n)$ for any $r$ and $n$.
+\begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
+    For all $r, n \in \N$ with $r \geq n$,
+    \begin{equation*}
+        S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the first object. If the first object is alone in a collection, it is equivalent to distributing $(r - 1)$ distinct objects into $(n - 1)$ identical collections such that no collection is empty, which can be done in $S(r - 1, n - 1)$ ways. If the first object is not alone, we first distribute the rest $(r - 1)$ distinct objects into the $n$ identical collections in $S(r - 1, n)$ ways, and then choose a collection to place the first object into in $n$ ways, which can be done in $nS(r - 1, n)$ ways. Therefore, 
+        \begin{equation*}
+            S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+The Stirling numbers of the second kind are closely related to the problem of set partition.
+\begin{dfnbox}{Partition}{partition}
+    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with~$S_1 \neq S_2$, we have $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
+\end{dfnbox}
+Note that in a set, the elements are pairwise distinct. Therefore, a partition of $A$ into $i$ disjoint subsets is equivalent to a distribution of $\abs{A}$ distinct objects into $i$ identical collections. Therefore, the number of different partitions of $A$ is just
+\begin{equation*}
+    \sum_{i = 1}^{\abs{A}}S(\abs{A}, i).
+\end{equation*}
+To find an exact formula for $S(r, n)$, we consider the following proposition:
+\begin{probox}{Number of Surjective Mappings}{numSurj}
+    Let $F(r, n)$ where $r, n \in \N^+$ deonote the number of surjective mappings
+    \begin{equation*}
+        f \colon [r] - \{0\} \to [n] - \{0\},
+    \end{equation*}
+    then
+    \begin{equation*}
+        F(r, n) = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
+            n \\
+            k
+        \end{pmatrix}(n - k)^r\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $f$ is a mapping from a domain of $r$ elements to a co-domain of $n$ elements. Let $M_k$ be the set of such mappings by which at least $k$ elements in the co-domain do not have pre-images. Note that for each element in the domain, its image can be any of the remaining $(n - k)$ elements. Therefore, 
+        \begin{equation*}
+            \abs{M_k} = \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE}, 
+        \begin{equation*}
+            F(r, n) = \abs{\left(\bigcup_{k = 0}^nM_k\right)'} = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r\right].
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Note that $F(r, n)$ is just the number of ways to distribute $r$ distinct elements into $n$ collections where the order of the collections matters, so $F(r, n) = n!S(r, n)$. This gives rise to some corollaries, for example:
+\begin{align*}
+    S(r, n) =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r
+\end{align*}
+Since $S(r, n) = 0$ if $n > r \geq 1$, we have
+\begin{equation*}
+    \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r = 0 \quad \textrm{if }n > r \geq 1.
+\end{equation*}
+A common application of distribution problems with $n$ identical objects and $m$ identical collections is the partition of an integer.
+\begin{dfnbox}{Integer Partition}{intPart}
+    Let $n \in \N^+$. A {\color{red} \textbf{partition}} of $n$ is a non-increasing sequence of positive integers whose sum is $n$. 
+\end{dfnbox}
+A useful tool to study such partitions is \textit{Ferrers diagram}.
+\begin{dfnbox}{Ferrers Diagram}{ferrers}
+    Let $n \in \N^+$ and consider a partition $P = \left\{n_1, n_2, \cdots, n_k\right\}$. The {\color{red} \textbf{Ferrers diagram}} of the partition, denoted as $\mathcal{F}(P)$, is an array of left-justified asterisks in which the $i$-th row has the length of $n_i$.
+\end{dfnbox}
+Just like matrices, a Ferrers diagram can be transposed.
+\begin{dfnbox}{Conjugate Partition}{conjPart}
+    Let $\mathcal{F}(P)$ be the Ferrers diagram of an integer partition $P$. $Q$ is known as the {\color{red} \textbf{conjugate partition}} of $P$ if $\mathcal{F}(Q) = \mathcal{F}(P)^{\mathrm{T}}$.
+\end{dfnbox}
+Intuitively, conjugate partition is a \textbf{symmetric relation}, and if $P$ and $Q$ are conjugate partitions, the number of parts of $Q$ is just the size of the largest part of $P$. This leads to the following theorem:
+\begin{probox}{Size of Conjugate Partitions}{sizeConj}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into $k$ parts equals the number of partitions of $r$ with the largest part having size $k$.
+    \tcblower   
+    \begin{proof}
+        Let $\mathcal{P}$ be the family of partitions of $r$ into $k$ parts and $\mathcal{Q}$ be the family of partitions of $r$ whose largest part has size $k$. Define a function $f \colon \mathcal{P} \to \mathcal{Q}$ such that~$\mathcal{F}\bigl(f(X)\bigr) = \mathcal{F}(X)^{\mathrm{T}}$, i.e., $f(X)$ and $X$ are conjugates. It is easy to see that $f$ is well-defined and bijective, so $\abs{\mathcal{P}} = \abs{\mathcal{Q}}$.
+    \end{proof}
+\end{probox}
+Proposition \ref{pro:sizeConj} leads to the following corollary:
+\begin{corbox}{Integer Partition into Limited Parts}{intPartLimited}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into at most $k$ parts equals the number of partitions of $r$ with the largest part having size at most $k$.
+\end{corbox}
+The following formula can de derived:
+\begin{equation*}
+    \sum_{k = 1}^{m}p(n, k) = p(n + m, m).
+\end{equation*}
 \chapter{Probability Axioms}
 \section{Classical and Axiomatic Probability}
 \begin{dfnbox}{Sample Space}{sampleSpace}
