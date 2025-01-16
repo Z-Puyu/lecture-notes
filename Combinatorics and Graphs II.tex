@@ -2,9 +2,98 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{nicematrix}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead \left(see below\right):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -20,15 +109,31 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
 \newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
 %\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
 
-\DeclareMathOperator*{\argmax}{\mathrm{argmax}}
-\DeclareMathOperator*{\argmin}{\mathrm{argmin}}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usetikzlibrary{shapes.geometric}
+
+\newenvironment{solution}
+    {\let\oldqedsymbol=\qedsymbol
+    \renewcommand{\qedsymbol}{\ }
+    \begin{proof}[Solution]
+    }
+    {\end{proof}
+    \renewcommand{\qedsymbol}{\oldqedsymbol}
+    }
 
 \begin{document}
 \fancyhead[L]{
@@ -43,7 +148,7 @@
 \section{Multigraphs}
 Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
 \begin{dfnbox}{Multigraph}{multigraph}
-    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$. In particular, if $v(G) = m$ and $e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}. $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
+    A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$. In particular, if $v(G) = m$ and~$e(G) = n$, we say that $G$ is an {\color{red} \textbf{$(m, n)$-graph}}. $G$ is said to be {\color{red} \textbf{trivial}} if $v(G) = 1$ and {\color{red} \textbf{non-trivial}} otherwise.
 \end{dfnbox}
 Note that in a multigraph, by default there can be a plural number of edges between any two vertices. We would define the notion of \textit{simple graph} as a special multigraph.
 \begin{dfnbox}{Simple Graph}{simpleGraph}
@@ -74,7 +179,7 @@ Alternatively, one may write $v \sim u$ if $v$ and $u$ are adjacent vertices. We
 \end{dfnbox}
 In particular, we can denote the average degree of a graph $G$ by
 \begin{equation*}
-    \bar{d}(G) = \frac{\sum_{v \in V(G)}d_G(v)}{v(G)}.
+    \widebar{d}(G) = \frac{\sum_{v \in V(G)}d_G(v)}{v(G)}.
 \end{equation*}
 \begin{notebox}
     \begin{remark}
@@ -92,10 +197,7 @@ With the notion of degree established, we can now define a \textit{regular graph
 \end{notebox}
 Since a graph essentially consists of two sets, it is natural to consider the notion of graph complementation. We now proceed to introducing the notion of \textit{complement}.
 \begin{dfnbox}{Complement}{comp}
-    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\overline{G}$, is the graph of order $n$ where
-    \begin{equation*}
-        V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
-    \end{equation*}
+    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\widebar{G}$, is the graph of order~$n$ where $V\left(\widebar{G}\right) = V(G)$ and $E\left(\widebar{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}$.
 \end{dfnbox}
 We discuss the following interesting question:
 \begin{quote}
@@ -117,7 +219,7 @@ Note that if we sum up $d_G(v_i)$ for all the vertices, every edge will be count
 \end{notebox}
 Observing Definition \ref{dfn:deg}, we see that the average degree of a graph $G$ can be computed as
 \begin{equation*}
-    \bar{d}(G) = \frac{2e(G)}{v(G)}.
+    \widebar{d}(G) = \frac{2e(G)}{v(G)}.
 \end{equation*}
 As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is obviously $0$, and the maximum size of a simple graph occurs when there is an edge between any two vertices.
 \begin{dfnbox}{Empty and Complete Graphs}{empCom}
@@ -161,20 +263,24 @@ Then, $H = \bigl(V(H), E(H)\bigr)$ is an induced subgraph of $G$. In fact, we ca
 \end{equation*}
 This leads to the following proposition:
 \begin{probox}{Altenative Definition of Induced Subgraph}{}
-    Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of $G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
+    Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of~$G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
 \end{probox}
 We would like to consider the relations between the properties of a graph to those of its subgraphs. In particular, it follows from intuition that if a graph has a high average degree, then we can naturally find a subgraph with a high minimal degree.
 
-This seems trivial from intuition, as we can always keep deleting vertices with the minimal degree from a graph until we cannot find any vertex whose degree is less than $\frac{1}{2}\bar{d}(G)$, but there is more to that --- for instance, how do we know if we would not end up deleting all vertices from the original graph? Thus, to prove our claim is essentially asking to prove the correctness of this greedy deletion, which we shall do in the following proposition.
+This seems trivial from intuition, as we can always keep deleting vertices with the minimal degree from a graph until we cannot find any vertex whose degree is less than $\frac{1}{2}\widebar{d}(G)$, but there is more to that --- for instance, how do we know if we would not end up deleting all vertices from the original graph? Thus, to prove our claim is essentially asking to prove the correctness of this greedy deletion, which we shall do in the following proposition.
 \begin{probox}{Subgraphs with High Minimum Degree}{highAvgDeg}
-    Every non-empty graph $G$ has a subgraph $H$ such that $\delta(H) \geq \frac{1}{2} \bar{d}(G)$.
+    Every non-empty graph $G$ has a subgraph $H$ such that $\delta(H) \geq \frac{1}{2} \widebar{d}(G)$.
     \tcblower
     \begin{proof}
-        Define $H_0 = G$ and $H_{i + 1} = H_i - v_i$ where $v_i$ is a vertex in $H_i$ whose degree is the smallest. Note that we can always find this $v_i$ for any $H_i$ with $V(H_i) \neq \varnothing$ because $V(H_i)$ is a finite well-ordered set. We will repeatedly perform the deletion until we obtain some $H_k$ with $d_{H_k}(v_k) \geq \frac{1}{2}\bar{d}(G)$. We shall proceed to proving that this algorithm always terminates with $V(H_k) \neq \varnothing$.
+        Define $H_0 = G$ and $H_{i + 1} = H_i - v_i$ where $v_i$ is a vertex in $H_i$ whose degree is the smallest. Note that we can always find this $v_i$ for any $H_i$ with $V(H_i) \neq \varnothing$ because $V(H_i)$ is a finite well-ordered set. We will repeatedly perform the deletion until we obtain some $H_k$ with $d_{H_k}(v_k) \geq \frac{1}{2}\widebar{d}(G)$. We shall proceed to proving that this algorithm always terminates with $V(H_k) \neq \varnothing$.
         \\\\
         Suppose on contrary that $V(H_k) = \varnothing$, then we have performed the deletion for $v(G)$ times. Suppose we have deleted $N$ edges in total, then clearly,
         \begin{equation*}
-            N < v(G)\frac{1}{2}\bar{d}(G) = v(G)\frac{e(G)}{v(G)} = e(G),
+            N < v(G)\frac{1}{2}\widebar{d}(G) = v(G)\frac{e(G)}{v(G)} = e(G),
         \end{equation*}
         which means $e(H_k) = e(G) - N > 0$. However, this is impossible since $v(H_k) = 0$, which is a contradiction.
     \end{proof}
@@ -193,16 +299,16 @@ Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent q
 \end{notebox}
 Such a bijection $f$ is said to \textbf{preserve adjacency}, i.e., if $u$ and $v$ are neighbours in $G$, then their images are also neighbours in $H$. In particular, it is possible to map a graph to its own complement via an isomorphism.
 \begin{dfnbox}{Self-Complementary Graph}{selfComp}
-    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
+    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \widebar{G}$.
 \end{dfnbox}
 It turns out that a self-complementary graph satisfies some special properties.
 \begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
     If $G$ is a self-complementary graph of order $n$, then either $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
     \tcblower
     \begin{proof}
-        Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
+        Since $G$ is self-complementary, $G \cong \widebar{G}$ and so $e(G) = e\left(\widebar{G}\right)$. Note that
         \begin{equation*}
-            e(G) + e\left(\overline{G}\right) = \begin{pmatrix}
+            e(G) + e\left(\widebar{G}\right) = \begin{pmatrix}
                 n \\
                 2
             \end{pmatrix} = \frac{n(n - 1)}{2},
@@ -219,7 +325,11 @@ It is very hard to determine whether two specific graphs are isomorphic, but the
 \end{itemize}
 Notice that by Definition \ref{dfn:graphIsomorph}, we can define a function $g$ such that $uv \notin E(G)$ if and only if $g(u)g(v) \notin E(H)$ and relate this function to the complement graphs of $G$ and $H$. Here we introduce a way to determine isomorphism by considering complement graphs, the proof of which is left to the reader as an exercise.
 \begin{thmbox}{Complementation Preserves Isomorphism}{compIso}
-    Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\overline{G} \cong \overline{H}$.
+    Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\widebar{G} \cong \widebar{H}$.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
 \end{thmbox}
 Now let us think the reverse: if it is not easy to prove isomorphism, can we find a way to quickly determine that two graphs are not isomorphic? Here we present the necessary conditions for isomorphism:
 \begin{thmbox}{Necessary Conditions for Isomorphism}{necessaryCondIso}
@@ -253,13 +363,13 @@ To determine whether a sequence is graphic by eye power is difficult. Fortunatel
         d^*_m = \begin{cases}
             d_{m + 1} - 1 & \quad\textrm{if } 1 \leq m \leq d_1 \\
             d_{m + 1} & \quad\textrm{if } d_1 + 1 \leq m \leq n - 1
-        \end{cases}.
+        \end{cases},
     \end{equation*}
-    $(d_n)$ is graphic if and only if $\left(d^*_m\right)$ is graphic.
+    then $(d_n)$ is graphic if and only if $\left(d^*_m\right)$ is graphic.
     \tcblower
     \begin{proof}
         Suppose $(d_n)$ is graphic,we consider the following lemma:
-        \begin{lembox}{}{graphicLemma}
+        \begin{lembox}{Property of Graphic Sequences}{graphicLemma}
             For any graphic sequence $(d_n)$, there is some graph $G$ of order $n$ with $d_G(v_i) = d_i$ for $i = 1, 2, \cdots, n$ such that $v_1$ is adjacent to $v_j$ for $j = 2, 3, \cdots, d_1 + 1$.
             \tcblower
             \begin{proof}
@@ -269,9 +379,7 @@ To determine whether a sequence is graphic by eye power is difficult. Fortunatel
                 \end{equation*}
                 Thus, there exists some $v_j \in A$ such that $v_1v_j \notin E(G)$. However,~$d_G(v_1) = d_1$, so there exists some $v_k \in V(G) - A$ with $v_k \neq v_1$ such that $v_1v_k \in E(G)$.
                 \\\\
-                Notice that since $v_k \notin A \cup \{v_1\}$, $k > j$ and so $d_G(v_k) = d_k \leq d_j = d_G(v_j)$. Therefore, $v_j$ has at least as many neighbours as $v_k$, which means there must exists some $v_r$ with $v_jv_r \in E(G)$ such that $v_kv_r \notin E(G)$.
-                \\\\
-                Define a graph $G'$ by
+                Notice that since $v_k \notin A \cup \{v_1\}$, $k > j$ and so $d_G(v_k) = d_k \leq d_j = d_G(v_j)$. Therefore, $v_j$ has at least as many neighbours as $v_k$, which means there must exists some $v_r$ with $v_jv_r \in E(G)$ such that $v_kv_r \notin E(G)$. Define a graph $G'$ by
                 \begin{equation*}
                     V(G') = V(G), \qquad E(G') = E(G) - v_jv_r - v_1v_k + v_jv_k + v_1v_j.
                 \end{equation*}
@@ -301,7 +409,7 @@ To determine whether a sequence is graphic by eye power is difficult. Fortunatel
 By Theorem \ref{thm:HavelHakimi}, we can reduce a sequence recursively until we reach some obvious case. This obvious case is graphic if and only if the original sequence is graphic. We can also build the graph corresponding to the original sequence from a simple graphic sequence.
 
 Alternatively, the following is another algorithmic way to determine whether a sequence is graphic.
-\begin{thmbox}{Erdos-Gallai Algorithm}{ErdosGallai}
+\begin{thmbox}{Erd\"{o}s-Gallai Algorithm}{ErdosGallai}
     A non-increasing sequence $(d_1, d_2, \cdots, d_n)$ is graphic if and only if $\sum_{i = 1}^n d_i$ is even and for all $k = 1, 2, \cdots, n$,
     \begin{equation*}
         \sum_{i = 1}^{k} d_i \leq k(k - 1) + \sum_{i = k + 1}^{n}\min\{d_i, k\}.
@@ -355,11 +463,7 @@ Intuitively, all walks can be reduced to a path by removing duplicated edges and
     If a graph $G$ contains a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
     \tcblower
     \begin{proof}
-        Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path.
-        \\\\
-        Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However,~$Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path.
-        \\\\
-        Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
+        Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path. Suppose that $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose that $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However,~$Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path. Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
     \end{proof}
 \end{probox}
 
@@ -378,9 +482,7 @@ Intuitively, we of course always can find a connected subgraph of a connected gr
     For every connected graph $G$, $V(G)$ can be labelled as $\left\{v_1, v_2, \cdots, v_n\right\}$ such that the graph~$G_i \coloneqq \bigl[\left\{v_1, v_2, \cdots, v_i\right\}\bigr]$ is connected for every $i = 1, 2, \cdots, n$.
     \tcblower
     \begin{proof}
-        For $i = 1$, we can pick any vertex in $V(G)$ as $v_1$ and $G_1$ is always trivially connected.
-        \\\\
-        Suppose we have fixed up to $k$ vertices for some $k = 1, 2, \cdots, n - 1$, then $G_1, G_2, \cdots, G_k$ are connected subgraphs of $G$. Note that $v(G) = n > k$, so there exists some $v \in V(G) - V(G_k)$ such that $v$ and $v_1$ are connected by a path $P$. Note that there exists some $u \in V(P)$ such that $u \sim v$ for some $v \in V(G_k)$, so taking $v_{k + 1} = u$ guarantees that $G_{k + 1}$ is connected.
+        For $i = 1$, we can pick any vertex in $V(G)$ as $v_1$ and $G_1$ is always trivially connected. Suppose we have fixed up to $k$ vertices for some $k = 1, 2, \cdots, n - 1$, then the graphs $G_1, G_2, \cdots, G_k$ are connected subgraphs of $G$. Note that $v(G) = n > k$, so there exists some $v \in V(G) - V(G_k)$ such that $v$ and $v_1$ are connected by a path~$P$. Note that there exists some $u \in V(P)$ such that $u \sim v$ for some $v \in V(G_k)$, so taking~$v_{k + 1} = u$ guarantees that $G_{k + 1}$ is connected.
     \end{proof}
 \end{probox}
 Intuitively, if a graph has many edges, we would believe that it is easy to find a long path in it. Note that the notion of ``having many edges'' can be related to the minimal degree of a graph. More formally, the following result is true:
@@ -388,20 +490,16 @@ Intuitively, if a graph has many edges, we would believe that it is easy to find
     Every graph $G$ with $\delta(G) \geq 2$ contains a path of length $\delta(G)$ and a cycle of length at least $\delta(G) + 1$.
     \tcblower
     \begin{proof}
-        Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Note that it suffices to prove that~$k \geq \delta(G)$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that~$\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$.
-        \\\\
-        Let $i \in \N$ be such that $x_jx_k \notin E(G)$ for all $0 \leq j < i$. Take $P' = x_ix_{i + 1}\cdots x_k$, then $e(P') \geq \delta(G)$ by the previous argument. However, $x_i \sim x_k$, so $P' + x_ix_k$ is a cycle of length at least $\delta(G) + 1$ in $G$.
+        Let $P = x_0x_1\cdots x_k$ be the longest path in $G$. Note that it suffices to prove that~$k \geq \delta(G)$. Suppose that there exists some $v \in N(x_k)$ such that $v \notin V(P)$, then we can find a longer path which is not possible. Therefore, $N(x_k) \subseteq V(P)$. Note that~$\abs{N(x_k)} \geq \delta(G)$, so $k \geq \delta(G)$ and so $G$ contains a $P_{\delta(G)} \subseteq P$. Let $i \in \N$ be such that $x_jx_k \notin E(G)$ for all $0 \leq j < i$. Take $P' = x_ix_{i + 1}\cdots x_k$, then $e(P') \geq \delta(G)$ by the previous argument. However, since $x_i \sim x_k$, we know that $P' + x_ix_k$ is a cycle of length at least~$\delta(G) + 1$ in $G$.
     \end{proof}
 \end{probox}
 Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and~$v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
 \begin{dfnbox}{Connected Component}{CC}
-    Let $G$ be a graph and $R$ be a relation such that for any $u, v \in V(G)$, $uRv$ if and only if~$u$ and $v$ are connected. Let
+    Let $G$ be a graph and 
     \begin{equation*}
-        C \coloneqq V(G)/R
+        C \coloneqq V(G) \slash \sim
     \end{equation*}
-    be the quotient set, then any $c(u) \in C$ is known as a (connected) {\color{red} \textbf{component}} of $G$.
-    \\\\
-    The number of components of $G$ is denoted by $\omega(G)$.
+    be a quotient set, then any $c(u) \in C$ is known as a (connected) {\color{red} \textbf{component}} of $G$. The number of components of $G$ is denoted by $\omega(G)$.
 \end{dfnbox}
 Alternatively, a connected component is a maximally connected subgraph, that is, a connected component of $G$ is a subgraph $H \subseteq G$ such that for all $e \in E(G)$, $H + e$ is not connected and for all $v \in V(G) - V(H)$, $\left[V(H) \cup \{v\}\right]$ is not connected.
 
@@ -409,19 +507,15 @@ It can be easily seen that $G$ is connected if and only if $\omega(G) = 1$.
 
 We will now establish a relationship between connectedness and complementation.
 \begin{thmbox}{Connectedness of Complement}{connectedComp}
-    If $G$ is disconnected, then $\overline{G}$ is connected.
+    If $G$ is disconnected, then $\widebar{G}$ is connected.
     \tcblower
     \begin{proof}
-        Let $u, v \in V\left(\overline{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\overline{G}\right)$ and so $u$ and $v$ are connected in $\overline{G}$.
-        \\\\
-        If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that~$uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\overline{G}\right)$. This means that there is a~$u$-$v$ path in $\overline{G}$ and so $u$ and $v$ are connected in $\overline{G}$.
-        \\\\
-        Therefore, $\overline{G}$ is connected.
+        Let $u, v \in V\left(\widebar{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\widebar{G}\right)$ and so $u$ and $v$ are connected in $\widebar{G}$. If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that~$uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\widebar{G}\right)$. This means that there is a~$u$-$v$ path in $\widebar{G}$ and so $u$ and $v$ are connected in $\widebar{G}$. Therefore, $\widebar{G}$ is connected.
     \end{proof}
 \end{thmbox}
 Intuitively, we can transform a connected graph into a disconnected one by deleting some vertices or edges. It can be easily observed that in certain graphs, deleting one particular vertex or edge will immediately disconnect the graph.
 \begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
-    Let $G$ be a non-trivial graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
+    Let $G$ be a non-trivial graph. A vertex $v \in V(G)$ is a {\color{red} \textbf{cut-vertex}} if $\omega(G - v) > \omega(G)$. An edge $e \in E(G)$ is a {\color{red} \textbf{bridge}} if $\omega(G - e) > \omega(G)$.
 \end{dfnbox}
 Note that a graph does not have to be connected to have cut vertices and bridges. Essentially, a cut-vertex (or bridge) is just a vertex (or edge) which disconnects a component upon removal.
 
@@ -430,9 +524,9 @@ Now the next question is how do we identify a cut-vertex or a bridge in a graph?
     Let $G$ be a graph. $v \in V(G)$ is a cut-vertex if and only if there exists $a, b \in V(G)$ such that $v$ is in every path between $a$ and $b$.
     \tcblower
     \begin{proof}
-        Let $v \in V(G)$ be a cut-vertex and consider $H = G - v$, then we can find two non-empty disjoint connected components of $H$, say $H_1$ and $H_2$. Now, take $a \in V(H_1)$ and $b \in V_(H_2)$, then they are disconnected. However, $a$ and $b$ are connected in $G$, which means $v$ is in every $a$-$b$ path.
+        Let $v \in V(G)$ be a cut-vertex and consider $H = G - v$, then we can find two non-empty disjoint connected components of $H$, say $H_1$ and $H_2$. Take $a \in V(H_1)$ and~$b \in V(H_2)$, then they are disconnected. However, $a$ and $b$ are connected in $G$, which means $v$ is in every $a$-$b$ path.
         \\\\
-        We will prove the converse by contrapositive. Suppose $v$ is not a cut-vertex of $G$, then $G - v$ is connected. Therefore, for any $u, w \in V(G)$, there is a path between them which does not contain $v$.
+        We will prove the converse by contrapositive. Suppose that $v$ is not a cut-vertex of~$G$, then $G - v$ is connected. Therefore, for any $u, w \in V(G)$, there is a path between them which does not contain $v$.
     \end{proof}
 \end{thmbox}
 A similar argument can be established for bridges. Furthermore, since we have to pass through the bridge when traversing between the two portions, it can be easily seen that we have to reuse the bridge in order to traverse back.
@@ -446,11 +540,11 @@ A similar argument can be established for bridges. Furthermore, since we have to
     \end{proof}
 \end{thmbox}
 Combining the two characterisations, we can relate cut-vertices to bridges in the following proposition, the proof of which is left to the reader as an exercise:
-\begin{probox}{}{cutVertexNBridge}
+\begin{probox}{Bridge Incident to a Cut-Vertex}{cutVertexNBridge}
     Let $G$ be a graph. If $uv \in E(G)$ is a bridge and $u$ is not an end vertex, then $u$ is a cut-vertex.
 \end{probox}
 A direct consequence of this is the following corollary:
-\begin{corbox}{}{}
+\begin{corbox}{Co-existence of Bridges and Cut-Vertices}{}
     If $G$ is a graph with order at least $3$ and $G$ contains a bridge, then $G$ contains a cut-vertex.
 \end{corbox}
 Given a graph $G$ with $u$, $v$ being two connected vertices, we are interested in the notion of distance between them. Intuitively, if there are multiple paths between $u$ and $v$, we would take the length of the shortest one to represent their distance.
@@ -480,11 +574,11 @@ Intuitively, having a large diameter means that the graph is sparse, i.e., one h
     Let $G$ be a graph with girth $g(G)$. If $G$ contains a cycle, then $g(G) \leq 2\mathrm{diam}(G) + 1$.
     \tcblower
     \begin{proof}
-        Suppose on contrary that $g(G) \geq 2\mathrm{diam}(G) + 2$. Let $C \subseteq G$ be the shortest cycle in $G$, then we can take $x, y \in V(C)$ such that $d_C(x, y)$ is the greatest. Clearly, we have $d_C(x, y) \geq \mathrm{diam}(G) + 1$.
-        \\\\
-        By Definition \ref{dfn:distEDia}, there exists some path $P$ between $x$ and $y$ with $e(P) \leq \mathrm{diam}(G)$. Let $P' \subseteq C$ be the $x$-$y$ path in $C$, then $e(P) < e(P')$. This means that $P$ and $P'$ are distinct paths and so there is some $q \in V(P') - V(P)$.
-        \\\\
-        Since $P$ and $P'$ are both $x$-$y$ walks, $\abs{P \cap P'} \geq 2$. Therefore, there are $p_1, p_2 \in P \cap P'$ which are connected to $q$, which implies that there is a $p_1$-$p_2$ path in $P'$. Since $p_1$ and~$p_2$ are connected in $P$, we have found $2$ different $p_1$-$p_2$ paths and so there is some cycle $Q \subseteq P \cup P'$. Therefore,
+        Suppose on contrary that $g(G) \geq 2\mathrm{diam}(G) + 2$. Let $C \subseteq G$ be the shortest cycle in $G$, then we can take $x, y \in V(C)$ such that $d_C(x, y)$ is the greatest. Clearly, 
+        \begin{equation*}
+            d_C(x, y) \geq \mathrm{diam}(G) + 1.
+        \end{equation*}
+        By Definition \ref{dfn:distEDia}, there exists some path $P$ between $x$ and $y$ with $e(P) \leq \mathrm{diam}(G)$. Let $P' \subseteq C$ be the $x$-$y$ path in $C$, then $e(P) < e(P')$. This means that $P$ and $P'$ are distinct paths and so there is some $q \in V(P') - V(P)$. Since $P$ and $P'$ are both $x$-$y$ walks, $\abs{P \cap P'} \geq 2$. Therefore, there are $p_1, p_2 \in P \cap P'$ which are connected to $q$, which implies that there is a $p_1$-$p_2$ path in $P'$. Since $p_1$ and~$p_2$ are connected in $P$, we have found $2$ different $p_1$-$p_2$ paths and so there is some cycle $Q \subseteq P \cup P'$. Therefore,
         \begin{align*}
             e(Q) & \leq e(P\cup P') \\
             & \leq e(P) + e(P') \\
@@ -498,38 +592,29 @@ Intuitively, having a large diameter means that the graph is sparse, i.e., one h
 \end{probox}
 
 For readers with knowledge in real analysis or topology, it is easy to see that an undirected unweighted connected graph is a metric space with distance between vertices as its metric. 
-\begin{thmbox}{Connected Graph as A Metric Space}{graphMetric}
+\begin{probox}{Connected Graph as A Metric Space}{graphMetric}
     If $G$ is connected, then $(V(G), d_G)$ is a metric space.
     \tcblower   
     \begin{proof}
-        Clearly, for all $x, y \in V(G)$, $d_G(x, y) \geq 0 \in V(G)$ with $d_G(x, y) = 0$ if and only if $x = y$ and $d_G(x, y) = d_G(y, x)$.
-
-        Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then~$U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
+        Clearly, for all $x, y \in V(G)$, $d_G(x, y) \geq 0 \in V(G)$ with $d_G(x, y) = 0$ if and only if $x = y$ and $d_G(x, y) = d_G(y, x)$. Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then~$U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
         \begin{equation*}
             d(u, v) \leq d(u, w) + d(w, v).
         \end{equation*}
         Therefore, $(V(G), d_G)$ is a metric space.
     \end{proof}
-\end{thmbox}
-An application of Theorem \ref{thm:graphMetric} allows us to establish the following:
-\begin{thmbox}{Boundedness of Diameter}{boundedDiam}
-    If $G$ is connected, then
-    \begin{equation*}
-        \mathrm{rad}(G) \leq \mathrm{diam}(G) \leq 2\mathrm{rad}(G).
-    \end{equation*}
+\end{probox}
+An application of Proposition \ref{pro:graphMetric} allows us to establish the following:
+\begin{probox}{Boundedness of Diameter}{boundedDiam}
+    If $G$ is connected, then $\mathrm{rad}(G) \leq \mathrm{diam}(G) \leq 2\mathrm{rad}(G)$.
     \tcblower
     \begin{proof}
-        $\mathrm{rad}(G) \leq \mathrm{diam}(G)$ is immediate from Definition \ref{dfn:distEDia}. Take $u, v \in V(G)$ with~$d(u, v) = \mathrm{diam}(G)$ and take $w \in V(G)$ such that $e(w) = \mathrm{rad}(G)$. Notice that this implies
+        $\mathrm{rad}(G) \leq \mathrm{diam}(G)$ is immediate from Definition \ref{dfn:distEDia}. Take $u, v \in V(G)$ with~$d(u, v) = \mathrm{diam}(G)$ and take $w \in V(G)$ such that $e(w) = \mathrm{rad}(G)$. Therefore,
         \begin{align*}
-            d(u, w) & \leq e(w) = \mathrm{rad}(G) \\
-            d(w, v) & \leq e(w) = \mathrm{rad}(G).
+            d(u, w) \leq e(w) = \mathrm{rad}(G) \quad\textrm{and} \quad d(w, v) & \leq e(w) = \mathrm{rad}(G).
         \end{align*}
-        By Theorem \ref{thm:thm:graphMetric}, 
-        \begin{equation*}
-            \mathrm{diam}(G) = d(u, v) \leq d(u, w) + d(w, v) = 2\mathrm{rad}(G).
-        \end{equation*}
+        By Theorem \ref{pro:graphMetric}, $\mathrm{diam}(G) = d(u, v) \leq d(u, w) + d(w, v) = 2\mathrm{rad}(G)$.
     \end{proof}
-\end{thmbox}
+\end{probox}
 \section{Graphs and Matrices}
 So far we have been using hand-drawn illustrations to aid us in graph visualisation. However, for large graphs with many vertices and edges, drawing out the graph structures becomes nearly impossible. Therefore, we need to use some algebraic tools to help us represent a large graph.
 \begin{dfnbox}{Adjacency Matrix}{adMat}
@@ -555,26 +640,22 @@ Note that an adjacency matrix does not tell us which edges are incident to a par
         For an undirected multigraph, consider an arbitrary $k$-th column of $\mathbfit{M}$. Note that any column will have exactly $2$ non-zero entries. Suppose $m_{ik} = m_{jk} = 1$, it means that $e_k = v_iv_j$.
     \end{remark}
 \end{notebox}
-For readers who have learnt about basic data structures in computer science, an incidence matrix is just an adjacency list with each list of neighbours converted to a (non-compact) boolean array.
-\\\\
-Note that the sum of the $i$-th row for both $\mathbfit{A}$ and $\mathbfit{M}$ is the degree of vertex $i$. 
+For readers who have learnt about basic data structures in computer science, an incidence matrix is just an adjacency list with each list of neighbours converted to a (non-compact) boolean array. Note that the sum of the $i$-th row for both $\mathbfit{A}$ and $\mathbfit{M}$ is the degree of vertex $i$. 
 \\\\
 Since $\mathbfit{A}$ and $\mathbfit{M}$ carries information about adjacencies between vertices, we can use them to draw some conclusions regarding graph traversal.
 \begin{probox}{Counting the Number of Walks between Two Vertices}{numWalks}
     Let $G$ be a simple graph of order $n$ with adjacency matrix $\mathbfit{A}$, then the $(i, j)$ entry of $\mathbfit{A}^k$ is the number of $v_i$-$v_j$ walks of length $k$.
     \tcblower   
     \begin{proof}
-        The case where $k = 1$ is trivially true since there is a $v_i$-$v_j$ walk of length $1$ if and only if $v_i$ and $v_j$ are neighbours.
-        \\\\
-        Let the $(i, j)$ entry of $\mathbfit{A}^m$ be $m_{ij}$. Suppose $m_{ij}$ is the number of $v_i$-$v_j$ walks of length $m$. Then the $(i, j)$ entry of $\mathbfit{A}^{m + 1}$ is given by
+        The case where $k = 1$ is trivially true since there is a $v_i$-$v_j$ walk of length $1$ if and only if $v_i$ and $v_j$ are neighbours. Let the $(i, j)$ entry of $\mathbfit{A}^m$ be $m_{ij}$. Suppose $m_{ij}$ is the number of $v_i$-$v_j$ walks of length $m$. Then the $(i, j)$ entry of $\mathbfit{A}^{m + 1}$ is given by
         \begin{align*}
             \sum_{r = 1}^{n}m_{ir}a_{rj}.
         \end{align*}
-        Notice that $m_{ir}$ is the number of $v_i$-$v_r$ walks of length $m$ and $a_{rj}$ is the number of $v_r$-$v_j$ walks of length $1$, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length~$n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
+        Observe that $m_{ir}$ and $a_{rj}$ are the number of $v_i$-$v_r$ walks of length $m$ and the number of~$v_r$-$v_j$ walks of length $1$ respectively, so $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length~$n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
     \end{proof}
 \end{probox}
 Additionally, we have the following corollary:
-\begin{corbox}{Connectedness Test}{}
+\begin{corbox}{Connectedness Test by Adjacency Matrices}{}
     Let $G$ be a graph with $v(G) \geq 2$ and adjacency matrix $\mathbfit{A}$. Let
     \begin{equation*}
         \mathbfit{B} = \sum_{i = 1}^{n - 1}\mathbfit{A}^i,
@@ -582,7 +663,7 @@ Additionally, we have the following corollary:
     then $G$ is connected if and only if $b_{ij} \neq 0$ for all $i \neq j$.
 \end{corbox}
 As it turns out, the incidence and adjacency matrices are related by a simple equation.
-\begin{probox}{}{}
+\begin{probox}{Conversion between Incidence and Adjacency Matrices}{}
     Let $\mathbfit{M}$ and $\mathbfit{A}$ be the incidence matrix and adjacency matrix of a simple graph $G$ respectively, then
     \begin{equation*}
         \mathbfit{M}\mathbfit{M}^{\mathrm{T}} = \begin{bmatrix}
@@ -606,18 +687,18 @@ In other words, a tree is an \textbf{connected acyclic graph}. We also have the 
     \begin{enumerate}
         \item $T$ is a tree.
         \item For any $u, v \in V(T)$, there exists a unique $u$-$v$ path in $T$.
-        \item $T$ is minimally connected, i.e., $T$ is connected but $T - e$ is disconnected for any $e \in E(T)$.
-        \item $T$ is maximally acyclic, i.e., $T$ is acyclic but $T + xy$ for any $x, y \in V(T)$ with $xy \notin E(T)$ is cyclic.
+        \item $T$ is minimally connected, i.e., $T$ is connected but $T - e$ is disconnected for any edge $e \in E(T)$.
+        \item $T$ is maximally acyclic, i.e., $T$ is acyclic but $T + xy$ is cyclic for any $x, y \in V(T)$ with $xy \notin E(T)$ 
     \end{enumerate}
     \tcblower
     \begin{proof}
-        Let $T$ be a tree. For any $u, v \in V(T)$, there exists a $u$-$v$ path $P \subseteq T$. Suppose $P' \subseteq T$ is also a $u$-$v$ path, then there exists a non-trivial closed walk between $u$ and $v$ which contains a cycle, leading to a contradiction.
+        Let $T$ be a tree. For any $u, v \in V(T)$, there exists a $u$-$v$ path $P \subseteq T$. Suppose on contrary that $P' \subseteq T$ is also a $u$-$v$ path, then there exists a non-trivial closed walk between $u$ and $v$ which contains a cycle, leading to a contradiction.
         \\\\
-        Suppose $T$ is such that any $u, v \in V(T)$ are connected by a unique path. Suppose on contrary $T - e$ is connected for some $e = xy \in E(T)$, then there exists some $x$-$y$ path in $T$ which does not contain $xy$. However, $xy$ is a different $x$-$y$ path, which is a contradiction.
+        Suppose that $T$ is such that any $u, v \in V(T)$ are connected by a unique path. Suppose on contrary that $T - e$ is connected for some $e = xy \in E(T)$, then there exists some $x$-$y$ path in $T$ which does not contain $xy$. However, $xy$ is a different $x$-$y$ path, which is a contradiction.
         \\\\
-        Suppose $T$ is minimally connected. Note that if $T$ contains some cycle $C$, then for any $e \in E(C)$, $T - e$ is connected. So $T$ being minimally connected implies that $T$ is acyclic. Take any $x, y \in V(T)$ with $xy \notin E(T)$, then there exists some $x$-$y$ path $P \subseteq T$ which does not contain $xy$. Therefore, $P + xy$ is a cycle, which implies that $T$ is maximally acyclic.
+        Suppose that $T$ is minimally connected. Note that if $T$ contains some cycle $C$, then for any $e \in E(C)$, $T - e$ is connected. So $T$ being minimally connected implies that $T$ is acyclic. Take any $x, y \in V(T)$ with $xy \notin E(T)$, then there exists some $x$-$y$ path $P \subseteq T$ which does not contain $xy$. Therefore, $P + xy$ is a cycle, which implies that $T$ is maximally acyclic.
         \\\\
-        Suppose $T$ is maximally acyclic. Suppose $T$ is not connected, then there exists $u, v \in V(T)$ which are disconnected. Note that $T + uv$ is acyclic because $uv$ is the unique $u$-$v$ path. Therefore, $T$ is not maximally acyclic. The contrapositive shows that $T$ being maximally acyclic implies that $T$ is a tree.
+        Suppose that $T$ is maximally acyclic but not connected, then there exists $u, v \in V(T)$ which are disconnected. Note that $T + uv$ is acyclic because $uv$ is the unique $u$-$v$ path. Therefore, $T$ is not maximally acyclic. The contrapositive shows that $T$ being maximally acyclic implies that $T$ is a tree.
     \end{proof}
 \end{thmbox}
 We first consider the following proposition:
@@ -653,31 +734,29 @@ In particular, a tree with exactly $2$ end vertices is a doubly linked list. We 
     Let $G$ be a tree. A {\color{red} \textbf{leaf}} of $G$ is a vertex $v \in V(G)$ with $d_G(v) = 1$.
 \end{dfnbox}
 Given any tree, we can fix a vertex as the ``root''. We can carry out depth-first search to traverse the tree's vertices starting from the root. An interesting phenomenon here is that at any point of time, we notice that the vertex which we are currently at is adjacent to exactly one of the vertices which we have visited.
-\begin{probox}{Re-labelling of Vertices in a Tree}{relabelTreeVtx}
-    Let $T$ be a tree with order $n$, then there exists an ordering of $V(T)$ such that for any $v_k \in V(T)$, $v_k$ is adjacent to exactly one of $v_1, v_2, \cdots, v_{k - 1}$.
+\begin{probox}{Topological Ordering of Vertices in a Tree}{relabelTreeVtx}
+    Let $T$ be a tree with order $n$, then there exists an ordering of $V(T)$ such that for any vertex~$v_k \in V(T)$, $v_k$ is adjacent to exactly one of $v_1, v_2, \cdots, v_{k - 1}$.
     \tcblower
     \begin{proof}
-        By Corollary \ref{cor:numEndVtx}, $T$ has a leaf vertex. Let this vertex be $v_n$. Note that $T - v_n \subseteq T$, so it is acyclic. Let $T' = T - v_n$, then $v_n$ has a unique neighbour in $V(T')$. Note that $T'$ is also a tree, so we can repeat this process to take $v_{n - 1}$. Continue doing so until we have taken all vertices in $T$, then for any $k = 1, 2, \cdots, n$, $v_k$ has a unique neighbour in $v_1, v_2, \cdots, v_k$.
+        By Corollary \ref{cor:numEndVtx}, $T$ has a leaf which we can label as $v_n$. Since $T - v_n \subseteq T$, it must be acyclic. Let $T' = T - v_n$, then $v_n$ has a unique neighbour in $V(T')$. Note that~$T'$ is also a tree, so we can repeat this process to fix $v_{n - 1}$. Continue doing so until we have taken all vertices in $T$, then for any $k = 1, 2, \cdots, n$, $v_k$ has a unique neighbour in $v_1, v_2, \cdots, v_k$.
     \end{proof}
 \end{probox}
-In fact, such an ordering of the tree is known as a \textit{topological sort}. 
+In fact, such an ordering of the tree is known as a \textit{topological ordering}. 
 
 Intuitively, if a connected graph contains cycles, we can always reduce it to a tree by deleting some edges. This leads to the following result:
-\begin{corbox}{Number of Egdes in a Tree}{numEgdesTree}
+\begin{corbox}{Characterising a Tree by Size}{numEgdesTree}
     A connected graph $T$ is a tree of order $n$ if and only if $e(T) = n - 1$.
     \tcblower
     \begin{proof}
-        If $T$ is a tree, then by Proposition \ref{pro:relabelTreeVtx} we can order $V(T)$ such that for all $i = 2, 3, \cdots, n$, $v_i$ is adjacent to exactly one vertex from $v_1, v_2, \cdots, v_{i - 1}$. Therefore, $e(T) = n - 1$.
-        \\\\
-        If $e(T) = n - 1$, note that $T$ contains a tree $T' \subseteq T$ which has $n$ vertices. Therefore, $e(T') = n - 1 = e(T)$. This implies that $T = T'$, so $T$ is a tree.
+        If $T$ is a tree, then by Proposition \ref{pro:relabelTreeVtx} we can fix a topological ordering on $V(T)$ such that for all $i = 2, 3, \cdots, n$, $v_i$ is adjacent to exactly one vertex among~$v_1, v_2, \cdots, v_{i - 1}$. Therefore, $e(T) = n - 1$. Conversely, if $e(T) = n - 1$, note that $T$ contains a tree $T' \subseteq T$ which has $n$ vertices. Therefore, $e(T') = n - 1 = e(T)$. This implies that $T = T'$, so $T$ is a tree.
     \end{proof}
 \end{corbox}
-Recall that every graph contains a tree. In fact, this result can be further strengthened.
+Recall that every graph contains a tree, so in fact, this result can be further strengthened.
 \begin{probox}{Existence of Subgraph Trees}{existTreeSubgraph}
     Let $T$ be a tree with $k$ vertices. If $G$ is a graph with $\delta(G) \geq k - 1$, then $G$ contains a subgraph which is isomorphic to $T$.
     \tcblower
     \begin{proof}
-        Fix an ordering on $V(T)$ such that $v_i$ has a unique neighbour in $v_1, v_2, \cdots, v_{i - 1}$. Take any vertex in $G$ to be $v_1$. Suppose we have chosen $v_1, v_2, \cdots, v_i$ in $G$ for some $i < k$, for any $v_j$ among these vertices, at most $(i - 1)$ of $v_j$'s neighbours have been chosen, but
+        Fix a topological ordering on $V(T)$ such that every $v_i \in V\left(T\right)$ has a unique neighbour in $v_1, v_2, \cdots, v_{i - 1}$. Take any vertex in $G$ to be $v_1$. For some $i < k$, suppose that we have taken $v_1, v_2, \cdots, v_i$ in $G$, then for any $v_j$ among these vertices, there are at most $(i - 1)$ of $v_j$'s neighbours which have been taken, but
         \begin{equation*}
             d_G(v_j) \geq \delta(G) = k - 1 > i - 1.
         \end{equation*}
@@ -709,8 +788,8 @@ Informally, we can describe the join of $G_1$ and $G_2$ as a graph which contain
     A {\color{red} \textbf{complete bipartite graph}} is defined as $K_{p, q} = 0_p + 0_q$.
 \end{dfnbox}
 Consider a $k$-regular bipartite graph. Intuitively, if every vertex in the first partite set must be adjacent to $k > 0$ vertices in the second partite set and vice versa, then it is only natural that the two partite sets have equal cardinalities.
-\begin{probox}{Regular Bipartite Graph}{regBip}
-    For all $k \in \Z^+$, a $k$-regular bipartite graph with bipartition $(U, V)$ is such that $\abs{U} = \abs{V}$.
+\begin{probox}{Property of Regular Bipartite Graph}{regBip}
+    For all $k \in \Z^+$, a $k$-regular bipartite graph with bipartition $(U, V)$ satisfies $\abs{U} = \abs{V}$.
     \tcblower
     \begin{proof}
         Note that we have
@@ -725,14 +804,12 @@ It is not easy to see whether a graph is bipartite by observation alone, so we c
     A graph is bipartite if and only if it contains no odd cycles.
     \tcblower
     \begin{proof}
-        The necessity following from the previous argument, so we only prove the sufficiency. Suppose $G$ contains no odd cycles. Note that there exists some spanning tree $T \subseteq G$ with root $u$. For every $v \in V(T)$, $v$ is coloured red if $d_T(u, v)$ is odd, and blue otherwise.
-        \\\\
-        Suppose that there exist some $w_1, w_2 \in V(G)$ such that both receive the same colour but $w_1w_2 \in E(G)$. Note that this means that there exist a $w_1$-$u$ path in $T$ and a $w_2$-$u$ path in $T$ with the same parity. This implies that there exists an closed walk of odd length in $G$, and so $G$ contains an odd cycle, which is a contradiction. Therefore, $G$ is bi-colourable and so is bipartite.
+        The necessity is obvious, so we only prove the sufficiency. Suppose that $G$ contains no odd cycles. Note that there exists some spanning tree~$T \subseteq G$ with root $u$. For every $v \in V(T)$, $v$ is coloured red if $d_T(u, v)$ is odd, and blue otherwise. Suppose on contrary that there exist some $w_1, w_2 \in V(G)$ such that both receive the same colour but $w_1w_2 \in E(G)$. Note that this means that there exist a~$w_1$-$u$ path in $T$ and a~$w_2$-$u$ path in $T$ with the same parity. This implies that there exists an closed walk of odd length in $G$, and so $G$ contains an odd cycle, which is a contradiction. Therefore,~$G$ is bi-colourable and so is bipartite.
     \end{proof}
 \end{thmbox}
 
 \chapter{Matchings and Vertex Covers}
-\section{Matching}
+\section{Matchings}
 In set theory, we define the notion of a function
 \begin{equation*}
     f \colon X \to Y
@@ -743,9 +820,7 @@ as a mapping such that every $x \in X$ has a unique image in $Y$. In a graph-the
 \end{dfnbox}
 The term ``vertex-disjoint edges'' means that for any $e, f \in M$, they are not incident to the same vertex in $G$. Here we define two notions which sound similar:
 \begin{dfnbox}{Maximal and Maximum Matchings}{maxMatch}
-    A {\color{red} \textbf{maximal matching}} is a matching $M \subseteq E(G)$ such that for all $e \in E(G) - M$, $M \cup \{e\}$ is not a matching.
-
-    A {\color{red} \textbf{maximum matching}} is a matching $M \subseteq E(G)$ such that for any matching $N \subseteq E(G)$, $\abs{N} \leq \abs{M}$.
+    A {\color{red} \textbf{maximal matching}} is a matching $M \subseteq E(G)$ such that for all $e \in E(G) - M$, $M \cup \{e\}$ is not a matching. A {\color{red} \textbf{maximum matching}} is a matching $M \subseteq E(G)$ such that for any matching $N \subseteq E(G)$, $\abs{N} \leq \abs{M}$.
 \end{dfnbox}
 It is clear that a maximum matching must be maximal but not the other way round.
 \begin{dfnbox}{Matching Number}{matchN}
@@ -784,15 +859,16 @@ We may have guessed based on the above observation that $\tau(G) \geq \nu(G)$ fo
         \end{equation*}
     \end{proof}
 \end{probox}
-\section{Clique and Independent Set}
+\section{Cliques and Independent Sets}
 Given any graph $G$, then theoretically, if we were to find a subgraph of order $n$, the one with the greatest size is a complete graph and that with the smallest size is an empty graph.
 \begin{dfnbox}{Clique}{clique}
     A {\color{red} \textbf{clique}} in $G$ is a complete subgraph of $G$. The {\color{red} \textbf{clique number}} of $G$ is the order of the largest clique in $G$, denoted as $\omega(G)$.
 \end{dfnbox}
+The counterpart of a clique is an \textit{independent set}.
 \begin{dfnbox}{Independent Set}{indSet}
     The {\color{red} \textbf{independent set}} of $G$ is a subset $I \subseteq V(G)$ such that for all $u, v \in I$, $uv \notin E(G)$. The {\color{red} \textbf{independence number}} of $G$, denoted as $\alpha(G)$, is the size of the largest independent set in $G$.
 \end{dfnbox}
-Intuitively, if a set $S \subseteq V(G)$ induces an empty subgraph in $G$, it will induce a complete subgraph in $\overline{G}$. Therefore, $\alpha(G) = \omega(\overline{G})$.
+Intuitively, if a set $S \subseteq V(G)$ induces an empty subgraph in $G$, it will induce a complete subgraph in $\widebar{G}$. Therefore, $\alpha(G) = \omega(\widebar{G})$.
 
 We shall examine the independence numbers of some special graphs.
 \begin{itemize}
@@ -808,11 +884,9 @@ The following theorem discusses the numerical relationship between the independe
     For any graph $G$ of order $n$, $\alpha(G) + \tau(G) = n$.
     \tcblower
     \begin{proof}
-        It suffices to prove that $S$ is an independent set in $G$ if and only if $V(G) - S$ is a vertex cover of $G$.
+        It suffices to prove that $S$ is an independent set in $G$ if and only if $V(G) - S$ is a vertex cover of $G$. Let $S \subseteq V(G)$ be an independent set, then for any $e = uv \in E(G)$, at least one of $u$ and $v$ is in $V(G) - S$ because otherwise there exists $u, v \in S$ such that $u \sim v$, which is not possible. Therefore, $V(G) - S$ is a vertex cover.
         \\\\
-        Let $S \subseteq V(G)$ be an independent set, then for any edge $e = uv \in E(G)$, at least one of $u$ and $v$ is in $V(G) - S$ for otherwise there exists $u, v \in S$ such that $u \sim v$, which is not possible. Therefore, $V(G) - S$ is a vertex cover.
-        \\\\
-        Suppose conversely that $S \subseteq V(G)$ is such that $V(G) - S$ is a vertex cover.
+        Suppose conversely that $S \subseteq V(G)$ is such that $V(G) - S$ is a vertex cover. For any $s \in S$, it is clear that $N_G\left(s\right) \subseteq V\left(G\right) - S$ because otherwise $V\left(G\right) - S$ is not a vertex cover. Therefore, $S$ is an independent set.
     \end{proof}
 \end{probox}
 So far we have been talking a lot about the Petersen graph, but it turns out that the Petersen graph can be generalised into a \textit{Kneser graph}.
@@ -850,9 +924,9 @@ In other words, $L(G)$ uses $E(G)$ as the vertex set and two vertices are adjace
     For any graph $G$, $\nu(G) = \alpha\bigl(L(G)\bigr)$.
     \tcblower
     \begin{proof}
-        Fix a maximum matching $M \subseteq G$, then for every $e, f \in E(M)$ with $e \neq f$, we have $ef \notin E\bigl(L(G)\bigr)$, therefore, $E(M)$ is an independent set in $L(G)$ and so $\alpha\bigl(L(G)\bigr) \geq \nu(G)$.
+        Fix a maximum matching $M \subseteq G$, then for every $e, f \in E(M)$ with $e \neq f$, we have $ef \notin E\bigl(L(G)\bigr)$, therefore, $E(M)$ is an independent set in $L(G)$ and so we have~$\alpha\bigl(L(G)\bigr) \geq \nu(G)$.
         \\\\
-        Suppose $\alpha\bigl(L(G)\bigr) > \nu(G)$, then there exists some $e_0 \in V\bigl(L(G)\bigr) = E(G)$ such that $e_0$ is vertex-disjoint with all $e \in E(M)$. However, this means that we can find a matching with bigger size in $G$, which is a contradiction. Therefore, 
+        Suppose that $\alpha\bigl(L(G)\bigr) > \nu(G)$, then there exists some $e_0 \in V\bigl(L(G)\bigr) = E(G)$ such that $e_0$ is vertex-disjoint with all $e \in E(M)$. However, this means that we can find a matching with bigger size in $G$, which is a contradiction. Therefore, 
         \begin{equation*}
             \nu(G) = \alpha\bigl(L(G)\bigr).
         \end{equation*}
@@ -867,7 +941,7 @@ For every $e \in E(G)$, let $x_e$ denote its weight. This way, to find a maximum
     \textrm{such that} & \quad x_e \in \{0, 1\}, \\
     & \quad \sum_{v \in e}x_e \leq 1 \quad\textrm{for all } v \in V(G),
 \end{align*}
-where the optimal value is just $\nu(G)$. Similarly, we can assign $0$-$1$ weights, $y_v$, to every $v \in V(G)$, then a vertex cover is equivalent to an optimal solution for the integer program 
+where the optimal value is just $\nu(G)$. Similarly, through assigning $0$-$1$ weights, $y_v$, to every~$v \in V(G)$, a vertex cover is equivalent to an optimal solution for the integer program 
 \begin{align*}
     \min & \sum_{v \in V(G)}y_v \\
     \textrm{such that} & \quad y_v \in \{0, 1\}, \\
@@ -901,7 +975,7 @@ In general, we can characterise a maximum matching by using augmenting paths.
         \end{equation*}
         Note that $M'$ is clearly a matching and $e(M') = e(M) + 1$, so $M$ is not a maximum matching.
         \\\\
-        Suppose conversely that there is no augmenting path in $G$ with respect to $M$. We will prove that $M$ is maximum by considering the contrapositive statement. Suppose that $M$ is not maximum, then there exists some matching $M'$ with $e(M') > e(M)$. Consider the subgraph $H \coloneqq M \triangle M'$. Note that $\Delta(H) = 2$ and that every connected component of $H$ is either a path or a cycle whose edges alternate between $E(M)$ and $E(M')$. Note that $H$ is bipartite, so every cycle in $H$ must be even and so contain equal number of edges from $M$ and $M'$. However, since $e(M') > e(M)$, we can find a path in $H$ which begins and ends with edges in $M' - M$ and whose edges alternate between $M$ and $M'$. This path is an augmenting path with respect to $M$.
+        Suppose conversely that there is no augmenting path in $G$ with respect to $M$. We will prove that $M$ is maximum by considering the contrapositive statement. Suppose that $M$ is not maximum, then there exists some matching $M'$ with $e(M') > e(M)$. Consider the subgraph $H \coloneqq M \triangle M'$. Note that $\Delta(H) = 2$ and that every connected component of $H$ is either a path or a cycle whose edges alternate between $M$ and~$M'$. Note that $H$ is bipartite, so every cycle in $H$ must be even and so contain equal number of edges from $M$ and $M'$. However, since $e(M') > e(M)$, we can find a path in $H$ which begins and ends with edges in $M' - M$ and whose edges alternate between $M$ and $M'$. This path is an augmenting path with respect to $M$.
     \end{proof}
 \end{thmbox}
 With these preliminary results established, we are now ready to prove \textit{K\"{o}nig's Theorem}.
@@ -909,17 +983,13 @@ With these preliminary results established, we are now ready to prove \textit{K\
     If $G$ is bipartite, then $\nu(G) = \tau(G)$.
     \tcblower
     \begin{proof}
-        By Proposition \ref{pro:tauGeqNu}, we already know that $\nu(G) \leq \tau(G)$. Therefore, it suffices to prove that $\nu(G) \geq \tau(G)$. Fix $M \subseteq G$ to be a maximum matching. Let $(A, B)$ be a bipartition of $G$, then for every $e \in E(M)$, we have $e = v_Av_B$ for some $v_A \in A$ and $v_B \in B$.
+        By Proposition \ref{pro:tauGeqNu}, we already know that $\nu(G) \leq \tau(G)$, so it suffices to prove that $\nu(G) \geq \tau(G)$. Fix $M \subseteq G$ to be a maximum matching. Let $(A, B)$ be a bipartition of $G$, then for every $e \in E(M)$, we have $e = v_Av_B$ for some $v_A \in A$ and~$v_B \in B$.
         \\\\
         We select a subset of vertices from $V(M)$ with the following algorithm: for each $v_Av_B \in E(M)$, we take $v_B$ if there exists some alternating path starting at a vertex in $A$ ends at $v_B$. Otherwise, we take $v_A$. Let the vertex set produced this way be $U$. We claim that $U$ is a vertex cover for $G$.
         \\\\
-        Take any edge $ab \in E(G)$. If $ab \in E(M)$, then $a \in U$ or $b \in U$. Otherwise, since $M$ is a maximum matching in $G$ which is bipartite, at least one of $a$ and $b$ is matched.
+        Take any edge $ab \in E(G)$. If $ab \in E(M)$, then $a \in U$ or $b \in U$. Otherwise, since $M$ is a maximum matching in $G$ which is bipartite, at least one of $a$ and $b$ is matched.  If $b \in V(M)$, consider $a$. If $a \notin V(M)$, then $ab$ is an alternating path and so $b \in U$. Otherwise, $a \in V(M)$ which reduces the case to the other case.
         \\\\
-        If $b \in V(M)$, consider $a$. If $a \notin V(M)$, then $ab$ is an alternating path and so $b \in U$. Otherwise, $a \in V(M)$ which reduces the case to the other case.
-        \\\\
-        If $a \in V(M)$ and $a \in U$ then we are done. Otherwise, $a \notin U$. Suppose $ab' \in E(M)$, then $b' \in U$. This means that we can find some alternating path $P$ with respect to $M$ which ends at $b'$. If $b \in P$, then there is some alternating path with respect to $M$ which ends at $b$. Otherwise, note that $a \notin P$ because $a$ is matched, so $P + ab$ is an alternating path which ends at $b$ with respect to $M$. Since $M$ is maximum, by Theorem \ref{thm:maxMatchChar}, this alternating path is not augmenting, which means that $b \in V(M)$. Therefore, $b \in U$. 
-        \\\\
-        Therefore, $U$ is a vertex cover for $G$. Note that $\abs{U} = \nu(G)$, so $\tau(G) \leq \nu(G)$. This means that $\nu(G) = \tau(G)$.
+        If $a \in V(M)$ and $a \in U$ then we are done. Otherwise, suppose that $ab' \in E(M)$, then $b' \in U$. This means that we can find some alternating path $P$ with respect to $M$ which ends at $b'$. If $b \in P$, then there is some alternating path with respect to~$M$ which ends at $b$. Otherwise, note that $a \notin P$ because $a$ is matched, so $P + ab$ is an alternating path which ends at $b$ with respect to $M$. Since $M$ is maximum, by Theorem \ref{thm:maxMatchChar}, this alternating path is not augmenting, which means that $b \in V(M)$. Therefore, $b \in U$, and so $U$ is a vertex cover for $G$. Note that $\abs{U} = \nu(G)$, so we have~$\tau(G) \leq \nu(G)$. This means that $\nu(G) = \tau(G)$.
     \end{proof}
 \end{thmbox}
 We can generalise Theorem \ref{thm:Konig} to \textit{fractional vertex covers}.
@@ -938,7 +1008,7 @@ Suppose $G$ is a bipartite graph with bipartition $(A, B)$. In the case where $\
 
 Suppose $S \subseteq A$ is a set of vertices in $G$. We denote the union of the neighbourhoods of all vertices in $S$ by $N_G(S)$. Apparently, if we can find some $S$ such that $\abs{N_G(S)} < \abs{S}$, it means that we cannot find a matching perfect to $A$ because we cannot match every vertex in $S$.
 
-This means that for $G$ to contain a matching perfect to $A$, it necessarily needs to satisfy $\abs{S} \leq \abs{N_G(S)}$ for every $S \subseteq A$. However, it turns out that amazingly, this necessary condition alone is also sufficient to ascertain the existence of a matching perfect to $A$.
+This means that for $G$ to contain a matching perfect to $A$, it necessarily needs to be such that $\abs{S} \leq \abs{N_G(S)}$ for every $S \subseteq A$. However, it turns out that amazingly, this necessary condition alone is also sufficient to ascertain the existence of a matching perfect to $A$.
 \begin{thmbox}{Hall's Theorem}{Hall}
     Let $G$ be a bipartite graph $G$ with bipartition $(A, B)$. $G$ contains a matching perfect to $A$ if and only if for every $S \subseteq A$,
     \begin{equation*}
@@ -946,21 +1016,17 @@ This means that for $G$ to contain a matching perfect to $A$, it necessarily nee
     \end{equation*}
     \tcblower
     \begin{proof}
-        Suppose $M \subseteq G$ is a matching perfect to $A$. Let $S \subseteq A$ be any subset. Clearly, for each $a \in S$, there exists a unique $b \in B$ such that $ab \in E(M)$ and if $ab, a'b' \in E(M)$ for $a \neq a'$, we have $b \neq b'$. Therefore, $\abs{N_G(S)} \geq \abs{S}$.
+        Suppose that $M \subseteq G$ is a matching perfect to $A$. Let $S \subseteq A$ be any subset. Clearly, for each $a \in S$, there exists a unique $b \in B$ such that $ab \in E(M)$ and if~$ab, a'b' \in E(M)$ for $a \neq a'$, we have $b \neq b'$. Therefore, $\abs{N_G(S)} \geq \abs{S}$. Suppose that for every $S \subseteq A$, $\abs{N_G(S)} \geq \abs{S}$, we take any matching $M \subseteq G$ such that $A - V(M) \neq \varnothing$. Take $(a_0, b_1, a_1, \cdots)$ to be a finite sequence of pair-wise distinct vertices with greatest length such that $a_0$ is unmatched, $b_i$ is adjacent to some $a_{f(i)} \in \left\{a_0, a_1, \cdots, a_{i - 1}\right\}$ in~$G$ and $b_ia_i \in M$ for all $i \geq 1$.
         \\\\
-        Suppose that for every $S \subseteq A$, $\abs{N_G(S)} \geq \abs{S}$, we take any matching $M \subseteq G$ such that $A - V(M) \neq \varnothing$. Take $(a_0, b_1, a_1, \cdots)$ to be a finite sequence of pair-wise distinct vertices with greatest length such that $a_0$ is unmatched, $b_i$ is adjacent to some $a_{f(i)} \in \left\{a_0, a_1, \cdots, a_{i - 1}\right\}$ in $G$ and $b_ia_i \in M$ for all $i \geq 1$.
+        We claim that this sequence does not end in $A$. Suppose on contrary that the sequence ends at some $a_{n - 1} \in A$. Take $T = \left\{a_0, a_1, \cdots, a_{n - 1}\right\}$, then $\abs{N_G(T)} \geq n$. Therefore, there exists some $b_n \in N_G(T) - \left\{b_1, b_2, \cdots, b_{n - 1}\right\}$, which is a contradiction because we can now extend the length of the sequence. Let $b_k$ be the end of the sequence, then the path $P \coloneqq a_0b_1a_{f(1)}b_2a_{f(2)}\cdots a_{f(k - 1)}b_k$ is an alternating path. If~$b_k$ is matched to some $a \in A \cap V(M)$, we know that $a \notin \left\{a_1, a_2,\cdots, a_{k - 1}\right\}$ because that would imply $b_k = b_i$ for some $i \in \left\{1, 2, \cdots, k - 1\right\}$, which is a contradiction. 
         \\\\
-        We claim that this sequence does not end in $A$. Suppose on contrary that the sequence ends at some $a_{n - 1} \in A$. Take $T = \left\{a_0, a_1, \cdots, a_{n - 1}\right\}$, then $\abs{N_G(T)} \geq n$. Therefore, there exists some $b_n \in N_G(T) - \left\{b_1, b_2, \cdots, b_{n - 1}\right\}$, which is a contradiction because we can now extend the length of the sequence. 
-        \\\\
-        Let $b_k$ be the end of the sequence, then the path $P \coloneqq a_0b_1a_{f(1)}b_2a_{f(2)}\cdots a_{f(k - 1)}b_k$ is an alternating path. If $b_k$ is matched to some $a \in A \cap V(M)$, we know that $a \notin \left\{a_1, a_2,\cdots, a_{k - 1}\right\}$ because that would imply $b_k = b_i$ for some $i \in \left\{1, 2, \cdots, k - 1\right\}$, which is a contradiction. Since $a_0$ is unmatched, we have find a longer sequence satisfying our construction, which is not possible. Therefore, $b_k$ must be unmatched. This means that $P$ is an augmenting path and so by Theorem \ref{thm:maxMatchChar} $M$ is not a maximum matching. This means that the maximum matching in $G$ must be perfect to $A$.
+        Since $a_0$ is unmatched, we have find a longer sequence satisfying our construction, which is not possible. Therefore, $b_k$ must be unmatched. This means that $P$ is an augmenting path and so by Theorem \ref{thm:maxMatchChar} $M$ is not a maximum matching. This means that the maximum matching in $G$ must be perfect to $A$.
     \end{proof}
 \end{thmbox}
 Beside the above proof, there are several alternative ways to prove Theorem \ref{thm:Hall}. Here we first present a proof by contradiction using Theorem \ref{thm:Konig}.
 \begin{genbox}{Proof for Hall's Theorem by K\"{o}nig's Theorem}
     \begin{proof}
-        Observe that it suffices to show that $\nu(G) = \abs{A}$. First, note that since $G$ is bipartite, it is not possible to have $\nu(G) > \abs{A}$ because otherwise there exists an edge between $2$ distinct vertices in $B$. Suppose on contrary that $\nu(G) < \abs{A}$, then by Theorem \ref{thm:Konig}, $\tau(G) = \nu(G) < \abs{A}$. This means that there exists a vertex cover with strictly less vertices than $A$.
-        \\\\
-        Suppose $U = A' \cup B'$ is a vertex cover for $G$ with $A' \subseteq A$ and $B' \subseteq B$, then $\abs{A'} + \abs{B'} < \abs{A}$. Clearly, there is no edge between $A - A'$ and $B - B'$. Take $S \coloneqq A - A'$, then $N_G(S) \subseteq B'$. Therefore,
+        Observe that it suffices to show that $\nu(G) = \abs{A}$. First, note that since $G$ is bipartite, it is not possible to have $\nu(G) > \abs{A}$ because otherwise there exists an edge between $2$ distinct vertices in $B$. Suppose on contrary that $\nu(G) < \abs{A}$, then by Theorem \ref{thm:Konig}, $\tau(G) = \nu(G) < \abs{A}$. This means that there exists a vertex cover with strictly less vertices than $A$. Suppose that $U = A' \cup B'$ is a vertex cover for $G$ with $A' \subseteq A$ and~$B' \subseteq B$, then we have~$\abs{A'} + \abs{B'} < \abs{A}$. Clearly, there is no edge between $A - A'$ and $B - B'$. Take $S \coloneqq A - A'$, then $N_G(S) \subseteq B'$. Therefore,
         \begin{equation*}
             \abs{N_G(S)} \leq \abs{B'} < \abs{A} - \abs{A'} = \abs{S},
         \end{equation*}
@@ -990,13 +1056,11 @@ Another proof uses an argument by strong induction:
 The last proof we are going to present stems from the following observation: suppose we have a graph $G$ satisfying the conditions in Hall's Theorem, we wish to delete ``redundant'' edges until we cannot remove any more edge without violating the condition. We claim that the remaining graph is a matching perfect to $A$.
 \begin{genbox}{Proof for Hall's Theorem by Edge-Minimal Subgraph}
     \begin{proof}
-        Let $H \subseteq G$ be the subgraph with the smallest size such that for every $S \subseteq A$, $\abs{N_H(S)} \geq \abs{S}$. We shall prove that $H$ is a matching perfect to $A$.
-        \\\\
-        First, observe that $d_H(a) \geq 1$ for all $a \in A$. Suppose on contrary that $H$ is not a matching perfect to $A$, then there exists some $a \in A$ which has two distinct neighbours $b_1, b_2 \in B$ in $H$. Define $H_1 \coloneqq H - ab_1$ and $H_2 \coloneqq H - ab_2$, then by the minimality of $H$, there exist subsets $A_1, A_2 \subseteq A$ both containing $a$ such that~$\abs{N_{H_1}(A_1)} < \abs{A_1}$ and $\abs{N_{H_2}(A_2)} < \abs{A_2}$. By our construction of $H_1$ and $H_2$, we know that $b_1 \in N_{H_2}(A_2) - N_{H_1}(A_1)$ and $b_2 \in N_{H_1}(A_1) - N_{H_2}(A_2)$. Consider 
+        Let $H \subseteq G$ be an edge-minimal subgraph such that for every $S \subseteq A$, we have~$\abs{N_H(S)} \geq \abs{S}$. We shall prove that $H$ is a matching perfect to $A$. First, observe that $d_H(a) \geq 1$ for all $a \in A$. Suppose on contrary that $H$ is not a matching perfect to $A$, then there exists some $a \in A$ which has two distinct neighbours $b_1, b_2 \in B$ in $H$. Define $H_1 \coloneqq H - ab_1$ and $H_2 \coloneqq H - ab_2$, then by the minimality of $H$, there exist subsets $A_1, A_2 \subseteq A$ both containing $a$ such that~$\abs{N_{H_1}(A_1)} < \abs{A_1}$ and $\abs{N_{H_2}(A_2)} < \abs{A_2}$. By our construction of $H_1$ and $H_2$, we know that 
         \begin{equation*}
-            S \coloneqq A_1 \cap A_2 - \{a\},
+            b_1 \in N_{H_2}(A_2) - N_{H_1}(A_1) \quad\textrm{and}\quad b_2 \in N_{H_1}(A_1) - N_{H_2}(A_2).
         \end{equation*}
-        then $N_H(S) \subseteq N_{H_1}(A_1) \cap N_{H_2}(A_2)$. Therefore,
+        Let $S \coloneqq A_1 \cap A_2 - \{a\}$, then $N_H(S) \subseteq N_{H_1}(A_1) \cap N_{H_2}(A_2)$. Therefore,
         \begin{align*}
             \abs{N_H(S)} & \leq \abs{N_{H_1}(A_1) \cap N_{H_2}(A_2)} \\
             & = \abs{N_{H_1}(A_1)} + \abs{N_{H_2}(A_2)} - \abs{N_{H_1}(A_1) \cup N_{H_2}(A_2)} \\
@@ -1012,7 +1076,7 @@ Here we introduce a famous corollary of Hall's Theorem:
     If $G$ is a $d$-regular bipartite graph with bipartition $(A, B)$, then $G$ has a perfect matching.
     \tcblower
     \begin{proof}
-        It suffices to prove that $G$ contains a matching perfect to $A$. Since $e(G) = d\abs{A} = d\abs{B}$, we have $\abs{A} = \abs{B}$. Take any $X \subseteq A$ and consider the induced subgraph 
+        It suffices to prove that $G$ contains some matching perfect to $A$. Observe that~$e(G) = d\abs{A} = d\abs{B}$, so we have $\abs{A} = \abs{B}$. Take any $X \subseteq A$ and consider the induced subgraph 
         \begin{equation*}
             H \coloneqq G[X \cup N_G(X)].
         \end{equation*}
@@ -1024,7 +1088,11 @@ The above result immediately leads to the following corollary:
     Let $G$ be a $d$-regular bipartite graph, then $E(G)$ can be decomposed into perfect matchings.
     \tcblower
     \begin{proof}
-        By Corollary \ref{cor:regBipMatch}, we can find some perfect matching $M_d$ in $G$. Consider the graph $G'$ with $V(G') = V(G)$ and $E(G') = E(G) - E(M_d)$, then $G'$ is a $(d - 1)$-regular bipartite graph and so it contains a perfect matching $M_{d - 1}$. Note that $E(M_{d - 1}) \cap E(M_d) = \varnothing$ and that $M_{d - 1}$ is also a perfect matching in $G$. Repeat this process until we have used all edges in $G$. The set of all perfect matchings obtained this way forms a partition of $E(G)$.
+        By Corollary \ref{cor:regBipMatch}, we can find some perfect matching $M_d$ in $G$. Consider the graph $G'$ with $V(G') = V(G)$ and $E(G') = E(G) - E(M_d)$, then $G'$ is a $(d - 1)$-regular bipartite graph and so it contains a perfect matching $M_{d - 1}$. Note that
+        \begin{equation*}
+            E(M_{d - 1}) \cap E(M_d) = \varnothing
+        \end{equation*}
+        and that $M_{d - 1}$ is also a perfect matching in $G$. Repeat this process until we have used all edges in $G$. The set of all perfect matchings obtained this way is a partition of~$E(G)$.
     \end{proof}
 \end{corbox}
 Can we derive a similar result for any kind of graphs in general? It turns out that this curious question is closely related to the number of connected components with odd orders in a graph. We denote this quantity by $o(G)$ for any graph $G$.
@@ -1034,12 +1102,12 @@ Can we derive a similar result for any kind of graphs in general? It turns out t
     \begin{proof}
         Let $M \subseteq G$ be a perfect matching. Take any $U \subseteq V(G)$ and consider the induced subgraph $H \coloneqq G - U$. Let $C \subseteq H$ be a connected component of odd order. Since $M$ is a perfect matching, then clearly there is at least one vertex $v \in C$ which is matched to some vertex $u \in U$ in $M$. Since every $u \in U$ is matched to exactly one vertex in $M$, this implies that $o(H) \leq \abs{U}$.
         \\\\
-        Suppose conversely that for every $U \subseteq V(G)$, $o\bigl(G[V(G) - U]\bigr) \leq \abs{U}$. We shall prove that $G$ contains a perfect matching by considering the contrapositive statement. Let $v(G) = n$. First, we consider the following lemma:
+        Suppose conversely that for every $U \subseteq V(G)$, $o\left(G - U\right) \leq \abs{U}$. We shall prove that $G$ contains a perfect matching by considering the contrapositive statement. Let~$v(G) = n$. First, we consider the following lemma:
         \begin{lembox}{}{badSet}
-            If graphs $G \subseteq G'$ are such that $V(G) = V(G')$ but $E(G) \subseteq E(G')$, then if $U \subseteq V(G')$ is such that $o(G' - U) > \abs{U}$, we have $o(G - U) > \abs{U}$.
+            Let $G'$ be a  graph. If $G \subseteq G'$ is such that $V(G) = V(G')$ but $E(G) \subseteq E(G')$, then if~$U \subseteq V(G')$ is such that $o(G' - U) > \abs{U}$, we have $o(G - U) > \abs{U}$.
             \tcblower
             \begin{proof}
-                Note that $G$ is produced by deleting some edges in $G'$. For each edge $e \in E(G') - E(G)$, if $e$ is in an odd component $H_1 \subseteq G'$, then $H_1 - e$ contains at least one odd component in $G$. Otherwise, if $e$ is in an even component $H_2 \subseteq G'$, then $H_2 - e$ may or may not contain any odd component. Therefore, we have
+                Note that $G$ can be produced by deleting some edges in $G'$. For each edge~$e \in E(G') - E(G)$, if $e$ is in an odd component $H_1 \subseteq G'$, then $H_1 - e$ contains at least one odd component in $G$. Otherwise, if $e$ is in a component $H_2 \subseteq G'$ of an even order, then $H_2 - e$ may or may not contain any odd component. Therefore, we have
                 \begin{equation*}
                     o(G - U) \geq o(G' - U) > \abs{U}.
                 \end{equation*}  
@@ -1047,15 +1115,15 @@ Can we derive a similar result for any kind of graphs in general? It turns out t
         \end{lembox}
         By Lemma \ref{lem:badSet}, without loss of generality we can take $G$ to be the edge-maximal graph of order $n$ such that $G$ does not contain any perfect matching. 
         \\\\
-        Consider $U \coloneqq \left\{v \colon v \sim u \textrm{ for all } u \in V(G) - v\right\}$, i.e., $U$ consists of vertices in $G$ which are adjacent to every other vertex in $G$, then $G[U]$ is a clique. We claim that every connected component of $G - U$ is complete. Suppose on contrary that there is some connected component $C_i \subseteq G - U$ which is not complete, then there exists distinct vertices $a, a' \in V(C_i)$ such that $a \not\sim a'$. Therefore, there exists an $a$-$a'$ path in $C_i$ of length at least $2$, and so we can find vertices $a, b, c \in V(C_i)$ such that $a \sim b$, $b \sim c$ but $a \not\sim c$. Note that $b \notin U$, so there exists some $d \in V(G)$ such that $b \not\sim d$.
+        Consider $U \coloneqq \left\{v \colon v \sim u \textrm{ for all } u \in V(G) - v\right\}$, i.e., $U$ consists of vertices in $G$ which are adjacent to every other vertex in $G$, then $G[U]$ is a clique. We claim that every connected component of $G - U$ is complete. Suppose on contrary that there is some connected component $C_i \subseteq G - U$ which is not complete, then there exists distinct vertices $a, a' \in V(C_i)$ such that $a \not\sim a'$. Therefore, there exists an $a$-$a'$ path in $C_i$ of length at least $2$, which implies that we can find vertices $a, b, c \in V(C_i)$ such that $a \sim b$, $b \sim c$ but $a \not\sim c$. Note that $b \notin U$, so there exists some $d \in V(G)$ such that $b \not\sim d$.
         \\\\
-        Define graphs $G_1 \coloneqq G + ac$ and $G_2 \coloneqq G + bd$. By the edge-maximality of $G$, $G_1$ contains a perfect matching $M_1$ and $G_2$ contains a perfect matching $M_2$. Note that $ac \in E(M_1)$, because otherwise $M_1$ is a perfect matching with vertex set $V(G)$ and edge set $E(G)$, which is not possible. Similarly, $bd \in E(M_2)$ Let $P \subseteq G$ be a maximal $d$-$v$ path for some $v \in V(G)$ which is alternating between edges in $M_1$ and $M_2$.
+        Define graphs $G_1 \coloneqq G + ac$ and $G_2 \coloneqq G + bd$. By the edge-maximality of $G$, we know that $G_1$ contains a perfect matching $M_1$ and $G_2$ contains a perfect matching~$M_2$. Note that $ac \in E(M_1)$, because otherwise $M_1$ is a perfect matching with vertex set $V(G)$ and edge set $E(G)$, which is not possible. Similarly, $bd \in E(M_2)$. Let~$P \subseteq G$ be a maximal $d$-$v$ path for some $v \in V(G)$ which is alternating between edges in $M_1$ and $M_2$.
         \\\\
         Suppose $P$ ends with an $M_1$-edge, then $v$ must be matched to $d$ in $M_2$ because otherwise we can find a longer $M_1$-$M_2$ alternating path than $P$, which is not possible. Since $bd \in E(M_2)$, this implies that $v = b$. Note that $M_1 \cap P \subseteq G$ is a perfect matching in $P$ and $M_2 - P - bd$ is a perfect matching in $G - P$, then $(M_1 \cap P) \cup (M_2 - P - bd)$ is a perfect matching in $G$.
         \\\\
-        Similarly, suppose $P$ ends with an $M_2$-edge, then $v$ must be either $a$ or $c$, because otherwise there exists an edge $uv \in E(M_1) \cap E(G)$ that can further extend $P$, which is not possible. Without loss of generality, suppose $v = c$, then it is clear that $a \notin P$. We claim that $b \notin P$. Suppose on contrary that $b \in P$, then there must be an $M_1$ edge in $P$ containing $b$ because there is no $M_2$ edge in $P$ containing $b$. However, this means that $P$ ends with an $M_2$ edge, which is a contradiction. Note that $M_2 \cap P \subseteq G$ is a perfect matching in $P$ and $M_1 - P - ac + ab$ is a perfect matching in $G - P$. Therefore, $(M_2 \cap P) \cup (M_1 - P - ac + ab)$ is a perfect matching in $M$.
+        Similarly, suppose $P$ ends with an $M_2$-edge, then $v$ must be either $a$ or $c$, because otherwise there exists an edge $uv \in E(M_1) \cap E(G)$ that can further extend~$P$, which is not possible. Without loss of generality, suppose $v = c$, then it is clear that $a \notin P$. We claim that $b \notin P$. Suppose on contrary that $b \in P$, then there must be an $M_1$ edge in $P$ containing $b$ because there is no $M_2$ edge in $P$ containing~$b$. However, this means that $P$ ends with an $M_2$ edge, which is a contradiction. Note that $M_2 \cap P \subseteq G$ is a perfect matching in $P$ and $M_1 - P - ac + ab$ is a perfect matching in $G - P$. Therefore, $(M_2 \cap P) \cup (M_1 - P - ac + ab)$ is a perfect matching in $G$.
         \\\\
-        Either way, we have reached a contradiction because $M$ does not contain any perfect matching. Therefore, every connected component of $G - U$ is complete. If $U = \varnothing$, then $G - U = G$ is complete. Since $G$ has no perfect matching, $v(G)$ must be odd and so $o(G - U) = 1 > 0 = \abs{U}$. Otherwise, for each connected component $C_i \subseteq G$, if $C_i$ has an even order, it contains a perfect matching. Otherwise, $C_i$ has an odd order. Take some $v_i \in V(C_i)$ and match it to some $u_i \in U$. Note that $C_i - v_i$ is a complete graph of even order and so it contains a perfect matching. Ho
+        Either way, we have reached a contradiction because $G$ does not contain any perfect matching. Therefore, every connected component of $G - U$ is complete. If~$U = \varnothing$, then $G - U = G$ is complete. Since $G$ has no perfect matching, $v(G)$ must be odd and so $o(G - U) = 1 > 0 = \abs{U}$. Otherwise, for each connected component~$C_i \subseteq G$, if $C_i$ has an even order, it contains a perfect matching. Otherwise, take some $v_i \in V(C_i)$ and match it to some $u_i \in U$. Note that $C_i - v_i$ is a complete graph of even order and so it contains a perfect matching. This implies that $o\left(G - U\right) > \abs{U}$ because otherwise we can produce a perfect matching by this algorithm.
     \end{proof}
 \end{thmbox}
 Tutte's Theorem has many interesting applications, one of which is related to the concept of an \textit{cut edge} or \textit{cut vertex}.
@@ -1063,11 +1131,11 @@ Tutte's Theorem has many interesting applications, one of which is related to th
     Every connected $3$-regular graph with no cut edge contains a perfect matching.
     \tcblower
     \begin{proof}
-        Let $U \subseteq V(G)$ be non-empty and consider $H \coloneqq G - u$. If $H$ contains no odd-order component, then we are done. Otherwise, fix some odd-order component $C \subseteq H$. Consider
+        Let $U \subseteq V(G)$ be non-empty and consider $H \coloneqq G - u$. If $H$ contains no odd-order component, then we are done. Otherwise, we can fix some odd-order component~$C \subseteq H$. Consider
         \begin{equation*}
             \sum_{v \in V(C)}d_G(v) = 3\abs{C} = 2e(G[V(C)]) + e_G(V(C), U).
         \end{equation*}
-        Note that the above sum is odd, so $e_G(V(C), U)$ is odd. Since $G$ contains no cut-edge, $e_G(V(C), U) \geq 3$. Let $p$ be the number of odd components in $G - u$ and $M$ be the number of edges between $U$ and $V(G) - U$, then $M \geq 3p$. However, $M \leq 3\abs{U}$ because $G$ is $3$-regular, so $p \leq \abs{U}$. By Theorem \ref{thm:tutte}, $G$ contains a perfect matching.
+        Note that the above sum is odd, so $e_G(V(C), U)$ is odd. Since $G$ contains no cut-edge,~$e_G(V(C), U) \geq 3$. Let $p$ be the number of odd components in $G - u$ and $M$ be the number of edges between $U$ and $V(G) - U$, then $M \geq 3p$. However, we know that $M \leq 3\abs{U}$ because~$G$ is $3$-regular, so $p \leq \abs{U}$. By Theorem \ref{thm:tutte}, $G$ contains a perfect matching.
     \end{proof}
 \end{thmbox}
 Note that a graph $G = (V, E)$ can actually be viewed as a collection of $2$-element subsets of $V$. Therefore, a natural generalisation is to consider a graph defined as the collection of subsets of any size of $V$.
@@ -1097,18 +1165,18 @@ Obviously, $\kappa(G) \leq v(G) - 1$ for any graph $G$, and a $k$-connected grap
     \item Non-trivial cycle $C_n$: $\kappa(C_n) = 2$.
     \item Complete bipartite graph $K_{m, n}$: $\kappa(K_{m, n}) = \min\{m, n\}$.
 \end{enumerate}
-We may also wish to consider the hypercube graph $Q^d$. Intuitively, $Q^d$ is $d$-regular, so it suffices to fix any $v \in V\left(Q^d\right)$ and delete all of its $d$ neighbours to isolate the vertex. Therefore, $\kappa\left(Q^d\right) \leq d$. However, can we force the inequality to an equality?
+We may also wish to consider the hypercube graph $Q^d$. Intuitively, $Q^d$ is $d$-regular, so it suffices to fix any $v \in V\left(Q^d\right)$ and delete all of its $d$ neighbours to isolate the vertex. Therefore, we have $\kappa\left(Q^d\right) \leq d$. However, can we force the inequality to an equality?
 \begin{probox}{The Hypercube Graph $Q^d$ is $d$-connected}{hypercubeKappa}
     Every hypercube graph $Q^d$ is $d$-connected.
     \tcblower
     \begin{proof}
-        The case where $d = 1$ is trivial. Suppose that for some $d \in \N^+$, $Q^d$ is $d$-connected. Consider $Q^{d + 1}$. Notice that $Q^{d + 1} = Q^+ \cup Q^- \cup M$, where $Q^+$ and $Q^-$ are both $Q^d$ and $M$ is a perfect matching joining vertices in $Q^+$ and those in $Q^-$ with exactly $1$ different digit. Let $S$ be the smallest vertex cut in $Q^{d + 1}$. We consider $2$ cases.
+        The case where $d = 1$ is trivial. Suppose that for some $d \in \N^+$, $Q^d$ is~$d$-connected. Consider $Q^{d + 1}$. Notice that $Q^{d + 1} = Q^+ \cup Q^- \cup M$, where $Q^+$ and $Q^-$ are both $Q^d$ and $M$ is a perfect matching joining vertices in $Q^+$ and those in $Q^-$ with exactly $1$ different digit. Let $S$ be the smallest vertex cut in $Q^{d + 1}$. We consider $2$ cases.
         \\\\
         If $Q^+ - S$ and $Q^- - S$ are both connected, then $V(M) \subseteq S$ because otherwise there is an edge between $Q^+ - S$ and $Q^- - S$ in $Q^{d - 1} - S$ and so $Q^{d - 1} - S$ is connected, which is a contradiction. Therefore,
         \begin{equation*}
             \kappa\left(Q^{d + 1}\right) = \abs{S} \geq \abs{M} = 2^{d} \geq d + 1.
         \end{equation*}
-        Otherwise, without loss of generality assume that $Q^+$ is disconnected, then $S \cap Q^+$ is a vertex cut in $Q^+$. By the inductive hypothesis, $\abs{S \cap Q^+} \geq d$. We claim that $\abs{S \cap Q^-} \geq 1$. Suppose on contrary that $\abs{S \cap Q^-} = 0$, then $S \cap V\left(Q^-\right) = \varnothing$. This means that $Q^- - S$ is connected. Note that for every $v \in V\left(Q^+ - S\right)$, there exists some $u \in V\left(Q^- - S\right)$ such that $uv \in E\left(Q^{d + 1} - S\right)$, because otherwise $S \cap V\left(Q^-\right) \neq \varnothing$. Therefore, for any $v_1, v_2 \in V\left(Q^+ - S\right)$, we can find $u_1, u_2 \in V\left(Q^- - S\right)$ such that there is a $v_1$-$v_2$ path in $Q^{d + 1}$ containing $v_1u_1$ and $v_2u_2$. Therefore, $Q^{d + 1} - S$ is connected, which is a contradiction. Therefore, 
+        Otherwise, without loss of generality assume that $Q^+$ is disconnected, then $S \cap Q^+$ is a vertex cut in $Q^+$. By the inductive hypothesis, we have $\abs{S \cap Q^+} \geq d$. We claim that~$\abs{S \cap Q^-} \geq 1$. Suppose on contrary that $\abs{S \cap Q^-} = 0$, then $S \cap V\left(Q^-\right) = \varnothing$. This means that $Q^- - S$ is connected. Notice that for every $v \in V\left(Q^+ - S\right)$, there exists some $u \in V\left(Q^- - S\right)$ such that $uv \in E\left(Q^{d + 1} - S\right)$, because otherwise it means that~$S \cap V\left(Q^-\right) \neq \varnothing$. Therefore, for any $v_1, v_2 \in V\left(Q^+ - S\right)$, we can always find~$u_1, u_2 \in V\left(Q^- - S\right)$ such that there is a $v_1$-$v_2$ path in $Q^{d + 1}$ containing $v_1u_1$ and~$v_2u_2$. Therefore, $Q^{d + 1} - S$ is connected, which is a contradiction. Therefore, 
         \begin{equation*}
             \kappa\left(Q^{d + 1}\right) = \abs{S} = \abs{S \cap Q^+} + \abs{S \cap Q^-} \geq d + 1.
         \end{equation*}
@@ -1123,7 +1191,7 @@ Next, we will focus on $2$-connected graph, i.e., graphs which we need to delete
         Suppose on contrary that there exists a $2$-connected graph $T$ which is acyclic. Note that $T$ is connected, so $T$ must be a tree. By Theorem \ref{thm:equivTreeDef}, $T - uv$ is disconnected for any $uv \in E(T)$. If both $u$ and $v$ are leaves, then $T$ is an edge, which implies that deleting any vertex reduces $T$ to a trivial graph. Otherwise, without loss of generality, assume $u$ is not a leaf, and so $T - u$ is disconnected. Either way, this contradicts with the fact that $\kappa(T) \geq 2$.
     \end{proof}
 \end{probox}
-It should be taken note of that the converse of Proposition \ref{pro:cycleIn2Connected} is not true in general. Let $C_n$ be a cycle, then adding a vertex $v$ into $C_n$ by joining it with any $u \in V(C_n)$ produces a graph $H$ containing a cycle. However, $H - u$ is disconnected so $\kappa(H) = 1$.
+It should be taken note of that the converse of Proposition \ref{pro:cycleIn2Connected} is not true in general. Let~$C_n$ be a cycle, then adding a vertex $v$ into $C_n$ by joining it with any $u \in V(C_n)$ will produce a graph $H$ containing a cycle. However, $H - u$ is disconnected so $\kappa(H) = 1$.
 
 An intuition about connectivity is that, if we were to increase the connectivity of a graph, we should try to make each vertex to have as many incident edges as possible.
 \begin{probox}{High Connectivity Implies High Minimum Degree}{highKappaThenHighDelta}
@@ -1137,18 +1205,18 @@ The above trivial proposition shows that a graph with high connectivity has high
 
 Recall that in Proposition \ref{pro:highAvgDeg}, while we cannot ensure a graph with a high average degree to have a high minimum degree, we have proved that the graph will contain a subgraph of a high minimum degree. In the same spirit, given a graph with a high minimum degree, we can try to find a subgraph with a high connectivity.
 \begin{thmbox}{Mader's Theorem}{Mader}
-    For every graph $G$, if $\bar{d}(G) \geq 4k$, then $G$ contains a $k$-connected subgraph.
+    For every graph $G$, if $\widebar{d}(G) \geq 4k$, then $G$ contains a $k$-connected subgraph.
     \tcblower
     \begin{proof}
-        For $k = 1$, we have $\bar{d}(G) \geq 4$. This means that $G$ is non-empty and so it contains an edge which is a $1$-connected subgraph.
-        \\\\
-        For $k \geq 2$, we consider the following claims: first, suppose $v(G) < 2k - 1$, then $\bar{d}(G) \leq v(G) - 1 < 2k - 2$. Therefore, if $\bar{d}(G) \geq 4k > 2k - 2$, we have $v(G) \geq 2k - 1$. On the other hand, notice that
+        For $k = 1$, we have $\widebar{d}(G) \geq 4$. This means that $G$ is non-empty and so it contains an edge which is a $1$-connected subgraph. For $k \geq 2$, if $v(G) < 2k - 1$, then we have $\widebar{d}(G) \leq v(G) - 1 < 2k - 2$. Hence, if $\widebar{d}(G) \geq 4k > 2k - 2$, then $v(G) \geq 2k - 1$. On the other hand, notice that
         \begin{equation*}
-            e(G) = \frac{v(G)\bar{d}(G)}{2} \geq (2k - 3)\bigl(v(G) - k + 1\bigr) + 1.
+            e(G) = \frac{v(G)\widebar{d}(G)}{2} \geq (2k - 3)\bigl(v(G) - k + 1\bigr) + 1.
         \end{equation*}
-        Therefore, it suffices to prove that whenever $k > 2$, if $v(G) \geq 2k - 1$ and $e(G) \geq (2k - 3)\bigl(v(G) - k + 1\bigr) + 1$, then $G$ contains a $k$-connected subgraph.
-        \\\\
-        For $v(G) = 2k - 1$, we have 
+        Therefore, it suffices to prove that whenever $k > 2$, if 
+        \begin{equation*}
+            v(G) \geq 2k - 1 \quad\textrm{and}\quad e(G) \geq (2k - 3)\bigl(v(G) - k + 1\bigr) + 1,
+        \end{equation*}
+        then $G$ contains a $k$-connected subgraph. For $v(G) = 2k - 1$, we have 
         \begin{equation*}
             e(G) \geq k(2k - 3) + 1 = (2k - 1)(k - 1) = \begin{pmatrix}
                 2k - 1 \\
@@ -1158,15 +1226,17 @@ Recall that in Proposition \ref{pro:highAvgDeg}, while we cannot ensure a graph 
         However, we know that $e(G) \leq \left(\begin{smallmatrix}
             v(G) \\
             2
-        \end{smallmatrix}\right)$, so $G \cong K_{2k - 1}$. Therefore, $\kappa(G) = 2k - 2 \geq k$ and so $G$ is $k$-connected.
-        \\\\
-        For $v(G) = n \geq 2k$, suppose that for all $v(G) = m \in [2k - 1, n - 1]$, $G$ contains a $k$-connected subgraph. We consider $2$ cases. If $\delta(G) \leq 2k - 3$, then we can take some $v \in V(G)$ with $d_G(v) = \delta(G)$. Consider
+        \end{smallmatrix}\right)$, so $G \cong K_{2k - 1}$. Therefore, $\kappa(G) = 2k - 2 \geq k$ and so $G$ is $k$-connected. For $v(G) = n \geq 2k$, suppose that for all 
+        \begin{equation*}
+            v(G) = m \in [2k - 1, n - 1],
+        \end{equation*}
+        $G$ contains a $k$-connected subgraph. We consider $2$ cases. If $\delta(G) \leq 2k - 3$, then we can take some $v \in V(G)$ with $d_G(v) = \delta(G)$. Consider
         \begin{align*}
             e(G - v) & = e(G) - \delta(G) \\
             & \geq (2k - 3)(n - k + 1) + 1 - (2k - 3) \\
             & = (2k - 3)\bigl((n - 1) - k + 1\bigr) + 1.
         \end{align*}
-        By the inductive hypothesis, $G - v$ contains a $k$-connected subgraph $H$. Since $G - v \subseteq G$, $H \subseteq G$.
+        By the inductive hypothesis, $G - v$ contains a $k$-connected subgraph $H$. This implies that $H \subseteq G$.
         \\\\
         If $\delta(G) \geq 2k - 2 > 2k - 3$, we again consider $2$ cases. If $G$ is $k$-connected, then we are done. Otherwise, $G$ contains a vertex cut with size at most $k - 1$. Therefore, we can consider $G_1, G_2 \subseteq G$ such that $G_1 \cup G_2 = G$ and $V(G_1) \cap V(G_2)$ is a vertex cut such that $\abs{V(G_1) \cap V(G_2)} \leq k - 1$. Notice that this implies that there is no edge between $V(G_1) - V(G_2)$ and $V(G_2) - V(G_1)$. Consider any $v \in V(G_1)$. Note that $N_G(v) \subseteq V(G_1)$ and $d_G(v) \geq \delta(G) \geq 2k - 2$, so $\abs{V(G_1)} \geq d_G(v) + 1 = 2k - 1$. Similarly, $\abs{V(G_2)} \geq 2k - 1$. Suppose that 
         \begin{align*}
@@ -1185,7 +1255,7 @@ Recall that in Proposition \ref{pro:highAvgDeg}, while we cannot ensure a graph 
         \begin{equation*}
             e(G_1) \geq (2k - 3)\bigl(v(G_1) - k + 1\bigr) + 1.
         \end{equation*}
-        Therefore, by the inductive hypothesis, $G_1$ contains a $k$-connected subgraph $H$. Since $G_1 \subseteq G$, $H \subseteq G$. Therefore, any graph $G$ with $\bar{d}(G) \geq 4k$ contains a $k$-connected subgraph.
+        Therefore, by the inductive hypothesis, $G_1$ contains a $k$-connected subgraph $H$. This implies that $H \subseteq G$. Therefore, any graph $G$ with $\widebar{d}(G) \geq 4k$ contains a $k$-connected subgraph.
     \end{proof}
 \end{thmbox}
 Since a high minimum degree implies a high average average degree, Theorem \ref{thm:Mader} in fact guarantees that a graph with a high minimum degree will have a high connectivity.
@@ -1200,9 +1270,9 @@ Similar to separating sets, we can analogously define a set of edges which will 
 \end{dfnbox}
 However, as opposed to vertex cuts, the notion of an \textit{edge cut} is slightly different.
 \begin{dfnbox}{Edge Cut}{edgeCut}
-    Let $G$ be a graph and $\left(S, \bar{S}\right)$ be a partition for $V(G)$, an {\color{red} \textbf{edge cut}} in $G$ with respect to $\left(S, \bar{S}\right)$ is defined as 
+    Let $G$ be a graph and $\left(S, \widebar{S}\right)$ be a partition for $V(G)$, an {\color{red} \textbf{edge cut}} in $G$ with respect to~$\left(S, \widebar{S}\right)$ is defined as 
     \begin{equation*}
-        E_G\left(S, \bar{S}\right) \coloneqq \left\{xy \in E(G) \colon x \in S, y \in \bar{S}\right\}.
+        E_G\left(S, \widebar{S}\right) \coloneqq \left\{xy \in E(G) \colon x \in S, y \in \widebar{S}\right\}.
     \end{equation*}
     If an edge cut contains only a single edge, that edge is known as a {\color{red} \textbf{cut edge}} or {\color{red} \textbf{bridge}}.
 \end{dfnbox}
@@ -1221,24 +1291,20 @@ In fact, we can derive the following relation:
     For every graph $G$, $\kappa(G) \leq \kappa'(G) \leq \delta(G)$.
     \tcblower
     \begin{proof}
-        If $G$ is disconnected, the result is trivial. 
-        \\\\
-        Otherwise, let $v \in V(G)$ be such that $d_G(v) = \delta(G)$. Note that deleting all edges incident to $v$ will isolate the vertex, so $\kappa'(G) \leq \delta(G)$.
-        \\\\
-        Let $E\left(S, \bar{S}\right)$ be an edge cut with $\abs{E\left(S, \bar{S}\right)} = \kappa'(G)$. We consider $2$ cases. If $E\left(S, \bar{S}\right)$ induces a complete graph, then 
+        If $G$ is disconnected, the result is trivial. Otherwise, let $v \in V(G)$ be such that $d_G(v) = \delta(G)$. Note that deleting all edges incident to $v$ will isolate the vertex, so $\kappa'(G) \leq \delta(G)$. Let $E\left(S, \widebar{S}\right)$ be an edge cut with $\abs{E\left(S, \widebar{S}\right)} = \kappa'(G)$. We consider $2$ cases. If $E\left(S, \widebar{S}\right)$ induces a complete graph, then 
         \begin{align*}
-            \kappa'(G) & = \abs{S}\abs{\bar{S}} \\
-            & = \abs{S}\left(v(G) - \abs{\bar{S}}\right) \\
+            \kappa'(G) & = \abs{S}\abs{\widebar{S}} \\
+            & = \abs{S}\left(v(G) - \abs{\widebar{S}}\right) \\
             & \geq v(G) - 1 \\
             & \geq \kappa(G).
         \end{align*}
-        Otherwise, there exist some $x \in S$ and $y \in \bar{S}$ such that $xy \notin E\left(S, \bar{S}\right)$. Define
+        Otherwise, there exist some $x \in S$ and $y \in \widebar{S}$ such that $xy \notin E\left(S, \widebar{S}\right)$. Define
         \begin{equation*}
-            U \coloneqq N_G(x) \cap \bar{S} \cup \left\{v \in S - \{x\} \colon N_G(v) \cap \bar{S} \neq \varnothing\right\}.
+            U \coloneqq N_G(x) \cap \widebar{S} \cup \left\{v \in S - \{x\} \colon N_G(v) \cap \widebar{S} \neq \varnothing\right\}.
         \end{equation*}
-        Consider $H \coloneqq G - U$. Notice that there is no $x$-$y$ path in $H$ because $E_H\left(S - U, \bar{S}\right) = \varnothing$. Therefore, $H$ is disconnected and so $U$ is a vertex cut. Therefore,
+        Consider $H \coloneqq G - U$. Notice that there is no $x$-$y$ path in $H$ because $E_H\left(S - U, \widebar{S}\right) = \varnothing$. Therefore, $H$ is disconnected and so $U$ is a vertex cut. Therefore,
         \begin{equation*}
-            \kappa(G) \leq \abs{U} \leq \abs{S} \leq \abs{E\left(S, \bar{S}\right)} = \kappa'(G).
+            \kappa(G) \leq \abs{U} \leq \abs{S} \leq \abs{E\left(S, \widebar{S}\right)} = \kappa'(G).
         \end{equation*}
         Therefore, $\kappa(G) \leq \kappa'(G) \leq \delta(G)$.
     \end{proof}
@@ -1250,7 +1316,7 @@ In fact, we can derive the following relation:
 \end{notebox}
 Lastly, we will state the following theorem without proof:
 \begin{thmbox}{Chartrad-Haray Theorem}{ChartradHaray}
-    For all positive integers $a, b, c$ with $a \leq b \leq c$, there exists a graph $G$ with $\kappa(G) = a$, $\kappa'(G) = b$ and $\delta(G) = c$.
+    For any three positive integers $a, b, c$ with $a \leq b \leq c$, there exists a graph $G$ such that~$\kappa(G) = a$, $\kappa'(G) = b$ and $\delta(G) = c$.
 \end{thmbox}
 \section{Blocks}
 We know that every graph can be naturally decomposed into connected components. However, can we actually present a stronger definition? Here, we consider components of a graph that are $2$-connected.
@@ -1269,7 +1335,7 @@ First, observe that a block is either an isolated vertex, a cut edge or a $2$-co
     Let $B_i$ and $B_j$ be distinct blocks of $G$, then $\abs{V(B_i) \cap V(B_j)} \leq 1$.
     \tcblower
     \begin{proof}
-        Suppose on contrary that $\abs{V(B_i) \cap V(B_j)} \geq 2$. Consider $B \coloneqq B_i \cup B_j$. Note that for any vertex $v \in V(B_i) \triangle V(B_j)$, $v$ is not a cut vertex of $B$. Take any $u_1, u_2 \in V(B_i) \cap V(B_j)$ and consider $B - u_1$. Let $w_1, w_2 \in V(B - u_1)$ be any vertices. If $w_1, w_2 \in V(B_i)$ or $w_1, w_2 \in V(B_j)$, then they are connected in $B - u_1$. Otherwise, without loss of generality, assume $w_1 \in V(B_i) - V(B_j)$ and $w_2 \in V(B_j) - V(B_i)$. Note that there exist a $u_2$-$w_1$ path and a $u_2$-$w_2$ path in $B - u_1$, so $w_1$ and $w_2$ are connected in $B - u_1$. Therefore, $B$ does not have a cut vertex and so is a block, but $B_i, B_j \subset B$, which is a contradiction.
+        Suppose on contrary that $\abs{V(B_i) \cap V(B_j)} \geq 2$. Consider $B \coloneqq B_i \cup B_j$. Note that any vertex $v \in V(B_i) \triangle V(B_j)$ is not a cut vertex of $B$. Take any $u_1, u_2 \in V(B_i) \cap V(B_j)$ and consider $B - u_1$. Let $w_1, w_2 \in V(B - u_1)$ be any vertices. If $w_1, w_2 \in V(B_i)$ or $w_1, w_2 \in V(B_j)$, then they are connected in $B - u_1$. Otherwise, without loss of generality, assume $w_1 \in V(B_i) - V(B_j)$ and $w_2 \in V(B_j) - V(B_i)$. Note that there exist a $u_2$-$w_1$ path and a $u_2$-$w_2$ path in $B - u_1$, so $w_1$ and $w_2$ are connected in $B - u_1$. Therefore, $B$ does not have a cut vertex and so is a block, but $B_i, B_j \subset B$, which is a contradiction.
     \end{proof}
 \end{probox}
 The above result allows us to show the following corollary about the edges in a graph with respect to its blocks:
@@ -1307,11 +1373,11 @@ Recall that in Proposition \ref{pro:cycleIn2Connected}, we have shown that every
     A graph $G$ is $2$-connected if and only if it can be constructed from a cycle by successively augmenting the partially constructed graph $H$ with $H$-paths.
     \tcblower
     \begin{proof}
-        Suppose that $G$ is constructed from a cycle by successively augmenting $H$-paths to a partially constructed graph $H$. Note that a cycle is $2$-connected. Assume that there exists some $k \in \N$ such that after $k$ iterations of such augmentation, the resulted graph $H$ is $2$-connected. Consider $H' \coloneqq H \cup P_H$ where $P_H$ is any $H$-path, the clearly $H'$ is also $2$-connected. Therefore, $G$ must be $2$-connected.
+        Suppose that $G$ is constructed from a cycle by successively augmenting~$H$-paths to a partially constructed graph $H$. Note that a cycle is $2$-connected. Assume that there exists some $k \in \N$ such that after $k$ iterations of such augmentation, the resulted graph $H$ is $2$-connected. Consider $H' \coloneqq H \cup P_H$ where $P_H$ is any $H$-path, the clearly $H'$ is also $2$-connected. Therefore, $G$ must be $2$-connected.
         \\\\
-        Suppose conversely that $G$ is $2$-connected, then by Proposition \ref{pro:cycleIn2Connected} it contains a cycle $C_n$. Therefore, $G$ contains a maximal subgraph $H$ which can be constructed by augmenting $H$-paths successively to a partially constructed graph starting from $C_n$. Note that it suffices to show that $G = H$.
+        Suppose conversely that $G$ is $2$-connected, then by Proposition \ref{pro:cycleIn2Connected} it contains a cycle $C_n$. Therefore, $G$ contains a maximal subgraph $H$ which can be constructed by augmenting $H$-paths successively to a partially constructed graph starting from~$C_n$. Note that it suffices to show that $G = H$.
         \\\\
-        We claim that $H$ must be an induced subgraph of $G$. Suppose on contrary that there exists $u, v \in V(H)$ such that $uv \in E(G)$ but $uv \notin E(H)$, then clearly $uv$ itself is an $H$-path in $G$. Therefore, $H + uv$ is a larger graph constructible from $C_n$ by successively augmenting $H$-paths to the partially constructed graph, which is a contradiction because $H$ is assumed to be maximal.
+        We claim that $H$ must be an induced subgraph of $G$. Suppose on contrary that there exists $u, v \in V(H)$ such that $uv \in E(G)$ but $uv \notin E(H)$, then clearly $uv$ itself is an $H$-path in $G$. Therefore, $H + uv$ is a larger graph constructible from~$C_n$ by successively augmenting $H$-paths to the partially constructed graph, which is a contradiction because $H$ is assumed to be maximal.
         \\\\
         Suppose on contrary that $G \neq H$, then $V(G) - V(H) \neq \varnothing$. Note that $G$ is connected, so there exist $v \in V(G) - V(H)$ and $w \in V(H)$ such that $vw \in E(G)$. Note that $C_n \subseteq H$, so there exists some $u \in V(H)$ with $u \neq w$. Since $G$ is $2$-connected, we know that $G - w$ is connected. This implies that there is a $v$-$u$ path in $G$ which does not contain $w$. Without loss of generality, let $u'$ be the first vertex in the path which is in $V(H)$, the we have found a $v$-$u'$ path which is an $H$-path. This means we can construct a larger graph $H'$ by augmenting the $H$-path to $H$, which contradicts the maximality of $H$.
     \end{proof}
@@ -1320,28 +1386,28 @@ An $H$-path is vividly termed as an ``ear'' to the graph. Clearly, Theorem \ref{
 
 We would like to take one step further and probe into $3$-connected graphs. We will state the following theorem by Tutte without proof:
 \begin{thmbox}{Tutte's Characterisation of $3$-connected Graphs}{Tutte3Connected}
-    A graph $G$ is $3$-connected if and only if there is a sequence $\left(G_0, G_1, \cdots, G_n\right)$ with $G_n \cong G$ such that $G_0 = K_4$ and $G_{i + 1}$ contains an edge $xy$ with $d_{G_{i + 1}}(x), d_{G_{i + 1}}(y) \geq 3$ and $G_i = G_{i + 1} \circ xy$. 
+    A graph $G$ is $3$-connected if and only if there is a sequence $\left(G_0, G_1, \cdots, G_n\right)$ with $G_n \cong G$ such that $G_0 = K_4$ and $G_{i + 1}$ contains an edge $xy$ satisfying $d_{G_{i + 1}}(x), d_{G_{i + 1}}(y) \geq 3$ and~$G_i = G_{i + 1} \circ xy$. 
 \end{thmbox}
 Ear-decomposition is a fairly nice construction for a $2$-connected graph. However, as a characterisation it is not very intuitive, in a sense that one still needs to work towards the graph from a cycle to actually verify $2$-connectivity. Can we do better and propose a more direct characterisation?
 \begin{thmbox}{Whitney's Characterisation of $2$-connected Graphs}{Whitney}
     A graph $G$ is $2$-connected if and only if for every $u, v \in V(G)$, there exist $2$ internally disjoint $u$-$v$ paths in $G$.
 \end{thmbox}
-Here, ``internally disjoint'' paths means that the paths share no other vertices except $u$ and $v$. More generally, we define the following:
+Here, ``internally disjoint'' paths means that the paths share no other vertices except $u$ and~$v$. More generally, we define the following:
 \begin{dfnbox}{$A$-$B$ Path}{ABPath}
     Let $G$ be a graph with $A, B \subseteq V(G)$. An {\color{red} \textbf{$A$-$B$ path}} is a path in $G$ which contains exactly one vertex in $A$ and one vertex in $B$.
 \end{dfnbox} 
-Note that in the above definition, we do not require $A$ and $B$ to be disjoint. Clearly, if $A \cap B \neq \varnothing$, then every vertex in $A \cap B$ is a trivial $A$-$B$ path. Intuitively, to disconnect $G$, we necessarily need to disconnect $A$ and $B$, i.e., we need to make sure that there is no $A$-$B$ path in $G$.
+Note that in the above definition, we do not require $A$ and $B$ to be disjoint. It is clear that if~$A \cap B \neq \varnothing$, then every vertex in $A \cap B$ is a trivial $A$-$B$ path. Intuitively, to disconnect $G$, we necessarily need to disconnect $A$ and $B$, i.e., we need to make sure that there is no $A$-$B$ path in $G$.
 \begin{dfnbox}{Separating Set for $(A, B)$}{ABSeparate}
     Let $G$ be a graph with $A, B \subseteq V(G)$. A {\color{red} \textbf{separating set}} for $(A, B)$ is a set $X$ consisting of both edges and vertices such that there is no $A$-$B$ path in $G - X$.
 \end{dfnbox}
 Notice that we have not given the proof for Theorem \ref{thm:Whitney} yet. One may choose to use ear-decomposition to prove the theorem, but we can also see it as a corollary of another theorem. However, before proving the actual theorem, we first consider the following lemma:
 \begin{lembox}{$A$-$B$ Paths Extension}{moreABPaths}
-    Let $G$ be a graph with $A, B \subseteq V(G)$ such that the minimum separating set for $(A, B)$ has size $k$, then for any set $P$ of less than $k$ vertex-disjoint $A$-$B$ paths in $G$, there is a set $Q$ of vertex-disjoint $A$-$B$ paths in $G$ whose set of end vertices contains the set of end vertices in $P$ as a proper subset.
+    Let $G$ be a graph with $A, B \subseteq V(G)$ such that the minimum separating set for $(A, B)$ has size $k$, then for any set $P$ of less than $k$ vertex-disjoint $A$-$B$ paths in $G$, there is a set $Q$ of vertex-disjoint $A$-$B$ paths in $G$ whose set of end vertices contains the set of end vertices in~$P$ as a proper subset.
     \tcblower
     \begin{proof}
-        Fix any $A \subseteq V(G)$. We will perform induction on $\abs{V(G)} - \abs{B}$. Note that when $\abs{V(G)} - \abs{B} = 0$, we have $B = V(G)$ and so $k = \abs{A}$. If $\abs{P} < k$, then there is at least one vertex $a \in A$ which is not contained by any path in $P$. Take $Q \coloneqq P \cup \{a\}$ then $Q$ is a set of $\abs{P} + 1$ vertex disjoint $A$-$B$ paths in $G$ whose set of end vertices contains the end vertices in $P$ as a proper subset.
+        Fix any $A \subseteq V(G)$. We will perform induction on $\abs{V(G)} - \abs{B}$. Observe that when~$\abs{V(G)} - \abs{B} = 0$, we have $B = V(G)$ and so $k = \abs{A}$. If $\abs{P} < k$, then there is at least one vertex $a \in A$ which is not contained by any path in $P$. Take $Q \coloneqq P \cup \{a\}$ then $Q$ is a set of $\abs{P} + 1$ vertex disjoint $A$-$B$ paths in $G$ whose set of end vertices contains the end vertices in $P$ as a proper subset.
         \\\\
-        Take any $A, B \subseteq V(G)$ and fix $P \coloneqq \left\{P_1, P_2, \cdots, P_n\right\}$ to be a set of $n < k$ vertex-disjoint $A$-$B$ paths. We denote the set of end vertices in $P$ by $P_A \coloneqq \left\{a_1, a_2, \cdots, a_n\right\}$ and $P_B \coloneqq \left\{b_1, b_2, \cdots, b_n\right\}$. Clearly, $P_B$ is not a separating set for $(A, B)$, so there is some $A$-$B$ path which does not contain any vertex from $P_B$. Let this path be $R$ with end vertex $b_R \in B$. If $R$ is vertex-disjoint to every $P_i \in P$, then we are done.
+        Take any $A, B \subseteq V(G)$ and fix $P \coloneqq \left\{P_1, P_2, \cdots, P_n\right\}$ to be a set of $n < k$ vertex-disjoint $A$-$B$ paths. We denote the sets of end vertices in $P$ by $P_A \coloneqq \left\{a_1, a_2, \cdots, a_n\right\}$ and~$P_B \coloneqq \left\{b_1, b_2, \cdots, b_n\right\}$. Clearly, $P_B$ is not a separating set for $(A, B)$, so there is some $A$-$B$ path which does not contain any vertex from $P_B$. Let this path be $R$ with end vertex $b_R \in B$. If $R$ is vertex-disjoint to every $P_i \in P$, then we are done.
         \\\\
         Otherwise, $R \cap P_j \neq \varnothing$ for some $P_j \in P$. Without loss of generality, let $x \in V(R)$ be the vertex such that the $x$-$b_R$ path in $R$ contains no vertex from $P$, i.e., $x$ is the last intersection between $R$ and the paths in $P$. Without loss of generality, we can re-label the paths in $P$ such that $x \in P_n$. Denote by $xR$ the $x$-$b_R$ path in $R$ and by $xP_n$ the $x$-$b_n$ path in $P_n$. Define $B' \coloneqq B \cup V(xR) \cup V(xP_n)$, then $B \subsetneqq B'$ and so $\abs{V(G)} - \abs{B'} < \abs{V(G)} - \abs{B}$. Let $P' \coloneqq \left\{P_1, P_2, \cdots, P_{n - 1}, P_nx\right\}$, then $P'$ is a set of $n$ vertex-disjoint $A$-$B'$ paths in $G$. Now, take any $X$ to be a minimum separating set for $(A, B')$, then clearly $X$ separates $(A, B)$, so $\abs{X} \geq k > n$. By the inductive hypothesis, we can find a set $Q'$ of vertex-disjoint $A$-$B'$ paths in $G$ such that the set of end vertices of $Q'$ contains the end vertices of $P$ as a proper subset.
         \\\\
@@ -1355,9 +1421,9 @@ Notice that we have not given the proof for Theorem \ref{thm:Whitney} yet. One m
         \end{equation*}
         where $y \notin P'_{B'}$. Note that $Q'_1, Q'_2, \cdots, Q'_{n - 1}$ are already vertex-disjoint $A$-$B$ paths. We will try to extend $Q'$ to obtain $Q$. We consider $2$ cases on $y$.
         \\\\
-        If $y \in xP_n$, then every vertex in $V(xR) - \{x\}$ is unused by all paths in $Q'$, and so we can extend $Q'_n$ by $xR$ to obtain an $A$-$B$ path, and extend $Q'_{n + 1}$ by $yP_n$ to obtain another $A$-$B$ path. Note that $xR$ and $yP_n$ are vertex-disjoint, so we have obtained a set $Q$ of $(n + 1)$ vertex-disjoint $A$-$B$ paths as desired.
+        If $y \in xP_n$, then every vertex in $V(xR) - \{x\}$ is unused by all paths in $Q'$, and so we can extend $Q'_n$ by $xR$ to obtain an $A$-$B$ path, and extend $Q'_{n + 1}$ by $yP_n$ to obtain another $A$-$B$ path. Note that $xR$ and $yP_n$ are vertex-disjoint, so we have obtained a set~$Q$ of $(n + 1)$ vertex-disjoint $A$-$B$ paths as desired.
         \\\\
-        If $y \notin xP_n$, then we can extend $Q'_n$ by $xP_n$ to connect $b_n$. Note that either $y \in yR$ or $y \in B$, but either way we can extend $Q'_{n + 1}$ to a new vertex in $B$, so we still can obtain $Q$ as desired.
+        If $y \notin xP_n$, then we can extend $Q'_n$ by $xP_n$ to join $b_n$. Note that either~$y \in yR$ or $y \in B$, but either way we can extend $Q'_{n + 1}$ to a new vertex in $B$, so we still can obtain $Q$ as desired.
     \end{proof}
 \end{lembox}
 Now we are ready to state the following theorem:
@@ -1367,7 +1433,7 @@ Now we are ready to state the following theorem:
     \begin{proof}
         Let $X$ to be a minimum separating set for $(A, B)$ and $k$ to be the number of vertex-disjoint $A$-$B$ paths in $G$. Clearly, to disconnect $A$ and $B$, we need to at least delete either one edge or one vertex from each of the $k$ $A$-$B$ paths. Therefore, $\abs{X} \geq k$.
         \\\\
-        Take any $n < \abs{X}$ disjoint $A$-$B$ paths, then by Lemma \ref{lem:moreABPaths}, we can extend this set of paths by another vertex-disjoint $A$-$B$ paths until $n = \abs{X}$. Therefore, $k \geq \abs{X}$, which implies that $k = \abs{X}$ as desired.
+        Take any $n < \abs{X}$ disjoint $A$-$B$ paths, then by Lemma \ref{lem:moreABPaths}, we can extend this set of paths by another vertex-disjoint $A$-$B$ paths until $n = \abs{X}$. Hence,~$k \geq \abs{X}$, which implies that $k = \abs{X}$ as desired.
     \end{proof}
 \end{thmbox}
 By taking both sets of vertices as singletons, we obtain a corollary of Theorem \ref{thm:Menger} at a ``local'' level.
@@ -1381,7 +1447,7 @@ By taking both sets of vertices as singletons, we obtain a corollary of Theorem 
     \begin{proof}
         Note that the minimum number of vertices that separate $a$ and $b$ when removed is just the minimum number of vertices that separate $N_G(a)$ and $N_G(b)$ when removed. By Theorem \ref{thm:Menger}, this quantity is just the maximum number of vertex-disjoint $N_G(a)$-$N_G(b)$ paths in $G$, which are internally vertex-disjoint $a$-$b$ paths.
         \\\\
-        Let $L(G)$ be the line graph of $G$ and let $A$ and $B$ be the sets of edges containing $a$ and $b$ respectively. Then, the minimum number of edges to separate $a$ and $b$ when removed is equal to the minimum number of vertices to separate $A$ and $B$ when removed in $L(G)$. By Theorem \ref{thm:Menger}, this quantity is just the number of vertex-disjoint $A$-$B$ paths in $L(G)$, which correspond to edge-disjoint $a$-$b$ paths in $G$.
+        Let $L(G)$ be the line graph of $G$ and let $A$ and $B$ be the sets of edges containing~$a$ and $b$ respectively. Then, the minimum number of edges to separate $a$ and~$b$ when removed is equal to the minimum number of vertices to separate $A$ and $B$ when removed in $L(G)$. By Theorem \ref{thm:Menger}, this quantity is just the number of vertex-disjoint $A$-$B$ paths in $L(G)$, which correspond to edge-disjoint $a$-$b$ paths in~$G$.
     \end{proof}
 \end{corbox}
 Correspondingly, the following ``global'' version of Menger's Theorem characterises a $k$-connected graph, to which Theorem \ref{thm:Whitney} is an immediate corollary.
@@ -1389,14 +1455,14 @@ Correspondingly, the following ``global'' version of Menger's Theorem characteri
     A graph $G$ is $k$-connected if and only if for any $u, v \in V(G)$, there are $k$ internally vertex-disjoint $u$-$v$ paths in $G$. A graph $G$ is $k$-edge-connected if and only if for any $u, v \in V(G)$, there are $k$ edge-disjoint $u$-$v$ paths in $G$. 
     \tcblower
     \begin{proof}
-        Suppose the for any $u, v \in V(G)$, there exist $k$ internally vertex-disjoint $u$-$v$ paths in $G$. Let $S$ be a set of less than $k$ vertices in $G$ and consider $G - S$. For any $u, v \in V(G) - S$, we know that there is at least one $u$-$v$ path in $G - S$, so $G - S$ is connected and so $G$ is $k$-connected.
+        Suppose the for any $u, v \in V(G)$, there exist $k$ internally vertex-disjoint $u$-$v$ paths in $G$. Let $S$ be a set of less than $k$ vertices in $G$ and consider $G - S$. For any vertices $u, v \in V(G) - S$, we know that there is at least one $u$-$v$ path in $G - S$. Therefore, $G - S$ is connected and so $G$ is $k$-connected.
         \\\\
-        Suppose conversely that $G$ is $k$-connected and suppose on contrary that there exist $a, b \in V(G)$ such that $a, b$ are connected by fewer than $k$ internally vertex-disjoint $a$-$b$ paths in $G$. By Corollary \ref{cor:localMenger}, $ab \in E(G)$ because otherwise we can disconnected $a$ and $b$ by deleting fewer than $k$ vertices, which is impossible because $G$ is $k$-connected. Let $H \coloneqq G - ab$, then there are at most $(k - 2)$ internally vertex-disjoint $a$-$b$ paths in $H$. By Corollary \ref{cor:localMenger}, there exists a set $X \subseteq V(H)$ with $\abs{X} \leq k - 2$ which separates $a$ and $b$ in $H$. Note that there exists some $w \in V(H) - X - \{a, b\}$ such that $X$ separates $w$ from either $a$ or $b$ in $H$, because otherwise $a$ and $b$ are connected in $H - X$. Without loss of generality, let $X$ separates $w$ from $a$. 
+        Suppose conversely that $G$ is $k$-connected and suppose on contrary that there exist vertices $a, b \in V(G)$ such that $a, b$ are connected by fewer than $k$ internally vertex-disjoint $a$-$b$ paths in $G$. By Corollary \ref{cor:localMenger}, $ab \in E(G)$ because otherwise we can disconnected $a$ and $b$ by deleting fewer than $k$ vertices, which is impossible because $G$ is $k$-connected. Let $H \coloneqq G - ab$, then there are at most~$(k - 2)$ internally vertex-disjoint $a$-$b$ paths in $H$. By Corollary \ref{cor:localMenger}, there exists a set~$X \subseteq V(H)$ with $\abs{X} \leq k - 2$ which separates $a$ and $b$ in $H$. Observe that there exists some~$w \in V(H) - X - \{a, b\}$ such that $X$ separates $w$ from either $a$ or $b$ in $H$, because otherwise $a$ and $b$ are connected in $H - X$. Without loss of generality, assume that $X$ separates $w$ from $a$. 
         \\\\
-        Note that $a$ and $w$ are connected in $G - X$ because $G$ is $k$-connected, so there exists at least one $a$-$w$ path in $G$ which does not contain any vertex in $X$. Notice that every such path must contain the edge $ab$ because otherwise $a$ and $w$ are connected in $H - X$. Therefore, $w$ and $a$ are disconnected in $G - X - \{b\}$, which means $G$ is $(k - 1)$-connected, which is a contradiction.
+        Note that $a$ and $w$ are connected in $G - X$ because $G$ is $k$-connected, so there exists at least one $a$-$w$ path in $G$ which does not contain any vertex in $X$. Notice that every such path must contain the edge $ab$ because otherwise $a$ and $w$ are connected in $H - X$. Therefore, $w$ and $a$ are disconnected in $G - X - \{b\}$, which means that~$G$ is $(k - 1)$-connected, which is a contradiction.
     \end{proof}
 \end{corbox}
-With Menger's Theorem, we can prove Theorem \ref{thm:Konig} as a corollary. Consider a bipartite graph $G$ with bipartition $(A, B)$. Add vertices $a, b$ to $G$ to form a new graph $H$ such that $N_H(a) = A$ and $N_H(b) = B$.
+With Menger's Theorem, we can prove Theorem \ref{thm:Konig} as a corollary. Consider a bipartite graph $G$ with bipartition $(A, B)$. Adding vertices $a, b$ to $G$ will form a new graph $H$ such that $N_H(a) = A$ and $N_H(b) = B$.
 
 Clearly, $\nu(G)$ is the maximum number of internally vertex-disjoint $a$-$b$ paths in $H$. By Corollary \ref{cor:localMenger}, this is just the minimum number of vertices which separate $a$ and $b$ in $H$ when removed. Let $X \subseteq V(G)$ be the minimal set of vertices to disconnect $a$ and $b$ when removed, then every $a$-$b$ path in $H$ must contain a vertex in $X$. Suppose there is an edge $uv \in E(G)$ such that $u \notin X$ and $v \notin X$, then $auvb$ is an $a$-$b$ path in $H - X$. Therefore, $X$ is a vertex cover for $G$ and so $\nu(G) = \abs{X} = \tau(G)$.
 \chapter{Graph Colouring}
@@ -1439,7 +1505,7 @@ Let us examine some special graphs to see their chromatic numbers:
             3 & \textrm{if } 2 \not\mid n
         \end{cases}.
     \end{equation*}
-    \item Empty graph $\overline{K_n}$: $\chi\left(\overline{K_n}\right) = 1$.
+    \item Empty graph $\widebar{K_n}$: $\chi\left(\widebar{K_n}\right) = 1$.
     \item Petersen graph $P$: $\chi(P) = 3$.
 \end{itemize}
 Recall the Kneser graph $KG(n, k)$ from Definition \ref{dfn:kneser}. For $i = 2k, 2k + 1, \cdots, n$, let $V_i$ be all $k$-element subsets whose greatest element is $i$. Note that for any $S, T \in V_i$, we have $i \in S \cap T$ and so $ST \notin E\bigl(KG(n, k)\bigr)$. Therefore, we can colour each $V_i$ using a distinct colour $c_i$. Notice that in doing so, $(n - 2k + 1)$ colours are used. For any $U$ not in any of the $V_i$'s, its elements must be from $\left\{1, 2, \cdots, k - 1\right\}$. By Pigeonhole Principle, this means that the remaining subsets are pair-wise intersecting, and so we can assign an extra colour for all of them. Therefore, $\chi\bigl(KG(n, k)\bigr) \leq n - 2k + 2$. However, the other direction is not trivial and requires some knowledge of the Borsuk-Ulam Theorem in Topology.
@@ -1574,7 +1640,7 @@ Remarkably, we can use $k$-constructible graphs to characterise all graphs with 
             Define a graph $H$ with $V(H) = \{x, y, z\}$ and $E(H) = \{yz\}$. A graph $G$ is complete multi-partite if it contains no induced subgraph isomorphic to $H$.
             \tcblower
             \begin{proof}
-                If $G$ contains no induced subgraph isomorphic to $H$, then $\overline{G}$ contains no induced subgraph isomorphic to $\overline{H}$. Let $G' \subseteq \overline{G}$ be a connected component. Notice that if there are vertices $u, v, w \in V(G')$ such that $u \sim v$ and $v \sim w$, then $u \sim w$ because otherwise $\{u, v, w\}$ induces a $P_2 \cong \overline{H}$ in $G'$. Therefore, adjacency is a transitive relation on $V(G')$. For any $x, y \in V(G')$, there exists an $x$-$y$ path in $G'$. By transitivity, this means that $x \sim y$ in $G'$. Therefore, $G'$ is a clique. This means that $\overline{G}$ is the union of disjoint cliques, and so $G$ must be complete multi-partite.
+                If $G$ contains no induced subgraph isomorphic to $H$, then $\widebar{G}$ contains no induced subgraph isomorphic to $\widebar{H}$. Let $G' \subseteq \widebar{G}$ be a connected component. Notice that if there are vertices $u, v, w \in V(G')$ such that $u \sim v$ and $v \sim w$, then $u \sim w$ because otherwise $\{u, v, w\}$ induces a $P_2 \cong \widebar{H}$ in $G'$. Therefore, adjacency is a transitive relation on $V(G')$. For any $x, y \in V(G')$, there exists an $x$-$y$ path in $G'$. By transitivity, this means that $x \sim y$ in $G'$. Therefore, $G'$ is a clique. This means that $\widebar{G}$ is the union of disjoint cliques, and so $G$ must be complete multi-partite.
             \end{proof}
         \end{lembox}
         By Lemma \ref{lem:completeMultPartite}, we know that $G$ must contain some subgraph of order $3$ with vertex set $\{x, y_1, y_2\}$ and edge set $\{y_1y_2\}$. For $i = 1, 2$, let $G_i \coloneqq G + xy_i$. Since $G$ is edge-maximal with respect to not having $k$-constructible subgraphs, $G_i$ must contain a $k$-constructible subgraph $H_i$. We claim that $xy_i \in E(H_i)$, because otherwise $H_i \subseteq G$, which is not possible. Let $H_1'$ and $H_2'$ be copies of $H_1$ and $H_2$ and define a graph $H \coloneqq H_1' \cup H_2'$. For every vertex $z \in V(H_1) \cap V(H_2)$ with $z \neq x$, let $z_1$, $z_2$ be its copy in $H_1'$ and $H_2'$ respectively, then $z_1z_2 \notin E(H)$. Therefore, $V(H_1') \cap V(H_2') = \{x\}$ and $xy_1 \in E(H_1')$, $xy_2 \in E(H_2')$. Therefore, $H' \coloneqq H - xy_1 - xy_2 + y_1y_2$ is $k$-constructible. Note that for every pair $(z_1, z_2) \in V(H')^2$, $z_1z_2 \notin E(H')$, and so $(H + z_1z_2)/z_1z_2$ is $k$-constructible. After contracting all $(z_1, z_2)$'s, we have restored the graph $H_1 \cup H_2 \subseteq G$, which is $k$-constructible.
@@ -1633,16 +1699,16 @@ In Proposition \ref{pro:lowerBoundChi}, we see that $\chi(G) \geq \omega(G)$. Th
 \begin{dfnbox}{Perfect Graph}{perfectGraph}
     A graph $G$ is {\color{red} \textbf{perfect}} if for every induced subgraph $H \subseteq G$, we have $\chi(H) = \omega(H)$.
 \end{dfnbox}
-Clearly, $K_n$ is a simple example for a perfect graph as every induced subgraph of $K_n$ is also complete. Correspondingly, one can easily check that the empty graph $\overline{K_n}$ is also perfect. A non-empty bipartite graph $G$ contains an edge as its maximum clique and so $\chi(G) = \omega(G) = 2$, which means $G$ is also perfect. We can also prove that the complement of any bipartite graph must also be perfect.
+Clearly, $K_n$ is a simple example for a perfect graph as every induced subgraph of $K_n$ is also complete. Correspondingly, one can easily check that the empty graph $\widebar{K_n}$ is also perfect. A non-empty bipartite graph $G$ contains an edge as its maximum clique and so $\chi(G) = \omega(G) = 2$, which means $G$ is also perfect. We can also prove that the complement of any bipartite graph must also be perfect.
 \begin{probox}{Complement of a Bipartite Graph Is Perfect}{bipCompPerfect}
-    Let $G$ be a bipartite graph, then $\overline{G}$ is perfect.
+    Let $G$ be a bipartite graph, then $\widebar{G}$ is perfect.
     \tcblower
     \begin{proof}
-        Let $\overline{H} \subseteq \overline{G}$ be an induced subgraph, then $\abs{V\left(\overline{H}\right)}$ induces a subgraph $H \subseteq G$ which is the complement of $\overline{H}$. Note that every clique in $\overline{H}$ is induced by an independent set of $H$, so $\omega\left(\overline{H}\right) = \alpha(H) = \abs{V(H)} - \tau(H)$ by Proposition \ref{pro:Order=Sum}. Observe that $\chi\left(\overline{H}\right)$ is the smallest number of independent sets to partition $V\left(\overline{H}\right)$, but since $H$ is bipartite, each of these independent sets induces either a clique, i.e., an edge, or an empty graph in $H$. Therefore, $\chi\left(\overline{H}\right) + \nu(H) = \abs{V(H)}$. By Theorem \ref{thm:Konig}, we have 
+        Let $\widebar{H} \subseteq \widebar{G}$ be an induced subgraph, then $\abs{V\left(\widebar{H}\right)}$ induces a subgraph $H \subseteq G$ which is the complement of $\widebar{H}$. Note that every clique in $\widebar{H}$ is induced by an independent set of $H$, so $\omega\left(\widebar{H}\right) = \alpha(H) = \abs{V(H)} - \tau(H)$ by Proposition \ref{pro:Order=Sum}. Observe that $\chi\left(\widebar{H}\right)$ is the smallest number of independent sets to partition $V\left(\widebar{H}\right)$, but since $H$ is bipartite, each of these independent sets induces either a clique, i.e., an edge, or an empty graph in $H$. Therefore, $\chi\left(\widebar{H}\right) + \nu(H) = \abs{V(H)}$. By Theorem \ref{thm:Konig}, we have 
         \begin{equation*}
-            \chi\left(\overline{H}\right) = \abs{V(H)} - \nu(H) = \abs{V(H)} - \tau(H) = \omega\left(\overline{H}\right),
+            \chi\left(\widebar{H}\right) = \abs{V(H)} - \nu(H) = \abs{V(H)} - \tau(H) = \omega\left(\widebar{H}\right),
         \end{equation*}
-        and so $\overline{G}$ is perfect.
+        and so $\widebar{G}$ is perfect.
     \end{proof}
 \end{probox}
 We can prove that the line graph of bipartite graphs are also perfect.
@@ -1664,7 +1730,7 @@ Now, let us devise a way to characterise perfect graphs.
     A graph is perfect if and only if its complement is perfect.
     \tcblower
     \begin{proof}
-        It suffices to prove that if $G$ is perfect, then $\overline{G}$ is perfect. We shall apply strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then clearly both $G$ and $\overline{G}$ are perfect. Suppose that there is some integer $n > 1$ such that whenever $\abs{V(G)} < n$, $G$ being perfect implies that $\overline{G}$ is perfect. Let $\abs{V(G)} = n$ and take $\overline{H} \subseteq \overline{G}$ to be an induced subgraph. If $\abs{V\left(\overline{H}\right)} < n$, then by the inductive hypothesis $\overline{H}$ is perfect, and so $\chi\left(\overline{H}\right) = \omega\left(\overline{H}\right)$. Otherwise, $\overline{H} = \overline{G}$, so it suffices to prove $\chi\left(\overline{G}\right) = \omega\left(\overline{G}\right)$. Consider the following lemma:
+        It suffices to prove that if $G$ is perfect, then $\widebar{G}$ is perfect. We shall apply strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then clearly both $G$ and $\widebar{G}$ are perfect. Suppose that there is some integer $n > 1$ such that whenever $\abs{V(G)} < n$, $G$ being perfect implies that $\widebar{G}$ is perfect. Let $\abs{V(G)} = n$ and take $\widebar{H} \subseteq \widebar{G}$ to be an induced subgraph. If $\abs{V\left(\widebar{H}\right)} < n$, then by the inductive hypothesis $\widebar{H}$ is perfect, and so $\chi\left(\widebar{H}\right) = \omega\left(\widebar{H}\right)$. Otherwise, $\widebar{H} = \widebar{G}$, so it suffices to prove $\chi\left(\widebar{G}\right) = \omega\left(\widebar{G}\right)$. Consider the following lemma:
         \begin{lembox}{Vertex Expansion Preserves Perfectness}{vtxExpand}
             Let $G$ be a perfect graph and define $G'$ by 
             \begin{equation*}
@@ -1712,13 +1778,13 @@ Now, let us devise a way to characterise perfect graphs.
         \end{equation*}
         which is a contradiction. Therefore, we can take some $K \in \mathcal{K}$ such that $K \cap A \neq \varnothing$ for all $A \in \mathcal{A}$, and so 
         \begin{align*}
-            \omega\left(\overline{G} - K\right) & = \alpha(G - K) < \alpha(G) = \omega\left(\overline{G}\right). 
+            \omega\left(\widebar{G} - K\right) & = \alpha(G - K) < \alpha(G) = \omega\left(\widebar{G}\right). 
         \end{align*}
-        By the inductive hypothesis, $\overline{G} - K$ is perfect, and so $\chi\left(\overline{G} - K\right) = \omega\left(\overline{G} - K\right)$. Fixing a $\chi\left(\overline{G} - K\right)$-colouring in $\overline{G} - K$ and colouring $V(K)$ with a new colour yields a proper colouring in $\overline{G}$ because $V(K)$ is an independent set in $\overline{G}$. Therefore,
+        By the inductive hypothesis, $\widebar{G} - K$ is perfect, and so $\chi\left(\widebar{G} - K\right) = \omega\left(\widebar{G} - K\right)$. Fixing a $\chi\left(\widebar{G} - K\right)$-colouring in $\widebar{G} - K$ and colouring $V(K)$ with a new colour yields a proper colouring in $\widebar{G}$ because $V(K)$ is an independent set in $\widebar{G}$. Therefore,
         \begin{align*}
-            \chi\left(\overline{G}\right) & \leq \chi\left(\overline{G} - K\right) + 1 \\
-            & = \omega\left(\overline{G} - K\right) + 1 \\
-            & \leq \omega\left(\overline{G}\right).
+            \chi\left(\widebar{G}\right) & \leq \chi\left(\widebar{G} - K\right) + 1 \\
+            & = \omega\left(\widebar{G} - K\right) + 1 \\
+            & \leq \omega\left(\widebar{G}\right).
         \end{align*}
     \end{proof}
 \end{thmbox}
@@ -2156,9 +2222,9 @@ Clearly by Theorem \ref{thm:Dirac}, the sequence $\left(\frac{n}{2}, \frac{n}{2}
     \begin{proof}
         Suppose that $(a_1, a_2, \cdots, a_n)$ is an integer sequence with $a_i \leq a_j$ for all $i \leq j$ such that $a_i \leq i$ implies $a_{n - i} \geq n - i$. We claim that for any graph $G$ with degree sequence $\left(d_1, d_2, \cdots, d_n\right)$ such that $d_i \geq a_i$ for all $i = 1, 2, \cdots, n$, $\mathrm{Cl}(G)$ is complete. Suppose on contrary that there exists some graph $G$ satisfying the degree condition but $\mathrm{Cl}(G)$ is not complete. Without loss of generality, take $G$ to be the edge-maximal graph such that this occurs. Notice that $G = \mathrm{Cl(G)}$, because otherwise $\mathrm{Cl}(G)$ is a graph with strictly more edges than $G$ satisfying the conditions, but $\mathrm{Cl}\bigl(\mathrm{Cl}(G)\bigr) = \mathrm{Cl}(G)$ is not complete, which is not possible by maximality of $G$. Therefore, for every $u, v \in V(G)$ with $u \not\sim v$, we must have $d_G(u) + d_G(v) \leq n - 1$. Without loss of generality, take $u, v$ such that $d_G(u) + d_G(v)$ is maximised and $d_G(u) \leq d_G(v)$. Notice that $d_G(u) < \frac{n}{2}$. Define $i \coloneqq d_G(u)$, then $d_G(v) \leq n - i - 1$. Define 
         \begin{equation*}
-            \overline{V} \coloneqq V(G) - N_G(v),
+            \widebar{V} \coloneqq V(G) - N_G(v),
         \end{equation*}
-        then $\abs{\overline{V}} \geq i$ and for every $w \in \abs{\overline{V}}$, 
+        then $\abs{\widebar{V}} \geq i$ and for every $w \in \abs{\widebar{V}}$, 
         \begin{equation*}
             d_G(w) \leq d_G(u) < \frac{n}{2}
         \end{equation*}
@@ -2240,11 +2306,11 @@ It might be useful to view a kernel as the ``core'' of a digraph such that every
     Any directed cycle $\overrightarrow{C}_{2k + 1}$ for $k \in \Z^+$ has no kernel.
     \tcblower
     \begin{proof}
-        Suppose on contrary that there is some $k \in \Z^+$ such that $K \subseteq V\left(\overrightarrow{C}_{2k + 1}\right)$ is a kernel. Clearly, $\abs{K} \leq \alpha\left(C_{2k + 1}\right) = k$. Define $\overline{K} \coloneqq V\left(\overrightarrow{C}_{2k - 1}\right) - K$, then 
+        Suppose on contrary that there is some $k \in \Z^+$ such that $K \subseteq V\left(\overrightarrow{C}_{2k + 1}\right)$ is a kernel. Clearly, $\abs{K} \leq \alpha\left(C_{2k + 1}\right) = k$. Define $\widebar{K} \coloneqq V\left(\overrightarrow{C}_{2k - 1}\right) - K$, then 
         \begin{equation*}
-            \abs{\overline{K}} \geq 2k + 1 - k = k + 1 > \abs{K}.
+            \abs{\widebar{K}} \geq 2k + 1 - k = k + 1 > \abs{K}.
         \end{equation*}
-        However, every $v \in \overline{K}$ must have a distinct out-neighbour $u \in K$, which is a contradiction.
+        However, every $v \in \widebar{K}$ must have a distinct out-neighbour $u \in K$, which is a contradiction.
     \end{proof}
 \end{probox}
 The above proposition turns out to be important for characterisation of kernel-free digraphs.
