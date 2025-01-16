@@ -2,10 +2,98 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+%\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{etoolbox}
-\usetikzlibrary{shapes.geometric}
+\usepackage{nicematrix}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead \left(see below\right):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
 
 \graphicspath{ {./images/} }
 \geometry{
@@ -21,11 +109,22 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
 \newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
 \newcommand{\image}[2]{#2\left[#1\right]} % Image
 \newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
 \newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
-\newcommand{\e}{\mathrm{e}}
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usetikzlibrary{shapes.geometric}
 
 \newenvironment{solution}
     {\let\oldqedsymbol=\qedsymbol
@@ -45,7 +144,7 @@
 }
 \tableofcontents
 
-\chapter{Permutations and Combinations}
+\chapter{Combinatorics}
 \section{Basic Counting Principles}
 An important motivation to study combinatorics is to count the \textbf{number of ways} in which an event may occur. Intuitively, we have two approaches to count.
 
@@ -202,7 +301,6 @@ We will finish this section with two interesting problems.
     \end{solution}
 \end{exbox}
 \section{Permutations}
-\subsection{Linear Permutations}
 A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
 
 Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
@@ -215,7 +313,7 @@ Continue choosing elements in this way, we realise that if we choose the terms s
     \end{equation*}
 \end{dfnbox}
 With some algebraic manipulations, it is easy to derive the following formula, which we, however, will prove in a combinatorial manner.
-\begin{thmbox}{}{permutationId}
+\begin{probox}{An Identity for Permutations}{permutationId}
     Let $n, r \in \N$ with $r \leq n$, then $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
     \tcblower
     \begin{proof}
@@ -227,29 +325,8 @@ With some algebraic manipulations, it is easy to derive the following formula, w
         \\\\
         Therefore, there are $P^n_{r} + rP^n_{r - 1}$ $r$-permutations of $S$, i.e. $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$. 
     \end{proof}
-\end{thmbox}
-
-\subsection{Circular Permutations}
-Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
-
-However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the \textbf{relative positions} of the objects matter.
-
-Let $\mathbfit{x}_i$ be an arbitrary straight-line permutations of the $n$ objects and let $\mathbfit{y}_i$ be the corresponding circular permutation of the $n$ objects.
-
-Note that if we translate every element in $\mathbfit{x}_i$ by $k$ positions, this will result in a different straight-line permutation $\mathbfit{x}_j$ but does not change the corresponding circular permutation because the relative positions of the objects remain unchanged.
-
-Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same set of $n$ distinct objects, every circular permutation is mapped to $n$ straight-line permutations.
-\begin{dfnbox}{Circular Permutations}{circPermutation}
-    Let $A$ be a finite set such that $\abs{A} = n$, a circular $r$ permutation of $A$ is a way to arrange~$r$ elements of $A$ around a circular locus, denoted as $Q^n_r$ and given by
-    \begin{equation*}
-        Q^n_r = \frac{P^n_r}{r} = \frac{n!}{r(n - r)!}.
-    \end{equation*}
-\end{dfnbox}
-
-\subsection{Permutations with Repetitions}
-Consider the following scenario: suppose $T_1, T_2, \cdots T_n$ are distinct labels and $a_1, a_2, \cdots, a_r$ are $r$ distinct objects. If we wish to associate each object with one label, then each of the ways to do so is a permutation, the terms of which are taken from the $T_i$'s. Notice that under this setting, the $T_i$'s are allowed to be repeated in a permutation.
-
-To reason such problems, we first introduce the notion of a \textit{multi-set}.
+\end{probox}
+Consider the following scenario: suppose $T_1, T_2, \cdots T_n$ are distinct labels and $a_1, a_2, \cdots, a_r$ are $r$ distinct objects. If we wish to associate each object with one label, then each of the ways to do so is a permutation, the terms of which are taken from the $T_i$'s. Notice that under this setting, the $T_i$'s are allowed to be repeated in a permutation. To reason such problems, we first introduce the notion of a \textit{multi-set}.
 \begin{dfnbox}{Multi-set}{multiset}
     The {\color{red} \textbf{multi-set}} is defined to be
     \begin{equation*}
@@ -280,12 +357,23 @@ In this case, we can simply iterate through each of the slots in the $r$-permuta
     \end{displaymath}
     The number of $r$-permutations formed using the elements from $M$ is given by $n^r$.
 \end{probox}
+Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
 
+However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the \textbf{relative positions} of the objects matter.
 
+Let $\mathbfit{x}_i$ be an arbitrary straight-line permutations of the $n$ objects and let $\mathbfit{y}_i$ be the corresponding circular permutation of the $n$ objects.
+
+Note that if we translate every element in $\mathbfit{x}_i$ by $k$ positions, this will result in a different straight-line permutation $\mathbfit{x}_j$ but does not change the corresponding circular permutation because the relative positions of the objects remain unchanged.
+
+Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same set of $n$ distinct objects, every circular permutation is mapped to $n$ straight-line permutations.
+\begin{dfnbox}{Circular Permutations}{circPermutation}
+    Let $A$ be a finite set such that $\abs{A} = n$, a circular $r$ permutation of $A$ is a way to arrange~$r$ elements of $A$ around a circular locus, denoted as $Q^n_r$ and given by
+    \begin{equation*}
+        Q^n_r = \frac{P^n_r}{r} = \frac{n!}{r(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
 \section{Combinations}
-Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection.
-
-Note that if we want to find a selection of $r$ elements from a set $A$ where the order of selected elements does not matter, it is equivalent to finding a subset of $A$ containing $r$ elements. This motivates us to give the following definition:
+Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection. Note that if we want to find a selection of $r$ elements from a set $A$ where the order of selected elements does not matter, it is equivalent to finding a subset of $A$ containing $r$ elements. This motivates us to give the following definition:
 \begin{dfnbox}{Combinations}{combinations}
     Let $A$ be a finite set such that $\abs{A} = n$, an $r$-combination of $A$ is a set $B \subseteq A$ with~$\abs{B} = r$. The number of combinations of $A$ is given by
     \begin{equation*}
@@ -300,7 +388,7 @@ Note that if we want to find a selection of $r$ elements from a set $A$ where th
         Two obvious results:
         \begin{enumerate}
             \item If $r > n$ or $r < 0$, $C^n_r = 0$;
-            \item $C^n_r = C^n_{n - r}$ (By Theorem \ref{thm:PC}).
+            \item $C^n_r = C^n_{n - r}$.
         \end{enumerate}
     \end{remark}
 \end{notebox}
@@ -312,39 +400,24 @@ Similar to permutations, we have the following important identity:
     \end{equation*}
     \tcblower
     \begin{proof}
-        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ represent $(n + 1)$ distinct objects. Consider an $r$-combination $T$ of $S$:
-        \\\\
-        If $n + 1 \notin T$, this is equivalent to an $r$-combination of $S - \{n + 1\}$, so there are $C^n_r$ such permutations.
-        \\\\
-        If $n + 1 \in T$, it suffices to find an $(r - 1)$-combination of $S - \{n + 1\}$, which has $C^n_{r - 1}$ ways to do.
-        \\\\
-        Therefore, there are $C^n_{r} + C^n_{r - 1}$ $r$-combinations of $S$, i.e. $C^{n + 1}_r = C^n_r + C^n_{r - 1}$. 
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ be $(n + 1)$ distinct objects. Consider any $r$-combination $T$ of $S$. If $n + 1 \notin T$, this is equivalent to an $r$-combination of~$S - \{n + 1\}$, so there are $C^n_r$ such permutations. If $n + 1 \in T$, it suffices to find an $(r - 1)$-combination of $S - \{n + 1\}$, which has $C^n_{r - 1}$ ways to do. Therefore, there are $C^n_{r} + C^n_{r - 1}$ $r$-combinations of $S$, i.e. $C^{n + 1}_r = C^n_r + C^n_{r - 1}$. 
     \end{proof}
 \end{thmbox}
-\subsection{Counting Subsets}
-A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, if we are given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$.
-
-Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearly
+A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, if we are given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$. Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearly
 \begin{equation*}
     \abs{\mathcal{P}(A)} = \sum_{i = 0}^{n}\abs{A_i} = \sum_{i = 0}^{n}C^n_i.
 \end{equation*}
-We can expand the above expression algebraically and realise that it simpifies to $2^n$. However, in a combinatorial perspective, we are able to prove this result in a more succint manner:
+We can expand the above expression algebraically and realise that it simplifies to $2^n$. However, in a combinatorial perspective, we can prove this result in a more succinct manner:
 \begin{thmbox}{General Formula for $\abs{\mathcal{P}(A)}$}{cardPowerset}
     Let $A$ be a finite set. If $\abs{A} = n$, then $\abs{\mathcal{P}(A)} = 2^n$.
     \tcblower
     \begin{proof}
-        Let $S$ be an arbitrary subset of $A$. Consider an arbitrary element $a \in A$, then either $a \in S$ or $a \notin S$. 
-        \\\\
-        Let $a_i \in A$ for $i = 1, 2, \cdots, n$. For all $S \in \mathcal{P}(A)$, We replace $a_i$ by $1$ if $a_i \in S$, and by $0$ otherwise. Let $B$ be the set of all binary sequences of length $n$. It is clear that there exists a bijection between $\mathcal{P}(A)$ and $B$, and so $\abs{\mathcal{P}(A)} = \abs{B}$.
-        \\\\
-        For each binary sequence of length $n$, each of its digits is either $0$ or $1$. By Theorem \ref{thm:MP}, this means that there are in total $2^n$ such binary sequences. Therefore,
+        Let $S$ be an arbitrary subset of $A$. Consider an arbitrary element $a \in A$, then either $a \in S$ or $a \notin S$. Let $a_i \in A$ for $i = 1, 2, \cdots, n$. For all $S \in \mathcal{P}(A)$, We replace $a_i$ by $1$ if $a_i \in S$, and by $0$ otherwise. Let $B$ be the set of all binary sequences of length $n$. It is clear that there exists a bijection between $\mathcal{P}(A)$ and $B$, and so $\abs{\mathcal{P}(A)} = \abs{B}$. For each binary sequence of length $n$, each of its digits is either $0$ or $1$. By Theorem \ref{thm:MP}, this means that there are in total $2^n$ such binary sequences. Therefore,
         \begin{equation*}
             \abs{\mathcal{P}(A)} = \abs{B} = 2^n.
         \end{equation*}
     \end{proof}
 \end{thmbox}
-
-\subsection{Combinations with Repetitions}
 Given a set of $n$ distinct objects, we wish to find the number of combinations taken from the set where any element is allowed to be selected for multiple times. To reason about such problems, we introduce the following notion of a \textit{multi-subset}.
 \begin{dfnbox}{Multi-subset}{multisubset}
     Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$ be a multi-set where $n \in \N$. An $r$-element {\color{red} \textbf{multi-subset}} of $M$ is the set
@@ -367,76 +440,10 @@ Intuitively, we can view each of the $a_i$'s as a ``box'' which holds $m_i$ ball
         \begin{displaymath}
             \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}.
         \end{displaymath}
-        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and~$(n - 1)$ ones.
-        \\\\
-        Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
+        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and~$(n - 1)$ ones. Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
     \end{proof}
 \end{probox}
-
-\section{Basic Distribution Problems}
-Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
-\begin{enumerate}
-    \item distribute $r$ distinct objects into $n$ identical collections;
-    \item distribute $r$ distinct objects into $n$ distinct collections;
-    \item distribute $r$ identical objects into $n$ identical collections;
-    \item distribute $r$ identical objects into $n$ distinct collections.
-\end{enumerate}
-These $4$ basic models of distribution problems give rise to many variations. We will only discuss two simple types of distribution problems. More detailed discussion will be given in later chapters.
-\subsection{Stirling Numbers of the First Kind}
-\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
-    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Some obvious results:
-        \begin{enumerate}
-            \item $s(r, 0) = 0$ if $r \geq 1$.
-            \item $s(r, r) = 1$ if $r \geq 0$.
-            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
-            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
-        \end{enumerate}
-    \end{remark}
-\end{notebox}
-One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
-\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
-    For $r, n \in \N^+$ and $r \leq n$, we have
-    \begin{equation*}
-        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
-    \end{equation*}
-    \tcblower   
-    \begin{proof}
-        Consider the set
-        \begin{displaymath}
-            \left\{x_1, x_2, \cdots, x_r\right\}
-        \end{displaymath}
-        to be the $r$ distinct objects. We consider two cases.
-        \\\\
-        If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
-        \\\\
-        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects.
-        \\\\
-        By Theorem \ref{thm:AP}, the total number of distributions is 
-        \begin{equation*}
-            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
-        \end{equation*}
-    \end{proof}
-\end{thmbox}
-
-\subsection{Distinct Objects into Distinct Collections}
-The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
-\begin{probox}{}{}
-    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
-\end{probox}
-We then consider the case where each collection can contain any number of objects.
-\begin{probox}{}{}
-    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
-    \begin{equation*}
-        \frac{(n + r - 1)!}{(n - 1)!}.
-    \end{equation*}
-\end{probox}
-
 \section{Binomial and Multinomial Coefficients}
-\subsection{Binomial Coefficients}
 In previous sections on combinations, we have already introduced the ways to choose $r$ items from a collection of $n$ distinct items, the number of which is given by
 \begin{displaymath}
     C^n_r = \begin{pmatrix}
@@ -511,7 +518,7 @@ There are many nice algebraic properties about the binomial coefficient $\left(\
         m - r
     \end{pmatrix}$.
 \end{enumerate}
-We will focus on two important identities about the binomial coefficients, one of which is as follows:
+One important identity for binomial coefficients is as follows:
 \begin{thmbox}{Vandermonde's Identity}{vadermonde}
     Let $m, n, r \in \N$, then
     \begin{equation*}
@@ -614,7 +621,7 @@ Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurre
         \end{equation*}
     \end{proof}
 \end{thmbox}
-\subsection{Multinomial Coefficients}
+Binomial coefficients can be generalised as \textit{multinomial coefficients}, which has a nice correspondence to a special variant of distribution problems.
 \begin{dfnbox}{Multinomial Coefficient}{multinomialCoeff}
     Let $m, n \in \N$, with $m \geq 1$. The {\color{red} \textbf{multinomial coefficient}}
     \begin{displaymath}
@@ -625,7 +632,7 @@ Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurre
     \end{displaymath}
     is the number of ways to distribute $n$ distinct objects into $m$ distinct collections such that there are exactly $n_i$ objects in the $i$-th collection.
 \end{dfnbox}
-Note that the binomial coefficient is just a special case for multinomial coefficients where $m = 2$ and $n_1 + n_2 = n$. Respectively, multinomial coefficients also generalise binomial expansion.
+Observe that the binomial coefficients are just a special case for multinomial coefficients with~$m = 2$ and $n_1 + n_2 = n$. Respectively, multinomial coefficients also generalise binomial expansion.
 \begin{thmbox}{Multinomial Expansion}{multinomialEx}
     For $m, n \in \N+$, we have
     \begin{equation*}
@@ -635,126 +642,6 @@ Note that the binomial coefficient is just a special case for multinomial coeffi
         \end{pmatrix}\prod_{i = 1}^{m}x_i^{n_i}.
     \end{equation*}
 \end{thmbox}
-
-\chapter{Pigeonhole Principle}
-\section{Pigeonhole Principle}
-\begin{thmbox}{Pigeonhole Principle}{PP}
-    Let $k, n \in \N^+$. If at least $kn + 1$ distinct objects are distributed into $n$ distinct sets, then there exists a set $K$ such that $\abs{K} \geq k + 1$.
-    \tcblower   
-    \begin{proof}
-        Let $a_1, a_2, \cdots, a_{kn + 1}$ be the $kn + 1$ distinct objects to be distributed into the sets~$K_1, K_2, \cdots, K_n$. Suppose there is no $i \in \N^+$ such that $\abs{K_i} \geq k + 1$, i.e. $K_i \leq k$ for all~$i = 1, 2, \cdots, n$.
-        \\\\
-        This means that $\sum_{i = 1}^{n}\abs{K_i} \leq kn < kn + 1$, which is a contradiction.
-    \end{proof}
-\end{thmbox}
-Note that Pigeonhole Principle only guarantees existence rather than uniqueness. We may also consider the following generalised version:
-\begin{thmbox}{Generalised Pigeonhole Principle}{GPP}
-    Let $n, k_1, k_2, \cdots, k_n \in \N^+$. If at least $\left[\sum_{i = 1}^{n}k_i + (n - 1)\right]$ distinct objects are distributed into $n$ distinct sets $S_1, S_2, \cdots, S_n$, then there exists at least one $S_i$ for $i = 1, 2, \cdots, n$ such that $\abs{S_i} \geq k_i$.
-    \tcblower   
-    \begin{proof}
-        Suppose there is no $i \in \N^+$ such that $\abs{S_i} \geq k_i$, i.e., $\abs{S_i} \leq k_i - 1$ for all $i = 1, 2, \cdots, n$
-        \\\\
-        This means that $\sum_{i = 1}^{n}\abs{K_i} \leq \sum_{i = 1}^{n}(k_i - 1) = \sum_{i = 1}^{n}k_i - n$, which is a contradiction.
-    \end{proof}
-\end{thmbox}
-Note that by setting $k_1 = k_2 = \cdots = k_n = 2$ we get from Theorem \ref{thm:GPP} to Theorem \ref{thm:PP}.
-
-The Pigeonhole Principle is closely linked to the \textit{Ramsey Types of Problems}.
-\section{Ramsey Types of Problems}
-The Ramsey Types of Problems are motivated by the following question statement:
-\begin{exbox}{}{sixPts}
-    Let $A_1, A_2, A_3, A_4, A_5, A_6$ be six arbitrary points in a plane. We join these points pairwise with either a {\color{red} \textbf{red}} line segment or a {\color{blue} \textbf{blue}} line segment. Prove that after each point has been joined with any other point, there exists at least one {\color{blue} \textbf{blue}} triangle or at least one {\color{red} \textbf{red}} triangle whose vertices are three of the six points.
-    \tcblower   
-    \begin{proof}
-        Consider the line segments joining $A_h$ with the other five points. Note that this is equivalent to colouring $5$ line segments using either red or blue. By Theorem \ref{thm:PP}, this means that at least $3$ of these line segments have the same colour.
-        \\\\
-        Without loss of generality, suppose the line segments $A_hA_i$, $A_hA_j$ and $A_hA_k$ are red. Consider the line segments $A_iA_j$, $A_jA_k$ and $A_iA_k$. If they are all blue, then we will have a blue triangle. Otherwise, if any one of them is red, then those two vertices together with $A_h$ will form a red triangle.
-    \end{proof}
-\end{exbox}
-We can extend the above question a bit. Suppose we have $17$ arbitrary points $X_1, X_2, \cdots, X_{17}$ in a plane and we join these points in the same way as Example \ref{ex:sixPts} but with three distinct colours: {\color{red} \textbf{red}}, {\color{blue} \textbf{blue}} and {\color{orange} \textbf{orange}}. Can we still guarantee the existence of at least on triangle whose sides are all of the same colour?
-
-It turns out that we can! Again we can consider all line segments joining $X_1$ with the other $16$ vertices. By Theorem \ref{thm:PP}, we must have at least $6$ of them having the same colour. Without loss of generality, assume that these $6$ line segments are all red.
-
-Now, examine these $6$ vertices joined to $X_1$ with the same-coloured line segments. If any line segment between these $6$ vertices is red, then we have a red triangle. Otherwise, the line segments joining these $6$ vertices are coloured with only two colours, and by Example \ref{ex:sixPts} we are guaranteed to have a triangle with all three sides having the same colour as well.
-
-Going back to Example \ref{ex:sixPts}, one might notice that $6$ is the smallest possible number of vertices for us to guarantee the existence of such a triangle. In the case of $5$ vertices, consider:
-\begin{center}
-    \begin{tikzpicture}[mystyle/.style={draw,shape=circle,fill=green}]
-        \def\ngon{5}
-        \node[
-            regular polygon,
-            regular polygon sides=\ngon,
-            minimum size=3cm
-        ] (p) {};
-        \foreach\x in {1,...,\ngon}{
-            \node[mystyle] (p\x) at (p.corner \x){};
-        }
-        \draw [red, very thick] (p1) -- (p2) -- (p3) -- (p4) -- (p5) -- (p1);
-        \draw [blue, very thick] (p1) -- (p3);
-        \draw [blue, very thick] (p1) -- (p4);
-        \draw [blue, very thick] (p2) -- (p4);
-        \draw [blue, very thick] (p2) -- (p5);
-        \draw [blue, very thick] (p3) -- (p5);
-    \end{tikzpicture}
-\end{center}
-This motivates the following definitions:
-\begin{dfnbox}{Clique}{clique}
-    A {\color{red} \textbf{clique}} is defined to be a finite set of vertices such that every pair of vertices are adjacent to each other (i.e., there exists a line segment joining any two vertices). A clique with $k$ vertices is called a $k$-clique.
-\end{dfnbox}
-\begin{dfnbox}{Ramsey Number}{ramseyNum}
-    Given $p, q \in \N^+$. The {\color{red} \textbf{Ramsey Number}} $R(p, q)$ is the smallest natural number $n$ such that for any colouring of the edges of an $n$-clique by $2$ colours, there exists either a monochromatic $p$-clique or a monochromatic $q$-clique.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Some obvious results:
-        \begin{itemize}
-            \item $R(p, q) = R(q, p)$.
-            \item $R(1, q) = 1$.
-            \item $R(2, q) = q$.
-        \end{itemize}
-    \end{remark}
-\end{notebox}
-These develop into what we now know as \textit{Ramsey Theory} which probes into the question:
-\begin{quote}
-    How many elements of a particular structure $S$ must there exist to guarantee that a certain property $p$ will always hold for $S$?
-\end{quote}
-It turns out that calculating the Ramsey Numbers can be extremely difficult. However, we do have a way to establish an upper bound for each of the Ramsey Numbers.
-\begin{thmbox}{Recurrence Relation of Ramsey Numbers}{recurRamsey}
-    For all integers $p, q \geq 2$,
-    \begin{equation*}
-        R(p, q) \leq R(p - 1, q) + R(p, q - 1).
-    \end{equation*}
-    In particular, if both $R(p - 1, q)$ and $R(p, q - 1)$ are even, then
-    \begin{equation*}
-        R(p, q) \leq R(p - 1, q) + R(p, q - 1) - 1.
-    \end{equation*}
-    \tcblower
-    \begin{proof}
-        Let $n = R(p - 1, q) + R(p, q - 1)$. To prove that $R(p, q) \leq n$, it suffices to prove that for any $n$-clique, any colouring of its edges using blue and red will result in either a blue $p$-clique or a red $q$ clique.
-        \\\\
-        Consider an arbitrary vertex $V$ of any $n$-clique. Note that $V$ is incident with $\left(R(p - 1, q) + R(p, q - 1) - 1\right)$ vertices and edges. By Theorem \ref{thm:GPP} this means that either at least $R(p - 1, q)$ edges are blue or at least $R(p, q - 1)$ edges are red.
-        \\\\ 
-        Without loss of generality, consider the $R(p - 1, q)$-clique whose vertices are joined to $V$ by blue edges. By Definition \ref{dfn:ramseyNum}, this clique contains either a blue $(p - 1)$-clique or a red $p$-clique. If it contains a red $p$-clique, then we are done. If it contains a blue $(p - 1)$-clique, this clique together with $V$ will form a blue $p$-clique. Either way, it is guaranteed that
-        \begin{equation*}
-            R(p, q) \leq n = R(p - 1, q) + R(p, q - 1).
-        \end{equation*}
-        Now we proceed to proving the case where $R(p - 1, q)$ and $R(p, q - 1)$ are both even.
-        \\\\
-        Let $m = R(p - 1, q) + R(p, q - 1) - 1$. Fix an arbitrary vertex $W$, then it suffices to prove that among the $(m - 1)$ edges incident to $W$, either at least $R(p - 1, q)$ are blue or at least $R(p, q - 1)$ are red.
-        \\\\
-        Suppose on contrary that there are exactly $\left(R(p - 1, q) - 1\right)$ blues edges and exactly $\left(R(p, q - 1) - 1\right)$ red edges for all vertices in the $m$-clique. This means that the total number of blue edges in the $m$-clique is
-        \begin{equation*}
-            N = \frac{m\left(R(p - 1, q) - 1\right)}{2}.
-        \end{equation*}
-        However, $m$ and $R(p - 1, q) - 1$ are both odd, this means that $N$ is not an integer, which is impossible.
-    \end{proof}
-\end{thmbox}
-The above recurrence allows us to prove the following theorem:
-\begin{thmbox}{Ramsey's Theorem}{RamseyThm}
-    For all $p, q \in N^+$, the Ramsey Number $R(p, q)$ always exists.
-\end{thmbox}
-
-\chapter{Principle of Inclusion and Exclusion}
 \section{Principle of Inclusion and Exclusion (PIE)}
 Consider the following naïve question:
 \begin{quote}
@@ -854,8 +741,62 @@ In particular, we see that
 \begin{equation*}
     E(0) = \sum_{i = 0}^{q}\left[(-1)^i\omega(i)\right].
 \end{equation*}
-We will introduce some related applications of Theorem \ref{thm:GenPIE}.
-\section{Stirling Numbers of the Second Kind}
+
+\section{Distribution Problems}
+Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
+\begin{enumerate}
+    \item distribute $r$ distinct objects into $n$ identical collections;
+    \item distribute $r$ distinct objects into $n$ distinct collections;
+    \item distribute $r$ identical objects into $n$ identical collections;
+    \item distribute $r$ identical objects into $n$ distinct collections.
+\end{enumerate}
+These $4$ basic models of distribution problems give rise to many variations. We will only discuss the first two types of distribution problems here. The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
+\begin{probox}{Distinct Objects into Singleton Distinct Collections}{distToDistNonEmpty}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
+\end{probox}
+We then consider the case where each collection can contain any number of objects.
+\begin{probox}{Distinct Objects into Distinct Collections}{distToDist}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
+    \begin{equation*}
+        \frac{(n + r - 1)!}{(n - 1)!}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
+\end{probox}
+For distributing distinct objects into identical collections, the reasoning becomes a bit more complicated. We first consider a scenario where the collections are circular.
+\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
+    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
+        \begin{enumerate}
+            \item $s(r, 0) = 0$ if $r \geq 1$.
+            \item $s(r, r) = 1$ if $r \geq 0$.
+            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
+            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
+\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
+    For $r, n \in \N^+$ and $r \leq n$, we have
+    \begin{equation*}
+        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set $\left\{x_1, x_2, \cdots, x_r\right\}$ to be the $r$ distinct objects. We consider two cases. If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
+        \\\\
+        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects. By Theorem \ref{thm:AP}, the total number of distributions is 
+        \begin{equation*}
+            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Next, we consider the case where the collections arrange their elements linearly.
 \begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
     The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
 \end{dfnbox}
@@ -871,7 +812,7 @@ We will introduce some related applications of Theorem \ref{thm:GenPIE}.
         \end{itemize}
     \end{remark}
 \end{notebox}
-Based on the above trivial results, we can use the following recurrence relation to derive $S(r, n)$ for any $r$ and $n$.
+Based on the above trivial results, we can use the following recurrence relation to derive a general formula for $S(r, n)$ for any $r$ and $n$.
 \begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
     For all $r, n \in \N$ with $r \geq n$,
     \begin{equation*}
@@ -887,7 +828,7 @@ Based on the above trivial results, we can use the following recurrence relation
 \end{thmbox}
 The Stirling numbers of the second kind are closely related to the problem of set partition.
 \begin{dfnbox}{Partition}{partition}
-    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with $S_1 \neq S_2$, $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
+    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with~$S_1 \neq S_2$, we have $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
 \end{dfnbox}
 Note that in a set, the elements are pairwise distinct. Therefore, a partition of $A$ into $i$ disjoint subsets is equivalent to a distribution of $\abs{A}$ distinct objects into $i$ identical collections. Therefore, the number of different partitions of $A$ is just
 \begin{equation*}
@@ -938,110 +879,140 @@ Since $S(r, n) = 0$ if $n > r \geq 1$, we have
         k
     \end{pmatrix}(n - k)^r = 0 \quad \textrm{if }n > r \geq 1.
 \end{equation*}
-\section{Derangement}
-The concept of derangements arises from the following question:
-\begin{quote}
-    Given an increasing sequence of consecutive integers from $1$ to $n$ inclusive. How many permutations of the sequence are there such that the integer at index $i$ in the permuted sequence is not $i$?
-\end{quote}
-Here we give a rigorous definition along with a generalised notion of \textit{fixed points}.
-\begin{dfnbox}{Derangement}{derangement}
-    Let $N_n = [n] - \{0\}$. A {\color{red} \textbf{derangement}} of $N_n$, denoted by $D_n$, is the permutation $a_1a_2\cdots a_n$ of $N_n$ such that $a_i \neq i$ for all $i = 1, 2, \cdots, n$.
-    \\\\
-    In general, we also say that an $r$-permutation of $N_n$ has a {\color{red} \textbf{fixed point}} at $i$ if $a_i = i$. The number of $r$-permutations of $N_n$ with $k$ fixed points is $D(n, r, k)$.
+A common application of distribution problems with $n$ identical objects and $m$ identical collections is the partition of an integer.
+\begin{dfnbox}{Integer Partition}{intPart}
+    Let $n \in \N^+$. A {\color{red} \textbf{partition}} of $n$ is a non-increasing sequence of positive integers whose sum is $n$. 
 \end{dfnbox}
-\begin{thmbox}{A Formula for $D(n, r, k)$}{dnrk}
-    For $n \geq r \geq k \geq -$ and $r \geq 1$,
-    \begin{equation*}
-        D(n, r, k) = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
-            r - k \\
-            i
-        \end{pmatrix}(n - k - i)!.
-    \end{equation*}
-    \tcblower
+A useful tool to study such partitions is \textit{Ferrers diagram}.
+\begin{dfnbox}{Ferrers Diagram}{ferrers}
+    Let $n \in \N^+$ and consider a partition $P = \left\{n_1, n_2, \cdots, n_k\right\}$. The {\color{red} \textbf{Ferrers diagram}} of the partition, denoted as $\mathcal{F}(P)$, is an array of left-justified asterisks in which the $i$-th row has the length of $n_i$.
+\end{dfnbox}
+Just like matrices, a Ferrers diagram can be transposed.
+\begin{dfnbox}{Conjugate Partition}{conjPart}
+    Let $\mathcal{F}(P)$ be the Ferrers diagram of an integer partition $P$. $Q$ is known as the {\color{red} \textbf{conjugate partition}} of $P$ if $\mathcal{F}(Q) = \mathcal{F}(P)^{\mathrm{T}}$.
+\end{dfnbox}
+Intuitively, conjugate partition is a \textbf{symmetric relation}, and if $P$ and $Q$ are conjugate partitions, the number of parts of $Q$ is just the size of the largest part of $P$. This leads to the following theorem:
+\begin{probox}{Size of Conjugate Partitions}{sizeConj}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into $k$ parts equals the number of partitions of $r$ with the largest part having size $k$.
+    \tcblower   
     \begin{proof}
-        Let $a_1a_2\cdots a_r$ be a permutation and let $P_i$ be a property satisfied by a permutation with $a_i = i$, then $D(n, r, k) = E(k)$. Suppose $A$ is a permutation with at least $t$ fixed points, then the rest $(r - t)$ digits form an $(r - t)$-permutation of $(n - t)$ integers. Therefore, 
-        \begin{equation*}
-            \omega(t) = \begin{pmatrix}
-                r \\
-                t
-            \end{pmatrix}\frac{(n - t)!}{(n - r)!}.
-        \end{equation*}
-        By Theorem \ref{thm:GenPIE},
-        \begin{align*}
-            D(n, r, k) & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
-                k + i \\
-                k
-            \end{pmatrix}\omega(k + i)\right] \\
-            & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
-                k + i \\
-                k
-            \end{pmatrix}\begin{pmatrix}
-                r \\
-                k + i
-            \end{pmatrix}\frac{(n - k - i)!}{(n - r)!}\right] \\
-            & = \frac{1}{(n - r)!}\sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
-                r \\
-                k
-            \end{pmatrix}\begin{pmatrix}
-                r - k \\
-                i
-            \end{pmatrix}(n - k - i)!\right] \\
-            & = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
-                r - k \\
-                i
-            \end{pmatrix}(n - k - i)!.
-        \end{align*}
+        Let $\mathcal{P}$ be the family of partitions of $r$ into $k$ parts and $\mathcal{Q}$ be the family of partitions of $r$ whose largest part has size $k$. Define a function $f \colon \mathcal{P} \to \mathcal{Q}$ such that~$\mathcal{F}\bigl(f(X)\bigr) = \mathcal{F}(X)^{\mathrm{T}}$, i.e., $f(X)$ and $X$ are conjugates. It is easy to see that $f$ is well-defined and bijective, so $\abs{\mathcal{P}} = \abs{\mathcal{Q}}$.
+    \end{proof}
+\end{probox}
+Proposition \ref{pro:sizeConj} leads to the following corollary:
+\begin{corbox}{Integer Partition into Limited Parts}{intPartLimited}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into at most $k$ parts equals the number of partitions of $r$ with the largest part having size at most $k$.
+\end{corbox}
+The following formula can de derived:
+\begin{equation*}
+    \sum_{k = 1}^{m}p(n, k) = p(n + m, m).
+\end{equation*}
+\section{Pigeonhole Principle}
+\begin{thmbox}{Pigeonhole Principle}{PP}
+    Let $k, n \in \N^+$. If at least $kn + 1$ distinct objects are distributed into $n$ distinct sets, then there exists a set $K$ such that $\abs{K} \geq k + 1$.
+    \tcblower   
+    \begin{proof}
+        Let $a_1, a_2, \cdots, a_{kn + 1}$ be the $kn + 1$ distinct objects to be distributed into the sets~$K_1, K_2, \cdots, K_n$. Suppose there is no $i \in \N^+$ such that $\abs{K_i} \geq k + 1$, i.e. $K_i \leq k$ for all~$i = 1, 2, \cdots, n$. This means that $\sum_{i = 1}^{n}\abs{K_i} \leq kn < kn + 1$, which is a contradiction.
     \end{proof}
 \end{thmbox}
-Using Theorem \ref{thm:dnrk}, we see that the number of derangements is just
-\begin{equation*}
-    D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}.
-\end{equation*}
-Relating this to probability, we see that given a sequence of $n$ integers, the probability of us having a derangement is given by:
-\begin{equation*}
-    \lim_{n \to \infty}P(\textrm{Having a derangement}) = \lim_{n \to \infty}\frac{D_n}{n!} = \mathrm{e}^{-1}.
-\end{equation*}
+Note that Pigeonhole Principle only guarantees existence rather than uniqueness. We may also consider the following generalised version:
+\begin{thmbox}{Generalised Pigeonhole Principle}{GPP}
+    Let $n, k_1, k_2, \cdots, k_n \in \N^+$. If at least $\left[\sum_{i = 1}^{n}k_i + (n - 1)\right]$ distinct objects are distributed into $n$ distinct sets $S_1, S_2, \cdots, S_n$, then there exists at least one $S_i$ for $i = 1, 2, \cdots, n$ such that $\abs{S_i} \geq k_i$.
+    \tcblower   
+    \begin{proof}
+        Suppose there is no $i \in \N^+$ such that $\abs{S_i} \geq k_i$, i.e., $\abs{S_i} \leq k_i - 1$ for any~$i = 1, 2, \cdots, n$. This means that $\sum_{i = 1}^{n}\abs{K_i} \leq \sum_{i = 1}^{n}(k_i - 1) = \sum_{i = 1}^{n}k_i - n$, which is a contradiction.
+    \end{proof}
+\end{thmbox}
+Note that by setting $k_1 = k_2 = \cdots = k_n = 2$ we get from Theorem \ref{thm:GPP} to Theorem \ref{thm:PP}.
 
-\section{Counting Co-prime Numbers}
-In the last section, we introduce an application of the general principle of inclusion and exclusion in the context of prime numbers. In particular, we wish to investigate a standardised method to count the number of prime numbers between $2$ and $n$ inclusive.
+The Pigeonhole Principle is closely linked to the \textit{Ramsey Types of Problems}, which are motivated by the following question statement:
+\begin{exbox}{Monochromatic Triangles with Six Points}{sixPts}
+    Let $A_1, A_2, A_3, A_4, A_5, A_6$ be six arbitrary points in a plane. We join these points pairwise with either a {\color{red} \textbf{red}} line segment or a {\color{blue} \textbf{blue}} line segment. Prove that after each point has been joined with any other point, there exists at least one {\color{blue} \textbf{blue}} triangle or at least one {\color{red} \textbf{red}} triangle whose vertices are three of the six points.
+    \tcblower   
+    \begin{proof}
+        Consider the line segments joining $A_h$ with the other five points. Note that this is equivalent to colouring $5$ line segments using either red or blue. By Theorem \ref{thm:PP}, this means that at least $3$ of these line segments have the same colour. Without loss of generality, suppose the line segments $A_hA_i$, $A_hA_j$ and $A_hA_k$ are red. Consider the line segments $A_iA_j$, $A_jA_k$ and $A_iA_k$. If they are all blue, then we will have a blue triangle. Otherwise, if any one of them is red, then those two vertices together with~$A_h$ will form a red triangle.
+    \end{proof}
+\end{exbox}
+We can extend the above question a bit. Suppose we have $17$ arbitrary points $X_1, X_2, \cdots, X_{17}$ in a plane and we join these points in the same way as Example \ref{ex:sixPts} but with three distinct colours: {\color{red} \textbf{red}}, {\color{blue} \textbf{blue}} and {\color{orange} \textbf{orange}}. Can we still guarantee the existence of at least on triangle whose sides are all of the same colour?
 
-We will first introduce an ancient algorithm discovered by Greek mathematician Eratosthenes.
-\begin{tecbox}{Sieve of Eratosthenes}{sieve}
-    Let $n \in \N$ and $n \geq 2$.
-    \begin{itemize}
-        \item Define $L$ to be the list of all integers from $2$ to $n$ inclusive, arranged in ascending order.
-        \item For every $i \in L$, while $i \leq \sqrt{n}$:
+It turns out that we can! Again we can consider all line segments joining $X_1$ with the other $16$ vertices. By Theorem \ref{thm:PP}, we must have at least $6$ of them having the same colour. Without loss of generality, assume that these $6$ line segments are all red.
+
+Now, examine these $6$ vertices joined to $X_1$ with the same-coloured line segments. If any line segment between these $6$ vertices is red, then we have a red triangle. Otherwise, the line segments joining these $6$ vertices are coloured with only two colours, and by Example \ref{ex:sixPts} we are guaranteed to have a triangle with all three sides having the same colour as well.
+
+Going back to Example \ref{ex:sixPts}, one might notice that $6$ is the smallest possible number of vertices for us to guarantee the existence of such a triangle. In the case of $5$ vertices, consider:
+\begin{center}
+    \begin{tikzpicture}[mystyle/.style={draw,shape=circle,fill=green}]
+        \def\ngon{5}
+        \node[
+            regular polygon,
+            regular polygon sides=\ngon,
+            minimum size=3cm
+        ] (p) {};
+        \foreach\x in {1,...,\ngon}{
+            \node[mystyle] (p\x) at (p.corner \x){};
+        }
+        \draw [red, very thick] (p1) -- (p2) -- (p3) -- (p4) -- (p5) -- (p1);
+        \draw [blue, very thick] (p1) -- (p3);
+        \draw [blue, very thick] (p1) -- (p4);
+        \draw [blue, very thick] (p2) -- (p4);
+        \draw [blue, very thick] (p2) -- (p5);
+        \draw [blue, very thick] (p3) -- (p5);
+    \end{tikzpicture}
+\end{center}
+This motivates the following definitions:
+\begin{dfnbox}{Clique}{clique}
+    A {\color{red} \textbf{clique}} is defined to be a finite set of vertices such that every pair of vertices are adjacent to each other (i.e., there exists a line segment joining any two vertices). A clique with $k$ vertices is called a $k$-clique.
+\end{dfnbox}
+\begin{dfnbox}{Ramsey Number}{ramseyNum}
+    Given $p, q \in \N^+$. The {\color{red} \textbf{Ramsey Number}} $R(p, q)$ is the smallest natural number $n$ such that for any colouring of the edges of an $n$-clique by $2$ colours, there exists either a monochromatic $p$-clique or a monochromatic $q$-clique.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
         \begin{itemize}
-            \item If $i$ is a prime, remove all multiples of $i$ from $L$.
+            \item $R(p, q) = R(q, p)$.
+            \item $R(1, q) = 1$.
+            \item $R(2, q) = q$.
         \end{itemize}
-        \item All remaining integers in $L$ are primes.
-    \end{itemize}
-\end{tecbox}
-To extend the problem further, we can instead consider counting the number of positive integers up to $n$ inclusive which are \textbf{co-prime} to $n$.
-\begin{thmbox}{Euler $\varphi$-Function}{eulerPhi}
-    Let $n \in \N^+$ and $\varphi(n)$ be the number of positive integers which are smaller than $n$ and co-prime to $n$. If $p_1, p_2, \cdots, p_k$ are distinct prime numbers such that
+    \end{remark}
+\end{notebox}
+These develop into what we now know as \textit{Ramsey Theory} which probes into the question:
+\begin{quote}
+    How many elements of a particular structure $S$ must there exist to guarantee that a certain property $p$ will always hold for $S$?
+\end{quote}
+It turns out that calculating the Ramsey Numbers can be extremely difficult. However, we do have a way to establish an upper bound for each of the Ramsey Numbers.
+\begin{thmbox}{Recurrence Relation of Ramsey Numbers}{recurRamsey}
+    For all integers $p, q \geq 2$,
     \begin{equation*}
-        n = \prod_{i = 1}^{k}p_i^{m_i}
-    \end{equation*} 
-    for positive $m_i$'s, then
+        R(p, q) \leq R(p - 1, q) + R(p, q - 1).
+    \end{equation*}
+    In particular, if both $R(p - 1, q)$ and $R(p, q - 1)$ are even, then
     \begin{equation*}
-        \varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+        R(p, q) \leq R(p - 1, q) + R(p, q - 1) - 1.
     \end{equation*}
     \tcblower
     \begin{proof}
-        Let $S_t$ be the set of positive integers at most $n$ which are divisible by at least $t$ of the $k$ primes. For $t = 1, 2, \cdots, k$, consider
+        Let $n = R(p - 1, q) + R(p, q - 1)$. To prove that $R(p, q) \leq n$, it suffices to prove that for any $n$-clique, any colouring of its edges using blue and red will result in either a blue $p$-clique or a red $q$ clique. Consider an arbitrary vertex $V$ of any~$n$-clique. Note that $V$ is incident to $\left(R(p - 1, q) + R(p, q - 1) - 1\right)$ vertices and edges. By Theorem \ref{thm:GPP} this means that either at least $R(p - 1, q)$ edges are blue or at least $R(p, q - 1)$ edges are red.
+        \\\\ 
+        Without loss of generality, consider the $R(p - 1, q)$-clique whose vertices are joined to $V$ by blue edges. By Definition \ref{dfn:ramseyNum}, this clique contains either a blue $(p - 1)$-clique or a red $p$-clique. If it contains a red $p$-clique, then we are done. If it contains a blue $(p - 1)$-clique, this clique together with $V$ will form a blue $p$-clique. Either way, it is guaranteed that
         \begin{equation*}
-            \abs{S_t} = \sum_{i_1 < i_2 < \cdots < i_t}\left\lfloor\frac{n}{\prod_{j = 1}^{t}p_{i_j}}\right\rfloor = \sum_{i_1 < i_2 < \cdots < i_t}\frac{n}{\prod_{j = 1}^{t}p_{i_j}}
+            R(p, q) \leq n = R(p - 1, q) + R(p, q - 1).
         \end{equation*}
-        By Theorem \ref{thm:GenPIE},
-        \begin{align*}
-            \varphi(n) & = n - \abs{\left(\bigcup_{t = 1}^{k}S_t\right)} \\
-            & = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
-        \end{align*}
+        Now we proceed to proving the case where $R(p - 1, q)$ and $R(p, q - 1)$ are both even. Let $m = R(p - 1, q) + R(p, q - 1) - 1$. Fix an arbitrary vertex $W$, then it suffices to prove that among the $(m - 1)$ edges incident to $W$, either at least $R(p - 1, q)$ are blue or at least $R(p, q - 1)$ are red.
+        \\\\
+        Suppose on contrary that there are exactly $\left(R(p - 1, q) - 1\right)$ blues edges and exactly $\left(R(p, q - 1) - 1\right)$ red edges for all vertices in the $m$-clique. This means that the total number of blue edges in the $m$-clique is
+        \begin{equation*}
+            N = \frac{m\left(R(p - 1, q) - 1\right)}{2}.
+        \end{equation*}
+        However, $m$ and $R(p - 1, q) - 1$ are both odd, this means that $N$ is not an integer, which is impossible.
     \end{proof}
 \end{thmbox}
+The above recurrence allows us to prove the following theorem:
+\begin{thmbox}{Ramsey's Theorem}{RamseyThm}
+    For all $p, q \in N^+$, the Ramsey Number $R(p, q)$ always exists.
+\end{thmbox}
 
-\chapter{Generating Functions}
+\chapter{Tools for Combinatorial Problems}
 \section{Ordinary Generating Functions}
 \begin{dfnbox}{Ordinary Generating Function (OGF)}{OGF}
     Let $(a_r)$ be a sequence in $\R$. The {\color{red} \textbf{ordinary generating function}} of $(a_r)$ is defined to be the series
@@ -1049,7 +1020,7 @@ To extend the problem further, we can instead consider counting the number of po
         A(x) = \sum_{i = 0}^{\infty}a_ix^i.
     \end{equation*}
 \end{dfnbox}
-Note that the set of generating functions is a vector space. In particular, if $C(x) = A(x) + B(x)$, then $c_r = a_r + b_r$ and if $C(x) = A(x)B(x)$, then $c_r = \sum_{i = 0}^{r}a_ib_{r - i}$.
+Note that the set of generating functions is a vector space. In particular, if the generating functions satisfy $C(x) = A(x) + B(x)$, then $c_r = a_r + b_r$ and if $C(x) = A(x)B(x)$, then we have $c_r = \sum_{i = 0}^{r}a_ib_{r - i}$.
 \begin{dfnbox}{Generalised Binomial Coefficients}{}
     Let $\alpha \in \R$ and $r \in \N$, then 
     \begin{equation*}
@@ -1059,7 +1030,7 @@ Note that the set of generating functions is a vector space. In particular, if $
         \end{pmatrix} = \frac{\prod_{i = 0}^{r - 1}(\alpha - i)}{r!}.
     \end{equation*}
 \end{dfnbox}
-
+Using this version of binomial coefficients, we can upgrade our binomial expansion to apply to a wider range of contexts.
 \begin{dfnbox}{Generalised Binomial Expansion}{}
     Let $\alpha \in \R$ then 
     \begin{equation*}
@@ -1069,7 +1040,6 @@ Note that the set of generating functions is a vector space. In particular, if $
         \end{pmatrix}(\pm x)^r.
     \end{equation*}
 \end{dfnbox}
-\subsection{Basic Ordinary Generating Functions}
 We now examine a few basic ordinary generating functions. First, consider
 \begin{equation*}
     a_r = \begin{cases}
@@ -1109,12 +1079,12 @@ Notice that
         i
     \end{pmatrix}x^i.
 \end{equation*}
-This means that the series $(1 - x)^{-n}$ generates the number of ways to choose $r$ objects from $(n - 1 + r)$ objects. In particular, if $a_r = r + 1$, note that $a_r = C^{r + 1}_r$, so substituting $n = 2$ yields
+This means that the series $(1 - x)^{-n}$ generates the number of ways to choose $r$ objects from~$(n - 1 + r)$ objects. In particular, if $a_r = r + 1$, note that $a_r = C^{r + 1}_r$, so substituting~$n = 2$ yields
 \begin{equation*}
     A(x) = (1 - x)^{-2} = \frac{1}{(1 - x)^2}
 \end{equation*}
 as the generating function for $(a_r)$.
-\subsection{Operations on Ordinary Generating Functions}
+
 Note that an ordinary generating function is an infinite polynomial, so the set of all ordinary generating functions form a vector space. 
 
 Additionally, the following conclusions hold:
@@ -1140,11 +1110,9 @@ Additionally, the following conclusions hold:
     \item $C(x) = A'(x)$ generates $c_r = (r + 1)a_{r + 1}$.
     \item $C(x) = xA'(x)$ generates $c_r = ra_r$.
 \end{enumerate}
-\subsection{Modelling with Generating Functions}
+Let us see an example of how generating functions can be used to model problems.
 \begin{tecbox}{\small Modelling Combinations with Ordinary Generating Functions}{}
-    Let $S = \left\{s_1, s_2, \cdots, s_n\right\}$ be $n$ distinct objects and let $a_r$ be the number of ways to select $r$ objects from $S$.
-    \\\\
-    To model this problem using ordinary generating functions, let $x^0$ denote the event that $s_i$ is not selected and $s_ix$ denote the event that $s_i$ is selected. Consider
+    Let $S = \left\{s_1, s_2, \cdots, s_n\right\}$ be $n$ distinct objects and let $a_r$ be the number of ways to select~$r$ objects from $S$. To model this problem using ordinary generating functions, let $x^0$ denote the event that $s_i$ is not selected and $s_ix$ denote the event that $s_i$ is selected. Consider
     \begin{equation*}
         \prod_{i = 1}^{n}(1 + s_ix).
     \end{equation*}
@@ -1157,7 +1125,7 @@ Additionally, the following conclusions hold:
     \end{equation*}
     which is essentially the binomial expansion.
 \end{tecbox}
-While the above modelling seems an over-kill, it becomes more useful when dealing with multi-sets. Suppose $S$ is now a multi-set instead with $s_i$ having $c_i$ copies. Then, we can let $s_i^jx^j$ denote the event that $s_i$ is selected $j$ times. Following a similar process we can obtain the corresponding generating function.
+While the above modelling seems an over-kill, it becomes more useful when dealing with multi-sets. Suppose $S$ is now a multi-set instead with $s_i$ having $c_i$ copies. Then, let $s_i^jx^j$ denote the event that $s_i$ is selected $j$ times. Following a similar process we can obtain the corresponding generating function.
 
 In general, let 
 \begin{equation*}
@@ -1169,47 +1137,15 @@ be a multi-set and let $a_r$ be the number of ways to select $r$ objects from $M
 \end{equation*}
 The above method enables us to also model distribution problems of $n$ identical objects into $k$ distinct collections. 
 
-However, the above method will not work if the collections are also identical. Let $x^i$ denote a collection which contains $i$ of the identical objects and let $a_r$ denote the number of ways to distribute $n$ identical objects into $r$ non-empty identical collections of size at most $k$, then $\left(x^i\right)^j$ denotes the event that there are $j$ collections of size $i$ in the distribution. As such, the generating function for $(a_r)$ is
+However, the above method will not work if the collections are also identical. Let $x^i$ denote a collection which contains $i$ of the identical objects and let $a_r$ denote the number of ways to distribute $n$ identical objects into $r$ non-empty identical collections of size at most $k$, then~$\left(x^i\right)^j$ denotes the event that there are $j$ collections of size $i$ in the distribution. As such, the generating function for $(a_r)$ is
 \begin{equation*}
     A(x) = \prod_{i = 1}^{k}\left(\sum_{j = 0}^{\infty}x^{ij}\right) = \frac{1}{\prod_{i = 1}^{k}(1 - x^i)}.
 \end{equation*}
 This allows us to model distribution problems with various constriants.
 
-\subsection{Ferrers Diagram}
-A common application of distribution problems with $n$ identical objects and $m$ identical collections is the partition of an integer.
-\begin{dfnbox}{Integer Partition}{intPart}
-    Let $n \in \N^+$. A {\color{red} \textbf{partition}} of $n$ is a non-increasing sequence of positive integers whose sum is $n$. 
-\end{dfnbox}
-A useful tool to study such partitions is \textit{Ferrers diagram}.
-\begin{dfnbox}{Ferrers Diagram}{ferrers}
-    Let $n \in \N^+$ and consider a partition $P = \left\{n_1, n_2, \cdots, n_k\right\}$. The {\color{red} \textbf{Ferrers diagram}} of the partition, denoted as $\mathcal{F}(P)$, is an array of left-justified asterisks in which the $i$-th row has the length of $n_i$.
-\end{dfnbox}
-Just like matrices, a Ferrers diagram can be transposed.
-\begin{dfnbox}{Conjugate Partition}{conjPart}
-    Let $\mathcal{F}(P)$ be the Ferrers diagram of an integer partition $P$. $Q$ is known as the {\color{red} \textbf{conjugate partition}} of $P$ if $\mathcal{F}(Q) = \mathcal{F}(P)^{\mathrm{T}}$.
-\end{dfnbox}
-Intuitively, conjugate partition is a \textbf{symmetric relation}, and if $P$ and $Q$ are conjugate partitions, the number of parts of $Q$ is just the size of the largest part of $P$. This leads to the following theorem:
-\begin{thmbox}{Size of Conjugate Partitions}{sizeConj}
-    Let $k \leq r \in \N^+$. The number of partitions of $r$ into $k$ parts equals the number of partitions of $r$ with the largest part having size $k$.
-    \tcblower   
-    \begin{proof}
-        Let $\mathcal{P}$ be the family of partitions of $r$ into $k$ parts and $\mathcal{Q}$ be the family of partitions of $r$ whose largest part has size $k$.
-        \\\\
-        Define $f \colon \mathcal{P} \to \mathcal{Q}$ such that $\mathcal{F}\bigl(f(X)\bigr) = \mathcal{F}(X)^{\mathrm{T}}$, i.e., $f(X)$ and $X$ are conjugates.
-        \\\\
-        It is easy to see that $f$ is well-defined and bijective, so $\abs{\mathcal{P}} = \abs{\mathcal{Q}}$.
-    \end{proof}
-\end{thmbox}
-Theorem \ref{thm:sizeConj} leads to the following corollary:
-\begin{corbox}{}{}
-    Let $k \leq r \in \N^+$. The number of partitions of $r$ into at most $k$ parts equals the number of partitions of $r$ with the largest part having size at most $k$.
-\end{corbox}
-The following formula can de derived:
-\begin{equation*}
-    \sum_{k = 1}^{m}p(n, k) = p(n + m, m).
-\end{equation*}
+
 \section{Exponential Generating Functions}
-\begin{dfnbox}{Exponential Generating Function (EGF)}
+\begin{dfnbox}{Exponential Generating Function (EGF)}{EGF}
     Let $(a_r)$ be a sequence in $\R$. The {\color{red} \textbf{exponential generating function}} of $(a_r)$ is defined to be the series
     \begin{equation*}
         A(x) = \sum_{i = 0}^{\infty}a_i\frac{x^i}{i!}.
@@ -1236,9 +1172,6 @@ be a multi-set and let $a_r$ be the number of $r$-permutations of $M$. The gener
 \begin{equation*}
     A(x) = \prod_{i = 1}^{k}\left(\sum_{j = 0}^{n_i}\frac{x^j}{j!}\right).
 \end{equation*}
-
-\chapter{Recurrence Relations}
-In this chapter, we will study how to utilise sequences, particularly recurrence relations, to help solve some counting problems. 
 \section{Recurrence Relations}
 A recurrence relation, informally, is an equation that relates the $n$-th term of a sequence to its previous $k$ terms.
 \begin{dfnbox}{Recurrence Relation}{RR}
@@ -1329,9 +1262,8 @@ There is no general way to derive the particular solution of a recurrence relati
         \hline
     \end{tabular}
 \end{center}
-\section{System of Recurrence Relations}
-Just like systems of equations, we can have two recurrence relations on sequences $(a_n)$ and $(b_n)$, which form a system of equations. We can solve the system by substitution to solve one of the recurrence relation first, just like solving a system of equations.
-\section{Recurrence Relations and Generating Functions}
+Just like systems of equations, we can have two recurrence relations on sequences $(a_n)$ and~$(b_n)$, which form a system of equations. We can solve the system by substitution to solve one of the recurrence relation first, just like solving a system of equations.
+
 Note that for a sequence $(a_n)$, we can define
 \begin{equation*}
     A(x) = \sum_{i = 0}^{\infty}a_ix^i
@@ -1340,7 +1272,6 @@ as the generating function. Recall that we can transform $A(x)$ to generate a li
 
 \chapter{Graph Theory}
 \section{Graph Structures}
-\subsection{Multigraph}
 Intuitively, we would describe a \textit{graph} as a collection of nodes (or vertices) plus some lines (or edges) joining some nodes together. This can be rigorously defined as follows:
 \begin{dfnbox}{Multigraph}{multigraph}
     A {\color{red} \textbf{multigraph}} $G$ consists of a non-empty finite set of vertices denoted by $V(G)$ and a finite set of edges denoted by $E(G)$. $\abs{V(G)}$ is known as the {\color{red} \textbf{order}} of $G$, denoted by~$v(G)$ and $\abs{E(G)}$ is known as the {\color{red} \textbf{size}} of $G$, denoted by $e(G)$.
@@ -1361,15 +1292,13 @@ Note that in a multigraph, by default there can be a plural number of edges betw
         \end{displaymath}
     \end{remark}
 \end{notebox}
-Notice that if $(v_i, v_i)$ is an edge, it connects a vertex to itself. This is known as a \textit{loop}.
-
-In a graph, it is important to know the layout of the vertices and edges. For this purpose, we define the notion of \textit{adjacency} in a multigraph.
+Notice that if $(v_i, v_i)$ is an edge, it connects a vertex to itself. This is known as a \textit{loop}. In a graph, it is important to know the layout of the vertices and edges. For this purpose, we define the notion of \textit{adjacency} in a multigraph.
 \begin{dfnbox}{Adjacency and Neighbourhood}{adjacent}
     Let $v_i, v_j \in V(G)$, we say that they are {\color{red} \textbf{adjacent}} if $v_iv_j \in E(G)$. Alternatively, we say that $v_i$ and $v_j$ are {\color{red} \textbf{neighbours}} to each other. The edge $v_iv_j$ is said to be {\color{red} \textbf{incident}} with~$v_i$ and $v_j$. Two edges $e$ and $f$ are said to be {\color{red} \textbf{adjacent}} if there exists some~$v \in V(G)$ such that both $e$ and $f$ are incident with $v$. 
     \\\\
     The set of all neighbours to some $v_i \in V(G)$ is called the {\color{red} \textbf{neighbourhood set}} of $v_i$, denoted by $N_G(v_i)$. In particular, the set $N_G[v_i] \coloneqq N_G(v_i)\cup\{v_i\}$ is known as the {\color{red} \textbf{closed neighbourhood set}} of $v_i$.
 \end{dfnbox}
-We can further add on to the definition by discussing the size of the neighbourhood of a vertex.
+We can add on to the definition by discussing the size of the neighbourhood of a vertex.
 \begin{dfnbox}{Degree}{deg}
     The {\color{red} \textbf{degree}} of $v$, denoted by $d_G(v)$ is defined as the number of edges incident to $v$. If~$d_G(v)$ is even (repectively, odd), then we say that $v$ is an even (respectively, odd) vertex. If $d_G(v) = 0$, we say that $v$ is {\color{red} \textbf{isolated}}; if $d_G(v) = 1$, we say that $v$ is an {\color{red} \textbf{end}} vertex. 
     \\\\
@@ -1389,13 +1318,12 @@ With the notion of degree established, we can now define a \textit{regular graph
 \end{notebox}
 Since a graph essentially consists of two sets, it is natural to consider the notion of graph complementation. We now proceed to introducing the notion of \textit{complement}.
 \begin{dfnbox}{Complement}{comp}
-    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\overline{G}$, is the graph of order $n$ where
+    Let $G$ be a graph of order $n$, the {\color{red} \textbf{complement}} of $G$, denoted by $\widebar{G}$, is the graph of order $n$ where
     \begin{equation*}
-        V\left(\overline{G}\right) = V(G), \qquad E\left(\overline{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
+        V\left(\widebar{G}\right) = V(G), \qquad E\left(\widebar{G}\right) = \left\{(u, v) \colon (u, v) \notin E(G)\right\}.
     \end{equation*}
 \end{dfnbox}
-\subsection{Handshaking Lemma}
-In this section, we discuss the following interesting question:
+We discuss the following interesting question:
 \begin{quote}
     $15$ students went to a party. During the party some of them shook hands with each other. At the end of the party, the number of handshakes made by each student was recorded and it was reported that the sum was $39$. Was this possible?
 \end{quote}
@@ -1421,7 +1349,6 @@ As an extension of Lemma \ref{lem:handshake}, the minimum size of any graph is o
 \begin{dfnbox}{Empty and Complete Graphs}{empCom}
     Let $G$ be a simple graph of order $n$. $G$ is said to be an {\color{red} \textbf{empty graph}} or {\color{red} \textbf{null graph}}, denoted by $0_n$, if $e(G) = 0$, and a {\color{red} \textbf{complete graph}}, denoted by $K_n$ if for all $u, v \in V(G)$, we have $(u, v) \in E(G)$. 
 \end{dfnbox}
-\subsection{Subgraph}
 Since a multigraph is just two sets, we can define a ``subset'' relation between graphs.
 \begin{dfnbox}{Subgraph}{subgraph}
     Let $G, H$ be graphs, then $H$ is a {\color{red} \textbf{subgraph}} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. In particular, a subgraph $H$ is a {\color{red} \textbf{proper subgraph}} of $G$ if $V(H) \neq V(G)$ or $E(H) \neq E(G)$.
@@ -1459,10 +1386,14 @@ Then, $H = \bigl(V(H), E(H)\bigr)$ is an induced subgraph of $G$. In fact, we ca
     H = G - A = [V(G) - A].
 \end{equation*}
 This leads to the following proposition:
-\begin{probox}{}{}
-    Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of $G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
+\begin{probox}{Characterisation of Induced Subgraphs}{induceChar}
+    Let $G$ be a graph. If $A \subseteq V(G)$, then $G - A = [V(G) - A]$. Suppose $H$ is a subgraph of~$G$, then $H$ is an induced subgraph of $G$ if and only if $H = G - \bigl(V(G) - V(H)\bigr)$.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
 \end{probox}
-\subsection{Graph Isomorphism}
+\section{Graph Isomorphism}
 Given two graphs $G$ and $H$, are they the same graph? This seemingly innocent question proves to be extremely hard to answer. Two graphs can look drastically different but be structurally identical in reality. For example, we could shift around the vertices of a graph without changing any edge to alter the shape of the graph dramatically. Therefore, to compare the structures of graphs, we require some rigorous definition.
 \begin{dfnbox}{Graph Isomorphism}{graphIsomorph}
     Two graphs $G$ and $H$ are said to be {\color{red} \textbf{isomorphic}}, denoted by $G \cong H$, if there exists a bijection $f \colon V(G) \to V(H)$ such that
@@ -1479,9 +1410,13 @@ It is very hard to determine whether two specific graphs are isomorphic, but the
     \item Two graphs with different numbers of components cannot be isomorphic.
     \item If the numbers of vertices with degree $k$ are different in two graphs, they cannot be isomorphic.
 \end{itemize}
-Notice that by Definition \ref{dfn:graphIsomorph}, we can define a function $g$ such that $uv \notin E(G)$ if and only if $g(u)g(v) \notin E(H)$ and relate this function to the complement graphs of $G$ and $H$. Here we introduce a way to determine isomorphism by considering complement graphs, the proof of which is left to the reader as an exercise.
+Notice that by Definition \ref{dfn:graphIsomorph}, we can define a function $g$ such that $uv \notin E(G)$ if and only if $g(u)g(v) \notin E(H)$ and relate this function to the complement graphs of $G$ and $H$. Here we introduce a way to determine isomorphism by considering complement graphs.
 \begin{thmbox}{Complementation Preserves Isomorphism}{compIso}
-    Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\overline{G} \cong \overline{H}$.
+    Let $G$ and $H$ be two graphs of the same order. $G \cong H$ if and only if $\widebar{G} \cong \widebar{H}$.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
 \end{thmbox}
 Now let us think the reverse: if it is not easy to prove isomorphism, can we find a way to quickly determine that two graphs are not isomorphic? Here we present the necessary conditions for isomorphism:
 \begin{thmbox}{Necessary Conditions for Isomorphism}{necessaryCondIso}
@@ -1509,7 +1444,7 @@ We will make use of the following definition:
     Let $(d_n)$ be a sequence of non-negative integers at most $n - 1$. $(d_n)$ is said to be {\color{red} \textbf{graphic}} if there exists a graph $G$ whose degree sequence is $(d_n)$.
 \end{dfnbox}
 To determine whether a sequence is graphic by eye power is difficult. Fortunately, we have the following recursive approach:
-\begin{thmbox}{Graphic Sequence Characterisation}{graphicSeqChar}
+\begin{thmbox}{Havel-Hakimi Algorithm}{graphicSeqChar}
     Let $(d_n)$ be a non-increasing sequence of non-negative integers at most $n - 1$. Define
     \begin{equation*}
         d^*_m = \begin{cases}
@@ -1564,16 +1499,16 @@ By Theorem \ref{thm:graphicSeqChar}, we can reduce a sequence recursively until 
 
 Lastly, we introduce a special type of graphs known as \textit{self-complementary} graphs.
 \begin{dfnbox}{Self-Complementary Graph}{selfComp}
-    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \overline{G}$.
+    A graph $G$ is said to be {\color{red} \textbf{self-complementary}} if $G \cong \widebar{G}$.
 \end{dfnbox}
 It turns out that a self-complementary graph satisfies some special properties.
 \begin{probox}{Order of Self-Complementray Graphs}{selfCompOrder}
-    If $G$ is a self-complementary graph of order $n$, then $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
+    If $G$ is a self-complementary graph of order $n$, then either $n = 4k$ or $n = 4k + 1$ for some~$k \in \Z^+$.
     \tcblower
     \begin{proof}
-        Since $G$ is self-complementary, $G \cong \overline{G}$ and so $e(G) = e\left(\overline{G}\right)$. Note that
+        Since $G$ is self-complementary, $G \cong \widebar{G}$ and so $e(G) = e\left(\widebar{G}\right)$. Note that
         \begin{equation*}
-            e(G) + e\left(\overline{G}\right) = \begin{pmatrix}
+            e(G) + e\left(\widebar{G}\right) = \begin{pmatrix}
                 n \\
                 2
             \end{pmatrix} = \frac{n(n - 1)}{2},
@@ -1582,8 +1517,7 @@ It turns out that a self-complementary graph satisfies some special properties.
     \end{proof}
 \end{probox}
 \section{Graph Traversal}
-In this chapter, we study the movement within a graph, that is, how to traverse the vertices in a graph along its edges.
-\subsection{Path and Connectedness}
+Next, we study the movement within a graph, that is, how to traverse the vertices in a graph along its edges.
 \begin{dfnbox}{Walk, Trail, Path}{wtp}
     Let $G$ be a graph and $x, y \in V(G)$, then an {\color{red} \textbf{$x$-$y$ walk}} is an alternating sequence
     \begin{equation*}
@@ -1603,15 +1537,11 @@ In more informal terms, a trail is a walk with no repeated edge and a path is a 
 Note that a path is essentially a gragh. We denote a path of order $n$ by $P_n$ and a cycle of order $n$ by $C_n$.
 
 A common tool in proofs of graph theory is the \textbf{extremal approach}, which can be demonstrated in the proposition below.
-\begin{probox}{}{}
+\begin{probox}{Reduction of Walks to Paths}{reduceWalkToPath}
     If a graph $G$ conatins a $u$-$v$ walk of length $k$, then $G$ contains a $u$-$v$ path of length at most $k$.
     \tcblower
     \begin{proof}
-        Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path.
-        \\\\
-        Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However,~$Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path.
-        \\\\
-        Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
+        Let $S$ be the set of all $u$-$v$ walks in $G$, Note that $S \neq \varnothing$ since there is a $u$-$v$ walk of length $k$. Let $P$ be a walk of the shortest length. We claim that $P$ must be a path. Suppose $P$ is not a path, then there exists some vertices $w_1 = w_2$ in $P$. Suppose $Q$ is obtained by removing the $w_1$-$w_2$ walk from $P$, then $Q$ is a walk. However,~$Q$ is shorter than $P$ which is not possible. Therefore, $P$ must be a path. Note that the length of $P$ is at most $k$, so $G$ contains a $u$-$v$ path of length at most $k$.
     \end{proof}
 \end{probox}
 An important question we are interested in with graphs is the reachability of a vertex, i.e., given two vertices $u$ and $v$, we want to know whether we can reach one vertex from another. Intuitively, we can traverse between two vertices if there is a path between them. From here we define the notion of a \textit{connected graph}.
@@ -1620,31 +1550,23 @@ An important question we are interested in with graphs is the reachability of a 
 \end{dfnbox}
 Note that connectedness is an equivalence relation. Let $P$ be a partition formed by the equivalence classes of $G$ under the connectedness relation, then for any $u, v \in V(G)$, $u$ and~$v$ are in the same equivalence class if and only if $u$ and $v$ are connected. Any $c(u) \in P$ induces a subgraph $[c(u)]$.
 \begin{dfnbox}{Connected Component}{CC}
-    Let $G$ be a graph and $R$ be a relation such that for any $u, v \in V(G)$, $uRv$ if and only if~$u$ and $v$ are connected. Let
+    Let $G$ be a graph and $\sim$ be a relation such that for any $u, v \in V(G)$, $u\sim v$ if and only if~$u$ and $v$ are connected. Let
     \begin{equation*}
-        C \coloneqq V(G)/R
+        C \coloneqq V(G) \slash \sim
     \end{equation*}
-    be the quotient set, then any $c(u) \in C$ is known as a (connected) {\color{red} \textbf{component}} of $G$.
-    \\\\
-    The number of components of $G$ is denoted by $\omega(G)$.
+    be the quotient set, then any $c(u) \in C$ is known as a (connected) {\color{red} \textbf{component}} of $G$. The number of components of $G$ is denoted by $\omega(G)$.
 \end{dfnbox}
-It can be easily seen that $G$ is connected if and only if $\omega(G) = 1$.
-
-We will now establish a relationship between connectedness and complementation.
+It can be easily seen that $G$ is connected if and only if $\omega(G) = 1$. We will now establish a relationship between connectedness and complementation.
 \begin{thmbox}{Connectedness of Complement}{connectedComp}
-    If $G$ is disconnected, then $\overline{G}$ is connected.
+    If $G$ is disconnected, then $\widebar{G}$ is connected.
     \tcblower
     \begin{proof}
-        Let $u, v \in V\left(\overline{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\overline{G}\right)$ and so $u$ and $v$ are connected in $\overline{G}$.
-        \\\\
-        If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that~$uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\overline{G}\right)$. This means that there is a~$u$-$v$ path in $\overline{G}$ and so $u$ and $v$ are connected in $\overline{G}$.
-        \\\\
-        Therefore, $\overline{G}$ is connected.
+        Let $u, v \in V\left(\widebar{G}\right)$ be two arbitrary vertices. If $uv \notin E(G)$, then $uv \in \left(\widebar{G}\right)$ and so $u$ and $v$ are connected in $\widebar{G}$. If $uv \in E(G)$, since $G$ is disconnected, there exists some $w \in V(G)$ such that~$uw, wv \notin E(G)$. Therefore, $uw, wv \in E\left(\widebar{G}\right)$. This means that there is a~$u$-$v$ path in $\widebar{G}$ and so $u$ and $v$ are connected in $\widebar{G}$. Therefore, $\widebar{G}$ is connected.
     \end{proof}
 \end{thmbox}
 Intuitively, we can transform a connected graph into a disconnected one by deleting some vertices or edges. It can be easily observed that in certain graphs, deleting one particular vertex or edge will immediately disconnect the graph.
 \begin{dfnbox}{Cut-Vertex, Bridge}{cutNBridge}
-    Let $G$ be a non-trivial graph. $v \in V(G)$ is called a {\color{red} \textbf{cut-vertex}} of $G$ if $\omega(G - v) > \omega(G)$. $e \in E(G)$ is called a {\color{red} \textbf{bridge}} of $G$ if $\omega(G - e) > \omega(G)$.
+    Let $G$ be a non-trivial graph. A vertex $v \in V(G)$ is a {\color{red} \textbf{cut-vertex}} if~$\omega(G - v) > \omega(G)$. An edge $e \in E(G)$ is a {\color{red} \textbf{bridge}} if $\omega(G - e) > \omega(G)$.
 \end{dfnbox}
 Note that a graph does not have to be connected to have cut vertices and bridges. Essentially, a cut-vertex (or bridge) is just a vertex (or edge) which disconnects a component upon removal.
 
@@ -1653,9 +1575,9 @@ Now the next question is how do we identify a cut-vertex or a bridge in a graph?
     Let $G$ be a graph. $v \in V(G)$ is a cut-vertex if and only if there exists $a, b \in V(G)$ such that $v$ is in every path between $a$ and $b$.
     \tcblower
     \begin{proof}
-        Let $v \in V(G)$ be a cut-vertex and consider $H = G - v$, then we can find two non-empty disjoint connected components of $H$, say $H_1$ and $H_2$. Now, take $a \in V(H_1)$ and $b \in V_(H_2)$, then they are disconnected. However, $a$ and $b$ are connected in $G$, which means $v$ is in every $a$-$b$ path.
+        Let $v \in V(G)$ be a cut-vertex and consider $H = G - v$, then we can find two non-empty disjoint connected components of $H$, say $H_1$ and $H_2$. Take $a \in V(H_1)$ and $b \in V(H_2)$, then they are disconnected. However, $a$ and $b$ are connected in $G$, which means $v$ is in every $a$-$b$ path.
         \\\\
-        We will prove the converse by contrapositive. Suppose $v$ is not a cut-vertex of $G$, then $G - v$ is connected. Therefore, for any $u, w \in V(G)$, there is a path between them which does not contain $v$.
+        We will prove the converse by contrapositive. Suppose $v$ is not a cut-vertex of~$G$, then $G - v$ is connected. Therefore, for any $u, w \in V(G)$, there is a path between them which does not contain $v$.
     \end{proof}
 \end{thmbox}
 A similar argument can be established for bridges. Furthermore, since we have to pass through the bridge when traversing between the two portions, it can be easily seen that we have to reuse the bridge in order to traverse back.
@@ -1668,12 +1590,16 @@ A similar argument can be established for bridges. Furthermore, since we have to
         We will prove the converse also by contrapositive. Suppose $e = xy$ is not a bridge, the $G - e$ is connected and so there is some $x$-$y$ path in $G - e$. Let this path be $P$, then $P \cup \{e\}$ is a cycle in $G$.
     \end{proof}
 \end{thmbox}
-Combining the two characterisations, we can relate cut-vertices to bridges in the following proposition, the proof of which is left to the reader as an exercise:
-\begin{probox}{}{cutVertexNBridge}
+Combining the two characterisations, we can relate cut-vertices to bridges in the following proposition:
+\begin{probox}{Bridge Incident to A Cut-Vertex}{cutVertexNBridge}
     Let $G$ be a graph. If $uv \in E(G)$ is a bridge and $u$ is not an end vertex, then $u$ is a cut-vertex.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
 \end{probox}
 A direct consequence of this is the following corollary:
-\begin{corbox}{}{}
+\begin{corbox}{Co-existence of Bridges and Cut-Vertices}{}
     If $G$ is a graph with order at least $3$ and $G$ contains a bridge, then $G$ contains a cut-vertex.
 \end{corbox}
 \section{Weighted Graphs}
@@ -1707,7 +1633,7 @@ For readers with knowledge in real analysis or topology, it is easy to see that 
     \end{equation*}
     \tcblower   
     \begin{proof}
-        Let $U$, $V$ be the shortest $u$-$w$ path and shortest $w$-$v$ path respectively, then~$U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length $d(u, v)$, we have
+        Let $U$, $V$ be the shortest $u$-$w$ path and the shortest $w$-$v$ path respectively, then~$U + V$ is a $u$-$v$ walk with length $d(u, w) + d(w, v)$. Since the shortest $u$-$v$ path has length~$d(u, v)$, we have
         \begin{equation*}
             d(u, v) \leq d(u, w) + d(w, v).
         \end{equation*}
@@ -1740,7 +1666,7 @@ The notion of distance between vertices can be abstracted into a concept known a
     \end{equation*}
 \end{dfnbox} 
 One classic problem on weighted graphs is the (single-source) shortest path problem.
-\subsection{(Single-Source) Shortest Path}
+
 In an unweighted graph, we define the length of a path to be the number of edges it contains. However, in a weighted graph we need a different definition to distinguish edges of different weights.
 \begin{dfnbox}{Length of a Weighted Path}{weightedPathLen}
     Let $G$ be a weighted graph and $P$ be a path in $G$. The {\color{red} \textbf{length}} of $P$ is defined as $w(P)$.
@@ -1791,26 +1717,20 @@ Note that an adjacency matrix does not tell us which edges are incident to a par
         For an undirected multigraph, consider an arbitrary $k$-th column of $\mathbfit{M}$. Note that any column will have exactly $2$ non-zero entries. Suppose $m_{ik} = m_{jk} = 1$, it means that $e_k = v_iv_j$.
     \end{remark}
 \end{notebox}
-For readers who have learnt about basic data structures in computer science, an incidence matrix is just an adjacency list with each list of neighbours converted to a (non-compact) boolean array.
-\\\\
-Note that the sum of the $i$-th row for both $\mathbfit{A}$ and $\mathbfit{M}$ is the degree of vertex $i$. 
-\\\\
-Since $\mathbfit{A}$ and $\mathbfit{M}$ carries information about adjacencies between vertices, we can use them to draw some conclusions regarding graph traversal.
-\begin{probox}{}{numWalks}
+For readers who have learnt about basic data structures in computer science, an incidence matrix is just an adjacency list with each list of neighbours converted to a (non-compact) boolean array. Note that the sum of the $i$-th row for both $\mathbfit{A}$ and $\mathbfit{M}$ is the degree of vertex $i$. Since $\mathbfit{A}$ and $\mathbfit{M}$ carries information about adjacencies between vertices, we can use them to draw some conclusions regarding graph traversal.
+\begin{probox}{Number of Walks with Given Length}{numWalks}
     Let $G$ be a simple graph of order $n$ with adjacency matrix $\mathbfit{A}$, then the $(i, j)$ entry of $\mathbfit{A}^k$ is the number of $v_i$-$v_j$ walks of length $k$.
     \tcblower   
     \begin{proof}
-        The case where $k = 1$ is trivially true since there is a $v_i$-$v_j$ walk of length $1$ if and only if $v_i$ and $v_j$ are neighbours.
-        \\\\
-        Let the $(i, j)$ entry of $\mathbfit{A}^m$ be $m_{ij}$. Suppose $m_{ij}$ is the number of $v_i$-$v_j$ walks of length $m$. Then the $(i, j)$ entry of $\mathbfit{A}^{m + 1}$ is given by
+        The case where $k = 1$ is trivially true since there is a $v_i$-$v_j$ walk of length $1$ if and only if $v_i$ and $v_j$ are neighbours. Let the $(i, j)$ entry of $\mathbfit{A}^m$ be $m_{ij}$. Suppose $m_{ij}$ is the number of $v_i$-$v_j$ walks of length $m$. Then the $(i, j)$ entry of $\mathbfit{A}^{m + 1}$ is given by
         \begin{align*}
             \sum_{r = 1}^{n}m_{ir}a_{rj}.
         \end{align*}
-        Notice that $m_{ir}$ is the number of $v_i$-$v_r$ walks of length $m$ and $a_{rj}$ is the number of $v_r$-$v_j$ walks of length $1$, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of $v_i$-$v_j$ walks of length~$n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for $r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
+        Notice that $m_{ir}$ and $a_{rj}$ are the number of $v_i$-$v_r$ walks of length $m$ and the number of $v_r$-$v_j$ walks of length $1$ respectively, so by Theorem \ref{thm:MP}, $m_{ir}a_{rj}$ is the number of~$v_i$-$v_j$ walks of length~$n$ that passes through $v_r$. Therefore, summing up $m_{ir}a_{rj}$ for each~$r = 1, 2, \cdots, n$ gives the total number of $v_i$-$v_j$ walks of length $n + 1$.
     \end{proof}
 \end{probox}
 Additionally, we have the following corollary:
-\begin{corbox}{}{}
+\begin{corbox}{Matrix Characterisation of Connected Graphs}{}
     Let $G$ be a graph with $v(G) \geq 2$ and adjacency matrix $\mathbfit{A}$. Let
     \begin{equation*}
         \mathbfit{B} = \sum_{i = 1}^{n - 1}\mathbfit{A}^i,
@@ -1880,9 +1800,13 @@ Intuitively, we need at least $(n - 1)$ edges. On the other hand, it is also eas
         \item Every two vertices in $T$ are joined by a unique path;
         \item $m = n - 1$.
     \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
 \end{thmbox}
 We introduce $2$ interesting properties of trees.
-\begin{probox}{}{numDeg1}
+\begin{probox}{Number of Vertices with Given Degree in a Tree}{numDeg1}
     Let $T$ be a tree with $\Delta(T) = k$. Let $n_i$ be the number of vertices in $T$ of degree $i$, then
     \begin{equation*}
         n_1 = 2 + \sum_{i = 1}^{k - 2}in_{i + 2}.
@@ -1906,32 +1830,29 @@ We introduce $2$ interesting properties of trees.
     \end{proof}
 \end{probox}
 The following corollary is an immediate consequence of Proposition \ref{pro:numDeg1}:
-\begin{corbox}{}{}
-    A tree of order at least $2$ contains at least $2$ end vertices.
+\begin{corbox}{Every Non-trivial Tree Has at Least $2$ Leaves}{}
+    A tree of order at least $2$ contains at least $2$ leaves.
 \end{corbox}
-A tree with exactly $2$ end vertices is a doubly linked list.
-
-A collection of disjoint trees are vividly named as a \textit{forest}.
+A tree with exactly $2$ end vertices is a doubly linked list and a collection of disjoint trees are vividly named as a \textit{forest}.
 \begin{dfnbox}{Forest}{forest}
     A {\color{red} \textbf{forest}} is a graph $G$ in which each component is a tree.
 \end{dfnbox}
 
-\subsection{Spanning Tree}
+\subsection{Spanning Trees}
+A \textit{spanning tree} is a special type of tree obtained as a subgraph containing all vertices from the original graph.
 \begin{dfnbox}{Spanning Tree}{spanTree}
-    Let $G$ be a multigraph, a tree $T$ which is a spanning graph of $G$ is known as the {\color{red} \textbf{spanning tree}} of $G$.
+    Let $G$ be a multigraph, a tree $T$ which is a spanning graph of $G$ is known as a {\color{red} \textbf{spanning tree}} of $G$.
 \end{dfnbox}
 Intuitively, one can traverse along a spanning tree of a graph to reach every vertex of the graph from any source vertex. Therefore, a spanning tree essentially gives all paths between any pair of vertices, and so the existence of a spanning tree is an indicator of connectedness.
-\begin{probox}{}{}
+\begin{probox}{Spanning Tree Characterisation of Connected Graphs}{}
     A graph $G$ is connected if and only if it contains a spanning tree.
     \tcblower
     \begin{proof}
-        If $G$ contains a spanning tree, then every pair of vertices in $G$ are connected, and so $G$ is connected.
-        \\\\
-        Suppose $G$ is connected. If $G$ is a tree, then it is a spanning tree of itself. Otherwise, $G$ contains some cycle $C$. Let $e$ be any edge in $C$, then $e$ is not a bridge so~$G - e$ is connected. Set $G' = G - e$ and repeat the process for $G'$. Since $G$ is finite, we will eventually remove all cycles in $G$ and derive a tree containing all vertices in $G$, i.e., a spanning tree.
+        If $G$ contains a spanning tree, then every pair of vertices in $G$ are connected, and so $G$ is connected. Conversely, suppose that $G$ is connected. If $G$ is a tree, then it is a spanning tree of itself. Otherwise, $G$ contains some cycle $C$. Let $e$ be any edge in~$C$, then $e$ is not a bridge so~$G - e$ is connected. Set $G' = G - e$ and repeat the process for $G'$. Since $G$ is finite, we will eventually remove all cycles in $G$ and derive a tree containing all vertices in $G$, i.e., a spanning tree.
     \end{proof}
 \end{probox}
 Notice that a connected graph cannot be smaller in size than its spanning tree, so we have the following corollary:
-\begin{corbox}{}{}
+\begin{corbox}{Minimal Size of Connected Graphs}{}
     If $G$ is a connected graph of order $n$, then $e(G) \geq n - 1$.
 \end{corbox}
 Now, we wish to answer the following question:
@@ -1951,15 +1872,11 @@ We may make use of contractions to compute $\tau(G)$ in a recursive manner.
     for all $e \in E(G)$.
     \tcblower
     \begin{proof}
-        Let $G$ be a multigraph and $e \in E(G)$. Define $A$ to be the set of spanning trees of $G$ which contains $e$ aand $B$ to be that which does not contain $e$.
-        \\\\
-        Take any $T_A \in A$, then $e \in E(T_A)$ is a bridge. Notice that if $T_1, T_2 \in A$, then~$T_1 \neq T_2$, so they have at least one different edge which is not $e$. Define
+        Let $G$ be a multigraph and $e \in E(G)$. Define $A$ to be the set of spanning trees of $G$ which contains $e$ and $B$ to be that which does not contain $e$. Take any $T_A \in A$, then $e \in E(T_A)$ is a bridge in $T_A$. Notice that if $T_1, T_2 \in A$, then~$T_1 \neq T_2$, so they have at least one different edge which is not $e$. Define
         \begin{equation*}
             A' \coloneqq \left\{T'_A = T_A - e \colon T_A \in A\right\}.
         \end{equation*}
-        Clearly, for $T'_1, T'_2 \in A'$, $T'_1 \neq T'_2$ are different spanning trees.Observe that there is a bijection between $A$ and $A'$, so $\abs{A} = \abs{A'} = \tau(G \circ e)$.
-        \\\\
-        Take any $T_B \in B$, since $e \notin E(T_B)$, $T_B$ must be a spanning tree of $G - e$. Therefore,~$\abs{B} = \tau(G - e)$. Hence,
+        Clearly, for $T'_1, T'_2 \in A'$, $T'_1 \neq T'_2$ are different spanning trees.Observe that there is a bijection between $A$ and $A'$, so $\abs{A} = \abs{A'} = \tau(G \circ e)$. Take any $T_B \in B$, since $e \notin E(T_B)$, this means that $T_B$ must be a spanning tree of $G - e$. Therefore,~$\abs{B} = \tau(G - e)$. Hence,
         \begin{equation*}
             \tau(G) = \abs{B} + \abs{A} = \tau(G - e) + \tau(G \circ e).
         \end{equation*}
@@ -1978,7 +1895,7 @@ Theorem \ref{thm:recursiveTau} allows us to reduce $\tau(G)$ for a complex graph
     \end{equation*}
     \item A connected graph $G$ with a bridge $e$:
     
-    By a similar argument as the previous case, let $G_1$ and $G_2$ be the two components of $G - e$, then $\tau(G) = \tau(G_1)\tau(G_2)$.
+    By a similar argument as the previous case, let $G_1$ and $G_2$ be the two components of~$G - e$, then $\tau(G) = \tau(G_1)\tau(G_2)$.
     \item A connected graph $G$ consisting of two simple cycles $C_p$ and $C_q$ sharing a common edge $e$:
     
     Note that $G - e$ is a simple cycle $C_{p + q - 2}$ and $G \circ e$ is two simple cycles $C_{p - 1}$ and $C_{q - 1}$ sharing a cut-vertex. By Theorem \ref{thm:recursiveTau},
@@ -2102,7 +2019,6 @@ Using Theorem \ref{thm:matTree}, we can prove the following propositions:
         Since such row operations do not change the determinant, so $\tau(K_{2, r}) = 2^{r - 1}r$.
     \end{proof}
 \end{probox}
-\subsection{Minimum Spanning Trees}
 The minimum spanning tree problem asks the following:
 \begin{quote}
     Given a connected graph $G$, what is a spanning tree of $G$ with the smallest possible weight, and what is this smallest weight?

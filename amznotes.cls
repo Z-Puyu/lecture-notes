@@ -33,6 +33,7 @@
 
 \RequirePackage[margin=1in]{geometry}   % set margins
 \RequirePackage{fontspec}               % set main font
+\RequirePackage{mathtools}  
 \RequirePackage{unicode-math}           % set math font; replaces amssymb
 \RequirePackage[dvipsnames]{xcolor}     % pretty colors
 \RequirePackage{hyperref}               % hyperlinks in pdf viewers; will appear underlined only in pdf viewer
@@ -51,7 +52,7 @@
 \RequirePackage{tabularx}
 
 \ifamznotes@math
-    \RequirePackage{mathtools}          % for math macros; also loads amsmath
+    %\RequirePackage{mathtools}          % for math macros; also loads amsmath
     \RequirePackage{amsthm}
     %\renewcommand\qedsymbol{$\squoval$}
 \fi
@@ -71,9 +72,11 @@
   ItalicFont = *-Italic,
   BoldItalicFont = *-SemiBoldItalic,
 ]
+\setmonofont{JetBrainsMonoNL-Regular}
 \setmathfont{STIXTwoMath-Regular.otf}[math-style = ISO]
-\setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
-\setmonofont{JetBrainsMono-Regular}
+\setmathfont{texgyretermes-math.otf}[range={scr,bfscr},StylisticSet=01]
+\setmathfont{texgyretermes-math.otf}[range={bb}]
+\setmathfont[range=\int]{XITS Math}
 
 % ------------------------------------------------------------
 % PAGE LAYOUT
@@ -205,6 +208,7 @@
         overlay={\begin{tcbclipinterior}\fill[darkgray!20!white] (frame.south west) rectangle ([xshift=6mm]frame.north west);\end{tcbclipinterior}},
         skin=bicolor,
         collower=white,
+        fontupper=\scriptsize,
         colbacklower=darkgray
     },
 }
@@ -222,6 +226,7 @@
         separator sign=\amzcolorboxtitlesep,
         parbox=true,               % normal paragraph spacing
         breakable,
+        sharp corners
     },
     thmboxstyle/.style={
         fontupper=\itshape,
@@ -243,6 +248,7 @@
     codeboxstyle/.style={
         overlay={\begin{tcbclipinterior}\fill[darkgray!20!white] (frame.south west) rectangle ([xshift=6mm]frame.north west);\end{tcbclipinterior}},
         skin=bicolor,
+        fontupper = \normalsize,
         collower=white,
         colbacklower=darkgray
     },
