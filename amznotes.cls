@@ -72,7 +72,7 @@
   ItalicFont = *-Italic,
   BoldItalicFont = *-SemiBoldItalic,
 ]
-\setmonofont{JetBrainsMonoNL-Regular.ttf}
+\setmonofont{JetBrainsMonoNL-Regular}
 \setmathfont{STIXTwoMath-Regular.otf}[math-style = ISO]
 \setmathfont{texgyretermes-math.otf}[range={scr,bfscr},StylisticSet=01]
 \setmathfont{texgyretermes-math.otf}[range={bb}]
@@ -226,6 +226,7 @@
         separator sign=\amzcolorboxtitlesep,
         parbox=true,               % normal paragraph spacing
         breakable,
+        sharp corners
     },
     thmboxstyle/.style={
         fontupper=\itshape,

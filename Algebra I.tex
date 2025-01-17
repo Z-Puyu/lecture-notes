@@ -341,12 +341,10 @@ A further consequence leads to the following way to identify the identity and in
         Suppose that $ab = 1$, then by Corollary \ref{cor:uniqueSolGrp} we have $b = a^{-1} \cdot 1 = a^{-1}$. Similarly, suppose that $ab = a$, then we have $b = a^{-1}a = 1$. The other cases are similar.
     \end{proof}
 \end{corbox}
-
-As an extension, for any $n \in \Z^+$, the quotient set $\Z/n\Z$ under $+$ is an additive group and the set $(Z/n\Z)^{\times}$ under $\times$ is a multiplicative group.
-
-We can do a bit of nesting with the definitions. First, we shall prove a preliminary theorem.
-\begin{thmbox}{Bijectivity and Invertibility Are Equivalent}{BijEquivInv}
-    Let $X, Y$ be any sets and let $\sigma \in \mathrm{Maps}(X, Y)$ be a map, then $\sigma$ is invertible if and only if it is bijective.
+\section{Permutations}
+Next, we examine a more complicated example of groups known as \textit{symmetric groups}. First, we shall prove a preliminary theorem.
+\begin{probox}{Bijectivity and Invertibility Are Equivalent}{BijEquivInv}
+    Let $X, Y$ be any sets and let $\sigma \in Y^X$ be a map, then $\sigma$ is invertible if and only if it is bijective.
     \tcblower
     \begin{proof}
         Suppose that $\sigma$ is invertible. Let $x_1, x_2 \in X$ be such that $\sigma(x_1) = \sigma(x_2)$, then 
@@ -355,34 +353,102 @@ We can do a bit of nesting with the definitions. First, we shall prove a prelimi
         \end{equation*}
         so $\sigma$ is injective. Take some $y \in Y$, then there exists $\sigma^{-1}(y) \in X$ with $\sigma\bigl(\sigma^{-1}(y)\bigr) = y$, so $\sigma$ is surjective. Therefore, $\sigma$ is a bijection.
         \\\\
-        Conversely, suppose that $\sigma$ is bijective. Define a map $\tau \colon Y \to X$ by $\tau(y) = x$ if and only if $\sigma(x) = y$. Since $\sigma$ is injective, for every $y \in Y$ there is a unique $x$ with $\sigma(x) = y$, so $\tau$ is well-defined. Take any $x \in X$ with $\sigma(x) = y$, we have
+        Conversely, suppose that $\sigma$ is bijective. Define a map $\tau \colon Y \to X$ by $\tau(y) = x$ if and only if $\sigma(x) = y$. Since $\sigma$ is injective, for every $y \in Y$ there is a unique $x$ with~$\sigma(x) = y$, so $\tau$ is well-defined. Take any $x \in X$ with~$\sigma(x) = y$, we have
         \begin{equation*}
             \tau\bigl(\sigma(x)\bigr) = \tau(y) = x,
         \end{equation*}
         so $\tau \circ \sigma = \mathrm{id}_X$. Similarly, $\sigma \circ \tau = \mathrm{id}_Y$. Therefore, $\sigma$ is invertible.
     \end{proof}
-\end{thmbox}
-Now for an arbitrary set $\Omega$, we will consider the set 
-\begin{equation*}
-    \mathrm{Perm}(\Omega) \coloneqq \left\{\sigma \in \mathrm{Maps}(\Omega, \Omega) \colon \sigma \textrm{ is bijective}\right\}.
-\end{equation*}
-$\mathrm{Perm}(\Omega)$ under $\circ$ is known as the \textit{permutation group} of $\Omega$. This group is intuitively named as such in a sense that each $\sigma \in \mathrm{Perm}(\Omega)$ defines a unique way to map an element of $\Omega$ to some element of $\Omega$ itself, forming a permutation of the set. 
-
-In particular, let $[n]$ denote the set of all natural numbers not greater than $n$, then the group of $\mathrm{Perm}([n] - \{0\})$ under $\circ$ is known as a \textit{symmetric group} of degree $n$.
+\end{probox}
+Now, the above proposition gives a way to quickly justify the existence of ``inverses'' for bijections, which we will use to prove the following result:
+\begin{probox}{Group of Bijections}{bijGrp}
+    Let $\Omega$ be a non-empty set and define $S_{\Omega} \subseteq \Omega^{\Omega}$ to be the set of all bijections from $\Omega$ to itself, then $\left(S_{\Omega}, \circ\right)$ is a group.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{probox}
+Intuitively, if we label each element in $\Omega$, the every map $\sigma \in S_{\Omega}$ is essentially a re-labelling of all elements via a one-to-one correspondence. Therefore, such bijections correspond exactly to the permutations of $\Omega$.
+\begin{dfnbox}{Symmetric Group}{symGrp}
+    For any non-empty set $\Omega$, the set $S_{\Omega}$ of all bijective maps from $\Omega$ to itself is called the {\color{red} \textbf{symmetric group}} under $\circ$. Each $\sigma \in S_{\Omega}$ is called a {\color{red} \textbf{permutation}} of $\Omega$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, for any $n \in \Z^+$, the group $S_n \colon S_{\left\{1, 2, \cdots, n\right\}}$ is called the \textit{symmetric group of degree $n$}.
+    \end{remark}
+\end{notebox}
+Let us investigate a little bit about the cardinality of symmetric groups.
+\begin{probox}{Cardinality of Sets of Bijections}{cardBij}
+    For any finite set $\Sigma$ with $\abs{\Sigma} = n$, define $S_{n, \Sigma}$ to be the set of all bijections from $\Z_{n}^+$ to $\Sigma$, where $\Z_{n}^+ = \left\{1, 2, \cdots, n\right\}$, then $\abs{S_{n, \Sigma}} = n!$.
+    \tcblower
+    \begin{proof}
+        We shall proceed with induction on $n$. The case where $n = 1$ is obvious. Suppose that there exists some $k \in \N^+$ such that any finite set $\Sigma_k$ with $\abs{\Sigma_k} = k$ satisfies~$\abs{S_{k, \Sigma_k}} = k!$. Let $\Sigma_{k + 1}$ be any finite set such that $\abs{\Sigma_{k + 1}} = k + 1$ and consider 
+        \begin{equation*}
+            S_{k + 1, \Sigma_{k + 1}} = \bigsqcup_{a \in \Sigma}\left\{\sigma \in S_{k + 1, \Sigma_{k + 1}} \colon \sigma\left(k + 1\right) = a\right\}.
+        \end{equation*}
+        It is clear that for each $a \in \Sigma_{k + 1}$, 
+        \begin{equation*}
+            \abs{\left\{\sigma \in S_{k + 1, \Sigma_{k + 1}} \colon \sigma\left(k + 1\right) = a\right\}} = \abs{S_{k, \Sigma_{k + 1} \setminus \left\{a\right\}}} = k!.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            \abs{S_{k + 1, \Sigma_{k + 1}}} & = \abs{\Sigma_{k + 1}} \cdot k! = \left(k + 1\right)!.
+        \end{align*}
+    \end{proof}
+\end{probox}
+By fixing $\Sigma = \left\{1, 2, \cdots, n\right\}$ in the above Proposition, we can easily deduce the following corollary:
+\begin{corbox}{Cardinality of Symmetric Groups}{cardSymGrp}
+    For any $n \in \N^+$, we have $\abs{S_n} = n!$.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{corbox}
+Note that this is exactly the same as the combinatorial argument that the total number of permutations over $n$ elements is $n!$. Notice that sometimes, if we apply a certain permutation repeatedly to a set, we might be able to restore the original arrangement of its elements. Such a situation is very peculiar and so we define the notion of \textit{order} to describe it.
+\begin{dfnbox}{Order of a Group}{order}
+    Let $G$ be a group. The {\color{red} \textbf{order}} of $x \in G$, denoted by $\abs{x}$, is the smallest $n \in \N^+$ such that $x^n = 1$. If for all $n \in \N^+$, we have $x^n \neq 1$, then we say that $x$ has order $\infty$.
+\end{dfnbox}
+It is clear that all finite sets of cardinality $n$ are equinumerous to $S_n$, so it suffices to study the behaviour of $S_n$'s for all $n \in \N^+$. We first consider a special type of permutations which shift each element by one position.
 \begin{dfnbox}{Cycle}{cycle}
-    Let $S_n = \left\{a_1, a_2, \cdots, a_n\right\}$ be a finite set. An {\color{red} \textbf{$m$-cycle}} on $S_n$ is the map
+    An {\color{red} \textbf{$m$-cycle}} on $S_n$ for some positive integer~$m \leq n$ is the permutation over $\left\{a_1, a_2, \cdots, a_m\right\} \subseteq S_n$ such that
     \begin{equation*}
         \sigma \colon a_i \mapsto \begin{cases}
             a_{i + 1} & \textrm{if } 1 \leq i \leq m - 1 \\
-            a_1 & \textrm{if } 1 = m \\
+            a_1 & \textrm{if } i = m \\
             a_i & \textrm{otherwise}
-        \end{cases}.
+        \end{cases},
     \end{equation*}
+    denoted by $\left(a_1, a_2, \cdots, a_m\right)$.
 \end{dfnbox}
+To demonstrate that the cycle notation is a good notation, we offer the following proposition:
+\begin{probox}{Characterisation of Abelian Symmetric Groups}{AbelianSymGrp}
+    A symmetric group of degree $n$ is not Abelian if and only if $n \geq 3$.
+\end{probox}
+In fact, we can characterise commutativity of cycles in symmetric groups in a bit more depth.
+\begin{probox}{Commutativity of Cycles}{commCycle}
+    Let $\left(a_1, a_2, \cdots, a_m\right), \left(b_1, b_2, \cdots, b_k\right) \in S_n$ be cycles, then 
+    \begin{equation*}
+        \left(a_1, a_2, \cdots, a_m\right)\left(b_1, b_2, \cdots, b_k\right) = \left(b_1, b_2, \cdots, b_k\right)\left(a_1, a_2, \cdots, a_m\right)
+    \end{equation*}
+    if $\left\{a_1, a_2, \cdots, a_m\right\} \cap \left\{b_1, b_2, \cdots, b_k\right\} = \varnothing$.
+\end{probox}
 Those with the intuition or training in programming may realise that since a permutation of a set is essentially constructed by repeatedly swapping elements in pairs, we can naturally find a finite number of cycles in a permutation.
-\begin{thmbox}{Cycle Decomposition}{cycleDecompo}
-    Let $\Omega$ be a finite set, then for all $\sigma \in \mathrm{Perm}(\Omega)$, $\sigma$ is a product of finitely many cycles.
-\end{thmbox}
+\begin{dfnbox}{Cycle Decomposition}{cycleDecompo}
+    Let $\sigma \in S_n$ be any permutation, then a {\color{red} \textbf{cycle decomposition}} of $\sigma$ is a finite product in the form of
+    \begin{equation*}
+        \sigma = \sigma_1 \circ \sigma_2 \circ \cdots \circ \sigma_k
+    \end{equation*}
+    where $\sigma_1, \sigma_2, \cdots, \sigma_k \in S_n$ are cycles.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that the cycle decomposition of a permutation is not unique in general.
+    \end{remark}
+\end{notebox}
+Now, let us justify our programming intuition from a mathematical perspective.
+\begin{probox}{Existence of Cycle Decompositions}{cycleDecompoExist}
+    Every $\sigma \in S_n$ admits a cycle decomposition.
+\end{probox}
 \section{Multiplication}
 \begin{probox}{}{uniqueFactor}
     Let $G$ be a group. For any $a, b \in G$, there exists a unique $x \in G$ such that $ax = b$ and a unique $y \in G$ such that $ya = b$.
