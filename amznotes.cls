@@ -226,6 +226,7 @@
         separator sign=\amzcolorboxtitlesep,
         parbox=true,               % normal paragraph spacing
         breakable,
+        sharp corners
     },
     thmboxstyle/.style={
         fontupper=\itshape,
