@@ -20,9 +20,9 @@
 \contentsline {section}{\numberline {5.1}Planar Graph}{67}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Dual Graph}{74}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Four Colour Theorem}{75}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Hamiltonian Graph}{77}{chapter.6}%
+\contentsline {chapter}{\numberline {6}Hamiltonicity}{77}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Eulerian Graph}{77}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Hamiltonian Graph}{79}{section.6.2}%
+\contentsline {section}{\numberline {6.2}Hamiltonian Graph}{78}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Vertex-Transitive Graph}{87}{section.6.3}%
 \contentsline {chapter}{\numberline {7}Directed Graph}{88}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Directed Graph}{88}{section.7.1}%

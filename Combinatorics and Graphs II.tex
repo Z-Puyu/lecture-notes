@@ -1485,11 +1485,11 @@ Suppose $G$ is bipartite with bipartition $(U, V)$, then we can colour the verti
 
 Clearly, if a graph has a proper $k$-colouring, then it must also have a proper $(k + 1)$-colouring. Therefore, we are interested to know the least number of colours to properly colour a graph.
 \begin{dfnbox}{Chromatic Number}{chromaticN}
-    The {\color{red} \textbf{chromatic number}} of a graph $G$, denoted as $\chi(G)$, is the smallest positive integer $k$ such that $G$ has a proper $k$-colouring.
+    The {\color{red} \textbf{chromatic number}} of a graph $G$, denoted as $\chi(G)$, is the smallest positive integer~$k$ such that $G$ has a proper $k$-colouring.
 \end{dfnbox}
 Observe that if $\chi(G) \leq 2$, it is equivalent to saying that we can find a bipartition of $V(G)$, so a bipartite graph can be alternatively defined as a graph $G$ with $\chi(G) \leq 2$. 
 
-Furthermore, observe that if $H \subseteq G$, then $\chi(H) \leq \chi(G)$. Consider a cycle $C_{2n + 1}$ for some $n \in \N$. It is clear that $\chi(C_{2n + 1}) = 3$, so if $C_{2n + 1} \subseteq G$, then $G$ cannot be bipartite.
+Furthermore, observe that if $H \subseteq G$, then $\chi(H) \leq \chi(G)$. Consider a cycle $C_{2n + 1}$ for some~$n \in \N$. It is clear that $\chi(C_{2n + 1}) = 3$, so if $C_{2n + 1} \subseteq G$, then $G$ cannot be bipartite.
 
 Similar to bipartite graphs, we can define the notion of an $r$-partite graph with chromatic numbers.
 \begin{dfnbox}{$r$-partite Graph}{rpartite}
@@ -1508,16 +1508,14 @@ Let us examine some special graphs to see their chromatic numbers:
     \item Empty graph $\widebar{K_n}$: $\chi\left(\widebar{K_n}\right) = 1$.
     \item Petersen graph $P$: $\chi(P) = 3$.
 \end{itemize}
-Recall the Kneser graph $KG(n, k)$ from Definition \ref{dfn:kneser}. For $i = 2k, 2k + 1, \cdots, n$, let $V_i$ be all $k$-element subsets whose greatest element is $i$. Note that for any $S, T \in V_i$, we have $i \in S \cap T$ and so $ST \notin E\bigl(KG(n, k)\bigr)$. Therefore, we can colour each $V_i$ using a distinct colour $c_i$. Notice that in doing so, $(n - 2k + 1)$ colours are used. For any $U$ not in any of the $V_i$'s, its elements must be from $\left\{1, 2, \cdots, k - 1\right\}$. By Pigeonhole Principle, this means that the remaining subsets are pair-wise intersecting, and so we can assign an extra colour for all of them. Therefore, $\chi\bigl(KG(n, k)\bigr) \leq n - 2k + 2$. However, the other direction is not trivial and requires some knowledge of the Borsuk-Ulam Theorem in Topology.
+Recall the Kneser graph $KG(n, k)$ from Definition \ref{dfn:kneser}. For $i = 2k, 2k + 1, \cdots, n$, let $V_i$ be all $k$-element subsets whose greatest element is $i$. Note that for any $S, T \in V_i$, we have~$i \in S \cap T$ and so $ST \notin E\bigl(KG(n, k)\bigr)$. Therefore, we can colour each $V_i$ using a distinct colour $c_i$. Notice that in doing so, $(n - 2k + 1)$ colours are used. For any $U$ not in any of the~$V_i$'s, its elements must be from $\left\{1, 2, \cdots, k - 1\right\}$. By Pigeonhole Principle, this means that the remaining subsets are pair-wise intersecting, and so we can assign an extra colour for all of them. Therefore, $\chi\bigl(KG(n, k)\bigr) \leq n - 2k + 2$. However, the other direction is not trivial and requires some knowledge of the Borsuk-Ulam Theorem in topology.
 
 Intuitively, one only needs to construct a proper colouring to establish an upper bound for $\chi(G)$, but to establish the lower bound is not so easy and we often need to do some estimation using other parameters.
 \begin{probox}{Lower Bound of Chromatic Number}{lowerBoundChi}
     For any graph $G$, $\chi(G) \geq \omega(G)$ and $\chi(G) \geq \frac{\abs{V(G)}}{\alpha(G)}$.
     \tcblower
     \begin{proof}
-        $\chi(G) \geq \omega(G)$ is trivial and is left to the reader as an exercise.
-        \\\\
-        Fix any proper $\chi(G)$-colouring for $G$. For every colour $i$, the set of vertices coloured in $i$, $V_i$, is an independent set, so $\abs{V_i} \leq \alpha(G)$. Therefore,
+        $\chi(G) \geq \omega(G)$ is trivial and is left to the reader as an exercise. Fix any proper~$\chi(G)$-colouring for $G$. For every colour $i$, the set of vertices coloured in $i$, $V_i$, is an independent set, so $\abs{V_i} \leq \alpha(G)$. Therefore,
         \begin{equation*}
             \abs{V(G)} = \sum_{i = 1}^{\chi(G)}\abs{V_i} \leq \chi(G)\alpha(G),
         \end{equation*}
@@ -1551,7 +1549,7 @@ This bound is sharp for complete graphs. However, we can use a greedy algorithm 
 \end{probox}
 We can further improve this bound by considering the following definition:
 \begin{dfnbox}{$k$-critical Graph}{kCrit}
-    A graph $G$ is said to be {\color{red} \textbf{$k$-critical}} if $\chi(G) = k$ and $\chi(G - e) < k$, $\chi(G - v) < k$ for any $e \in E(G)$ and any $v \in V(G)$.
+    A graph $G$ is said to be {\color{red} \textbf{$k$-critical}} if $\chi(G) = k$ and $\chi(G - e) < k$, $\chi(G - v) < k$ for any~$e \in E(G)$ and any $v \in V(G)$.
 \end{dfnbox}
 An easy example here is that any odd cycle is $3$-critical. In fact, every $3$-critical graph must be an odd cycle, which can be proven by a later theorem.
 
@@ -1560,7 +1558,7 @@ We first examine some properties of $k$-critical graphs.
     For any $k$-critical graph $G$, $\delta(G) \geq k - 1$.
     \tcblower
     \begin{proof}
-        It suffices to prove that $d_G(x) \geq k - 1$ for every $x \in V(G)$. Suppose on contrary that there exists some $v \in V(G)$ such that $d_G(v) < k - 1$. Since $G$ is $k$-critical, $\chi(G - v) \leq k - 1$ and so there exists a proper $(k - 1)$-colouring of $G - v$. Note that this means that we can find some colour among these $(k - 1)$ distinct colours to colour $v$ in $G$ such that $v$ does not share the colour with any of its neighbours, which is a contradiction because $\chi(G) = k$.
+        It suffices to prove that $d_G(x) \geq k - 1$ for every $x \in V(G)$. Suppose on contrary that there exists some $v \in V(G)$ such that $d_G(v) < k - 1$. Since $G$ is $k$-critical, we have $\chi(G - v) \leq k - 1$ and so there exists a proper $(k - 1)$-colouring of $G - v$. Note that this means that we can find some colour among these $(k - 1)$ distinct colours to colour $v$ in $G$ such that $v$ does not share the colour with any of its neighbours, which is a contradiction because $\chi(G) = k$.
     \end{proof}
 \end{probox}
 We can establish a better upper bound for chromatic number by using a $k$-critical graph as follows:
@@ -1581,14 +1579,16 @@ We can establish a better upper bound for chromatic number by using a $k$-critic
 \end{notebox}
 Consider any tree $T$. Note that $T$ is bipartite and $2$-colourable. By Proposition \ref{pro:upperBoundChiKCrit}, since any subgraph of $T$ is a forest with a minimum degree of $1$, $\chi(G) \leq 2$ is a sharp bound. However, $\Delta(T)$ can be arbitrarily large, which means the bound given by \ref{pro:greedyUpperBoundChi} can be very loose. In fact, we can prove that unless $G$ is a complete graph or an odd cycle, the bound given by \ref{pro:greedyUpperBoundChi} is always loose.
 \begin{thmbox}{Brooks' Theorem}{Brooks}
-    Let $G$ be a connected graph not isomorphic to a complete graph or an odd cycle, then $\chi(G) \leq \Delta(G)$.
+    Let $G$ be a connected graph not isomorphic to a complete graph or an odd cycle, then we have $\chi(G) \leq \Delta(G)$.
     \tcblower
     \begin{proof}
-        We shall perform strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then clearly $\chi(G) = 1 = \Delta(G)$. Suppose there is some $n \in \Z^+$ with $n > 1$ such that for any integer $m \in [1, n - 1]$, any graph $G$ with order $m$ is such that $\chi(G) \leq \Delta(G)$.
+        We shall perform strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then it is clear that $\chi(G) = 1 = \Delta(G)$. Suppose there is some $n \in \Z^+$ with $n > 1$ such that for any integer $m \in [1, n - 1]$, any graph $G$ with order $m$ is such that $\chi(G) \leq \Delta(G)$.
         \\\\
-        Suppose on contrary that there exists a graph $G'$ of order $n$ such that $\chi(G') > \Delta(G')$. Take any vertex $v \in V(G')$ and consider $H \coloneqq G' - v$. Let $H'$ be any connected component of $H$, then $\Delta(H') \leq \Delta(G')$. If $H'$ is not a complete graph nor an odd cycle, by the inductive hypothesis, $\chi(H') \leq \Delta(H') \leq \Delta(G')$. Otherwise, note that $H'$ will be $\Delta(H')$-regular. Since at least one vertex in $H'$ is adjacent to $v$ in $G'$, we have $\chi(H') = \Delta(H') + 1 \leq \Delta(G')$. Therefore, $\chi(H) \leq \Delta(G')$.
-        \\\\
-        Fix a $\Delta(G')$-colouring on $H$. Note that $N_{G'}(v) \subseteq V(H)$. We claim that $N_{G'}(v)$ used all $\Delta(G')$ colours, because otherwise we can use one of the $\Delta(G')$ colours to colour $v$ in $G'$ and obtain a $\Delta(G')$-colouring in $G'$, which is not possible. Therefore, $d_{G'}(v) = \Delta(G')$, and so every vertex in $N_{G'}(v)$ has a colour distinct to the other neighbours. Let $v_i$ be the neighbour of $v$ coloured in $i$, and let $H_{ij}$ be the subgraph spanned by all $i$- and $j$-vertices in $H$. We claim that whenever $i \neq j$, $v_i$ and $v_j$ must be in the same connected component $C_{ij}$ of $H_{ij}$, otherwise, we can interchange all $i$- and $j$-vertices in the connected component containing $v_i$ and colour $v$ in $i$.
+        Suppose on contrary that there exists a graph $G'$ of order $n$ such that $\chi(G') > \Delta(G')$. Take any vertex $v \in V(G')$ and consider $H \coloneqq G' - v$. Let $H'$ be any connected component of $H$, then $\Delta(H') \leq \Delta(G')$. If $H'$ is not a complete graph nor an odd cycle, by the inductive hypothesis, $\chi(H') \leq \Delta(H') \leq \Delta(G')$. Otherwise, note that $H'$ will be~$\Delta(H')$-regular. Since at least one vertex in $H'$ is adjacent to $v$ in $G'$, we have 
+        \begin{equation*}
+            \chi(H') = \Delta(H') + 1 \leq \Delta(G').
+        \end{equation*}
+        Therefore, $\chi(H) \leq \Delta(G')$. Fix a $\Delta(G')$-colouring on $H$. Note that $N_{G'}(v) \subseteq V(H)$. We claim that $N_{G'}(v)$ used all $\Delta(G')$ colours, because otherwise we can use one of the~$\Delta(G')$ colours to colour $v$ in $G'$ and obtain a $\Delta(G')$-colouring in $G'$, which is not possible. Therefore, $d_{G'}(v) = \Delta(G')$, and so every vertex in $N_{G'}(v)$ has a colour distinct to the other neighbours. Let $v_i$ be the neighbour of $v$ coloured in~$i$, and let~$H_{ij}$ be the subgraph spanned by all $i$- and $j$-vertices in $H$. We claim that whenever~$i \neq j$, the vertices $v_i$ and $v_j$ must be in the same connected component~$C_{ij}$ of $H_{ij}$, otherwise, we can interchange all $i$- and $j$-vertices in the connected component containing $v_i$ and colour $v$ in $i$.
         \\\\
         Let $P$ be a $v_i$-$v_j$ path in $C_{ij}$. Note that $d_H(v_i) = d_{G'}(v_i) - 1 \leq \Delta(G') - 1$. We claim that the neighbours of $v_i$ use exactly $(\Delta(G') - 1)$ distinct colours, otherwise we can re-colour $v_i$ in a different colour and colour $v$ with one of the $\Delta(G')$ colours, which is not possible. This implies that $v_i$ has only one neighbour with colour $j$, and so the neighbour of $v_i$ in $P$ is its only neighbour in $C_{ij}$. 
         \\\\
@@ -1603,7 +1603,10 @@ Previously in Proposition \ref{pro:greedyUpperBoundChi}, we have used a greedy a
 
 Here, we devise a construction for a graph with high chromatic number.
 \begin{dfnbox}{Edge Contraction}{edgeContraction}
-    Let $G$ be a graph. For any $e = xy \in E(G)$, the {\color{red} \textbf{edge contraction}} of $G$ at $e$, denoted by $G/e$, is a graph produced by deleting $e$ and merging $x$ and $y$ such that $N_{G/e}(xy) = N_G(x) \cup N_G(y)$.
+    Let $G$ be a graph. For any $e = xy \in E(G)$, the {\color{red} \textbf{edge contraction}} of $G$ at $e$, denoted by~$G/e$, is a graph produced by deleting $e$ and merging $x$ and $y$ such that 
+    \begin{equation*}
+        N_{G/e}(xy) = N_G(x) \cup N_G(y).
+    \end{equation*}
 \end{dfnbox}
 We define the notion of a $k$-\textit{constructible graph} recursively.
 \begin{dfnbox}{$k$-constructible Graph}{kConstruct}
@@ -1611,7 +1614,7 @@ We define the notion of a $k$-\textit{constructible graph} recursively.
     \begin{enumerate}
         \item $G \cong K_k$;
         \item there is some $k$-constructible graph $H$ with $x, y \in V(H)$ and $xy \notin E(H)$ such that $G \cong (H + xy)/xy$;
-        \item there are $k$-constructible graphs $H_1$, $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$ such that $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$.
+        \item there are $k$-constructible graphs $H_1$, $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$, $y_1x \in E(H_1)$ and $y_2x \in E(H_2)$ such that $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$.
     \end{enumerate}
 \end{dfnbox}
 We can easily derive a lower bound for the chromatic number of $k$-constructible graphs.
@@ -1619,11 +1622,9 @@ We can easily derive a lower bound for the chromatic number of $k$-constructible
     If $G$ is a $k$-constructible graph, then $\chi(G) \geq k$.
     \tcblower
     \begin{proof}
-        If $G \cong K_k$, then $\chi(G) = k \geq k$ is trivial. 
+        If $G \cong K_k$, then $\chi(G) = k \geq k$ is trivial. Suppose that $G \cong (H + xy)/xy$ for some $k$-constructible graph $H$ with $\chi(H) \geq k$, we shall prove that $\chi(G) \geq k$ by considering the contrapositive statement. Suppose that $\chi(G) \leq k - 1$, then we can fix a $(k - 1)$-colouring in $G$. Suppose that $x$ and $y$ are contracted into $z$ in $G$, then we can just colour $x$ and $y$ in $H$ both using the colour of $z$ in $G$ while keep all other vertices the same colour. Since $N_H(x) \cup N_H(y) = N_G(z)$, this colouring is proper in~$H$ and so $\chi(H) \leq k - 1$. 
         \\\\
-        Suppose $G \cong (H + xy)/xy$ for some $k$-constructible graph $H$ with $\chi(H) \geq k$, we shall prove that $\chi(G) \geq k$ by considering the contrapositive statement. Suppose that $\chi(G) \leq k - 1$, then we can fix a $(k - 1)$-colouring in $G$. Suppose that $x$ and $y$ are contracted into $z$ in $G$, then we can just colour $x$ and $y$ in $H$ both using the colour of $z$ in $G$ while keep all other vertices the same colour. Since $N_H(x) \cup N_H(y) = N_G(z)$, this colouring is proper in $H$ and so $\chi(H) \leq k - 1$. 
-        \\\\
-        Suppose $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$ for some $k$-constructible graphs $H_1$ and $H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$. We shall prove that if $\chi(H_1) \geq k$ and $\chi(H_2) \geq k$, then $\chi(G) \geq k$ by considering the contrapositive. Suppose that $\chi(G) \leq k - 1$, then we can fix a $(k - 1)$-colouring in $G$. Note that $y_1y_2 \in E(G)$, so $y_1$ and $y_2$ must have different colours. This means at least one of $y_1$ and $y_2$ has a colour distinct from the colour of $x$. Without loss of generality, assume that $x$ and $y_1$ have different colours. This means that the colouring of $G$ is still proper in $H_1$, and so $\chi(H_1) \leq k - 1$. Therefore, we have proved that any $k$-constructible graph $G$ is such that $\chi(G) \geq k$.
+        Suppose that $G \cong H_1 \cup H_2 - y_1x - y_2x + y_1y_2$ for some $k$-constructible graphs~$H_1$ and~$H_2$ with $V(H_1) \cap V(H_2) = \{x\}$ and $y_1x \in E(H_1), y_2x \in E(H_2)$. We shall prove that if $\chi(H_1) \geq k$ and $\chi(H_2) \geq k$, then $\chi(G) \geq k$ by considering the contrapositive. Suppose that $\chi(G) \leq k - 1$, then we can fix a $(k - 1)$-colouring in $G$. Notice that~$y_1y_2 \in E(G)$, so $y_1$ and $y_2$ must have different colours. This means at least one of $y_1$ and $y_2$ has a colour distinct from the colour of $x$. Without loss of generality, assume that $x$ and $y_1$ have different colours. This means that the colouring of~$G$ is still proper in $H_1$, and so $\chi(H_1) \leq k - 1$. Therefore, we have proved that any~$k$-constructible graph $G$ is such that $\chi(G) \geq k$.
     \end{proof}
 \end{probox}
 Remarkably, we can use $k$-constructible graphs to characterise all graphs with a certain chromatic number.
@@ -1633,17 +1634,17 @@ Remarkably, we can use $k$-constructible graphs to characterise all graphs with 
     \begin{proof}
         Suppose $G$ has $k$-constructible subgraph $H$. By Proposition \ref{pro:lowerBoundChiKCons}, $\chi(H) \geq k$, and so $\chi(G) \geq \chi(H) \geq k$.
         \\\\
-        Suppose $\chi(G) \geq k$. The case where $k = 1$ is trivial. If $k = 2$, then $\chi(G) \geq 2$ implies that $G$ contains a $K_2$ which is $2$-constructible. For $k \geq 3$, take $G$ to be the edge-maximal graph with $\chi(G) \geq k$ such that $G$ contains not $k$-constructible subgraph. If $G$ is a complete multi-partite graph, then it contains at least $k$ partite sets. Fix $k$ partite sets in $G$ and take one vertex from each set, then clearly these vertices induce a $K_k \subseteq G$ which is $k$-constructible.
+        Suppose conversely that $\chi(G) \geq k$. The case where $k = 1$ is trivial. If $k = 2$, then $\chi(G) \geq 2$ implies that $G$ contains a $K_2$ which is $2$-constructible. For $k \geq 3$, take $G$ to be the edge-maximal graph with $\chi(G) \geq k$ such that $G$ contains not~$k$-constructible subgraph. If $G$ is a complete multi-partite graph, then it contains at least $k$ partite sets. Fix $k$ partite sets in $G$ and take one vertex from each set, then clearly these vertices induce a $K_k \subseteq G$ which is $k$-constructible.
         \\\\
         If $G$ is not complete multi-partite, consider the following lemma:
         \begin{lembox}{Complete Multi-partite Graph Characterisation}{completeMultPartite}
             Define a graph $H$ with $V(H) = \{x, y, z\}$ and $E(H) = \{yz\}$. A graph $G$ is complete multi-partite if it contains no induced subgraph isomorphic to $H$.
             \tcblower
             \begin{proof}
-                If $G$ contains no induced subgraph isomorphic to $H$, then $\widebar{G}$ contains no induced subgraph isomorphic to $\widebar{H}$. Let $G' \subseteq \widebar{G}$ be a connected component. Notice that if there are vertices $u, v, w \in V(G')$ such that $u \sim v$ and $v \sim w$, then $u \sim w$ because otherwise $\{u, v, w\}$ induces a $P_2 \cong \widebar{H}$ in $G'$. Therefore, adjacency is a transitive relation on $V(G')$. For any $x, y \in V(G')$, there exists an $x$-$y$ path in $G'$. By transitivity, this means that $x \sim y$ in $G'$. Therefore, $G'$ is a clique. This means that $\widebar{G}$ is the union of disjoint cliques, and so $G$ must be complete multi-partite.
+                If $G$ contains no induced subgraph isomorphic to $H$, then $\widebar{G}$ contains no induced subgraph isomorphic to $\widebar{H}$. Let $G' \subseteq \widebar{G}$ be a connected component. Notice that if there are vertices $u, v, w \in V(G')$ such that $u \sim v$ and $v \sim w$, then~$u \sim w$ because otherwise $\{u, v, w\}$ induces a $P_2 \cong \widebar{H}$ in $G'$. Therefore, adjacency is a transitive relation on $V(G')$. For any $x, y \in V(G')$, there exists an $x$-$y$ path in $G'$. By transitivity, this means that $x \sim y$ in $G'$. Therefore, $G'$ is a clique. This means that $\widebar{G}$ is the union of disjoint cliques, and so $G$ must be complete multi-partite.
             \end{proof}
         \end{lembox}
-        By Lemma \ref{lem:completeMultPartite}, we know that $G$ must contain some subgraph of order $3$ with vertex set $\{x, y_1, y_2\}$ and edge set $\{y_1y_2\}$. For $i = 1, 2$, let $G_i \coloneqq G + xy_i$. Since $G$ is edge-maximal with respect to not having $k$-constructible subgraphs, $G_i$ must contain a $k$-constructible subgraph $H_i$. We claim that $xy_i \in E(H_i)$, because otherwise $H_i \subseteq G$, which is not possible. Let $H_1'$ and $H_2'$ be copies of $H_1$ and $H_2$ and define a graph $H \coloneqq H_1' \cup H_2'$. For every vertex $z \in V(H_1) \cap V(H_2)$ with $z \neq x$, let $z_1$, $z_2$ be its copy in $H_1'$ and $H_2'$ respectively, then $z_1z_2 \notin E(H)$. Therefore, $V(H_1') \cap V(H_2') = \{x\}$ and $xy_1 \in E(H_1')$, $xy_2 \in E(H_2')$. Therefore, $H' \coloneqq H - xy_1 - xy_2 + y_1y_2$ is $k$-constructible. Note that for every pair $(z_1, z_2) \in V(H')^2$, $z_1z_2 \notin E(H')$, and so $(H + z_1z_2)/z_1z_2$ is $k$-constructible. After contracting all $(z_1, z_2)$'s, we have restored the graph $H_1 \cup H_2 \subseteq G$, which is $k$-constructible.
+        By Lemma \ref{lem:completeMultPartite}, we know that $G$ must contain some subgraph of order $3$ with vertex set $\{x, y_1, y_2\}$ and edge set $\{y_1y_2\}$. For $i = 1, 2$, let $G_i \coloneqq G + xy_i$. Since $G$ is edge-maximal with respect to not having $k$-constructible subgraphs, $G_i$ must contain a~$k$-constructible subgraph $H_i$. We claim that $xy_i \in E(H_i)$, because otherwise $H_i \subseteq G$, which is not possible. Let $H_1'$ and $H_2'$ be copies of $H_1$ and $H_2$ and define a graph by~$H \coloneqq H_1' \cup H_2'$. For every $z \in V(H_1) \cap V(H_2)$ with $z \neq x$, let $z_1$, $z_2$ be its copy in~$H_1'$ and $H_2'$ respectively, then $z_1z_2 \notin E(H)$. Hence, $V(H_1') \cap V(H_2') = \{x\}$, $xy_1 \in E(H_1')$ and~$xy_2 \in E(H_2')$. Therefore, $H' \coloneqq H - xy_1 - xy_2 + y_1y_2$ is $k$-constructible. Note that for every pair $(z_1, z_2) \in V(H')^2$, $z_1z_2 \notin E(H')$, and so $(H + z_1z_2)/z_1z_2$ is $k$-constructible. After contracting all $(z_1, z_2)$'s, we have restored the graph $H_1 \cup H_2 \subseteq G$, which is $k$-constructible.
     \end{proof}
 \end{thmbox}
 Theorem \ref{thm:Hajos} leads to an important property of $k$-critical graphs.
@@ -1651,13 +1652,17 @@ Theorem \ref{thm:Hajos} leads to an important property of $k$-critical graphs.
     A graph $G$ is $k$-constructible if it is $k$-critical. 
     \tcblower
     \begin{proof}
-        Let $H \subseteq G$ be the maximal $k$-constructible subgraph of $G$. It suffices to prove that $H = G$. Suppose on contrary that $H \neq G$, then there exists either an edge $e$ or a vertex $v$ in $G - H$. Therefore, $H \subseteq G - e$ and $H \subseteq G - v$, which implies that $\chi(G - e) = \chi(G - v) = k$ by Theorem \ref{thm:Hajos}, which is a contradiction because $G$ is $k$-critical.
+        Let $H \subseteq G$ be the maximal $k$-constructible subgraph of $G$. It suffices to prove that $H = G$. Suppose on contrary that $H \neq G$, then there exists either an edge $e$ or a vertex $v$ in $G - H$. Therefore, $H \subseteq G - e$ and $H \subseteq G - v$, which implies that 
+        \begin{equation*}
+            \chi(G - e) = \chi(G - v) = k
+        \end{equation*}
+        by Theorem \ref{thm:Hajos}, which is a contradiction because $G$ is $k$-critical.
     \end{proof}
 \end{corbox}
 \section{Edge Colouring}
 Just like vertices, we can also colour the edges of a graph. 
 \begin{dfnbox}{Edge Colouring}{edgeColour}
-    Let $G$ be a graph. A {\color{red} \textbf{proper $k$-edge-colouring}} on $G$ is a map $c \colon E(G) \to \left\{1, 2, \cdots, k\right\}$ such that if $\abs{e \cap f} \geq 1$, then $c(e) \neq c(f)$. The minimum $k$ such that $G$ has a proper $k$-edge-colouring is known as the {\color{red} \textbf{edge chromatic number}} of $G$, denoted by $\chi'(G)$.
+    Let $G$ be a graph. A {\color{red} \textbf{proper $k$-edge-colouring}} on $G$ is a map $c \colon E(G) \to \left\{1, 2, \cdots, k\right\}$ such that if $\abs{e \cap f} \geq 1$, then $c(e) \neq c(f)$. The minimum $k$ such that $G$ has a proper~$k$-edge-colouring is known as the {\color{red} \textbf{edge chromatic number}} of $G$, denoted by $\chi'(G)$.
 \end{dfnbox}
 Intuitively, colouring the edges in a graph is equivalent to colouring the vertices in its line graph, so the following proposition is intuitive:
 \begin{probox}{Chromatic Number of Line Graphs}{lineGraphChi}
@@ -1679,11 +1684,11 @@ Recall that according to Corollary \ref{cor:regBipDecomposition}, every $d$-regu
     If $G$ is a bipartite graph, then $\chi'(G) = \Delta(G)$.
     \tcblower
     \begin{proof}
-        It suffices to prove that $\chi'(G) \leq \Delta(G)$. We shall perform induction on $\abs{E(G)}$. The case where $\abs{E(G)} = 1$ is trivial. For $\abs{E(G)} = m$, take any $xy \in E(G)$ and consider $H \coloneqq G - xy$. Note that $\abs{E(H)} = m - 1$, so by the inductive hypothesis we have 
+        It suffices to prove that $\chi'(G) \leq \Delta(G)$. We shall perform induction on $\abs{E(G)}$. The case where $\abs{E(G)} = 1$ is trivial. For $\abs{E(G)} = m$, take any $xy \in E(G)$ and consider~$H \coloneqq G - xy$. Note that $\abs{E(H)} = m - 1$, so by the inductive hypothesis we have 
         \begin{equation*}
             \chi'(H) = \Delta(H) \leq \Delta(G).
         \end{equation*}
-        Therefore, there exists a $\Delta(G)$-edge-colouring on $H$. Notice that $d_H(x) \leq \Delta(G) - 1$ and $d_H(y) \leq \Delta(G) - 1$, but there are $\Delta(G)$ colours. Without loss of generality, assume that $x$ is not incident to any $\alpha$-edge and $y$ is not incident to any $\beta$-edge. If $x$ is not incident to any $\beta$-edge, we can colour $xy$ with $\beta$ in $G$ and obtain a $\Delta(G)$-edge-colouring in $G$. Otherwise, take a maximal $\alpha$-$\beta$ alternating path starting from $x$ and ending at $x'$. Note that there is no $\alpha$-edge between $x$ and $x'$, so switching the $\alpha$- and $\beta$-edges along the path retains the proper colouring in $H$. However, notice that now $x$ is no longer incident to any $\beta$-edge in $H$, and so we can colour $xy$ as $\beta$ in $G$ to obtain a proper $\Delta(G)$-edge-colouring.
+        Therefore, there exists a $\Delta(G)$-edge-colouring on $H$. Note that $d_H(x) \leq \Delta(G) - 1$ and~$d_H(y) \leq \Delta(G) - 1$, but there are $\Delta(G)$ colours. Without loss of generality, assume that $x$ is not incident to any $\alpha$-edge and $y$ is not incident to any $\beta$-edge. If $x$ is not incident to any $\beta$-edge, we can colour $xy$ with $\beta$ in $G$ and obtain a $\Delta(G)$-edge-colouring in~$G$. Otherwise, take a maximal $\alpha$-$\beta$ alternating path starting from $x$ and ending at~$x'$. Note that there is no $\alpha$-edge between $x$ and $x'$, so switching the $\alpha$- and~$\beta$-edges along the path retains the proper colouring in $H$. However, notice that now $x$ is no longer incident to any $\beta$-edge in $H$, and so we can colour $xy$ as $\beta$ in $G$ to obtain a proper~$\Delta(G)$-edge-colouring.
     \end{proof}
 \end{thmbox}
 It turns out that for general graphs, we need at most one more colour to obtain a proper edge-colouring as compared to a bipartite graph.
@@ -1699,12 +1704,12 @@ In Proposition \ref{pro:lowerBoundChi}, we see that $\chi(G) \geq \omega(G)$. Th
 \begin{dfnbox}{Perfect Graph}{perfectGraph}
     A graph $G$ is {\color{red} \textbf{perfect}} if for every induced subgraph $H \subseteq G$, we have $\chi(H) = \omega(H)$.
 \end{dfnbox}
-Clearly, $K_n$ is a simple example for a perfect graph as every induced subgraph of $K_n$ is also complete. Correspondingly, one can easily check that the empty graph $\widebar{K_n}$ is also perfect. A non-empty bipartite graph $G$ contains an edge as its maximum clique and so $\chi(G) = \omega(G) = 2$, which means $G$ is also perfect. We can also prove that the complement of any bipartite graph must also be perfect.
+Clearly, $K_n$ is a simple example for a perfect graph as every induced subgraph of $K_n$ is also complete. Correspondingly, one can easily check that the empty graph $\widebar{K_n}$ is also perfect. A non-empty bipartite graph $G$ contains an edge as its maximum clique and so we have~$\chi(G) = \omega(G) = 2$, which means $G$ is also perfect. We can also prove that the complement of any bipartite graph must also be perfect.
 \begin{probox}{Complement of a Bipartite Graph Is Perfect}{bipCompPerfect}
     Let $G$ be a bipartite graph, then $\widebar{G}$ is perfect.
     \tcblower
     \begin{proof}
-        Let $\widebar{H} \subseteq \widebar{G}$ be an induced subgraph, then $\abs{V\left(\widebar{H}\right)}$ induces a subgraph $H \subseteq G$ which is the complement of $\widebar{H}$. Note that every clique in $\widebar{H}$ is induced by an independent set of $H$, so $\omega\left(\widebar{H}\right) = \alpha(H) = \abs{V(H)} - \tau(H)$ by Proposition \ref{pro:Order=Sum}. Observe that $\chi\left(\widebar{H}\right)$ is the smallest number of independent sets to partition $V\left(\widebar{H}\right)$, but since $H$ is bipartite, each of these independent sets induces either a clique, i.e., an edge, or an empty graph in $H$. Therefore, $\chi\left(\widebar{H}\right) + \nu(H) = \abs{V(H)}$. By Theorem \ref{thm:Konig}, we have 
+        Let $\widebar{H} \subseteq \widebar{G}$ be an induced subgraph, then $\abs{V\left(\widebar{H}\right)}$ induces a subgraph $H \subseteq G$ which is the complement of $\widebar{H}$. Note that every clique in $\widebar{H}$ is induced by an independent set of $H$, so $\omega\left(\widebar{H}\right) = \alpha(H) = \abs{V(H)} - \tau(H)$ by Proposition \ref{pro:Order=Sum}. Observe that~$\chi\left(\widebar{H}\right)$ is the smallest number of independent sets to partition $V\left(\widebar{H}\right)$, but since $H$ is bipartite, each of these independent sets induces either a clique, i.e., an edge, or an empty graph in $H$. Therefore, $\chi\left(\widebar{H}\right) + \nu(H) = \abs{V(H)}$. By Theorem \ref{thm:Konig}, we have 
         \begin{equation*}
             \chi\left(\widebar{H}\right) = \abs{V(H)} - \nu(H) = \abs{V(H)} - \tau(H) = \omega\left(\widebar{H}\right),
         \end{equation*}
@@ -1739,9 +1744,9 @@ Now, let us devise a way to characterise perfect graphs.
             then $G'$ is perfect.
             \tcblower
             \begin{proof}
-                We shall apply strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then $G' \cong K_2$ which is perfect. Suppose that there exists $n > 1$ such that whenever $\abs{V(G)} < n$, $G'$ is perfect. Let $\abs{V(G)} = n$ and $H \subseteq G'$ be an induced subgraph with $H \neq G'$. If at most one of $x'$ and $x$ is contained in $H$, then $H$ is isomorphic to an induced subgraph in $G$. Otherwise, $H$ can be obtained by extending $x$ on some induced subgraph $H'$ of $G$.  Either case, by our inductive hypothesis we have $\omega(H) = \chi(H)$. Therefore, it suffices to prove that $\omega(G') \geq \chi(G')$.
+                We shall apply strong induction on $\abs{V(G)}$. If $\abs{V(G)} = 1$, then we have~$G' \cong K_2$ which is perfect. Suppose that there exists $n > 1$ such that whenever $\abs{V(G)} < n$, $G'$ is perfect. Let $\abs{V(G)} = n$ and $H \subseteq G'$ be an induced subgraph with $H \neq G'$. If at most one of $x'$ and $x$ is contained in~$H$, then $H$ is isomorphic to an induced subgraph in $G$. Otherwise, $H$ can be obtained by extending $x$ on some induced subgraph $H'$ of $G$.  Either case, by our inductive hypothesis we have $\omega(H) = \chi(H)$. Therefore, it suffices to prove that $\omega(G') \geq \chi(G')$.
                 \\\\
-                Note that $\omega(G') \in \{\omega(G), \omega(G) + 1\}$, so we consider $2$ cases. If $\omega(G') = \omega(G) + 1$, since $G$ is perfect, we have $\omega(G') = \chi(G) + 1$, and so $\chi(G') \leq \chi(G) + 1 = \omega(G')$. Otherwise, $\omega(G') = \omega(G) = \chi(G)$. Fix a proper $\omega(G)$-colouring on $G$ and take any maximal clique $K \cong K_{\omega(G)}$ in $G$. Notice that $x \notin K$ because otherwise $V(K) \cup \{x'\}$ induces a clique of size $\omega(G) + 1$ in $G'$, which is not possible. Suppose $x \in U$ where $U$ is some colour class in $G$, then clearly $K$ contains some vertex in $U$. Therefore, $G - (U - \{x\})$ contains no $K_{\omega(G)}$. Since $G$ is perfect,
+                Note that $\omega(G') \in \{\omega(G), \omega(G) + 1\}$, so we consider $2$ cases. If $\omega(G') = \omega(G) + 1$, since $G$ is perfect, we have $\omega(G') = \chi(G) + 1$, and so $\chi(G') \leq \chi(G) + 1 = \omega(G')$. Otherwise, $\omega(G') = \omega(G) = \chi(G)$. Fix a proper $\omega(G)$-colouring on $G$ and take any maximal clique $K \cong K_{\omega(G)}$ in $G$. Notice that $x \notin K$ because otherwise~$V(K) \cup \{x'\}$ induces a clique of size $\omega(G) + 1$ in $G'$, which is not possible. Suppose $x \in U$ where $U$ is some colour class in $G$, then clearly $K$ contains some vertex in $U$. Therefore, $G - (U - \{x\})$ contains no $K_{\omega(G)}$. Since $G$ is perfect,
                 \begin{equation*}
                     \chi\bigl(G - (U - \{x\})\bigr) = \omega\bigl(G - (U - \{x\})\bigr) < \omega(G).
                 \end{equation*}
@@ -1760,7 +1765,7 @@ Now, let us devise a way to characterise perfect graphs.
             V(G') & \coloneqq \left\{G_x \colon x \in V(G)\right\}, \\
             E(G') & \coloneqq \bigcup_{xy \in E(G)}\bigl(V(G_x) \times V(G_y)\bigr),
         \end{align*}
-        i.e., $V(G_x) \cup V(G_y)$ induces a clique in $G'$ if and only if $x \sim y$ in $G$. Notice that every $G_x \subseteq G'$ corresponds to some unique $x \in V(G)$, so we can construct $G'$ by repeatedly expanding on vertices of $G$. Since $G$ is perfect, by Lemma \ref{lem:vtxExpand} we know that $G'$ is perfect and so $\chi(G') \leq \omega(G')$. Notice that if $\bigcup_{i = 1}^{m}V\left(G_{x_i}\right)$ induces a maximal clique $K'$ in $G'$, then $\left\{x_1, x_2, \cdots, x_m\right\}$ must also induce a maximal clique $X \in \mathcal{K}$ in $G$. Note that 
+        i.e., $V(G_x) \cup V(G_y)$ induces a clique in $G'$ if and only if $x \sim y$ in $G$. Notice that every~$G_x \subseteq G'$ corresponds to some unique $x \in V(G)$, so we can construct $G'$ by repeatedly expanding on vertices of $G$. Since $G$ is perfect, by Lemma \ref{lem:vtxExpand} we know that $G'$ is perfect and so $\chi(G') \leq \omega(G')$. Notice that if $\bigcup_{i = 1}^{m}V\left(G_{x_i}\right)$ induces a maximal clique $K'$ in $G'$, then $\left\{x_1, x_2, \cdots, x_m\right\}$ must also induce a maximal clique $X \in \mathcal{K}$ in $G$. Note that 
         \begin{align*}
             \abs{V(K')} & = \sum_{x \in V(X)}k(x) \\
             & = \sum_{x \in V(X)}\abs{\left\{K \in \mathcal{K}\colon x \in A_K\right\}} \\
@@ -1772,7 +1777,7 @@ Now, let us devise a way to characterise perfect graphs.
             & = \sum_{K \in \mathcal{K}}\abs{A_K} \\
             & = \alpha(G)\abs{\mathcal{K}}.
         \end{align*}
-        Take any independent set $A \subseteq V(G')$, then for any $a, b \in A$, $a, b$ are in different cliques. Suppose $a \in G_x$ and $b \in G_y$, then $xy \notin E(G)$ because otherwise $V(G_x) \cup V(G_y)$ induces a clique in $G'$, which is not possible. Therefore, there exists an independent set in $G$ which has the same size as $A$, and so $\alpha(G') \leq \alpha(G)$. Therefore,
+        Take any independent set $A \subseteq V(G')$, then for any $a, b \in A$, $a, b$ are in different cliques. Suppose $a \in G_x$ and $b \in G_y$, then $xy \notin E(G)$ because otherwise~$V(G_x) \cup V(G_y)$ induces a clique in $G'$, which is not possible. Therefore, there exists an independent set in $G$ which has the same size as $A$, and so $\alpha(G') \leq \alpha(G)$. Therefore,
         \begin{equation*}
             \chi(G') \geq \frac{\abs{V(G')}}{\alpha(G')} \geq \frac{\alpha(G)\abs{\mathcal{K}}}{\alpha(G)} = \abs{\mathcal{K}},
         \end{equation*}
@@ -1822,7 +1827,7 @@ Euler once developed a formula that handles the relationship between the numbers
         \begin{equation*}
             n - m + \ell = n - (n - 1) + 1 = 2.
         \end{equation*}
-        For $m \geq n$, $G$ must contain some cycle. Take a cycle $C \subseteq G$, then for any $e \in E(C)$, $e$ lies on the boundary between exactly $2$ faces. Therefore, $G' \coloneqq G - e$ is a connected plane graph with $n$ vertices, $(m - 1)$ edges and $(\ell - 1)$ faces, and by the inductive hypothesis we have 
+        For $m \geq n$, $G$ must contain some cycle. Take a cycle $C \subseteq G$, then for any $e \in E(C)$,~$e$ lies on the boundary between exactly $2$ faces. Therefore, $G' \coloneqq G - e$ is a connected plane graph with $n$ vertices, $(m - 1)$ edges and $(\ell - 1)$ faces, and by the inductive hypothesis we have 
         \begin{equation*}
             n - (m - 1) + (\ell - 1) = n - m + \ell = 2.
         \end{equation*}
@@ -1858,11 +1863,11 @@ Note that in the formal definition, we only require that the plane drawing of a 
     Any planar graph $G$ can be draw with straight edges in a plane.
     \tcblower
     \begin{proof}
-        It suffices to prove for the case where $G$ is maximally planar, i.e., $e(G) = 3v(G) - 6$. We shall apply induction on $v(G)$. The case where $v(G) = 3$ is trivial. Suppose that there exists some integer $k \geq 3$ such that any $k$-vertex maximally planar graph has a straight-line plane drawing. Let $G$ be a $(k + 1)$-vertex maximally planar graph and let $A, B, C$ be the vertices on the boundary of the outer face of $G$. We claim that there exists some $v \in V(G) - \{A, B, C\}$ such that $d_G(v) \leq 5$, because otherwise 
+        It suffices to prove for maximally planar graphs, i.e., $e(G) = 3v(G) - 6$. We shall apply induction on $v(G)$. The case where $v(G) = 3$ is trivial. Suppose that there exists some integer $k \geq 3$ such that any $k$-vertex maximally planar graph has a straight-line plane drawing. Let $G$ be a $(k + 1)$-vertex maximally planar graph and let $A, B, C$ be the vertices on the boundary of the outer face of $G$. We claim that there exists some~$v \in V(G) - \{A, B, C\}$ such that $d_G(v) \leq 5$, because otherwise 
         \begin{equation*}
             2e(G) > \sum_{v \in V(G)}6(k + 1 - 3) + 3 \times 2 = 6(k + 1) - 12,
         \end{equation*}
-        which is not possible. Consider $G' \coloneqq G - v$, then $G'$ is isomorphic to some subgraph of a $k$-vertex maximally planar graph, and so by the inductive hypothesis we can embed $G'$ in a plane with straight edges. Consider the face in $G'$ which contains $v$ in $G$. Notice that this face is a polygon $P$ with at most $5$ edges. Since $v$ is in the interior of $P$, $P + v$ is a $6$-vertex planar graph. One may check that $v$ can be joined to the vertices of $P$ using only straight lines, and so $G$ can be embedded in a plane with only straight edges.
+        which is not possible. Consider $G' \coloneqq G - v$, then $G'$ is isomorphic to some subgraph of a $k$-vertex maximally planar graph, and so by the inductive hypothesis we can embed~$G'$ in a plane with straight edges. Consider the face in $G'$ which contains $v$ in $G$. Notice that this face is a polygon $P$ with at most $5$ edges. Since $v$ is in the interior of~$P$, we know that $P + v$ is a $6$-vertex planar graph. One may check that $v$ can be joined to the vertices of $P$ using only straight lines, and so $G$ can be embedded in a plane with only straight edges.
     \end{proof}
 \end{thmbox}
 For non-planar graphs, we may still wish to embed them into a plane using the most optimal drawing possible.
@@ -1888,12 +1893,12 @@ In fact, we can extend the above proposition to a sufficient and necessary condi
 \begin{dfnbox}{Minor}{minor}
     A graph $H$ is called a {\color{red} \textbf{minor}} of a graph $G$ if it can be obtained by deleting edges, deleting vertices or contracting edges from $G$.
 \end{dfnbox}
-Intuitively, minor is a transitive relation. Note that any subgraph of $G$ must be a minor of $G$, but the converse is not true. One can also easily check that any topological minor of $G$ must also be a minor of $G$ (and so the name ``topological minor''). 
+Intuitively, minor is a transitive relation. Note that any subgraph of $G$ must be a minor of~$G$, but the converse is not true. One can also easily check that any topological minor of $G$ must also be a minor of $G$ (and so the name ``topological minor''). 
 \begin{probox}{Topological Minor Is a Minor}{topoMinorIsMinor}
     If $H$ is a topological minor of $G$, then $H$ is a minor of $G$.
     \tcblower
     \begin{proof}
-        By Definition \ref{dfn:topoMinor}, $G$ contains a subdivision of $H$. Denote this subdivision as $K$, then it is clear that we can obtain $H$ by contracting the edges of $K$ repeatedly until we restore $E(H)$. Therefore, $H$ is a minor of $K$ and so it must be a minor of $H$.
+        By Definition \ref{dfn:topoMinor}, $G$ contains a subdivision of $H$. Denote this subdivision as~$K$, then it is clear that we can obtain $H$ by contracting the edges of $K$ repeatedly until we restore $E(H)$. Therefore, $H$ is a minor of $K$ and so it must be a minor of $H$.
     \end{proof}
 \end{probox}
 Note that the converse of the above proposition is not true in general. However, we can impose an additional restriction to make the converse work.
@@ -1923,11 +1928,11 @@ We shall consider the following theorem which is important for deriving a charac
             If a $3$-connected graph $G$ contains neither $K_5$ nor $K_{3, 3}$ as a minor, then $G$ is planar.
             \tcblower
             \begin{proof}
-                We shall apply induction on $\abs{V(G)}$. For $\abs{V(G)} = 1$, it is trivial that $G$ is planar. Suppose that there exists some $k \in \Z^+$ such that any graph of order $k$ containing neither $K_5$ nor $K_{3, 3}$ as a minor is planar. Let $G$ be a $3$-connected graph with $\abs{V(G)} = k + 1$. By Theorem \ref{thm:Tutte3Connected}, there exists some $xy \in E(G)$ such that $d_G(x), d_G(y) \geq 3$ and $G' \coloneqq G/xy$ is $3$-connected. Clearly, $G'$ does not contain either $K_5$ or $K_{3, 3}$ as a minor, so by the inductive hypothesis, $G'$ is planar. Fix a plane drawing $\tilde{G}$ of $G'$. Suppose $xy$ is contracted to $v_{xy} \in G'$ and let $F$ be a face in $\tilde{G} - v_{xy}$ such that $v_{xy} \in F$. Consider $X \coloneqq N_G(x) - \{y\}$ and $Y \coloneqq N_G(y) - \{x\}$, then clearly $X \cup Y$ is contained by the boundary of $F$, because otherwise there will be crossings in $\tilde{G}$. This means $\tilde{G}$ is a plane drawing of $G - y$ by replacing $v_{xy}$ with $x$.
+                We shall apply induction on $\abs{V(G)}$. For $\abs{V(G)} = 1$, it is trivial that $G$ is planar. Suppose that there exists some $k \in \Z^+$ such that any graph of order~$k$ containing neither $K_5$ nor $K_{3, 3}$ as a minor is planar. Let $G$ be a $3$-connected graph with $\abs{V(G)} = k + 1$. By Theorem \ref{thm:Tutte3Connected}, there exists some $xy \in E(G)$ such that $d_G(x), d_G(y) \geq 3$ and $G' \coloneqq G/xy$ is $3$-connected. Clearly, $G'$ does not contain either $K_5$ or $K_{3, 3}$ as a minor, so by the inductive hypothesis, $G'$ is planar. Fix a plane drawing $\widetilde{G}$ of $G'$. Suppose $xy$ is contracted to $v_{xy} \in G'$ and let $F$ be a face in $\widetilde{G} - v_{xy}$ such that $v_{xy} \in F$. Consider $X \coloneqq N_G(x) - \{y\}$ and~$Y \coloneqq N_G(y) - \{x\}$, then clearly $X \cup Y$ is contained by the boundary of~$F$, because otherwise there will be crossings in $\widetilde{G}$. This means $\widetilde{G}$ is a plane drawing of $G - y$ by replacing $v_{xy}$ with $x$.
                 \\\\ 
-                Since $\tilde{G}$ is $3$-connected, $\tilde{G} - v_{xy}$ must be $2$-connected. We claim that the boundary of $F$, denoted as $C$, must be a cycle, because otherwise $\tilde{G} - v_{xy}$ is a tree and cannot be $2$-connected. Re-label $X \cap V(C) = \left\{x_1, x_2, \cdots, x_n\right\}$ such that the $x_i$'s are placed in clockwise order. Define $P_i$ to be the clockwise $x_i$-$x_{i + 1}$ path in $C$ (for simplicity, we define $x_{n + 1} = x_1$). We consider $2$ cases.
+                Since $\widetilde{G}$ is $3$-connected, $\widetilde{G} - v_{xy}$ must be $2$-connected. We claim that the boundary of $F$, denoted as $C$, must be a cycle, because otherwise $\widetilde{G} - v_{xy}$ is a tree and cannot be $2$-connected. Re-label $X \cap V(C) = \left\{x_1, x_2, \cdots, x_n\right\}$ such that the $x_i$'s are placed in clockwise order. Define $P_i$ to be the clockwise $x_i$-$x_{i + 1}$ path in $C$ (for simplicity, we define $x_{n + 1} = x_1$). We consider $2$ cases.
                 \\\\
-                If $Y \subseteq X$, we claim that $\abs{Y} \leq 2$. Suppose on contrary that $\abs{Y} \geq 3$, then any $3$ vertices from $Y$ together with $x$ and $y$ induces a subdivision of $K_5$ in $G$, which is a contradiction. However, recall that $d_G(y) \geq 3$, so $\abs{Y} \geq 2$ and so $\abs{Y} = 2$. Let $Y = \left\{x_m, x_{\ell}\right\}$ with $\ell > m$. If there is some $x_1 \in V(P_m)$ and $x_2 \in V(C) - V(P_m)$, then we can find a subdivision of $K_{3, 3}$ with partite sets $\{y, x_1, x_2\}$ and $\{x, x_m, x_{\ell}\}$, which is not possible. Therefore, $x_m$ and $x_{\ell}$ are consecutive, which means that we can simply place $y$ in the face containing $x$, $x_m$ and $x_{\ell}$.
+                If $Y \subseteq X$, we claim that $\abs{Y} \leq 2$. Suppose on contrary that $\abs{Y} \geq 3$, then any $3$ vertices from $Y$ together with $x$ and $y$ induces a subdivision of $K_5$ in~$G$, which is a contradiction. However, recall that $d_G(y) \geq 3$, so $\abs{Y} \geq 2$ and so $\abs{Y} = 2$. Let $Y = \left\{x_m, x_{\ell}\right\}$ with $\ell > m$. If there is some $x_1 \in V(P_m)$ and~$x_2 \in V(C) - V(P_m)$, then we can find a subdivision of $K_{3, 3}$ with partite sets $\{y, x_1, x_2\}$ and $\{x, x_m, x_{\ell}\}$, which is not possible. Therefore, $x_m$ and $x_{\ell}$ are consecutive, which means that we can place $y$ in the face containing $x$, $x_m$ and~$x_{\ell}$.
                 \\\\
                 Otherwise, there is some $y_1 \in V(P_i) - \{x_i, x_{i + 1}\}$ for some $P_i$. We claim that $Y \subseteq V(P_i)$ Suppose on contrary that there is some $y_2 \in Y - V(P_i)$, then one may check that there is a subdivision of $K_{3, 3}$ on $\{y, x_i, x_{i + 1}\}$ and $\{x, y_1, y_2\}$, which is a contradiction. Therefore, we can place $y$ in the face containing $x$, $x_i$ and $x_{i + 1}$. Therefore, $G$ is planar.
             \end{proof}
@@ -1936,7 +1941,7 @@ We shall consider the following theorem which is important for deriving a charac
         \\\\
         Take $\{x, y\}$ to be a vertex cut of $G$. Let $H$ be a connected component in $G - \{x, y\}$ and let $V_1 \coloneqq V(H) \cup \{x, y\}$, $V_2 \coloneqq V(G) - V(H)$. Notice that both $G[V_1]$ and $G[V_2]$ are planar, and so we claim that $xy \notin E(G)$ because otherwise we can find the plane drawings for $G[V_1]$ and $G[V_2]$ respectively such that $xy$ is in the outer face in both drawings, from which we can construct a plane drawing for $G$. 
         \\\\
-        Define $G_i \coloneqq G[V_i] + xy$ for $i = 1, 2$. If both $G_1$ and $G_2$ are planar, by repeating the previous argument we obtain a contradiction. Without loss of generality, assume that $G_1$ is not planar, then by the minimality of $G$ we know that $G_1$ is either $TK_5$ or $TK_{3, 3}$. Let $S \subseteq G_1$ be a subdivision of either $K_5$ or $K_{3, 3}$, then $S$ must contain the edge $xy$ because otherwise $S \subseteq G$, which is not possible. However, notice that there exists a vertex $v \in V_2$ such that $v \in N_G(x) \cap N_G(y)$ because otherwise $\{x, y\}$ is not a minimum vertex cut. Let $P_2$ be the path induced by $\{x, y, v\}$, then $(S - xy) \cup P_2$ is a subdivision of either $K_5$ or $K_{3, 3}$ in $G$, which is a contradiction. Therefore, $G$ must be planar.
+        Define $G_i \coloneqq G[V_i] + xy$ for $i = 1, 2$. If both $G_1$ and $G_2$ are planar, by repeating the previous argument we obtain a contradiction. Without loss of generality, assume that $G_1$ is not planar, then by the minimality of $G$ we know that $G_1$ is either~$TK_5$ or $TK_{3, 3}$. Let $S \subseteq G_1$ be a subdivision of either $K_5$ or $K_{3, 3}$, then $S$ must contain the edge $xy$ because otherwise $S \subseteq G$, which is not possible. However, notice that there exists a vertex $v \in V_2$ such that $v \in N_G(x) \cap N_G(y)$ because otherwise $\{x, y\}$ is not a minimum vertex cut. Let $P_2$ be the path induced by $\{x, y, v\}$, then $(S - xy) \cup P_2$ is a subdivision of either $K_5$ or $K_{3, 3}$ in $G$, which is a contradiction. Therefore, $G$ must be planar.
     \end{proof}
 \end{thmbox}
 Clearly, if a graph is not $TK_5$ nor $TK_{3, 3}$, we can immediately use Theorem \ref{thm:Wagner} to prove that it is planar. With the above results, we can easily prove \textit{Kuratowski's Theorem}.
@@ -1950,20 +1955,20 @@ There is also an equivalent definition for planar graphs. However, we shall stat
 \section{Dual Graph}
 Recall the Four-Colour Problem. In modelling the problem as a graph, we can either take each country as a vertex and define bordering using edges. Equivalently, we could have used edges to represent each border first and define vertices as the intersection of borders, where the countries become faces in a planar graph. This motivates us to define the notion of \textit{dual graphs}. We start with a definition that is easier to visualise.
 \begin{dfnbox}{Geometric Dual}{geoDual}
-    Let $G$ be a planar graph with plane drawing $\tilde{G}$. Let $\mathcal{F}(G)$ be the family of faces in $\tilde{G}$. The {\color{red} \textbf{geometric dual}} of $G$ is a graph $G^*$ such that $V(G^*) \coloneqq \mathcal{F}(G)$ and every $e^* \in E(G^*)$ is induced by an edge $e \in E(G)$ on the boundary between $2$ faces.
+    Let $G$ be a planar graph with plane drawing $\widetilde{G}$. Let $\mathcal{F}(G)$ be the family of faces in $\widetilde{G}$. The {\color{red} \textbf{geometric dual}} of $G$ is a graph $G^*$ such that $V(G^*) \coloneqq \mathcal{F}(G)$ and every $e^* \in E(G^*)$ is induced by an edge $e \in E(G)$ on the boundary between $2$ faces.
 \end{dfnbox}
 Note that in the above definition, even for a simple planar graph $G$, its dual $G^*$ might be a multi-graph because there could be faces in $G$ whose boundary consists of multiple edges. Intuitively, the dual of a planar graph is always planar and 
 \begin{equation*}
     \abs{V(G^*)} = \abs{\mathcal{F}(G)}, \qquad \abs{E(G^*)} = \abs{E(G)}, \qquad \abs{\mathcal{F}(G^*)} = \abs{V(G)}.
 \end{equation*}
-The above identities can be proved by applying Theorem \ref{thm:eulerFormula}. One may also verify that $G^{**} \cong G$, which also aligns with our intuition. Correspondingly, we have the following proposition:
+The above identities can be proved with Theorem \ref{thm:eulerFormula}. One may verify that~$G^{**} \cong G$, which also aligns with our intuition. Correspondingly, we have the following proposition:
 \begin{probox}{Cycles Induce Edge Cuts in the Dual}{cycleCut}
     Let $G$ be a connected plane multi-graph. For any $S \subseteq E(G)$, $S$ induces a cycle in $G$ if and only if $S^* \coloneqq \left\{e^* \colon e \in S\right\}$ is a minimal edge cut in $G^*$.
     \tcblower
     \begin{proof}
         Suppose that $S$ induces a cycle in $G$. For every $e \in S$, let $I_e$ and $O_e$ be the faces in the interior and exterior of the cycle respectively with $e$ on their boundary. Clearly, for every $I_e \in V(G^* - S^*)$, $I_e$ is not adjacent to any face in the exterior of the cycle. Therefore, $S^*$ is an edge cut. Clearly, $S^*$ is minimal because removing any fewer number of edges cause some $I_eO_e$ to remain in the resultant graph, but all interior faces to the cycle induces a connected graph in $G^*$.
         \\\\
-        Suppose conversely that $S^*$ is a minimal edge cut in $G^*$, then $G^* - S^*$ contains exactly $2$ connected components. Let the connected components by $H_1$ and $H_2$, then $V(H_1)$ and $V(H_2)$ form a bipartition of $\mathcal{F}(G)$. Clearly, the boundary between $V(H_1)$ and $V(H_2)$ in $G$ must contain a cycle, and by minimality of $S^*$, this boundary is the cycle itself. 
+        Suppose conversely that $S^*$ is a minimal edge cut in $G^*$, then $G^* - S^*$ contains exactly $2$ connected components. Let the connected components by $H_1$ and~$H_2$, then~$V(H_1)$ and $V(H_2)$ form a bipartition of $\mathcal{F}(G)$. Clearly, the boundary between~$V(H_1)$ and $V(H_2)$ in $G$ must contain a cycle, and by minimality of $S^*$, this boundary is the cycle itself. 
     \end{proof}
 \end{probox}
 Proposition \ref{pro:cycleCut} motivates us to define the notion of an \textit{abstract dual} without knowing first an explicit drawing of the planar graph.
@@ -1980,7 +1985,7 @@ Now to answer the Four-Colour Problem posed at the beginning of the chapter, we 
     For every planar graph $G$, $\chi(G) \leq 6$.
     \tcblower
     \begin{proof}
-        The case where $v(G) \leq 2$ is trivial. If $v(G) \geq 3$, by Corollary \ref{cor:numEPlanar}, we have $e(G) \leq 3v(G) - 6$. This immediately implies that 
+        The case where $v(G) \leq 2$ is trivial. If $v(G) \geq 3$, by Corollary \ref{cor:numEPlanar}, we know that~$e(G) \leq 3v(G) - 6$. This immediately implies that 
         \begin{equation*}
             \delta(G) \leq \frac{2e(G)}{v(G)} \leq 6 - \frac{12}{v(G)} < 6.
         \end{equation*}
@@ -1992,7 +1997,7 @@ We can improve this proof to reduce the upper bound to $5$.
     For every planar graph $G$, $\chi(G) \leq 5$.
     \tcblower
     \begin{proof}
-        We shall apply induction on $v(G)$. The case where $v(G) = 1$ is trivial. Suppose that there exists some $k \in \Z^+$ such that any planar graph of degree $k$ is $5$-colourable, consider $G$ to be a planar graph of degree $k + 1$. Note that we can take some $v \in V(G)$ with $d_G(v) \leq 5$ since $\delta(G) \leq 5$. Define $G' \coloneqq G - v$ and by the inductive hypothesis, we can fix a proper $5$-colouring on $G'$. If $d_G(v) \leq 4$, then we are done. Otherwise, $d_G(v) = 5$ and denote $N_G(v) \coloneqq \left\{v_1, v_2, v_3, v_4, v_5\right\}$ in clockwise order. If any two vertices in $N_G(v)$ share the same colour, we are done. Otherwise, suppose $v_i$ is in colour $i$ for $i = 1, 2, 3, 4, 5$. Let $G_{i, j}$ be the subgraph of $G'$ induced by colour classes associated to $i$ and $j$. If there is a $v_1$-$v_3$ path in $G_{1, 3}$ and a $v_2$-$v_4$ path in $G_{2, 4}$, we claim that these two paths must intersect at some vertex, because otherwise there is some edge in one of the path which either crosses with some edge in the other path or one of $\{vv_1, vv_2, vv_3, vv_4, vv_5\}$. However, this implies that there exists one vertex which is in two distinct colour classes, which is not possible. Therefore, without loss of generality, assume that $v_1$ and $v_3$ are in different connected components in $G_{1, 3}$. This means we can switch the colours $1$ and $3$ in the connected component of $G_{1, 3}$ containing $v_1$ and colour $v$ in $1$ to obtain a proper $5$-colouring of $G$, which implies that $\chi(G) \leq 5$.
+        We shall apply induction on $v(G)$. The case where $v(G) = 1$ is trivial. Suppose that there exists some $k \in \Z^+$ such that any planar graph of degree $k$ is $5$-colourable, consider $G$ to be a planar graph of degree $k + 1$. Note that there is some $v \in V(G)$ with $d_G(v) \leq 5$ since $\delta(G) \leq 5$. Define $G' \coloneqq G - v$ and by the inductive hypothesis, we can fix a proper $5$-colouring on $G'$. If $d_G(v) \leq 4$, then we are done. Otherwise,~$d_G(v) = 5$ and denote $N_G(v) \coloneqq \left\{v_1, v_2, v_3, v_4, v_5\right\}$ in clockwise order. If any two vertices in $N_G(v)$ share the same colour, we are done. Otherwise, suppose that~$v_i$ is in colour $i$ for $i = 1, 2, 3, 4, 5$. Let $G_{i, j}$ be the subgraph of $G'$ induced by colour classes associated to $i$ and $j$. If there is a $v_1$-$v_3$ path in $G_{1, 3}$ and a $v_2$-$v_4$ path in $G_{2, 4}$, we claim that these two paths must intersect at some vertex, because otherwise there is some edge in one of the path which either crosses with some edge in the other path or one of $\{vv_1, vv_2, vv_3, vv_4, vv_5\}$. However, this implies that there exists one vertex which is in two distinct colour classes, which is not possible. Therefore, without loss of generality, assume that $v_1$ and $v_3$ are in different connected components in $G_{1, 3}$. This means we can switch the colours $1$ and $3$ in the connected component of $G_{1, 3}$ containing $v_1$ and colour $v$ in $1$ to obtain a proper $5$-colouring of $G$, which implies that $\chi(G) \leq 5$.
     \end{proof}
 \end{thmbox}
 However, note that we cannot easily replicate the proof for Theorem \ref{5colour} to the $4$-colour case because we may not be able to find a vertex of degree at most $4$. 
@@ -2003,7 +2008,7 @@ If the graph has some additional special properties, we can further improve the 
 \begin{thmbox}{Gr\"{o}tzsch's Theorem}{Grotzsch}
     Every triangle-free planar graph is $3$-colourable.
 \end{thmbox}
-\chapter{Hamiltonian Graph}
+\chapter{Hamiltonicity}
 \section{Eulerian Graph}
 A classic problem regarding graph traversal in connected graphs is the K\"{o}nisburg Bridge Problem:
 \begin{quote}
@@ -2018,13 +2023,7 @@ Intuitively, if a graph is Eulerian, then following any Eulerian circuit will vi
     A connected multigraph $G$ is Eulerian if and only if every vertex in $G$ has an even degree.
     \tcblower
     \begin{proof}
-        The necessity is trivial, so we will only prove for sufficiency.
-        \\\\
-        Consider the case where $e(G) = 0$, then the only connected multigraph is the trivial graph consisting of a singleton vertex, which is Eulerian. 
-        \\\\
-        Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleInGraph}, there exists a cycle $S \subseteq G$ where $e(S) \geq 3$.
-        \\\\
-        Let $G'$ be the multigraph such that $V(G') = V(G)$ and $E(G') = E(G) - E(S)$, then clearly, $e(G') < m$ and every vertex in $G'$ has an even degree. Therefore, each connected component of $G'$ is Eulerian.
+        The necessity is trivial, so we will only prove for sufficiency. Consider the case where $e(G) = 0$, then the only connected multigraph is the trivial graph consisting of a singleton vertex, which is Eulerian. Suppose that for all $k < m$ where $m \in \Z^+$, a connected multigraph $H$ with $e(H) = k$ is Eulerian if every vertex in $H$ has an even degree. Let $G$ be a connected multigraph with $e(G) = m > 0$ such that every vertex in $G$ has an even degree, then $\delta(G) \geq 2$. By Proposition \ref{pro:pathCycleInGraph}, there exists a cycle~$S \subseteq G$ where $e(S) \geq 3$. Let $G'$ be the multigraph such that $V(G') = V(G)$ and~$E(G') = E(G) - E(S)$, then clearly, $e(G') < m$ and every vertex in $G'$ has an even degree. Therefore, each connected component of $G'$ is Eulerian.
         \\\\
         Let $C_1$ be a connected component of $G'$ and let $v_1 \in V(C_1) \cap V(S)$. Note that there exists an Eulerian circuit in $C_1$ which starts and ends with $v_1$. We can traverse along this circuit and then traverse in the clockwise orientation along $S$ until we reach another vertex in $S$ which is in some connected component of $G'$ and repeat the process. Note that $v_1 \in V(S)$, so we will eventually traverse back to $v_1$, which gives an Eulerian circuit in $G$.
     \end{proof}
@@ -2038,11 +2037,7 @@ Intuitively, even if a graph $G$ is not Eulerian, it is possible to traverse all
         \begin{equation*}
             \abs{\left\{v \in \bigcup_{i = 1}^{k - 1}T_i \colon d_G(v) \textrm{ is odd}\right\}} \leq 2(k - 1) < 2k,
         \end{equation*}
-        which is a contradiction. Therefore, we need at least $k$ trails to decompose $G$. 
-        \\\\
-        Let $v_1, v_2, \cdots, v_{2k}$ be the vertices in $G$ with odd degrees. Let $G'$ be the graph produced by adding the edges $v_1v_2, v_3v_4, \cdots, v_{2k - 1}v_{2k}$ to $G$, then the vertices in $G'$ all have even degrees. Therefore, there exists an Eulerian circuit in $G'$ by Theorem \ref{thm:NSCondEulerian}.
-        \\\\
-        Note that for all $i = 1, 2, \cdots, k - 1$, $v_{2i - 1}v_{2i}$ and $v_{2i + 1}v_{2i + 2}$ are disjoint, so there exists a $v_{2i}$-$v_{2i + 1}$ trail. Note also that there exists a $v_{2k}$-$v_1$ trail. The union of these trails is exactly $G' - v_1v_2 - v_3v_4 - \cdots - v_{2k - 1}v_{2k} = G$.
+        which is a contradiction. Therefore, we need at least $k$ trails to decompose $G$. Let~$v_1, v_2, \cdots, v_{2k}$ be the vertices in $G$ with odd degrees. Let $G'$ be the graph produced by adding the edges $v_1v_2, v_3v_4, \cdots, v_{2k - 1}v_{2k}$ to $G$, then the vertices in $G'$ all have even degrees. Therefore, there exists an Eulerian circuit in $G'$ by Theorem \ref{thm:NSCondEulerian}. Note that for all $i = 1, 2, \cdots, k - 1$, $v_{2i - 1}v_{2i}$ and $v_{2i + 1}v_{2i + 2}$ are disjoint, so there exists a $v_{2i}$-$v_{2i + 1}$ trail. Note also that there exists a $v_{2k}$-$v_1$ trail. The union of these trails is exactly~$G' - v_1v_2 - v_3v_4 - \cdots - v_{2k - 1}v_{2k} = G$.
     \end{proof}
 \end{probox}
 \section{Hamiltonian Graph}
@@ -2055,7 +2050,7 @@ Clearly, $K_n$ and $K_{m, n}$ are Hamiltonian. We can also verify that tetrahedr
     The $n$-dimensional hypercube graph $Q^n$ is Hamiltonian.
     \tcblower
     \begin{proof}
-        We shall apply induction on $n$. The case where $n = 1$ is trivial. For any integer $n > 1$, $Q^n$ consists of $2$ identical copies of $Q^{n - 1}
+        We shall apply induction on $n$. The case where $n = 1$ is trivial. For any integer~$n > 1$, $Q^n$ consists of $2$ identical copies of $Q^{n - 1}
         $ plus a perfect matching between their vertex sets. Fix $2$ Hamiltonian cycles $v_1v_2\cdots v_{2^{n - 1}}$ and $u_1u_2\cdots u_{2^{n - 1}}$ in the $2$ copies of $Q^{n - 1}$ respectively. Then clearly, $v_1v_2\cdots v_{2^{n - 1}}u_{2^{n - 1}}u_{2^{n - 1} - 1}\cdots u_1$ is a Hamiltonian cycle in $Q^n$.
     \end{proof}
 \end{probox}
@@ -2064,7 +2059,7 @@ As with many other graph properties, the Petersen graph is yet again a counter e
     The Petersen graph $P$ is not Hamiltonian.
     \tcblower
     \begin{proof}
-        Suppose on contrary that there is a Hamiltonian cycle $C_{10} \subseteq P$, then there are $5$ edges in $P$ which are not in $C_{10}$. We claim that at least one of these edges do not join vertices at distance $5$ apart along $C_{10}$, because otherwise we can find a $C_4 \subseteq P$, which is not possible because the girth of $P$ is $5$. Similarly, there is no edge joining vertices at distance at most $3$ apart along $C_{10}$. Therefore, there exists at least one edge $uv \in E(P) - E(C_{10})$ such that $d_{C_{10}}(u, v) = 4$. Let $u'$ be a vertex at distance $5$ away from $v$ in $C_{10}$, then there is no edge incident to $u'$, which is a contradiction.
+        Suppose on contrary that there is a Hamiltonian cycle $C_{10} \subseteq P$, then there are $5$ edges in $P$ which are not in $C_{10}$. We claim that at least one of these edges do not join vertices at distance $5$ apart along $C_{10}$, because otherwise we can find a $C_4 \subseteq P$, which is not possible because the girth of $P$ is $5$. Similarly, there is no edge joining vertices at distance at most $3$ apart along $C_{10}$. Therefore, there exists at least one edge~$uv \in E(P) - E(C_{10})$ such that $d_{C_{10}}(u, v) = 4$. Let $u'$ be a vertex at distance $5$ away from $v$ in $C_{10}$, then there is no edge incident to $u'$, which is a contradiction.
     \end{proof}
 \end{probox}
 In fact, the Petersen graph is the smallest \textit{hypo-Hamiltonian graph}.
@@ -2079,7 +2074,7 @@ Now let us find some useful conditions to determine a graph as non-Hamiltonian.
         Let $C_n \subseteq G$ be a Hamiltonian cycle. Note that $\kappa(G) \geq \kappa(C_n)$, so it suffices to prove the statement for $C_n$. Note that $C_n - v$ for any $v \in V(C_n)$ has $1$ connected component, and every time we remove one more vertex, the number of connected components increases by at most $1$. Therefore, for any $X \subseteq V(C_n)$, the number of connected components in $C_n - X$ is at most $\abs{X}$.
     \end{proof}
 \end{probox}
-Therefore, if there is some $X \subseteq V(G)$ such that the number of connected components in $G - X$ is more than $\abs{X}$, then we can conclude that $G$ is not Hamiltonian. 
+Therefore, if there is some $X \subseteq V(G)$ such that the number of connected components in~$G - X$ is more than $\abs{X}$, then we can conclude that $G$ is not Hamiltonian. 
 \begin{notebox}
     \begin{remark}
         This condition is not necessary for non-Hamiltonicity. For example, the Petersen graph $G_P$ is not Hamiltonian but $G_P - X$ has at most $\abs{X}$ connected components for every $X \subseteq V(G_P)$.
@@ -2087,7 +2082,7 @@ Therefore, if there is some $X \subseteq V(G)$ such that the number of connected
 \end{notebox}
 So far, there has not been any good characterisation for Hamiltonian graphs. However, we can still obtain some sufficient conditions for a graph to be Hamiltonian.
 
-First, note that having a lot of edges does not guarantee Hamiltonicity (consider the graph $K_{n - 1} \cup K_1$). Locally, it is easy to see that $\delta(G) \geq 2$ must be satisfied for $G$ to be Hamiltonian, but our counter example demonstrates that we need the graph to be very close to a complete graph to guarantee this.
+First, note that having a lot of edges does not guarantee Hamiltonicity (for example, consider the graph~$K_{n - 1} \cup K_1$). Locally, it is easy to see that $\delta(G) \geq 2$ must be satisfied for $G$ to be Hamiltonian, but our counter example demonstrates that we need the graph to be very close to a complete graph to guarantee this.
 
 Intuitively, we might wish to propose a lower bound for $\delta(G)$ such that when $\delta(G)$ is large enough, Hamiltonicity is guaranteed. Clearly, we need the graph to first be connected. However, notice that if we take a disjoint union of $2$ $K_n$'s, then $\delta(G) = n - 1$ but the graph is not even connected. In fact, we can have an even higher minimum degree without a Hamiltonian cycle. Consider complete bipartite graphs $K_{n - 1, n + 1}$ and $K_{m, m + 1}$. Clearly, there is no Hamiltonian cycle but the minimum degrees are $n - 1$ and $m$ respectively.
 
@@ -2100,7 +2095,7 @@ However, by an argument using Pigeonhole Principle, one can easily see that it i
         \begin{equation*}
             P \coloneqq v_0v_1\cdots v_k
         \end{equation*}
-        be the longest path in $G$. Note that $N_G(v_k), N_G(v_0) \subseteq V(P)$, so at least $\frac{n}{2}$ integers $i \in \left\{0, 1, 2, \cdots k - 1\right\}$ satisfy $v_i \sim v_k$ and at least $\frac{n}{2}$ integers $i \in \left\{0, 1, 2, \cdots k - 1\right\}$ satisfy $v_{i + 1} \sim v_0$. However, $k \leq n - 1$, so by Pigeonhole Principle, there exists some $i \in \left\{0, 1, 2, \cdots, k - 1\right\}$ such that $v_i \sim v_k$ and $v_{i + 1} \sim v_0$. Consider the cycle $C \coloneqq v_0v_{i + 1}v_{i + 2}\cdots v_kv_iv_{i - 1}\cdots v_1$. We claim that this cycle must be Hamiltonian, because otherwise there exists some $u \in V(G) - V(C)$ such that $u \sim v_i$ for some $v_i \in V(C)$, which gives us a path in $G$ longer than $P$. This is a contradiction.
+        be the longest path in $G$. Note that $N_G(v_k), N_G(v_0) \subseteq V(P)$, so at least $\frac{n}{2}$ integers~$i \in \left\{0, 1, 2, \cdots k - 1\right\}$ satisfy $v_i \sim v_k$ and at least $\frac{n}{2}$ integers $i \in \left\{0, 1, 2, \cdots k - 1\right\}$ satisfy $v_{i + 1} \sim v_0$. However, $k \leq n - 1$, so by Pigeonhole Principle, there exists some $i \in \left\{0, 1, 2, \cdots, k - 1\right\}$ such that $v_i \sim v_k$ and $v_{i + 1} \sim v_0$. Consider the cycle~$C \coloneqq v_0v_{i + 1}v_{i + 2}\cdots v_kv_iv_{i - 1}\cdots v_1$. We claim that this cycle must be Hamiltonian, because otherwise there exists some $u \in V(G) - V(C)$ such that $u \sim v_i$ for some~$v_i \in V(C)$, which gives us a path in $G$ longer than $P$. This is a contradiction.
     \end{proof}
 \end{thmbox}
 An easy corollary of Dirac's Theorem states the following result on the length of paths in a Hamiltonian graph:
@@ -2136,11 +2131,11 @@ We can generalise Theorem \ref{thm:Dirac} into the following:
 \begin{thmbox}{Ore's Theorem} {Ore}
     A graph $G$ on at least $3$ vertices is Hamiltonian if for all $u, v \in V(G)$ with $u \not\sim v$, we have $d_G(u) + d_G(v) \geq n$.
     \tcblower
-    We first prove that $G$ is connected. Suppose on contrary that $G$ is not connected. Let $H$ be the smallest connected component in $G$, then $\abs{V(H)} \leq \frac{n}{2}$. Notice that $H$ must be a clique, because otherwise there exist $u_1, u_2 \in V(H)$ with $u_1 \not\sim u_2$ and
+    We first prove that $G$ is connected. Suppose on contrary that $G$ is not connected. Let~$H$ be the smallest connected component in $G$, then $\abs{V(H)} \leq \frac{n}{2}$. Notice that $H$ must be a clique, because otherwise there exist $u_1, u_2 \in V(H)$ with $u_1 \not\sim u_2$ and
     \begin{equation*}
         d_G(u_1) + d_G(u_2) = d_H(u_1) + d_H(u_2) < n,
     \end{equation*}
-    which is not possible. We claim that Take any vertex $u \in V(H)$ and for any $u' \in V(G) - V(H)$, we have 
+    which is not possible. We claim that for any $u \in V(H)$ and any $u' \in V(G) - V(H)$, 
     \begin{equation*}
         d_G(u) + d_G(u') \leq \abs{V(H)} - 1 + \left(n - \abs{V(H)} - 1\right) < n,
     \end{equation*}
@@ -2166,7 +2161,7 @@ Recall that if a graph $G$ has low independence number, $\chi(G) \geq \frac{v(G)
     A graph $G$ with at least $3$ vertices is Hamiltonian if $\kappa(G) \geq \alpha(G)$.
     \tcblower
     \begin{proof}
-        Let $C \coloneqq v_1v_2\cdots v_n$ be the longest cycle in $G$. We claim that $C$ is Hamiltonian. Suppose on contrary that $C$ is not Hamiltonian, then there exists some vertex $v \in V(G) - V(C)$. Define $\mathcal{F}$ to be the maximal set of vertex-disjoint paths from $v$ to the vertices in $C$. By Theorem \ref{thm:Menger}, $\abs{\mathcal{F}} = \min\{\kappa(G), n\}$. For every $v_i \in V(C)$ such that there is a $v$-$v_i$ path in $\mathcal{F}$, notice that there is no $v_{i + 1}$-$v$ path in $\mathcal{F}$ because otherwise we can obtain a larger cycle including $v$. Therefore, $\abs{\mathcal{F}} < n$ and so $\abs{\mathcal{F}} \geq \kappa(G) \geq \alpha(G)$. For any $v_i, v_j \in V(C)$ with $i < j$ such that $\mathcal{F}$ contains a $v$-$v_i$ path $P_i$ and a $v$-$v_j$ path $P_j$, we claim that $v_{i + i} \not\sim v_{j + 1}$ because otherwise 
+        Let $C \coloneqq v_1v_2\cdots v_n$ be the longest cycle in $G$. We claim that $C$ is Hamiltonian. Suppose on contrary that $C$ is not Hamiltonian, then there is some $v \in V(G) - V(C)$. Define $\mathcal{F}$ to be the maximal set of vertex-disjoint paths from $v$ to the vertices in $C$. By Theorem \ref{thm:Menger}, $\abs{\mathcal{F}} = \min\{\kappa(G), n\}$. For every $v_i \in V(C)$ such that there is a~$v$-$v_i$ path in $\mathcal{F}$, notice that there is no $v_{i + 1}$-$v$ path in $\mathcal{F}$ because otherwise we can obtain a larger cycle including $v$. Therefore, $\abs{\mathcal{F}} < n$ and so $\abs{\mathcal{F}} \geq \kappa(G) \geq \alpha(G)$. For any~$v_i, v_j \in V(C)$ with $i < j$ such that $\mathcal{F}$ contains a $v$-$v_i$ path $P_i$ and a $v$-$v_j$ path~$P_j$, we claim that $v_{i + i} \not\sim v_{j + 1}$ because otherwise 
         \begin{equation*}
             \left(C - v_iv_{i + 1} - v_jv_{j + 1} + v_{i + 1}v_{j + 1}\right) \cup P_i \cup P_j
         \end{equation*}
@@ -2188,7 +2183,7 @@ Actually, people have studied $k$-regular graphs intensively to discover that th
         \lim_{n \to \infty}\frac{h(n)}{n} = 1.
     \end{equation*}
 \end{thmbox}
-A nice related result to this is that almost all $k$-regular bipartite graphs are Hamiltonian and $k$-colourable. For regular graphs with odd degrees, there is a stronger result to characterise their structures.
+A nice related result to this is that almost all $k$-regular bipartite graphs are Hamiltonian and~$k$-colourable. For regular graphs with odd degrees, there is a stronger result to characterise their structures.
 \begin{thmbox}{Smith's Theorem}{Smith}
     If $G$ is a $d$-regular graph where $d$ is odd, then for any $e \in E(G)$, there is an even number of Hamiltonian cycles in $G$ containing $e$.
     \tcblower
@@ -2213,7 +2208,7 @@ A very interesting corollary of Theorem \ref{thm:Smith} states that every Hamilt
 \end{corbox}
 Recall that in Definition \ref{dfn:degSeq}, we discuss the properties of an integer sequence for it to be the degree sequence of some graph. Now, we introduce a stronger definition.
 \begin{dfnbox}{Hamiltonian Sequence}{hamSeq}
-    A sequence $(a_1, a_2, \cdots, a_n)$ with $a_i \leq a_j$ for all $i \leq j$ is said to be a {\color{red} \textbf{Hamiltonian sequence}} if every graph with degree sequence $(d_1, d_2, \cdots d_n)$ such that $d_i \geq a_i$ for all $i = 1, 2, \cdots, n$ is Hamiltonian.
+    A sequence $(a_1, a_2, \cdots, a_n)$ with $a_i \leq a_j$ for all $i \leq j$ is said to be a {\color{red} \textbf{Hamiltonian sequence}} if every graph with degree sequence $(d_1, d_2, \cdots d_n)$ such that $d_i \geq a_i$ for all~$i = 1, 2, \cdots, n$ is Hamiltonian.
 \end{dfnbox}
 Clearly by Theorem \ref{thm:Dirac}, the sequence $\left(\frac{n}{2}, \frac{n}{2}, \cdots, \frac{n}{2}\right)$ of length $n$ is Hamiltonian for every integer $n > 2$. The following theorem, however, allows us to characterise all Hamiltonian sequences:
 \begin{thmbox}{Chv\'{a}tal's Hamiltonian Sequence Theorem}{Chvatal}
@@ -2228,13 +2223,13 @@ Clearly by Theorem \ref{thm:Dirac}, the sequence $\left(\frac{n}{2}, \frac{n}{2}
         \begin{equation*}
             d_G(w) \leq d_G(u) < \frac{n}{2}
         \end{equation*}
-        because otherwise $d_G(u) + d_G(v)$ is not maximised. This implies that at least $i$ vertices have degrees at most $i$ in $G$, and so $d_i \leq i$, which means that $a_i \leq d_i \leq i$. Similarly, there are exactly $(n - i - 1)$ vertices in $G$ which are non-adjacent to $u$ and each of them has a degree of at most $n - i - 1$. Note that $d_G(u) \leq n - i - 1$, so there are at least $(n - i)$ vertices in $G$ with degrees at most $n - i - 1$, and so $d_{n - i} \leq n - i - 1$. However, 
+        because otherwise $d_G(u) + d_G(v)$ is not maximised. This implies that at least $i$ vertices have degrees at most $i$ in $G$, and so $d_i \leq i$, which means that $a_i \leq d_i \leq i$. Similarly, there are exactly $(n - i - 1)$ vertices in $G$ which are non-adjacent to $u$ and each of them has a degree of at most $n - i - 1$. Note that $d_G(u) \leq n - i - 1$, so there are at least~$(n - i)$ vertices in $G$ with degrees at most $n - i - 1$, and so $d_{n - i} \leq n - i - 1$. However, 
         \begin{equation*}
             d_{n - i} \geq a_{n - i} \geq n - i > n - i - 1,
         \end{equation*}
         which is a contradiction. Therefore, $\mathrm{Cl}(G)$ is complete and thus Hamiltonian, which implies that $G$ is also Hamiltonian by Proposition \ref{pro:closureHam}.
         \\\\
-        Suppose conversely that a non-decreasing integer sequence $(a_1, a_2, \cdots, a_n)$ is Hamiltonian, then we shall prove that $i < \frac{n}{2}$ implies that $a_{n - i} \geq n - i$ by considering the contrapositive statement. Suppose that there is some $i < \frac{n}{2}$ such that $a_i \leq i$ but $a_{n - i} < n - i$. Notice that this means that $a_j \leq i$ for all $j \leq i$, $i \leq a_j \leq n - i - 1$ for all $i < j \leq n - i$. Construct a graph $G$ as follows: take a complete graph $K_{n - i}$ and fix any set of $i$ vertices from $K_{n - i}$, denoted as $V$. Let $U$ be a copy and $V$ and construct a complete bipartite graph $K_{i, i}$ on $U$ and $V$. Notice that $G$ has degree sequence $\left\{d_j\right\}_{j = 1}^{n}$ such that 
+        Suppose conversely that a non-decreasing integer sequence $(a_1, a_2, \cdots, a_n)$ is Hamiltonian, then we shall prove that $i < \frac{n}{2}$ implies that $a_{n - i} \geq n - i$ by considering the contrapositive statement. Suppose that there is some $i < \frac{n}{2}$ such that $a_i \leq i$ but~$a_{n - i} < n - i$. Notice that this means that $a_j \leq i$ for all $j \leq i$, $i \leq a_j \leq n - i - 1$ for all $i < j \leq n - i$. Construct a graph $G$ as follows: take a complete graph $K_{n - i}$ and fix any set of $i$ vertices from $K_{n - i}$, denoted as $V$. Let $U$ be a copy and $V$ and construct a complete bipartite graph $K_{i, i}$ on $U$ and $V$. Notice that $G$ has degree sequence $\left\{d_j\right\}_{j = 1}^{n}$ such that 
         \begin{equation*}
             d_j = \begin{cases}
                 i & \textrm{if } 1 \leq j \leq i \\
@@ -2289,17 +2284,17 @@ Many results in undirected graphs can be generalised to directed cases. For exam
 \begin{probox}{Necessary and Sufficient Condition for Eulerian Digraphs}{NSCondEulerianDi}
     A digraph $D$ is Eulerian if and only if for every $v \in V(D)$, we have $d^+(v) = d^-(v)$.
 \end{probox}
-Next, let us see how we can define connectivity in the directed case. For simplicity, let us define the underlying undirected graph of a digraph $D$ as a graph $G$ with $V(G) = V(D)$ and $E(G)$ obtained by joining every pair of vertices that are connected via any one directed edge in $D$. If $G$ is connected, then $D$ is ``connected'' in a sense that no vertex is isolated.
+Next, let us see how we can define connectivity in the directed case. For simplicity, let us define the underlying undirected graph of a digraph $D$ as a graph $G$ with $V(G) = V(D)$ and~$E(G)$ obtained by joining every pair of vertices that are connected via any one directed edge in $D$. If $G$ is connected, then $D$ is ``connected'' in a sense that no vertex is isolated.
 \begin{dfnbox}{Weak Connectivity}{weekConnect}
     A digraph $D$ is {\color{red} \textbf{weakly connected}} if its underlying undirected graph is connected.
 \end{dfnbox}
 However, note that in a weakly connected digraph $D$, having no isolated vertex does not guarantee that there is always a path from any $u \in V(D)$ to any $v \in V(D)$. Consider a directed $u$-$v$ path, then it is clearly weakly connected but we can only traverse from $u$ to $v$ but not the other way around. Therefore, the ``complete'' connectivity is a much stronger property in digraphs.
 \begin{dfnbox}{Strong Connectivity}{strongConnect}
-    A digraph $D$ is {\color{red} \textbf{strongly connected}} if for every $u, v \in V(D)$, there is a directed $u$-$v$ path in $D$. A maximal strongly connected subgraph of $D$ is known as a {\color{red} \textbf{strongly connected component}} of $D$.
+    A digraph $D$ is said to be {\color{red} \textbf{strongly connected}} if for every $u, v \in V(D)$, there exists a directed~$u$-$v$ path in $D$. A maximal strongly connected subgraph of $D$ is known as a {\color{red} \textbf{strongly connected component}} of $D$.
 \end{dfnbox}
 Recall that in undirected graphs, we define an independent set to be a subset of vertices that induces no edges. A similar structure can be defined on digraphs.
 \begin{dfnbox}{Kernel}{ker}
-    Let $D$ be a digraph. A {\color{red} \textbf{kernel}} of $D$ is a set $S \subseteq V(D)$ such that for any $u, v \in S$, $uv, vu \notin E(D)$ and for any $w \in V(D) - S$, there is some $w' \in S$ with $ww' \in E(D)$.
+    Let $D$ be a digraph. A {\color{red} \textbf{kernel}} of $D$ is a set $S \subseteq V(D)$ such that for any $u, v \in S$, we have~$uv, vu \notin E(D)$ and for any $w \in V(D) - S$, there is some $w' \in S$ with $ww' \in E(D)$.
 \end{dfnbox}
 It might be useful to view a kernel as the ``core'' of a digraph such that every vertex outside of it points to something in it. Note that unlike independent set, not every digraph has a kernel. The easiest example is $\overrightarrow{C}_3$. In fact, with some observations we can prove the following result:
 \begin{probox}{Odd Directed Cycles Have No Kernel}{oddCycleNoKer}
@@ -2322,11 +2317,11 @@ The above proposition turns out to be important for characterisation of kernel-f
         \begin{equation*}
             S \coloneqq \left\{v \in V(D) \colon d_{D}(v, y) \textrm{ is even}\right\}.
         \end{equation*}
-        We claim that $S$ induces no edge in $D$. Suppose on contrary that there is some edge $uv \in V(D)$ with $u, v \in S$. Note that there is some even $u$-$y$ path $P$ and some even $v$-$y$ path $P'$ in $D$, so $uv + P'$ is an odd path and so $uv + P' \neq P$. Since $D$ is strongly connected, there is some $y$-$u$ path $Q$ in $D$. Notice that now, $P' \cup Q \cup \{uv\}$ and $P \cup Q$ are two distinct closed walks in $D$ with lengths $e(P') + e(Q) + 1$ and $e(P) + e(Q)$ respectively. Note that $e(P')$ and $e(P)$ are even, so the sizes of the two closed walks have different parity. Therefore, at least one of them is an odd closed walk and so contains a directed odd cycle, which is a contradiction.
+        We claim that $S$ induces no edge in $D$. Suppose on contrary that there is some edge~$uv \in V(D)$ with $u, v \in S$. Note that there is some even $u$-$y$ path $P$ and some even $v$-$y$ path $P'$ in $D$, so $uv + P'$ is an odd path and so $uv + P' \neq P$. Since $D$ is strongly connected, there is some $y$-$u$ path $Q$ in $D$. Notice that now, $P' \cup Q \cup \{uv\}$ and~$P \cup Q$ are two distinct closed walks in $D$ with lengths $e(P') + e(Q) + 1$ and $e(P) + e(Q)$ respectively. Note that $e(P')$ and $e(P)$ are even, so the sizes of the two closed walks have different parity. Therefore, at least one of them is an odd closed walk and so contains a directed odd cycle, which is a contradiction.
         \\\\
-        For every $u \in V(D) - S$, we know that there is a $u$-$y$ path with odd length. Let $w$ be the successor of $u$ along the path, then $d_D(w, y)$ is even and so $w \in S$. Since $uw \in E(D)$, this implies that $S$ is a kernel of $D$.
+        For every $u \in V(D) - S$, we know that there is a $u$-$y$ path with odd length. Let $w$ be the successor of $u$ along the path, then $d_D(w, y)$ is even and so $w \in S$. Since~$uw \in E(D)$, this implies that $S$ is a kernel of $D$.
         \\\\
-        If $D$ is not strongly connected, we shall apply strong induction on $v(D)$. The case where $D$ is of order $2$ is trivial. Now, suppose that any digraph containing no directed odd cycle with orders less than $D$ has a kernel. Take $D'$ to be a strongly connected component in $D$. By the previous argument, $D'$ has a kernel $S'$. If for all $v \in D - D'$, $v$ is a successor to some vertex in $S'$, then $S'$ is a kernel of $D$. Otherwise, let $D''$ be a subgraph of $D - D'$ obtained by deleting all successors to vertices in $S'$. $D''$ has a kernel $S''$ by the inductive hypothesis. Clearly, $S' \cup S''$ is a kernel in $D$.
+        If $D$ is not strongly connected, we shall apply strong induction on $v(D)$. The case where $D$ is of order $2$ is trivial. Now, suppose that any digraph containing no directed odd cycle with orders less than $D$ has a kernel. Take $D'$ to be a strongly connected component in $D$. By the previous argument, $D'$ has a kernel $S'$. If for all~$v \in D - D'$, $v$ is a successor to some vertex in $S'$, then $S'$ is a kernel of $D$. Otherwise, let $D''$ be a subgraph of $D - D'$ obtained by deleting all successors to vertices in $S'$. $D''$ has a kernel $S''$ by the inductive hypothesis. Clearly, $S' \cup S''$ is a kernel in $D$.
     \end{proof}
 \end{thmbox}
 \section{Tournament}
@@ -2343,22 +2338,20 @@ Although it may sound counter-intuitive, we can actually prove that any tourname
     Any tournament contains a Hamiltonian path.
     \tcblower
     \begin{proof}
-        Suppose on contrary that there exists some tournament $T$ without any Hamiltonian path. Take $P \coloneqq v_1v_2\cdots v_n$ to be a longest path in $T$. Since $P$ is not Hamiltonian, there exists some $u \in V(T) - V(P)$. Notice that $v_n \to u, u \to v_1 \notin E(T)$, so $u \to v_n, v_1 \to u \in E(T)$. Therefore, it is clear that there must exists some integer $i \in [1, n - 1]$ such that $v_i \to u, u \to v_{i + 1} \in E(T)$. However, this means that $v_1\cdots v_iuv_{i + 1}\cdots v_n$ is a longer path in $T$, which is a contradiction.
+        Suppose on contrary that there exists some tournament $T$ without any Hamiltonian path. Take $P \coloneqq v_1v_2\cdots v_n$ to be a longest path in $T$. Since $P$ is not Hamiltonian, there exists some $u \in V(T) - V(P)$. Notice that $v_n \to u, u \to v_1 \notin E(T)$, so $u \to v_n, v_1 \to u \in E(T)$. Therefore, it is clear that there must exists some integer $i \in [1, n - 1]$ such that $v_i \to u, u \to v_{i + 1} \in E(T)$. However, this means that~$v_1\cdots v_iuv_{i + 1}\cdots v_n$ is a longer path in $T$, which is a contradiction.
     \end{proof}
 \end{probox}
 Just like undirected graphs, we say that a tournament $T_n$ is \textit{acyclic} if it contains no directed cycle. Alternatively, we also call it a \textit{transitive} tournament.
 \begin{probox}{Characterisation of Transitive Tournaments}{transTour}
-    A tournament $T$ is transitive if and only if there exists a labelling of its vertices into $v_1, v_2, \cdots, v_n$ such that $v_i \to v_j \in E(T)$ for every $i < j$.
+    A tournament $T$ is transitive if and only if there exists a labelling of the vertices of $T$ into~$v_1, v_2, \cdots, v_n$ such that $v_i \to v_j \in E(T)$ for every $i < j$.
     \tcblower
     \begin{proof}
-        If there exists such a labelling, then clearly every path in $T$ is in the form of $v_{I(1)}v_{I(2)}\cdots v_{I(k)}$ for some index set $I \subseteq \left\{1, 2, \cdots, n\right\}$ such that $I(i) < I(j)$ for every $i < j$. Note that $v_{I(k)} \to v_{I(1)} \notin E(T)$, so $T$ does not contain any cycle.
-        \\\\
-        Suppose conversely that $T$ is transitive. Consider the following lemma:
+        If there exists such a labelling, then clearly every path in $T$ is in the form of~$v_{I(1)}v_{I(2)}\cdots v_{I(k)}$ for some index set $I \subseteq \left\{1, 2, \cdots, n\right\}$ such that $I(i) < I(j)$ for every~$i < j$. Note that $v_{I(k)} \to v_{I(1)} \notin E(T)$, so $T$ does not contain any cycle. Suppose conversely that $T$ is transitive. Consider the following lemma:
         \begin{lembox}{Acyclic Graphs Contain Vertices without Incoming Edges}{noIncome}
             For any acyclic digraph $G$, there exists some vertex $v \in V(G)$ such that $d^-_G(v) = 0$.
             \tcblower
             \begin{proof}
-                We shall prove the contrapositive statement. Suppose that for every $v \in V(G)$, we have $d^-(v) \geq 1$. Fix some $v_1 \in V(G)$, then there exists some $v_2 \in V(G)$ such that $v_2 \to v_1 \in E(G)$. Continuing taking vertices this way, since the graph is finite, we will eventually reach a vertex $v_k \in V(G)$ such that for all $v_i \in N_G^-(v_k)$, we have $i < k$. Take any $v_i$ with $v_i \to v_k \in E(G)$, then since $v_kv_{k - 1}\cdots v_i$ is a path, we have obtained a directed cycle in $G$.
+                We shall prove the contrapositive statement. Suppose that for every vertex $v \in V(G)$, we have $d^-(v) \geq 1$. Fix some $v_1 \in V(G)$, then there exists some~$v_2 \in V(G)$ such that $v_2 \to v_1 \in E(G)$. Continuing taking vertices this way, since the graph is finite, we will eventually reach a vertex $v_k \in V(G)$ such that for all $v_i \in N_G^-(v_k)$, we have $i < k$. Take any $v_i$ with $v_i \to v_k \in E(G)$, then since $v_kv_{k - 1}\cdots v_i$ is a path, we have obtained a directed cycle in $G$.
             \end{proof}
         \end{lembox}
         By Lemma \ref{lem:noIncome}, there exists some $v_1 \in V(T)$ with no incoming edge, so no matter how the other vertices are labelled, $v_1 \to v_i \in E(T)$ for all $i > 1$. Now, suppose we have fixed the labelling up to $v_k$, then $T - \{v_1, v_2, \cdots, v_k\}$ is still an acyclic tournament and so there exists some $v_{k + 1}$ with no incoming edge. Therefore, we can eventually reach a labelling where $v_i \to v_j$ is an edge for every $i < j$.
@@ -2382,9 +2375,9 @@ Using some easy constructions, it is easy to show that Hamiltonian paths in a to
     A tournament contains a unique Hamiltonian path if and only if it is transitive.
     \tcblower
     \begin{proof}
-        Let $T$ be a transitive tournament. By Proposition \ref{pro:existHamPathInT}, the existence is guaranteed. By Proposition \ref{pro:transTour}, fix a topological ordering $v_1, v_2, \cdots, v_n$ in $T$. Since $v_i \to v_j$ is an edge only when $i < j$, then only possible Hamiltonian path is $v_1v_2\cdots v_n$.
+        Let $T$ be a transitive tournament. By Proposition \ref{pro:existHamPathInT}, the existence is guaranteed. By Proposition \ref{pro:transTour}, we can fix a topological ordering $v_1, v_2, \cdots, v_n$ in~$T$. Since~$v_i \to v_j$ is an edge only when $i < j$, then only possible Hamiltonian path is~$v_1v_2\cdots v_n$.
         \\\\
-        Suppose conversely that a tournament $T$ contains a unique Hamiltonian path. Denote the path by $v_1v_2\cdots v_n$. We claim that this path induces a topological ordering in $T$. Suppose on contrary that there is some $v_p \in V(T)$ such that $v_k \to v_p \in E(T)$ for some $k > p$ and let $v_q$ be the last vertex such that $v_q \to v_p \in E(T)$. Without loss of generality, let $v_p$ be the first such vertex. If $p \neq 1$ and $q \neq n$, then $v_{p - 1} \to v_{p + 1} \in E(T)$. By the maximality of $q$, we have $v_mv_{q + 1} \in E(T)$, which implies that $v_1v_2\cdots v_{p - 1}v_{p + 1}v_{p + 2}\cdots v_qv_pv_{q + 1}v_{q + 2}\cdots v_n$ is a different Hamiltonian path. One may check that for the cases where $p = 1$ or $q = n$, we can also find a different Hamiltonian path in $T$, which is a contradiction.
+        Suppose conversely that a tournament $T$ contains a unique Hamiltonian path. Denote the path by $v_1v_2\cdots v_n$. We claim that this path induces a topological ordering in $T$. Suppose on contrary that there is some $v_p \in V(T)$ such that $v_k \to v_p \in E(T)$ for some $k > p$ and let $v_q$ be the last vertex such that $v_q \to v_p \in E(T)$. Without loss of generality, let $v_p$ be the first such vertex. If $p \neq 1$ and $q \neq n$, then~$v_{p - 1} \to v_{p + 1} \in E(T)$. By the maximality of $q$, we have $v_mv_{q + 1} \in E(T)$, which implies that $v_1v_2\cdots v_{p - 1}v_{p + 1}v_{p + 2}\cdots v_qv_pv_{q + 1}v_{q + 2}\cdots v_n$ is a different Hamiltonian path. One may check that for the cases where $p = 1$ or $q = n$, we can also find a different Hamiltonian path in $T$, which is a contradiction.
     \end{proof}
 \end{probox}
 In another direction, we can also characterise the structure of a non-transitive tournament.
@@ -2392,7 +2385,7 @@ In another direction, we can also characterise the structure of a non-transitive
     Any tournament which is not transitive contains some directed triangle.
     \tcblower
     \begin{proof}
-        Let $T$ be a tournament which is not transitive and let $\overrightarrow{C}_k \coloneqq v_1v_2\cdots v_kv_1$ be the shortest directed cycle in $T$. If $k = 3$, then we are done. Otherwise, $k > 3$. Notice that $v_{k - 1} \to v_1 \notin E(T)$ because otherwise there is a shorter directed cycle. Therefore, $v_1 \to v_{k - 1} \in E(T)$, and so $v_1v_{k - 1}v_kv_1$ is a directed triangle.
+        Let $T$ be a tournament which is not transitive and let $\overrightarrow{C}_k \coloneqq v_1v_2\cdots v_kv_1$ be the shortest directed cycle in $T$. If $k = 3$, then we are done. Otherwise, $k > 3$. Notice that $v_{k - 1} \to v_1 \notin E(T)$ because otherwise there is a shorter directed cycle. Therefore,~$v_1 \to v_{k - 1} \in E(T)$, and so $v_1v_{k - 1}v_kv_1$ is a directed triangle.
     \end{proof}
 \end{probox}
 Note that the existence of Hamiltonian paths in tournaments guarantees that there is always a vertex which is reachable from any other vertex in a tournament. However, to reach this ``end'' vertex, it might not give the shortest path along the Hamiltonian path. Thus, we might wish to further strengthen this result.
@@ -2409,14 +2402,14 @@ Surprisingly, we always get a king in any tournament for free.
 \end{thmbox}
 Note that although the existence of a king is guaranteed in any tournament, the uniqueness is not. The following definition generalises the concept of a king:
 \begin{dfnbox}{Quasi-kernel}{quasiKer}
-    Let $D$ be a digraph. A {\color{red} \textbf{quasi-kernel}} of $D$ is a set $S \subseteq V(D)$ such that for every $u \in V(D) - S$, there is a directed $u$-$v$ path for some $v \in S$ of length at most $2$.
+    Let $D$ be a digraph. A {\color{red} \textbf{quasi-kernel}} of $D$ is a set $S \subseteq V(D)$ such that for every vertex~$u \in V(D) - S$, there is a directed $u$-$v$ path for some $v \in S$ of length at most $2$.
 \end{dfnbox}
 Clearly, a king in a tournament is always a vertex in the quasi-kernel. However, the existence of a quasi-kernel is also guaranteed for any digraph.
 \begin{thmbox}{Chv\'{a}tal-Lov\'{a}sz Quasi-kernel Existence Theorem}{Chvatal-Lovasz}
     Every digraph $D$ has a quasi-kernel.
     \tcblower
     \begin{proof}
-        We shall apply strong induction on $\abs{V(D)}$. The case where $\abs{V(D)} = 1$ is trivial because $D$ is its own quasi-kernel. Suppose that there exists some integer $n \geq 1$ such that any digraph with order less than $n$ has a quasi-kernel. Take any $v \in V(D)$. If $\{v\} \cup N_D^-(v) = V(D)$, then $\{v\}$ is a quasi-kernel. Otherwise, define 
+        We shall apply strong induction on $\abs{V(D)}$. The case where $\abs{V(D)} = 1$ is trivial because $D$ is its own quasi-kernel. Suppose that there exists some integer $n \geq 1$ such that any digraph with order less than $n$ has a quasi-kernel. Take any $v \in V(D)$. If~$\{v\} \cup N_D^-(v) = V(D)$, then $\{v\}$ is a quasi-kernel. Otherwise, define 
         \begin{equation*}
             D' \coloneqq D - \bigl(\{v\} \cup N_D^-(v)\bigr).
         \end{equation*}
