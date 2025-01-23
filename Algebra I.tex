@@ -404,7 +404,9 @@ By fixing $\Sigma = \left\{1, 2, \cdots, n\right\}$ in the above Proposition, we
         Trivial.
     \end{proof}
 \end{corbox}
-Note that this is exactly the same as the combinatorial argument that the total number of permutations over $n$ elements is $n!$. Notice that sometimes, if we apply a certain permutation repeatedly to a set, we might be able to restore the original arrangement of its elements. Such a situation is very peculiar and so we define the notion of \textit{order} to describe it.
+Note that this is exactly the same as the combinatorial argument that the total number of permutations over $n$ elements is $n!$. Basically, to fix any bijection from $\Sigma$ to $\Z_n^+$, we just need to take each element in $\Sigma$ and ``match'' it to a unique unmatched element in $\Z_n^+$. In doing so, we are in fact applying the multiplication principle and it is not surprising that we can arrive at the same conclusion. 
+
+Notice that sometimes, if we apply a certain permutation repeatedly to a set, we might be able to restore the original arrangement of its elements. Such a situation is very peculiar and so we define the notion of \textit{order} to describe it.
 \begin{dfnbox}{Order of a Group}{order}
     Let $G$ be a group. The {\color{red} \textbf{order}} of $x \in G$, denoted by $\abs{x}$, is the smallest $n \in \N^+$ such that $x^n = 1$. If for all $n \in \N^+$, we have $x^n \neq 1$, then we say that $x$ has order $\infty$.
 \end{dfnbox}
@@ -423,14 +425,47 @@ It is clear that all finite sets of cardinality $n$ are equinumerous to $S_n$, s
 To demonstrate that the cycle notation is a good notation, we offer the following proposition:
 \begin{probox}{Characterisation of Abelian Symmetric Groups}{AbelianSymGrp}
     A symmetric group of degree $n$ is not Abelian if and only if $n \geq 3$.
+    \tcblower
+    \begin{proof}
+        Let $S_{\Omega}$ be a non-Abelian symmetric group of degree $n$ for some finite set $\Omega$, then there exists $a, b \in S_{\Omega}$ such that $ab \neq ba$. Clearly, this means that $a \neq b$. Notice that $a$ is not the identity because otherwise $ab = b = ba$, which is a contradiction. Similarly, $b$ is not the identity, and so there must exists some $e \in S_{\Omega}$ which is the identity. Therefore, $n = \abs{S_{\Omega}} \geq 3$.
+        \\\\
+        Conversely, it suffices to prove that $S_n$ is not Abelian if $n \geq 3$. Take $\left(1, 2\right), \left(1, 3\right) \in S_n$ and consider 
+        \begin{align*}
+            \left(1, 2\right) \circ \left(1, 3\right) & = \left(1, 3, 2\right) \\
+            \left(1, 3\right) \circ \left(1, 2\right) & = \left(1, 2, 3\right).
+        \end{align*}
+        Clearly, $\left(1, 3, 2\right) \neq \left(1, 2, 3\right)$ and so $\left(1, 2\right)$ and $\left(1, 3\right)$ do not commute. Therefore, $S_n$ is not Abelian.
+    \end{proof}
 \end{probox}
-In fact, we can characterise commutativity of cycles in symmetric groups in a bit more depth.
+\begin{notebox}
+    \begin{remark}
+        In fact, all non-Abelian groups must have cardinality at least $3$.
+    \end{remark}
+\end{notebox}
+Some rough observation shows that the reason that some cycles do not permute is that they contain overlapping elements which will get swapped to different positions if the order of the permutations is different. However, if two cycles are disjoint, then intuitively it should not matter which one is executed first.
 \begin{probox}{Commutativity of Cycles}{commCycle}
     Let $\left(a_1, a_2, \cdots, a_m\right), \left(b_1, b_2, \cdots, b_k\right) \in S_n$ be cycles, then 
     \begin{equation*}
-        \left(a_1, a_2, \cdots, a_m\right)\left(b_1, b_2, \cdots, b_k\right) = \left(b_1, b_2, \cdots, b_k\right)\left(a_1, a_2, \cdots, a_m\right)
+        \left(a_1, a_2, \cdots, a_m\right) \circ \left(b_1, b_2, \cdots, b_k\right) = \left(b_1, b_2, \cdots, b_k\right) \circ \left(a_1, a_2, \cdots, a_m\right)
     \end{equation*}
     if $\left\{a_1, a_2, \cdots, a_m\right\} \cap \left\{b_1, b_2, \cdots, b_k\right\} = \varnothing$.
+    \tcblower
+    \begin{proof}
+        Define 
+        \begin{align*}
+            \sigma_{ab} & = \left(a_1, a_2, \cdots, a_m\right) \circ \left(b_1, b_2, \cdots, b_k\right), \\
+            \sigma_{ba} & = \left(b_1, b_2, \cdots, b_k\right) \circ \left(a_1, a_2, \cdots, a_m\right),
+        \end{align*}
+        then it is equivalent to proving that $\sigma_{ab}\left(x\right) = \sigma_{ba}\left(x\right)$ for all $x \in \Z_n^+$. Take any $x \in \Z_n^+$, if $x \notin \left\{a_1, a_2, \cdots, a_m\right\} \cup \left\{b_1, b_2, \cdots, b_k\right\}$, then $\sigma_{ab}\left(x\right) = x = \sigma_{ba}\left(x\right)$. If $x = a_i \in \left\{a_1, a_2, \cdots, a_m\right\}$, then 
+        \begin{align*}
+            \left(a_1, a_2, \cdots, a_m\right)\left(x\right) & = \begin{cases}
+                a_{i + 1} & \textrm{if } 1 \leq i \leq m - 1 \\
+                a_1 & \textrm{if } i = m \\
+            \end{cases}, \\
+            \left(b_1, b_2, \cdots, b_k\right)\left(x\right) & = x
+        \end{align*}
+        because $\left\{a_1, a_2, \cdots, a_m\right\} \cap \left\{b_1, b_2, \cdots, b_k\right\} = \varnothing$. Therefore, $\sigma_{ab}\left(x\right) = \sigma_{ba}\left(x\right)$. The same argument applies to $x = b_j \in \left\{b_1, b_2, \cdots, b_k\right\}$.
+    \end{proof}
 \end{probox}
 Those with the intuition or training in programming may realise that since a permutation of a set is essentially constructed by repeatedly swapping elements in pairs, we can naturally find a finite number of cycles in a permutation.
 \begin{dfnbox}{Cycle Decomposition}{cycleDecompo}
@@ -446,9 +481,20 @@ Those with the intuition or training in programming may realise that since a per
     \end{remark}
 \end{notebox}
 Now, let us justify our programming intuition from a mathematical perspective.
-\begin{probox}{Existence of Cycle Decompositions}{cycleDecompoExist}
+\begin{thmbox}{Existence of Cycle Decompositions}{cycleDecompoExist}
     Every $\sigma \in S_n$ admits a cycle decomposition.
-\end{probox}
+    \tcblower
+    \begin{proof}
+        For each $\sigma \in S_n$, let us define $D_{\sigma}$ to be a digraph with $V\left(D_{\sigma}\right) = \Z_n^+$ such that~$x \to y \in E\left(D_{\sigma}\right)$ if and only if $\sigma\left(x\right) = y$. Fix any $v_0 \in V\left(D_{\sigma}\right)$. For every $i \in \N$, it is clear that $d^{+}\left(v_i\right) = 1$ and so we can take $v_{i + 1}$ as the unique out-neighbour of $v_{i}$. We claim that there exists some $v_{k} \in V\left(D_{\sigma}\right)$ such that $v_{k + 1} = v_0$ because otherwise the graph is of an infinite order, which is not possible. Remove all edges $v_i \to v_{i + 1}$ for $i = 1, 2, \cdots, k$ and let $D'_{\sigma}$ be the resultant graph. We can repeat the same process again on $D'_{\sigma}$ and we claim that eventually the graph will become empty. Suppose on contrary that the edge-minimal graph obtained through this algorithm is non-empty, then it must be acyclic and contains a longest directed path $u_0u_1\cdots u_k$. Let $\sigma\left(u_k\right) = w$, then $u_k \to w$ has been removed in a previous iteration, which means that $u_k \to w$ is contained in some cycle $\overrightarrow{C} \subseteq D$. Note that $u_0u_1\cdots u_k \not\subseteq \overrightarrow{C}$ because otherwise the path would have been removed, so there must exists a vertex $u_m \in u_0u_1\cdots u_k$ such that
+        \begin{equation*}
+            u_mu_{m + 1}\cdots u_{k} \subseteq \overrightarrow{C} \quad\textrm{but}\quad u_{m - 1} \to u_m \notin E\left(\overrightarrow{C}\right).
+        \end{equation*}
+        However, this is not possible because this means that there exists some $u' \neq u_{m - 1}$ such that $u', u_{m - 1} \in N_D^-\left(u_m\right)$ and so $\sigma\left(u'\right) = \sigma\left(u_{m - 1}\right) = u_m$, which is a contradiction because $\sigma$ is a bijection. Now, let $\overrightarrow{C_i}$ be the directed cycle removed at the $i$-th iteration, then by taking its vertices in clockwise order we form a cycle $\sigma_i$, where $i = 1, 2, \cdots, k$. It is clear that these cycles are pairwise disjoint and 
+        \begin{equation*}
+            \sigma = \sigma_1 \circ \sigma_2 \circ \cdots \circ \sigma_k.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
 \section{Multiplication}
 \begin{probox}{}{uniqueFactor}
     Let $G$ be a group. For any $a, b \in G$, there exists a unique $x \in G$ such that $ax = b$ and a unique $y \in G$ such that $ya = b$.
