@@ -1,6 +1,7 @@
 \contentsline {chapter}{\numberline {1}Introduction to Groups}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Groups}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Permutations}{8}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Multiplication}{13}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Generators and Relations}{14}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Homomorphism}{15}{section.1.5}%
+\contentsline {section}{\numberline {1.3}Generators and Relations}{14}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Matrix Groups}{15}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Multiplication}{16}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Homomorphism}{17}{section.1.6}%
