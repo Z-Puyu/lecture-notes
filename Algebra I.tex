@@ -341,6 +341,60 @@ A further consequence leads to the following way to identify the identity and in
         Suppose that $ab = 1$, then by Corollary \ref{cor:uniqueSolGrp} we have $b = a^{-1} \cdot 1 = a^{-1}$. Similarly, suppose that $ab = a$, then we have $b = a^{-1}a = 1$. The other cases are similar.
     \end{proof}
 \end{corbox}
+Lastly, note that we can take Cartesian product over groups.
+\begin{dfnbox}{Direct Product}{dirProd}
+    Let $(A, \star)$ and $(B, \diamond)$ be groups. The {\color{red} \textbf{direct product}} $A \times B$ is defined by the set
+    \begin{equation*}
+        \left\{\left(a, b\right) \colon a \in A, b \in B\right\}
+    \end{equation*}
+    where
+    \begin{equation*}
+        \left(a_1, b_1\right)\left(a_2, b_2\right) = \left(a_1 \star a_2, b_1 \diamond b_2\right).
+    \end{equation*}
+\end{dfnbox}
+One may check that for  any groups $A$ and $B$, the direct product $A \times B$ is always a group with identity $\left(1_A, 1_B\right)$ and inversion map $\left(a, b\right) \mapsto \left(a^{-1}, b^{-1}\right)$.
+
+We will discuss the structure of matrix groups. However, as matrices are closely related to vector spaces and vector spaces are closely related to fields, it is helpful to first define what a field is.
+\begin{dfnbox}{Field}{field}
+    A {\color{red} \textbf{field}} is a set $\F$ together with two binary operations $+$ and $\cdot$ such that 
+    \begin{itemize}
+        \item $\left(\F, +\right)$ is an Abelian group with identity $0$,
+        \item $\left(\F \setminus \left\{0\right\}, \cdot\right)$ is an Abelian group with identity $1$, and
+        \item $a \cdot \left(b + c\right) = \left(a \cdot b\right) + \left(a \cdot c\right)$ for all $a, b, c \in \F$.
+    \end{itemize}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        We use $\F^{\times}$ to denote the multiplication group $\left(\F \setminus \left\{0\right\}, \cdot\right)$.
+    \end{remark}
+\end{notebox}
+The next proposition is an attempt in constructing a field of a fixed cardinality. 
+\begin{probox}{Construction of a Finite Field}{finiteField}
+    Let $p$ be a prime number and $\sim$ be the equivalence relation on $\Z$ such that $a \sim b$ if and only if $a \equiv b \mod p$. Define $\F_p \coloneqq \Z / \sim$ and 
+    \begin{align*}
+        \left[x\right]_{\sim} + \left[y\right]_{\sim} & = \left[x + y\right]_{\sim}, \\
+        \left[x\right]_{\sim} \cdot \left[y\right]_{\sim} & = \left[x \cdot y\right]_{\sim}
+    \end{align*}
+    for all $\left[x\right]_{\sim}, \left[y\right]_{\sim} \in \F_p$, then $\left(\F_p, +, \cdot\right)$ is a field with $\abs{\F_p} = p$.
+    \tcblower
+    \begin{proof}
+        Let $X \coloneqq \left\{0, 1, \cdots, p - 1\right\}$ and define $f \colon X \to \F_p$ by $f\left(x\right) = \left[x\right]_{\sim}$. We claim that $f$ is bijective. Suppose that $f\left(x\right) = f\left(y\right)$ for some $x, y \in X$, then $\left[x\right]_{\sim} = \left[y\right]_{\sim}$, which means $x \equiv y \mod p$. Without loss of generality, assume that $x \leq y$, then since $0 \leq y - x \leq p - 1$ we must have $y - x = 0$, so $x = y$. Therefore, $f$ is injective. Take any $\left[x\right]_{\sim} \in \F_p$, then there exists some $b \in \Z$ and $r \in X$ such that $x = bp + r$, and so $x \equiv r \mod p$. This means that $\left\{x\right\}_{\sim} = \left[r\right]_{\sim} = f\left(r\right)$. Therefore, $f$ is surjective and so is a bijection. Therefore, $\abs{\F_p} = \abs{X} = p$.
+    \end{proof}
+\end{probox}
+Now we can fix some arbitrary field $\F$ and consider some matrices.
+\begin{dfnbox}{General Linear Group}{matGrp}
+    Let $\F$ be a field, then for each $n \in \Z^+$, the {\color{red} \textbf{general linear group}} of degree $n$ on $\F$ is defined as 
+    \begin{equation*}
+        \mathrm{GL}_n\left(\F\right) \coloneqq \left\{\mathbfit{A} \in \mathcal{M}_{n \times n} \colon \det\left(\mathbfit{A}\right) \neq 0\right\}
+    \end{equation*}
+    with respect to matrix multiplication.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In other words, the matrix group on $\F$ is the set of all non-singular $n \times n$ matrices on $\F$.
+    \end{remark}
+\end{notebox}
+The reader might find it an interesting exercise to show that $\mathrm{GL}_n\left(\F\right)$ is indeed a group. In particular, $\mathrm{GL}_1\left(\F\right) = \F^{\times}$.
 \section{Permutations}
 Next, we examine a more complicated example of groups known as \textit{symmetric groups}. First, we shall prove a preliminary theorem.
 \begin{probox}{Bijectivity and Invertibility Are Equivalent}{BijEquivInv}
@@ -518,7 +572,7 @@ Consider a regular $n$-sided polygon $P$ and define $r$ as ``clockwise rotation 
         Note that for $n > 3$, the multiplication tables of $D_{2n}$ and $S_n$ no longer coincide because $\abs{D_{2n}} = 2n \neq n! = \abs{S_n}$.
     \end{remark}
 \end{notebox}
-\section{Generators and Relations}
+\section{Group Presentation}
 \begin{dfnbox}{Generators}{generator}
     Let $G$ be a group. A set of {\color{red} \textbf{generators}} of $G$ is a set $S \subseteq G$ such that every element of~$G$ can be written as a finite product of elements of $S$ and their inverses.
 \end{dfnbox}
@@ -539,99 +593,58 @@ Roughly speaking, relations define how the generators can be combined together t
 \begin{dfnbox}{Presentation}{present}
     A {\color{red} \textbf{presentation}} of a group $G = \left\langle S \mid R\right\rangle$ is a set of generators $S$ and a set of relations~$R$ on $S$ such that any other relation on $S$ can be deduced from $R$.
 \end{dfnbox}
-\section{Matrix Groups}
-We will discuss the structure of matrix groups. However, as matrices are closely related to vector spaces and vector spaces are closely related to fields, it is helpful to first define what a field is.
-\begin{dfnbox}{Field}{field}
-    A {\color{red} \textbf{field}} is a set $\F$ together with two binary operations $+$ and $\cdot$ such that 
-    \begin{itemize}
-        \item $\left(\F, +\right)$ is an Abelian group with identity $0$,
-        \item $\left(\F \setminus \left\{0\right\}, \cdot\right)$ is an Abelian group with identity $1$, and
-        \item $a \cdot \left(b + c\right) = \left(a \cdot b\right) + \left(a \cdot c\right)$ for all $a, b, c \in \F$.
-    \end{itemize}
+\section{Group Homomorphisms}
+Previously, we have seen how $S_{\Omega}$ and $S_n$ are essentially ``the same'' if $\abs{\Omega} = n$. This is exactly because of the fact that these groups have the same structure. We shall now formalise the notion of ``having the same structure''. In the context of groups, since every group can be completely defined by a binary operation, it is natural to define a structure-preserving transformation as one which preserves the binary operation.
+\begin{dfnbox}{Group Homomorphism}{homomorphic}
+    Let $\left(G, \star\right)$ and $\left(H, \diamond\right)$ be groups. A {\color{red} \textbf{homomorphism}} from $G$ to $H$ is a map $\varphi \colon G \to H$ such that 
+    \begin{equation*}
+        \varphi\left(a \star b\right) = \varphi\left(a\right) \diamond \varphi\left(b\right)
+    \end{equation*}
+    for all $a, b \in G$.
 \end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        We use $\F^{\times}$ to denote the multiplication group $\left(\F \setminus \left\{0\right\}, \cdot\right)$.
-    \end{remark}
-\end{notebox}
-The next proposition is an attempt in constructing a field of a fixed cardinality. 
-\begin{probox}{Construction of a Finite Field}{finiteField}
-    Let $p$ be a prime number and $\sim$ be the equivalence relation on $\Z$ such that $a \sim b$ if and only if $a \equiv b \mod p$. Define $\F_p \coloneqq \Z / \sim$ and 
-    \begin{align*}
-        \left[x\right]_{\sim} + \left[y\right]_{\sim} & = \left[x + y\right]_{\sim}, \\
-        \left[x\right]_{\sim} \cdot \left[y\right]_{\sim} & = \left[x \cdot y\right]_{\sim}
-    \end{align*}
-    for all $\left[x\right]_{\sim}, \left[y\right]_{\sim} \in \F_p$, then $\left(\F_p, +, \cdot\right)$ is a field with $\abs{\F_p} = p$.
+Recall that the notions of identity and inverses are induced by the binary operation on a group, so naturally a group homomorphism should respect these structures as well.
+\begin{probox}{Properties of Group Homomorphisms}{propHom}
+    Let $\varphi \colon G \to H$ be a homomorphism, then 
+    \begin{equation*}
+        \varphi\left(1_G\right) = \varphi\left(1_H\right) \quad\textrm{and}\quad \varphi\left(a^{-1}\right) = \varphi\left(a\right)^{-1}
+    \end{equation*}
+    for all $a \in G$.
     \tcblower
     \begin{proof}
-        Let $X \coloneqq \left\{0, 1, \cdots, p - 1\right\}$ and define $f \colon X \to \F_p$ by $f\left(x\right) = \left[x\right]_{\sim}$. We claim that $f$ is bijective. Suppose that $f\left(x\right) = f\left(y\right)$ for some $x, y \in X$, then $\left[x\right]_{\sim} = \left[y\right]_{\sim}$, which means $x \equiv y \mod p$. Without loss of generality, assume that $x \leq y$, then since $0 \leq y - x \leq p - 1$ we must have $y - x = 0$, so $x = y$. Therefore, $f$ is injective. Take any $\left[x\right]_{\sim} \in \F_p$, then there exists some $b \in \Z$ and $r \in X$ such that $x = bp + r$, and so $x \equiv r \mod p$. This means that $\left\{x\right\}_{\sim} = \left[r\right]_{\sim} = f\left(r\right)$. Therefore, $f$ is surjective and so is a bijection. Therefore, $\abs{\F_p} = \abs{X} = p$.
+        Notice that 
+        \begin{equation*}
+            \varphi\left(1_G\right)\varphi\left(1_G\right) = \varphi\left({1_G}^2\right) = 1_H\varphi\left(1_G\right),
+        \end{equation*}
+        so by \ref{thm:cancelLaw}, we have $\varphi\left(1_G\right) = 1_H$. Consider 
+        \begin{equation*}
+            \varphi\left(a^{-1}\right)\varphi\left(a\right) = \varphi\left(a^{-1}a\right) = \varphi\left(1_G\right) = 1_H.
+        \end{equation*}
+        Similarly, $\varphi\left(a\right)\varphi\left(a^{-1}\right) = 1_H$, so $\varphi\left(a^{-1}\right) = \varphi\left(a\right)^{-1}$ for all $a \in G$.
     \end{proof}
 \end{probox}
-Now we can fix some arbitrary field $\F$ and consider some matrices.
-\begin{dfnbox}{General Linear Group}{matGrp}
-    Let $\F$ be a field, then for each $n \in \Z^+$, the {\color{red} \textbf{general linear group}} of degree $n$ on $\F$ is defined as 
-    \begin{equation*}
-        \mathrm{GL}_n\left(\F\right) \coloneqq \left\{\mathbfit{A} \in \mathcal{M}_{n \times n} \colon \det\left(\mathbfit{A}\right) \neq 0\right\}
-    \end{equation*}
-    with respect to matrix multiplication.
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        In other words, the matrix group on $\F$ is the set of all non-singular $n \times n$ matrices on $\F$.
-    \end{remark}
-\end{notebox}
-The reader might find it an interesting exercise to show that $\mathrm{GL}_n\left(\F\right)$ is indeed a group. In particular, $\mathrm{GL}_1\left(\F\right) = \F^{\times}$.
-\section{Multiplication}
-\begin{probox}{}{uniqueFactor}
-    Let $G$ be a group. For any $a, b \in G$, there exists a unique $x \in G$ such that $ax = b$ and a unique $y \in G$ such that $ya = b$.
-    \tcblower
-    \begin{proof}
-        Observe that $x = a^{-1}b$ is such that $x \in G$ and $ax = b$. Suppose there is $x' \in G$ such that $ax' = b$, then
-        \begin{align*}
-            x' = a^{-1}ax' = a^{-1}b = a^{-1}ax = x.
-        \end{align*}
-        Therefore, $x$ is unique. One can check similarly that there exists a unique $y \in G$ such that $ya = b$.
-    \end{proof}
-\end{probox}
-An important implication of Proposition \ref{pro:uniqueFactor} is that we can cancel ``common factors'' in multiplication between group elements.
-\begin{corbox}{Cancellation Laws}{cancelLaw}
-    Let $G$ be a group. For any $a, u, v \in G$, if $au = av$, then $u = v$. Similarly, if $ua = va$, then $u = v$.
-\end{corbox}
-It is also easy to see that for any $a$ in a group $G$, the maps $x \mapsto ax$ and $x \mapsto xa$ where $x \in G$ are always bijective.
-\begin{dfnbox}{Direct Product}{dirProd}
-    Let $(A, \star)$ and $(B, \circ)$ be groups. The {\color{red} \textbf{direct product}} $A \times B$ is defined by the set
-    \begin{equation*}
-        \left\{(a, b) \colon a \in A, b \in B\right\}
-    \end{equation*}
-    where
-    \begin{equation*}
-        (a_1, b_1)(a_2, b_2) = (a_1 \star a_2, b_1 \circ b_2).
-    \end{equation*}
-\end{dfnbox}
-One may check that for  any groups $A$ and $B$, the direct product $A \times B$ is always a group with identity $(1_A, 1_B)$ and inversion map $(a, b) \mapsto (a^{-1}, b^{-1})$.
-\begin{dfnbox}{Order}{order}
-    Let $G$ be a group and $x \in G$. The {\color{red} \textbf{order}} of $x$ is the smallest $n \in \Z^+$ such that $x^n = 1$, denoted by $\abs{x}$ or $\mathrm{ord}(x)$. If $x^n \neq 1$ for all $n \in \Z^+$, we say that $x$ is of {\color{red} \textbf{infinite order}}.
-\end{dfnbox}
+Clearly, for any group $G$, the identity map $\mathrm{id}_G\colon G \to G$ is a homomorphism. Moreover, by denoting $\mathbb{1} \coloneqq \left\{1\right\}$, the maps $\psi \colon \mathbb{1} \to G$ and $\varphi \colon G \to \left\{1\right\}$ with $\psi\left(1\right) = 1_G$ and $\varphi\left(a\right) = 1$ for all $a \in G$ are the unique homomorphisms for any group $G$. It is also clear from the above fact that ``the'' singleton group is unique up to homomorphisms.
 
-\section{Homomorphism}
-\begin{dfnbox}{Homomorphism}{homomorphic}
-    Let $G$ and $H$ be groups. A {\color{red} \textbf{homomorphism}} from $G$ to $H$ is a map $\varphi \colon G \to H$ such that 
-    \begin{itemize}
-        \item $\varphi(xy) = \varphi(x)\varphi(y)$ for all $x, y \in G$;
-        \item $\varphi(1_G) = 1_H$;
-        \item $\varphi(x^{-1}) = \varphi(x)^{-1}$ for all $x \in G$.
-    \end{itemize}
-\end{dfnbox}
-\begin{probox}{Equivalent Definition for Homomorphism}{equivHomomorphic}
-    A map $\varphi \colon G \to H$ is a homomorphism if and only if $\varphi(xy) = \varphi(x)\varphi(y)$ for all $x, y \in G$.
-\end{probox}
-Clearly, for any group $G$, the identity map $\mathrm{id}_G\colon G \to G$ is a homomorphism.
+Intuitively, since a homomorphism does not change the group's structure, the group's structure will not change after undergoing any sequence of homomorphisms.
 \begin{probox}{Composition of Homomorphisms Is a Homomorphism}{compoHomomorphism}
     For any groups $G, H, K$, if $\varphi \colon G \to H$ and $\psi \colon H \to K$ are homomorphisms, then
     \begin{equation*}
         \psi \circ \varphi \colon G \to K
     \end{equation*}
     is a homomorphism.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
+\end{probox}
+Let us examine two simple groups, $S_2$ and $S_3$, and try to list down all homomorphisms between them.
+\begin{probox}{Homomorphisms from $S_3$ to $S_2$}{S3S2Hom}
+    Any group homomorphism from $S_3$ to $S_2$ is either the trivial identity map or the sign map~$\mathrm{sgn} \colon S_3 \to S_2$ such that 
+    \begin{equation*}
+        \mathrm{sgn}\left(a\right) = \begin{cases}
+            1 & \quad\textrm{if } a = 1 \textrm{ or } \left(123\right) \textrm{ or } \left(132\right) \\
+            \left(12\right) & \quad\textrm{if } a = \left(12\right) \textrm{ or } \left(23\right) \textrm{ or } \left(13\right)
+        \end{cases}.
+    \end{equation*}
 \end{probox}
 \begin{dfnbox}{Isomorphism}{isomorphic}
     An {\color{red} \textbf{isomorphism}} from $G$ to $H$ is a homomorphism $\varphi \colon G \to H$ such that there exists a homomorphism $\psi \colon H \to G$ such that $\psi \circ \varphi = \mathrm{id}_G$ and $\varphi \circ \psi = \mathrm{id}_H$
