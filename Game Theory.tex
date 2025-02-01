@@ -321,7 +321,15 @@ where $Q$ is the demand and $P$ is the price. We can assume that $P = 0$ when $Q
         a - bQ & \textrm{otherwise}
     \end{cases},
 \end{equation*}
-where $a = \frac{q_0}{k}$ and $b = \frac{1}{k}$. In order to achieve the market clearing price, the demand should always be equal to the supply, so the firm should produce such that $Q = q_1 + q_2$. This means that 
+where $a = \frac{q_0}{k}$ and $b = \frac{1}{k}$. Notice that this means that when the price reaches $a$, the demand for the product vanishes.
+\begin{dfnbox}{Demand-Side Reservation Price}{demandSideReservation}
+    The {\color{red} \textbf{demand-side reservation price}} is the lowest price at which the demand is $0$.
+\end{dfnbox}
+Here our goal is to achieve \textit{market clearing price}.
+\begin{dfnbox}{Market Clearing Price}{marketClear}
+    The {\color{red} \textbf{market clearing price}} is the price at which the demand is equal to the supply.
+\end{dfnbox}
+In order to achieve the market clearing price, the demand should always be equal to the supply, so the firm should produce such that $Q = q_1 + q_2$. This means that 
 \begin{equation*}
     P\left(Q\right) = \begin{cases}
         0 & \textrm{if } Q \geq q_0 \\
@@ -340,7 +348,7 @@ for $i = 1, 2$, where $c$ is the unit cost of production, then we have
     \end{cases}.
 \end{equation*}
 \begin{dfnbox}{Cournot Model of Duopoly}{Cournot}
-    Let $S_1, S_2 \coloneqq \left[0, \infty\right)$ be possible prices for a product produced by two firms. Assuming linear demand such that the demand is $q_0$ at a price of $0$, then there exists positive constants $a$ and $b$ such that
+    Let $S_1, S_2 \coloneqq \left[0, \infty\right)$ be possible supply quantities for a product produced by two firms. Assuming linear demand such that the demand is $q_0$ at a price of $0$, then there exists positive constants $a$ and $b$ such that
     \begin{equation*}
         \pi_i\left(q_1, q_2\right) = \begin{cases}
             \left(a - bq_1 - bq_2 - c\right)q_i & \textrm{if } Q < q_0 \\
@@ -354,18 +362,179 @@ It is clear that if $q_1 > q_0 - q_2$, then $\pi_1\left(q_1, q_2\right) = -cq_1 
     Let $G \coloneqq \left\{S_1, S_2, \pi_1, \pi_2\right\}$ be a Cournot model of duopoly, then for any $q_2 \in S_2$, the best response of the first firm is 
     \begin{equation*}
         q_1 \coloneqq R_1\left(q_2\right) = \begin{cases}
-            \frac{1}{2}\left(q_0 - q_2 - c\right) & \textrm{if } q_2 \leq q_0 - c \\
-            0 & \textrm{if } q_2 > q_0 - c
+            \frac{1}{2b}\left(a - bq_2 - c\right) & \textrm{if } q_2 \leq \frac{a - c}{b} \\
+            0 & \textrm{if } q_2 > \frac{a - c}{b}
         \end{cases}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Fix $q_2 \geq 0$ as the output of the second firm. Note that it suffices to consider the case where $\pi_1\left(q_1, q_2\right) = \left(a - bq_1 - bq_2 - c\right)q_1$. If $a - c - bq_2 < 0$, for any $q_1 > 0$, we have $\pi_1\left(q_1, q_2\right) < 0$ so $q_1 = 0$ is the best response. Otherwise, consider 
+        \begin{equation*}
+            \frac{\partial \pi_1}{\partial q_1} = -2bq_1 + a - bq_2 - c = 0.
+        \end{equation*} 
+        Solving the equation yields 
+        \begin{equation*}
+            q_1 = \frac{a - bq_2 - c}{2b}.
+        \end{equation*}
+        Therefore, the best response of the first firm is 
+        \begin{equation*}
+            R_1\left(q_2\right) = \begin{cases}
+                \frac{1}{2b}\left(a - bq_2 - c\right) & \textrm{if } q_2 \leq \frac{a - c}{b} \\
+                0 & \textrm{if } q_2 > \frac{a - c}{b}
+            \end{cases}.
+        \end{equation*}
+    \end{proof}
 \end{probox}
-Using the above result, it is easy to compute the Nash equilibrium of the Cournot model.
+\begin{notebox}
+    \begin{remark}
+        In a simplified case where $Q\left(P\right) = q_0 - P$ (i.e., $k = 1$), we have $a = q_0$ and~$b = 1$, and so 
+        \begin{equation*}
+            R_1\left(q_2\right) = \begin{cases}
+                \frac{1}{2}\left(a - q_2 - c\right) & \textrm{if } q_2 \leq a - c \\
+                0 & \textrm{if } q_2 > a - c
+            \end{cases}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+Using the above result, it is easy to compute the Nash equilibrium of the Cournot model by solving the system 
+\begin{equation*}
+    \begin{cases}
+        q_1^* & = \frac{1}{2b}\left(a - bq_2^* - c\right) \\
+        q_2^* & = \frac{1}{2b}\left(a - bq_1^* - c\right)
+    \end{cases}.
+\end{equation*}
 \begin{corbox}{Nash Equilibrium of Cournot Model of Duopoly}{CournotEqui}
-    In a Cournot model of duopoly, the Nash equilibrium is $q_1^* = q_2^* = \frac{1}{3}\left(q_0 - c\right)$.
+    In a Cournot model of duopoly, the Nash equilibrium is $q_1^* = q_2^* = \frac{1}{3b}\left(a - c\right)$.
 \end{corbox}
 Next, instead of \textbf{homogeneous product}, let us consider firms producing \textbf{differentiated products}. In this case, the Cournot model no longer makes sense because the sum of quantities demanded for differentiated products is meaningless.
 
-Let $c$ be the cost of production and $a$ be the reservation price.
+Let $c$ be the cost of production and $a$ be the demand-side reservation price. We shall consider the model through the perspective of pricing. Suppose that the two firms set the prices for their products at $p_1$ and $p_2$ respectively. Take the demand for the first firm's product as an example. We may assume that the demand is linear in price and that $b > 0$ is a coefficient representing the substitutability of the first firm's product for the second firm's. Consider
+\begin{equation*}
+    Q\left(p_1\right) = q_0 - kp_1,
+\end{equation*}
+where the $x$-intercept is $a$, so we can compute 
+\begin{equation*}
+    q_0 = ka.
+\end{equation*}
+Considering substitutability, we have 
+\begin{equation*}
+    q_1\left(p_1, p_2\right) = ka - kp_1 + bp_2.
+\end{equation*}
+\begin{dfnbox}{Bertrand Model of Duopoly}{Bertrand}
+    Let $S_1, S_2 \coloneqq \left[0, \infty\right)$ be possible prices for two firms producing differentiated products. Let $c$ and $a$ be the cost of production and demand-side reservation price respectively. Assuming linear demand, then there exists positive constant $k$ and $b$ such that 
+    \begin{align*}
+        \pi_i\left(p_1, p_2\right) & = q_i\left(p_1, p_2\right)p_i - cq_i\left(p_1, p_2\right) \\
+        & = \left(ka - kp_1 + bp_2\right)\left(p_i - c\right)
+    \end{align*}
+    for $i = 1, 2$, where $p_1 \in S_1, p_2 \in S_2$ are pricing strategies. The $2$-player normal-form game~$G \coloneqq \left\{S_1, S_2, \pi_1, \pi_2\right\}$ is known as the {\color{red} \textbf{Bertrand model of duopoly}}. 
+\end{dfnbox}
+Via a similar process, we can compute the best responses and Nash equilibrium for the model.
+\begin{probox}{Nash Equilibrium in Bertrand Model of Duopoly}{BertrandEqui}
+    Let $G \coloneqq \left\{S_1, S_2, \pi_1, \pi_2\right\}$ be a Bertrand model of duopoly, then for any $p_2 \in S_2$, the best response of the first firm is
+    \begin{equation*}
+        R_1\left(p_2\right) = \frac{1}{2k}\left(ka + bp_2 + kc\right)
+    \end{equation*} 
+    and the Nash equilibrium is 
+    \begin{equation*}
+        p_1^* = p_2^* = \frac{ka + kc}{2k - b}.
+    \end{equation*}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Note that this means that this model is sensible only if $b > 2k$.
+    \end{remark}
+\end{notebox}
+We can use Bertrand model to analyse homogeneous product as well by setting $b = 0$. Assume that the consumers always buy from the firm which offers a lower price, then the demand for the first firm is 
+\begin{equation*}
+    q_1\left(p_1, p_2\right) = \begin{cases}
+        ka - kp_1 & \quad\textrm{if } p_1 < p_2 \\
+        0 & \quad\textrm{if } p_1 > p_2 \\
+        \frac{ka - kp_1}{2} & \quad\textrm{if } p_1 = p_2
+    \end{cases}.
+\end{equation*}
+The payoff can be computed as profit for the first firm by 
+\begin{equation*}
+    \pi_1\left(p_1, p_2\right) = \begin{cases}
+        \left(ka - kp_1\right)\left(p_1 - c\right) & \quad\textrm{if } p_1 < p_2 \\
+        0 & \quad\textrm{if } p_1 > p_2 \\
+        \frac{1}{2}\left(ka - kp_1\right)\left(p_1 - c\right) & \quad\textrm{if } p_1 = p_2
+    \end{cases}.
+\end{equation*}
+\begin{probox}{\small Nash Equilibrium of Betrand Model for Homogeneous Product}{homoNashEquiBetrand}
+    The Nash equilibrium for the Bertrand model if both firms produce the same product is~$p_1 = p_2 = c$ where $c$ is the cost of production.
+    \tcblower
+    \begin{proof}
+        It suffices to consider the first firm. Notice that when $p_1 < c$ or $p_1 > a$, we have $\pi_1\left(p_1, p_2\right) < 0$, so it suffices to consider the strategy space as $\left[c, a\right]$, where we assume that $c \leq a$. We consider $3$ cases. If $p_2 > \frac{a + c}{2}$, it is obvious that $p_1 = \frac{a + c}{2}$ is the best response. If $c < p_2 \leq \frac{a + c}{2}$, it is clear that 
+        \begin{equation*}
+            \sup\pi_1\left(p_1, p_2\right) = \left(ka - kp_2\right)\left(p_2 - c\right)
+        \end{equation*}
+        but there is no $p_1 \in \left[c, a\right]$ such that $\pi_1\left(p_1, p_2\right) = \left(ka - kp_2\right)\left(p_2 - c\right)$, and so there is no best response. If $p_2 = c$, then since $\pi_1\left(p_1, c\right) = 0$ for all $p_1 \in \left[c, a\right]$, we have~$R_1\left(p_2\right) = \left[c, a\right]$. Observe that $R_1\left(\left[c, a\right]\right) \cap R_2\left(\left[c, a\right]\right) = \left\{\left(c, c\right)\right\}$, so the only Nash equilibrium is $(c, c)$.
+    \end{proof}
+\end{probox}
+An important implication of this is that if consumers only buy from the cheaper supplier, then the firms have no choice but to produce at the cost without any profit.
+
+Another classic claim in economics is that public goods tend to be under-supplied in a free market. This is summarised as the \textit{Tragedy of the Commons}, which states the following problem:
+\begin{quote}
+    Suppose that there are $n$ persons ($n \geq 2$) in a community. Let $x_i$ be the amount of a public resource used by the $i$-th person and denote 
+    \begin{equation*}
+        X \coloneqq \sum_{i = 1}^nx_i.
+    \end{equation*}
+    For each unit usage of the resource, there is a fixed cost of $c$. The public resource has a total capacity of $X_{\max}$. When $x$ units of the resources are used, each unit induces a utility of $v\left(x\right)$, where $v$ is a strictly concave function for $x < X_{\max}$ and $v\left(x\right) = 0$ for $x \geq X_{\max}$. All the persons simultaneously choose how much of the public resource they wish to use.
+\end{quote}
+If we model this as an $n$-player normal-form game, the strategy space for the $i$-th person will be~$S_i \coloneqq \left[0, X_{\max}\right)$ and the payoff function is 
+\begin{equation*}
+    u_i\left(x_i, \mathbfit{x}_{-i}\right) \coloneqq x_iv\left(\sum_{k = 1}^{n}x_k\right) - cx_i.
+\end{equation*}
+Let $\mathbfit{x}^* \coloneqq \left(x_1^*, x_2^*, \cdots, x_n^*\right)$ be a Nash equilibrium, then clearly
+\begin{equation*}
+    \left.\frac{\partial u_i}{\partial x_i}\right\rvert_{\mathbfit{x} = \mathbfit{x}^*} = v\left(\sum_{k = 1}^{n}x_k^*\right) + x_i^*\left.\frac{\d v}{\d x_i}\right\rvert_{x_i = x_i^*} - c = 0
+\end{equation*}
+for each $i = 1, 2, \cdots, n$. If we use 
+\begin{equation*}
+    v\left(x\right) \coloneqq \begin{cases}
+        0 & \quad\textrm{if } x \geq X_{\max} \\
+        a - x^2 & \quad\textrm{if } x < X_{\max}
+    \end{cases}
+\end{equation*}
+for some $a > c$ as the utility function, we have 
+\begin{equation*}
+    a - X^2 - 2x_i^*X - c = 0
+\end{equation*}
+for each $i = 1, 2, \cdots, n$. Intuitively, $x_1^* = x_2^* = \cdots = x_n^*$ because all payoff functions are the same, so 
+\begin{equation*}
+    a - n^2{x_i^*}^2 - 2n{x_i^*}^2 - c = 0
+\end{equation*}
+for each $i = 1, 2, \cdots, n$. Solving the equation yields $x_i^* = \sqrt{\frac{a - c}{n^2 + 2n}}$ for each $i = 1, 2, \cdots, n$ as the Nash equilibrium. 
+
+Next, define the \textit{social welfare} as
+\begin{equation*}
+    w\left(x\right) = xv\left(x\right) - xc
+\end{equation*}
+where $x$ is the total usage of the public resource. Let $x^* < X_{\max}$ be the optimal usage for maximum social welfare and $\left(x_1^*, x_2^*, \cdots, x_n^*\right)$ be the Nash equilibrium. We claim that
+\begin{equation*}
+    x^* < \sum_{i = 1}^{n}x_i^*.
+\end{equation*}
+Denote $X^* \coloneqq \sum_{i = 1}^{n}x_i^* < X_{\max}$. Suppose on contrary that $x^* \geq X^*$, then we have 
+\begin{equation*}
+    v\left(X^*\right) \geq v\left(x^*\right) \quad\textrm{and}\quad 0 > v'\left(X^*\right) \geq v'\left(x^*\right)
+\end{equation*}
+since $v$ is strictly concave on $\left(-\infty, X_{\max}\right)$. Note that $n \geq 2$, so $\frac{X^*}{n} < X^* \leq x^*$, which means that 
+\begin{equation*}
+    \frac{X^*}{n}v'\left(X^*\right) \geq \frac{X^*}{n}v'\left(x^*\right) > x^*v'\left(x^*\right).
+\end{equation*}
+Therefore, 
+\begin{equation*}
+    v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) > v\left(x^*\right) + x^*v'\left(x^*\right).
+\end{equation*}
+However, notice that since $x^*$ achieves maximum social welfare, we have 
+\begin{align*}
+    w'\left(x^*\right) & = v\left(x^*\right) + x^*v'\left(x^*\right) - c = 0.
+\end{align*}
+For each $i = 1, 2, \cdots, n$, we also have $x_i^* = \frac{X^*}{n}$ and thus
+\begin{equation*}
+    v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) - c = 0.
+\end{equation*}
+Therefore, $v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) = v\left(x^*\right) + x^*v'\left(x^*\right)$, which is a contradiction. The above argument precisely shows that at the Nash equilibrium, the usage of public resources always exceed what is socially optimal.
 \section{Dynamic Games of Complete Information}
 In static games, the players move independently and the strategy of one player will not affect the context in which another player would make decisions. However, there are many games where this is not true. For example, in a turn-based game, the sequence in which the players move makes a significant impact on the strategy of each player. Furthermore, such games consist of multiple stages and so a player has to observe the past actions in order to predict the best decision.
 
