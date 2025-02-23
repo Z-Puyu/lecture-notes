@@ -690,6 +690,78 @@ Surprisingly this uniqueness extends to groups of cardinality $3$.
         Sudoku.
     \end{proof}    
 \end{probox}
+In particular, the group of cardinality $3$ has the following multiplication table:
+\begin{center}
+    \begin{tabular}{c|ccc}
+        $G$ & $1$ & $a$ & $b$ \\
+        \hline
+        $1$ & $1$ & $a$ & $b$ \\
+        $a$ & $a$ & $b$ & $1$ \\
+        $b$ & $b$ & $1$ & $a$
+    \end{tabular}
+\end{center}
+By observation, it is clear that any subset of cardinality $2$ is not compatible with the binary operation on this group, which leads to the following conclusion:
+\begin{probox}{Subgroups of the Group of Cardinality $3$}{subgrp3}
+    Let $G$ be the group of cardinality $3$. If $H \leq G$, then either $H = \left\{1\right\}$ or $H = G$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+We can continue our exploration onto groups of cardinality $4$.
+\begin{probox}{Uniqueness of Groups of Cardinality $4$}{uniqueGrp4}
+    There exists exactly $2$ distinct groups of cardinality $4$ up to isomorphism.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+With some effort, we can construct the following multiplication tables for the $2$ groups of cardinality $4$:
+\begin{center}
+    \begin{tabular}{c|cccc}
+        $G_1$ & $1$ & $a$ & $b$ & $c$ \\
+        \hline
+        $1$ & $1$ & $a$ & $b$ & $c$ \\
+        $a$ & $a$ & $1$ & $c$ & $b$ \\
+        $b$ & $b$ & $c$ & $1$ & $a$ \\
+        $c$ & $c$ & $b$ & $a$ & $1$
+    \end{tabular}\qquad
+    \begin{tabular}{c|cccc}
+        $G_2$ & $1$ & $a$ & $b$ & $c$ \\
+        \hline
+        $1$ & $1$ & $a$ & $b$ & $c$ \\
+        $a$ & $a$ & $b$ & $c$ & $1$ \\
+        $b$ & $b$ & $c$ & $1$ & $a$ \\
+        $c$ & $c$ & $1$ & $a$ & $b$
+    \end{tabular}
+\end{center}
+Based on this, we can list down all the possible subgroups of the groups of cardinality $4$.
+\begin{probox}{Subgroups of the Groups of Cardinality $4$}{subgrp4}
+    Let $G_1$ and $G_2$ be groups of cardinality $4$ with multiplication tables:
+    \begin{center}
+        \begin{tabular}{c|cccc}
+            $G_1$ & $1$ & $a$ & $b$ & $c$ \\
+            \hline
+            $1$ & $1$ & $a$ & $b$ & $c$ \\
+            $a$ & $a$ & $1$ & $c$ & $b$ \\
+            $b$ & $b$ & $c$ & $1$ & $a$ \\
+            $c$ & $c$ & $b$ & $a$ & $1$
+        \end{tabular}\quad
+        \begin{tabular}{c|cccc}
+            $G_2$ & $1$ & $a$ & $b$ & $c$ \\
+            \hline
+            $1$ & $1$ & $a$ & $b$ & $c$ \\
+            $a$ & $a$ & $b$ & $c$ & $1$ \\
+            $b$ & $b$ & $c$ & $1$ & $a$ \\
+            $c$ & $c$ & $1$ & $a$ & $b$
+        \end{tabular},
+    \end{center}
+    then the only subgroups of $G_1$ are $\left\{1\right\}$, $\left\{1, a\right\}$, $\left\{1, b\right\}$, $\left\{1, c\right\}$, $G_1$ and the only subgroups of $G_2$ are $\left\{1\right\}$, $\left\{1, b\right\}$ and $G_2$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
 \section{Group Homomorphisms}
 Previously, we have seen how $S_{\Omega}$ and $S_n$ are essentially ``the same'' if $\abs{\Omega} = n$. This is exactly because of the fact that these groups have the same structure. We shall now formalise the notion of ``having the same structure''. In the context of groups, since every group can be completely defined by a binary operation, it is natural to define a structure-preserving transformation as one which preserves the binary operation.
 \begin{dfnbox}{Group Homomorphism}{homomorphic}
