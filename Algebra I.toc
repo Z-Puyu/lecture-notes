@@ -2,4 +2,10 @@
 \contentsline {section}{\numberline {1.1}Groups}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Permutations}{10}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Group Presentation}{16}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Group Homomorphisms}{16}{section.1.4}%
+\contentsline {section}{\numberline {1.4}Subgroups}{17}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Group Homomorphisms}{19}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Group Actions}{25}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Universal Properties}{31}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Cyclic Groups}{31}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Categories}{33}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Universal Properties}{36}{section.2.3}%

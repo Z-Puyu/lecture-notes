@@ -109,6 +109,11 @@
 \newtheorem*{remark}{Remark}
 \newtheorem{case}{Case}
 
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Forget}{\mathrm{Forget}}
+\newcommand{\cyclic}[1]{\left\langle#1\right\rangle}
+\newcommand{\kernel}[1]{\ker\left(#1\right)}
+\newcommand{\img}[1]{\mathrm{im}\left(#1\right)}
 \newcommand{\0}{\mathbf{0}}
 \newcommand{\1}{\mathbf{1}}
 \newcommand{\I}{\mathbfit{I}}
@@ -466,7 +471,7 @@ Notice that sometimes, if we apply a certain permutation repeatedly to a set, we
 \end{dfnbox}
 It is clear that all finite sets of cardinality $n$ are equinumerous to $S_n$, so it suffices to study the behaviour of $S_n$'s for all $n \in \N^+$. We first consider a special type of permutations which shift each element by one position.
 \begin{dfnbox}{Cycle}{cycle}
-    An {\color{red} \textbf{$m$-cycle}} on $S_n$ for some positive integer~$m \leq n$ is the permutation over $\left\{a_1, a_2, \cdots, a_m\right\} \subseteq S_n$ such that
+    Let $m \leq n$ be positive integers. An {\color{red} \textbf{$m$-cycle}} on $S_n$ is the permutation over $\left\{a_1, a_2, \cdots, a_m\right\} \subseteq S_n$ such that
     \begin{equation*}
         \sigma \colon a_i \mapsto \begin{cases}
             a_{i + 1} & \textrm{if } 1 \leq i \leq m - 1 \\
@@ -593,6 +598,98 @@ Roughly speaking, relations define how the generators can be combined together t
 \begin{dfnbox}{Presentation}{present}
     A {\color{red} \textbf{presentation}} of a group $G = \left\langle S \mid R\right\rangle$ is a set of generators $S$ and a set of relations~$R$ on $S$ such that any other relation on $S$ can be deduced from $R$.
 \end{dfnbox}
+\section{Subgroups}
+\begin{dfnbox}{Subgroup}{subgrp}
+    A {\color{red} \textbf{subgroup}} of a group $G$ is a subset $H \subseteq G$, denoted by $H \leq G$, such that 
+    \begin{itemize}
+        \item for all $x, y \in H$, we have $xy \in H$;
+        \item $1_G \in H$;
+        \item for all $x \in H$, we have $x^{-1} \in H$.
+    \end{itemize}
+    If $H \neq G$, then $H$ is said to be a {\color{red} \textbf{proper subgroup}} of $G$, denoted by $H < G$.
+\end{dfnbox}
+For every group $G$, the \textit{trivial subgroup} is $\left\{1_G\right\}$ and every group is known to be its own \textit{improper subgroup}.
+
+Clearly, the binary operation on $H$ must be compatible with that on $G$ if $H \leq G$.
+\begin{probox}{Equivalent Definition of Subgroups}{equivDefSubgrp}
+    If $\left(G, \star\right)$ is a group and $H \subseteq G$, then $H \leq G$ if and only if $\left(H, \star\right)$ is a group.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}    
+\end{probox}
+Since a subgroup lies entirely in a bigger group, there is a natural homomorphic structure between them.
+\begin{probox}{Inclusion Map is a Group Homomorphism}{incMap}
+    If $H \leq G$, then the canonical inclusion map $\iota \colon H \to G$ is a group homomorphism.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{probox}
+Subgroup relationship is obviously transitive.
+\begin{probox}{Transitivity of Subgroups}{transSubgrp}
+    If $H \leq G$ and $K \leq H$, then $K \leq G$.
+\end{probox}
+Now we study some conditions under which a subset becomes a subgroup.
+\begin{probox}{Subgroup Criterion}{subgrpCrite}
+    Let $G$ be a group and $H \subseteq G$, then $H \leq G$ if and only if $H \neq \varnothing$ and $xy^{-1} \in H$ for all~$x, y \in H$.
+    \tcblower
+    \begin{proof}
+        Suppose that $H \subseteq G$, then $1_G \in H$ and so $H \neq \varnothing$. For all $x, y \in H$, we have $y^{-1}$ and so $xy^{-1} \in H$. Suppose conversely that $H \neq \varnothing$ and $xy^{-1} \in H$ for all $x, y \in H$. Take some $a \in H \subseteq G$, then $1_G = aa^{-1} \in H$. Therefore, $a^{-1} = a1_G^{-1} = a1_G = a \in H$. This means that for all $a, b \in H$, we have $b^{-1} \in H$ and so $ab = a\left(b^{-1}\right)^{-1} \in H$. Therefore, we have $H \leq G$.
+    \end{proof}
+\end{probox}
+We examine the following structure with the criterion:
+\begin{probox}{Subgroups of Integers}{subgrpInt}
+    For each $n \in \Z$, define 
+    \begin{equation*}
+        n\Z \coloneqq \left\{nk \colon k \in \Z\right\} \subseteq \Z,
+    \end{equation*}
+    then every subgroup $H \leq \Z$ is such that $H = n\Z$ for some $n \in \Z$.
+    \tcblower
+    \begin{proof}
+        Let $H \leq \Z$ be a subgroup and take $n \coloneqq \min\left\{h \in H \colon h > 0\right\}$. We claim that for all $m \in \left\{h \in H \colon h > 0\right\}$, we have $n \mid m$. Suppose on contrary that there exists some $m \in \left\{h \in H \colon h > 0\right\}$ such that $n \nmid m$, then $m > n$ and so we can write
+        \begin{equation*}
+            m = nq + r \quad\textrm{for some } q, r \in \Z^+
+        \end{equation*}
+        where $0 < r < n$. Note that $-qn \in H$ and so 
+        \begin{equation*}
+            m + \left(-qn\right) = r \in \left[1, n - 1\right]
+        \end{equation*}
+        is a smaller positive integer than $n$ in $H$, which is a contradiction. Take any $h \in H$, then if $h \geq 0$, there exists some $k \in \N$ such that $h = nk$. Otherwise, $h < 0$ and so 
+        \begin{equation*}
+            h = -\left(-h\right) = nk'
+        \end{equation*}
+        for some $k' \in \Z^-$. Therefore, $H \subseteq n\Z$. Clearly, this implies that for all $k \in \Z^+$, we have $nk \in H$. Therefore, 
+    \end{proof}
+\end{probox}
+In finite subsets, it turns out that the existence of inverses becomes free.
+\begin{probox}{Finite Subgroup Criterion}{finiteSubgrpCrite}
+    Let $G$ be a group. A finite subseteq $H \subseteq G$ is a subgroup of $G$ if and only if $H \neq \varnothing$ and~$xy \in H$ for all $x, y \in H$.
+    \tcblower
+    \begin{proof}
+        The forward direction is trivial. Take some $y \in H$, then clearly $y^a \in H$ for all~$a \in \Z^+$. Let $\sigma_y \colon Z^+ \to H$ be defined by $\sigma_y\left(a\right) = y^a$, then since $H$ is finite, $\sigma_y$ is not injective. Therefore, without loss of generality, there exist $a, b \in Z^+$ with $a < b$ such that $\sigma_y\left(a\right) = \sigma_y\left(b\right)$. Therefore, 
+        \begin{equation*}
+            1_G = y^by_a^{-1} = y^{b - a} \in H.
+        \end{equation*}
+        Notice that $b - a - 1 \in \N$, so $y^{b - a - 1} \in H$. Notice that $yy^{b - a - 1} = y^{b - a - 1}y = y^{b - a} = 1_G$, so $y^{-1} = y^{b - a - 1} \in H$.
+    \end{proof}
+\end{probox}
+Trivially, the trivial group is the only group of cardinality $1$ and it has a unique subgroup (which is itself). More interestingly, we can show that there exists a unique group of cardinality $2$.
+\begin{probox}{Uniqueness of Group of Cardinality $2$}{uniqueGrp2}
+    There exists a unique group of cardinality $2$ up to isomorphism.
+    \tcblower
+    \begin{proof}
+        Let $G \coloneqq \left\{1, a\right\}$ with $a^2 = 1$, then $G$ is clearly a group. Suppose on contrary that $G' \coloneqq \left\{1, a'\right\}$ is a group with $G' \neq G$, then ${a'}^2 \neq 1$, which implies that ${a'}^2 = a'$ and so $a' = 1$. However, this means that $\abs{G'} = 1$, which is a contradiction.
+    \end{proof}
+\end{probox}
+Surprisingly this uniqueness extends to groups of cardinality $3$.
+\begin{probox}{Uniqueness of Group of Cardinality $3$}{uniqueGrp3}
+    There exists a unique group of cardinality $3$ up to isomorphism.
+    \tcblower
+    \begin{proof}
+        Sudoku.
+    \end{proof}    
+\end{probox}
 \section{Group Homomorphisms}
 Previously, we have seen how $S_{\Omega}$ and $S_n$ are essentially ``the same'' if $\abs{\Omega} = n$. This is exactly because of the fact that these groups have the same structure. We shall now formalise the notion of ``having the same structure''. In the context of groups, since every group can be completely defined by a binary operation, it is natural to define a structure-preserving transformation as one which preserves the binary operation.
 \begin{dfnbox}{Group Homomorphism}{homomorphic}
@@ -636,7 +733,7 @@ Intuitively, since a homomorphism does not change the group's structure, the gro
         Left to the reader as an exercise.
     \end{proof}
 \end{probox}
-Let us examine two simple groups, $S_2$ and $S_3$, and try to list down all homomorphisms between them.
+Let us examine two simple groups, $S_2$ and $S_3$, and try to list down all homomorphisms between them. Let $\varphi \colon S_2 \to S_3$ be a homomorphism, then by Proposition \ref{pro:propHom}, we must have $\varphi\left(1_{S_2}\right) = 1_{S_3}$. Therefore, it suffices to fix $\varphi\bigl(\left(12\right)\bigr)$. Since $\left(12\right)^2 = 1$, we need to fix~$b \in S_3$ with $b^2 = 1$, which means that $b = 1_{S_3}$ or $\left(12\right)$ or $\left(13\right)$ or $\left(23\right)$. The other direction requires a bit more working.
 \begin{probox}{Homomorphisms from $S_3$ to $S_2$}{S3S2Hom}
     Any group homomorphism from $S_3$ to $S_2$ is either the trivial identity map or the sign map~$\mathrm{sgn} \colon S_3 \to S_2$ such that 
     \begin{equation*}
@@ -645,11 +742,683 @@ Let us examine two simple groups, $S_2$ and $S_3$, and try to list down all homo
             \left(12\right) & \quad\textrm{if } a = \left(12\right) \textrm{ or } \left(23\right) \textrm{ or } \left(13\right)
         \end{cases}.
     \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\psi \colon S_3 \to S_2$ be a homomorphism. We claim that 
+        \begin{equation*}
+            \psi\bigl(\left(132\right)\bigr) = \psi\bigl(\left(123\right)\bigr) = 1.
+        \end{equation*}
+        Notice that $\left(123\right)^3 = 1$, so $\psi\bigl(\left(123\right)\bigr)^3 = 1 \in S_2$, which implies that~$\psi\bigl(\left(123\right)\bigr) = 1$ because $\left(12\right)^3 = \left(12\right) \neq 1$. If $\mathrm{sgn} \neq \psi$, then there exists $a \in \left\{\left(12\right), \left(23\right), \left(13\right)\right\}$ such that~$\psi\left(a\right) \neq \left(12\right)$. Without loss of generality, assume that $a = \left(12\right)$, then~$\psi\bigl(\left(12\right)\bigr) = 1$. Therefore,
+        \begin{align*}
+            \psi\bigl(\left(13\right)\bigr) & = \psi\bigl(\left(13\right)\left(12\right)\bigr) = \psi\bigl(\left(123\right)\bigr) = 1, \\
+            \psi\bigl(\left(23\right)\bigr) & = \psi\bigl(\left(23\right)\left(12\right)\bigr) = \psi\bigl(\left(123\right)\bigr) = 1.
+        \end{align*}
+        Therefore, $\psi$ is the trivial map. Therefore, every homomorphism from $S_3$ to $S_2$ is either trivial or $\mathrm{sgn}$.
+    \end{proof}
 \end{probox}
-\begin{dfnbox}{Isomorphism}{isomorphic}
-    An {\color{red} \textbf{isomorphism}} from $G$ to $H$ is a homomorphism $\varphi \colon G \to H$ such that there exists a homomorphism $\psi \colon H \to G$ such that $\psi \circ \varphi = \mathrm{id}_G$ and $\varphi \circ \psi = \mathrm{id}_H$
+Like linear transformations, group homomorphisms come with the ideas of ``kernels'' and ``images''.
+\begin{dfnbox}{Kernel and Image}{kerIm}
+    Let $\varphi \colon G \to H$ be a group homomorphism, then the {\color{red} \textbf{kernel}} of $\varphi$ is 
+    \begin{equation*}
+        \kernel{\varphi} \coloneqq \left\{g \in G \colon \varphi\left(g\right) = 1_H\right\}
+    \end{equation*}
+    and the {\color{red} \textbf{image}} of $\varphi$ is 
+    \begin{equation*}
+        \img{\varphi} \colon \left\{\varphi\left(g\right) \in H \colon g \in G\right\}.
+    \end{equation*}
 \end{dfnbox}
-\begin{probox}{Isomorphism Is Bijective}{bijectiveIsomorphism}
-    A homomorphism $\varphi \colon G \to H$ is an isomorphism if and only if it is bijective.
+The following result is clearly true:
+\begin{probox}{Kernels and Images as Subgroups}{kerImSubgrp}
+    Let $\varphi \colon G \to H$ be a group homomorphism, then $\kernel{\varphi} \leq G$ and $\img{\varphi} \leq H$.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
 \end{probox}
+Intuitively, a homomorphism being bijective is equivalent to its image being the same as the co-domain. More specifically, we have the following characterisation:
+\begin{probox}{Kernel and Image Characterisation of Isomorphisms}{isoCharKerIm}
+    Let $\varphi \colon G \to H$ be a group homomorphism, then 
+    \begin{enumerate}
+        \item $\varphi$ is injective if and only if $\kernel{\varphi} = \left\{1\right\}$;
+        \item $\varphi$ is surjective if and only if $\img{\varphi} = H$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        $2$ is trivial so it suffices to prove $1$. Suppose that $\varphi$ is injective. Take $x \in G$ such that $\varphi\left(x\right) = 1$, then 
+        \begin{equation*}
+            \varphi\left(x\right) = 1 = \varphi\left(1\right),
+        \end{equation*}
+        which implies that $x = 1$ and so we have $\kernel{\varphi} = \left\{1\right\}$. Suppose conversely that~$\kernel{\varphi} = \left\{1\right\}$, we show that $\varphi$ is injective by considering the contrapositive statement. Suppose that $\varphi$ is not injective, then there exists $x, y \in G$ with $x \neq y$ but~$\varphi\left(x\right) = \varphi\left(y\right)$. Therefore,
+        \begin{equation*}
+            1 = \varphi\left(x\right)^{-1}\varphi\left(x\right) = \varphi\left(x\right)^{-1}\varphi\left(y\right) = \varphi\left(x^{-1}y\right).
+        \end{equation*}
+        Since $x \neq y$, we have $x^{-1} \neq y^{-1}$ and so $x^{-1}y \neq 1$. Therefore, $\kernel{\varphi} \neq \left\{1\right\}$.
+    \end{proof}
+\end{probox}
+Fix $n \in \Z$, define the ``multiplication by $n$'' map by $m \mapsto nm$. One may check that this is a group homomorphism due to distributive law of multiplication. Clearly, 
+\begin{equation*}
+    \kernel{m \mapsto nm} = \begin{cases}
+        0 & \quad\textrm{if } n \neq 0 \\
+        \Z & \quad\textrm{otherwise}
+    \end{cases}
+\end{equation*}
+and 
+\begin{equation*}
+    \img{m \mapsto nm} = n\Z \coloneqq \left\{nk \colon k \in \Z\right\}.
+\end{equation*}
+As a side note, such maps have covered all group homomorphisms over the addition group on $\Z$.
+\begin{probox}{\small Multiplication Is the Only Group Homomorphism over $\left(\Z, +\right)$}{multGrpHomoZ}
+    For every group homomorphism $\varphi \colon \Z \to \Z$, there exists some $n \in \Z$ such that 
+    \begin{equation*}
+        \varphi\left(m\right) = nm \qquad\textrm{for all } m \in \Z.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Take $n \coloneqq \varphi\left(1\right)$. For all $m \geq 0$, we have 
+        \begin{align*}
+            \varphi\left(m\right) & = \varphi\left(\sum_{i = 1}^{m}1\right) \\
+            & = \sum_{i = 1}^{m}\varphi\left(1\right) \\
+            & = \sum_{i = 1}^{m}n \\
+            & = nm.
+        \end{align*}
+        For all $m < 0$, we have 
+        \begin{align*}
+            \varphi\left(m\right) & = \varphi\bigl(-\left(-m\right)\bigr) \\
+            & = -\varphi\left(-m\right) \\
+            & = -n\left(-m\right) \\
+            & = nm.
+        \end{align*}
+    \end{proof}
+\end{probox}
+Since homomorphisms are mappings, it is natural to talk about their bijectivity. Intuitively, a ``bijective homomorphism'' establishes an equivalent relationship to transform between the groups.
+\begin{dfnbox}{Group Isomorphism}{isomorphic}
+    An {\color{red} \textbf{isomorphism}} from $G$ to $H$ is a homomorphism $\varphi \colon G \to H$ such that there exists a homomorphism $\psi \colon H \to G$ such that $\psi \circ \varphi = \mathrm{id}_G$ and $\varphi \circ \psi = \mathrm{id}_H$. Groups $G$ and~$H$ are said to be {\color{red} \textbf{isomorphic}}, denoted by $G \cong H$.
+\end{dfnbox}
+Let us justify our intuition that an isomorphism is nothing but a bijective homomorphism.
+\begin{probox}{Characterisation of Group Isomorphism}{bijectiveIsomorphism}
+    A homomorphism $\varphi \colon G \to H$ is an isomorphism if and only if it is bijective.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:BijEquivInv}.
+    \end{proof}
+\end{probox}
+Isomorphic groups are essentially the ``different forms'' of the ``same group'', so their binary operations are compatible with each other and underlying sets coincide. Naturally, being isomorphic is an equivalence relation.
+\begin{probox}{Properties of Isomorphic Groups}{equiIso}
+    For any groups $G$, $H$ and $K$, 
+    \begin{itemize}
+        \item $G \cong G$;
+        \item if $G \cong H$, then $H \cong G$;
+        \item if $G \cong H$ and $H \cong K$, then $G \cong K$.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        It is worth noting that although $\cong$ is reflexive, symmetric and transitive, it is not an equivalence relation because there is no ``set of all sets'' and so there is no ``set of all groups''.
+    \end{remark}
+\end{notebox}
+Recall that we have stated that $S_n$ and $S_{\Omega}$ are essentially the same if $\abs{\Omega} = n$. This is precisely because that $S_n \cong S_{\Omega}$. In fact, we can prove a more general result.
+\begin{probox}{Isomorphism between Symmetric Groups}{symGrpIso}
+    Let $\Delta$ and $\Omega$ be sets and $\theta \colon \Delta \to \Omega$ be a bijection, then the map $\varphi_{\theta} \colon S_{\Delta} \to S_{\Omega}$ defined by 
+    \begin{equation*}
+        \varphi_{\theta}\left(\sigma\right) = \theta \circ \sigma \circ \theta^{-1}
+    \end{equation*}
+    is a group isomorphism.
+    \tcblower
+    \begin{proof}
+        For any $\tau, \sigma \in S_{\Delta}$, we have 
+        \begin{align*}
+            \varphi_{\theta}\left(\tau \circ \sigma\right) & = \theta \circ \left(\tau \circ \sigma\right) \circ \theta^{-1} \\
+            & = \theta \circ \tau \circ \theta^{-1} \circ \theta \circ \sigma \circ \theta^{-1} \\
+            & = \varphi_{\theta}\left(\tau\right) \circ \varphi_{\theta}\left(\sigma\right).
+        \end{align*}
+        Therefore, $\varphi_{\theta}$ is a homomorphism. Similarly, $\varphi_{\theta^{-1}} \colon S_{\Omega} \to S_{\Delta}$ is a group homomorphism. Note that for each $\sigma \in S_{\Omega}$
+        \begin{align*}
+            \left(\varphi_{\theta} \circ \varphi_{\theta}^{-1}\right)\left(\sigma\right) & = \varphi_{\theta}\bigl(\varphi_{\theta^{-1}}\left(\sigma\right)\bigr) \\
+            & = \theta \circ \left(\theta^{-1} \circ \sigma \circ \theta\right) \circ \theta^{-1} \\
+            & = \sigma,
+        \end{align*} 
+        so $\varphi_{\theta} \circ \varphi_{\theta^{-1}} = \mathrm{id}_{S_{\Omega}}$. Similarly, $\varphi_{\theta^{-1}} \circ \varphi_{\theta} = \mathrm{id}_{S_{\Delta}}$. Therefore, by Proposition \ref{pro:BijEquivInv}, $\varphi_{\theta}$ is bijective and by Proposition \ref{pro:bijectiveIsomorphism}, this means that $\varphi_{\theta}$ is a group isomorphism.
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        In general, if $\Delta, \Omega$ and $\Sigma$ are sets and $\theta \colon \Delta \to \Omega$, $\eta \colon \Omega \to \Sigma$ are bijections, then $\varphi_{\theta \circ \eta} = \varphi_{\theta} \circ \varphi_{\eta}$. Furthermore, $\varphi_{\mathrm{id}_{\Delta}} = \mathrm{id}_{S_{\Delta}}$.
+    \end{remark}
+\end{notebox}
+\section{Group Actions}
+\begin{dfnbox}{Group Action}{grpAction}
+    A {\color{red} \textbf{left group action}} of a group $G$ on a set $A$ is a map $\cdot \colon G \times A \to A$ such that for all~$g_1, g_2 \in G$ and all $a \in A$,
+    \begin{itemize}
+        \item $g_1 \cdot \left(g_2 \cdot a\right) = \left(g_1g_2\right) \cdot a$, and
+        \item $1_G \cdot a = a$.
+    \end{itemize}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A \textit{right group action} is defined analogously. Clearly, for Abelian groups, the left and right actions are equivalent.
+    \end{remark}
+\end{notebox}
+Let $G$ be a group with a right group action $\cdot \colon A \times G \to A$. Define the ``opposite'' group of~$G$ to be $G^{\mathrm{op}} \coloneqq \left(G, \star\right)$ such that 
+\begin{equation*}
+    x \star y = yx \qquad\textrm{for all } x, y \in G.
+\end{equation*}
+Now it is clear that $g \diamond a \coloneqq a \cdot g$ is a left group action. Therefore, in fact it suffices to study left group actions.
+\begin{probox}{Group Actions Induce Group Homomorphisms}{grpActionHomo}
+    Let $G$ be a group and $A$ be a set with a left group action. For each $g \in G$, define the map~$\sigma_g \colon A \to A$ such that~$\sigma_g\left(a\right) = ga$, then 
+    \begin{itemize}
+        \item $\sigma_g \in S_A$ is bijective, and 
+        \item if $\varphi \colon G \to S_A$ is such that $\varphi\left(g\right) = \sigma_g$, then $\varphi$ is a group homomorphism.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Observe that for any $a \in A$, we have 
+        \begin{align*}
+            \left(\sigma_g \circ \sigma_{g^{-1}}\right)\left(a\right) & = g^{-1}\left(ga\right) = \left(g^{-1}g\right)a = 1_Ga = a.
+        \end{align*}
+        Similarly, $\left(\sigma_{g^{-1}} \circ \sigma_{g}\right)\left(a\right) = a$ for all $a \in A$, and so $\sigma_g \circ \sigma_{g^{-1}} = \sigma_{g^{-1}} \circ \sigma_{g} = \mathrm{id}_A$. Therefore, by Proposition \ref{pro:BijEquivInv}, $\sigma_g$ is bijective and so $\sigma_g \in S_A$.
+        \\\\
+        Take any $g, h \in G$, then for any $a \in A$, we have 
+        \begin{align*}
+            \varphi\left(gh\right)\left(a\right) & = \sigma_{gh}\left(a\right) = \left(gh\right)a = g\left(ha\right) = \sigma_g\bigl(\sigma_h\left(a\right)\bigr) = \bigl(\varphi\left(g\right) \circ \varphi\left(h\right)\bigr)\left(a\right).
+        \end{align*}
+        Therefore, $\varphi\left(gh\right) = \varphi\left(g\right)\varphi\left(h\right)$ for any $g, h \in G$ and so $\varphi$ is a group homomorphism.
+    \end{proof}
+\end{probox}
+In the above result, $\sigma_g$ is essentially an evaluation map that re-arranges the set $A$ through a bijection by letting a particular element $g$ in the group act on $A$. Therefore, each element~$g$ induces a permutation on $A$ via a left group action.
+\begin{dfnbox}{Permutation Representation}{permRep}
+    Let $G$ be a group and $A$ be a set, then for each left group action $\left(g, a\right) \mapsto ga$, the map~$\varphi \colon G \to S_A$ such that $\varphi\left(g\right)\left(a\right) = ga$ for all $\left(g, a\right) \in G \times A$ is called the {\color{red} \textbf{permutation representation}} of the left group action.
+\end{dfnbox}
+Note that now, for each fixed group action of $G$ on $A$, there is a correspondence between each element in $G$ and the permutations of $A$. In fact, we can prove further that each element is linked to a unique permutation.
+\begin{probox}{Injectivity of Permutation Representations}{injPerm}
+    The permutation representation for every left group action is injective.
+\end{probox}
+There is naturally a way to map each group action to the correspondence.
+\begin{probox}{Group Actions and Permutation Representations}{correspondActionAndPerm}
+    Let $G$ be a group and $A$ be a set. Define $\mathcal{L}_{G, A}$ to be the set of all left group actions from $G$ to $A$ and $\mathcal{P}_{G, A}$ to be the set of all permutation representations, then $\Phi \colon \mathcal{L}_{G, A} \to \mathcal{P}_{G, A}$ defined by $\Phi\left(\alpha\right)\left(g\right) = \sigma_g$ is bijective.
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Basically, $\Phi$ takes in a group action and outputs a representation that maps each element in $G$ to a permutation of $A$.
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Cayley's Theorem}{Cayley}
+    For every group $G$, there exists an injective group homomorphism $\varphi \colon G \to S_G$. If $G$ is finite of order $n$, then there exists an injective group homomorphism $\varphi \colon G \to S_n \cong S_G$.
+\end{thmbox}
+Observe that $\bigl(\varphi\left[G\right], \circ\bigr)$ is a group and $\varphi\left[G\right] \subseteq S_G$. Therefore, in fact every group $G$ is isomorphic to a subgroup of $S_G$ and every finite group $G$ is isomorphic to some $S_n$ for some $n \in \Z^+$. This implies that in theory, symmetric groups cover everything about group theory.
+
+For each $g \in G$, we consider a mapping over itself. In particular, picking any element $a$, we first apply a left action by $g$, followed by a right action by $g^{-1}$. We can see the mapping $a \mapsto gag^{-1} \in G$ is indeed a group action.
+\begin{probox}{Group Action over a Group}{conjGrpAct}
+    Let $G$ be a group, then for each $g \in G$, the map $\alpha_g \colon G \to G$ defined by $\alpha_g\left(a\right) = gag^{-1}$ is a group action.
+\end{probox}
+Such a group action results in the notion of \textit{conjugates}. 
+\begin{dfnbox}{Conjugate}{conj}
+    Let $G$ be a group, then for each pair $\left(a, g\right) \in G \times G$, the {\color{red} \textbf{$g$-conjugate}} of $a$ is $gag^{-1} \in G$. The {\color{red} \textbf{conjugacy class}} of $a$ is defined as the set 
+    \begin{equation*}
+        \left\{gag^{-1} \in G \colon g \in G\right\}.
+    \end{equation*}
+    For each pair $\left(A, g\right) \in \mathcal{P}\left(G\right) \times G$, the {\color{red} \textbf{$g$-conjugate}} of $A$ is defined as 
+    \begin{equation*}
+        gAg^{-1} \coloneqq \left\{gag^{-1} \in G \colon a \in A\right\}.
+    \end{equation*}
+\end{dfnbox}
+
+Things become interesting when this conjugate action happens to be an inclusion map.
+\begin{dfnbox}{Centraliser}{centraliser}
+    Let $G$ be a group, the element $g \in G$ is said to {\color{red} \textbf{centralise}} $a \in G$ if $gag^{-1} = a$. The {\color{red} \textbf{centraliser}} of $a \in G$ is defined as the set 
+    \begin{equation*}
+        C_G\left(a\right) \coloneqq \left\{g \in G \colon gag^{-1} = a\right\}.
+    \end{equation*}
+    $g$ is said to {\color{red} \textbf{centralise}} $A \subseteq G$ if $gag^{-1} = a$ for all $a \in A$. The {\color{red} \textbf{centraliser}} of $A \subseteq G$ is defined as the set 
+    \begin{equation*}
+        C_G\left(A\right) \coloneqq \left\{g \in G \colon gag^{-1} = a \textrm{ for all } a \in A\right\}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Clearly, $g \in G$ centralises $a \in G$ if and only if $ga = ag$.
+    \end{remark}
+\end{notebox}
+It is possible that some $g \in G$ centralises the entire group.
+\begin{dfnbox}{Centre}{centre}
+    The {\color{red} \textbf{centre}} of a group $G$ is defined as 
+    \begin{equation*}
+        Z\left(G\right) \coloneqq \left\{g \in G \colon gag^{-1} \textrm{ for all } a \in G\right\}.
+    \end{equation*}
+\end{dfnbox}
+Similarly, we can consider the mapping $A \mapsto gAg^{-1}$ and focus on the case where this map is an inclusion map.
+\begin{dfnbox}{Normaliser}{normaliser}
+    Let $G$ be a group and $A \subseteq G$ be a subset. An element $g \in G$ is said to {\color{red} \textbf{normalise}} $A$ if~$gAg^{-1} = A$. The {\color{red} \textbf{normaliser}} of $A$ is defined as the set
+    \begin{equation*}
+        N_G\left(A\right) \coloneqq \left\{g \in G \colon gAg^{-1} = A\right\}.
+    \end{equation*}
+\end{dfnbox}
+A normaliser of $A$ might not be a centraliser for any $a \in A$ because the normalisation operation could be a permutation of $A$. However, if $g \in G$ centralises every $a \in A$, then $g$ normalises $A$. Intuitively, this means that 
+\begin{equation*}
+    \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right).
+\end{equation*}
+However, the converse may not hold. Formally, we have the following properties:
+\begin{probox}{Relationship between Centraliser and Normaliser}{centraliserNormaliser}
+    For any group $G$, 
+    \begin{enumerate}
+        \item $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$ for all $a \in G$;
+        \item $C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right)$;
+        \item $Z\left(G\right) = C_G\left(G\right) = \bigcap_{a \in G}C_G\left(a\right)$;
+        \item $N_G\left(G\right) = G$;
+        \item $C_G\left(1\right) = G$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{align*}
+            C_G\left(a\right) & = \left\{g \in G \colon gag^{-1} = a\right\}, \\
+            N_G\left(\left\{a\right\}\right) & = \left\{g \in G \colon g\left\{a\right\}g^{-1} = \left\{a\right\}\right\}.
+        \end{align*}
+        Observe that $g\left\{a\right\}g^{-1} = \left\{a\right\}$ if and only if $gag^{-1} = a$, so $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$. Take any $g \in C_G\left(A\right)$, then $gag^{-1} = a$ for all $a \in A$, and so $g \in C_G\left(a\right)$ for every $a \in A$ and~$g \in N_G\left(A\right)$, which means that $C_G\left(A\right) \subseteq \bigcap_{a \in A}C_G\left(a\right)$ and $C_G\left(A\right) \subseteq N_G\left(A\right)$. Take any $g \in \bigcap_{a \in A}C_G\left(a\right)$, then $gag^{-1} = a$ for each $a \in A$ and so $g \in C_G\left(A\right)$. Therefore, we have $\bigcap_{a \in A}C_G\left(a\right) \subseteq C_G\left(A\right)$ and so 
+        \begin{equation*}
+            C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right).
+        \end{equation*}
+        $3$ is trivial from the definitions. To show $4$, it suffices to prove that $G \subseteq N_G\left(G\right)$. Take any $g \in G$. For any $x \in G$, define $a \coloneqq g^{-1}xg \in G$, then clearly $x = gag^{-1}$ and so we have~$x \in gGg^{-1}$. Therefore, $G \subseteq gGg^{-1}$ and so $gGg^{-1} = G$. Therefore, we have~$g \in N_G\left(G\right)$. To show $5$, it suffices to prove that $G \subseteq C_G\left(1\right)$. For any $g \in G$, it is clear that $g1g^{-1} = gg^{-1} = 1$, so $g \in C_G\left(1\right)$, which implies that $G \subseteq C_G\left(1\right)$.
+    \end{proof}
+\end{probox}
+It is obvious that if $G$ is an Abelian group, then every element of $G$ centralises everything in $G$. This leads to a series of interesting and important properties.
+\begin{probox}{Centre Characterisation of Abelian Groups}{AbelianCentre}
+    For every group $G$, the followings are equivalent:
+    \begin{enumerate}
+        \item $G$ is Abelian;
+        \item $Z\left(G\right) = G$;
+        \item $C_G\left(a\right) = G$ for all $a \in G$;
+        \item $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Suppose that $G$ is Abelian, to show that $Z\left(G\right) = G$, it suffices to prove that~$G \subseteq Z\left(G\right)$. Take any $g \in G$, then for all $a \in G$, we have $ga = ag$ and so~$gag^{-1} = a$, which means that $g \in Z\left(G\right)$. Therefore, $G \subseteq Z\left(G\right)$ and so $Z\left(G\right) = G$. 
+        \\\\
+        Suppose that $Z\left(G\right) = G$, for any $a \in G$, to show that $C_G\left(a\right) = G$, it suffices to prove that $G \subseteq C_G\left(a\right)$. Take any $g \in G \subseteq Z\left(G\right)$, then $gag^{-1} = a$ for all $a \in G$. Therefore, $g \in C_G\left(a\right)$ for all $a \in G$. Therefore, $G \subseteq C_G\left(a\right)$ and so $C_G\left(a\right) = G$ for all~$a \in G$.
+        \\\\
+        Suppose that $C_G\left(a\right) = G$ for all $a \in G$. Take any $A \subseteq G$. By Proposition \ref{pro:centraliserNormaliser}, we already know that $C_G\left(A\right) \subseteq N_G\left(A\right)$. It is clear that $N_G\left(A\right) \subseteq G$. Fix some~$a \in A$, then $G = C_G\left(a\right) \subseteq C_G\left(A\right)$, which means that 
+        \begin{equation*}
+            C_G\left(A\right) \subseteq N_G\left(A\right) \subseteq G \subseteq C_G\left(A\right),
+        \end{equation*}
+        and so $C_G\left(A\right) = N_G\left(A\right) = G$. 
+        \\\\
+        Suppose that $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$. Take $A = G$, then for any~$g \in G$, since $g \in G = C_G\left(G\right)$, we have $gag^{-1} = a$ for all $a \in G$, and so $ga = ag$. Therefore, $G$ is Abelian.
+    \end{proof}
+\end{probox}
+The following proposition shows that every centraliser or normaliser is a subgroup.
+\begin{probox}{Centraliser and Normaliser as Subgroups}{subgrpCentraliserNormaliser}
+    Let $G$ be a group. For all $A \subseteq G$, we have $C_G\left(A\right), N_G\left(A\right) \leq G$.
+    \tcblower
+    \begin{proof}
+        For every $A \subseteq G$, we have $1a1^{-1} = a$ for all $a \in A$ and $1A1^{-1} = A$, so we have~$1 \in C_G\left(A\right)$ and $1 \in N_G\left(A\right)$. This means that $C_G\left(A\right), N_G\left(A\right) \neq \varnothing$. Take any~$g_1, g_2 \in C_G\left(A\right)$, then 
+        \begin{equation*}
+            g_1ag_1^{-1} = a \quad\textrm{and}\quad g_2ag_2^{-1} = a
+        \end{equation*}
+        for all $a \in A$. Consider 
+        \begin{equation*}
+            \left(g_1g_2^{-1}\right)a\left(g_1g_2^{-1}\right)^{-1} = g_1g_2^{-1}ag_2g_1^{-1} = a,
+        \end{equation*}
+        so $g_1g_2^{-1} \in C_G\left(A\right)$. By Proposition \ref{pro:subgrpCrite}, $C_G\left(A\right) \leq G$. Similarly, $N_G\left(A\right) \leq G$.
+    \end{proof}
+\end{probox}
+\chapter{Universal Properties}
+\section{Cyclic Groups}
+\begin{dfnbox}{Cyclic Subgroup}{cyclicSubGrp}
+    Let $G$ be a group. For any $x \in G$, the {\color{red} \textbf{cyclic subgroup}} of $G$ generated by $x$ is the subset 
+    \begin{equation*}
+        \left\langle x \right\rangle \coloneqq \left\{x^n \colon n \in \Z\right\}.
+    \end{equation*}
+    If there exists some $g \in G$ such that $\left\langle g \right\rangle = G$, then $G$ is said to be {\color{red} \textbf{cyclic}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In the above definition, the element $g \in G$ with $\left\langle g \right\rangle = G$ is not unique in general. For example, $\left\langle g \right\rangle = \left\langle g^{-1} \right\rangle$ for all $g \in G$.
+    \end{remark}
+\end{notebox}
+Let us consider some simple examples. First, $\left(\Z, +\right)$ is clearly cyclic because $\Z = \left\langle 1 \right\rangle$. It is easy to see that all cyclic groups are Abelian, so groups like $S_3$ and $D_8$ are not cyclic.
+\begin{probox}{Cyclic Groups Are Abelian}{cyclicAbel}
+    Every cyclic group is Abelian.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{probox}
+Note that it is possible that $x^a = x^b$ in a cyclic group for $a \neq b$. In such cases, a cyclic group could be finite. Now, an interesting question is whether we can construct cyclic groups of arbitrary order. The following construction is useful:
+\begin{dfnbox}{Residue Class}{residueClass}
+    Let $n \in \Z$. For every $a \in \Z$, the set 
+    \begin{equation*}
+        \widebar{a} \coloneqq a + n\Z = \left\{a + kn \colon k \in \Z\right\}
+    \end{equation*}
+    is called a {\color{red} \textbf{residue class}} of $a$ modulo $n$. We denote 
+    \begin{equation*}
+        \Z \slash n\Z \coloneqq \left\{\widebar{a} \colon a \in \Z\right\}.
+    \end{equation*}
+\end{dfnbox}
+It is clear that for any $x, y \in \widebar{a}$, we have $x \equiv y \mod n$. Therefore, $\Z \slash n\Z$ is intuitively the set of all equivalence classes of $\Z$ modulo $n$. This leads to the following result:
+\begin{probox}{Cardinality of Residue Class}{cardResidueClass}
+    For every $n \in \N$, we have $\abs{\Z \slash n\Z} = n$.
+    \tcblower
+    \begin{proof}
+        Define $A \coloneqq \left\{0, 1, 2, \cdots, n - 1\right\}$ and $f \colon A \to \Z \slash n\Z$ by $f\left(a\right) = \widebar{a}$. Let $a, b \in A$ be such that $f\left(a\right) = f\left(b\right)$, then $\widebar{a} = \widebar{b}$. This means that $a \in \widebar{b}$ and so there exists some $k \in \Z$ such that $a = b + kn$. However, $0 \leq a, b < n$, so $k = 0$ and so $a = b$. Therefore, $f$ is injective. Take any $\widebar{a} \in \Z \slash n\Z$. Note that there exists some $q \in \Z$ and~$r \in \left\{0, 1, 2, \cdots, n - 1\right\}$ such that $a = qn + r$. Take any $x \in \widebar{a}$, then there exists some $k_1 \in \Z$ such that 
+        \begin{equation*}
+            x = a + kn = \left(q + k\right)n + r \in \widebar{r}
+        \end{equation*}
+        and so $\widebar{a} \subseteq \widebar{r}$. Take any $y \in \widebar{r}$, then there exists some $k_2 \in \Z$ such that 
+        \begin{equation*}
+            y = r + kn = a + \left(k - q\right)n \in \widebar{a}
+        \end{equation*}
+        and so $\widebar{r} \subseteq \widebar{a}$. Therefore, $\widebar{a} = \widebar{r} = f\left(r\right)$ and so $f$ is surjective. Therefore, $f$ is a bijection and so $\abs{\Z \slash n\Z} = \abs{A} = n$.
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Combining Propositions \ref{pro:cardConjClass} and \ref{pro:finiteField}, there exists a bijection $\Z \slash p\Z \to \F_p$ if $p \in \Z$ is a prime.
+    \end{remark}
+\end{notebox}
+The next theorem shows that in fact $\Z \slash n\Z$ can be used to construct a cyclic group for every~$n \in \N$.
+\begin{thmbox}{Existence of Cyclic Groups of Arbitrary Order}{existsCycGrp}
+    For every $n \in \N$, there exists a cyclic group of order $n$.
+    \tcblower
+    \begin{proof}
+        Define 
+        \begin{equation*}
+            \widebar{a} + \widebar{b} = \widebar{a + b}.
+        \end{equation*}
+        It is clear that $\widebar{a + b} \in \Z \slash n\Z$ for any $a, b \in \Z$. Note that 
+        \begin{equation*}
+            \widebar{a} + \widebar{0} = \widebar{0} + \widebar{a} = \widebar{a},
+        \end{equation*}
+        so $\widebar{0}$ is the identity. Moreover, for each $a \in \Z$, we have 
+        \begin{equation*}
+            \widebar{a} + \widebar{-a} = \widebar{-a} + \widebar{a} = \widebar{0},
+        \end{equation*}
+        so $\widebar{-a} = \widebar{a}^{-1}$ for all $a \in \Z$. Therefore, $\left(\Z \slash n\Z, +\right)$ is a group for all $n \in \Z$. For every~$\widebar{k} \in \Z \slash n\Z$ with $k \geq 0$, we have
+        \begin{equation*}
+            \widebar{k} = \sum_{i = 1}^{k}\widebar{1} = k \cdot \widebar{1}.
+        \end{equation*} 
+        For each $k \in \Z^-$, we have 
+        \begin{equation*}
+            \widebar{k} = \widebar{-k}^{-1} = -\left(-k \cdot \widebar{1}\right) = k \cdot \widebar{1}.
+        \end{equation*}
+        Therefore, $\Z \slash n\Z = \left\langle \widebar{1} \right\rangle$ and is a cyclic group of order $n$.
+    \end{proof}
+\end{thmbox}
+\section{Categories}
+A fundamental question in mathematics is \textbf{how one defines an mathematical object}. Conventionally, one uses a \textbf{constructive} approach by proposing an explicit structure of an object. However, certain objects are hard to be defined this way (an infamous example is the notion of a ``set''). Therefore, we may opt for a different approach where we \textbf{describe the ``behaviour''} of an object.
+
+The Universal Properties is used to describe the interaction of an object with all other objects of choice. For example, Theorem \ref{thm:uniPropZ} describes group homomorphisms $\Z \to G$ for any group $G$, which characterises $\Z$ (up to group isomorphisms).
+
+To better understand this, let us introduce some preliminary definitions.
+\begin{dfnbox}{Category}{cat}
+    A {\color{red} \textbf{category}} $\mathcal{C}$ consists of a class of objects $\mathrm{ob}\left(\mathcal{C}\right)$ and a class of morphisms between objects $\mathrm{mor}\left(\mathcal{C}\right)$ such that:
+    \begin{itemize}
+        \item for any morphisms $f \colon A \to B$ and $g \colon B \to C$, there exists a morphism 
+        \begin{equation*}
+            h \coloneqq g \circ f \colon A \to C;
+        \end{equation*}
+        \item for every object $A \in \mathrm{ob}\left(\mathcal{C}\right)$, there exists an {\color{red} \textbf{identity}} morphism $\mathrm{id}_A \colon A \to A$ such that
+        \begin{equation*}
+            \mathrm{id}_B \circ f = f \circ \mathrm{id}_A = f
+        \end{equation*}
+        for any morphism $f \colon A \to B$;
+        \item for any morphisms $f \colon A \to B$, $g \colon B \to C$ and $h \colon C \to D$, 
+        \begin{equation*}
+            h \circ \left(g \circ f\right) = \left(h \circ g\right) \circ f.
+        \end{equation*}
+    \end{itemize}
+\end{dfnbox}
+We use the notation $\mathrm{Hom}\left(A, B\right)$ to denote the class of all morphisms from $A$ to $B$ in a category. It is clear that $\mathrm{Hom}\left(A, A\right) \neq \varnothing$ for every object $A$. In particular, the \textit{category of group}, denoted as $\mathrm{Grp}$, is constructed with
+\begin{itemize}
+    \item $\mathrm{ob}\left(\mathrm{Grp}\right)$: the class of all groups, and 
+    \item $\mathrm{Hom}\left(G, H\right)$: the class of all group homomorphisms from $G$ to $H$,
+\end{itemize}
+where the composition, identities and associative law are defined in the intuitive way.
+
+Categories are somewhat highly abstract collections of mathematical objects. Therefore, it is natural to think about how one would transform between different categories.
+\begin{dfnbox}{Functor}{functor}
+    Let $\mathcal{C}$ and $\mathcal{D}$ be categories. A {\color{red} \textbf{functor}} from $\mathcal{C}$ to $\mathcal{D}$ is a mapping $F$ such that 
+    \begin{itemize}
+        \item for each $X \in \mathrm{ob}\left(\mathcal{C}\right)$, there exists some $Y \in \mathrm{ob}\left(\mathcal{D}\right)$ with $Y = F\left(X\right)$;
+        \item for each morphism $\varphi \colon X \to Y$ in $\mathcal{C}$, there exists a morphism 
+        \begin{equation*}
+            \phi \coloneqq F\left(\varphi\right) \colon F\left(X\right) \to F\left(Y\right)
+        \end{equation*}
+        in $\mathcal{D}$ such that 
+        \begin{itemize}
+            \item $F\left(\mathrm{id}_X\right) = \mathrm{id}_{F\left(X\right)}$;
+            \item $F\left(\psi \circ \varphi\right) = F\left(\psi\right) \circ F\left(\varphi\right)$ for any morphisms $\psi \colon Y \to Z$ and $\varphi \colon X \to Y$ in~$\mathcal{C}$.
+        \end{itemize}
+    \end{itemize}
+\end{dfnbox}
+Let $\mathrm{Set}$ be the category of set, then we can defined a \textit{set-valued functor on the category of group} as $F \colon \mathrm{Grp} \to \mathrm{Set}$. Such a functor is not a map since there is no set of sets (and thus no set of groups). In particular, the following defines a functor to map each group to its underlying set:
+\begin{dfnbox}{Forgetful Functor}{forget}
+    The {\color{red} \textbf{forgetful functor}} is a functor $\mathrm{Forget} \colon \mathrm{Grp} \to \mathrm{Set}$ such that 
+    \begin{align*}
+        \mathrm{Forget}\left(G\right) = G \quad\textrm{and}\quad \mathrm{Forget}\left(\varphi\right) = \varphi.
+    \end{align*}
+\end{dfnbox}
+There is also a trivial functor $F \colon \mathrm{Grp} \to \mathrm{Set}$ defined by $F\left(G\right) = \varnothing$ and $F\left(\varphi\right) = \mathrm{id}_{\varnothing}$. The following proposition defines a more complex functor:
+\begin{probox}{Well-Defined-ness of the $\mathrm{Hom}$-Functor}{homFunc}
+    Fix a group $K$ and define $F \colon \mathrm{Grp} \to \mathrm{Set}$ such that 
+    \begin{equation*}
+        F\left(G\right) = \mathrm{Hom}\left(K, G\right) \quad\textrm{and}\quad F\left(\varphi\right) = \mathrm{Hom}\left(K, \varphi\right) \coloneqq \tau \mapsto \varphi \circ \tau,
+    \end{equation*}
+    then $F$ is a functor.
+    \tcblower
+    \begin{proof}
+        It suffices to prove that $F$ preserves morphisms. Note that for any group $G$ and any $\tau \in \mathrm{Hom}\left(K, G\right)$, we have 
+        \begin{align*}
+            F\left(\mathrm{id}_G\right)\left(\tau\right) = \mathrm{Hom}\left(K, \mathrm{id}_G\right)\left(\tau\right) = \mathrm{id}_G \circ \tau = \tau,
+        \end{align*}
+        so $F\left(\mathrm{id}_G\right) = \mathrm{id}_{\mathrm{Hom}\left(K, G\right)} = \mathrm{id}_{F\left(G\right)}$. Let $\varphi \in \mathrm{Hom}\left(G, H\right)$ and $\psi \in \mathrm{Hom}\left(H, K\right)$ be any group homomorphisms, then 
+        \begin{align*}
+            F\left(\psi \circ \varphi\right)\left(\tau\right) & = \mathrm{Hom}\left(K, \psi \circ \varphi\right)\left(\tau\right) \\
+            & = \left(\psi \circ \varphi\right) \circ \tau \\
+            & = F\left(\varphi\right) \circ F\left(\psi\right) \\
+            & = \psi \circ \left(\varphi \circ \tau\right) \\
+            & = \mathrm{Hom}\left(K, \psi\right)\left(\varphi \circ \tau\right) \\
+            & = \mathrm{Hom}\left(K, \psi\right)\bigl(\mathrm{Hom}\left(K, \varphi\right)\left(\tau\right)\bigr) \\
+            & = \bigl(\mathrm{Hom}\left(K, \psi\right) \circ \mathrm{Hom}\left(K, \varphi\right)\bigr)\left(\tau\right) \\
+            & = \bigl(F\left(\psi\right) \circ F\left(\varphi\right)\bigr)\left(\tau\right)
+        \end{align*}
+        for any $\tau \in \mathrm{Hom}\left(K, G\right)$. Therefore, $F\left(\psi \circ \varphi\right) = F\left(\psi\right) \circ F\left(\varphi\right)$ and so $F$ is a functor.
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        The above functor is usually written as $\mathrm{Hom}\left(G, -\right)$.
+    \end{remark}
+\end{notebox}
+Since there are numerous ways to define a functor between categories, it is natural to think about the question of whether the functors can be ``transformed'' into each other through composition as well.
+\begin{dfnbox}{Natural Transformation}{natTrans}
+    Let $F_1$ and $F_2$ be functors from $\mathcal{C}$ to $\mathcal{D}$. A {\color{red} \textbf{natural transformation}} $\eta \colon F_1 \Rightarrow F_2$ is a family of morphisms in $\mathcal{D}$ such that 
+    \begin{itemize}
+        \item for every $X \in \mathrm{ob}\left(\mathcal{C}\right)$, there exists some $\eta_X \colon F_1\left(X\right) \to F_2\left(X\right) \in \eta$, known as the {\color{red} \textbf{component}} of $\eta$ at $X$;
+        \item for every morphism $\varphi \colon X \to Y$ in $\mathrm{mor}\left(\mathcal{C}\right)$, we have $\eta_Y \circ F_1\left(\varphi\right) = F_2\left(\varphi\right) \circ \eta_X$.
+    \end{itemize} 
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        With $\mathcal{C} \coloneqq \mathrm{Grp}$ and $\mathcal{D} \coloneqq \mathrm{Set}$, the natural transformation $\eta$ is a collection of underlying maps for group homomorphisms.
+    \end{remark}
+\end{notebox}
+We can think a natural transformation as a ``projection'' of a morphism in one category onto another category, such that the ``shadow of the transformed object'' is the same as the ``transformed shadow of the original object''.
+\begin{dfnbox}{Natural Isomorphism}{natIso}
+    A natural transformation $\eta \colon F_1 \Rightarrow F_2$ is an {\color{red} \textbf{natural isomorphism}} if there exists a natural transformation $\zeta \colon F_2 \Rightarrow F_1$ such that $\zeta_X \circ \eta_X = \mathrm{id}_{F_1\left(X\right)}$ and $\eta_X \circ \zeta_X = \mathrm{id}_{F_2\left(X\right)}$ for every $X$. We say that $F_1$ and $F_2$ are {\color{red} \textbf{isomorphic}}, denoted by $F_1 \cong F_2$.
+\end{dfnbox}
+In the case of groups, a natural isomorphism will contain group isomorphisms. Analogously speaking, a natural isomorphism between categories is not so different from bijective maps between sets.
+\begin{dfnbox}{Bijectivity of Natural Transformations}{bijNatTrans}
+    A natural transformation $\eta \colon F_1 \Rightarrow F_2$ is {\color{red} \textbf{bijective}} if $\eta_X \colon F_1\left(X\right) 
+    \to F_2\left(X\right)$ is bijective for every $X$.
+\end{dfnbox}
+A natural conclusion here is that a natural isomorphism is nothing but a bijective natural transformation.
+\begin{probox}{Characterisation of Natural Isomorphisms}{charNatIso}
+    A natural transformation $\eta \colon F_1 \Rightarrow F_2$ is an isomorphism if and only if it is bijective.
+    \tcblower
+    \begin{proof}
+        Suppose that $\eta$ is bijective. For any $X$, since $\eta_X$ is bijective, there exists a unique morphism $\zeta_X \colon F_2\left(X\right) \to F_1\left(X\right)$ such that 
+        \begin{equation*}
+            \eta_X \circ \zeta_X = \mathrm{id}_{F_2\left(X\right)} \quad\textrm{and}\quad \zeta_X \circ \eta_X = \mathrm{id}_{F_1\left(X\right)}.
+        \end{equation*}
+        We claim that $\zeta \coloneqq \left\{\zeta_X \colon \eta_X \in \eta\right\}$ is a natural transformation.
+    \end{proof}
+\end{probox}
+\section{Universal Properties}
+Note that a natural isomorphism consists of morphisms which have a two-sided inverse. Using a weaker condition, we can consider morphisms with only one-sided inverses and in particular right inverses.
+\begin{dfnbox}{Epimorphism}{epi}
+    A morphism $f \colon X \to Y$ is an {\color{red} \textbf{epimorphism}} if $g_1 \circ f = g_2 \circ f$ implies $g_1 = g_2$ for all~$g_1, g_2 \colon Y \to Z$.
+\end{dfnbox}
+In other words, a morphism $f \colon X \to Y$ is an epimorphism if and only if there exists a morphism $h \colon Y \to X$ such that $f \circ h = \mathrm{id}_Y$. 
+
+In the category of group, \textbf{a group homomorphism is an epimorphism if and only if it is surjective}.
+\begin{dfnbox}{Reduction-Modulo-$n$ Map}{canonicalEpi}
+    For each $n \in \Z$, the {\color{red} \textbf{reduction-modulo-$n$ map}} $\pi \colon \Z \to \Z \slash n\Z$ is defined by $\pi\left(a\right) = \widebar{a}$ and said to be the {\color{red} \textbf{canonical epimorphism}}.
+\end{dfnbox}
+The word ``canonical'' implies that there is no other possibilities for this epimorphism, which is precisely due to the following result:
+\begin{probox}{Uniqueness of Canonical Epimorphism}{uniqueCanonicalHomo}
+    The reduction-modulo-$n$ map $\pi \colon \Z \to \Z \slash n\Z$ is the unique group homomorphism such that $\pi\left(1\right) = \widebar{1}$.
+    \tcblower
+    \begin{proof}
+        Let $\varphi \colon \Z \to \Z \slash n\Z$ be any group homomorphism such that $\varphi\left(1\right) = \widebar{1}$, then for any~$a \in \Z$,
+        \begin{equation*}
+            \varphi\left(a\right) = \varphi\left(\sum_{i = 1}^{a}1\right) = \sum_{i = 1}^{a}\varphi\left(1\right) = \sum_{i = 1}^{a}\widebar{1} = \widebar{a}.
+        \end{equation*}
+        Therefore, $\varphi = \pi$ and so $\pi$ is unique.
+    \end{proof}
+\end{probox}
+A key observation by far is that $\Z = \left\langle 1 \right\rangle$, so the image of $1$ under a group homomorphism in fact completely determines the image of any integer under the homomorphism. Therefore, given the image of $1$, the group homomorphism is fully specified, which generalises Proposition \ref{pro:uniqueCanonicalHomo} into the universal property for $\Z$.
+\begin{thmbox}{Universal Property of the Additive Group on the Integers}{uniPropZ}
+    For any group $G$ and any $x \in G$, there exists a unique group homomorphism $\varphi \colon \Z \to G$ such that $\varphi\left(1\right) = x$.
+    \tcblower
+    \begin{proof}
+        Define $\varphi \colon \Z \to G$ by $\varphi\left(n\right) = x^n$, then clearly $\varphi\left(1\right) = x$. One may check that~$\varphi$ is indeed a group homomorphism. Let $\psi \colon \Z \to G$ be any group homomorphism such that $\psi\left(1\right) = x$, then for any~$a \in \Z$, we have 
+        \begin{equation*}
+            \psi\left(a\right) = \psi\left(\sum_{i = 1}^{a}1\right) = \sum_{i = 1}^{a}\psi\left(1\right) = a \cdot x = a \cdot \varphi\left(1\right) = \varphi\left(a\right).
+        \end{equation*}
+        Therefore, $\psi = \varphi$ and so $\varphi$ is unique.
+    \end{proof}
+\end{thmbox}
+Based on the above theorem, once we fix the image of the unit element under a group homomorphism $\Z \to G$, we will then be able to express everything in $\cyclic{x}$ as an image of some integer. A direct consequence of this is that it justifies the notation for double exponentiation.
+\begin{corbox}{Exponential Arithmetic in Groups}{expInGroup}
+    For any group $G$ and any $x \in G$, we have $\left(x^a\right)^b = x^{ab}$ for all $a, b \in \Z$.
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:uniPropZ}, there exists a unique group homomorphism $\psi \colon \Z \to G$ such that $\psi\left(1\right) = x$. Define $\varphi_k \colon \Z \to \Z$ by $\varphi\left(n\right) = kn$, then $\varphi$ is clearly a group homomorphism and so $\varphi_{a} \circ \varphi_b = \varphi_{ab}$. Note that 
+        \begin{equation*}
+            \left(\psi \circ \varphi_a\right) \circ \varphi_b = \psi \circ \varphi_{ab} \colon \Z \to G
+        \end{equation*}
+        is a group homomorphism. Observe that $\psi \circ \varphi_a \colon \Z \to G$ is the unique group homomorphism such that $\left(\psi \circ \varphi_a\right)\left(1\right) = x^a$, so 
+        \begin{align*}
+            \left(x^a\right)^b & = \left(\psi \circ \varphi_a\right)\left(b\right) \\
+            & = \left(\psi \circ \varphi_a\right)\bigl(\varphi_b\left(1\right)\bigr) \\
+            & = \bigl(\left(\psi \circ \varphi_a\right) \circ \varphi_b\bigr)\left(1\right) \\
+            & = \left(\psi \circ \varphi_{ab}\right)\left(1\right) \\
+            & = \psi\bigl(\varphi_{ab}\left(1\right)\bigr) \\
+            & = \psi\left(ab\right) \\
+            & = \psi\left(1\right)^{ab} \\
+            & = x^{ab}. 
+        \end{align*} 
+    \end{proof}
+\end{corbox}
+Consequently, the above result gives us a way to construct cyclic groups using homomorphisms from $\Z$.
+\begin{thmbox}{Construction of Cyclic Groups}{constructCyc}
+    Let $G$ be a group. Fix $x \in G$ and let $\varphi \colon \Z \to G$ be the unique group homomorphism with $\varphi\left(1\right) = x$, then 
+    \begin{equation*}
+        \img{\varphi} = \left\langle x \right\rangle \leq G
+    \end{equation*}
+    and 
+    \begin{equation*}
+        \kernel{\varphi} = \begin{cases}
+            n\Z & \quad\textrm{if } \abs{x} = n \in \Z^+ \\
+            \left\{0\right\} & \quad\textrm{otherwise}
+        \end{cases}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        It is clear that for each $g \in G$, we have $g \in \cyclic{x}$ if and only if $g = x^k = \varphi\left(k\right)$ for some $k \in \Z$. Conversely, $\varphi\left(k\right) = x^k \in \cyclic{x}$ for all $k \in \Z$, and so $\img{\varphi} = \cyclic{x}$. Consider 
+        \begin{equation*}
+            \varphi\left(0\right) = \varphi\left(1 - 1\right) = \varphi\left(1\right)\varphi\left(-1\right) = \varphi\left(1\right)\varphi\left(1\right)^{-1} = 1,
+        \end{equation*}
+        so $0 \in \kernel{\varphi}$. If $x$ has infinite order, then for any $n \in \Z^+$, we have $x^n \neq 1$ and so~$x^{-n} = \left(x^{n}\right)^{-1}\neq 1$. Therefore, $\kernel{\varphi} = \left\{0\right\}$. If there exists some $n \in \Z^+$ such that $\abs{x} = n$, then $x^n = 1$. For any $z \in n\Z$, there exists some $k \in \Z$ such that $z = kn$, and so 
+        \begin{equation*}
+            \varphi\left(z\right) = \varphi\left(n\right)^k = \left(x^n\right)^k = 1^k = 1.
+        \end{equation*}
+        Therefore, $n\Z \subseteq \kernel{\varphi}$. By the division algorithm, for any $z \in \kernel{\varphi}$, there exists some $q \in \Z$ and $r \in \left\{0, 1, 2, \cdots, n - 1\right\}$ such that $z = qn + r$. Note that 
+        \begin{equation*}
+            1 = \varphi\left(qn + r\right) = \varphi\left(n\right)^q + \varphi\left(1\right)^r = 1 + x^r.
+        \end{equation*}
+        Since for any $r \in \left\{1, 2, \cdots, n - 1\right\}$, we have $x^r \neq 1$, so $r = 0$. Therefore, $z = qn \in n\Z$ and so $\kernel{\varphi} \leq n\Z$. Hence, $\kernel{\varphi} = n\Z$.
+    \end{proof}
+\end{thmbox}
+Intuitively, for a group homomorphism $\varphi$ with $n\Z$ as the kernel, we may view it to have a certain ``periodic'' behaviour such that it self-loops back to the identity over and over again. Clearly, this implies that there are only finitely many distinct choices for $\varphi\left(x\right)$, which can be formalised to the following result:
+\begin{corbox}{Order of Cyclic Subgroup}{ordCycSubgrp}
+    Let $G$ be a group. For any $x \in G$,
+    \begin{itemize}
+        \item if $x$ is of infinite order, then $\left\langle x \right\rangle$ is infinite;
+        \item if $\abs{x} = n \in \Z^+$, then $\abs{\left\langle x \right\rangle} = 2n - 1$.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Let $\varphi \colon \Z \to G$ be the group homomorphism with $\varphi\left(1\right) = x$. Suppose on contrary that $x \in G$ is of infinite order but $\cyclic{x}$ is finite, then 
+        \begin{equation*}
+            N \coloneqq \max\left\{n \in \Z^+ \colon x^n \in \cyclic{x} \textrm{ and } x^k \neq x^n \textrm{ for all } k \in \Z^+ \textrm{ and } k < n\right\}
+        \end{equation*}
+        exists. By the maximality of $N$, there is some $k \in \left\{1, 2, \cdots, N\right\}$ such that $x^{N + 1} = x^k$, and so
+        \begin{equation*}
+            \varphi\left(N + 1 - k\right) = x^{N + 1 - k} = 1_G.  
+        \end{equation*}
+        This implies that $N + 1 - k \in \kernel{\varphi}$. By Theorem \ref{thm:constructCyc}, $\kernel{\varphi} = \left\{0\right\}$ and so we have~$N + 1 = k$, which is a contradiction. Therefore, $\cyclic{x}$ is infinite. If $\abs{x} = n \in \Z^+$, by Theorem \ref{thm:constructCyc} we have 
+        \begin{equation*}
+            x^{nk} = \varphi\left(nk\right) = 1_G \qquad\textrm{for all } k \in \Z.
+        \end{equation*}
+        Therefore, for any $r \in \left\{0, 1, 2, \cdots, n - 1\right\}$, we have $x^{nk + r} = x^{r}$ for all $k \in \Z$. We claim that for any $r_1, r_2 \in \left\{0, 1, 2, \cdots, n - 1\right\}$ with $r_1 \neq r_2$, we have $x^{r_1} \neq x^{r_2}$. Suppose on contrary that $x^{r_1} = x^{r_2}$, then 
+        \begin{equation*}
+            \varphi\left(r_2 - r_1\right) = x^{r_2 - r_1} = 1_G.
+        \end{equation*}
+        This means that $r_2 - r_1 \in \kernel{\varphi} = n\Z$, which is a contradiction since $\abs{r_2 - r_1} < n$. Therefore, \begin{equation*}
+            \cyclic{x} = \left\{x^{1 - n}, \cdots x^{-2}, x^{-1}, 1_G, x, x^2, \cdots, x^{n - 1}\right\}
+        \end{equation*}
+        and so $\abs{\cyclic{x}} = 2n - 1$.
+    \end{proof}
+\end{corbox}
+As a side note, it turns out that $\Z$ is in fact the only group satisfying Theorem \ref{thm:uniPropZ}. In other words, the property described in Theorem \ref{thm:uniPropZ} defines everything about the interaction between $\Z$ and any other group. In category-theoretic terms, this ``universality'' is stated as follows:
+\begin{thmbox}{Universal Property of the Integers}{upZ}
+    Let $\mathrm{Hom}\left(\Z, -\right)$ be a $\mathrm{Hom}$-functor, then there is an isomorphism $\mathrm{Hom}\left(\Z, -\right) \cong \mathrm{Forget}$ and for any group $K$ such that $\mathrm{Hom}\left(K, -\right) \cong \mathrm{Forget}$, there exists a canonical isomorphism $\Z \cong K$.
+    \tcblower
+    \begin{proof}
+        For any group $G$, define $\eta_G \colon \mathrm{Hom}\left(\Z, G\right) \to \mathrm{Forget}\left(G\right)$ by $\eta_G\left(\varphi\right) = \varphi\left(1\right)$. We claim that 
+        \begin{equation*}
+            \eta \coloneqq \left\{\eta_G \colon G \textrm{ is a group}\right\}
+        \end{equation*}
+        is a natural transformation from $\mathrm{Hom}\left(\Z, -\right)$ to $\mathrm{Forget}$. Let $\varphi \colon G \to H$ be any group homomorphism. Take any group $G$ and $\tau \in \mathrm{Hom}\left(\Z, G\right)$, then 
+        \begin{align*}
+            \bigl(\eta_H \circ \mathrm{Hom}\left(\Z, \varphi\right)\bigr)\left(\tau\right) & = \eta_H\left(\varphi \circ \tau\right) \\
+            & = \left(\varphi \circ \tau\right)\left(1\right) \\
+            & = \varphi\bigl(\eta_G\left(\tau\right)\bigr) \\
+            & = \bigl(\mathrm{Forget}\left(\varphi\right) \circ \eta_G\bigr)\left(\tau\right).
+        \end{align*}
+        Therefore, $\eta_H \circ \mathrm{Hom}\left(\Z, \varphi\right) = \mathrm{Forget}\left(\varphi\right) \circ \eta_G$ and so $\eta$ is a natural transformation. For any group $G$, suppose that $\eta_G\left(\varphi\right) = \eta_G\left(\psi\right)$ for some $\varphi, \psi \in \mathrm{Hom}\left(\Z, G\right)$, then we have~$\varphi\left(1\right) = \psi\left(1\right)$. By Theorem \ref{thm:uniPropZ}, there is a unique group homomorphism from $\Z$ to $G$ which maps $1$ to $\varphi\left(1\right)$, so $\varphi = \psi$ and so $\eta_G$ is injective. For any $x \in G$, by Theorem \ref{thm:uniPropZ}, there exists some $\varphi \colon \Z \to G$ with $\varphi\left(1\right) = x$ and so $\eta_G\left(\varphi\right) = x$. Therefore, $\eta_G$ is surjective and so $\eta_G$ is a bijection. By Proposition \ref{pro:charNatIso}, $\eta$ is a natural isomorphism. Let $\zeta \colon \mathrm{Hom}\left(K, -\right) \Rightarrow \Forget$ be a natural isomorphism. Define 
+        \begin{equation*}
+            \rho \coloneqq \left\{\rho_G = \zeta^{-1}_G \circ \eta_G \colon G \textrm{ is a group}\right\},
+        \end{equation*}
+        which is clearly a natural isomorphism. Define 
+        \begin{equation*}
+            \alpha \coloneqq \rho_{\Z}\left(\mathrm{id}_{\Z}\right) \in \Hom\left(K, \Z\right) \quad\textrm{and}\quad \beta \coloneqq \rho^{-1}_K\left(\mathrm{id}_K\right) \in \Hom\left(\Z, K\right).
+        \end{equation*}
+        Consider 
+        \begin{align*}
+            \beta \circ \alpha & = \mathrm{Hom}\left(K, \beta\right)\left(\alpha\right) \\ 
+            & = \bigl(\Hom\left(K, \beta\right) \circ \rho_{\Z}\bigr)\left(\mathrm{id}_{\Z}\right) \\
+            & = \bigl(\rho_{K} \circ \Hom\left(\Z, \beta\right)\bigr)\left(\mathrm{id}_{\Z}\right) \\
+            & = \rho_K\bigl(\Hom\left(\Z, \beta\right)\left(\mathrm{id}_{\Z}\right)\bigr) \\
+            & = \rho_K\left(\beta \circ \mathrm{id}_{\Z}\right) \\
+            & = \rho_K\left(\rho_{K}^{-1}\left(\mathrm{id}_K\right)\right) \\
+            & = \mathrm{id}_K.
+        \end{align*}
+        Similarly, $\alpha \circ \beta = \mathrm{id}_{\Z}$ and so $\alpha$ and $\beta$ are isomorphisms.
+    \end{proof}
+\end{thmbox}
 \end{document}
