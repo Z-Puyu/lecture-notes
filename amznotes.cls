@@ -30,7 +30,7 @@
 
 % ------------------------------------------------------------
 % LOAD REQUIRED PACKAGES
-
+\RequirePackage{newcomputermodern}
 \RequirePackage[margin=1in]{geometry}   % set margins
 \RequirePackage{fontspec}               % set main font
 \RequirePackage{mathtools}  
@@ -73,9 +73,9 @@
   BoldItalicFont = *-SemiBoldItalic,
 ]
 \setmonofont{JetBrainsMonoNL-Regular}
-\setmathfont{STIXTwoMath-Regular.otf}[math-style = ISO]
-\setmathfont{texgyretermes-math.otf}[range={scr,bfscr},StylisticSet=01]
-\setmathfont{texgyretermes-math.otf}[range={bb}]
+\setmathfont{STIXTwoMath-Regular.otf}[range={it/{Latin},up/{Latin},bfit/{Latin},bfup/{Latin}}, math-style=ISO]
+\setmathfont{texgyretermes-math.otf}[range={it/{Greek},up/{Greek},bfit/{Greek},bfup/{Greek}}, math-style=ISO]
+\setmathfont{STIXTwoMath-Regular.otf}[range=\varnothing]
 \setmathfont[range=\int]{XITS Math}
 
 % ------------------------------------------------------------

@@ -134,8 +134,9 @@
 }
 \tableofcontents
 
-\chapter{Static Games of Complete Information}
-\section{Nash Equilibrium}
+\chapter{Games of Complete Information}
+\section{Static Games of Complete Information}
+\subsection{Nash Equilibrium}
 We start with a classic story:
 \begin{genbox}{Prisoners' Dilemma}
     Two suspects are arrested and charged with a crime. The police lack sufficient evidence to convict the suspects, unless at least one confesses. The suspects are held in separate cells and told:
@@ -276,7 +277,19 @@ Note that this does not mean that Proposition \ref{pro:iesdsNash} establishes th
         because $\mathbfit{s}_{-i}^*$ are strategies which are not eliminated, but this is a contradiction since~$t_i$ is a better response than $b_i$.
     \end{proof}
 \end{probox}
-So far, in our analysis we have been assuming that the players in a game make decisions \textbf{deterministically}, i.e., the player always choose a single strategy as the response. However, in real-life scenarios, there could be some random factors involved in decision-making.
+So far, in our analysis we have been assuming that the players in a game make decisions \textbf{deterministically}, i.e., the player always choose a single strategy as the response. However, in real-life scenarios, there could be some random factors involved in decision-making. 
+
+For example, consider a game where $2$ players, A and B, choose which side of a coin to display. If both choose the same side, then B wins over A's coin. Otherwise, A wins over B's coin. In this case, the payoff matrix is 
+\begin{equation*}
+    \begin{bNiceMatrix}[first-row,first-col]
+        & \textrm{Head} & \textrm{Tail} \\
+        \textrm{Head} & \left(-1, 1\right) & \left(1, -1\right) \\
+        \textrm{Tail} & \left(1, -1\right) & \left(-1, 1\right)
+    \end{bNiceMatrix}.
+\end{equation*}
+One may check that this game does not have a Nash equilibrium because the best responses of the two players are always disjoint. Such a phenomenon occurs because we assume that both players move deterministically, whereas in reality, since each player's best move is \textbf{dependent on the opponent's move} but there is no prior information on the opponent's move before the player's move is made, there is uncertainty in the actual moves executed.
+
+Therefore, we need to consider the probabilities of each strategy being executed.
 \begin{dfnbox}{Mixed Strategy}{mixedStrategy}
     Let $G = \left(S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right)$ be an $n$-player normal-form game with finite strategy spaces. Suppose $S_i = \left\{s_{i1}, s_{i2}, \cdots, s_{ik}\right\}$, then each $s_{ij} \in S_i$ is a {\color{red} \textbf{pure strategy}} for player $i$ and a probability distribution $p_i \coloneqq \left(p_{i1}, p_{i2}, \cdots, p_{ik}\right)$ is said to be a {\color{red} \textbf{mixed strategy}} such that the probability of player $i$ playing $s_{ij}$ is $p_{ij}$.
 \end{dfnbox}
@@ -301,7 +314,25 @@ Now we can extend the notion of Nash equilibrium to mixed strategies using expec
     \end{equation*}
     for any probability distribution $p_i$ on $S_i$.
 \end{dfnbox}
-Intuitively, if a pure strategy $s_{ik}$ is eliminated by IESDS, then any mixed strategy that is good enough probably should not favour playing the strategy. Indeed, we have the following result:
+Consider a $2$-player game where each player has exactly $2$ strategies. Let $p_1 = \left(r, 1 - r\right)$ and $p_2 = \left(q, 1 - q\right)$ be mixed strategies for player $1$ and $2$ respectively, then based on the previous argument the expected payoff of player $1$ is 
+\begin{equation*}
+    v_1\left(p_1, p_2\right) = rv_1\left(s_{11}, p_2\right) + \left(1 - r\right)v_1\left(s_{12}, p_2\right).
+\end{equation*}
+For each $q \in \left[0, 1\right]$, we can compute 
+\begin{equation*}
+    r^*\left(q\right) \coloneqq \argmax_{0 \leq r \leq 1}v_1\left(p_1, p_2\right).
+\end{equation*}
+This is known as the \textit{best response} of player $1$ to the mixed strategy $p_2$. Observe that $v_1$ is a \textbf{convex combination}, so it is clear that 
+\begin{equation*}
+    r^*\left(q\right) = \begin{cases}
+        \left\{1\right\} & \quad\textrm{if } v_1\left(s_{11}, p_2\right) > v_1\left(s_{12}, p_2\right) \\
+        \left\{0\right\} & \quad\textrm{if } v_1\left(s_{11}, p_2\right) < v_1\left(s_{12}, p_2\right) \\
+        \left[0, 1\right] & \quad\textrm{if } v_1\left(s_{11}, p_2\right) = v_1\left(s_{12}, p_2\right)
+    \end{cases}.
+\end{equation*}
+The case of $q^*\left(r\right)$ is symmetric. Taking $r^*\left(q\right) \cap q^*\left(r\right)$ yields the Nash equilibrium involving mixed strategies.
+
+If there are more than $2$ strategies for a player, we should first eliminate strictly dominated strategies to reduce the strategy spaces. Intuitively, if a pure strategy $s_{ik}$ is eliminated by IESDS, then any mixed strategy that is good enough probably should not favour playing the strategy. Indeed, we have the following result:
 \begin{probox}{Zero Probability of Strategies Eliminated by IESDS}{zeroProbIESDS}
     Let $\left(p_1^*, p_2^*, \cdots, p_n^*\right)$ be any mixed strategy Nash equilibrium. If $s_{ik}$ is eliminated by IESDS, then $p_{ik}^* = 0$.
 \end{probox}
@@ -309,7 +340,7 @@ Lastly, combining the two scenarios of Nash equilibria, the following theorem st
 \begin{thmbox}{Nash's Theorem}{Nash}
     Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be a normal-form $n$-player game with finite strategy spaces, then there exists at least one Nash equilibrium if mixed strategies are allowed.
 \end{thmbox}
-\section{Economic Models}
+\subsection{Economic Models}
 Suppose that there are two firms producing the same product. Let $q_1$ and $q_2$ be the quantity produced by the two firms respectively and $c$ be the unit cost of production. Assuming that the demand is a linear function in price, then there exists positive constants $q_0$ and $k$ such that 
 \begin{equation*}
     Q\left(P\right) = q_0 - kP,
@@ -510,36 +541,118 @@ Next, define the \textit{social welfare} as
 \begin{equation*}
     w\left(x\right) = xv\left(x\right) - xc
 \end{equation*}
-where $x$ is the total usage of the public resource. Let $x^* < X_{\max}$ be the optimal usage for maximum social welfare and $\left(x_1^*, x_2^*, \cdots, x_n^*\right)$ be the Nash equilibrium. We claim that
-\begin{equation*}
-    x^* < \sum_{i = 1}^{n}x_i^*.
-\end{equation*}
-Denote $X^* \coloneqq \sum_{i = 1}^{n}x_i^* < X_{\max}$. Suppose on contrary that $x^* \geq X^*$, then we have 
-\begin{equation*}
-    v\left(X^*\right) \geq v\left(x^*\right) \quad\textrm{and}\quad 0 > v'\left(X^*\right) \geq v'\left(x^*\right)
-\end{equation*}
-since $v$ is strictly concave on $\left(-\infty, X_{\max}\right)$. Note that $n \geq 2$, so $\frac{X^*}{n} < X^* \leq x^*$, which means that 
-\begin{equation*}
-    \frac{X^*}{n}v'\left(X^*\right) \geq \frac{X^*}{n}v'\left(x^*\right) > x^*v'\left(x^*\right).
-\end{equation*}
-Therefore, 
-\begin{equation*}
-    v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) > v\left(x^*\right) + x^*v'\left(x^*\right).
-\end{equation*}
-However, notice that since $x^*$ achieves maximum social welfare, we have 
+where $x$ is the total usage of the public resource. We have the following argument:
+\begin{probox}{The Tragedy of the Commons}{TragedyOfTheCommons}
+    Let $x^* < X_{\max}$ be the optimal usage for maximum social welfare and $\left(x_1^*, x_2^*, \cdots, x_n^*\right)$ be the Nash equilibrium, then
+    \begin{equation*}
+        x^* < \sum_{i = 1}^{n}x_i^*.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Denote $X^* \coloneqq \sum_{i = 1}^{n}x_i^* < X_{\max}$. Suppose on contrary that $x^* \geq X^*$, then we have 
+        \begin{equation*}
+            v\left(X^*\right) \geq v\left(x^*\right) \quad\textrm{and}\quad 0 > v'\left(X^*\right) \geq v'\left(x^*\right)
+        \end{equation*}
+        since $v$ is strictly concave on $\left(-\infty, X_{\max}\right)$. Note that $n \geq 2$, so $\frac{X^*}{n} < X^* \leq x^*$, which means that 
+        \begin{equation*}
+            \frac{X^*}{n}v'\left(X^*\right) \geq \frac{X^*}{n}v'\left(x^*\right) > x^*v'\left(x^*\right).
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) > v\left(x^*\right) + x^*v'\left(x^*\right).
+        \end{equation*}
+        However, notice that since $x^*$ achieves maximum social welfare, we have 
+        \begin{align*}
+            w'\left(x^*\right) & = v\left(x^*\right) + x^*v'\left(x^*\right) - c = 0.
+        \end{align*}
+        For each $i = 1, 2, \cdots, n$, we also have $x_i^* = \frac{X^*}{n}$ and thus
+        \begin{equation*}
+            v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) - c = 0.
+        \end{equation*}
+        Therefore, $v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) = v\left(x^*\right) + x^*v'\left(x^*\right)$, which is a contradiction.
+    \end{proof}
+\end{probox}
+The above argument precisely shows that at the Nash equilibrium, the usage of public resources always exceed what is socially optimal.
+
+Game theory can also be used to examine bargaining. One such example is the negotiation for wages between firms and workers. Here, a mechanism called \textit{final-offer arbitration} comes into play:
+\begin{itemize}
+    \item The firm and the union simultaneously offer their desired wages, $w_f$ and $w_u$, respectively. 
+    \item We may assume that $w_f < w_u$ due to the aims of the firm and the union.
+    \item Suppose that an \textbf{arbitrator} has an ideal offer $x$ and chooses the final offer by
+    \begin{equation*}
+        w = \begin{cases}
+            w_f & \textrm{if } x < \frac{w_f + w_u}{2} \\
+            w_u & \textrm{if } x > \frac{w_f + w_u}{2}
+        \end{cases}.
+    \end{equation*}
+    In other words, the arbitrator chooses whichever is closer to his ideal expectation.
+    \item Suppose that both the firm and the union \textbf{believe} that $x$ is randomly distributed with probability density function $f$ and cumulative distribution function $F$.
+\end{itemize}
+Denote $x_m$ to be the median of $x$, i.e., $F\left(x_m\right) = \frac{1}{2}$. Notice that 
 \begin{align*}
-    w'\left(x^*\right) & = v\left(x^*\right) + x^*v'\left(x^*\right) - c = 0.
+    P\left(w = w_f\right) & = P\left(x < \frac{w_f + w_u}{2}\right) = F\left(\frac{w_f + w_u}{2}\right), \\
+    P\left(w = w_u\right) & = 1 - F\left(\frac{w_f + w_u}{2}\right).
 \end{align*}
-For each $i = 1, 2, \cdots, n$, we also have $x_i^* = \frac{X^*}{n}$ and thus
+Let $\phi\left(w_f, w_u\right)$ be the expected wage settlement, then 
 \begin{equation*}
-    v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) - c = 0.
+    \phi\left(w_f, w_u\right) = \mathbb{E}\left[w\right] = w_fF\left(\frac{w_f + w_u}{2}\right) + w_u\biggl(1 - F\left(\frac{w_f + w_u}{2}\right)\biggr).
 \end{equation*}
-Therefore, $v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) = v\left(x^*\right) + x^*v'\left(x^*\right)$, which is a contradiction. The above argument precisely shows that at the Nash equilibrium, the usage of public resources always exceed what is socially optimal.
-\section{Dynamic Games of Complete Information}
+Clearly, $\phi$ can be seen as a payoff for this two-player game.
+\begin{probox}{Nash Equilibrium of Final-Offer Arbitration}{finalOfferArbitration}
+    In a final-offer arbitration with ideal offer $x$ distributed with probability density function~$f$, cumulative distribution function $F$ and median $x_m$, if $w_f$ and $w_u$ are the offers by the firm and the union respectively, then the Nash equilibrium is 
+    \begin{equation*}
+        w_f^* = x_m - \frac{1}{2f\left(x_m\right)} \quad\textrm{and}\quad w_u^* = x_m + \frac{1}{2f\left(x_m\right)}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $\phi\left(w_f, w_u\right)$ be the expected wage settlement, then $\left(w_f^*, w_u^*\right)$ are an Nash equilibrium if and only if 
+        \begin{equation*}
+            \phi\left(w_f^*, w_u^*\right) = \min_{0 \leq w_f < w_u^*}\phi\left(w_f, w_u^*\right) \quad\textrm{and}\quad \phi\left(w_f^*, w_u^*\right) = \max_{w_u > w_f^*}\phi\left(w_f^*, w_u\right).
+        \end{equation*}
+        Note that this implies that $w_f^*$ is a local minimum of $w_f \mapsto \phi\left(w_f, w_u^*\right)$. Therefore, $w_f^*$ must be a stationary point and 
+        \begin{equation*}
+            \left.\frac{\partial \phi}{\partial w_f}\right\rvert_{w_f = w_f^*} = 0.
+        \end{equation*}
+        Note that
+        \begin{align*}
+            \frac{\partial \phi}{\partial w_f} & = F\left(\frac{w_f + w_u}{2}\right) + \frac{w_f}{2}F'\left(\frac{w_f + w_u}{2}\right) - \frac{w_u}{2}F'\left(\frac{w_f + w_u}{2}\right) \\
+            & = F\left(\frac{w_f + w_u}{2}\right) + \frac{w_f - w_u}{2}f\left(\frac{w_f + w_u}{2}\right).
+        \end{align*}
+        Therefore, 
+        \begin{equation*}
+            F\left(\frac{w_f^* + w_u^*}{2}\right) + \frac{w_f^* - w_u^*}{2}f\left(\frac{w_f^* + w_u^*}{2}\right) = 0.
+        \end{equation*}
+        Similarly, $w_u^*$ is a local maximum of $w_u \mapsto \phi\left(w_f^*, w_u\right)$ and so 
+        \begin{equation*}
+            1 - F\left(\frac{w_f^* + w_u^*}{2}\right) + \frac{w_f^* - w_u^*}{2}f\left(\frac{w_f^* + w_u^*}{2}\right) = 0.
+        \end{equation*}
+        Therefore, we have 
+        \begin{equation*}
+            1 - F\left(\frac{w_f^* + w_u^*}{2}\right) = F\left(\frac{w_f^* + w_u^*}{2}\right)            
+        \end{equation*}
+        and so $F\left(\frac{w_f^* + w_u^*}{2}\right) = \frac{1}{2}$. This means that $x_m = \frac{w_f^* + w_u^*}{2}$ and so 
+        \begin{equation*}
+            \frac{1}{2} + \frac{w_f^* - w_u^*}{2}f\left(x_m\right) = 0.
+        \end{equation*}
+        Therefore, $w_f^* - w_u^* = -\frac{1}{f\left(x_m\right)}$. Consider the system
+        \begin{equation*}
+            \begin{cases}
+                w_u^* - w_f^* & = \frac{1}{f\left(x_m\right)} \\
+                \frac{w_u^* + w_f^*}{2} & = x_m
+            \end{cases}.
+        \end{equation*}
+        Solving the system yields
+        \begin{equation*}
+            w_f^* = x_m - \frac{1}{2f\left(x_m\right)} \quad\textrm{and}\quad w_u^* = x_m + \frac{1}{2f\left(x_m\right)}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+\section{Dynamic Games of Complete and Perfect Information}
+\subsection{Backward Induction}
 In static games, the players move independently and the strategy of one player will not affect the context in which another player would make decisions. However, there are many games where this is not true. For example, in a turn-based game, the sequence in which the players move makes a significant impact on the strategy of each player. Furthermore, such games consist of multiple stages and so a player has to observe the past actions in order to predict the best decision.
 
 Note that now, the extent to which a player can observe the past is important as this impacts how much information the player can acquire to make a decision in his or her own profit.
-\subsection{Perfect Information}
+
 We will first discuss the first case where the information about the past moves are fully available.
 \begin{dfnbox}{Dynamic Games of Complete and Perfect Information}{dynamicGame}
     A {\color{red} \textbf{dynamic game}} of {\color{red} \textbf{complete}} and {\color{red} \textbf{perfect}} information is a game where 
