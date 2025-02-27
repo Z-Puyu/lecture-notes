@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  26 FEB 2025 01:05
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  27 FEB 2025 20:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1725,19 +1725,32 @@ Chapter 1.
 Package hyperref Info: bookmark level for unknown tcolorbox defaults to 0 on input line 162.
 [2
 
-] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] 
+] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21]
+Overfull \hbox (12.57382pt too wide) in paragraph at lines 772--773
+\TU/STIXTwoText(0)/m/n/12 librium $[]$ and the second-stage Nash equilibrium $[][][] [] [] [][] [][]$ given $[]$
+ []
+
+[22] [23] [24] [25] [26] [27] [28]
+Underfull \hbox (badness 10000) in paragraph at lines 1051--1054
+
+ []
+
+[29] [30] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Game Theory.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `"Game Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39675 strings out of 478630
- 862855 string characters out of 5847730
- 1879012 words of memory out of 5000000
- 59090 multiletter control sequences out of 15000+600000
+ 39921 strings out of 478630
+ 867694 string characters out of 5847730
+ 1889012 words of memory out of 5000000
+ 59336 multiletter control sequences out of 15000+600000
  520489 words of font info for 139 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 129i,12n,156p,1198b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 129i,19n,156p,1198b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Game Theory.pdf (18 pages).
+Output written on Game Theory.pdf (30 pages).

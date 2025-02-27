@@ -4,3 +4,5 @@
 \contentsline {subsection}{\numberline {1.1.2}Economic Models}{9}{subsection.1.1.2}%
 \contentsline {section}{\numberline {1.2}Dynamic Games of Complete and Perfect Information}{17}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Backward Induction}{17}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Economic Models}{22}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Multi-stage Games}{27}{subsection.1.2.3}%

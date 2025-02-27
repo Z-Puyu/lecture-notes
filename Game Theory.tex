@@ -345,17 +345,17 @@ Suppose that there are two firms producing the same product. Let $q_1$ and $q_2$
 \begin{equation*}
     Q\left(P\right) = q_0 - kP,
 \end{equation*}
-where $Q$ is the demand and $P$ is the price. We can assume that $P = 0$ when $Q \geq q_0$, so we have 
-\begin{equation*}
-    P\left(Q\right) = \begin{cases}
-        0 & \textrm{if } Q \geq q_0 \\
-        a - bQ & \textrm{otherwise}
-    \end{cases},
-\end{equation*}
-where $a = \frac{q_0}{k}$ and $b = \frac{1}{k}$. Notice that this means that when the price reaches $a$, the demand for the product vanishes.
+where $Q$ is the demand and $P$ is the price. Suppose that the demand vanishes when the price reaches $a$. 
 \begin{dfnbox}{Demand-Side Reservation Price}{demandSideReservation}
     The {\color{red} \textbf{demand-side reservation price}} is the lowest price at which the demand is $0$.
 \end{dfnbox}
+Clearly, this means that $Q\left(a\right) = 0$ and so $q_0 = ka$. Therefore, 
+\begin{equation*}
+    P\left(Q\right) = \begin{cases}
+        0 & \textrm{if } Q \geq ka \\
+        a - \frac{1}{k}Q & \textrm{otherwise}
+    \end{cases},
+\end{equation*}
 Here our goal is to achieve \textit{market clearing price}.
 \begin{dfnbox}{Market Clearing Price}{marketClear}
     The {\color{red} \textbf{market clearing price}} is the price at which the demand is equal to the supply.
@@ -363,8 +363,8 @@ Here our goal is to achieve \textit{market clearing price}.
 In order to achieve the market clearing price, the demand should always be equal to the supply, so the firm should produce such that $Q = q_1 + q_2$. This means that 
 \begin{equation*}
     P\left(Q\right) = \begin{cases}
-        0 & \textrm{if } Q \geq q_0 \\
-        a - bq_1 - bq_2 & \textrm{otherwise}
+        0 & \textrm{if } Q \geq ka \\
+        a - \frac{1}{k}q_1 - \frac{1}{k}q_2 & \textrm{otherwise}
     \end{cases}
 \end{equation*}
 Define the profit by 
@@ -374,51 +374,51 @@ Define the profit by
 for $i = 1, 2$, where $c$ is the unit cost of production, then we have 
 \begin{equation*}
     \pi_i\left(q_1, q_2\right) = \begin{cases}
-        \left(a - bq_1 - bq_2 - c\right)q_i & \textrm{if } Q < q_0 \\
-        -cq_1 & \textrm{if } Q \geq q_0
+        \left(a - \frac{1}{k}q_1 - \frac{1}{k}q_2 - c\right)q_i & \textrm{if } Q < ka \\
+        -cq_1 & \textrm{if } Q \geq ka
     \end{cases}.
 \end{equation*}
 \begin{dfnbox}{Cournot Model of Duopoly}{Cournot}
-    Let $S_1, S_2 \coloneqq \left[0, \infty\right)$ be possible supply quantities for a product produced by two firms. Assuming linear demand such that the demand is $q_0$ at a price of $0$, then there exists positive constants $a$ and $b$ such that
+    Let $S_1, S_2 \coloneqq \left[0, \infty\right)$ be possible supply quantities for a product produced by two firms. Assuming linear demand with demand-side reservation price $a$, then there exists some $k > 0$ such that
     \begin{equation*}
         \pi_i\left(q_1, q_2\right) = \begin{cases}
-            \left(a - bq_1 - bq_2 - c\right)q_i & \textrm{if } Q < q_0 \\
-            -cq_1 & \textrm{if } Q \geq q_0
+            \left(a - \frac{1}{k}q_1 - \frac{1}{k}q_2 - c\right)q_i & \textrm{if } Q < ka \\
+            -cq_1 & \textrm{if } Q \geq ka
         \end{cases}
     \end{equation*}
     for $i = 1, 2$, where $q_1 \in S_1, q_2 \in S_2$ and $Q = q_1 + q_2$. The $2$-player normal-form game~$G \coloneqq \left\{S_1, S_2, \pi_1, \pi_2\right\}$ is known as the {\color{red} \textbf{Cournot model of duopoly}}. 
 \end{dfnbox}
-It is clear that if $q_1 > q_0 - q_2$, then $\pi_1\left(q_1, q_2\right) = -cq_1 < 0$ so it cannot be an optimum. Therefore, we effectively only need to consider $q_1 \in \left[0, q_0 - q_2\right]$ and $q_2 \in \left[0, q_0 - q_1\right]$.
+It is clear that if $q_1 > ka - q_2$, then $\pi_1\left(q_1, q_2\right) = -cq_1 < 0$ so it cannot be an optimum. Therefore, we effectively only need to consider $q_1 \in \left[0, ka - q_2\right]$ and $q_2 \in \left[0, ka - q_1\right]$.
 \begin{probox}{Best Response in Cournot Model of Duopoly}{CournotBestResponse}
     Let $G \coloneqq \left\{S_1, S_2, \pi_1, \pi_2\right\}$ be a Cournot model of duopoly, then for any $q_2 \in S_2$, the best response of the first firm is 
     \begin{equation*}
         q_1 \coloneqq R_1\left(q_2\right) = \begin{cases}
-            \frac{1}{2b}\left(a - bq_2 - c\right) & \textrm{if } q_2 \leq \frac{a - c}{b} \\
-            0 & \textrm{if } q_2 > \frac{a - c}{b}
+            \frac{1}{2}\left(ka - q_2 - kc\right) & \textrm{if } q_2 \leq k\left(a - c\right) \\
+            0 & \textrm{if } q_2 > k\left(a - c\right)
         \end{cases}.
     \end{equation*}
     \tcblower
     \begin{proof}
-        Fix $q_2 \geq 0$ as the output of the second firm. Note that it suffices to consider the case where $\pi_1\left(q_1, q_2\right) = \left(a - bq_1 - bq_2 - c\right)q_1$. If $a - c - bq_2 < 0$, for any $q_1 > 0$, we have $\pi_1\left(q_1, q_2\right) < 0$ so $q_1 = 0$ is the best response. Otherwise, consider 
+        Fix $q_2 \geq 0$ as the output of the second firm. Note that it suffices to consider the case where $\pi_1\left(q_1, q_2\right) = \left(a - \frac{1}{k}q_1 - \frac{1}{k}q_2 - c\right)q_1$. If $a - c - \frac{1}{k}q_2 < 0$, for any $q_1 > 0$, we have $\pi_1\left(q_1, q_2\right) < 0$ so $q_1 = 0$ is the best response. Otherwise, consider 
         \begin{equation*}
-            \frac{\partial \pi_1}{\partial q_1} = -2bq_1 + a - bq_2 - c = 0.
+            \frac{\partial \pi_1}{\partial q_1} = -\frac{2}{k}q_1 + a - \frac{1}{k}q_2 - c = 0.
         \end{equation*} 
         Solving the equation yields 
         \begin{equation*}
-            q_1 = \frac{a - bq_2 - c}{2b}.
+            q_1 = \frac{ka - q_2 - kc}{2}.
         \end{equation*}
         Therefore, the best response of the first firm is 
         \begin{equation*}
-            R_1\left(q_2\right) = \begin{cases}
-                \frac{1}{2b}\left(a - bq_2 - c\right) & \textrm{if } q_2 \leq \frac{a - c}{b} \\
-                0 & \textrm{if } q_2 > \frac{a - c}{b}
+            R_1\left(q_2\right) =  \begin{cases}
+                \frac{1}{2}\left(ka - q_2 - kc\right) & \textrm{if } q_2 \leq k\left(a - c\right) \\
+                0 & \textrm{if } q_2 > k\left(a - c\right)
             \end{cases}.
         \end{equation*}
     \end{proof}
 \end{probox}
 \begin{notebox}
     \begin{remark}
-        In a simplified case where $Q\left(P\right) = q_0 - P$ (i.e., $k = 1$), we have $a = q_0$ and~$b = 1$, and so 
+        In a simplified case where $P\left(Q\right) = a - Q$ (i.e., $k = 1$), we have $a = q_0$ and so 
         \begin{equation*}
             R_1\left(q_2\right) = \begin{cases}
                 \frac{1}{2}\left(a - q_2 - c\right) & \textrm{if } q_2 \leq a - c \\
@@ -430,12 +430,12 @@ It is clear that if $q_1 > q_0 - q_2$, then $\pi_1\left(q_1, q_2\right) = -cq_1 
 Using the above result, it is easy to compute the Nash equilibrium of the Cournot model by solving the system 
 \begin{equation*}
     \begin{cases}
-        q_1^* & = \frac{1}{2b}\left(a - bq_2^* - c\right) \\
-        q_2^* & = \frac{1}{2b}\left(a - bq_1^* - c\right)
+        q_1^* & = \frac{1}{2}\left(ka - q_2^* - kc\right) \\
+        q_2^* & = \frac{1}{2}\left(ka - q_1^* - kc\right)
     \end{cases}.
 \end{equation*}
 \begin{corbox}{Nash Equilibrium of Cournot Model of Duopoly}{CournotEqui}
-    In a Cournot model of duopoly, the Nash equilibrium is $q_1^* = q_2^* = \frac{1}{3b}\left(a - c\right)$.
+    In a Cournot model of duopoly, the Nash equilibrium is $q_1^* = q_2^* = \frac{ka - kc}{3}$.
 \end{corbox}
 Next, instead of \textbf{homogeneous product}, let us consider firms producing \textbf{differentiated products}. In this case, the Cournot model no longer makes sense because the sum of quantities demanded for differentiated products is meaningless.
 
@@ -649,8 +649,10 @@ Clearly, $\phi$ can be seen as a payoff for this two-player game.
 \end{probox}
 \section{Dynamic Games of Complete and Perfect Information}
 \subsection{Backward Induction}
-In static games, the players move independently and the strategy of one player will not affect the context in which another player would make decisions. However, there are many games where this is not true. For example, in a turn-based game, the sequence in which the players move makes a significant impact on the strategy of each player. Furthermore, such games consist of multiple stages and so a player has to observe the past actions in order to predict the best decision.
-
+In static games, the players move independently and the strategy of one player will not affect the context in which another player would make decisions. However, there are many games where this is not true. For example, in a turn-based game, the sequence in which the players move makes a significant impact on the strategy of each player. Furthermore, such games consist of multiple stages and so a player has to observe the past actions in order to predict the best decision. In this case, it makes more sense to talk about the ``moves'' of each player during his or her turn.
+\begin{dfnbox}{Action Space}{actionSpace}
+    In an $n$-player dynamic game, the {\color{red} \textbf{action space}} of the $i$-th player is the set of all possible moves of the player during the turn, denoted by $A_i$.
+\end{dfnbox}
 Note that now, the extent to which a player can observe the past is important as this impacts how much information the player can acquire to make a decision in his or her own profit.
 
 We will first discuss the first case where the information about the past moves are fully available.
@@ -665,9 +667,402 @@ We will first discuss the first case where the information about the past moves 
 Such games can be presented with a \textit{game tree} consisting of game states after each possible sequence of moves. A game state can be modelled by an ordered $n$-tuple $\left(x_{k1}, x_{k2}, \cdots, x_{kn}\right)$ denoting the payoffs off all players after $k$ moves. In this respect, the initial state can be represented by $\mathbf{0}$. Let $G \coloneqq \left\{S_1, S_2, \cdots, S_n, u_1, u_2, \cdots, u_n\right\}$ be such a dynamic game. 
 
 Let $\mathbf{0}$ be the root of the game tree. For each payoff vector $\mathbfit{u}_{h - 1}$ in height $h - 1$, the $h$-th player takes a move in the \textit{feasible set} $A_h$ to modify the payoffs to a new payoff vector~$\mathbfit{u}_h$ and create an edge $s_h \coloneqq \mathbfit{u}_{h - 1}$-$\mathbfit{u}_h$. Consider the leaves of the tree formed this way at height~$n$. Note that every strategy is uniquely represented as the $\mathbf{0}$-$\mathbfit{u}$ path for some leaf $\mathbfit{u}$, where the projection~$\pi_i\left(\mathbfit{u}\right) = u_i\left(s_1, s_2, \cdots, s_n\right)$ is the payoff corresponding to the strategy.
+\begin{dfnbox}{Game Tree}{gameTree}
+    A {\color{red} \textbf{game tree}} is a rooted tree representing a game. The vertices of a game tree are known as {\color{red} \textbf{decision nodes}} and the edges represent the strategies of the players. Each leaf of the tree is known as a {\color{red} \textbf{terminal node}} and is associated with a payoff tuple. 
+\end{dfnbox}
+Contrary to perfect information, imperfect information occurs when some (not necessarily all) players of a game do not know the entire history of other players' moves during their turn.
 
-The optimal strategy of a dynamic game of complete and perfect information can be obtained from a recursive algorithm.
-\begin{tecbox}{Backward Induction}{backwardInduction}
-    
-\end{tecbox}
+The optimal strategy of a dynamic game of complete and perfect information can be obtained from a recursive algorithm. Suppose that player $1$ chooses the move $a_1$. For the second player, he would then observe the previous move and choose 
+\begin{equation*}
+    R_2\left(a_1\right) \coloneqq \argmax_{a_2 \in A_2} u_2\left(a_1, a_2\right)
+\end{equation*}
+as his \textit{best response}. However, since player $1$ knows about this fact, he would start the game by taking 
+\begin{equation*}
+    a_1^* \in \argmax_{a_1 \in A_1}u_1\bigl(a_1, R_2\left(a_1\right)\bigr)
+\end{equation*}
+as his move. We say that $\bigl(a_1^*, R_2\left(a_1^*\right)\bigr)$ is a \textit{backward induction outcome} of the game. However, note that if $a_2^* = R_2\left(a_1^*\right)$, in general $u_1\left(a_1^*, a_2^*\right)$ might not be maximised. This difference from Nash equilibrium is exactly because of the fact that the players no longer take moves simultaneously, so the second player would gain additional information when making a decision.
+\begin{thmbox}{Backward Induction}{backwardInduction}
+    Consider an $n$-player dynamic game with complete and perfect information. Define 
+    \begin{equation*}
+        b_j\left(b_1\right) \coloneqq R_j\left(b_1, b_2, b_3, \cdots, b_{j - 1}\right)
+    \end{equation*}
+    as the best response of the $j$-th player given the first action $b_1$ in the game, then the backward induction outcome is given by 
+    \begin{align*}
+        a_1^* \in \argmax_{a_1 \in A_1} u_1\bigl(a_1, b_2\left(a_1\right), b_3\left(a_1\right), \cdots, b_n\left(a_1\right)\bigr)
+    \end{align*}
+    and $a_i^* \coloneqq b_i\left(a_1^*\right)$ for $i = 1, 2, \cdots, n$.
+\end{thmbox}
+In an alternative perspective, a static game can be viewed just as a dynamic game such that each player has completely no information about the other players' moves. Therefore, it is clear that we can find a generalised way to represent both types of games.
+\begin{dfnbox}{Extensive-Form Representation of Games}{extensive}
+    An {\color{red} \textbf{extensive-form representation}} of a game specifies
+    \begin{enumerate}
+        \item the players in the game;
+        \item when each player takes a move;
+        \item each player's strategy space;
+        \item each player's knowledge of the game;
+        \item the payoffs for each possible combination of strategies.
+    \end{enumerate}
+\end{dfnbox}
+The term ``each player's knowledge of the game'' can be a bit vague. To make it more precise, we represent a game with a game tree. Note that when a player takes the turn, he or she might be at one among many possible nodes in the game tree. If there is perfect information, the player would be able to trace the game's historical moves from the root and deduce exactly which node he or she is currently at. On the other hand, if the information is imperfect, the player will not be able to distinguish between all the possible nodes.
+\begin{dfnbox}{Information Set}{infoSet}
+    An {\color{red} \textbf{information set}} for a player is a set of decision nodes in a game such that 
+    \begin{itemize}
+        \item all nodes in the set belong to the same player at the same turn, and
+        \item the player has no information to deduce which node in the set they are currently at.
+    \end{itemize}
+\end{dfnbox}
+Another way to see an information set is to view it as a set of decision nodes such that when the player is currently in the set, he or she does not know which decision node is the predecessor to his or her current node.
+\begin{notebox}
+    \begin{remark}
+        Intuitively, when the information is perfect, the player's information set is a singleton. Hence, a game has imperfect information if and only if there exists some non-singleton information set.
+    \end{remark}
+\end{notebox}
+Every $n$-player extensive-form game can be represented as a game tree, such that the tree's decision nodes are partitioned into $n$ subsets, each belonging to a distinct player. The nodes belonging to the same information set are joined with dotted lines by convention when drawing the tree.
+
+In the case of a multi-stage game, each stage can be seen as a subgame, which can be formalised as follows:
+\begin{dfnbox}{Subgame}{subgame}
+    A {\color{red} \textbf{subgame}} in an extensive-form game is a game represented by a subtree rooted at an internal decision node belonging to a singleton information set of the game tree such that for each decision node $n$ in the subgame, all other decision nodes belonging to the information set of $n$ are also in the subgame.
+\end{dfnbox}
+Notice that via extensive-form games, both static and dynamic games can be represented in the same way. Therefore, this implies that dynamic games also have Nash equilibria! 
+
+However, note that the ``strategies'' of a player in a dynamic game would depend on the other player's moves, so in this case, a strategy is then a \textbf{complete plan} consisting of all possible responses to previous moves in the game.
+\begin{dfnbox}{Strategy in Dynamic Games}{dynamicStrategy}
+    A {\color{red} \textbf{strategy}} in a dynamic game is a function that maps a set of past moves to a move of the current player.
+\end{dfnbox}
+Note that the payoff in a dynamic game is computed based on a \textbf{sequence of moves} instead of a set of strategies. Therefore, given a set of strategies of all players, we should first transform it into the corresponding sequence of moves.
+\begin{dfnbox}{Payoff in Dynamic Games}{dynamicPayoff}
+    Let $\mathbfit{s} \coloneqq \left(s_1, s_2, \cdots, s_n\right)$ be a collection of strategies in an $n$-player dynamic game. Define $a_i \colon \prod_{j = 1}^nS_j \to A_i$, where $S_i$ is the strategy space and $A_i$ is the set of all possible moves for the $i$-th player, such that 
+    \begin{equation*}
+        a_i\left(\mathbfit{s}\right) = s_i\bigl(a_1\left(\mathbfit{s}\right), a_2\left(\mathbfit{s}\right), \cdots, a_{i - 1}\left(\mathbfit{s}\right)\bigr).
+    \end{equation*}
+    The {\color{red} \textbf{payoff}} for $\mathbfit{s}$ is defined as
+    \begin{equation*}
+        \widetilde{\mathbfit{u}}\left(\mathbfit{s}\right) \coloneqq \mathbfit{u}\bigl(a_1\left(\mathbfit{s}\right), a_2\left(\mathbfit{s}\right), \cdots, a_n\left(\mathbfit{s}\right)\bigr).
+    \end{equation*}
+\end{dfnbox}
+With the above definition, we can ``collapse'' a game tree for a dynamic game into a normal-form representation and find the Nash equilibria. 
+
+Intuitively, if all players choose their best moves sequentially after observing the previous moves, the end result should correspond to a Nash equilibrium.
+\begin{probox}{Backward Induction Outcome Induces a Nash Equilibrium}{backwardInductionNash}
+    Let $\bigl(a_1^*, R_2\left(a_1^*\right)\bigr)$ be a backward induction outcome of a $2$-player dynamic game of complete and perfect information, then $\left(a_1^*, R_2\right)$ is a Nash equilibrium.
+    \tcblower
+    \begin{proof}
+        Consider 
+        \begin{align*}
+            \widetilde{u}_1\left(a_1^*, R_2\right) & = u_1\bigl(a_1^*, R_2\left(a_1^*\right)\bigr) \\
+            & = \max_{a_1 \in A_1} u_1\bigl(a_1, R_2\left(a_1\right)\bigr) \\
+            & = \max_{a_1 \in A_1} \widetilde{u}_1\left(a_1, R_2\right).
+        \end{align*}
+        Therefore, $a_1^*$ is a best response to $R_2$. Similarly, for any $s_2 \in S_2$, since
+        \begin{align*}
+            \widetilde{u}_2\left(a_1^*, R_2\right) & = u_2\bigl(a_1^*, R_2\left(a_1^*\right)\bigr) \\
+            & = \max_{a_2 \in A_2} u_2\left(a_1^*, a_2\right) \\
+            & \geq u_2\bigl(a_1^*, s_2\left(a_1^*\right)\bigr) \\
+            & = \widetilde{u}_2\left(a_1^*, s_2\right),           
+        \end{align*}
+        we know that $R_2$ is also a best response to $a_1^*$. Therefore, $\left(a_1^*, R_2\right)$ is a Nash equilibrium.
+    \end{proof}
+\end{probox}
+However, a Nash equilibrium might not be a backward induction outcome. For example, if $\left(s_1^*, s_2^*\right)$ are a Nash equilibrium, we have
+\begin{equation*}
+    s_1^* = a_1^* = \argmax_{a_1 \in A_1}\widetilde{u}_1\left(a_1, s_2^*\right) = \argmax_{a_1 \in A_1}u_1\bigl(a_1, s_2^*\left(a_1\right)\bigr).
+\end{equation*}
+but this does not guarantee that $a_1^* = \argmax_{a_1 \in A_1}u_1\bigl(a_1, R_2\left(a_1\right)\bigr)$ since $s_2^* \neq R_2$ in general.
+
+Similarly, for a $2$-stage dynamic game with imperfect information, the first-stage Nash equilibrium $\left(a_1^*, a_2^*\right)$ and the second-stage Nash equilibrium $\bigl(a_3\left(a_1, a_2\right), a_4\left(a_1, a_2\right)\bigr)$ given~$\left(a_1, a_2\right)$ induce a Nash equilibrium $\left(a_1^*, a_2^*, a_3, a_4\right)$ in the normal-form representation.
+
+However, in such cases, a Nash equilibrium might not lead to an optimal solution. To rule out these bad equilibria, we need a stronger definition.
+\begin{dfnbox}{Subgame Perfect Nash Equilibrium}{subgamePerfectNash}
+    A Nash equilibrium $\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ is said to be {\color{red} \textbf{subgame perfect}} if it constitutes a Nash equilibrium in every subgame.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        It can be shown that if mixed strategies are allowed, every finite dynamic game of complete information contains at least one subgame perfect Nash equilibrium.
+    \end{remark}
+\end{notebox}
+\subsection{Economic Models}
+Using dynamic games, we are able to model economic activities just like static games. 
+\begin{dfnbox}{Stackelberg Model of Duopoly}{Stackelberg}
+    The {\color{red} \textbf{Stackelberg model of duopoly}} studies a dominant firm $1$ with a follower firm $2$ whose production strategy spaces are $S_1, S_2 \coloneqq \left[0, \infty\right)$ respectively. Assuming that the demand is linear in price the demand-side reservation price is $a$, then the profit of firm $i$ is 
+    \begin{equation*}
+        \pi_i\left(q_1, q_2\right) = q_i\bigl(P\left(Q\right) - c\bigr)
+    \end{equation*}
+    where $Q = q_1 + q_2$ and 
+    \begin{equation*}
+        P\left(Q\right) = \begin{cases}
+            a - \frac{1}{k}Q & \textrm{if } Q < a \\
+            0 & \textrm{if } Q \geq a
+        \end{cases}
+    \end{equation*}
+    for some positive constant $k$.
+\end{dfnbox}
+Note that 
+\begin{equation*}
+    R_2\left(q_1\right) = \argmax \pi_2\left(q_1, q_2\right) = \begin{cases}
+        \argmax \Bigl(q_2\left(a - \frac{1}{k}q_1 - \frac{1}{k}q_2 - c\right)\Bigr) & \quad\textrm{if } q_1 + q_2 < a \\
+        \argmax \left(-cq_2\right) & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Clearly, it suffices to consider the case where $q_1 + q_2 < a$. If $a - \frac{1}{k}q_1 - c < 0$, we have $q_2 = 0$ as the best response. Otherwise, we should find the maximum of the payoff via differentiation. This means that 
+\begin{equation*}
+    R_2\left(q_1\right) = \begin{cases}
+        \frac{1}{2}\left(ka - q_1 - kc\right) & \quad\textrm{if } q_1 < k\left(a - c\right) \\
+        0 & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+Consider 
+\begin{equation*}
+    \pi_1\bigl(a_1, R_2\left(a_1\right)\bigr) = \begin{cases}
+        q_1\left(a - \frac{1}{k}q_1 - \frac{ka - q_1 - kc}{2} - c\right) & \quad\textrm{if } q_1 < k\left(a - c\right) \\
+        q_1\left(a - \frac{1}{k}q_1 - c\right) & \quad\textrm{if } a - c \leq q_1 < a \\
+        -cq_1 & \quad\textrm{if } q_1 \geq a
+    \end{cases}.
+\end{equation*}
+\begin{probox}{Best Response of the Dominant Firm in Stackelberg Model}{StackelbergBestResponse}
+    In Stackelberg model of duopoly, the best response of the dominant firm is
+    \begin{equation*}
+        q_1^* \coloneqq \frac{ka - kc}{2}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that when $q_1 \geq k\left(a - c\right)$, the profit of the dominant firm is non-positive and strictly decreasing in $q_1$, so it suffices to find 
+        \begin{equation*}
+            q_1^* \coloneqq \argmax_{a_1 < k\left(a - c\right)} \pi\left(a_1, R_2\left(a_1\right)\right).
+        \end{equation*}
+        Solving $\left.\frac{\d\pi_1}{\d q_1}\right\rvert_{q_1 = q_1^*} = 0$ yields
+        \begin{equation*}
+            q_1^* \coloneqq \frac{ka - kc}{2}.
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Using the above result, the follower firm's production quantity can be computed to be 
+\begin{equation*}
+    q_2^* = R_2\left(q_1^*\right) = \frac{1}{2}\left(ka - q_1^* - kc\right) = \frac{ka - kc}{4}.
+\end{equation*}
+The price at the market is therefore
+\begin{equation*}
+    P\left(q_1^* + q_2^*\right) = P\left(\frac{3ka - 3kc}{4}\right) = a - \frac{3k\left(a - c\right)}{4k} = c + \frac{a - c}{4}.
+\end{equation*}
+Furthermore, the profits for the two firms are 
+\begin{equation*}
+    \pi_1\left(q_1^*, q_2^*\right) = \frac{k^2\left(a - c\right)^2}{8} \quad\textrm{and}\quad \pi_2\left(q_1^*, q_2^*\right) = \frac{k^2\left(a - c\right)^2}{16}.
+\end{equation*}
+We can compare this model with Cournot model, with the latter seen as a game where the second firm makes production decisions independently without observing what the first firm decides.
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline 
+        & Cournot & Stackelberg \\
+        \hline
+        $\left(q_1^*, q_2^*\right)$ & $\left(\frac{ka - kc}{3}, \frac{ka - kc}{3}\right)$ & $\left(\frac{ka - kc}{2}, \frac{ka - kc}{4}\right)$ \\
+        \hline
+        $P$ & $c + \frac{a - c}{3}$ & $c + \frac{a - c}{4}$ \\
+        \hline
+        $\left(\pi_1^*, \pi_2^*\right)$ & $\left(\frac{k^2\left(a - c\right)^2}{9}, \frac{k^2\left(a - c\right)^2}{9}\right)$ & $\left(\frac{k^2\left(a - c\right)^2}{8}, \frac{k^2\left(a - c\right)^2}{16}\right)$ \\
+        \hline
+        $\pi_1^* + \pi_2^*$ & $\frac{2k^2\left(a - c\right)^2}{9}$ & $\frac{3k^2\left(a - c\right)^2}{16}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+Surprisingly, knowing more information causes the second firm to obtain a lower profit in Stackelberg model as compared to Cournot model. This can be explained by the fact that since the first firm knows that the second firm would observe their decision first before making a move, this piece of information will be utilised by the first firm to make a better decision, causing the second firm to become worse off.
+
+Dynamic games can be very useful in modelling bargaining. A simple model is as follows:
+\begin{dfnbox}{Three-Period Bargaining Game}{threePeriodBargaining}
+    The {\color{red} \textbf{three-period bargaining game}} describes the following procedures:
+    \begin{enumerate}
+        \item In period $t$, player $t$ proposes $s_t\left(t\right) \in \left[0, 1\right]$ for himself and $s_{3 - t}\left(t\right) \coloneqq 1 - s_t\left(t\right)$ for the other player.
+        \item In the first $2$ periods, the other player can either
+        \begin{enumerate}
+            \item accept the offer and end the bargaining, or 
+            \item continue to the next period.
+        \end{enumerate}
+        \item In period $3$, player $1$ gets $\widebar{s}_1$ and player $2$ gets $\widebar{s}_2$ for some fixed exogenous amounts $\widebar{s}_1, \widebar{s}_2 \in \left[0, 1\right]$ with $\widebar{s}_1 + \widebar{s}_2 \leq 1$.
+    \end{enumerate}
+    The payoff to player $i$ at period $t$ is given by $u_i\left(t\right) = \delta^{t - 1}s_i\left(t\right)$ for some $\delta \in \left(0, 1\right)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Here, the constant $\delta$ represents the decay in satisfaction over time and is known as the \textit{discount factor}.
+    \end{remark}
+\end{notebox}
+Let us first consider the case where both players can predict correctly the amounts they will receive in the next period.
+\begin{probox}{Best Prudent Strategy in Three-Period Bargaining}{threePeriodBargainingBestPrudent}
+    Suppose that in a three-period bargaining game, the players will receive $\left(u_1, u_2\right)$ for some~$u_1, u_2 \geq 0$ with $u_1 + u_2 \leq 1$ in period $t + 1$, then the best strategy for player~$t$ in period $t$ is to offer $s_{3 - t}\left(t\right) = \delta u_{3 - t}$ and the best strategy for player $3 - t$ is to accept the offer.
+    \tcblower
+    \begin{proof}
+        Observe that player $3 - t$ in period $t$ will accept the offer if and only if 
+        \begin{equation*}
+            u_{3 - t}\left(t\right) = \delta^{t - 1}s_{3 - t}\left(t\right) \geq \delta^tu_{3 - t}.
+        \end{equation*} 
+        Clearly, player $t$ will offer $s_{3 - t}\left(t\right) \leq \delta u_{3 - t}$. If $s_{3 - t}\left(t\right) = \delta u_{3 - t}$, then player $3 - t$ will accept the offer and player $t$ receives $1 - \delta u{3 - t}$. Otherwise, player $3 - t$ will reject the offer and continue to the next period, where player $t$ receives
+        \begin{equation*}
+            u_t \leq 1 - u_{3 - t} < 1 - \delta u_{3 - t}.
+        \end{equation*}
+        Therefore, the best strategy of player $t$ is to offer $\delta u_{3 - t}$ and the other player will accept the offer.
+    \end{proof}
+\end{probox}
+Using the above fact, we can deduce player $2$'s action during the second period since the final settlement is common knowledge. This allows us to perform backward induction.
+\begin{probox}{Backward Induction Outcom of Three-Period Bargaining}{threePeriodBargainingBackwardInduction}
+    In a three-period bargaining game, player $1$ will offer 
+    \begin{equation*}
+        \begin{cases}
+            s_1\left(1\right) & = 1 - \delta\left(1 - \delta\widebar{s}_1\right) \\
+            s_2\left(1\right) & = \delta\left(1 - \delta\widebar{s}_1\right)
+        \end{cases}
+    \end{equation*}
+    and player $2$ will accept the offer.
+    \tcblower
+    \begin{proof}
+        Suppose that the bargaining proceeds to the second period, then by Proposition \ref{pro:threePeriodBargainingBestPrudent}, player $2$ will offer 
+        \begin{equation*}
+            \begin{cases}
+                s_1\left(2\right) & = \delta\widebar{s}_1 \\
+                s_2\left(2\right) & = 1 - \delta\widebar{s}_1.
+            \end{cases}
+        \end{equation*}
+        If player $1$ offers $s_2\left(1\right) < \delta\left(1 - \delta\widebar{s}_1\right)$, then 
+        \begin{equation*}
+            u_2\bigl(s_2\left(1\right)\bigr) = s_2\left(1\right) < \delta\left(1 - \delta\widebar{s}_1\right) = u_2\bigl(s_2\left(2\right)\bigr),
+        \end{equation*}
+        so player $2$ will not accept the offer and so the final payoff of player $1$ will be 
+        \begin{equation*}
+            u_1\bigl(s_1\left(2\right)\bigr) = \delta^2\widebar{s}_1 < \delta^2\widebar{s}_1 + 1 - \delta = u_1\bigl(s_1\left(1\right)\bigr).
+        \end{equation*}
+        Therefore, player $1$ will offer 
+        \begin{equation*}
+            \begin{cases}
+                s_1\left(1\right) & = 1 - \delta\left(1 - \delta\widebar{s}_1\right) \\
+                s_2\left(1\right) & = \delta\left(1 - \delta\widebar{s}_1\right)
+            \end{cases}
+        \end{equation*}
+        and player $2$ will accept the offer.
+    \end{proof}
+\end{probox}
+We can extend this model by allowing the bargaining steps to recur indefinitely.
+\begin{dfnbox}{Infinite-Horizon Bargaining Game}{infHorizon}
+    An {\color{red} \textbf{infinite-horizon bargaining game}} describes the following procedures of a dynamic game for~$k \in \Z^+$:
+    \begin{enumerate}
+        \item In period $2k - 1$, player $1$ proposes $s_1\left(2k - 1\right) \in \left[0, 1\right]$ for himself and $s_{2}\left(2k - 1\right) \coloneqq 1 - s_1\left(2k - 1\right)$ for the other player.
+        \item In period $2k$, player $2$ proposes $s_2\left(2k\right) \in \left[0, 1\right]$ for himself and $s_{1}\left(2k\right) \coloneqq 1 - s_2\left(2k\right)$ for the other player.
+        \item In each period, the other player either accepts the offer or continues to the next period.
+        \item The game ends when one player accepts the offer.
+    \end{enumerate}
+    The payoff to player $i$ at period $t$ is given by $u_i\left(t\right) = \delta^{t - 1}s_i\left(t\right)$ for some $\delta \in \left(0, 1\right)$.
+\end{dfnbox}
+The intuition here is that the game is ``memoryless'', i.e., the subgame starting at odd periods are essentially identical because the players make offers alternately and the payoff functions form a geometric progression.
+
+Denote the entire game by $G$. Suppose that $\left(\widebar{s}_1, \widebar{s}_2\right)$ are the \textbf{final offers} the players can receive in the backward induction outcome. It is clear that $\widebar{s}_1, \widebar{s}_2 > 0$ and $\widebar{s}_1 + \widebar{s}_2 \leq 1$.
+
+Suppose that we have reached period $3$. Let $G'$ be the infinite-horizon bargaining game starting at period $3$ with $\left(\widebar{s}_1, \widebar{s}_2\right)$ as the final offer. Therefore, the game $G$ is equivalent to a three-period bargaining game with exogenous settlement $\left(\widebar{s}_1, \widebar{s}_2\right)$. By Proposition \ref{pro:threePeriodBargainingBackwardInduction}, we know that 
+\begin{equation*}
+    \begin{cases}
+        s_1\left(1\right) & = 1 - \delta\left(1 - \delta\widebar{s}_1\right) \\
+        s_2\left(1\right) & = \delta\left(1 - \delta\widebar{s}_1\right)
+    \end{cases}
+\end{equation*}
+will be the offer of player $1$, which player $2$ will accept. Therefore, we have 
+\begin{equation*}
+    \begin{cases}
+        \widebar{s}_1 & = 1 - \delta\left(1 - \delta\widebar{s}_1\right) \\
+        \widebar{s}_2 & = \delta\left(1 - \delta\widebar{s}_1\right)
+    \end{cases}
+\end{equation*}
+Solving the system yields $\widebar{s}_1 = \frac{1}{1 + \delta}$ and $\widebar{s}_2 = \frac{\delta}{1 + \delta}$.
+\subsection{Multi-stage Games}
+The above bargaining game can be generalised to any dynamic game with a ``periodic'' behaviour. The decision nodes contained within the same period can be seen as its own ``mini-game'' which is known as a \textit{stage}.
+\begin{dfnbox}{Multi-stage Game}{multistage}
+    A {\color{red} \textbf{multi-stage game}} is a dynamic game which can be partitioned into static {\color{red} \textbf{stage games}}.
+\end{dfnbox}
+In a simplified form, a $4$-player game consists of two stages. In the first stage, players $1$ and $2$ take moves simultaneously. In the second stage, players $3$ and $4$ take moves simultaneously. In this case, we can view the second stage as a \textit{static sub-game} given additional information from the first stage.
+
+In this case, players $3$ and $4$ will condition their strategies on the strategies of players $1$ and $2$ in the first stage. In an ideal case, for each pair of strategies $\left(a_1, a_2\right)$ played in the first stage, the second stage has an Nash equilibrium $\bigl(a_3\left(a_1, a_2\right), a_4\left(a_1, a_2\right)\bigr)$.
+\begin{dfnbox}{Subgame Perfect Outcome}{subgamePerfect}
+    In a $4$-player two-stage game of imperfect information, a {\color{red} \textbf{subgame perfect outcome}} is an Nash equilibrium of the first stage $\left(a_1^*, a_2^*\right)$ such that $\bigl(a_3^*\left(a_1^*, a_2^*\right), a_4^*\left(a_1^*, a_2^*\right)\bigr)$ are an Nash equilibrium of the second stage.
+\end{dfnbox}
+Such a structure can be used to represent \textbf{tariffs}.
+\begin{dfnbox}{Tariff Game}{tariff}
+    A {\color{red} \textbf{tariff game}} describes two countries $1$ and $2$ where firm $i$ at country $i$ produces~$h_i$ for domestic market and $e_i$ for export. The governments simultaneously choose tariff rates $t_1$ and $t_2$, after which the firms simultaneously choose production strategies~$\left(h_1, e_1\right)$ and $\left(h_2, e_2\right)$.
+\end{dfnbox}
+With cost of production at $c$ and reservation price at $a$, the usual computation yields a subgame perfect Nash equilibrium to be 
+\begin{align*}
+    t_1^* & = t_2^* = \frac{a - c}{3}, \\
+    h_1^* & = h_2^* = \frac{4\left(a - c\right)}{9}, \\
+    e_1^* & = e_2^* = \frac{a - c}{9}.
+\end{align*}
+We introduce another economic model using a two-stage game.
+\begin{dfnbox}{Bank Runs}{bankRuns}
+    {\color{red} \textbf{Bank Runs}} is a model where
+    \begin{itemize}
+        \item $2$ investors each deposit $x$ dollars at a bank, which the bank invests into a project;
+        \item if the project is forced to stop, the investors can recover $a$ dollars;
+        \item if the project completes, the investors can earn $b > a$ dollars;
+        \item the investors can withdraw their money either before the project completes (stage $1$) or after (stage $2$).
+    \end{itemize}
+\end{dfnbox}
+By observation, it is clear that at stage $2$, the unique Nash equilibrium is for both investors to withdraw to earn $\frac{b}{2}$ each. This means that the payoff for both not withdrawing at stage $1$ is $\left(\frac{b}{2}, \frac{b}{2}\right)$. 
+
+One may check that both withdrawing and both not withdrawing are the pure Nash equilibria of stage $1$, so by Definition \ref{dfn:subgamePerfectNash}, both are the Nash equilibria of the game.
+
+When the stages of a multi-stage game is the same across the entire game, we arrive at a special case.
+\begin{dfnbox}{Repeated Game}{repeatGame}
+    A {\color{red} \textbf{repeated game}} is a multi-stage game where each stage is the same static game $G$.
+\end{dfnbox}
+For \textit{finitely repeated games}, we have the following intuitive result:
+\begin{probox}{Nash Equilibrium of Finitely Repeated Games}{finitelyRepeatedGames}
+    If the stage game in a finitely repeated game has a unique Nash equilibrium, then it is the unique subgame perfect Nash equilibrium of the repeated game.
+\end{probox}
+\textit{Infinitely repeated games} are a generalisation of infinite-horizon bargaining. In an infinitely repeated game, the players discount future payoffs at a common discount factor $\delta \in \left(0, 1\right)$. Given any sequence of strategies, we can compute the aggregate payoff of the strategies using the following definition:
+\begin{dfnbox}{Present Value}{presentVal}
+    Let $\pi_i$ be the payoff obtained at the $i$-th stage in an infinitely repeated game with discount factor $\delta \in \left(0, 1\right)$, then the {\color{red} \textbf{present value}} of the payoffs is defined as 
+    \begin{equation*}
+        \sum_{i = 1}^{\infty}\delta^{i - 1}\pi_i.
+    \end{equation*}
+\end{dfnbox}
+Suppose that the stage game of an infinitely repeated game is the Prisoner's Dilemma game with two actions $R$ and $L$ and the following payoff matrix:
+\begin{equation*}
+    \begin{bNiceMatrix}[first-row,first-col]
+        & $L$ & $R$ \\
+        $L$ & \left(1, 1\right) & \left(5, 0\right) \\
+        $R$ & \left(0, 5\right) & \left(4, 4\right)
+    \end{bNiceMatrix}.
+\end{equation*}
+There are two typical strategies for the game:
+\begin{enumerate}
+    \item \textbf{Non-cooperative Strategy} plays ``$L$'' in all stages and is denoted by~$NC$. 
+    \item \textbf{Trigger Strategy} plays ``$R$'' in the first stage and plays ``$L$'' if at least one player did $L$ in the previous stage. This strategy is denoted by~$T$.
+\end{enumerate}
+\begin{notebox}
+    \begin{remark}
+        The trigger strategy will $R$ until the other player decides to $L$, where the action will switch to ``$L$'' forever. If both players adopt the trigger strategy, the game will continue by both co-operating forever.
+    \end{remark}
+\end{notebox}
+Referring back to the analysis of Prisoners' Dilemma, we have the following result:
+\begin{probox}{Non-cooperative Strategy Is a Nash Equilibrium}{nonCoopNash}
+    $\left(NC, NC\right)$ is always a Nash equilibrium.
+    \tcblower
+    \begin{proof}
+        Without loss of generality, assume that player $1$ plays $NC$. If player $2$ choose to $R$, his payoff decreases, and so player $2$ will choose to $L$ in every stage, and so $\left(NC, NC\right)$ is a backward induction outcome and a Nash equilibrium by Proposition \ref{pro:backwardInductionNash}.
+    \end{proof}
+\end{probox}
+Intuitively, whether the trigger strategy is worth playing depends on how much value it provides when switching to not co-operating.
+\begin{probox}{Condition for Trigger Strategy to Be a Nash Equilibrium}{triggerNash}
+    $\left(T, T\right)$ is a Nash equilibrium if and only if $\delta \geq \frac{1}{4}$.
+    \tcblower
+    \begin{proof}
+        It suffices to show that $T \in R_2\left(T\right)$ if and only if $\delta \geq \frac{1}{4}$. Without loss of generality, suppose that player $1$ adopts $T$. We consider $2$ cases. If at least one player choose to $L$ in the previous stage, then player $1$ will choose to $L$ forever starting in the current stage. Therefore, player $2$ has to $L$ forever as well. 
+        \\\\
+        If both player $R$ in the previous stage or the current stage is the initial stage, player $1$ will choose $R$. If player $2$ chooses $L$, then player $1$ will $L$ from the next stage onwards. By the previous argument, player $2$ will choose $L$ from the next stage onwards as well. Therefore, player $2$'s payoff from this stage onwards is 
+        \begin{equation*}
+            5 + \sum_{i = 1}^{\infty}\delta^i = 5 + \frac{\delta}{1 - \delta}.
+        \end{equation*}
+        If player $2$ chooses $R$, then the game will continue with $\left(R, R\right)$ indefinitely and player $2$'s payoff is
+        \begin{equation*}
+            4\sum_{i = 0}^{\infty}\delta^i = \frac{4}{1 - \delta}.
+        \end{equation*}
+        Therefore, $T \in R_2\left(T\right)$ if and only if 
+        \begin{equation*}
+            \frac{4}{1 - \delta} \geq 5 + \frac{\delta}{1 - \delta},
+        \end{equation*}
+        i.e., $\delta \geq \frac{1}{4}$.
+    \end{proof}
+\end{probox}
 \end{document}
