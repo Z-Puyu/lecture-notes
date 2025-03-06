@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  27 FEB 2025 20:27
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  4 MAR 2025 14:57
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1738,9 +1738,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 1051--1054
 [29] [30] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Game Theory.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `"Game Theory".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
