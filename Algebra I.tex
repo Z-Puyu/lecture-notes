@@ -201,13 +201,13 @@ Another important thing to remember here is that, although we call the map $\sta
 
 In fact, we will see that by taking $\Z$ as the set and addition $+$ as the multiplication map, we get a group that satisfies Definition \ref{dfn:grp} perfectly! Furthermore, this group $\left(\Z, +\right)$, known as the \textit{additive group} of $\Z$, is an Abelian group. The same holds for $\left(\Q, +\right)$, $\left(\R, +\right)$, and~$\left(\C, +\right)$.
 
-Consider $\left(\Q \setminus \left\{0\right\}, +\right)$, which is not a group due to the missing identity. However, we can turn it into a group, specifically into a \textit{multiplicative group}, by changing the operation to $\times$. In fact, $\left(\Q \setminus \left\{0\right\}, \times\right)$ is also Abelian. The same holds for $\left(\R \setminus \left\{0\right\}, \times\right)$ and $\left(\C \setminus \left\{0\right\}, \times\right)$.
+Consider $\left(\Q - \left\{0\right\}, +\right)$, which is not a group due to the missing identity. However, we can turn it into a group, specifically into a \textit{multiplicative group}, by changing the operation to $\times$. In fact, $\left(\Q - \left\{0\right\}, \times\right)$ is also Abelian. The same holds for $\left(\R - \left\{0\right\}, \times\right)$ and $\left(\C - \left\{0\right\}, \times\right)$.
 \begin{notebox}
     \begin{remark}
         Writing $\frac{b}{a}$ is not a good notation in the context of this course because it could mean either $a^{-1} \star b$ or $b \star a^{-1}$, which are completely different for non-Abelian groups.
     \end{remark}
 \end{notebox}
-Note that further $\left(\Z \setminus \left\{0\right\}, \times\right)$ is not a group because all elements except $1$ do not have inverses. Therefore, we define $\Z^{\times} \coloneqq \{-1, 1\}$ which under $\times$ is a multiplicative group.
+Note that further $\left(\Z - \left\{0\right\}, \times\right)$ is not a group because all elements except $1$ do not have inverses. Therefore, we define $\Z^{\times} \coloneqq \{-1, 1\}$ which under $\times$ is a multiplicative group.
 
 A group can be finite or infinite. To define those we need to define a measurement for the ``size'' of a group.
 \begin{dfnbox}{Order of a Group}{order}
@@ -364,13 +364,13 @@ We will discuss the structure of matrix groups. However, as matrices are closely
     A {\color{red} \textbf{field}} is a set $\F$ together with two binary operations $+$ and $\cdot$ such that 
     \begin{itemize}
         \item $\left(\F, +\right)$ is an Abelian group with identity $0$,
-        \item $\left(\F \setminus \left\{0\right\}, \cdot\right)$ is an Abelian group with identity $1$, and
+        \item $\left(\F - \left\{0\right\}, \cdot\right)$ is an Abelian group with identity $1$, and
         \item $a \cdot \left(b + c\right) = \left(a \cdot b\right) + \left(a \cdot c\right)$ for all $a, b, c \in \F$.
     \end{itemize}
 \end{dfnbox}
 \begin{notebox}
     \begin{remark}
-        We use $\F^{\times}$ to denote the multiplication group $\left(\F \setminus \left\{0\right\}, \cdot\right)$.
+        We use $\F^{\times}$ to denote the multiplication group $\left(\F - \left\{0\right\}, \cdot\right)$.
     \end{remark}
 \end{notebox}
 The next proposition is an attempt in constructing a field of a fixed cardinality. 
@@ -447,7 +447,7 @@ Let us investigate a little bit about the cardinality of symmetric groups.
         \end{equation*}
         It is clear that for each $a \in \Sigma_{k + 1}$, 
         \begin{equation*}
-            \abs{\left\{\sigma \in S_{k + 1, \Sigma_{k + 1}} \colon \sigma\left(k + 1\right) = a\right\}} = \abs{S_{k, \Sigma_{k + 1} \setminus \left\{a\right\}}} = k!.
+            \abs{\left\{\sigma \in S_{k + 1, \Sigma_{k + 1}} \colon \sigma\left(k + 1\right) = a\right\}} = \abs{S_{k, \Sigma_{k + 1} - \left\{a\right\}}} = k!.
         \end{equation*}
         Therefore, 
         \begin{align*}
@@ -672,6 +672,55 @@ In finite subsets, it turns out that the existence of inverses becomes free.
             1_G = y^by_a^{-1} = y^{b - a} \in H.
         \end{equation*}
         Notice that $b - a - 1 \in \N$, so $y^{b - a - 1} \in H$. Notice that $yy^{b - a - 1} = y^{b - a - 1}y = y^{b - a} = 1_G$, so $y^{-1} = y^{b - a - 1} \in H$.
+    \end{proof}
+\end{probox}
+Intuitively, for any two subgroups of the same group, their intersection should still be a subgroup. This can be extended to the following general result:
+\begin{probox}{Preservation of Subgroups under Intersection}{subgrpPresInt}
+    Let $\mathcal{S}$ be any non-empty family of subgroups of a group $G$, then
+    \begin{equation*}
+        \bigcap_{H \in \mathcal{S}}H \leq G.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+In a different perspective, the intersection of several subgroups can be seen as the ``smallest common part'' of the subgroups which still preserves the group structure. Therefore, this subgroup can be seen as ``the minimal subgroup'' that contains a small part of the original group.
+\begin{dfnbox}{Generated Subgroup}{genSubgrp}
+    Let $G$ be a group and $A \subseteq G$ be a subset, then the subgroup 
+    \begin{equation*}
+        \left\langle A \right\rangle \coloneqq \bigcap_{A \subseteq H \leq G}H
+    \end{equation*}
+    is said to be {\color{red} \textbf{generated}} by $A$.
+\end{dfnbox}
+In other words, a subgroup generated by a set $A$ is the smallest subgroup containing $A$. It is curious how ``small'' this subgroup can get, but the intuition here is that in this subgroup, all elements should be expressible in terms of $A$ and nothing else (otherwise it can be ``reduced'' by eliminating the extra elements).
+\begin{probox}{Generated Subgroup Criterion}{genSubgrpCrite}
+    Let $G$ be a group and $A \subseteq G$ be a subset. Define 
+    \begin{equation*}
+        \widebar{A} \coloneqq \left\{\prod_{i = 1}^{n}a_i^{e_i} \colon n \in \N, a_i \in A, e_i = \pm 1\right\},
+    \end{equation*}
+    then $\left\langle A\right\rangle = \widebar{A}$.
+    \tcblower
+    \begin{proof}
+        Note that $1 \in \widebar{A}$ so $\widebar{A} \neq \varnothing$. Take any $a, b \in \widebar{A}$, then there exists some $m, n \in \N$ such that 
+        \begin{equation*}
+            a = \prod_{i = 1}^{n}a_i^{e_i} \quad\textrm{and}\quad b = \prod_{i = 1}^{m}b_i^{f_i},
+        \end{equation*}
+        where $a_1, a_2, \cdots, a_n, b_1, b_2, \cdots, b_m \in A$ and $e_i, f_i = \pm 1$. Note that 
+        \begin{equation*}
+            ab^{-1} = \prod_{i = 1}^{m + n}c_i^{p_i}
+        \end{equation*}
+        where 
+        \begin{equation*}
+            c_i = \begin{cases}
+                a_i & \textrm{if } i \leq n \\
+                b_i & \textrm{if } n < i \leq n + m
+            \end{cases} \quad\textrm{and}\quad \begin{cases}
+                p_i = e_i & \textrm{if } i \leq n \\
+                p_i = f_i & \textrm{if } n < i \leq n + m
+            \end{cases}.
+        \end{equation*}
+        Therefore, $ab^{-1} \in \widebar{A}$ and so by Proposition \ref{pro:subgrpCrite}, $\widebar{A}$ is a subgroup and so $\left\langle A \right\rangle \leq \widebar{A}$. Let $H \leq G$ be any subgroup containing $A$, then the elements of $A$ are closed under the binary operation in $H$ and so $\widebar{A} \leq H$. Therefore, $\widebar{A} = \left\langle A \right\rangle$.
     \end{proof}
 \end{probox}
 Trivially, the trivial group is the only group of cardinality $1$ and it has a unique subgroup (which is itself). More interestingly, we can show that there exists a unique group of cardinality $2$.
@@ -961,181 +1010,6 @@ Recall that we have stated that $S_n$ and $S_{\Omega}$ are essentially the same 
         In general, if $\Delta, \Omega$ and $\Sigma$ are sets and $\theta \colon \Delta \to \Omega$, $\eta \colon \Omega \to \Sigma$ are bijections, then $\varphi_{\theta \circ \eta} = \varphi_{\theta} \circ \varphi_{\eta}$. Furthermore, $\varphi_{\mathrm{id}_{\Delta}} = \mathrm{id}_{S_{\Delta}}$.
     \end{remark}
 \end{notebox}
-\section{Group Actions}
-\begin{dfnbox}{Group Action}{grpAction}
-    A {\color{red} \textbf{left group action}} of a group $G$ on a set $A$ is a map $\cdot \colon G \times A \to A$ such that for all~$g_1, g_2 \in G$ and all $a \in A$,
-    \begin{itemize}
-        \item $g_1 \cdot \left(g_2 \cdot a\right) = \left(g_1g_2\right) \cdot a$, and
-        \item $1_G \cdot a = a$.
-    \end{itemize}
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        A \textit{right group action} is defined analogously. Clearly, for Abelian groups, the left and right actions are equivalent.
-    \end{remark}
-\end{notebox}
-Let $G$ be a group with a right group action $\cdot \colon A \times G \to A$. Define the ``opposite'' group of~$G$ to be $G^{\mathrm{op}} \coloneqq \left(G, \star\right)$ such that 
-\begin{equation*}
-    x \star y = yx \qquad\textrm{for all } x, y \in G.
-\end{equation*}
-Now it is clear that $g \diamond a \coloneqq a \cdot g$ is a left group action. Therefore, in fact it suffices to study left group actions.
-\begin{probox}{Group Actions Induce Group Homomorphisms}{grpActionHomo}
-    Let $G$ be a group and $A$ be a set with a left group action. For each $g \in G$, define the map~$\sigma_g \colon A \to A$ such that~$\sigma_g\left(a\right) = ga$, then 
-    \begin{itemize}
-        \item $\sigma_g \in S_A$ is bijective, and 
-        \item if $\varphi \colon G \to S_A$ is such that $\varphi\left(g\right) = \sigma_g$, then $\varphi$ is a group homomorphism.
-    \end{itemize}
-    \tcblower
-    \begin{proof}
-        Observe that for any $a \in A$, we have 
-        \begin{align*}
-            \left(\sigma_g \circ \sigma_{g^{-1}}\right)\left(a\right) & = g^{-1}\left(ga\right) = \left(g^{-1}g\right)a = 1_Ga = a.
-        \end{align*}
-        Similarly, $\left(\sigma_{g^{-1}} \circ \sigma_{g}\right)\left(a\right) = a$ for all $a \in A$, and so $\sigma_g \circ \sigma_{g^{-1}} = \sigma_{g^{-1}} \circ \sigma_{g} = \mathrm{id}_A$. Therefore, by Proposition \ref{pro:BijEquivInv}, $\sigma_g$ is bijective and so $\sigma_g \in S_A$.
-        \\\\
-        Take any $g, h \in G$, then for any $a \in A$, we have 
-        \begin{align*}
-            \varphi\left(gh\right)\left(a\right) & = \sigma_{gh}\left(a\right) = \left(gh\right)a = g\left(ha\right) = \sigma_g\bigl(\sigma_h\left(a\right)\bigr) = \bigl(\varphi\left(g\right) \circ \varphi\left(h\right)\bigr)\left(a\right).
-        \end{align*}
-        Therefore, $\varphi\left(gh\right) = \varphi\left(g\right)\varphi\left(h\right)$ for any $g, h \in G$ and so $\varphi$ is a group homomorphism.
-    \end{proof}
-\end{probox}
-In the above result, $\sigma_g$ is essentially an evaluation map that re-arranges the set $A$ through a bijection by letting a particular element $g$ in the group act on $A$. Therefore, each element~$g$ induces a permutation on $A$ via a left group action.
-\begin{dfnbox}{Permutation Representation}{permRep}
-    Let $G$ be a group and $A$ be a set, then for each left group action $\left(g, a\right) \mapsto ga$, the map~$\varphi \colon G \to S_A$ such that $\varphi\left(g\right)\left(a\right) = ga$ for all $\left(g, a\right) \in G \times A$ is called the {\color{red} \textbf{permutation representation}} of the left group action.
-\end{dfnbox}
-Note that now, for each fixed group action of $G$ on $A$, there is a correspondence between each element in $G$ and the permutations of $A$. In fact, we can prove further that each element is linked to a unique permutation.
-\begin{probox}{Injectivity of Permutation Representations}{injPerm}
-    The permutation representation for every left group action is injective.
-\end{probox}
-There is naturally a way to map each group action to the correspondence.
-\begin{probox}{Group Actions and Permutation Representations}{correspondActionAndPerm}
-    Let $G$ be a group and $A$ be a set. Define $\mathcal{L}_{G, A}$ to be the set of all left group actions from $G$ to $A$ and $\mathcal{P}_{G, A}$ to be the set of all permutation representations, then $\Phi \colon \mathcal{L}_{G, A} \to \mathcal{P}_{G, A}$ defined by $\Phi\left(\alpha\right)\left(g\right) = \sigma_g$ is bijective.
-\end{probox}
-\begin{notebox}
-    \begin{remark}
-        Basically, $\Phi$ takes in a group action and outputs a representation that maps each element in $G$ to a permutation of $A$.
-    \end{remark}
-\end{notebox}
-\begin{thmbox}{Cayley's Theorem}{Cayley}
-    For every group $G$, there exists an injective group homomorphism $\varphi \colon G \to S_G$. If $G$ is finite of order $n$, then there exists an injective group homomorphism $\varphi \colon G \to S_n \cong S_G$.
-\end{thmbox}
-Observe that $\bigl(\varphi\left[G\right], \circ\bigr)$ is a group and $\varphi\left[G\right] \subseteq S_G$. Therefore, in fact every group $G$ is isomorphic to a subgroup of $S_G$ and every finite group $G$ is isomorphic to some $S_n$ for some $n \in \Z^+$. This implies that in theory, symmetric groups cover everything about group theory.
-
-For each $g \in G$, we consider a mapping over itself. In particular, picking any element $a$, we first apply a left action by $g$, followed by a right action by $g^{-1}$. We can see the mapping $a \mapsto gag^{-1} \in G$ is indeed a group action.
-\begin{probox}{Group Action over a Group}{conjGrpAct}
-    Let $G$ be a group, then for each $g \in G$, the map $\alpha_g \colon G \to G$ defined by $\alpha_g\left(a\right) = gag^{-1}$ is a group action.
-\end{probox}
-Such a group action results in the notion of \textit{conjugates}. 
-\begin{dfnbox}{Conjugate}{conj}
-    Let $G$ be a group, then for each pair $\left(a, g\right) \in G \times G$, the {\color{red} \textbf{$g$-conjugate}} of $a$ is $gag^{-1} \in G$. The {\color{red} \textbf{conjugacy class}} of $a$ is defined as the set 
-    \begin{equation*}
-        \left\{gag^{-1} \in G \colon g \in G\right\}.
-    \end{equation*}
-    For each pair $\left(A, g\right) \in \mathcal{P}\left(G\right) \times G$, the {\color{red} \textbf{$g$-conjugate}} of $A$ is defined as 
-    \begin{equation*}
-        gAg^{-1} \coloneqq \left\{gag^{-1} \in G \colon a \in A\right\}.
-    \end{equation*}
-\end{dfnbox}
-
-Things become interesting when this conjugate action happens to be an inclusion map.
-\begin{dfnbox}{Centraliser}{centraliser}
-    Let $G$ be a group, the element $g \in G$ is said to {\color{red} \textbf{centralise}} $a \in G$ if $gag^{-1} = a$. The {\color{red} \textbf{centraliser}} of $a \in G$ is defined as the set 
-    \begin{equation*}
-        C_G\left(a\right) \coloneqq \left\{g \in G \colon gag^{-1} = a\right\}.
-    \end{equation*}
-    $g$ is said to {\color{red} \textbf{centralise}} $A \subseteq G$ if $gag^{-1} = a$ for all $a \in A$. The {\color{red} \textbf{centraliser}} of $A \subseteq G$ is defined as the set 
-    \begin{equation*}
-        C_G\left(A\right) \coloneqq \left\{g \in G \colon gag^{-1} = a \textrm{ for all } a \in A\right\}.
-    \end{equation*}
-\end{dfnbox}
-\begin{notebox}
-    \begin{remark}
-        Clearly, $g \in G$ centralises $a \in G$ if and only if $ga = ag$.
-    \end{remark}
-\end{notebox}
-It is possible that some $g \in G$ centralises the entire group.
-\begin{dfnbox}{Centre}{centre}
-    The {\color{red} \textbf{centre}} of a group $G$ is defined as 
-    \begin{equation*}
-        Z\left(G\right) \coloneqq \left\{g \in G \colon gag^{-1} \textrm{ for all } a \in G\right\}.
-    \end{equation*}
-\end{dfnbox}
-Similarly, we can consider the mapping $A \mapsto gAg^{-1}$ and focus on the case where this map is an inclusion map.
-\begin{dfnbox}{Normaliser}{normaliser}
-    Let $G$ be a group and $A \subseteq G$ be a subset. An element $g \in G$ is said to {\color{red} \textbf{normalise}} $A$ if~$gAg^{-1} = A$. The {\color{red} \textbf{normaliser}} of $A$ is defined as the set
-    \begin{equation*}
-        N_G\left(A\right) \coloneqq \left\{g \in G \colon gAg^{-1} = A\right\}.
-    \end{equation*}
-\end{dfnbox}
-A normaliser of $A$ might not be a centraliser for any $a \in A$ because the normalisation operation could be a permutation of $A$. However, if $g \in G$ centralises every $a \in A$, then $g$ normalises $A$. Intuitively, this means that 
-\begin{equation*}
-    \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right).
-\end{equation*}
-However, the converse may not hold. Formally, we have the following properties:
-\begin{probox}{Relationship between Centraliser and Normaliser}{centraliserNormaliser}
-    For any group $G$, 
-    \begin{enumerate}
-        \item $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$ for all $a \in G$;
-        \item $C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right)$;
-        \item $Z\left(G\right) = C_G\left(G\right) = \bigcap_{a \in G}C_G\left(a\right)$;
-        \item $N_G\left(G\right) = G$;
-        \item $C_G\left(1\right) = G$.
-    \end{enumerate}
-    \tcblower
-    \begin{proof}
-        Notice that 
-        \begin{align*}
-            C_G\left(a\right) & = \left\{g \in G \colon gag^{-1} = a\right\}, \\
-            N_G\left(\left\{a\right\}\right) & = \left\{g \in G \colon g\left\{a\right\}g^{-1} = \left\{a\right\}\right\}.
-        \end{align*}
-        Observe that $g\left\{a\right\}g^{-1} = \left\{a\right\}$ if and only if $gag^{-1} = a$, so $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$. Take any $g \in C_G\left(A\right)$, then $gag^{-1} = a$ for all $a \in A$, and so $g \in C_G\left(a\right)$ for every $a \in A$ and~$g \in N_G\left(A\right)$, which means that $C_G\left(A\right) \subseteq \bigcap_{a \in A}C_G\left(a\right)$ and $C_G\left(A\right) \subseteq N_G\left(A\right)$. Take any $g \in \bigcap_{a \in A}C_G\left(a\right)$, then $gag^{-1} = a$ for each $a \in A$ and so $g \in C_G\left(A\right)$. Therefore, we have $\bigcap_{a \in A}C_G\left(a\right) \subseteq C_G\left(A\right)$ and so 
-        \begin{equation*}
-            C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right).
-        \end{equation*}
-        $3$ is trivial from the definitions. To show $4$, it suffices to prove that $G \subseteq N_G\left(G\right)$. Take any $g \in G$. For any $x \in G$, define $a \coloneqq g^{-1}xg \in G$, then clearly $x = gag^{-1}$ and so we have~$x \in gGg^{-1}$. Therefore, $G \subseteq gGg^{-1}$ and so $gGg^{-1} = G$. Therefore, we have~$g \in N_G\left(G\right)$. To show $5$, it suffices to prove that $G \subseteq C_G\left(1\right)$. For any $g \in G$, it is clear that $g1g^{-1} = gg^{-1} = 1$, so $g \in C_G\left(1\right)$, which implies that $G \subseteq C_G\left(1\right)$.
-    \end{proof}
-\end{probox}
-It is obvious that if $G$ is an Abelian group, then every element of $G$ centralises everything in $G$. This leads to a series of interesting and important properties.
-\begin{probox}{Centre Characterisation of Abelian Groups}{AbelianCentre}
-    For every group $G$, the followings are equivalent:
-    \begin{enumerate}
-        \item $G$ is Abelian;
-        \item $Z\left(G\right) = G$;
-        \item $C_G\left(a\right) = G$ for all $a \in G$;
-        \item $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$.
-    \end{enumerate}
-    \tcblower
-    \begin{proof}
-        Suppose that $G$ is Abelian, to show that $Z\left(G\right) = G$, it suffices to prove that~$G \subseteq Z\left(G\right)$. Take any $g \in G$, then for all $a \in G$, we have $ga = ag$ and so~$gag^{-1} = a$, which means that $g \in Z\left(G\right)$. Therefore, $G \subseteq Z\left(G\right)$ and so $Z\left(G\right) = G$. 
-        \\\\
-        Suppose that $Z\left(G\right) = G$, for any $a \in G$, to show that $C_G\left(a\right) = G$, it suffices to prove that $G \subseteq C_G\left(a\right)$. Take any $g \in G \subseteq Z\left(G\right)$, then $gag^{-1} = a$ for all $a \in G$. Therefore, $g \in C_G\left(a\right)$ for all $a \in G$. Therefore, $G \subseteq C_G\left(a\right)$ and so $C_G\left(a\right) = G$ for all~$a \in G$.
-        \\\\
-        Suppose that $C_G\left(a\right) = G$ for all $a \in G$. Take any $A \subseteq G$. By Proposition \ref{pro:centraliserNormaliser}, we already know that $C_G\left(A\right) \subseteq N_G\left(A\right)$. It is clear that $N_G\left(A\right) \subseteq G$. Fix some~$a \in A$, then $G = C_G\left(a\right) \subseteq C_G\left(A\right)$, which means that 
-        \begin{equation*}
-            C_G\left(A\right) \subseteq N_G\left(A\right) \subseteq G \subseteq C_G\left(A\right),
-        \end{equation*}
-        and so $C_G\left(A\right) = N_G\left(A\right) = G$. 
-        \\\\
-        Suppose that $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$. Take $A = G$, then for any~$g \in G$, since $g \in G = C_G\left(G\right)$, we have $gag^{-1} = a$ for all $a \in G$, and so $ga = ag$. Therefore, $G$ is Abelian.
-    \end{proof}
-\end{probox}
-The following proposition shows that every centraliser or normaliser is a subgroup.
-\begin{probox}{Centraliser and Normaliser as Subgroups}{subgrpCentraliserNormaliser}
-    Let $G$ be a group. For all $A \subseteq G$, we have $C_G\left(A\right), N_G\left(A\right) \leq G$.
-    \tcblower
-    \begin{proof}
-        For every $A \subseteq G$, we have $1a1^{-1} = a$ for all $a \in A$ and $1A1^{-1} = A$, so we have~$1 \in C_G\left(A\right)$ and $1 \in N_G\left(A\right)$. This means that $C_G\left(A\right), N_G\left(A\right) \neq \varnothing$. Take any~$g_1, g_2 \in C_G\left(A\right)$, then 
-        \begin{equation*}
-            g_1ag_1^{-1} = a \quad\textrm{and}\quad g_2ag_2^{-1} = a
-        \end{equation*}
-        for all $a \in A$. Consider 
-        \begin{equation*}
-            \left(g_1g_2^{-1}\right)a\left(g_1g_2^{-1}\right)^{-1} = g_1g_2^{-1}ag_2g_1^{-1} = a,
-        \end{equation*}
-        so $g_1g_2^{-1} \in C_G\left(A\right)$. By Proposition \ref{pro:subgrpCrite}, $C_G\left(A\right) \leq G$. Similarly, $N_G\left(A\right) \leq G$.
-    \end{proof}
-\end{probox}
 \chapter{Universal Properties}
 \section{Cyclic Groups}
 \begin{dfnbox}{Cyclic Subgroup}{cyclicSubGrp}
@@ -1469,7 +1343,7 @@ Intuitively, an infinite cyclic group has infinitely many cyclic subgroups becau
     If $G \coloneqq \left\langle x \right\rangle$ is an infinite cyclic group, then the map $\Phi \colon \N \to \left\{H \colon H \leq G\right\}$ defined by $\Phi\left(a\right) = \left\langle x^a \right\rangle$ is a bijection.
     \tcblower
     \begin{proof}
-        Let $\varphi \colon \Z \to G$ be the unique isomorphism such that $\varphi\left(1\right) = x$, then the map $\psi \colon \left\{K \colon K \leq \Z\right\} \to \left\{H \colon H \leq G\right\}$ defined by $\psi\left(K\right) = \varphi\left[K\right]$ is a bijection. Let $K$ be any subgroup of $\Z$ and take $a \in K$ to be the smallest positive integer in $K$, then it is clear that $a\Z \leq K$. Suppose that there exists some $b \in K \setminus a\Z$, then there exists $r, q \in \Z$ with $1 \leq r \leq a - 1$ such that $b = aq + r$. However, this means that $r \in K$ which is a contradiction to the minimality of $a$. Therefore, every subgroup of $\Z$ is of the form of $a\Z$ for some $a \in \N$. It is clear that the map $\eta \colon \N \to \left\{K \colon K \leq \Z\right\}$ defined by $\eta\left(a\right) = a\Z$ is a bijection, and so $\Phi = \psi \circ \eta$ is a bijection.
+        Let $\varphi \colon \Z \to G$ be the unique isomorphism such that $\varphi\left(1\right) = x$, then the map $\psi \colon \left\{K \colon K \leq \Z\right\} \to \left\{H \colon H \leq G\right\}$ defined by $\psi\left(K\right) = \varphi\left[K\right]$ is a bijection. Let $K$ be any subgroup of $\Z$ and take $a \in K$ to be the smallest positive integer in $K$, then it is clear that $a\Z \leq K$. Suppose that there exists some $b \in K - a\Z$, then there exists $r, q \in \Z$ with $1 \leq r \leq a - 1$ such that $b = aq + r$. However, this means that $r \in K$ which is a contradiction to the minimality of $a$. Therefore, every subgroup of $\Z$ is of the form of $a\Z$ for some $a \in \N$. It is clear that the map $\eta \colon \N \to \left\{K \colon K \leq \Z\right\}$ defined by $\eta\left(a\right) = a\Z$ is a bijection, and so $\Phi = \psi \circ \eta$ is a bijection.
     \end{proof}
 \end{probox}
 \begin{notebox}
@@ -1614,7 +1488,7 @@ Intuitively, each factor $d \mid n$ for a cyclic group of order $n$ induces a ``
     If $G \coloneqq \left\langle x \right\rangle$ is a finite cyclic group, then the map $\Phi \colon \left\{a \in \N \colon a \mid n\right\} \to \left\{H \colon H \leq G\right\}$ defined by $\Phi\left(a\right) = \left\langle x^a \right\rangle$ is a bijection.
     \tcblower
     \begin{proof}
-        Let $\varphi \colon \Z \slash n\Z \to G$ be the unique isomorphism such that $\varphi\left(\widebar{1}\right) = x$, then the map $\psi \colon \left\{K \colon K \leq \Z \slash n\Z\right\} \to \left\{H \colon H \leq G\right\}$ defined by $\psi\left(K\right) = \varphi\left[K\right]$ is a bijection. Let $K$ be any subgroup of $\Z \slash n\Z$ and take $a \coloneqq \argmin_{a \in \N}\left\{\widebar{a} \in K\right\}$, then it is clear that $\left\{\widebar{ka} \colon k \in \Z\right\} \leq K$. Suppose that there exists some $\widebar{b} \in K \setminus \left\{\widebar{ka} \colon k \in \Z\right\}$, then there exists $r, q \in \Z$ with $1 \leq r \leq a - 1$ such that $b = aq + r$. However, this means that $\widebar{r} \in K$ which is a contradiction to the minimality of $a$. Therefore, every subgroup of $\Z$ is of the form of $\left\{\widebar{ka} \colon k \in \Z\right\}$ for some $a \in \N$. It is clear that the map $\eta \colon \N \to \left\{K \colon K \leq \Z \slash n\Z\right\}$ defined by $\eta\left(a\right) = \left\{\widebar{ka} \colon k \in \Z\right\}$ is a bijection, and so $\Phi = \psi \circ \eta$ is a bijection.
+        Let $\varphi \colon \Z \slash n\Z \to G$ be the unique isomorphism such that $\varphi\left(\widebar{1}\right) = x$, then the map $\psi \colon \left\{K \colon K \leq \Z \slash n\Z\right\} \to \left\{H \colon H \leq G\right\}$ defined by $\psi\left(K\right) = \varphi\left[K\right]$ is a bijection. Let $K$ be any subgroup of $\Z \slash n\Z$ and take $a \coloneqq \argmin_{a \in \N}\left\{\widebar{a} \in K\right\}$, then it is clear that $\left\{\widebar{ka} \colon k \in \Z\right\} \leq K$. Suppose that there exists some $\widebar{b} \in K - \left\{\widebar{ka} \colon k \in \Z\right\}$, then there exists $r, q \in \Z$ with $1 \leq r \leq a - 1$ such that $b = aq + r$. However, this means that $\widebar{r} \in K$ which is a contradiction to the minimality of $a$. Therefore, every subgroup of $\Z$ is of the form of $\left\{\widebar{ka} \colon k \in \Z\right\}$ for some $a \in \N$. It is clear that the map $\eta \colon \N \to \left\{K \colon K \leq \Z \slash n\Z\right\}$ defined by $\eta\left(a\right) = \left\{\widebar{ka} \colon k \in \Z\right\}$ is a bijection, and so $\Phi = \psi \circ \eta$ is a bijection.
     \end{proof}
 \end{probox}
 \begin{notebox}
@@ -1637,4 +1511,368 @@ Note that the representation of a cyclic group might not be unique. However, the
         \item If $G$ is finite of order $n$, then $G = \left\langle x^a \right\rangle$ if and only if $\gcd\left(a, n\right) = 1$.
     \end{enumerate}
 \end{probox}
+\chapter{Group Actions}
+\section{Group Actions}
+\begin{dfnbox}{Group Action}{grpAction}
+    A {\color{red} \textbf{left group action}} of a group $G$ on a set $A$ is a map $\cdot \colon G \times A \to A$ such that for all~$g_1, g_2 \in G$ and all $a \in A$,
+    \begin{itemize}
+        \item $g_1 \cdot \left(g_2 \cdot a\right) = \left(g_1g_2\right) \cdot a$, and
+        \item $1_G \cdot a = a$.
+    \end{itemize}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        A \textit{right group action} is defined analogously. Clearly, for Abelian groups, the left and right actions are equivalent.
+    \end{remark}
+\end{notebox}
+Let $G$ be a group with a right group action $\cdot \colon A \times G \to A$. Define the ``opposite'' group of~$G$ to be $G^{\mathrm{op}} \coloneqq \left(G, \star\right)$ such that 
+\begin{equation*}
+    x \star y = yx \qquad\textrm{for all } x, y \in G.
+\end{equation*}
+Now it is clear that $g \diamond a \coloneqq a \cdot g$ is a left group action. Therefore, in fact it suffices to study left group actions.
+\begin{probox}{Group Actions Induce Group Homomorphisms}{grpActionHomo}
+    Let $G$ be a group and $A$ be a set with a left group action. For each $g \in G$, define the map~$\sigma_g \colon A \to A$ such that~$\sigma_g\left(a\right) = ga$, then 
+    \begin{itemize}
+        \item $\sigma_g \in S_A$ is bijective, and 
+        \item if $\varphi \colon G \to S_A$ is such that $\varphi\left(g\right) = \sigma_g$, then $\varphi$ is a group homomorphism.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        Observe that for any $a \in A$, we have 
+        \begin{align*}
+            \left(\sigma_g \circ \sigma_{g^{-1}}\right)\left(a\right) & = g^{-1}\left(ga\right) = \left(g^{-1}g\right)a = 1_Ga = a.
+        \end{align*}
+        Similarly, $\left(\sigma_{g^{-1}} \circ \sigma_{g}\right)\left(a\right) = a$ for all $a \in A$, and so $\sigma_g \circ \sigma_{g^{-1}} = \sigma_{g^{-1}} \circ \sigma_{g} = \mathrm{id}_A$. Therefore, by Proposition \ref{pro:BijEquivInv}, $\sigma_g$ is bijective and so $\sigma_g \in S_A$.
+        \\\\
+        Take any $g, h \in G$, then for any $a \in A$, we have 
+        \begin{align*}
+            \varphi\left(gh\right)\left(a\right) & = \sigma_{gh}\left(a\right) = \left(gh\right)a = g\left(ha\right) = \sigma_g\bigl(\sigma_h\left(a\right)\bigr) = \bigl(\varphi\left(g\right) \circ \varphi\left(h\right)\bigr)\left(a\right).
+        \end{align*}
+        Therefore, $\varphi\left(gh\right) = \varphi\left(g\right)\varphi\left(h\right)$ for any $g, h \in G$ and so $\varphi$ is a group homomorphism.
+    \end{proof}
+\end{probox}
+In the above result, $\sigma_g$ is essentially an evaluation map that re-arranges the set $A$ through a bijection by letting a particular element $g$ in the group act on $A$. Therefore, each element~$g$ induces a permutation on $A$ via a left group action.
+\begin{dfnbox}{Permutation Representation}{permRep}
+    Let $G$ be a group and $A$ be a set, then for each left group action $\left(g, a\right) \mapsto ga$, the map~$\varphi \colon G \to S_A$ such that $\varphi\left(g\right)\left(a\right) = ga$ for all $\left(g, a\right) \in G \times A$ is called the {\color{red} \textbf{permutation representation}} of the left group action.
+\end{dfnbox}
+Note that now, for each fixed group action of $G$ on $A$, there is a correspondence between each element in $G$ and the permutations of $A$. In fact, we can prove further that each element is linked to a unique permutation.
+\begin{probox}{Injectivity of Permutation Representations}{injPerm}
+    The permutation representation for every left group action is injective.
+\end{probox}
+There is naturally a way to map each group action to the correspondence.
+\begin{probox}{Group Actions and Permutation Representations}{correspondActionAndPerm}
+    Let $G$ be a group and $A$ be a set. Define $\mathcal{L}_{G, A}$ to be the set of all left group actions from $G$ to $A$ and $\mathcal{P}_{G, A}$ to be the set of all permutation representations, then $\Phi \colon \mathcal{L}_{G, A} \to \mathcal{P}_{G, A}$ defined by $\Phi\left(\alpha\right)\left(g\right) = \sigma_g$ is bijective.
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Basically, $\Phi$ takes in a group action and outputs a representation that maps each element in $G$ to a permutation of $A$.
+    \end{remark}
+\end{notebox}
+\begin{thmbox}{Cayley's Theorem}{Cayley}
+    For every group $G$, there exists an injective group homomorphism $\varphi \colon G \to S_G$. If $G$ is finite of order $n$, then there exists an injective group homomorphism $\varphi \colon G \to S_n \cong S_G$.
+\end{thmbox}
+Observe that $\bigl(\varphi\left[G\right], \circ\bigr)$ is a group and $\varphi\left[G\right] \subseteq S_G$. Therefore, in fact every group $G$ is isomorphic to a subgroup of $S_G$ and every finite group $G$ is isomorphic to some $S_n$ for some $n \in \Z^+$. This implies that in theory, symmetric groups cover everything about group theory.
+
+\chapter{Quotient Groups}
+\section{Cosets}
+Given any subgroup $H$ in a group $G$, we can fix an element $g$ and map each element in $H$ by applying left-multiplication by $g$. This structure is known as a \textit{coset}.
+\begin{dfnbox}{Coset}{coset}
+    Let $G$ be a group and $H \leq G$. For any $g \in G$, the {\color{red} \textbf{left $g$-coset}} of $H$ in $G$ is defined as 
+    \begin{equation*}
+        gH \coloneqq \left\{gh \in G \colon h \in H\right\}
+    \end{equation*}
+    and the {\color{red} \textbf{right $g$-coset}} of $H$ in $G$ is defined as 
+    \begin{equation*}
+        Hg \coloneqq \left\{hg \in G \colon h \in H\right\}.
+    \end{equation*}
+    An element in a coset is called a {\color{red} \textbf{representative}}.
+\end{dfnbox}
+It is clear that different element can, but not necessarily will, induce different cosets.
+\begin{dfnbox}{Set of Cosets}{setOfCosets}
+    The {\color{red} \textbf{set of left cosets}} of $H \leq G$ in a group $G$ is defined as 
+    \begin{equation*}
+        G \slash H \coloneqq \left\{gH \colon g \in G\right\}
+    \end{equation*}
+    and the {\color{red} \textbf{set of right cosets}} denoted by $H \backslash G$ is defined analogously.
+\end{dfnbox}
+We list some common properties of cosets:
+\begin{probox}{Common Properties of Cosets}{cosetProp}
+    Let $G$ be a group, $H \leq G$ be a subgroup and $g_1, g_2 \in G$ be any elements, then the followings are equivalent:
+    \begin{enumerate}
+        \item $g_1H = g_2H$;
+        \item $g_1 \in g_2H$ and $g_2 \in g_1H$;
+        \item $g_2^{-1}g_1, g_1^{-1}g_2 \in H$.
+    \end{enumerate}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Note that $g_2^{-1}g_1 \in H$ if and only if $g_1^{-1}g_2 \in H$, so we can use $g_2^{-1}g_1 \in H$ as a characterisation for $g_1H = g_2H$.
+    \end{remark}
+\end{notebox}
+In a sense, we can say that $g_1$ and $g_2$ are ``equal'' with respect to coset with $H$. This motivates us to consider some equivalence relation.
+\begin{probox}{Coset Partition of a Group}{cosetPartition}
+    Let $G$ be a group and $H \leq G$. Define $\sim$ to be a relation on $G$ by $g_1 \sim g_2$ if and only if $g_1H = g_2H$, then $\sim$ is an equivalence relation, $G \slash H = G \slash \sim$ and the map $\pi \colon G \to G \slash H$ defined by $\pi\left(g\right) = gH$ is the quotient map.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
+\end{probox}
+Intuitively, $\abs{G \slash H}$ is the number of distinct cosets $H$ can have with respect to the elements of $G$.
+\begin{dfnbox}{Index}{index}
+    Let $G$ be a group with $H \leq G$. The {\color{red} \textbf{index}} of $H$ is defined as $\abs{G \slash H}$ and is denoted by $\left[G : H\right]$ or $\abs{G \colon H}$.
+\end{dfnbox}
+Naturally, the index should stay consistent regardless of whether we use left- or right-cosets.
+\begin{probox}{Consistency of Index}{indexConsistency}
+    For any group $G$ and any $H \leq G$, we have $\abs{H \backslash G} = \abs{G \slash H}$.
+    \tcblower
+    \begin{proof}
+        Define $f \colon H \backslash G \to G \slash H$ by 
+        \begin{equation*}
+            f\left(X\right) = X^{-1} \coloneqq \left\{x^{-1} \in G \colon x \in X\right\}.
+        \end{equation*}
+        For any $X \in H \backslash G$, there exists some $g \in G$ such that $X = gH$, then 
+        \begin{align*}
+            f\left(X\right) & = \left\{x^{-1} \in G \colon x \in gH\right\} \\
+            & = \left\{h^{-1}g^{-1} \colon h \in H\right\} \\
+            & = \left\{h'g^{-1} \colon h' \in H\right\} \\
+            & = Hg^{-1}.
+        \end{align*}
+        Define $g \colon H \slash G \to H \backslash G$ by $g\left(X\right) = X^{-1}$, then by a similar argument, we can show that $f \circ g = \mathrm{id}_{H \slash G}$ and $g \circ f = \mathrm{id}_{H \backslash G}$. Therefore, $f$ is a bijection and $\abs{H \backslash G} = \abs{G \slash H}$.
+    \end{proof}
+\end{probox}
+Clearly, for any $H \leq G$ and any $h_1, h_2 \in H$ with $h_1 \neq h_2$, we must have $gh_1 \neq gh_2$ by the cancellation laws. Therefore, $H$, $gH$ and $Hg$ should be equinumerous.
+\begin{probox}{Equinumerous Cosets}{equinumerousCosets}
+    For any group $G$ and any $g \in G$, we have $H \approx gH \approx Hg$ for any $H \leq G$.
+    \tcblower
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{probox}
+These above results combined give us a powerful way to determine the cardinality of a group.
+\begin{thmbox}{Lagrange's Theorem}{Lagrange}
+    For any group $G$ and any $H \leq G$, we have $\abs{G} = \abs{G \colon H}\abs{H}$.
+    \tcblower
+    \begin{proof}
+        By Proposition \ref{pro:cosetPartition}, $H \backslash G$ is a partition of $G$, so 
+        \begin{equation*}
+            G = \bigsqcup_{X \in H \backslash G} X
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            \abs{G} = \sum_{X \in H \backslash G} \abs{X}.
+        \end{equation*}
+        By Proposition \ref{pro:equinumerousCosets}, $\abs{X} = \abs{H}$ for any $X \in H \backslash G$ and so $\abs{G} = \abs{G \colon H}\abs{H}$.
+    \end{proof}
+\end{thmbox}
+For finite groups, we have the following corollary:
+\begin{corbox}{Lagrange's Theorem for Finite Groups}{LagrangeFinite}
+    For any finite group $G$ and any $H \leq G$, we have $\abs{H} \mid \abs{G}$.
+    \tcblower 
+    \begin{proof}
+        Trivial.
+    \end{proof}
+\end{corbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, for any element $x \in G$, we have $\abs{x} \mid \abs{G}$ because $\left\langle x \right\rangle$ is a finite cyclic subgroup, and so $x^{\abs{G}} = 1$.
+    \end{remark}
+\end{notebox}
+By the above remark, it is easy to see that if $G$ is finite and its order is prime, then we are left with no choice but to force $\left\langle x \right\rangle = \left\{1\right\}$ or $G$.
+\begin{corbox}{Prime-Order Finite Groups Are Cyclic}{finiteCyclicPrime}
+    If $G$ is a finite group and $\abs{G}$ is a prime, then $G$ is cyclic.
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
+\end{corbox}
+\begin{notebox}
+    \begin{remark}
+        A finite group with prime order is isomorphic to $\Z \slash p\Z$.
+    \end{remark}
+\end{notebox}
+We can apply Lagrange's Theorem to the following context: consider the ``multiplication'' operation defined on $\Z \slash n\Z$ by 
+\begin{equation*}
+    \widebar{x} \cdot \widebar{y} = \widebar{xy}.
+\end{equation*}
+This is well-defined and associative over $\Z \slash n\Z$. However, $\left(\Z \slash n\Z, \cdot\right)$ is not a group because some elements do not have an inverse.
+
+Instead, we define $\left(\Z \slash n\Z\right)^{\times} \subseteq \Z \slash n\Z$ to be the maximal subset such that $\left(\left(\Z \slash n\Z\right)^{\times}, \cdot\right)$ is a group.
+\begin{probox}{The Multiplicative Group of $\Z \slash n\Z$}{multiplicativeGroup}
+    For any $n \in \N$, we have 
+    \begin{equation*}
+        \left(\Z \slash n\Z\right)^{\times} - \left\{\widebar{a} \in \Z \slash n\Z \colon a \leq n \textrm{ and } \gcd\left(a, n\right) = 1\right\}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Take any integer $a \leq n$ coprime to $n$, then by B\'{e}zout's Identity, there exist $s, t \in \Z$ such that $sa + tn = 1$. Therefore, $\widebar{sa} = \widebar{sa + tn} = \widebar{1}$. Similarly, $\widebar{as} = \widebar{1}$. Take any $x \in \left(\Z \slash n\Z\right)^{\times}$, then there exists some integer $a \in \left[0, n - 1\right]$ such that $x = \widebar{a}$. Notice that there exists $y \coloneqq \widebar{b} \in \left(\Z \slash n\Z\right)^{\times}$ such that $xy = 1$. Therefore, $n \mid ab - 1$ and so there exists some $k \in \Z$ such that $ab - kn = 1$ and so $\gcd\left(a, n\right) = 1$.
+    \end{proof}
+\end{probox}
+Recall that the \textit{Euler-$\varphi$ function} counts the number of integers coprime to a fixed non-negative integer $n$, so 
+\begin{equation*}
+    \varphi\left(n\right) = \abs{\left(\Z \slash n\Z\right)^{\times}}.
+\end{equation*}
+Combining with Lagrange's Theorem implies that for any $x \in \left(\Z \slash n\Z\right)^{\times}$, 
+\begin{equation*}
+    x^{\varphi\left(n\right)} = x^{\abs{\left(\Z \slash n\Z\right)^{\times}}} = \widebar{1}.
+\end{equation*}
+In other words, for any integer $a$ coprime to $n$, we have 
+\begin{equation*}
+    a^{\varphi\left(n\right)} \equiv 1 \mod n. 
+\end{equation*}
+By taking $n = p$ to be a prime, we get \textit{Fermat's Little Theorem}: for every $x \in \left(\Z \slash p\Z\right)^{\times}$, we have $x^{p - 1} = \widebar{1}$ and that for any $a \in \Z$, 
+\begin{equation*}
+    a^p \equiv a \mod p.
+\end{equation*}
+\section{Conjugacy Classes}
+For each $g \in G$, we consider a mapping over itself. In particular, picking any element $a$, we first apply a left action by $g$, followed by a right action by $g^{-1}$. We can see the mapping $a \mapsto gag^{-1} \in G$ is indeed a group action.
+\begin{probox}{Group Action over a Group}{conjGrpAct}
+    Let $G$ be a group, then for each $g \in G$, the map $\alpha_g \colon G \to G$ defined by $\alpha_g\left(a\right) = gag^{-1}$ is a group action.
+\end{probox}
+Such a group action results in the notion of \textit{conjugates}. 
+\begin{dfnbox}{Conjugate}{conj}
+    Let $G$ be a group, then for each pair $\left(a, g\right) \in G \times G$, the {\color{red} \textbf{$g$-conjugate}} of $a$ is $gag^{-1} \in G$. The {\color{red} \textbf{conjugacy class}} of $a$ is defined as the set 
+    \begin{equation*}
+        \left\{gag^{-1} \in G \colon g \in G\right\}.
+    \end{equation*}
+    For each pair $\left(A, g\right) \in \mathcal{P}\left(G\right) \times G$, the {\color{red} \textbf{$g$-conjugate}} of $A$ is defined as 
+    \begin{equation*}
+        gAg^{-1} \coloneqq \left\{gag^{-1} \in G \colon a \in A\right\}.
+    \end{equation*}
+\end{dfnbox}
+Things become interesting when this conjugate action happens to be an inclusion map.
+\begin{dfnbox}{Centraliser}{centraliser}
+    Let $G$ be a group, the element $g \in G$ is said to {\color{red} \textbf{centralise}} $a \in G$ if $gag^{-1} = a$. The {\color{red} \textbf{centraliser}} of $a \in G$ is defined as the set 
+    \begin{equation*}
+        C_G\left(a\right) \coloneqq \left\{g \in G \colon gag^{-1} = a\right\}.
+    \end{equation*}
+    $g$ is said to {\color{red} \textbf{centralise}} $A \subseteq G$ if $gag^{-1} = a$ for all $a \in A$. The {\color{red} \textbf{centraliser}} of $A \subseteq G$ is defined as the set 
+    \begin{equation*}
+        C_G\left(A\right) \coloneqq \left\{g \in G \colon gag^{-1} = a \textrm{ for all } a \in A\right\}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Clearly, $g \in G$ centralises $a \in G$ if and only if $ga = ag$.
+    \end{remark}
+\end{notebox}
+It is possible that some $g \in G$ centralises the entire group.
+\begin{dfnbox}{Centre}{centre}
+    The {\color{red} \textbf{centre}} of a group $G$ is defined as 
+    \begin{equation*}
+        Z\left(G\right) \coloneqq \left\{g \in G \colon gag^{-1} \textrm{ for all } a \in G\right\}.
+    \end{equation*}
+\end{dfnbox}
+Similarly, we can consider the mapping $A \mapsto gAg^{-1}$ and focus on the case where this map is an inclusion map.
+\begin{dfnbox}{Normaliser}{normaliser}
+    Let $G$ be a group and $A \subseteq G$ be a subset. An element $g \in G$ is said to {\color{red} \textbf{normalise}} $A$ if~$gAg^{-1} = A$. The {\color{red} \textbf{normaliser}} of $A$ is defined as the set
+    \begin{equation*}
+        N_G\left(A\right) \coloneqq \left\{g \in G \colon gAg^{-1} = A\right\}.
+    \end{equation*}
+\end{dfnbox}
+A normaliser of $A$ might not be a centraliser for any $a \in A$ because the normalisation operation could be a permutation of $A$. However, if $g \in G$ centralises every $a \in A$, then $g$ normalises $A$. Intuitively, this means that 
+\begin{equation*}
+    \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right).
+\end{equation*}
+However, the converse may not hold. Formally, we have the following properties:
+\begin{probox}{Relationship between Centraliser and Normaliser}{centraliserNormaliser}
+    For any group $G$, 
+    \begin{enumerate}
+        \item $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$ for all $a \in G$;
+        \item $C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right)$;
+        \item $Z\left(G\right) = C_G\left(G\right) = \bigcap_{a \in G}C_G\left(a\right)$;
+        \item $N_G\left(G\right) = G$;
+        \item $C_G\left(1\right) = G$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Notice that 
+        \begin{align*}
+            C_G\left(a\right) & = \left\{g \in G \colon gag^{-1} = a\right\}, \\
+            N_G\left(\left\{a\right\}\right) & = \left\{g \in G \colon g\left\{a\right\}g^{-1} = \left\{a\right\}\right\}.
+        \end{align*}
+        Observe that $g\left\{a\right\}g^{-1} = \left\{a\right\}$ if and only if $gag^{-1} = a$, so $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$. Take any $g \in C_G\left(A\right)$, then $gag^{-1} = a$ for all $a \in A$, and so $g \in C_G\left(a\right)$ for every $a \in A$ and~$g \in N_G\left(A\right)$, which means that $C_G\left(A\right) \subseteq \bigcap_{a \in A}C_G\left(a\right)$ and $C_G\left(A\right) \subseteq N_G\left(A\right)$. Take any $g \in \bigcap_{a \in A}C_G\left(a\right)$, then $gag^{-1} = a$ for each $a \in A$ and so $g \in C_G\left(A\right)$. Therefore, we have $\bigcap_{a \in A}C_G\left(a\right) \subseteq C_G\left(A\right)$ and so 
+        \begin{equation*}
+            C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right).
+        \end{equation*}
+        $3$ is trivial from the definitions. To show $4$, it suffices to prove that $G \subseteq N_G\left(G\right)$. Take any $g \in G$. For any $x \in G$, define $a \coloneqq g^{-1}xg \in G$, then clearly $x = gag^{-1}$ and so we have~$x \in gGg^{-1}$. Therefore, $G \subseteq gGg^{-1}$ and so $gGg^{-1} = G$. Therefore, we have~$g \in N_G\left(G\right)$. To show $5$, it suffices to prove that $G \subseteq C_G\left(1\right)$. For any $g \in G$, it is clear that $g1g^{-1} = gg^{-1} = 1$, so $g \in C_G\left(1\right)$, which implies that $G \subseteq C_G\left(1\right)$.
+    \end{proof}
+\end{probox}
+It is obvious that if $G$ is an Abelian group, then every element of $G$ centralises everything in $G$. This leads to a series of interesting and important properties.
+\begin{probox}{Centre Characterisation of Abelian Groups}{AbelianCentre}
+    For every group $G$, the followings are equivalent:
+    \begin{enumerate}
+        \item $G$ is Abelian;
+        \item $Z\left(G\right) = G$;
+        \item $C_G\left(a\right) = G$ for all $a \in G$;
+        \item $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$.
+    \end{enumerate}
+    \tcblower
+    \begin{proof}
+        Suppose that $G$ is Abelian, to show that $Z\left(G\right) = G$, it suffices to prove that~$G \subseteq Z\left(G\right)$. Take any $g \in G$, then for all $a \in G$, we have $ga = ag$ and so~$gag^{-1} = a$, which means that $g \in Z\left(G\right)$. Therefore, $G \subseteq Z\left(G\right)$ and so $Z\left(G\right) = G$. 
+        \\\\
+        Suppose that $Z\left(G\right) = G$, for any $a \in G$, to show that $C_G\left(a\right) = G$, it suffices to prove that $G \subseteq C_G\left(a\right)$. Take any $g \in G \subseteq Z\left(G\right)$, then $gag^{-1} = a$ for all $a \in G$. Therefore, $g \in C_G\left(a\right)$ for all $a \in G$. Therefore, $G \subseteq C_G\left(a\right)$ and so $C_G\left(a\right) = G$ for all~$a \in G$.
+        \\\\
+        Suppose that $C_G\left(a\right) = G$ for all $a \in G$. Take any $A \subseteq G$. By Proposition \ref{pro:centraliserNormaliser}, we already know that $C_G\left(A\right) \subseteq N_G\left(A\right)$. It is clear that $N_G\left(A\right) \subseteq G$. Fix some~$a \in A$, then $G = C_G\left(a\right) \subseteq C_G\left(A\right)$, which means that 
+        \begin{equation*}
+            C_G\left(A\right) \subseteq N_G\left(A\right) \subseteq G \subseteq C_G\left(A\right),
+        \end{equation*}
+        and so $C_G\left(A\right) = N_G\left(A\right) = G$. 
+        \\\\
+        Suppose that $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$. Take $A = G$, then for any~$g \in G$, since $g \in G = C_G\left(G\right)$, we have $gag^{-1} = a$ for all $a \in G$, and so $ga = ag$. Therefore, $G$ is Abelian.
+    \end{proof}
+\end{probox}
+The following proposition shows that every centraliser or normaliser is a subgroup.
+\begin{probox}{Centraliser and Normaliser as Subgroups}{subgrpCentraliserNormaliser}
+    Let $G$ be a group. For all $A \subseteq G$, we have $C_G\left(A\right), N_G\left(A\right) \leq G$.
+    \tcblower
+    \begin{proof}
+        For every $A \subseteq G$, we have $1a1^{-1} = a$ for all $a \in A$ and $1A1^{-1} = A$, so we have~$1 \in C_G\left(A\right)$ and $1 \in N_G\left(A\right)$. This means that $C_G\left(A\right), N_G\left(A\right) \neq \varnothing$. Take any~$g_1, g_2 \in C_G\left(A\right)$, then 
+        \begin{equation*}
+            g_1ag_1^{-1} = a \quad\textrm{and}\quad g_2ag_2^{-1} = a
+        \end{equation*}
+        for all $a \in A$. Consider 
+        \begin{equation*}
+            \left(g_1g_2^{-1}\right)a\left(g_1g_2^{-1}\right)^{-1} = g_1g_2^{-1}ag_2g_1^{-1} = a,
+        \end{equation*}
+        so $g_1g_2^{-1} \in C_G\left(A\right)$. By Proposition \ref{pro:subgrpCrite}, $C_G\left(A\right) \leq G$. Similarly, $N_G\left(A\right) \leq G$.
+    \end{proof}
+\end{probox}
+\section{Quotient Groups}
+Now we consider applying the conjugate action not on any set, but on a subgroup instead. Recall that every $g \in G$ normalises $G$, but $G$ it not the only subgroup which is normalised by all elements. In particular, subgroups normalised by any element is called \textit{normal}.
+\begin{dfnbox}{Normal Subgroup}{normalSubgrp}
+    Let $G$ be a group. A subgroup $N \subseteq G$ is {\color{red} \textbf{normal}} if $gNg^{-1} = N$ for all $g \in G$, denoted by $N \trianglelefteq G$.
+\end{dfnbox}
+In fact, it turns out that the equality can be implied by simply having a one-directional inclusion.
+\begin{probox}{Characterisation of Normal Subgroups}{charNorm}
+    Let $G$ be a group. A subgroup $N \leq G$ is normal if and only if $gNg^{-1} \subseteq N$ for all $g \in G$.
+\end{probox}
+Next, we introduce some preliminary notations:
+\begin{dfnbox}{Product and Inverse of Subgroups}{prodInvSubgrp}
+    Let $G$ be a group and $X\leq G$ be a subgroup, then the {\color{red} \textbf{inverse}} of $X$ is defined by 
+    \begin{equation*}
+        X^{-1} \coloneqq \left\{x^{-1} \colon x \in X\right\}.
+    \end{equation*}
+    If $Y \leq G$ is a subgroup, then the {\color{red} \textbf{product}} of $X$ and $Y$ is defined by 
+    \begin{equation*}
+        XY \coloneqq \left\{xy \in G \colon x \in X, y \in Y\right\}.
+    \end{equation*}
+\end{dfnbox}
+Here is a fact: for some normal subgroup $N \leq G$, consider the left-cosets $G \slash N$ and take any $X_1, X_2 \in G \slash N$. Note that we can choose any $g_1 \in X_1$ and $X_1 = g_1N$. Similarly, $X_2 = g_2N$ for any $g_2 \in X_2$. One can check that $X_1X_2 = g_1g_2N \in G \slash N$.
+\begin{notebox}
+    \begin{remark}
+        One can show that such a binary operation is well-defined if and only if $N$ is a normal subgroup.
+    \end{remark}
+\end{notebox}
+
+At the same time, the inverse of a coset $X \in G \slash N$ is simply $g^{-1}N \in G \slash N$ for any $g \in X$.
+
+Clearly, the above defines a binary operation under which the left-cosets are closed and a way to define the inverse of a left-coset. By augmenting them into the set $G \slash N$, we should have a group.
+\begin{dfnbox}{Quotient Group}{quotientGrp}
+    Let $G$ be a group and $N \trianglelefteq G$ be a normal subgroup. The {\color{red} \textbf{quotient group of $G$ modulo $N$}} is the group $\left(G \slash N, \cdot\right)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        It is clear that the identity of a quotient group is $N$.
+    \end{remark}
+\end{notebox}
 \end{document}

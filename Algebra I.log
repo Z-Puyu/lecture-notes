@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  30 MAR 2025 18:11
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  30 MAR 2025 23:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1716,49 +1716,61 @@ Underfull \hbox (badness 10000) in paragraph at lines 489--492
 
  []
 
-[12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22]
+[12] [13] [14] [15] [16] [17] [18]
+
+Package tcolorbox Warning: Discard zero height first box part due to break problems (possible loss of zero height content) on input line 725.
+
+[19] [20] [21] [22] [23] [24]
 LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(2)/m/n' will be
-(Font)              scaled to size 10.95116pt on input line 882.
+(Font)              scaled to size 10.95116pt on input line 931.
 LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(2)/m/n' will be
-(Font)              scaled to size 8.00085pt on input line 882.
+(Font)              scaled to size 8.00085pt on input line 931.
 LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 882.
+(Font)              scaled to size 10.94882pt on input line 931.
 LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 882.
- [23] [24] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 993--997
-
- []
-
-[26] [27] [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 1110--1115
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1110--1115
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1117--1121
-
- []
-
-[30] [31]
+(Font)              scaled to size 7.99915pt on input line 931.
+ [25] [26] [27] [28]
 Chapter 2.
-[32
+[29
 
 ]
 
-LaTeX Warning: Reference `pro:cardConjClass' on page 33 undefined on input line 1190.
+LaTeX Warning: Reference `pro:cardConjClass' on page 30 undefined on input line 1064.
 
-[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
-Underfull \hbox (badness 10000) in paragraph at lines 1591--1594
+[30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41]
+Underfull \hbox (badness 10000) in paragraph at lines 1465--1468
 
  []
 
-[45] [46] [47] 
+[42] [43] [44]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1544--1548
+
+ []
+
+[45
+
+] [46] [47]
+Chapter 4.
+[48
+
+] [49] [50] [51] [52] [53]
+Underfull \hbox (badness 10000) in paragraph at lines 1811--1816
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1811--1816
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1818--1822
+
+ []
+
+[54] [55] [56] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Algebra I.aux)
 
@@ -1771,12 +1783,12 @@ Package rerunfilecheck Info: File `"Algebra I".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39466 strings out of 478630
- 857611 string characters out of 5847730
- 1889012 words of memory out of 5000000
- 58873 multiletter control sequences out of 15000+600000
+ 39514 strings out of 478630
+ 858433 string characters out of 5847730
+ 1888012 words of memory out of 5000000
+ 58921 multiletter control sequences out of 15000+600000
  523962 words of font info for 157 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  129i,18n,156p,1365b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Algebra I.pdf (47 pages).
+Output written on Algebra I.pdf (56 pages).
