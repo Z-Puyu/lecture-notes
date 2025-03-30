@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  24 FEB 2025 01:31
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  30 MAR 2025 18:11
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1753,7 +1753,12 @@ Chapter 2.
 
 LaTeX Warning: Reference `pro:cardConjClass' on page 33 undefined on input line 1190.
 
-[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] 
+[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
+Underfull \hbox (badness 10000) in paragraph at lines 1591--1594
+
+ []
+
+[45] [46] [47] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Algebra I.aux)
 
@@ -1766,12 +1771,12 @@ Package rerunfilecheck Info: File `"Algebra I".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39440 strings out of 478630
- 857163 string characters out of 5847730
- 1888012 words of memory out of 5000000
- 58847 multiletter control sequences out of 15000+600000
+ 39466 strings out of 478630
+ 857611 string characters out of 5847730
+ 1889012 words of memory out of 5000000
+ 58873 multiletter control sequences out of 15000+600000
  523962 words of font info for 157 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  129i,18n,156p,1365b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Algebra I.pdf (42 pages).
+Output written on Algebra I.pdf (47 pages).
