@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  21 APR 2025 22:59
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.2)  22 APR 2025 20:49
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1762,30 +1762,48 @@ Chapter 5.
 [46
 
 ] [47] [48] [49] [50] [51]
-Underfull \hbox (badness 10000) in paragraph at lines 1770--1775
+Underfull \hbox (badness 10000) in paragraph at lines 1766--1771
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1770--1775
+Underfull \hbox (badness 10000) in paragraph at lines 1766--1771
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1777--1781
+Underfull \hbox (badness 10000) in paragraph at lines 1773--1777
 
  []
 
 [52] [53] [54] [55] [56] [57] [58] [59]
 Chapter 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2015--2019
+Underfull \hbox (badness 10000) in paragraph at lines 2017--2021
 
  []
 
 [60
 
-] [61] [62] [63] [64] [65] [66] [67] 
+] [61] [62] [63] [64] [65] [66] [67] [68]
+LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(2)/m/n' will be
+(Font)              scaled to size 17.28183pt on input line 2244.
+LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(2)/m/n' will be
+(Font)              scaled to size 10.00107pt on input line 2244.
+LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(3)/m/n' will be
+(Font)              scaled to size 17.27815pt on input line 2244.
+LaTeX Font Info:    Font shape `TU/NewCMMath-Book.otf(3)/m/n' will be
+(Font)              scaled to size 9.99893pt on input line 2244.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 2244.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 2244.
+
+[69] [70] [71] [72] [73] [74] [75] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Algebra I.aux)
 
@@ -1798,12 +1816,12 @@ Package rerunfilecheck Info: File `"Algebra I".out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 39567 strings out of 478630
- 859345 string characters out of 5847730
+ 39653 strings out of 478630
+ 861532 string characters out of 5847730
  1900012 words of memory out of 5000000
- 58974 multiletter control sequences out of 15000+600000
- 523962 words of font info for 157 fonts, out of 8000000 for 9000
+ 59046 multiletter control sequences out of 15000+600000
+ 527097 words of font info for 179 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  129i,18n,156p,1365b,2774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Algebra I.pdf (67 pages).
+Output written on Algebra I.pdf (75 pages).

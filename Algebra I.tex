@@ -1683,11 +1683,7 @@ By taking $n = p$ to be a prime, we get \textit{Fermat's Little Theorem}: for ev
     a^p \equiv a \mod p.
 \end{equation*}
 \section{Conjugacy Classes}
-For each $g \in G$, we consider a mapping over itself. In particular, picking any element $a$, we first apply a left action by $g$, followed by a right action by $g^{-1}$. We can see the mapping $a \mapsto gag^{-1} \in G$ is indeed a group action.
-\begin{probox}{Group Action over a Group}{conjGrpAct}
-    Let $G$ be a group, then for each $g \in G$, the map $\alpha_g \colon G \to G$ defined by $\alpha_g\left(a\right) = gag^{-1}$ is a group action.
-\end{probox}
-Such a group action results in the notion of \textit{conjugates}. 
+For each $g \in G$, we consider a mapping over itself. In particular, picking any element $a$, we first apply a left action by $g$, followed by a right action by $g^{-1}$. Such a mapping results in the notion of \textit{conjugates}. 
 \begin{dfnbox}{Conjugate}{conj}
     Let $G$ be a group, then for each pair $\left(a, g\right) \in G \times G$, the {\color{red} \textbf{$g$-conjugate}} of $a$ is $gag^{-1} \in G$. The {\color{red} \textbf{conjugacy class}} of $a$ is defined as the set 
     \begin{equation*}
@@ -2001,6 +1997,12 @@ Let $G$ be a group with a right group action $\cdot \colon A \times G \to A$. De
     x \star y = yx \qquad\textrm{for all } x, y \in G.
 \end{equation*}
 Now it is clear that $g \diamond a \coloneqq a \cdot g$ is a left group action. Therefore, in fact it suffices to study left group actions.
+
+We can see the conjugation mapping $a \mapsto gag^{-1} \in G$ is a group action.
+\begin{probox}{Group Action over a Group}{conjGrpAct}
+    Let $G$ be a group, then for each $g \in G$, the map $\alpha_g \colon G \to G$ defined by $\alpha_g\left(a\right) = gag^{-1}$ is a group action.
+\end{probox}
+Since group action is essentially a mapping, it is natural to investigate its relationship with group homomorphisms.
 \begin{probox}{Group Actions Induce Group Homomorphisms}{grpActionHomo}
     Let $G$ be a group and $A$ be a set with a left group action. For each $g \in G$, define the map~$\sigma_g \colon A \to A$ such that~$\sigma_g\left(a\right) = ga$, then 
     \begin{itemize}
@@ -2191,5 +2193,261 @@ Notice that by fixing $a \in A$, to produce the $G$-orbit of $a$ is simply to co
         G_a \coloneqq \left\{g \in G \colon ga = a\right\} \subseteq G.
     \end{equation*}
 \end{dfnbox}
-We can view the stabiliser as all elements from the group $G$ that make $a \in A$ ``loop'' around itself.
+We can view the stabiliser as all elements from the group $G$ that make $a \in A$ ``loop'' around itself. We prove the following correspondence between the stabiliser and the orbits:
+\begin{probox}{Bijection between Stabiliser and Orbit}{bijectionStabiliserOrbit}
+    Let $G$ be a group acting on a set $A$. Define $f \colon G \slash G_a \to G \cdot a$ by $f\left(gG_a\right) = ga$, then $f$ is a bijection.
+    \tcblower
+    \begin{proof}
+        We first prove that $f$ is well-defined. Let $g_1, g_2 \in G$ be such that $g_1G_a = g_2G_a$, then $g_2 \in g_1G_a$. Therefore, there exists some $h \in G_a$ such that $g_2 = g_1h$. Therefore,
+        \begin{equation*}
+            g_2a = g_1ha = g_1\left(ha\right) = g_1a,
+        \end{equation*}
+        which means that $f\left(g_1G_a\right) = f\left(g_2G_a\right)$. Notice that $f$ is clearly surjective, so it suffices to prove injectivity. For any $g_1, g_2 \in G$ such that $g_1a = g_2a$, we have 
+        \begin{equation*}
+            \left(g_2^{-1}g_1\right)a = g_2^{-1}\left(g_1a\right) = g_2^{-1}\left(g_2a\right) = a,
+        \end{equation*}
+        so $g_2^{-1}g_1 \in G_a$. This means that $g_2^{-1}g_1G_a = G_a$ and so $g_1G_a = g_2G_a$. Therefore, this means that $f\left(g_1G_a\right) = f\left(g_2G_a\right)$ implies that $g_1G_a = g_2G_a$, and so $f$ is injective.
+    \end{proof}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        The above implies that $\abs{G \colon G_a} = \abs{G \cdot a}$.
+    \end{remark}
+\end{notebox}
+Note that a set can be decomposed into a partition using orbits, so the above gives rise to the following result:
+\begin{corbox}{Orbit Decomposition}{orbitDecomposition}
+    Let $G$ be a group acting on a finite set $A$. Let $\left\{G \cdot a_i\right\}_{i \in I}$ be the collection of all distinct $G$-orbits in $A$, where $I$ is an index set, then there exists a bijection between $\bigsqcup_{i \in I}G \slash G_{a_i}$ and $\bigsqcup_{i \in I}G \cdot a_i$.
+\end{corbox}
+It is possible that the stabiliser of some element is the entire group. In this case, the element is intuitively ``fixed'' to a position forever.
+\begin{dfnbox}{Fixed Point}{fixedPoint}
+    Let $G$ be a group acting on a set $A$. An element $a \in A$ is said to be a {\color{red} \textbf{fixed point}} if~$ga = a$ for all $g \in G$. The set of all fixed points of $A$ is denoted by $A^G$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Equivalently, if $a$ is a fixed point, then $G_a = G$ and $G \cdot a = \left\{a\right\}$.
+    \end{remark}
+\end{notebox}
+The following result is trivial:
+\begin{probox}{Cardinality of a Set Acted upon by a Group}{cardinalityActedGroup}
+    Let $G$ be a group acting on a finite set $A$. If $\left\{G \cdot a_i\right\}_{i \in I}$ are all distinct non-trivial orbits in $A$ for some index set $I$, then 
+    \begin{equation*}
+        \abs{A} = \abs{A^G} + \sum_{i \in I}\abs{G \colon G_{a_i}}.
+    \end{equation*}
+\end{probox}
+Recall the conjugacy action of a group $G$ on itself. The $G$-orbits of the action are simply the conjugacy classes in $G$, the stabilisers are the centralisers in $G$, and the fixed points are the centre of $G$. 
+\begin{thmbox}{The Class Equation}{classEquation}
+    Let $G$ be a finite group such that $\left\{G \cdot g_i\right\}_{i \in I}$ are all distinct non-trivial conjugacy classes of $G$ for some index set $I$, then 
+    \begin{equation*}
+        \abs{G} = \abs{Z\left(G\right)} + \sum_{i \in I}\abs{G \colon C_G\left(g_i\right)}.
+    \end{equation*}
+\end{thmbox}
+\section{Sylow $p$-Subgroups}
+In this section, we introduce a special class of groups known as the $p$\textit{-groups}.
+\begin{dfnbox}{$p$-Group}{pGrp}
+    Let $p$ be a prime. A {\color{red} \textbf{$p$-group}} is a finite group $G$ with $\abs{G} = p^{\alpha}$ for some $\alpha \geq 1$. A {\color{red} \textbf{$p$-subgroup}} is a subgroup which is a $p$-group.
+\end{dfnbox}
+A \textit{Sylow $p$-subgroup} is a $p$-subgroup with additional restrictions.
+\begin{dfnbox}{Sylow $p$-Subgroup}{sylowP}
+    A {\color{red} \textbf{Sylow $p$-subgroup}} of a group $G$ is a maximal $p$-subgroup of $G$. We denote the collection of all Sylow $p$-subgroups of $G$ by $\mathrm{Syl}_p\left(G\right)$ and define $n_p \coloneqq \abs{\mathrm{Syl}_p\left(G\right)}$.
+\end{dfnbox}
+Equivalently, a Sylow $p$-subgroup can be characterised as follows:
+\begin{probox}{Characterisation of Sylow $p$-Subgroups}{charSylow}
+    Let $G$ be a finite group with order $p^{\alpha}m$ where $p$ is a prime, $\alpha \geq 1$ and $p \nmid m$, then a subgroup $H \leq G$ is a Sylow $p$-subgroup if and only if $\abs{H} = p^{\alpha}$ or $\gcd\left(\abs{G \colon H}, p\right) = 1$.
+\end{probox}
+The Sylow $p$-subgroups give rise to a series of interesting results collectively known as Sylow's Theorems. We first state a preliminary lemma:
+\begin{lembox}{The Basic Lemma}{baiscLemma}
+    If $H$ is a $p$-group acting on a finite set $A$, then $\abs{A^H} \equiv \abs{A} \mod p$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{lembox}
+We can extend the lemma to $p$-subgroups:
+\begin{corbox}{The Basic Lemma on Subgroups}{basicLemmaSubgrp}
+    If $H$ is a $p$-subgroup of a finite group $G$, then $\abs{N_G\left(H\right) \colon H} \equiv \abs{G \colon H} \mod p$.
+    \tcblower
+    \begin{proof}
+        With respect to the left multiplication action of $H$ on $G \slash H$, we have 
+        \begin{align*}
+            \left(G \slash H\right)^H & = \left\{\xi \in G \slash H \colon h\xi = \xi \textrm{ for all } h \in H\right\} \\
+            & = \left\{xH \in G \slash H \colon x^{-1}hx \in H \textrm{ for all } h \in H\right\} \\
+            & = \left\{xH \in G \slash H \colon x^{-1}Hx \subseteq H\right\} \\
+            & = \left\{xH \in G \slash H \colon x^{-1}Hx = H\right\} \\
+            & = \left\{xH \in G \slash H \colon x \in N_G\left(H\right)\right\} \\
+            & = N_G\left(H\right) \slash H.
+        \end{align*}
+        By Lemma \ref{lem:baiscLemma}, 
+        \begin{equation*}
+            \abs{N_G\left(H\right) \colon H} = \abs{N_G\left(H\right) \slash H} = \abs{\left(G \slash H\right)^H} \equiv \abs{G \slash H} = \abs{G \colon H} \mod p.
+        \end{equation*}
+    \end{proof}
+\end{corbox}
+We first use the lemma to prove some simple result of $p$-groups.
+\begin{probox}{Centre of $p$-Groups}{pGrpCentre}
+    For every $p$-group $P$, we have $Z\left(P\right) \neq \left\{1_P\right\}$. 
+    \tcblower
+    \begin{proof}
+        Consider the conjugation action of $P$ on itself, then $P^P = Z\left(P\right)$. By Lemma \ref{lem:baiscLemma}, 
+        \begin{equation*}
+            \abs{Z\left(P\right)} = \abs{P^P} \equiv \left\{P\right\} \mod p.
+        \end{equation*}
+        Since $p \bigm\vert \abs{P}$, this means that $p \bigm\vert \abs{Z\left(P\right)}$. Note that $Z\left(P\right) \neq \varnothing$, so it is non-trivial.
+    \end{proof}
+\end{probox}
+The first question of Sylow $p$-subgroups is their existence. A weaker version on the existence of Sylow $p$-subgroups is as follows:
+\begin{thmbox}{Cauchy's Theorem}{cauchyTheorem}
+    For every finite group $G$ and any prime $p \bigm\vert \abs{G}$, there exists some $g \in G$ such that $\abs{g} = p$.
+    \tcblower
+    \begin{proof}
+        Define $\alpha \colon S_p \times G^p \to G^p$ by 
+        \begin{equation*}
+            \alpha\left(\sigma, \left(g_i\right)_{i = 1}^p\right) = \left(g_{\sigma^{-1}\left(i\right)}\right)_{i = 1}^p.
+        \end{equation*}
+        One may check that $\alpha$ is a group action of $S_p$ on $G^p$. Take $\sigma_0 \coloneqq \left(1, 2, \cdots, p\right)$ and consider the cyclic group $\left\langle\sigma_0\right\rangle \leq S_p$. It is clear that $\abs{\left\langle\sigma_0\right\rangle} = p$ by Corollary \ref{cor:ordCycSubgrp} and so  $\left\langle\sigma_0\right\rangle \cong \Z \slash p\Z$ by Corollary \ref{cor:finiteCyclicPrime}. Note that $\left.\alpha\right\vert_{\left\langle\sigma_0\right\rangle}$ is a group action of $\left\langle\sigma_0\right\rangle$ on~$G^p$. Observe that for any $\left(g_i\right)_{i = 1}^p \in G^p$ with $\prod_{i = 1}^{p}g_i = 1_G$, we have 
+        \begin{equation*}
+            \alpha\left(\sigma_0, \left(g_i\right)_{i = 1}^p\right) = \left(g_2, g_3, \cdots, g_p, g_1\right),
+        \end{equation*}
+        where 
+        \begin{equation*}
+            \left(\prod_{i = 2}^{p}g_i\right)g_1 = g_1^{-1}1_Gg_1 = 1_G.
+        \end{equation*}
+        Therefore, $A \coloneqq \left\{\left(g_i\right)_{i = 1}^p \in G^p \colon \prod_{i = 1}^{p}g_i = 1_G\right\}$ is stable under $\left.\alpha\right\rvert_{\left\langle\sigma_0\right\rangle}$ by Proposition \ref{pro:stablePerm}. Let $\left\{\left\langle\sigma_0\right\rangle \cdot a_i\right\}_{i \in I}$ be all distinct non-trivial $\left\langle\sigma_0\right\rangle$-orbits in $A$ in the orbit decomposition for some index set $I$, then by Proposition \ref{pro:cardinalityActedGroup}, 
+        \begin{equation*}
+            \abs{A} = \abs{A^{\left\langle\sigma_0\right\rangle}} + \sum_{i \in I}\abs{\left\langle\sigma_0\right\rangle \colon {\left\langle\sigma_0\right\rangle}_{a_i}}.
+        \end{equation*}
+        By Corollary \ref{cor:LagrangeFinite}, each $\abs{\left\langle\sigma_0\right\rangle \colon {\left\langle\sigma_0\right\rangle}_{a_i}}$ is a factor of $p$ and is strictly greater than $1$, so $\abs{\left\langle\sigma_0\right\rangle \colon {\left\langle\sigma_0\right\rangle}_{a_i}} = p$ for all $i \in I$. Therefore, 
+        \begin{equation*}
+            \abs{A} \equiv \abs{A^{\left\langle\sigma_0\right\rangle}} \mod p.
+        \end{equation*}
+        By the multiplication rule, $p \bigm\vert \abs{A} = \abs{G}^{p - 1}$, so $p \bigm\vert \abs{A^{\left\langle\sigma_0\right\rangle}}$. Since $A^{\left\langle\sigma_0\right\rangle} \neq \varnothing$, this means that $\abs{A^{\left\langle\sigma_0\right\rangle}} \geq p > 1$. Therefore, there exists some $a \in A^{\left\langle\sigma_0\right\rangle} \subseteq G$ with $a \neq 1_G$. By Corollary \ref{cor:cycOrder}, $\abs{a} = p$.
+    \end{proof}
+\end{thmbox}
+We can use the above result to extend the statement into a stronger version:
+\begin{thmbox}{Sylow's First Theorem}{1stSylow}
+    For every finite group $G$ and any prime factor $p$ with multiplicity $\alpha$ of $\abs{G}$, there exists a Sylow $p$-subgroup of $G$ of order $p^{\alpha}$.
+    \tcblower
+    \begin{proof}
+        We shall prove a stronger statement: for any $k \in \Z$ with $0 \leq k \leq \alpha$, there exists a $p$-subgroup of $G$ of order $p^k$. We proceed by induction on $k$. The case where $k = 0$ is trivial by taking $\left\{1_G\right\} \leq G$. Suppose that there exists some $k \in \left\{0, 1, \cdots, \alpha - 1\right\}$ such that there exists a $p$-subgroup $H \leq G$ of order $p^k$. By Theorem \ref{thm:Lagrange}, 
+        \begin{equation*}
+            \abs{G \colon H} = \frac{\abs{G}}{\abs{H}} = \frac{p^{\alpha}m}{p^k}
+        \end{equation*}
+        for some $m \geq 1$. Since $\alpha > k$, this means that $p \bigm \vert \abs{G \colon H}$. Notice that $H \trianglelefteq N_G\left(H\right)$ is always a normal subgroup. By Corollary \ref{cor:basicLemmaSubgrp}, we have 
+        \begin{equation*}
+            \abs{N_G\left(H\right) \colon H} \equiv \abs{G \colon H} \equiv 0 \mod p.
+        \end{equation*}
+        Let $\pi \colon N_G\left(H\right) \to N_G\left(H\right) \slash H$ be the quotient homomorphism, then by Theorem \ref{thm:cauchyTheorem}, there exists some $\xi \in N_G\left(H\right)$ such that $K \coloneqq \left\langle\xi\right\rangle \leq N_G\left(H\right)$ is a subgroup of order $p$. For each coset $\kappa \in K$, we have $\abs{\kappa} = \abs{H} = p^k$, so the $p$ distinct cosets in~$K$ imply that $\abs{\pi^{-1}\left(K\right)} = p^{k + 1}$. Note that $\pi^{-1}\left(K\right) \leq N_G\left(H\right) \leq G$, so there exists a $p$-subgroup of order $p^k$ of $G$ for every $k \in \left\{0, 1, 2, \cdots, \alpha\right\}$. By Proposition \ref{pro:charSylow}, the $p$-subgroup among them with order $\alpha$ is a Sylow $p$-subgroup.
+    \end{proof}
+\end{thmbox}
+Next, we investigate the relationship between Sylow $p$-subgroups.
+\begin{thmbox}{Sylow's Second Theorem}{Sylow2nd}
+    Let $G$ be a finite group. For any $P, Q \in \mathrm{Syl}_p\left(G\right)$, there exists some $g \in G$ such that $Q = gPg^{-1}$.
+    \tcblower
+    \begin{proof}
+        With respect to the left multiplication action of $Q$ on $G \slash P$, we have 
+        \begin{align*}
+            \left(G \slash P\right)^Q & = \left\{gP \in G \slash P \colon qgP = gP \textrm{ for all } q \in Q\right\} \\
+            & = \left\{gP \in G \slash P \colon g^{-1}qg \in P \textrm{ for all } q \in Q\right\} \\
+            & = \left\{gP \in G \slash P \colon g^{-1}Qg \subseteq P\right\}.
+        \end{align*}
+        Since $Q$ is a Sylow $p$-subgroup, it is maximal and so 
+        \begin{equation*}
+            \left(G \slash P\right)^Q = \left\{gP \in G \slash P \colon g^{-1}Qg = P\right\}.
+        \end{equation*}
+        By Lemma \ref{lem:baiscLemma}, $\abs{\left(G \slash P\right)^Q} \equiv \abs{G \colon P} \mod p$. Note that $\left(G \slash P\right)^Q \neq \varnothing$, so there exists some $g \in G$ such that $gPg^{-1} = Q$.
+    \end{proof}
+\end{thmbox}
+Based on this conjugacy relationship, we can derive the following result:
+\begin{corbox}{Sylow $p$-Subgroups Contain all $p$-Subgroups}{SylowSubgrpContainAll}
+    Let $G$ be a finite group, then every $p$-subgroup is contained in some Sylow $p$-subgroup. 
+    \tcblower
+    \begin{proof}
+        Let $H$ be a $p$-subgroup of $G$ and $P \in \mathrm{Syl}_p\left(G\right)$. One may check that 
+        \begin{equation*}
+            \left(G \slash P\right)^H = \left\{gP \in G \slash P \colon H \subseteq gPg^{-1}\right\}.
+        \end{equation*}
+        By Lemma \ref{lem:baiscLemma}, this means that there exists some $g \in G$ such that $H \subseteq gPg^{-1}$. By Theorem \ref{thm:Sylow2nd}, $gPg^{-1} \in \mathrm{Syl}_p\left(G\right)$.
+    \end{proof}
+\end{corbox}
+Lastly, we investigate the number of Sylow $p$-subgroups in a group.
+\begin{thmbox}{Sylow's Third Theorem}{Sylow3rd}
+    Let $G$ be a finite group with $\abs{G} = p^{\alpha}m$ where $p$ is a prime, $\alpha \geq 1$, and $p \nmid m \geq 1$, then 
+    \begin{itemize}
+        \item $n_p\left(G\right) \mid m$;
+        \item $n_p \equiv 1 \mod p$;
+        \item $n_p = \abs{G \colon N_G\left(P\right)}$ where $P$ is any Sylow $p$-subgroup.
+    \end{itemize}
+    \tcblower
+    \begin{proof}
+        By Theorem \ref{thm:1stSylow}, $\mathrm{Syl}_p\left(G\right) \neq \varnothing$. Note that Theorem \ref{thm:Sylow2nd} implies that $\mathrm{Syl}_p\left(G\right)$ is transitive under conjugation. Therefore, by Proposition \ref{pro:bijectionStabiliserOrbit}, we have 
+        \begin{equation*}
+            n_p\left(G\right) = \abs{\mathrm{Syl}_p\left(G\right)} = \abs{G \cdot P} = \abs{G \slash G_P} = \abs{G \colon G_P}
+        \end{equation*}
+        for any $P \in \mathrm{Syl}_p\left(G\right)$. By definition, $G_P = N_G\left(P\right)$. Let $\alpha$ be the conjugation action restricted to $P \leq G$, then 
+        \begin{align*}
+            \mathrm{Syl}_p\left(G\right)^P & = \left\{Q \in \mathrm{Syl}_p\left(G\right) \colon gQg^{-1} = Q \textrm{ for all } g \in P\right\} \\
+            & = \left\{Q \in \mathrm{Syl}_p\left(G\right) \colon P \subseteq N_G\left(Q\right)\right\}.
+        \end{align*}
+        By maximality of $P$, for any $Q \in \mathrm{Syl}_p\left(G\right)^P$, both $P$ and $Q$ are Sylow $p$-subgroups of $N_G\left(Q\right)$. By Theorem \ref{thm:Sylow3rd}, there exists some $\nu \in N_G\left(Q\right)$ such that 
+        \begin{equation*}
+            Q = \nu Q \nu^{-1} = P.
+        \end{equation*}
+        This means that $\mathrm{Syl}_p\left(G\right)^P = \left\{P\right\}$. By Lemma \ref{lem:baiscLemma}, 
+        \begin{equation*}
+            n_p\left(G\right) = \abs{\mathrm{Syl}_p\left(G\right)} \equiv \abs{\mathrm{Syl}_p\left(G\right)^P} = 1 \mod p.
+        \end{equation*}
+        By Theorem \ref{thm:Lagrange}, $\abs{G \colon N_G\left(P\right)} \bigm\vert \abs{G}$, so 
+        \begin{equation*}
+            n_p\left(G\right) = \abs{\mathrm{Syl}_p\left(G\right)} = \abs{G \colon N_G\left(P\right)} \bigm\vert \abs{G} = p^{\alpha}m.
+        \end{equation*}
+        Note that $n_p\left(G\right) \nmid p$, so $n_p\left(G\right) \mid m$.
+    \end{proof}
+\end{thmbox}
+\section{Simple Groups}
+Most applications of Sylow's Theorems involve a special type of groups known as \textit{simple groups}.
+\begin{dfnbox}{Simple Group}{simpleGrp}
+    A group $G$ is {\color{red} \textbf{simple}} if $\abs{G} > 1$ and the only normal subgroups of $G$ are $\abs{1_G}$ and $G$.
+\end{dfnbox}
+We first state a result without proof on the properties of finite simple groups.
+\begin{thmbox}{Classification of Finite Simple Groups}{classifyFiniteSimple}
+    There exists exactly $18$ unique families of finite simple groups and $26$ unique sporadic finite simple groups up to isomorphism.
+\end{thmbox}
+We list down some facts:
+\begin{itemize}
+    \item $\left\{\Z \slash p\Z\right\}$ is one of these families.
+    \item $\left\{A_n \colon n \geq 5\right\}$ consisting of non-Abelian finite simple groups is one of the families.
+    \item The smallest non-Abelian finite simple group is $A_5$ of order $60$.
+\end{itemize}
+By some very tedious enumeration and computation, we have the following result:
+\begin{thmbox}{Lower Bound of Order of Non-abelian Simple Groups}{ordNonAbelSimple}
+    Every non-Abelian simple finite group has order at least $60$.
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        Equivalently, every group of order smaller than $60$ is either Abelian simple and is isomorphic to $\Z \slash p\Z$ of prime order $p$, or not simple.
+    \end{remark}
+\end{notebox}
+Recall in Proposition \ref{pro:pGrpCentre}, every $p$-group has a non-trivial centre which is normal, so it is easy to derive the following corollary:
+\begin{corbox}{Necessary Condition of Simple $p$-Groups}{simplePGrp}
+    Every $p$-group with order greater than $p$ is not simple.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{corbox}
+Using Sylow's Theorems, we can further generalise this necessary condition.
+\begin{probox}{Necessary Condition of Finite Simple Groups}{finSimpleGrp}
+    Any finite group of order $pq$ where $p$ and $q$ are primes is not simple.
+    \tcblower
+    \begin{proof}
+        If $p = q$, the statement is trivial by Corollary \ref{cor:simplePGrp}. Otherwise, without loss of generality, assume that $p < q$. By Theorem \ref{thm:Sylow3rd}, $n_q \mid p$ and $n_q \equiv 1 \mod q$. This means that $n_q = 1$. Let $S$ be the unique Sylow $q$-subgroup. By Theorem \ref{thm:Sylow2nd}, for any element $g$ in the group, $gSg^{-1} = S$, so $S$ is normal. Therefore, the group is not simple.
+    \end{proof}
+\end{probox}
+We can generalise this even more:
+\begin{probox}{Generalised Necessary Condition of Finite Simple Groups}
+    Any finite group of order $p^{\alpha}q^{\beta}$ where $p$ and $q$ are primes, $\alpha, \beta \geq 1$, and $p^k \not\equiv 1 \mod q$ for any $k = 1, 2, \cdots, \alpha$ is not simple.
+    \tcblower
+    \begin{proof}
+        If $p = q$, the statement is trivial by Proposition \ref{cor:simplePGrp}. Otherwise, by Theorem \ref{thm:Sylow3rd}, $n_q \mid p^{\alpha}$ and $n_q \equiv 1 \mod q$. Therefore, $n_q = 1$. By the same reasoning with Theorem \ref{thm:Sylow2nd}, this means that the unique Sylow $q$-subgroup is normal.
+    \end{proof}
+\end{probox}
 \end{document}

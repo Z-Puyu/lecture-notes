@@ -20,3 +20,5 @@
 \contentsline {chapter}{\numberline {6}Group Actions}{60}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Group Actions}{60}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Orbits}{66}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Sylow $p$-Subgroups}{69}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Simple Groups}{74}{section.6.4}%
