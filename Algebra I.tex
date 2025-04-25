@@ -1,7 +1,5 @@
 \documentclass[math]{amznotes}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
 %\usepackage{yhmath}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -11,6 +9,8 @@
 
 \usepackage{scalerel}[2014/03/10]
 \usepackage{stackengine}
+\usepackage{amsmath}
+\usepackage{amsfonts}
 \makeatletter
 \def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
 \def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
@@ -211,7 +211,7 @@ Note that further $\left(\Z - \left\{0\right\}, \times\right)$ is not a group be
 
 A group can be finite or infinite. To define those we need to define a measurement for the ``size'' of a group.
 \begin{dfnbox}{Order of a Group}{order}
-    Let $\left(G, \star\right)$ be a group, then $\abs{G}$ is known as the \textit{order} of the group. $G$ is said to be a {\color{red} \textbf{finite}} group if $G$ is finite, and {\color{red} \textbf{infinite}} group otherwise.
+    Let $\left(G, \star\right)$ be a group, then $\abs{G}$ is known as the {\color{red} \textbf{order}} of the group. $G$ is said to be a {\color{red} \textbf{finite}} group if $G$ is finite, and {\color{red} \textbf{infinite}} group otherwise.
 \end{dfnbox}
 Let us consider some extreme cases here. Note that a group cannot be empty, so the most extreme case is a singleton group.
 \begin{probox}{Singleton Sets Are Abelian Groups}{AbelianSingleton}
@@ -297,18 +297,18 @@ The above results justify some short-hand notations in a group $G$.
     \item For all $a \in G$ and any $n \in \Z$, 
     \begin{equation*}
         a^n = \begin{cases}
-            \underbrace{a \cdot a \cdot \cdots \cdot a}_{n \text{ terms}} & \textrm{if } $n > 0$ \\
+            a \cdot a \cdot \cdots \cdot a & \textrm{if } $n > 0$ \\
             1 & \textrm{if } $n = 0$ \\
-            \underbrace{a^{-1} \cdot a^{-1} \cdot \cdots \cdot a^{-1}}_{n \textrm{ terms}} & \textrm{if } $n < 0$ \\
+            a^{-1} \cdot a^{-1} \cdot \cdots \cdot a^{-1} & \textrm{if } $n < 0$ \\
         \end{cases}
     \end{equation*}
 \end{itemize}
 Note that the last notation here can be confusing when our group is an additive group, so we may consider the following alternative instead:
 \begin{equation*}
     n \cdot a = \begin{cases}
-        \underbrace{a + a + \cdots + a}_{n \text{ terms}} & \textrm{if } $n > 0$ \\
+        a + a + \cdots + a & \textrm{if } $n > 0$ \\
         0 & \textrm{if } $n = 0$ \\
-        \underbrace{a^{-1} + a^{-1} + \cdots + a^{-1}}_{n \textrm{ terms}} & \textrm{if } $n < 0$ \\
+        a^{-1} + a^{-1} + \cdots + a^{-1} & \textrm{if } $n < 0$ \\
     \end{cases}
 \end{equation*}
 \begin{thmbox}{Left and Right Cancellation Laws}{cancelLaw}
@@ -465,7 +465,7 @@ Let us investigate a little bit about the cardinality of symmetric groups.
     \begin{proof}
         We shall proceed with induction on $n$. The case where $n = 1$ is obvious. Suppose that there exists some $k \in \N^+$ such that any finite set $\Sigma_k$ with $\abs{\Sigma_k} = k$ satisfies~$\abs{S_{k, \Sigma_k}} = k!$. Let $\Sigma_{k + 1}$ be any finite set such that $\abs{\Sigma_{k + 1}} = k + 1$ and consider 
         \begin{equation*}
-            S_{k + 1, \Sigma_{k + 1}} = \bigsqcup_{a \in \Sigma}\left\{\sigma \in S_{k + 1, \Sigma_{k + 1}} \colon \sigma\left(k + 1\right) = a\right\}.
+            S_{k + 1, \Sigma_{k + 1}} = \bigsqcup_{a \in \Sigma_{k + 1}}\left\{\sigma \in S_{k + 1, \Sigma_{k + 1}} \colon \sigma\left(k + 1\right) = a\right\}.
         \end{equation*}
         It is clear that for each $a \in \Sigma_{k + 1}$, 
         \begin{equation*}
@@ -705,7 +705,7 @@ We introduce a special homomorphism on symmetric groups.
     \begin{equation*}
         \epsilon\left(\sigma\right) = \left(-1\right)^{\abs{R\left(\sigma\right)}}.
     \end{equation*}
-    A permutation $\sigma \in S_n$ is called an {\color{red} \textbf{even permutation}} if $\epsilon\left(\sigma\right)$ is even, and an {\color{red} \textbf{odd permutation}} otherwise.
+    A permutation $\sigma \in S_n$ is called an {\color{red} \textbf{even permutation}} if $\epsilon\left(\sigma\right) = 1$, and an {\color{red} \textbf{odd permutation}} otherwise.
 \end{dfnbox}
 Intuitively, for each reversal $\left(i, j\right)$, the signs of $i - j$ and $\sigma\left(i\right) - \sigma\left(j\right)$ are reversed. Therefore, if 
 \begin{equation*}
@@ -719,7 +719,7 @@ $\epsilon$ is the only sign such function such that $\sigma\left(\Delta\right) =
 
 One can check that $\epsilon$ is surjective, so for any symmetric group, there exists at least one even permutation and at least one odd permutation. In general, we have the following result:
 \begin{corbox}{Characterisation of the Sign of a Permutation}{charSign}
-    For any $\sigma\in S_n$, $\epsilon\left(\sigma\right)$ is even if and only if $\sigma$ is a product of an even number of transpositions.
+    For any $\sigma\in S_n$, $\epsilon\left(\sigma\right) = 1$ if and only if $\sigma$ is a product of an even number of transpositions.
 \end{corbox}
 Observe that every $m$-cycle has exactly $\left(m - 1\right)$ reversals all with respect to the last index.
 
@@ -1136,7 +1136,7 @@ We examine the following structure with the criterion:
 \end{probox}
 In finite subsets, it turns out that the existence of inverses becomes free.
 \begin{probox}{Finite Subgroup Criterion}{finiteSubgrpCrite}
-    Let $G$ be a group. A finite subseteq $H \subseteq G$ is a subgroup of $G$ if and only if $H \neq \varnothing$ and~$xy \in H$ for all $x, y \in H$.
+    Let $G$ be a group. A finite subset $H \subseteq G$ is a subgroup of $G$ if and only if $H \neq \varnothing$ and~$xy \in H$ for all $x, y \in H$.
     \tcblower
     \begin{proof}
         The forward direction is trivial. Take some $y \in H$, then clearly $y^a \in H$ for all~$a \in \Z^+$. Let $\sigma_y \colon Z^+ \to H$ be defined by $\sigma_y\left(a\right) = y^a$, then since $H$ is finite, $\sigma_y$ is not injective. Therefore, without loss of generality, there exist $a, b \in Z^+$ with $a < b$ such that $\sigma_y\left(a\right) = \sigma_y\left(b\right)$. Therefore, 
@@ -1352,7 +1352,7 @@ Based on the above theorem, once we fix the image of the unit element under a gr
     For any group $G$ and any $x \in G$, we have $\left(x^a\right)^b = x^{ab}$ for all $a, b \in \Z$.
     \tcblower
     \begin{proof}
-        By Theorem \ref{thm:uniPropZ}, there exists a unique group homomorphism $\psi \colon \Z \to G$ such that $\psi\left(1\right) = x$. Define $\varphi_k \colon \Z \to \Z$ by $\varphi\left(n\right) = kn$, then $\varphi$ is clearly a group homomorphism and so $\varphi_{a} \circ \varphi_b = \varphi_{ab}$. Note that 
+        By Theorem \ref{thm:uniPropZ}, there exists a unique group homomorphism $\psi \colon \Z \to G$ such that $\psi\left(1\right) = x$. Define $\varphi_k \colon \Z \to \Z$ by $\varphi_k\left(n\right) = kn$, then $\varphi$ is clearly a group homomorphism and so $\varphi_{a} \circ \varphi_b = \varphi_{ab}$. Note that 
         \begin{equation*}
             \left(\psi \circ \varphi_a\right) \circ \varphi_b = \psi \circ \varphi_{ab} \colon \Z \to G
         \end{equation*}
@@ -1466,7 +1466,7 @@ Intuitively, for a group homomorphism $\varphi$ with $n\Z$ as the kernel, we may
         \begin{equation*}
             \varphi\left(N + 1 - k\right) = x^{N + 1 - k} = 1_G.  
         \end{equation*}
-        This implies that $N + 1 - k \in \kernel{\varphi}$. By Theorem \ref{thm:constructCyc}, $\kernel{\varphi} = \left\{0\right\}$ and so we have~$N + 1 = k$, which is a contradiction. Therefore, $\cyclic{x}$ is infinite. If $\abs{x} = n \in \Z^+$, by Theorem \ref{thm:constructCyc} we have 
+        This implies that $N + 1 - k \in \kernel{\varphi}$. By Proposition \ref{pro:constructCyc}, $\kernel{\varphi} = \left\{0\right\}$ and so we have~$N + 1 = k$, which is a contradiction. Therefore, $\cyclic{x}$ is infinite. If $\abs{x} = n \in \Z^+$, by Proposition \ref{pro:constructCyc} we have 
         \begin{equation*}
             x^{nk} = \varphi\left(nk\right) = 1_G \qquad\textrm{for all } k \in \Z.
         \end{equation*}
@@ -1485,7 +1485,7 @@ Intuitively, any cyclic group is at most countably infinite. Therefore, for any 
     The infinite cyclic group is unique up to isomorphism. 
     \tcblower
     \begin{proof}
-        It suffices to prove that any infinite cyclic group $G \coloneqq \left\langle x \right\rangle$ is such that $G \cong \Z$. Since $G$ is infinite, by Corollary \ref{cor:ordCycSubgrp}, $x$ is of infinite order. By Theorem \ref{thm:uniPropZ}, there exists a unique homomorphism $\varphi \colon \Z \to G$ such that $\varphi\left(1\right) = x$. By Theorem \ref{thm:constructCyc}, $\img{\varphi} = \left\langle x \right\rangle = G$ so $\varphi$ is surjective. It is clear that $\varphi$ is injective and so it is an isomorphism. Therefore, $G \cong \Z$.
+        It suffices to prove that any infinite cyclic group $G \coloneqq \left\langle x \right\rangle$ is such that $G \cong \Z$. Since $G$ is infinite, by Corollary \ref{cor:ordCycSubgrp}, $x$ is of infinite order. By Theorem \ref{thm:uniPropZ}, there exists a unique homomorphism $\varphi \colon \Z \to G$ such that $\varphi\left(1\right) = x$. By Proposition \ref{pro:constructCyc}, $\img{\varphi} = \left\langle x \right\rangle = G$ so $\varphi$ is surjective. It is clear that $\varphi$ is injective and so it is an isomorphism. Therefore, $G \cong \Z$.
     \end{proof}
 \end{corbox}
 Intuitively, an infinite cyclic group has infinitely many cyclic subgroups because we can just pick any ``step size'' and generate the group. Formally, this is formulated as below:
@@ -1576,7 +1576,7 @@ Intuitively, $\Z \slash n\Z$ is a finite cyclic group, so by ``embedding'' it to
     \begin{proof}
         It is clear that $\img{\varphi} \subseteq \left\langle x \right\rangle$. For any $x^a \in \left\langle x \right\rangle$, we have $\varphi\left(\widebar{a}\right) = x^a$ and so $\left\langle x \right\rangle \subseteq \img{\varphi}$, which implies that $\img{\varphi} = \left\langle x \right\rangle$.
         \\\\
-        Let $\phi \colon \Z \to G$ be the unique homomorphism such that $\phi\left(1\right) = x$. By Proposition \ref{thm:constructCyc}, $\kernel{\phi} = \abs{x}\Z$. Take any $\widebar{a} \in \kernel{\varphi}$, then 
+        Let $\phi \colon \Z \to G$ be the unique homomorphism such that $\phi\left(1\right) = x$. By Proposition \ref{pro:constructCyc}, $\kernel{\phi} = \abs{x}\Z$. Take any $\widebar{a} \in \kernel{\varphi}$, then 
         \begin{equation*}
             1 = \varphi\left(\widebar{a}\right) = x^a = \phi\left(a\right),
         \end{equation*}
@@ -1751,7 +1751,7 @@ Instead, we define $\left(\Z \slash n\Z\right)^{\times} \subseteq \Z \slash n\Z$
 \begin{probox}{The Multiplicative Group of $\Z \slash n\Z$}{multiplicativeGroup}
     For any $n \in \N$, we have 
     \begin{equation*}
-        \left(\Z \slash n\Z\right)^{\times} - \left\{\widebar{a} \in \Z \slash n\Z \colon a \leq n \textrm{ and } \gcd\left(a, n\right) = 1\right\}.
+        \left(\Z \slash n\Z\right)^{\times} = \left\{\widebar{a} \in \Z \slash n\Z \colon a \leq n \textrm{ and } \gcd\left(a, n\right) = 1\right\}.
     \end{equation*}
     \tcblower
     \begin{proof}
@@ -1806,7 +1806,7 @@ It is possible that some $g \in G$ centralises the entire group.
 \begin{dfnbox}{Centre}{centre}
     The {\color{red} \textbf{centre}} of a group $G$ is defined as 
     \begin{equation*}
-        Z\left(G\right) \coloneqq \left\{g \in G \colon gag^{-1} \textrm{ for all } a \in G\right\}.
+        Z\left(G\right) \coloneqq \left\{g \in G \colon gag^{-1} = a \textrm{ for all } a \in G\right\}.
     \end{equation*}
 \end{dfnbox}
 Similarly, we can consider the mapping $A \mapsto gAg^{-1}$ and focus on the case where this map is an inclusion map.
