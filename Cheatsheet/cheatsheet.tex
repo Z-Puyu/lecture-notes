@@ -44,6 +44,7 @@
 \begin{document}
     \begin{multicols*}{3}
         \begin{itemize}
+            \setlength\itemsep{2pt}
             \item Let $\Z_n \coloneqq \left\{0, 2, \cdots, n - 1\right\}$ and define 
             \begin{equation*}
                 U_n \coloneqq \left\{\exp\left(\frac{2k\pi\im}{n}\right) \colon k \in \Z_n\right\},
@@ -60,9 +61,11 @@
             \item $S_n = \langle\left\{\left(12\right), \left(12\cdots n\right)\right\}$
             \item \textbf{reversal}: $a < b$ but $\sigma\left(a\right) > \sigma\left(b\right)$. $R\left(\sigma\right)$ is all reversals.
             \item An $m$-cycle has exactly $\left(m - 1\right)$ reversals.
+            \item $\forall H \leq G$ s.t. $G$ finite, $\exists$ maximal $M \leq G$ s.t. $H \subseteq M$ (use finite family of subgrps containing $H$)
         \end{itemize}
         \textbf{Homomorphism}
         \begin{itemize}
+            \setlength\itemsep{2pt}
             \item \textbf{Sign}: $\epsilon\left(\sigma\right) = \left(-1\right)^{\abs{R\left(\sigma\right)}}$. even and odd permutations.
             \item Injective iff $\ker = 1$, surjective iff $\mathrm{im} = H$.
             \item \textbf{Alternating group}: $A_n \coloneqq \ker{\epsilon}$. $A_1 = S_1$, $\abs{A_n} = \frac{n!}{2}$.
@@ -70,6 +73,7 @@
         \end{itemize}
         \textbf{Subgroups}
         \begin{itemize}
+            \setlength\itemsep{2pt}
             \item \textbf{Universal property}: if $H \leq G$, $\forall$ homomorphism $\varphi \colon G \to H$, $\exists!$ homomorphism $\psi \colon G \to K$ where $\mathrm{im}\,{\varphi} \leq K \leq H$ such that $\varphi = i_{K} \circ \psi$.
             \item \textbf{Subgroup criterion}: if $H \subseteq G$, then $H \leq G$ iff $H \neq \varnothing$ and $xy^{-1} \in H$ for all~$x, y \in H$.
             \item Every subgroup of $\Z$ is $n\Z$ ($n$ is min $+$int in subgroup).
@@ -80,9 +84,11 @@
         \end{itemize}
         \textbf{Cyclic groups}
         \begin{itemize}
+            \setlength\itemsep{2pt}
             \item \textbf{Residue class}: $\bar{a} \coloneqq a + n\Z = \left\{a + kn \colon k \in \Z\right\}$
             \item \textbf{Reduction-modulo-$n$}: $\pi\left(a\right) = \bar{a}$ uniq s.t. $\pi\left(1\right) = \bar{1}$
-            \item \textbf{Universal property of $\Z$}: $\forall G$ and $\forall x \in G$, $\exists!$ homomorphism $\varphi \colon \Z \to G$ such that $\varphi\left(1\right) = x$.  For $\Z \slash n\Z$ it's analogous.
+            \item \textbf{Universal property of $\Z$}: $\forall G$ and $\forall x \in G$, $\exists!$ homomorphism $\varphi \colon \Z \to G$ s.t. $\varphi\left(1\right) = x$. $\Z \slash n\Z$ is analogous.
+            \item $\Z \slash n\Z \colon \left\{\bar{x} \colon \exists \bar{y} \textrm{ s.t. } \overline{xy} = \overline{yx} = \bar{1}\right\} = \left\{\bar{a} \colon \gcd\left(a, n\right) = 1\right\}$
             \item $\left(x^a\right)^b = x^{ab}$ (let $\psi\left(1\right) = x$ and $\varphi_k\left(n\right) = kn$, then $\left(\psi \circ \varphi_k\right)\left(1\right) = x^k$. $\left(x^a\right)^b = \left(\psi \circ \varphi_a\right)\left(b\right) = \psi\left(1\right)^{ab}$)
             \item $\Z \slash n\Z = \langle\bar{1}\rangle$ is of order $n$.
             \item Fix $x \in G$ and let $\varphi \colon \Z \to G$ be the unique homomorphism with $\varphi\left(1\right) = x$, then $\mathrm{im}\,{\varphi} = \left\langle x \right\rangle \leq G$ and 
@@ -107,94 +113,76 @@
                 \item If $G$ is infinite, then $G = \left\langle x^a \right\rangle$ iff $a = \pm 1$.
                 \item If $G$ is of order $n$, then $G = \left\langle x^a \right\rangle$ iff $\gcd\left(a, n\right) = 1$.
             \end{enumerate}
+            \item $\left\{a / 2^n \colon a, n \in \Z\right\} \leq \Q$ is not cyclic.
         \end{itemize}
         \textbf{Quotient groups}
         \begin{itemize}
+            \setlength\itemsep{2pt}
             \item $g_1H = g_2H \iff g_i \in g_jH \iff g_2^{-1}g_1, g_1^{-1}g_2 \in H$.
             \item $\abs{H \backslash G} = \abs{G \slash H}$ ($f \colon H \backslash G \to G \slash H$ by $f\left(X\right) = X^{-1} \coloneqq \left\{x^{-1} \in G \colon x \in X\right\}$, $g \colon H \slash G \to H \backslash G$ by $g\left(X\right) = X^{-1}$ is inverse)
             \item $H \approx gH \approx Hg$
             \item \textbf{Lagrange's Theorem}: $\abs{G} = \abs{G \colon H}\abs{H}$.
             \item $\langle x \rangle \leq G \implies \abs{x} \mid \abs{G}$ for finite $G \implies x^{\abs{G}} = 1$.
+            \item Finite Abelian not divisible ($\forall a \exists x$ s.t. $1 = x^{\abs{G}} = a$)
             \item A prime-order group is cyclic.
             \item $\left(\Z \slash n\Z\right)^{\times} = \left\{\bar{a} \in \Z \slash n\Z \colon a \leq n \textrm{ and } \gcd\left(a, n\right) = 1\right\}$ ($\supseteq$: Bezout $\implies \overline{sa} = \overline{sa + tn} = \overline{1}$. $\subseteq$: $x = \bar{a}, y = \bar{b}$ s.t. $xy = 1 \implies n \mid ab - 1 \implies ab - kn = 1$)
-            \item For any group $G$, 
-            \begin{enumerate}
-                \item $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$ for all $a \in G$;
-                \item $C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right)$;
-                \item $Z\left(G\right) = C_G\left(G\right) = \bigcap_{a \in G}C_G\left(a\right)$;
-                \item $N_G\left(G\right) = G$;
-                \item $C_G\left(1\right) = G$.
-            \end{enumerate}
-            \item For every group $G$, the followings are equivalent:
-            \begin{enumerate}
-                \item $G$ is Abelian;
-                \item $Z\left(G\right) = G$;
-                \item $C_G\left(a\right) = G$ for all $a \in G$;
-                \item $C_G\left(A\right) = N_G\left(A\right) = G$ for all $A \subseteq G$.
-            \end{enumerate}
+            \item $\forall G$, $C_G\left(a\right) = N_G\left(\left\{a\right\}\right)$ for all $a \in G$; $C_G\left(A\right) = \bigcap_{a \in A}C_G\left(a\right) \subseteq N_G\left(A\right)$; $Z\left(G\right) = C_G\left(G\right) = \bigcap_{a \in G}C_G\left(a\right)$; $N_G\left(G\right) = G$; $C_G\left(1\right) = G$.
+            \item $G$ Abelian $\iff Z\left(G\right) = G \iff C_G\left(a\right) = G \forall a \in G \iff C_G\left(A\right) = N_G\left(A\right) = G \forall A \subseteq G$
             \item $C_G\left(A\right), N_G\left(A\right) \leq G$.
             \item \textbf{Normal subgroup}: $N \trianglelefteq G$ iff $gNg^{-1} \subseteq N \forall g \in G$.
-            \item \textbf{Quotient group}: $\left(G \slash N, \cdot\right)$ where $N \trianglelefteq G$. Identity is $N$.
+            \item $S_3$ is non-Abelian but $\left\{1, \left(123\right), \left(132\right)\right\}$ is normal s.t. $S_3 \slash N$ is Abelian.
+            \item $G$ finite, $N \trianglelefteq G$ and $\gcd\left(\abs{N}, \abs{G \colon N}\right) = 1 \implies N$ is unique subgrp of ord $\abs{N}$ (use $\abs{HN}$ and Lagrange to prove $H = H \cap N$. Consider division to force it)
+            \item $\Q$ is the only subgrp of $\Q$ of finite idx ($\abs{q + H} \bigm\vert \abs{\Q \colon H} = n \implies nq + H = H \implies n\Q \subseteq H$)
+            \item $\abs{G} = pq$ for primes $p, q \implies G$ Abelian or $Z\left(G\right) = 1$ (Lagrange: $\abs{Z\left(G\right)} \bigm\vert pq$, then 4 cases)
+            \item $\abs{G \colon H} = m, \abs{G \colon K} = n \implies \abs{G \colon H \cap K} \in \left[\mathrm{lcm}\left(m, n\right), mn\right]$ (prove $g\left(H \cap K\right) = gH \cap gK$ for $mn$; use nested Lagrange for $\mathrm{lcm}$)
+            \item \textbf{Quotient group}: $\left(G \slash N, \cdot\right)$ where $N \trianglelefteq G$. $1_{G \slash N} = N$.
             \item \textbf{Universal property}: Let $N \trianglelefteq G$. For any group $H$ and any homomorphism $\varphi \colon G \to H$ with $N \leq \ker{\varphi}$, $\exists! \bar{\varphi} \colon G \slash N \to H$ such that $\varphi = \bar{\varphi} \circ \pi$ ($\bar{\varphi}\left(\xi\right) = \varphi\left(g\right)$ iff $\pi\left(g\right) = \xi$).
-            \item \textbf{1st isomorphism thm}: For any homomorphism $\varphi \colon G \to H$, $\exists! \tilde{\varphi} \colon G \slash \ker{\varphi} \to \mathrm{im}\,{\varphi}$ s.t. $\varphi = i_{\mathrm{im}\,{\varphi}} \circ \tilde{\varphi} \circ \pi$ is the canonical factorisation of $\varphi$ (prove injection by $\ker = 1$).
-            \item Let $\varphi \colon G \to H$ be any homomorphism, then 
-            \begin{itemize}
-                \item $\abs{\mathrm{im}\,{\varphi}} = \abs{G \colon \ker{\varphi}}$;
-                \item if $G$ is finite, then $\abs{\mathrm{im}\,{\varphi}} \bigm\vert \abs{G}$;
-                \item if $G$ and $H$ are finite, then $\abs{\mathrm{im}\,{\varphi}} \bigm\vert \abs{H}$.
-            \end{itemize}
+            \item \textbf{1st isomorphism thm}: For any homomorphism $\varphi \colon G \to H$, $\exists!$ isomorphism $\tilde{\varphi} \colon G \slash \ker{\varphi} \to \mathrm{im}\,{\varphi}$ s.t. $\varphi = i_{\mathrm{im}\,{\varphi}} \circ \tilde{\varphi} \circ \pi$ is the canonical factorisation of $\varphi$ (prove injection by $\ker = 1$).
+            \item $\forall$ homomorphism $\varphi \colon G \to H$: $\abs{\mathrm{im}\,{\varphi}} = \abs{G \colon \ker{\varphi}}$; $G$ finite $\implies\abs{\mathrm{im}\,{\varphi}} \bigm\vert \abs{G}$; $G, H$ finite $\implies\abs{\mathrm{im}\,{\varphi}} \bigm\vert \abs{H}$.
+            \item $M, N \trianglelefteq G$ s.t. $G = MN \implies G \slash \left(M \cap N\right) \cong \left(G \slash M\right) \times \left(G \slash N\right)$ ($\varphi \colon G \to \left(G \slash M\right) \times \left(G \slash N\right)$ with quotient comp and apply 1st thm)
             \item \textbf{2nd isomorphism thm}: if $H, K \leq G$ and $K \trianglelefteq G$, then $H \slash \left(H \cap K\right) \cong HK \slash K$. ($K \trianglelefteq HK$. Define $\varphi = \pi_{HK} \circ i_H \colon H \to HK \slash K$. Use 1st isomorphism thm to get isomorphism $\tilde{\varphi}$. First prove it's surjective and $\mathrm{im}\,\varphi = HK \slash K$. Then $\ker{\varphi} = H\cap K$ because $hk \notin K$ for $h \in K - H$.)
-            \item \textbf{3rd isomorphism thm}: if $N, K \trianglelefteq G$ s.t. $N \leq K$, then $K \slash N \trianglelefteq G \slash N$ and $G \slash K \cong \left(G \slash N\right) \slash \left(K \slash N\right)$. (Note: $N \trianglelefteq K$ and $K \slash N \leq G \slash N$ for any $gN \in G \slash N$ and $k \in K$, $gkg^{-1} \in K$ and $\left(gN\right)\left(kN\right)\left(g^{-1}N\right) = \left(gkg^{-1}\right)N \in K \slash N$. For each $k$ there is $k'$ s.t. $k = gk'g^{-1}$ so $kN = \left(gN\right)\left(k'N\right)\left(g^{-1}N\right) \implies K \slash N \trianglelefteq G \slash N$. Define $\varphi = \psi \circ \phi$ where $\psi \colon G \to G \slash N$ and $\phi \colon G \slash N \to \left(G \slash N\right) \slash \left(K \slash N\right)$ are quotient homomorphisms, then $\varphi$ is surjective and $\ker{\varphi} = K$. Now use 1st isomorphism thm.)
-            \item \textbf{Lattice point isomorphism thm}: Let $N \trianglelefteq G$, $\pi \colon G \to G \slash N$ be the quotient homomorphism, $\mathcal{H}$ be the family of all subgroups of $G$ containing $N$ and $\mathcal{Q}$ be the family of all subgroups of $G \slash N$, then $\varphi \colon \mathcal{H} \to \mathcal{Q}$ defined by $\varphi\left(H\right) \coloneqq \pi\left[H\right]$ is a bijection such that 
-            \begin{enumerate}
-                \item if $H \trianglelefteq G$, then $\varphi\left(H\right) \trianglelefteq G \slash N$;
-                \item if $X \trianglelefteq G \slash N$, then $\varphi^{-1}\left(X\right) \trianglelefteq G$.
-            \end{enumerate}
+            \item \textbf{3rd isomorphism thm}: if $N, K \trianglelefteq G$ s.t. $N \leq K$, then $K \slash N \trianglelefteq G \slash N$ and $G \slash K \cong \left(G \slash N\right) \slash \left(K \slash N\right)$. ($N \trianglelefteq K, K \slash N \leq G \slash N \forall gN \in G \slash N$ and $k \in K$, $gkg^{-1} \in K$ and $\left(gN\right)\left(kN\right)\left(g^{-1}N\right) = \left(gkg^{-1}\right)N \in K \slash N$. $\forall k \exists k'$ s.t. $k = gk'g^{-1}$ so $kN = \left(gN\right)\left(k'N\right)\left(g^{-1}N\right) \implies K \slash N \trianglelefteq G \slash N$. Let $\varphi = \psi \circ \phi$ s.t. $\psi \colon G \to G \slash N$ and $\phi \colon G \slash N \to \left(G \slash N\right) \slash \left(K \slash N\right)$ are quotient, then $\varphi$ is surjective and $\ker{\varphi} = K$. Now use 1st thm.)
+            \item \textbf{Lattice point isomorphism thm}: $N \trianglelefteq G$, $\pi \colon G \to G \slash N$ be quotient, $\mathcal{H}$ be family of all subgrps containing $N$ and $\mathcal{Q}$ be family of all subgrps of $G \slash N$, $\implies\varphi \colon \mathcal{H} \to \mathcal{Q}$ by $\varphi\left(H\right) \coloneqq \pi\left[H\right]$ is bijective s.t. $H \trianglelefteq G \implies \varphi\left(H\right) \trianglelefteq G \slash N$; $X \trianglelefteq G \slash N \implies \varphi^{-1}\left(X\right) \trianglelefteq G$.
         \end{itemize}
         \textbf{Group actions}
         \begin{itemize}
+            \setlength\itemsep{2pt}
             \item $\sigma_g = a \mapsto ga$ is bijective and $g \mapsto \sigma_g$ is a homomorphism (prove $\sigma_{g^{-1}} = \sigma_g^{-1}$).
             \item \textbf{Action homomorphism / perm representation}: $\varphi_{\alpha}\left(g\right)\left(a\right) = \alpha\left(g, a\right)$. \textbf{Always injective}
             \item $\forall$ homomorphism $\varphi \colon G \to S_A$, $\alpha_{\varphi} = \left(g, a\right) \mapsto \varphi\left(g\right)\left(a\right)$ is a group action.
             \item $\psi \colon H \to G$ homomorphism, $\varphi \colon G \to S_A$ perm representation, $\alpha_{\psi}\left(h, a\right) = \varphi\left(\psi\left(h\right)\right)\left(a\right)$ is a group action.
             \item \textbf{Cayley's Thm}: every group $\cong$ some subgroup of some symmetric group.
             \item $\alpha \mapsto \varphi_{\alpha}$ is bijective (prove $\varphi \mapsto \alpha_{\varphi}$ is inverse).
-            \item if $p$ is min prime factor of $\abs{G}$, $\abs{G \colon H} = p \implies H \trianglelefteq G$. (consider left multiply action $\alpha$ of $G$ on $G \slash H$. Use 1st isomorphism thm: $\exists K \subseteq S_{G \slash H}$ s.t. $G \slash \ker{\varphi_{\alpha}} \cong K$. Use Lagrange: $\abs{G \colon \ker{\varphi_{\alpha}}} \bigm\vert p!$. Prove $\ker{\varphi_{\alpha}} \leq H \leq G$ and $\abs{H \colon \ker{\varphi_{\alpha}}} = \frac{\abs{G \colon \ker{\varphi_{\alpha}}}}{\abs{G \colon H}} \Biggm\vert \frac{p!}{p} = \left(p - 1\right)!$. Use Lagrange again: $\abs{H \colon \ker{\varphi_{\alpha}}} \bigm\vert \abs{G} \implies \abs{H \colon \ker{\varphi_{\alpha}}}$ has no prime factor.)
+            \item if $p$ is min prime factor of $\abs{G}$, $\abs{G \colon H} = p \implies H \trianglelefteq G$. (left $\times$ action $\alpha$ of $G$ on $G \slash H$. 1st thm: $\exists K \subseteq S_{G \slash H}$ s.t. $G \slash \ker{\varphi_{\alpha}} \cong K$. Lagrange: $\abs{G \colon \ker{\varphi_{\alpha}}} \bigm\vert p!$. Prove $\ker{\varphi_{\alpha}} \leq H \leq G$ and $\abs{H \colon \ker{\varphi_{\alpha}}} = \frac{\abs{G \colon \ker{\varphi_{\alpha}}}}{\abs{G \colon H}} \Biggm\vert \frac{p!}{p} = \left(p - 1\right)!$. Lagrange: $\abs{H \colon \ker{\varphi_{\alpha}}} \bigm\vert \abs{G} \implies \abs{H \colon \ker{\varphi_{\alpha}}}$ no prime factor.)
             \item $\forall \sigma \in S_A$, define $\mathcal{P}\left(\sigma\right) \colon \mathcal{P}\left(A\right) \to \mathcal{P}\left(A\right)$ by $\mathcal{P}\left(\sigma\right)\left(U\right) = \sigma\left[U\right]$, then $f\left(\sigma\right) = \mathcal{P}\left(\sigma\right)$ is a homomorphism.
             \item $\alpha\bigl(\left(\sigma_A, \sigma_B\right), f\bigr) = \sigma_B \circ f \circ \sigma_A^{-1}$ is a group action of $S_A \times S_B$ on $\mathrm{Maps}\left(A, B\right)$
             \item \textbf{Stable}: $A_0 \subseteq A$ is stable under $\alpha$ if $\alpha\left[G \times A_0\right] \subseteq A_0$.
-            \item The followings are equivalent:
-            \begin{enumerate}
-                \item $A_0$ is stable under $\alpha$;
-                \item $\varphi_{\alpha}\left[G\right] = \mathrm{Perm}\left(A\right)_{A_0} \coloneqq \left\{\sigma \in S_A \colon \sigma\left[A_0\right] = A_0\right\}$;
-                \item $\sigma_g\left(a\right) \in A_0$ for any $g \in G$ and $a \in A_0$.
-                \item $\left.\varphi_{\alpha}\right\rvert_{G \times A_0}$ is an action group homomorphism to $A_0$.
-            \end{enumerate}
+            \item $A_0$ is stable under $\alpha \iff \varphi_{\alpha}\left[G\right] = \mathrm{Perm}\left(A\right)_{A_0} \coloneqq \left\{\sigma \in S_A \colon \sigma\left[A_0\right] = A_0\right\}\iff\sigma_g\left(a\right) \in A_0$ for any $g \in G$ and $a \in A_0\iff\left.\varphi_{\alpha}\right\rvert_{G \times A_0}$ is an action homomorphism
             \item \textbf{Orbit}: $G \cdot a$ is all $b$ s.t. $\exists g$ s.t. $b = ga$.
             \item \textbf{Transitive action}: only one orbit
             \item \textbf{Stabiliser}: $G_a \coloneqq \left\{g \in G \colon ga = a\right\} \subseteq G$
-            \item $f \colon G \slash G_a \to G \cdot a$ by $f\left(gG_a\right) = ga$ is a bijection $\implies \abs{G \colon G_a} = \abs{G \cdot a}$
+            \item $f\left(gG_a\right) = ga$ is a bijection $\implies \abs{G \colon G_a} = \abs{G \cdot a}$
             \item \textbf{Fixed point}: $ga = a \forall g \in G$. $A^G$ is all fixed points.
             \item $\abs{A} = \abs{A^G} + \sum\abs{G \colon G_{a_i}}$ where $G \cdot a_i$'s non-trivial orbits
             \item Conjugate action: fixed points $Z\left(G\right)$, orbit $C_G\left(g_i\right)$
             \item \textbf{$p$-group}: $\abs{G} = p^{\alpha}$ for some $\alpha \geq 1$. 
             \item \textbf{Sylow $p$-subgroup}: maximal $p$-subgroup
             \item Let $\abs{G} = p^{\alpha}m$, $\alpha \geq 1$ and $p \nmid m$, then $H \leq G$ is a Sylow $p$-subgroup iff $\abs{H} = p^{\alpha}$ or $\gcd\left(\abs{G \colon H}, p\right) = 1$.
-            \item If $H$ is a $p$-group acting on $A$, then $\abs{A^H} \equiv \abs{A} \mod p$.
-            \item If $H$ is a $p$-subgroup of a finite group $G$, then $\abs{N_G\left(H\right) \colon H} \equiv \abs{G \colon H} \mod p$ (use left multiply action of $H$ on $G \slash H$ and prove $\left(G \slash H\right)^H = N_G\left(H\right) \slash H$).
+            \item \textbf{Basic lem}: $H$ $p$-group act on $A \implies \abs{A^H} \equiv \abs{A} \mod p$.
+            \item If $H$ is a $p$-subgroup of a finite group $G$, then $\abs{N_G\left(H\right) \colon H} \equiv \abs{G \colon H} \mod p$ (use left $\times$ action of $H$ on $G \slash H$ and prove $\left(G \slash H\right)^H = N_G\left(H\right) \slash H$).
             \item Centre of any $p$-group is non-trivial
-            \item \textbf{Cauchy's Thm}: For every finite group $G$ and any prime $p \bigm\vert \abs{G}$, $\exists g \in G$ s.t. $\abs{g} = p$.
+            \item \textbf{Cauchy's Thm}: $\forall$ finite $G$, $\forall$ prime $p \bigm\vert \abs{G}$, $\exists g \in G$ s.t. $\abs{g} = p$ ($\sigma_0 = \left(1\cdots p\right)$, $\langle\sigma_0\rangle \cong \Z \slash p\Z$. $\alpha$ acts on $G^p$ with $\sigma_0$. Show $A \coloneqq \left\{\prod g_i = 1\right\}$ stable. Orbit-decomp $\implies \abs{A} \equiv \abs{A^{\langle\sigma_0\rangle}}$. Compute $\abs{A}$ to show $A$ non-trivial)
             \item \textbf{Sylow's Theorems}:
             \begin{enumerate}
-                \item $\forall$ finite group $G$ and prime factor $p$ with multiplicity $\alpha$ of $\abs{G}$, $\exists$ Sylow $p$-subgroup of order $p^{\alpha}$.
-                \item $\forall P, Q \in \mathrm{Syl}_p\left(G\right)$, $\exists g \in G$ such that $Q = gPg^{-1}$.
-                \item $\forall G$ finite group with $\abs{G} = p^{\alpha}m$ with $\alpha \geq 1$, and $p \nmid m \geq 1$, $n_p\left(G\right) \mid m$; $n_p \equiv 1 \mod p$; $n_p = \abs{G \colon N_G\left(P\right)}$ for any Sylow $p$-subgroup.
+                \item $\forall$ finite $G$ and prime factor $p$ with multiplicity $\alpha$ of $\abs{G}$, $\exists$ Sylow $p$-subgrp of ord $p^{\alpha}$ (show $\exists$ $p$-subgrp $\forall k$. Lagrange: $p \bigm\vert \abs{G \colon H}$. $H \trianglelefteq N\left(H\right)$. Basic lem: $p \bigm\vert \abs{N\left(H\right) \colon H}$. Cauchy: $\exists\abs{\langle gH\rangle} = p$ and each coset has $p^k$ elems. $\pi^{-1}\left(K\right)$ has ord $p^{k + 1}$)
+                \item $\forall P, Q \in \mathrm{Syl}_p\left(G\right)$, $\exists g \in G$ such that $Q = gPg^{-1}$ (w.r.t left $\times$ action, show $\left(G \slash P\right)^Q = \left\{gP \colon g^{-1}Qg \subseteq P\right\}$. $Q$ maximal so $\subseteq$ is $=$. Show it's not $\varnothing$)
+                \item $\forall G$ s.t. $\abs{G} = p^{\alpha}m$ with $\alpha \geq 1$, and $p \nmid m \geq 1$: $n_p\left(G\right) \mid m$; $n_p \equiv 1 \mod p$; $n_p = \abs{G \colon N_G\left(P\right)}$ for any Sylow $p$-subgroup (by 2: $\mathrm{Syl_p}$ transitive under conj so $n_p = \abs{\mathrm{Syl}_p} = \abs{G \cdot P} = \abs{G \slash G_P} = \abs{G \colon G_P}$. $\forall P$ Sylow, $G_P = N\left(P\right)$. Show $\mathrm{Syl}_p^P$ under conj is $\left\{Q \in \mathrm{Syl}_p \colon P \subseteq N\left(Q\right)\right\}$. Maximality of $P$, $Q$: both Sylow in $N\left(Q\right)$. by 2: $\exists \nu \in N\left(Q\right)$ s.t. $P = \nu^{-1}Q\nu = Q$ so $\mathrm{Syl}_p^P = \left\{P\right\}$. Basic lem: $n_p \equiv 1 \mod p$. Lagrange: $n_p \mid m$)
             \end{enumerate}
             \item Every $p$-subgroup is in some Sylow $p$-subgroup
             \item \textbf{Simple group}: non-trivial and $1$ and $G$ are only normal subgroups.
             \item Every group of order $< 60$ is either Abelian simple and $\cong \Z \slash p\Z$ of prime order $p$, or not simple.
             \item $p$-group with order $> p$ is not simple (centre is normal)
-            \item Any finite group of order $p^{\alpha}q^{\beta}$ where $p$ and $q$ are primes, $\alpha, \beta \geq 1$, and $p^k \not\equiv 1 \mod q$ for any $k = 1, 2, \cdots, \alpha$ is not simple.
+            \item Any finite group of order $p^{\alpha}q^{\beta}$ where $p$ and $q$ are primes, $\alpha, \beta \geq 1$, and $p^k \not\equiv 1 \mod q$ for any $k = 1, 2, \cdots, \alpha$ is not simple (Sylow 3rd: $n_q \equiv 1 \mod q$ and $n_q \mid p^{\alpha}$ so only 1 Sylow subgrp. Sylow 2nd: $gSg^{-1} = S$ so $G$ not simple)
         \end{itemize}
     \end{multicols*}
 \end{document}
