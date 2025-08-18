@@ -1,0 +1,2910 @@
+\documentclass[math]{amznotes}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{yhmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{etoolbox}
+\usepackage{nicematrix}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n} \DeclareMathAccent{\yhwidehat}{\mathord}{yhlargesymbols}{"62}
+
+\usepackage{scalerel}[2014/03/10]
+\usepackage{stackengine}
+\makeatletter
+\def\bign#1{\mathclose{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Bign#1{\mathclose{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\biggn#1{\mathclose{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}\mathopen{}}
+\def\Biggn#1{\mathclose{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}\mathopen{}}
+\makeatother
+\renewcommand\widetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{1pt-\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5467\wd0}}{.5\ht0}%
+%    .2mu is the kern imbalance when clipping white space
+%    .5467++++ is \ht/[kerned \wd] aspect ratio for \sim glyph
+  }{O}{c}{F}{T}{S}%
+}}
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead \left(see below\right):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = \left(italic correction / 3\right) - \left(Breite / 10\right)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern \left(-\dimen@\right) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
+
+\graphicspath{ {./images/} }
+\geometry{
+    a4paper,
+    headheight = 1.5cm
+}
+
+\patchcmd{\chapter}{\thispagestyle{plain}}
+{\thispagestyle{fancy}}{}{}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+\newtheorem{case}{Case}
+
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\I}{\mathbfit{I}}
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\map}[3]{#1: #2 \rightarrow #3} % Mapping
+\newcommand{\image}[2]{#2\left[#1\right]} % Image
+\newcommand{\preimage}[2]{#2\left[#1\right]^{-1}} % Pre-image
+\newcommand{\eval}[3]{\left. #1\right\rvert_{#2 = #3}} % Evaluated at
+%\newcommand\bigO[1]{\mathcal{O}\left(#1\right)}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\begin{document}
+\fancyhead[L]{
+    MA2116 Probability
+}
+\fancyhead[R]{
+    Lecture Notes
+}
+\tableofcontents
+
+\chapter{Combinatorics}
+\section{Basic Counting Principles}
+An important motivation to study combinatorics is to count the \textbf{number of ways} in which an event may occur. Intuitively, we have two approaches to count.
+
+The first approach is to categorise the event into \textbf{non-overlapping cases}. This means that we break an event into mutually exclusive sub-events, after which we can count the number of ways for each sub-event to occur. The agregate of these counts is the total number of ways for the original event to occur.
+
+Those familiar with basic set theory may consider $E$ to be the set containing all distinct ways for an event to occur. By breaking up the event, we essentially establish a \textbf{partition} of~$E$, so that the sum of cardinalities of all the elements in that partition equals the cardinality of $E$.
+
+This motivates us to write the following principle using set notations.
+\begin{thmbox}{Addition Principle (AP)}{AP}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ finite sets which are pairwise disjoint, i.e. for all~$i, j$ such that $1 \leq i, j \leq k$, $A_i \cap A_j = \varnothing$ whenever~$i \neq j$, then
+   \begin{equation*}
+        \abs{\bigcup_{i = 1}^k A_i} = \sum_{i = 1}^{k}\abs{A_i}.
+   \end{equation*} 
+   \tcblower
+   \begin{proof}
+        The case where $k = 1$ is trivial.
+
+        Suppose that when $k = n$, we have
+        \begin{equation*}
+            \abs{\bigcup_{i = 1}^n A_i} = \sum_{i = 1}^{n}\abs{A_i}
+        \end{equation*} 
+        for any $n$ finite sets which are pairwise disjoint. Let $A_{n + 1}$ be an arbitrary finite set which is disjoint with any of the $A_i$'s from the $n$ sets. So we have:
+        \begin{align*}
+            \abs{\bigcup_{i = 1}^{n + 1} A_i} & = \abs{\left(\bigcup_{i = 1}^n A_i\right) \cup A_{n + 1}} \\
+            & = \abs{\bigcup_{i = 1}^n A_i} + \abs{A_{n + 1}} - \abs{\left(\bigcup_{i = 1}^n A_i\right) \cap A_{n + 1}} \\
+            & = \left(\sum_{i = 1}^{n}\abs{A_i}\right) + \abs{A_{n + 1}} - \abs{\varnothing} \\
+            & = \sum_{i = 1}^{n + 1}\abs{A_i}.
+        \end{align*}
+        Therefore, the original statement holds for all $k \in \N^+$.
+   \end{proof}
+\end{thmbox}
+\begin{notebox}
+    In more casual language, this means that if an event $E_k$ has $n_k$ distinct ways to occur, then there is $\sum_{i = 1}^{k}n_k$ ways for at least one of the events $E_1, E_2, \cdots, E_k$ to occur, provided that $E_i$ and $E_j$ can never occur concurrently whenever $i \neq j$.
+\end{notebox}
+Given an event $E$, the other approach to count the number of ways for it to occur is to break~$E$ up internally into \textbf{non-overlapping stages}.
+
+With set notations, we can write the $i$-th stage for $E$ to occur as $e_i$, and so a way for $E$ to occur can be represented by an ordered tuple $(e_1, e_2, \cdots, e_k)$, where $k$ is the total number of stages to undergo for $E$ to occur.
+
+Let $E_i$ denote the set of all distinct ways to undergo the $i$-th stage of $E$, then it is easy to see that $E$ is just the \textbf{Cartesian product} of all the $E_i$'s. Hence, we derive the following principle:
+\begin{thmbox}{Multiplication Principle (MP)}{MP}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ pairwise disjoint finite sets, then
+    \begin{equation*}
+        \abs{\prod_{i = 1}^{k}A_i} = \prod_{i = 1}^{k}\abs{A_i}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        The case where $k = 1$ is trivial.
+
+        Suppose that when $k = n$, we have
+        \begin{equation*}
+            \abs{\prod_{i = 1}^{n}A_i} = \prod_{i = 1}^{n}\abs{A_i}
+        \end{equation*} 
+        for any $n$ finite sets which are pairwise disjoint. Let $A_{n + 1}$ be an arbitrary finite set which is disjoint with any of the $A_i$'s from the $n$ sets. Take $a_i, a_j \in A_{n + 1}$. Note that for all $\mathbfit{a} \in \prod_{i = 1}^{n}A_i$, $(\mathbfit{a}, a_i) \neq (\mathbfit{a}, a_j)$ whenever $a_i \neq a_j$. This means that
+        \begin{align*}
+            \abs{\prod_{i = 1}^{n + 1}A_i} & = \abs{\prod_{i = 1}^{n}A_i \times A_{n + 1}} \\
+            & = \abs{\prod_{i = 1}^{n}A_i}\abs{A_{n + 1}} \\
+            & = \left(\prod_{i = 1}^{n}\abs{A_i}\right)\abs{A_{n + 1}} \\
+            & = \prod_{i = 1}^{n + 1}\abs{A_i}
+        \end{align*}
+        Therefore, the original statement holds for all $k \in \N^+$.
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    In more casual language, this means that if an event $E$ requires $k$ stages to be undergone before it occurs and the $i$-th stage has $n_i$ ways to complete, then there is $\prod_{i = 1}^{k}n_k$ ways for $E$ to occur, provided that no two different stages complete concurrently.
+\end{notebox}
+Next, consider the following naïve question:
+\begin{quote}
+    If $\abs{A} = a$ and $\abs{B} = b$, what is $\abs{A \cup B}$?
+\end{quote}
+The solution is simple: we first count how many elements are in $A$ and then count how many elements are in $B$, but note that there are some elements which might be in both sets and are thus counted twice, so we need to subtract these elements away.
+\begin{probox}{Cardinality of the Union of Two Finite Sets}{2PIE}
+    Let $A$ and $B$ be two finite sets, then
+    \begin{equation*}
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
+    \end{equation*}
+    In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
+\end{probox}
+Proposition \ref{pro:2PIE} can be generalised for a finite sequence of finite sets.
+\begin{thmbox}{Principle of Inclusion and Exclusion (PIE)}{PIE}
+    Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
+    \begin{equation*}
+        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{r = 1}^{j}E_{k_r}}\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider
+        \begin{equation}\label{eq:1}
+            \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right). \tag{*}
+        \end{equation}
+        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that~$f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
+        \\\\
+        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$. In particular, $f_{E \cap E_i}(x) = f_{E_i}(x)$ for all $i = 1, 2, \cdots, n$. Expanding (\ref{eq:1}), we have
+        \begin{equation*}
+            f_E(x) = \bigl[f_E(x)\bigr]^n = \sum_{j = 1}^{n} \left\{(-1)^{j + 1}\left[\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\left(\prod_{r = 1}^{j}f_{E_{k_r}}(x)\right)\right]\right\}.
+        \end{equation*}
+        Summing up $f_E(x)$ over all $x$ leads to the identity in the original statement.
+    \end{proof}
+\end{thmbox}
+We can generalise this further. Note that every set is uniquely determined by some formula~$\phi$ with some parameter $p$. This means that the statement $x \in X$ is logically equivalent to ``$x$ satisfies a property $\phi(x, p)$''. This leads to the general principle of inclusion and exclusion.
+\begin{thmbox}{General Principle of Inclusion and Exclusion (GPIE)}{GenPIE}
+    Let $S$ be a finite set with $\abs{S} = n$ and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that~$E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that~$\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
+    \begin{equation*}
+        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
+    \end{equation*}
+    then
+    \begin{equation*}
+        E(m) = \sum_{k = m}^{q}\left[(-1)^{k - m}\begin{pmatrix}
+            k \\
+            m
+        \end{pmatrix}\omega(k)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $x \in S$ be an arbitrary element which satisfies exactly $t$ properties. If $t < m$ or $q < t$, then $x$ contributes a count of $0$ to both sides. If $t = m$, then $x$ contributes a count of $1$ to $E(m)$ and to $\omega(m)$ and contributes a count of $0$ to $\omega(k)$ for all $k > m$.
+        \\\\
+        If $q \geq t > m$, then $x$ contributes a count of $0$ to the left-hand side. On the right-hand side, $x$ is counted $\left(\begin{smallmatrix}
+            t \\
+            k
+        \end{smallmatrix}\right)$ times for $k = m, m + 1, \cdots, t$. So the total contribution of $x$ to the right-hand side is
+        \begin{align*}
+            \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                k \\
+                m
+            \end{pmatrix}\right] & = \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k - m
+            \end{pmatrix}\right] \\
+            & = \sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = \begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = 0.
+        \end{align*}
+        Therefore, every $x \in S$ contributes an equal count to both sides of the identity, so the identity holds.
+    \end{proof}
+\end{thmbox}
+In particular, we see that 
+\begin{equation*}
+    E(0) = \sum_{i = 0}^{q}\left[(-1)^i\omega(i)\right].
+\end{equation*}
+The PIE can be used to study derangements, the concept of which arises from the following question:
+\begin{quote}
+    Given an increasing sequence of consecutive integers from $1$ to $n$ inclusive. How many permutations of the sequence are there such that the integer at index $i$ in the permuted sequence is not $i$?
+\end{quote}
+Here we give a rigorous definition along with a generalised notion of \textit{fixed points}.
+\begin{dfnbox}{Derangement}{derangement}
+    Let $N_n = [n] - \{0\}$. A {\color{red} \textbf{derangement}} of $N_n$, denoted by $D_n$, is defined as the permutation $a_1a_2\cdots a_n$ of $N_n$ such that $a_i \neq i$ for all $i = 1, 2, \cdots, n$. We say that an~$r$-permutation of $N_n$ has a {\color{red} \textbf{fixed point}} at $i$ if $a_i = i$. The number of $r$-permutations of~$N_n$ with $k$ fixed points is $D(n, r, k)$.
+\end{dfnbox}
+With some careful computation, we arrive at the following formula:
+\begin{thmbox}{A Formula for $D(n, r, k)$}{dnrk}
+    For $n \geq r \geq k \geq -$ and $r \geq 1$,
+    \begin{equation*}
+        D(n, r, k) = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
+            r - k \\
+            i
+        \end{pmatrix}(n - k - i)!.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $a_1a_2\cdots a_r$ be a permutation and let $P_i$ be a property satisfied by a permutation with $a_i = i$, then $D(n, r, k) = E(k)$. Suppose $A$ is a permutation with at least $t$ fixed points, then the rest $(r - t)$ digits form an $(r - t)$-permutation of $(n - t)$ integers. Therefore, 
+        \begin{equation*}
+            \omega(t) = \begin{pmatrix}
+                r \\
+                t
+            \end{pmatrix}\frac{(n - t)!}{(n - r)!}.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE},
+        \begin{align*}
+            D(n, r, k) & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                k + i \\
+                k
+            \end{pmatrix}\omega(k + i)\right] \\
+            & = \sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                k + i \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                r \\
+                k + i
+            \end{pmatrix}\frac{(n - k - i)!}{(n - r)!}\right] \\
+            & = \frac{1}{(n - r)!}\sum_{i = 0}^{r - k}\left[(-1)^i\begin{pmatrix}
+                r \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                r - k \\
+                i
+            \end{pmatrix}(n - k - i)!\right] \\
+            & = \frac{C^r_k}{(n - r)!}\sum_{i = 0}^{r - k}(-1)^i \begin{pmatrix}
+                r - k \\
+                i
+            \end{pmatrix}(n - k - i)!.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+Using Theorem \ref{thm:dnrk}, we see that the number of derangements is just
+\begin{equation*}
+    D_n = D(n, n, 0) = n!\sum_{i = 0}^{n}\frac{(-1)^i}{i!}.
+\end{equation*}
+Relating this to probability, we see that given a sequence of $n$ integers, the probability of us having a derangement is given by:
+\begin{equation*}
+    \lim_{n \to \infty}P(\textrm{Having a derangement}) = \lim_{n \to \infty}\frac{D_n}{n!} = \mathrm{e}^{-1}.
+\end{equation*}
+Another application of the PIE is to investigate a standardised method to count the number of prime numbers between $2$ and $n$ inclusive. We will first introduce an ancient algorithm discovered by Greek mathematician Eratosthenes.
+\begin{tecbox}{Sieve of Eratosthenes}{sieve}
+    Let $n \in \N$ and $n \geq 2$.
+    \begin{itemize}
+        \item Define $L$ to be the list of all integers from $2$ to $n$ inclusive, arranged in ascending order.
+        \item For every $i \in L$, while $i \leq \sqrt{n}$:
+        \begin{itemize}
+            \item If $i$ is a prime, remove all multiples of $i$ from $L$.
+        \end{itemize}
+        \item All remaining integers in $L$ are primes.
+    \end{itemize}
+\end{tecbox}
+To extend the problem further, we can instead consider counting the number of positive integers up to $n$ inclusive which are \textbf{co-prime} to $n$.
+\begin{thmbox}{Euler $\varphi$-Function}{eulerPhi}
+    Let $n \in \N^+$ and $\varphi(n)$ be the number of positive integers which are smaller than $n$ and co-prime to $n$. If $p_1, p_2, \cdots, p_k$ are distinct prime numbers such that
+    \begin{equation*}
+        n = \prod_{i = 1}^{k}p_i^{m_i}
+    \end{equation*} 
+    for positive $m_i$'s, then
+    \begin{equation*}
+        \varphi(n) = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $S_t$ be the set of positive integers at most $n$ which are divisible by at least $t$ of the $k$ primes. For $t = 1, 2, \cdots, k$, consider
+        \begin{equation*}
+            \abs{S_t} = \sum_{i_1 < i_2 < \cdots < i_t}\left\lfloor\frac{n}{\prod_{j = 1}^{t}p_{i_j}}\right\rfloor = \sum_{i_1 < i_2 < \cdots < i_t}\frac{n}{\prod_{j = 1}^{t}p_{i_j}}
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE},
+        \begin{align*}
+            \varphi(n) & = n - \abs{\left(\bigcup_{t = 1}^{k}S_t\right)} \\
+            & = n\prod_{i = 1}^{k}\left(1 - \frac{1}{p_i}\right).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+\section{Permutations}
+A fundamental problem in combinatorics is described as follows: given a set $S$, how many ways are there to arrange $r$ elements in $S$, i.e. how many \textbf{distinct sequences} can be formed using the elements in $S$ without repetition? The process of selecting elements from $S$ and arranging them as a sequence is known as \textbf{permutation}.
+
+Note that forming a sequence using $r$ elements from a set $S$ is an event consisting of $r$ stages, as we need to select an element for each of the $r$ terms of the sequence. Suppose $S$ has $n$ elements. For the first term of the sequence, we can choose any of the elements in $S$, so there is $n$ ways to do it. For the second term, since we cannot repeat the elements, we are left with $n - 1$ choices. 
+
+Continue choosing elements in this way, we realise that if we choose the terms sequentially, when we reach the $k$-th term we will be left with $n - k + 1$ options as the previous~$(k - 1)$ terms have taken away $(k - 1)$ elements. By Theorem \ref{thm:MP}, we know that the number of sequences which can be formed is given by $\prod_{i = 1}^{r}(n - r + i)$.
+\begin{dfnbox}{Permutations}{permutations}
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-permutation of $A$ is a way to arrange $r$ elements of $A$, denoted as $P^n_r$ and given by
+    \begin{equation*}
+        P^n_r = \prod_{i = 1}^{r}(n - r + i) = \frac{n!}{(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
+With some algebraic manipulations, it is easy to derive the following formula, which we, however, will prove in a combinatorial manner.
+\begin{probox}{An Identity for Permutations}{permutationId}
+    Let $n, r \in \N$ with $r \leq n$, then $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$.
+    \tcblower
+    \begin{proof}
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ represent $(n + 1)$ distinct objects. Consider a permutation of $S$:
+        \\\\
+        If $n + 1$ is not inside the permutation, this is equivalent to an $r$-permutation of~$S - \{n + 1\}$, so there are $P^n_r$ such permutations.
+        \\\\
+    If $n + 1$ is inside the permutation, it means we need to first find an $(r - 1)$-permuation of $S - \{n + 1\}$, which has $P^n_{r - 1}$ ways to do. After that, we need to insert~$n + 1$ into each of these $(r - 1)$-permutations. Note that for each of such permutations, there are $r$ positions into which we can place $n + 1$. Therefore, the total number of $r$-permuations of $S$ derived in this manner is $rP^n_{r - 1}$.
+        \\\\
+        Therefore, there are $P^n_{r} + rP^n_{r - 1}$ $r$-permutations of $S$, i.e. $P^{n + 1}_r = P^n_r + rP^n_{r - 1}$. 
+    \end{proof}
+\end{probox}
+Consider the following scenario: suppose $T_1, T_2, \cdots T_n$ are distinct labels and $a_1, a_2, \cdots, a_r$ are $r$ distinct objects. If we wish to associate each object with one label, then each of the ways to do so is a permutation, the terms of which are taken from the $T_i$'s. Notice that under this setting, the $T_i$'s are allowed to be repeated in a permutation. To reason such problems, we first introduce the notion of a \textit{multi-set}.
+\begin{dfnbox}{Multi-set}{multiset}
+    The {\color{red} \textbf{multi-set}} is defined to be
+    \begin{equation*}
+        M \coloneqq \left\{r_1 \cdot a_1, r_2 \cdot a_2, \cdots, r_n \cdot a_n\right\},
+    \end{equation*}
+    where $a_i$ has $r_i$ identical copies.
+\end{dfnbox}
+Observe that in a permutation of such a multi-set $M$, the object $a_i$ is repeated $r_i$ times. This brings us to the following formula:
+\begin{probox}{Generalised Formula for Permutations}{genPnr}
+    Let $k \in \N^+$ and let $A_1, A_2, \cdots, A_k$ be $k$ distinct objects, where $A_i$ occurs $n_i > 0$ times for~$i = 1, 2, \cdots, k$, then each permutation for these objects, corresponds to a unique permutation of the multi-set
+    \begin{displaymath}
+        M = \left\{n_1 \cdot A_1, n_2 \cdot A_2, \cdots, n_k \cdot A_k\right\},
+    \end{displaymath}
+    and the total number of permutations is given by
+    \begin{equation*}
+        \frac{\left(\sum_{i = 1}^{k}n_i\right)!}{\prod_{i = 1}^{k}\left(n_i!\right)}.
+    \end{equation*}
+\end{probox}
+We may also consider the special case where we want to form an $r$-permutation with $k$ objects, where each object can repeat an arbitrary number of times. Notice that this is equivalent to finding the permutations of the multi-set
+\begin{displaymath}
+    M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_k\right\}.
+\end{displaymath}
+In this case, we can simply iterate through each of the slots in the $r$-permutation and choose the object to be placed there. Trivially, there are always $k$ choices for each slot.
+\begin{probox}{A Special Case}{pnrSpe}
+    Consider the multi-set
+    \begin{displaymath}
+        M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}.
+    \end{displaymath}
+    The number of $r$-permutations formed using the elements from $M$ is given by $n^r$.
+\end{probox}
+Consider arranging $n$ distinct objects around a circle. If the slots around the circle are uniquely labelled, this is exactly the same as permutations along a straight line.
+
+However, if the slots are identical, i.e. we are arranging $n$ distinct objects around a circle with identical slots, only the \textbf{relative positions} of the objects matter.
+
+Let $\mathbfit{x}_i$ be an arbitrary straight-line permutations of the $n$ objects and let $\mathbfit{y}_i$ be the corresponding circular permutation of the $n$ objects.
+
+Note that if we translate every element in $\mathbfit{x}_i$ by $k$ positions, this will result in a different straight-line permutation $\mathbfit{x}_j$ but does not change the corresponding circular permutation because the relative positions of the objects remain unchanged.
+
+Notice that $k$ can take the values $0, 1, 2, \cdots, n - 1$, so for the same set of $n$ distinct objects, every circular permutation is mapped to $n$ straight-line permutations.
+\begin{dfnbox}{Circular Permutations}{circPermutation}
+    Let $A$ be a finite set such that $\abs{A} = n$, a circular $r$ permutation of $A$ is a way to arrange~$r$ elements of $A$ around a circular locus, denoted as $Q^n_r$ and given by
+    \begin{equation*}
+        Q^n_r = \frac{P^n_r}{r} = \frac{n!}{r(n - r)!}.
+    \end{equation*}
+\end{dfnbox}
+\section{Combinations}
+Beside permutations, there are also occasions where we only care about which elements from a particular set are selected instead of the order of selection. Note that if we want to find a selection of $r$ elements from a set $A$ where the order of selected elements does not matter, it is equivalent to finding a subset of $A$ containing $r$ elements. This motivates us to give the following definition:
+\begin{dfnbox}{Combinations}{combinations}
+    Let $A$ be a finite set such that $\abs{A} = n$, an $r$-combination of $A$ is a set $B \subseteq A$ with~$\abs{B} = r$. The number of combinations of $A$ is given by
+    \begin{equation*}
+        C^n_r = \frac{P^n_r}{P^r_r} = \frac{n!}{r!(n - r)!} = \begin{pmatrix}
+            n \\
+            r
+        \end{pmatrix}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Two obvious results:
+        \begin{enumerate}
+            \item If $r > n$ or $r < 0$, $C^n_r = 0$;
+            \item $C^n_r = C^n_{n - r}$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+Similar to permutations, we have the following important identity:
+\begin{thmbox}{Pascal's Triangle}{pascalTri}
+    Let $n$ be an integer with $n \geq 2$ and let $r$ be an integer with $0 \leq r \leq n$, then
+    \begin{equation*}
+        C^{n + 1}_r = C^{n}_{r - 1} + C^{n}_r.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $S = \left\{x \in \N^+ \colon x \leq n + 1\right\}$ be $(n + 1)$ distinct objects. Consider any $r$-combination $T$ of $S$. If $n + 1 \notin T$, this is equivalent to an $r$-combination of~$S - \{n + 1\}$, so there are $C^n_r$ such permutations. If $n + 1 \in T$, it suffices to find an $(r - 1)$-combination of $S - \{n + 1\}$, which has $C^n_{r - 1}$ ways to do. Therefore, there are $C^n_{r} + C^n_{r - 1}$ $r$-combinations of $S$, i.e. $C^{n + 1}_r = C^n_r + C^n_{r - 1}$. 
+    \end{proof}
+\end{thmbox}
+A useful application of combinations, derived directly from the definition, is to count the number of subsets for a given set which is finite. In other words, if we are given a set $A$ with $\abs{A} = n \in \N$, we wish to find a general formula for $\abs{\mathcal{P}(A)}$. Let $A_i$ be the set of all subsets of $A$ whose cardinality is $i$, then clearly
+\begin{equation*}
+    \abs{\mathcal{P}(A)} = \sum_{i = 0}^{n}\abs{A_i} = \sum_{i = 0}^{n}C^n_i.
+\end{equation*}
+We can expand the above expression algebraically and realise that it simplifies to $2^n$. However, in a combinatorial perspective, we can prove this result in a more succinct manner:
+\begin{thmbox}{General Formula for $\abs{\mathcal{P}(A)}$}{cardPowerset}
+    Let $A$ be a finite set. If $\abs{A} = n$, then $\abs{\mathcal{P}(A)} = 2^n$.
+    \tcblower
+    \begin{proof}
+        Let $S$ be an arbitrary subset of $A$. Consider an arbitrary element $a \in A$, then either $a \in S$ or $a \notin S$. Let $a_i \in A$ for $i = 1, 2, \cdots, n$. For all $S \in \mathcal{P}(A)$, We replace $a_i$ by $1$ if $a_i \in S$, and by $0$ otherwise. Let $B$ be the set of all binary sequences of length $n$. It is clear that there exists a bijection between $\mathcal{P}(A)$ and $B$, and so $\abs{\mathcal{P}(A)} = \abs{B}$. For each binary sequence of length $n$, each of its digits is either $0$ or $1$. By Theorem \ref{thm:MP}, this means that there are in total $2^n$ such binary sequences. Therefore,
+        \begin{equation*}
+            \abs{\mathcal{P}(A)} = \abs{B} = 2^n.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Given a set of $n$ distinct objects, we wish to find the number of combinations taken from the set where any element is allowed to be selected for multiple times. To reason about such problems, we introduce the following notion of a \textit{multi-subset}.
+\begin{dfnbox}{Multi-subset}{multisubset}
+    Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$ be a multi-set where $n \in \N$. An $r$-element {\color{red} \textbf{multi-subset}} of $M$ is the set
+    \begin{displaymath}
+        \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}
+    \end{displaymath}
+    where each of the $m_i$'s is a non-negative integer such that $\sum_{i = 1}^{n}m_i = r$. We denote the number of $r$-element multi-subsets of $M$ by $H^n_r$.
+\end{dfnbox}
+Intuitively, we can view each of the $a_i$'s as a ``box'' which holds $m_i$ balls. Therefore, if we can find the ways to distribute a total of $r$ balls into the $n$ ``boxes'', each of the distribution will then correspond to a multi-subset of $M$!
+\begin{probox}{A Formula for $H^n_r$}{hnrFormula}
+    Let $M = \left\{\infty \cdot a_1, \infty \cdot a_2, \cdots, \infty \cdot a_n\right\}$, then the number of $r$-element multi-subsets of $M$ is given by
+    \begin{equation*}
+        H^n_r = C^{r + n - 1}_r.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider a binary string formed using $r$ zeros. Note that we can insert a number of ones into the binary string to partition the zeros into different sections. Now, suppose we insert $(n - 1)$ ones into the binary string, it will result in a binary string containing $r$ zeros and $(n - 1)$ ones, such that the zeros are partitioned into $n$ sections.
+        \\\\
+        We can then number the sections using $1, 2, 3, \cdots, n$. For the $i$-th section, the number of zeros is recorded as $m_i$. Notice that in this case, each of the binary strings will correspond to a multi-subset in the form of 
+        \begin{displaymath}
+            \left\{m_1 \cdot a_1, m_2 \cdot a_2, \cdots, m_n \cdot a_n\right\}.
+        \end{displaymath}
+        One can check that this will establish a bijection between the set of all multi-subsets containing $n$ distinct types of objects and the set of all binary strings with $r$ zeros and~$(n - 1)$ ones. Therefore, the above has proven that $H^n_r = C^{r + n - 1}_r$.
+    \end{proof}
+\end{probox}
+\section{Binomial and Multinomial Coefficients}
+In previous sections on combinations, we have already introduced the ways to choose $r$ items from a collection of $n$ distinct items, the number of which is given by
+\begin{displaymath}
+    C^n_r = \begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix}.
+\end{displaymath} 
+In this section, we will see that there is a clear relation between the number of $r$-combinations to the \textit{binomial expansion}.
+\begin{thmbox}{Binomial Expansion}{binomial}
+    Let $n \in \N$, then
+    \begin{equation*}
+        (x + y)^n = \sum_{i = 0}^{n}\left[\begin{pmatrix}
+            n \\
+            i
+        \end{pmatrix}x^{n - i}y^i\right].
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Note that 
+        \begin{equation*}
+            (x + y)^n = \prod_{i = 1}^{n}(x + y).
+        \end{equation*}
+        Let the coefficient of $x^{n - r}y^r$ be $k$, where $r$ is an integer with $0 \leq r \leq n$. Notice that $k$ is exactly the number of ways to choose $(n - r)$ copies of $x$'s from the distinct $n$ terms of $(x + y)$, which is given by
+        \begin{equation*}
+            \begin{pmatrix}
+                n \\
+                n - r
+            \end{pmatrix} = \begin{pmatrix}
+                n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+        Therefore, summing up the terms, we have
+        \begin{equation*}
+            (x + y)^n = \sum_{i = 0}^{n}\left[\begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}x^{n - i}y^i\right].
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+There are many nice algebraic properties about the binomial coefficient $\left(\begin{smallmatrix}
+    n \\
+    r
+\end{smallmatrix}\right)$. Beside Theorem \ref{thm:pascalTri}, the following can be proven with a few simple algebraic manipulations:
+\begin{enumerate}
+    \item $\begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix} = \frac{n}{r}\begin{pmatrix}
+        n - 1 \\
+        r - 1
+    \end{pmatrix}$.
+    \item $\begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix} = \frac{n - r + 1}{r}\begin{pmatrix}
+        n \\
+        r - 1
+    \end{pmatrix}$.
+    \item $\begin{pmatrix}
+        n \\
+        m
+    \end{pmatrix}\begin{pmatrix}
+        m \\
+        r
+    \end{pmatrix} = \begin{pmatrix}
+        n \\
+        r
+    \end{pmatrix}\begin{pmatrix}
+        n - r \\
+        m - r
+    \end{pmatrix}$.
+\end{enumerate}
+One important identity for binomial coefficients is as follows:
+\begin{thmbox}{Vandermonde's Identity}{vadermonde}
+    Let $m, n, r \in \N$, then
+    \begin{equation*}
+        \sum_{i = 0}^{r}\left[\begin{pmatrix}
+            m \\
+            i
+        \end{pmatrix}\begin{pmatrix}
+            n \\
+            r - i
+        \end{pmatrix}\right] = \begin{pmatrix}
+            m + n \\
+            r
+        \end{pmatrix}.
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            X = \left\{a_1, a_2, \cdots, a_m, b_1, b_2, \cdots, b_n\right\}.
+        \end{displaymath}
+        Clearly, $\abs{X} = m + n$. Let $A \subseteq X$ such that $\abs{A} = r$, we consider the number of such $A$'s.
+        \\\\
+        Let $i$ be an integer with $0 \leq i \leq r$. If $A$ contains exactly $i$ elements from the $a_j$'s, then it will contain exactly $(r - 1)$ elements from the $b_j$'s. Therefore, the number of $A$'s for each $i = 1, 2, \cdots, r$ is given by
+        \begin{equation*}
+            \begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}.
+        \end{equation*}
+        However, we know that the total number of such $A$'s is just $C^{m + n}_r$, so we have
+        \begin{equation*}
+            \sum_{i = 0}^{r}\left[\begin{pmatrix}
+                m \\
+                i
+            \end{pmatrix}\begin{pmatrix}
+                n \\
+                r - i
+            \end{pmatrix}\right] = \begin{pmatrix}
+                m + n \\
+                r
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Recall that in Theorem \ref{thm:pascalTri}, we essentially established a recurrence relation for the binomial coefficients. Thus in theory, it is possible to generate any binomial coefficient recursively. The following theorem illustrates this.
+\begin{thmbox}{Chu Shih-Chieh (CSC) Identity}{CSC}
+    Let $r, n, k \in \N$ with $n \geq r$, then
+    \begin{equation*}
+        \sum_{i = 0}^{n - r}\begin{pmatrix}
+            r + i \\
+            r
+        \end{pmatrix} = \begin{pmatrix}
+            n + 1 \\
+            r + 1
+        \end{pmatrix}, \qquad \sum_{i = 0}^{k}\begin{pmatrix}
+            r + i \\
+            i
+        \end{pmatrix} = \begin{pmatrix}
+            r + k + 1 \\
+            k
+        \end{pmatrix}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the set
+        \begin{displaymath}
+            X = \left\{x \in \N^+ \colon x \leq n + 1\right\}.
+        \end{displaymath}
+        We will count the number of $(r + 1)$-element subsets of $X$ in the following way:
+        \\\\
+        Fix $k$ to be the smallest element in some $Y \subseteq X$, then it suffices to choose $r$ elements from $X - \left\{x \in \N^+ \colon x \leq k\right\}$. Note that the maximum for $k$ is $n - r + 1$, and so there are $n - r + 1$ disjoint cases. Therefore, it is easy to see that the total number of subsets is given by
+        \begin{displaymath}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix}.
+        \end{displaymath}
+        However, we know that this is equivalent to choosing $(r + 1)$ elements directly from $X$, so
+        \begin{equation*}
+            \sum_{i = 0}^{n - r}\begin{pmatrix}
+                r + i \\
+                r
+            \end{pmatrix} = \begin{pmatrix}
+                n + 1 \\
+                r + 1
+            \end{pmatrix}.
+        \end{equation*}
+        Note that $C^{r + i}_r = C^{r + i}_i$ and $C^{n + 1}_{r + 1} = C^{n + 1}_{n - r}$. Therefore, by setting $k = n - r$, it is obvious by symmetry that
+        \begin{equation*}
+            \sum_{i = 0}^{k}\begin{pmatrix}
+                r + i \\
+                i
+            \end{pmatrix} = \begin{pmatrix}
+                r + k + 1 \\
+                k
+            \end{pmatrix}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Binomial coefficients can be generalised as \textit{multinomial coefficients}, which has a nice correspondence to a special variant of distribution problems.
+\begin{dfnbox}{Multinomial Coefficient}{multinomialCoeff}
+    Let $m, n \in \N$, with $m \geq 1$. The {\color{red} \textbf{multinomial coefficient}}
+    \begin{displaymath}
+        \begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_m
+        \end{pmatrix} = \frac{n!}{\prod_{i = 1}^{m}n_i!}
+    \end{displaymath}
+    is the number of ways to distribute $n$ distinct objects into $m$ distinct collections such that there are exactly $n_i$ objects in the $i$-th collection.
+\end{dfnbox}
+Observe that the binomial coefficients are just a special case for multinomial coefficients with~$m = 2$ and $n_1 + n_2 = n$. Respectively, multinomial coefficients also generalise binomial expansion.
+\begin{thmbox}{Multinomial Expansion}{multinomialEx}
+    For $m, n \in \N+$, we have
+    \begin{equation*}
+        \left(\sum_{i = 1}^{m}x_i\right)^n = \sum_{\substack{\sum_{j = 1}^{m}n_j = n}} \begin{pmatrix}
+            n \\
+            n_1, n_2, \cdots, n_m
+        \end{pmatrix}\prod_{i = 1}^{m}x_i^{n_i}.
+    \end{equation*}
+\end{thmbox}
+\section{Principle of Inclusion and Exclusion (PIE)}
+Consider the following naïve question:
+\begin{quote}
+    If $\abs{A} = a$ and $\abs{B} = b$, what is $\abs{A \cup B}$?
+\end{quote}
+The solution is simple: we first count how many elements are in $A$ and then count how many elements are in $B$, but note that there are some elements which might be in both sets and are thus counted twice, so we need to subtract these elements away.
+\begin{probox}{Cardinality of the Union of Two Finite Sets}{2PIE}
+    Let $A$ and $B$ be two finite sets, then
+    \begin{equation*}
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
+    \end{equation*}
+    In particular, if $A$ and $B$ are disjoint, then $\abs{A \cup B} = \abs{A} + \abs{B}$.
+\end{probox}
+Proposition \ref{pro:2PIE} can be generalised for a finite sequence of finite sets.
+\begin{thmbox}{Principle of Inclusion and Exclusion}{PIE}
+    Let $E_1, E_2, \cdots, E_n$ be a sequence of finite sets. In general, we have
+    \begin{equation*}
+        \abs{\bigcup_{i = 1}^n E_i} = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\abs{\bigcap_{r = 1}^{j}E_{k_r}}\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider
+        \begin{equation}\label{eq:1}
+            \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right). \tag{*}
+        \end{equation}
+        For any $x$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that~$f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, (\ref{eq:1}) is identically $0$.
+        \\\\
+        Note that for any sets $A$, $B$, $f_{A \cap B}(x) = f_A(x)f_B(x)$. In particular, $f_{E \cap E_i}(x) = f_{E_i}(x)$ for all $i = 1, 2, \cdots, n$. Expanding (\ref{eq:1}), we have
+        \begin{equation*}
+            f_E(x) = \bigl[f_E(x)\bigr]^n = \sum_{j = 1}^{n} \left\{(-1)^{j + 1}\left[\sum_{1 \leq k_1 \leq k_2 \leq \cdots \leq k_j \leq n}\left(\prod_{r = 1}^{j}f_{E_{k_r}}(x)\right)\right]\right\}.
+        \end{equation*}
+        Summing up $f_E(x)$ over all $x$ leads to the identity in the original statement.
+    \end{proof}
+\end{thmbox}
+We can generalise this further. Note that every set is uniquely determined by some formula~$\phi$ with some parameter $p$. This means that the statement $x \in X$ is logically equivalent to ``$x$ satisfies a property $\phi(x, p)$''. This leads to the general principle of inclusion and exclusion.
+\begin{thmbox}{General Principle of Inclusion and Exclusion}{GenPIE}
+    Let $S$ be a finite set with $\abs{S} = n$ and let $\left\{P_1, P_2, \cdots P_q\right\}$ be a set of properties. Suppose that~$E(m)$ is the number of elements in $S$ that satisfy exactly $m$ of the $q$ properties and that~$\omega(P_{i_1}P_{i_2}\cdots P_{i_m})$ is the number of elements in $S$ that satisfy exactly $P_{i_1}, P_{i_2},\cdots, P_{i_m}$, such that
+    \begin{equation*}
+        \omega(m) = \sum \omega(P_{i_1}P_{i_2}\cdots P_{i_m}),
+    \end{equation*}
+    then
+    \begin{equation*}
+        E(m) = \sum_{k = m}^{q}\left[(-1)^{k - m}\begin{pmatrix}
+            k \\
+            m
+        \end{pmatrix}\omega(k)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $x \in S$ be an arbitrary element which satisfies exactly $t$ properties. If $t < m$ or $q < t$, then $x$ contributes a count of $0$ to both sides. If $t = m$, then $x$ contributes a count of $1$ to $E(m)$ and to $\omega(m)$ and contributes a count of $0$ to $\omega(k)$ for all $k > m$.
+        \\\\
+        If $q \geq t > m$, then $x$ contributes a count of $0$ to the left-hand side. On the right-hand side, $x$ is counted $\left(\begin{smallmatrix}
+            t \\
+            k
+        \end{smallmatrix}\right)$ times for $k = m, m + 1, \cdots, t$. So the total contribution of $x$ to the right-hand side is
+        \begin{align*}
+            \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                k
+            \end{pmatrix}\begin{pmatrix}
+                k \\
+                m
+            \end{pmatrix}\right] & = \sum_{k = m}^{t}\left[(-1)^{k - m}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k - m
+            \end{pmatrix}\right] \\
+            & = \sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = \begin{pmatrix}
+                t \\
+                m
+            \end{pmatrix}\sum_{k = 0}^{t - m}\left[(-1)^{k}\begin{pmatrix}
+                t - m\\
+                k
+            \end{pmatrix}\right] \\
+            & = 0.
+        \end{align*}
+        Therefore, every $x \in S$ contributes an equal count to both sides of the identity, so the identity holds.
+    \end{proof}
+\end{thmbox}
+In particular, we see that 
+\begin{equation*}
+    E(0) = \sum_{i = 0}^{q}\left[(-1)^i\omega(i)\right].
+\end{equation*}
+
+\section{Distribution Problems}
+Another problem in which we are interested is to \textbf{distribute} the objects from a collection into a finite number of sub-collections. Specifically, we consider the number of ways to
+\begin{enumerate}
+    \item distribute $r$ distinct objects into $n$ identical collections;
+    \item distribute $r$ distinct objects into $n$ distinct collections;
+    \item distribute $r$ identical objects into $n$ identical collections;
+    \item distribute $r$ identical objects into $n$ distinct collections.
+\end{enumerate}
+These $4$ basic models of distribution problems give rise to many variations. We will only discuss the first two types of distribution problems here. The easiest case for this distribution problem is that each collection contains at most one object, i.e., each collection either contains an object, or contains no object at all.
+\begin{probox}{Distinct Objects into Singleton Distinct Collections}{distToDistNonEmpty}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection contains at most $1$ object is given by $P^n_r$.
+\end{probox}
+We then consider the case where each collection can contain any number of objects.
+\begin{probox}{Distinct Objects into Distinct Collections}{distToDist}
+    The number of ways to distribute $r$ distinct objects into $n$ distinct collections such that each collection can contain any number of objects is given by
+    \begin{equation*}
+        \frac{(n + r - 1)!}{(n - 1)!}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left to the reader as an exercise.
+    \end{proof}
+\end{probox}
+For distributing distinct objects into identical collections, the reasoning becomes a bit more complicated. We first consider a scenario where the collections are circular.
+\begin{dfnbox}{Stirling Numbers of the First Kind}{stirling1}
+    Let $r, n \in \N$ such that $0 \leq n \leq r$, then the {\color{red} \textbf{Stirling Number of the First Kind}}, $s(r, n)$, is the number of ways to arrange $r$ {\color{red} \textbf{distinct}} onjects around $n$ {\color{red} \textbf{identical}} circles such that no circle is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some obvious results:
+        \begin{enumerate}
+            \item $s(r, 0) = 0$ if $r \geq 1$.
+            \item $s(r, r) = 1$ if $r \geq 0$.
+            \item $s(r, 1) = (r - 1)!$ if $r \geq 2$.
+            \item $s(r, r - 1) = C^r_2$ if $r \geq 2$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+One thing to take note of is that there is no general algebraic formula for $s(r, n)$. Instead, all Stirling Numbers of the First Kind follow a recurrence relation in $2$ parameters.
+\begin{thmbox}{A Recurrence Relation for $s(r, n)$}{recurrence1}
+    For $r, n \in \N^+$ and $r \leq n$, we have
+    \begin{equation*}
+        s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Consider the set $\left\{x_1, x_2, \cdots, x_r\right\}$ to be the $r$ distinct objects. We consider two cases. If $x_r$ is distributed to a circle such that it is the only objects around that circle, it suffices to find the number of ways to arrange the rest $(r - 1)$ distinct objects around the rest $(n - 1)$ identical circles, which there are $s(r - 1, n - 1)$ ways to do.
+        \\\\
+        If $x_r$ is adjacent to some other object, we can first arrange the rest $(r - 1)$ distinct objects around the $n$ identical circles, which there are $s(r - 1, n)$ ways to do. After that, we can choose any one of the $(r - 1)$ spaces between two adjacent objects to slot in $x_r$. Therefore, there are $(r - 1)s(r - 1, n)$ ways to distribute the objects. By Theorem \ref{thm:AP}, the total number of distributions is 
+        \begin{equation*}
+            s(r, n) = s(r - 1, n - 1) + (r - 1)s(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Next, we consider the case where the collections arrange their elements linearly.
+\begin{dfnbox}{Stirling Number of the Second Kind}{2ndStirling}
+    The {\color{red} \textbf{Stirling Number of the Second Kind}}, denoted as $S(r, n)$, is the number of ways to distribute $r$ distinct objects into $n$ indentical collections such that no collection is empty.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Some trivial results:
+        \begin{itemize}
+            \item $S(0, 0)$ = 1.
+            \item $S(r, 0) = S(0, n) = 0$ for all $r, n \in \N^+$.
+            \item $S(r, n) > 0$ for all $r, n \in \N$ with $r \geq n \geq 1$.
+            \item $S(r, n) = 0$ if $n > r \geq 1$.
+            \item $S(r, 1) = S(r, r) = 1$ for all $r \in \N^+$.
+        \end{itemize}
+    \end{remark}
+\end{notebox}
+Based on the above trivial results, we can use the following recurrence relation to derive a general formula for $S(r, n)$ for any $r$ and $n$.
+\begin{thmbox}{Recurrence Relation of $S(r, n)$}{SrnRecur}
+    For all $r, n \in \N$ with $r \geq n$,
+    \begin{equation*}
+        S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Consider the first object. If the first object is alone in a collection, it is equivalent to distributing $(r - 1)$ distinct objects into $(n - 1)$ identical collections such that no collection is empty, which can be done in $S(r - 1, n - 1)$ ways. If the first object is not alone, we first distribute the rest $(r - 1)$ distinct objects into the $n$ identical collections in $S(r - 1, n)$ ways, and then choose a collection to place the first object into in $n$ ways, which can be done in $nS(r - 1, n)$ ways. Therefore, 
+        \begin{equation*}
+            S(r, n) = S(r - 1, n - 1) + nS(r - 1, n).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+The Stirling numbers of the second kind are closely related to the problem of set partition.
+\begin{dfnbox}{Partition}{partition}
+    Let $A$ be a set, an $n$-partition of $A$ is a set $S \subset \mathcal{P}(A)$ such that for all $S_1, S_2 \in S$ with~$S_1 \neq S_2$, we have $S_1 \cap S_2 = \varnothing$ and $\bigcup S = A$.
+\end{dfnbox}
+Note that in a set, the elements are pairwise distinct. Therefore, a partition of $A$ into $i$ disjoint subsets is equivalent to a distribution of $\abs{A}$ distinct objects into $i$ identical collections. Therefore, the number of different partitions of $A$ is just
+\begin{equation*}
+    \sum_{i = 1}^{\abs{A}}S(\abs{A}, i).
+\end{equation*}
+To find an exact formula for $S(r, n)$, we consider the following proposition:
+\begin{probox}{Number of Surjective Mappings}{numSurj}
+    Let $F(r, n)$ where $r, n \in \N^+$ deonote the number of surjective mappings
+    \begin{equation*}
+        f \colon [r] - \{0\} \to [n] - \{0\},
+    \end{equation*}
+    then
+    \begin{equation*}
+        F(r, n) = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
+            n \\
+            k
+        \end{pmatrix}(n - k)^r\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $f$ is a mapping from a domain of $r$ elements to a co-domain of $n$ elements. Let $M_k$ be the set of such mappings by which at least $k$ elements in the co-domain do not have pre-images. Note that for each element in the domain, its image can be any of the remaining $(n - k)$ elements. Therefore, 
+        \begin{equation*}
+            \abs{M_k} = \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r.
+        \end{equation*}
+        By Theorem \ref{thm:GenPIE}, 
+        \begin{equation*}
+            F(r, n) = \abs{\left(\bigcup_{k = 0}^nM_k\right)'} = \sum_{k = 0}^{n}\left[(-1)^k \begin{pmatrix}
+                n \\
+                k
+            \end{pmatrix}(n - k)^r\right].
+        \end{equation*}
+    \end{proof}
+\end{probox}
+Note that $F(r, n)$ is just the number of ways to distribute $r$ distinct elements into $n$ collections where the order of the collections matters, so $F(r, n) = n!S(r, n)$. This gives rise to some corollaries, for example:
+\begin{align*}
+    S(r, n) =\frac{1}{n!} \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r
+\end{align*}
+Since $S(r, n) = 0$ if $n > r \geq 1$, we have
+\begin{equation*}
+    \sum_{k = 0}^{n}(-1)^k \begin{pmatrix}
+        n \\
+        k
+    \end{pmatrix}(n - k)^r = 0 \quad \textrm{if }n > r \geq 1.
+\end{equation*}
+A common application of distribution problems with $n$ identical objects and $m$ identical collections is the partition of an integer.
+\begin{dfnbox}{Integer Partition}{intPart}
+    Let $n \in \N^+$. A {\color{red} \textbf{partition}} of $n$ is a non-increasing sequence of positive integers whose sum is $n$. 
+\end{dfnbox}
+A useful tool to study such partitions is \textit{Ferrers diagram}.
+\begin{dfnbox}{Ferrers Diagram}{ferrers}
+    Let $n \in \N^+$ and consider a partition $P = \left\{n_1, n_2, \cdots, n_k\right\}$. The {\color{red} \textbf{Ferrers diagram}} of the partition, denoted as $\mathcal{F}(P)$, is an array of left-justified asterisks in which the $i$-th row has the length of $n_i$.
+\end{dfnbox}
+Just like matrices, a Ferrers diagram can be transposed.
+\begin{dfnbox}{Conjugate Partition}{conjPart}
+    Let $\mathcal{F}(P)$ be the Ferrers diagram of an integer partition $P$. $Q$ is known as the {\color{red} \textbf{conjugate partition}} of $P$ if $\mathcal{F}(Q) = \mathcal{F}(P)^{\mathrm{T}}$.
+\end{dfnbox}
+Intuitively, conjugate partition is a \textbf{symmetric relation}, and if $P$ and $Q$ are conjugate partitions, the number of parts of $Q$ is just the size of the largest part of $P$. This leads to the following theorem:
+\begin{probox}{Size of Conjugate Partitions}{sizeConj}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into $k$ parts equals the number of partitions of $r$ with the largest part having size $k$.
+    \tcblower   
+    \begin{proof}
+        Let $\mathcal{P}$ be the family of partitions of $r$ into $k$ parts and $\mathcal{Q}$ be the family of partitions of $r$ whose largest part has size $k$. Define a function $f \colon \mathcal{P} \to \mathcal{Q}$ such that~$\mathcal{F}\bigl(f(X)\bigr) = \mathcal{F}(X)^{\mathrm{T}}$, i.e., $f(X)$ and $X$ are conjugates. It is easy to see that $f$ is well-defined and bijective, so $\abs{\mathcal{P}} = \abs{\mathcal{Q}}$.
+    \end{proof}
+\end{probox}
+Proposition \ref{pro:sizeConj} leads to the following corollary:
+\begin{corbox}{Integer Partition into Limited Parts}{intPartLimited}
+    Let $k \leq r \in \N^+$. The number of partitions of $r$ into at most $k$ parts equals the number of partitions of $r$ with the largest part having size at most $k$.
+\end{corbox}
+The following formula can de derived:
+\begin{equation*}
+    \sum_{k = 1}^{m}p(n, k) = p(n + m, m).
+\end{equation*}
+\chapter{Probability Axioms}
+\section{Classical and Axiomatic Probability}
+\begin{dfnbox}{Sample Space}{sampleSpace}
+    Consider an experiment whose outcome is {\color{red} \textbf{not}} predictable, then the set of all possible outcomes of the experiment is called the {\color{red} \textbf{sample space}} of the experiment, denoted by $S$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $S \neq \varnothing$.
+    \end{remark}
+\end{notebox}
+Naturally, an \textit{event} is nothing but a collection of outcomes.
+\begin{dfnbox}{Events}{event}
+    Let $S$ be a sample space, a set $E \subseteq S$ is known as an {\color{red} \textbf{event}}.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        $S$ itself is known as the {\color{red} \textbf{sure event}} and $\varnothing$ is known as the {\color{red} \textbf{null event}}.
+    \end{remark}
+\end{notebox}
+Note that since sample spaces and events are sets, we can apply operations onto events precisely in the same way for sets.
+
+By convention, the intersection of two events $E$ and $F$ is preferably written as $EF$. Two events which are disjoint are called \textit{mutually exclusive}.
+\begin{dfnbox}{Classical Definition of Probability}{probability}
+    Let $E$ be any event of an experiment and let $n(E)$ be the number of occurrences of $E$ in the first $n$ repetitions of the experiment, then the {\color{red} \textbf{probability}} of $E$ is
+    \begin{equation*}
+        P(E) = \lim_{n \to \infty}\frac{n(E)}{n},
+    \end{equation*}
+    if the limit exists.
+\end{dfnbox}
+However, notice that from the above, the notion of probability may not be well-defined as~$n(E)$ is not a function, which means that the limit is not defined.
+
+To avoid this problem, we shall use an axiomatic definition instead, i.e., we define probability to be such that if it exists and is well-defined, then it satisfies a series of axioms. 
+\begin{dfnbox}{Axiomatic Definition of Probability}{probAxi}
+    Let $S$ be a sample space and let $P(E)$ be a real number defined for every $E \subseteq S$. If
+    \begin{itemize}
+        \item $0 \leq P(E) \leq 1$,
+        \item $P(S) = 1$, and
+        \item for all mutually exclusive $E$ and $F$, $P(E \cup F) = P(E) + P(F)$,
+    \end{itemize}
+    then $P(E)$ is the {\color{red} \textbf{probability}} of $E$.
+\end{dfnbox}
+With induction, one can easily show that if $E_1, E_2, \cdots$ to be any sequence of events in a sample space $S$, then
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
+\end{equation*}
+We now follow up with proofs for two seemingly intuitive results.
+\begin{thmbox}{The Null Event}{null}
+    Consider the null event $\varnothing$, we have
+    \begin{equation*}
+        P(\varnothing) = 0.
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Let $S$ be a sample space and let $E_1, E_2, \cdots$ be a countably infinite sequence of events such that $E_i = \varnothing$ for all $i \in \N^+$. We can write
+        \begin{equation*}
+            P\left(\bigcup_{i = 1}^\infty E_i\right) = \sum_{i = 1}^{\infty}P(E_i).
+        \end{equation*}
+        Note that the countable union of empty sets is empty, so the above is equivalent to
+        \begin{equation*}
+            P\left(\bigcup_{i = 1}^\infty \varnothing\right) = P(\varnothing) = \sum_{i = 1}^{\infty}P(\varnothing).
+        \end{equation*}
+        This means that $P(\varnothing)$ equals the sum of a countably infinite sequence of itself, so 
+        \begin{equation*}
+            P(\varnothing) = 0.
+        \end{equation*}
+    \end{proof} 
+\end{thmbox}
+\begin{thmbox}{Monotonity of Probability}{monotone}
+    Let $E$ and $F$ be events such that $E \subseteq F$, then 
+    \begin{equation*}
+        P(F) \geq P(E).
+    \end{equation*}
+    \tcblower   
+    \begin{proof}
+        Note that $E$ and $F - E$ are mutually exclusive, so 
+        \begin{equation*}
+            P(F) = P(E \cup (F - E)) = P(E) + P(F - E).
+        \end{equation*}
+        Note that $P(F - E) \geq 0$, so $P(E) + P(F - E) \geq P(E)$, which means
+        \begin{equation*}
+            P(F) \geq P(E).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+It is easy to compute the probability of a countable union of mutually exclusive events. However, it may get tricky when an event is the union of events which are not mutually exclusive. Intuitively, we can sum up the probabilities of all individual events and subtract the portions which are double-counted. This approach is rigorously summarised as follows:
+\begin{thmbox}{Inclusion-Exclusion Principle}{in-exPrinciple}
+    Let $S$ be a sample space and let $E_1, E_2, \cdots, E_n$ be a sequence of events. In general, we have
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^n E_i\right) = \sum_{j = 1}^{n} \left[(-1)^{j + 1}\left(\sum_{k_1 \leq k_2 \leq \cdots \leq k_j}P\left(\bigcap_{h = 1}^{j}E_{k_h}\right)\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define a function $f_S \colon S \to \{0, 1\}$ by
+        \begin{equation*}
+            f_S(x) = \begin{cases}
+                1 \quad \textrm{if } x \in S \\
+                0 \quad \textrm{if } x \notin S
+            \end{cases}.
+        \end{equation*}
+        Let $E = \bigcup_{i = 1}^n E_i$. Consider the function $g \colon S \to \{0, 1\}$ given by
+        \begin{displaymath}
+            g(x) = \prod_{i = 1}^{n}\left(f_E(x) - f_{E_i}(x)\right).
+        \end{displaymath}
+        For any $x \in S$, if $x \in E$, then $x \in E_k$ for some $k \in \left\{x \in \N \colon x \leq n\right\}$, which means that $f_E(x) - f_{E_k}(x) = 0$; if $x \notin E$, then $f_E(x) = f_{E_i}(x) = 0$ for all $i \in \left\{x \in \N \colon x \leq n\right\}$. In either case, $g(x) = 0$.
+    \end{proof}
+\end{thmbox}
+One can check that the above principle gives rise to the following inequality:
+\begin{thmbox}{Boole's Inequality}{boole}
+    Let $E_1, E_2, \cdots, E_n, \cdots$ be a countable sequence of events, then
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^\infty E_i\right) \leq \sum_{i = 1}^{\infty}P(E_i).
+    \end{equation*}
+    In particular, equality is achieved if and only if the $E_i$'s are mutually exclusive.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+Lastly, combining everything we have learnt so far, we can derive the following formula for finite sample spaces, which complies with our intuition:
+\begin{thmbox}{Probability in a Finite Sample Space}{finiteProb}
+    Let $S$ be a sample space which is finite and let $E \subseteq S$ be an event, then 
+    \begin{equation*}
+        P(E) = \frac{\abs{E}}{\abs{S}}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+\section{Measure-Theoretic Probability}The above definition for probability, though intuitive, is not very solid when it comes to an infinite sample space and continuous cases. In this section, we would establish the theories of probability using a more modern and rigorous structure.
+
+In a na\"{i}ve attempt to devise a probability model, if the sample space $S$ is countable, then it suffices to define a \textit{probability mass function} $P \colon S \to \R$ such that $\sum_{\omega \in S}P\left(\omega\right) = 1$. Naturally, the probability for an event $E \subseteq S$ is defined as $P\left(E\right) = \sum_{\omega \in E}P\left(\omega\right)$. This summation is compatible with the infinite case because if we have countably many pairwise disjoint events $E_1, E_2, \cdots$, we can compute 
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}P\left(E_i\right) = \lim_{n \to \infty}\sum_{i = 1}^{n}E_i,
+\end{equation*}
+which is clearly convergent by monotone-convergent theorem.
+
+However, when $S$ is uncountable, this construction leads to weird behaviours. For example, suppose $S$ is the sample space for the experiment of tossing a fair coin for uncountably many times. It is clear that for any $\omega \in S$, we have 
+\begin{equation*}
+    P\left(\omega\right) = \lim_{n \to \infty}\frac{1}{2^{n}} = 0,
+\end{equation*}
+but at the same time we must have 
+\begin{equation*}
+    1 = P\left(S\right) = \sum_{\omega \in S}P\left(\omega\right) = 0,
+\end{equation*}
+which is ridiculous. Therefore, we need to find a better way to construct the probability model. Notice that here the incompatibility arises because we build our model by considering the probabilities of individual outcomes. Our next attempt try to bypass this issue by considering the probabilities of events only.
+
+Since the set of all events in a sample space $S$ is simply $\mathcal{P}\left(S\right)$, let us instead consider a more generalisable algebraic structure for this collection of subsets.
+\begin{dfnbox}{Set Algebra}{setAlgebra}
+    Let $X$ be a set. A {\color{red} \textbf{set algebra}} over $X$ is a family $\mathcal{F} \subseteq \mathcal{P}\left(X\right)$ such that 
+    \begin{itemize}
+        \item $X \backslash F \in \mathcal{F}$ for all $F \in \mathcal{F}$ (closed under complementation);
+        \item $X \in \mathcal{F}$;
+        \item $X_1 \cup X_2 \in \mathcal{F}$ for any $X_1, X_2 \in \mathcal{F}$ (closed under binary union).
+    \end{itemize}
+\end{dfnbox}
+There are several immediate implications from the above definition. 
+
+First, by closure under complementation, we know that an algebra over any set $X$ must contain the empty set. 
+
+Second, by De Morgan's Law, one can easily check that if the first $2$ axioms hold, the closure under binary union is equivalent to 
+\begin{itemize}
+    \item $X_1 \cap X_2 \in \mathcal{F}$ for any $X_1, X_2 \in \mathcal{F}$;
+    \item $\bigcup_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$;
+    \item $\bigcap_{i = 1}^{n}X_i \in \mathcal{F}$ for any $X_1, X_2, \cdots, X_n \in \mathcal{F}$ for all $n \in \N$.
+\end{itemize}
+$\left(X, \mathcal{F}\right)$ is known as a \textit{field of sets}, where the elements of $X$ are called \textit{points} and those of~$\mathcal{F}$, \textit{complexes} or \textit{admissible sets} of $X$. In probability theory, what we are interested in is a special type of set algebras known as $\sigma$-\textit{algebras}.
+\begin{dfnbox}{$\sigma$-Algebra}{sigmaAlgebra}
+    A {\color{red} \textbf{$\sigma$-Algebra}} over a set $A$ is a non-empty set algebra over $A$ that is closed under countable union.
+\end{dfnbox}
+Of course, by the same argument as above, we known that any $\sigma$-algebra is closed under countable intersection as well. Roughly speaking, we could now define the probability of an event $E \subseteq S$ as the ratio of the size of $E$ to that of $S$. The remaining question now is: how do we define the size of a set (and in particular, an infinite set) properly?
+\begin{dfnbox}{Measure}{measure}
+    Let $X$ be a set and $\Sigma$ be a $\sigma$-algebra over $X$. A {\color{red} \textbf{measure}} over $\Sigma$ is a function 
+    \begin{equation*}
+        \mu \colon \Sigma \to \R \cup \{-\infty, +\infty\}
+    \end{equation*}
+    such that 
+    \begin{itemize}
+        \item $\mu\left(E\right) \geq 0$ for all $E \in \Sigma$ (non-negativity);
+        \item $\mu\left(\varnothing\right) = 0$;
+        \item $\mu\left(\bigcup_{i = 1}^{\infty}E_i\right) = \sum_{i = 1}^{\infty}\mu\left(E_i\right)$ for any countable collection of pairwise disjoint elements of $\Sigma$ (countable additivity or $\sigma$-additivity).
+    \end{itemize}
+    The triple $\left(X, \Sigma, \mu\right)$ is known as a {\color{red} \textbf{measure space}} and the pair $\left(X, \Sigma\right)$, a {\color{red} \textbf{measurable space}}.
+\end{dfnbox}
+One thing to note here is that if at least one $E \in \Sigma$ has a finite measure, then $\mu\left(\varnothing\right) = 0$ is automatically guaranteed for obvious reasons.
+\begin{dfnbox}{Probability Measure}{prob}
+    Let $\mathcal{F}$ be a $\sigma$-algebra over a sample space $S$. A {\color{red} \textbf{probability measure}} over $S$ is a measure~$P \colon \mathcal{F} \to \left[0, 1\right]$ such that $P\left(S\right) = 1$.
+\end{dfnbox}
+Obviously, the above definition immediately guarantees that 
+\begin{enumerate}
+    \item $P\left(A^c\right) = 1 - P\left(A\right)$;
+    \item $P\left(A\right) \leq P\left(B\right)$ if $P\left(A\right) \subseteq P\left(A\right)$;
+    \item $P\left(A \cup B\right) \leq P\left(A\right) + P\left(B\right)$.
+\end{enumerate}
+The third result follows from a direct application of the principle of inclusion and exclusion. By induction, one can easily check that 
+\begin{equation*}
+    P\left(\bigcup_{i = 1}^{n}E_i\right) \leq \sum_{i = 1}^{n}P\left(E_i\right)
+\end{equation*}
+for any finitely many events. The following proposition extends this result to countable collections of events:
+\begin{probox}{Union Bound of Countable Collections of Events}{unionBound}
+    Let $\left(S, \mathcal{F}, P\right)$ be a probability space and $E_1, E_2, \cdots, E_n, \cdots \in \mathcal{F}$ is any countable sequence of events, then 
+    \begin{equation*}
+        P\left(\bigcup_{i = 1}^{\infty}E_i\right) \leq \sum_{i = 1}^{\infty}P\left(E_i\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define $F_1 \coloneqq E_1$ and $F_k \coloneqq E_k \backslash \bigcup_{i = 1}^{k - 1}E_i$ for $k \geq 2$. Clearly, the $F_i$'s are pairwise disjoint. By Definition \ref{dfn:sigmaAlgebra}, the $F_i$'s are elements of $\mathcal{F}$. Note that $P\left(F_i\right) \leq \mathbb{E_i}$ for all~$i \in \N^+$, so 
+        \begin{align*}
+            P\left(\bigcup_{i = 1}^{\infty}E_i\right) & = P\left(\bigcup_{i = 1}^{\infty}F_i\right) \\
+            & = \sum_{i = 1}^{\infty}P\left(F_i\right) \\
+            & \leq \sum_{i = 1}^{\infty}P\left(E_i\right).
+        \end{align*}
+    \end{proof}
+\end{probox}
+Intuitively, the equality is attained if and only if the events are pairwise disjoint. 
+\section{Conditional Probability}
+In a sample space $S$, we may wish to find the probability of two events $E$ and $F$ both occurring, $P(EF)$. However, if we already know that event $F$ \textbf{has occurred}, then necessarily, the sample space we consider would no longer be $S$. Essentially, this condition of $F$ having occurred has restricted our sample space to $F$. Thus, we give the following definition:
+\begin{dfnbox}{Conditional Probability}{condProb}
+    Let $S$ be a sample space and $E, F \subseteq S$ be two events. If $P(F) \geq 0$, then the {\color{red} \textbf{conditional probability}} is the probability that $E$ occurs given that $F$ has occurred, denoted by
+    \begin{equation*}
+        P(E|F) = \frac{P(EF)}{P(F)}.
+    \end{equation*}
+    In particular, if $E \subseteq F$, we have $P(E|F) = \frac{P(E)}{P(F)}$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Note that $P(E|F) = P(EF|F)$.
+    \end{remark}
+\end{notebox}
+It is easy to see that $P(EF) = P(E|F)P(F)$, i.e., the probability of $E$ and $F$ both occurring is the product of the probability of $F$ occurring and the probability of $E$ occurring given the occurrence of $F$. This complies with our intuition in a sense that if we wish both $E$ and $F$ to happen, we just need $F$ to happen first and $E$ to happen given the occurrence of $F$. We can generalise this for a countable number of events:
+\begin{probox}{Multiplication Rule}{multRule}
+    Let $S$ be a sample space and let $E_i \subseteq S$ for $i = 1, 2, \cdots, n$ be $n$ events, where $n \geq 2$. Suppose that $P\left(\bigcap_{i = 1}^{n - 1}E_i\right) > 0$, then 
+    \begin{equation*}
+        P\left(\bigcap_{i = 1}^{n}E_i\right) = P(E_1)\prod_{i = 2}^{n}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        The case where $n = 2$ is immediate from Definition \ref{dfn:condProb}. Suppose that there is some $k \in \N$ and $k \geq 2$ such that
+        \begin{equation*}
+            P\left(\bigcap_{i = 1}^{k}E_i\right) = P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right),
+        \end{equation*}
+        then we consider
+        \begin{align*}
+            P\left(E_{k + 1}\left\lvert\bigcap_{i = 1}^{k}E_i\right.\right) & = \frac{P\left(\bigcap_{i = 1}^{k + 1}E_i\right)}{P\left(\bigcap_{i = 1}^{k}E_i\right)} \\
+            & = \frac{P\left(\bigcap_{i = 1}^{k + 1}E_i\right)}{P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right)}.
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            P\left(\bigcap_{i = 1}^{k + 1}E_i\right) & = \left[P(E_1)\prod_{i = 2}^{k}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right)\right]P\left(E_{k + 1}\left\lvert\bigcap_{i = 1}^{k}E_i\right.\right) \\
+            & = P(E_1)\prod_{i = 2}^{k + 1}P\left(E_i\left\lvert\bigcap_{j = 1}^{i - 1}E_j\right.\right)
+        \end{align*}
+    \end{proof}
+\end{probox}
+Consider a sample space $S$ and two events $E, F \subseteq S$. Suppose that $E$ occurs, then either $F$ has occurred or $F$ has never occurred (i.e. $F^{\mathrm{c}}$ occurred). Therefore, it is easy to see that
+\begin{equation*}
+    P(E) = P(EF) + P(EF^{\mathrm{c}}) = P(E|F) + P(E|F^{\mathrm{c}}).
+\end{equation*}
+We can extend the above argument for more than two events. Suppose that $F_1, F_2, \cdots, F_n$ are $n$ mutually exclusive events such that $\bigcup_{i = 1}^n F_i = S$, then obviously $\left\{F_1, F_2, \cdots, F_n\right\}$ is a \textit{partition} of $S$.
+
+Consider any event $E$ and let $e \in E$. Clearly, $e$ must be in one and only one of $F_1, F_2, \cdots, F_n$. It then follows that $\left\{E \cap F_1, E \cap F_2, \cdots, E \cap F_n\right\}$ is a partition of $E$. This can be formalised into the following result:
+\begin{thmbox}{Law of Total Probabilities}{totalProb}
+    Let $F_1, F_2, \cdots, F_n$ be a partition of a sample space $S$ with probability measure $P$. For any event $A \subseteq S$, 
+    \begin{equation*}
+        P\left(A\right) = \sum_{i = 1}^{n}P\left(A \mid F_i\right)P\left(F_i\right).
+    \end{equation*}
+\end{thmbox} 
+For a countably infinite number of mutually exclusive events $F_1, F_2, \cdots$ such that $\bigcup_{i = 1}^\infty F_i = S$, we arrive at the following formula:
+\begin{equation*}
+    P(E) = \sum_{i = 1}^{\infty}P(E|F_i)P(F_i).
+\end{equation*}
+This leads to the \textit{Bayes's Formula}:
+\begin{thmbox}{Bayes's Formula}{BayesFormula}
+    Let $F_1, F_2, \cdots$ be a countably infinite sequence of events from a sample space $S$ such that~$\bigcup_{i = 1}^\infty F_i = S$. For any event $E \subseteq S$, we have
+    \begin{equation*}
+        P(F_j|E) = \frac{P(E|F_j)P(F_j)}{\sum_{i = 1}^{\infty}P(E|F_i)P(F_i)}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+Note that in general, for two events $E$ and $F$, $P(E|F) \neq P(E)$, i.e., the occurrence of $F$ may affect the occurrence of $E$. However, in some cases, we notice that the occurrence of $E$ is \textit{independent} of $F$, and so we introduce the following definition:
+\begin{dfnbox}{Independent Events}{Independence}
+    Let $S$ be a sample space with probability measure $P$. Two events $E, F \subseteq S$ are {\color{red} \textbf{independent}} if $P\left(E \mid F\right) = P\left(E\right)$, or equivalently, $P\left(E \cap F\right) = P\left(E\right)P\left(F\right)$. A collection of events $E_1, E_2, \cdots, E_n$ are said to be {\color{red} \textbf{jointly independent}} if for any $I \subseteq \left\{1, 2, \cdots, n\right\}$, 
+    \begin{equation*}
+        P\left(\bigcap_{i \in I}E_i\right) = \prod_{i \in I}P\left(E_i\right),
+    \end{equation*}
+    or equivalently, $P\left(E_1 \mid E_2, \cdots, E_n\right) = P\left(E_1\right)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        The following results are immediate:
+        \begin{enumerate}
+            \item If $P(E) = 0$ or $P(F) = 0$, then $E$ and $F$ are independent.
+            \item If $P(E) > 0$ (respectively, $P(F) > 0$), then $E$ and $F$ are independent if and only if $P(F|E) = P(F)$ (respectively, $P(E|F) = P(E)$).
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+Intuitively, given independent events $E$ and $F$, we may believe that if the occurrence of $E$ does not affect the occurrence of $F$, then naturally the occurrence of $E$ should also not affect the ``not-occurring'' of $F$, i.e., the following is true:
+\begin{probox}{Characterisation of Independent Events}{independentComp}
+    $E$ and $F$ are independent events if and only if $E$ and $F^{\mathrm{c}}$ are independent events.
+    \tcblower
+    \begin{proof}
+        Notice that $EF \cup EF^{\mathrm{c}} = E(F \cup F^{\mathrm{c}}) = E$, so
+        \begin{equation*}
+            P(E) = P(EF) + P(EF^{\mathrm{c}}) = P(E)P(F) + P(EF^{\mathrm{c}}).
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            P(EF^{\mathrm{c}}) = P(E) - P(E)P(F) = P(E)(1 - P(F)) = P(E)P(F^{\mathrm{c}}),
+        \end{equation*}
+        and so $E$ and $F^{\mathrm{c}}$ are independent. The other direction is trivial because $F = \left(F^{\mathrm{c}}\right)^{\mathrm{c}}$
+    \end{proof}
+\end{probox} 
+Note that $E$ and $F$ are independent if and only if $E, F, E^c, F^c$ are pairwise independent. Moreover, for any jointly independent collection of events $E_1, E_2, \cdots, E_n$ and any disjoint index sets $I, J \subseteq \left\{1, 2, \cdots, n\right\}$,
+\begin{equation*}
+    P\left(\bigcap_{i \in I}E_i \cap \bigcap_{j \in J}E_j^c\right) = \left(\prod_{i \in I}P\left(E_i\right)\right)\left(\prod_{j \in J}P\left(E_j^c\right)\right).
+\end{equation*}
+\begin{notebox}
+    \begin{remark}
+        Joint independence is a strictly stronger result than pairwise independence, i.e., there exists pairwise independent events $E_1, E_2, E_3$ such that 
+        \begin{equation*}
+            P\left(E_1 \cap E_2 \cap E_3\right) \neq P\left(E_1\right)P\left(E_2\right)P\left(E_3\right).
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+
+\chapter{Random Variables}
+\section{Random Variables}
+In many contexts, we might wish to generalise a formula to compute the probability of the occurrence of a certain event. However, in cases where the events are abstract or unquantifiable (e.g. the event ``tomorrow is rainy''), it becomes hard to formulate a well-defined mapping from a sample space to $[0, 1]$. Thus, to model all events easily using functions and mappings, we introduce the notion of \textit{random variables}.
+
+A random variable can be viewed as a function that maps the outcomes in a sample space to some measurable co-domain. We first introduce a few preliminary definitions.
+\begin{dfnbox}{Probability Space}{probSpace}
+    A {\color{red} \textbf{probability space}} is a tuple $\left(S, \mathcal{F}, P\right)$ where $S$ is a sample space, $\mathcal{F}$ is a $\sigma$-algebra on $S$ and $P$ is a probability measure on $S$.
+\end{dfnbox}
+It can be troublesome to consider different sample spaces for different experiments. Therefore, we define the \textit{abstract probability space} as $\left(\Omega, \mathcal{F}, P\right)$ with a uniform random variable~$Z$ such that for every outcome measured by a random variable $X$ in a sample space $S$, there exists a function~$f \colon \Omega \to S$ such that $X = f\left(Z\right)$. For convenience, we often choose $\Omega = \left[0, 1\right]$ and $P$ to be the uniform measure on $\left[0, 1\right]$.
+
+One important property of a probability space is \textbf{countable additivity}. 
+\begin{probox}{Countable Additivity in Probability Spaces}{countableAdd}
+    Let $\left(\Omega, P\right)$ be a probability space. If $\left\{A_i\right\}_{i \in \N^+}$ is a family of subsets of $\Omega$ such that $A_i \subseteq A_{i + 1}$ for all $i \in \N^+$, then 
+    \begin{equation*}
+        P\left(\bigcup_{i \in \N^+}A_i\right) = \lim_{n \to \infty}P\left(A_n\right).
+    \end{equation*}
+    If $\left\{B_i\right\}_{i \in \N^+}$ is a family of subsets of $\Omega$ such that $B_{i + 1} \subseteq B_i$ for all $i \in \N^+$, then 
+    \begin{equation*}
+        P\left(\bigcap_{i \in \N^+}B_i\right) = \lim_{n \to \infty}P\left(B_n\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Define $A_0 \coloneqq \varnothing$, then 
+        \begin{equation*}
+            \left\{A_{i + 1} \setminus A_i \colon i \in \N\right\}
+        \end{equation*}
+        is a countable collection of pairwise disjoint subsets of $\Omega$. Therefore, 
+        \begin{align*}
+            P\left(\bigcup_{i \in \N^+}A_i\right) & = P\left(\bigcup_{i \in \N}\left(A_{i + 1} \setminus A_i\right)\right) \\
+            & = \sum_{i = 0}^{\infty}P\left(A_{i + 1}\setminus A_i\right) \\
+            & = \lim_{n \to \infty}\sum_{i = 0}^{n}P\left(A_{i + 1}\setminus A_i\right) \\
+            & = \lim_{n \to \infty}P\left(\bigcup_{i = 0}^n\left(A_{i + 1}\setminus A_i\right)\right) \\
+            & = \lim_{n \to \infty}P\left(A_n\right).
+        \end{align*}
+        Define $C_i \coloneqq \Omega \setminus B_i$. Since $B_{i + 1} \subseteq B_i$ for all $i \in \N^+$, we have $C_{i} \subseteq C_{i + 1}$ for all $i \in \N^+$. Therefore, 
+        \begin{align*}
+            P\left(\bigcup_{i \in \N^+}B_i\right) & = P\left(\bigcup_{i \in \N^+}\left(\Omega\setminus C_i\right)\right) \\
+            & = \sum_{i = 1}^{\infty}P\left(\Omega \setminus C_i\right) \\
+            & = 1 - \sum_{i = 1}^{\infty}P\left(C_i\right) \\
+            & = 1 - P\left(\bigcup_{i \in \N^+} C_i\right) \\
+            & = 1 - \lim_{n \to \infty}P\left(C_n\right) \\
+            & = 1 - \lim_{n \to \infty}P\left(\Omega \setminus B_n\right) \\
+            & = 1 - \lim_{n \to \infty}\left(1 - P\left(B_n\right)\right) \\
+            & = \lim_{n \to \infty}P\left(B_n\right).
+        \end{align*}
+    \end{proof}
+\end{probox}
+It is important that the co-domain of a random variable is measurable. For this purpose, we construct some structure to generalise open intervals in $\R$.
+\begin{dfnbox}{Borel Algebra}{borelAlgebra}
+    Let $X$ be a topological space. A {\color{red} \textbf{Borel set}} on $X$ is a set which can be formed via countable union, countable intersection and relative complementation of open sets in $X$. The smallest $\sigma$-algebra over $X$ containing all Borel sets on $X$ is known as the {\color{red} \textbf{Borel algebra}} over $X$.
+\end{dfnbox}
+Note that the Borel set over $\R$ is just the family of all open intervals. Clearly, the Borel algebra over $X$ contains all open sets in $X$ according to the above axioms from Definition \ref{dfn:sigmaAlgebra}. This helps us define the following:
+\begin{dfnbox}{Random Variable}{RV}
+    Let $\left(\Omega, \mathcal{F}, P\right)$ be the abstract probability space and $\left(\mathcal{X}, \mathcal{B}\right)$ be a measurable space where~$\mathcal{B}$ is the Borel algebra over $\mathcal{X}$. A {\color{red} \textbf{random variable}} is a function $X \colon \Omega \to \mathcal{X}$ such that 
+    \begin{equation*}
+        \left\{\omega \in S \colon X\left(\omega\right) \in B\right\} \in \mathcal{F} 
+    \end{equation*}
+    for all $B \in \mathcal{B}$. The probability measure $P_X$ on $\mathcal{X}$ induced by $P$ with 
+    \begin{equation*}
+        P_X\left(A\right) \coloneqq P\left(X \in A\right) \coloneqq P\bigl(\left\{\omega \in \Omega \colon X\left(\omega\right) \in A\right\}\bigr)
+    \end{equation*}
+    is known as the {\color{red} \textbf{distribution}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Rigorously, such a random variable $X$ is a \textit{measurable function} or \textit{measurable mapping} from $\left(\Omega, \mathcal{F}\right)$ to $\left(\mathcal{X}, \mathcal{B}\right)$.
+    \end{remark}
+\end{notebox}
+We shall verify that $P_X$ as defined above is indeed a probability measure. Notice that we have $P_X\left(A\right) \in \left[0, 1\right]$ for all $A \subseteq \mathcal{X}$ and that $P_X\left(\mathcal{X}\right) = 1$ and $P_X\left(\varnothing\right) = 0$. Let $\left\{A_i\right\}_{i \in \N}$ be a family of pairwise disjoint events. Consider 
+\begin{align*}
+    X^{-1}\left(\bigcup_{i \in \N}A_i\right) & = \left\{\omega \in \Omega \colon X\left(\omega\right) \in \bigcup_{i \in \N}A_i\right\} \\
+    & = \bigcup_{i \in \N}\left\{\omega \in \Omega \colon X\left(\omega\right) \in A_i\right\} \\
+    & = \bigcup_{i \in \N}X^{-1}\left(A_i\right).
+\end{align*}
+Therefore, 
+\begin{align*}
+    P_X\left(\bigcup_{i \in \N}A_i\right) & = P\left(\bigcup_{i \in \N}X^{-1}\left(A_i\right)\right) \\
+    & = \sum_{i \in \N}P\left(X^{-1}\left(A_i\right)\right) \\
+    & = \sum_{i \in \N}P_X\left(A\right).
+\end{align*}
+Alternatively, let $\Omega$ be a sample space, the random variable 
+\begin{displaymath}
+    X \colon \Omega \to \R
+\end{displaymath}
+is a real-valued function such that for any event $E \subseteq \Omega$, 
+\begin{equation*}
+    P(E) = P(X[E]) = P(X \in X[E]),
+\end{equation*}
+where
+\begin{displaymath}
+    X[E] \coloneqq \left\{X(\omega) \colon \omega \in \Omega\right\}
+\end{displaymath}
+is the image of the event $E$ under $X$.
+
+A random variable describes the random outcome of an ``experiment'' or ``phenomenon''. When we perform a series of experiments (for example, model the weather for $n$ consecutive days), it is reasonable to use one random variable to capture the outcome for each experiment. In this way, we obtain a collection of random variables denoted as 
+\begin{equation*}
+    X_i^n \coloneqq \left(X_1, X_2, \cdots, X_n\right).
+\end{equation*}
+Clearly, if $X$ is a real-valued random variable, we have $\left\{\omega \in S \colon X\left(\omega\right) > x\right\} \in \mathcal{F}$. Moreover, we claim that 
+\begin{equation*}
+    \left\{\omega \in S \colon X\left(\omega\right) < x\right\} = \bigcup_{y < x}\left\{\omega \in S \colon X\left(\omega\right) \leq y\right\}.
+\end{equation*}
+The proof is quite straightforward and is left to the reader as an exercise. By Definition \ref{dfn:sigmaAlgebra}, this means that 
+\begin{equation*}
+    \left\{\omega \in S \colon X\left(\omega\right) < x\right\} \cup \left\{\omega \in S \colon X\left(\omega\right) > x\right\} \in \mathcal{F}.
+\end{equation*}
+Therefore, $\left\{\omega \in S \colon X\left(\omega\right) = x\right\} \in \mathcal{F}$. This argument justifies the probabilities $P\left(X < x\right)$ and $P\left(X = x\right)$. 
+
+When a collection of many random variables is concerned, we may consider their \textit{joint distribution}.
+\begin{dfnbox}{Joint Distribution}{joint}
+    Let $\left(\Omega, \mathcal{F}, P\right)$ be the abstract probability space and $X_i \colon \Omega \to \mathcal{X}_i$ be random variables for $i = 1, 2, \cdots, n$. The {\color{red} \textbf{joint distribution}} of $X \coloneqq \left(X_1, X_2, \cdots, X_n\right)$ is the probability measure $P_{X}$ with domain $\mathcal{X}_1 \times \mathcal{X}_2 \times \cdots \times \mathcal{X}_n$ such that 
+    \begin{align*}
+        P_{X}\left(A_1 \times A_2 \times \cdots \times A_n\right) & \coloneqq P\bigl(\left\{\omega \in \Omega \colon X_1\left(\omega\right) \in A_1, X_2\left(\omega\right) \in A_2, \cdots, X_n\left(\omega\right) \in A_n\right\}\bigr) \\
+        & = P\left(X_1 \in A_1, X_2 \in A_2, \cdots, X_n \in A_n\right).
+    \end{align*}
+\end{dfnbox}
+Now we can define independence between random variables in a manner similar to Definition \ref{dfn:Independence}.
+
+In this course, we focus on real-valued random variables, which can be fully determined by their \textit{distribution functions}.
+\begin{dfnbox}{Distribution Function}{distribution}
+    Let $X$ be a real-valued random variable over the abstract probability space, the {\color{red} \textbf{distribution function}} of $X$ is a function $F_X \colon \Omega \to \left[0, 1\right]$ such that 
+    \begin{equation*}
+        F_X\left(x\right) = P\left(X \leq x\right).
+    \end{equation*}
+\end{dfnbox}
+Note that for all $a < b \in \R$, 
+\begin{equation*}
+    P\bigl(X \in \left(a, b\right]\bigr) = F_X\left(b\right) - F_X\left(a\right).
+\end{equation*}
+It can be shown from here that $F_X$ fully determines the distribution of $X$ (which is non-trivial). By using Proposition \ref{pro:countableAdd}, we can prove the following result with some analysis tools:
+\begin{probox}{Properties of Distribution Functions}{distrProps}
+    If $F_X$ is a distribution function of a real-valued random variable $X$, then 
+    \begin{enumerate}
+        \item $F_X$ is non-decreasing;
+        \item $\lim_{x \to -\infty}F_X\left(x\right) = 0$ and $\lim_{x \to +\infty}F_X\left(x\right) = 1$;
+        \item for all $x \in \R$, $F_X\left(x\right) = \lim_{y \to x^+}F_X\left(y\right)$ and $F_X\left(x^-\right) \coloneqq \lim_{y \to x^-}F_X\left(y\right)$ exists. In particular, $P\left(X = x\right) = F_X\left(x\right) - F_X\left(x^-\right)$.
+    \end{enumerate}
+\end{probox}
+\begin{notebox}
+    \begin{remark}
+        Conversely, every function $F \colon \R \to \left[0, 1\right]$ satisfying the above properties induces a probability measure $P$ on $\R$ with $P\bigl(\left(-\infty, x\right]\bigr) = F_X\left(x\right)$.
+    \end{remark}
+\end{notebox}
+In computer programs, a random number is often generated via the uniform random variable $Z$ over $\left[0, 1\right]$. $Z$ can be used to generate a random variable $X$ associated to any given distribution function $F$.
+\begin{thmbox}{Distribution Simulation}{simulate}
+    Let $F \colon \R \to \left[0, 1\right]$ be any distribution function. Define $F' \colon \left[0, 1\right] \to \R$ by
+    \begin{equation*}
+        F'\left(y\right) = \inf \left\{x \in \R \colon F\left(x\right) \geq y\right\}.
+    \end{equation*}
+    Let $Z$ be the uniform random variable on $\left[0, 1\right]$, then $X \coloneqq F'\left(Z\right)$ is a random variable with distribution function $F$.
+    \tcblower
+    \begin{proof}
+        Notice that for all $x \in \R$, we have $P\left(X \leq x\right) = P\left(F^{-1}\left(Z\right) \leq x\right)$. One may check that $F^{-1}\left(z\right) \leq x$ if and only if $z \leq F\left(x\right)$, so 
+        \begin{equation*}
+            P\left(X \leq x\right) = P\bigl(Z \leq F\left(x\right)\bigr) = F\left(x\right).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\section{Discrete Random Variables}
+Intuitively, there are certain events whose outcomes are finite or can be enumerated. In such cases, we may associate these events with a \textit{discrete random variable}.
+\begin{dfnbox}{Discrete Random Variable (DRV)}{DRV}
+    Let $X$ be a random variable over a sample space $S$, if $\mathrm{ran}(X)$ is countable, then $X$ is called a {\color{red} \textbf{discrete random variable}}.
+\end{dfnbox}
+Among finitely many outcomes, the probability for each outcome is well-defined.
+\begin{dfnbox}{Probability Mass Function (PMF)}{PMF}
+    Let $X$ be a discrete random variable over a sample space $S$, the function
+    \begin{displaymath}
+        p_X \colon X[S] \to [0, 1]
+    \end{displaymath}
+    where $p_X(a) = P(X = a)$ is known as the {\color{red} \textbf{probability mass function}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        $\sum_{a \in X[S]} p_X(a) = 1$.
+    \end{remark}
+\end{notebox}
+For any discrete random variable $X$, $p_X(a) = 0$ if and only if $\left\{s \in S \colon X(s) = a\right\} = \varnothing$. This essentially means that if $p_X$ evaluates to $0$, then the corresponding event is an impossible event.
+
+Note that $p_X$ essentially gives the probability of \textbf{singleton} events in a sample space. Naturally, we can represent the probability of a union of singleton events as a linear combination of the values of $p_X$.
+\begin{dfnbox}{Cumulative Distribution Function (CDF)}{CDF}
+    Let $X$ be a discrete random variable over a sample space $S$ with PMF $p_X$, the function
+    \begin{displaymath}
+        F_X \colon X[S] \to [0, 1]
+    \end{displaymath}
+    where $F_X(a) = \sum_{x \leq a}p_X(x)$ is known as the {\color{red} \textbf{cumulative distribution function}} of $X$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Suppose that $X(s_i) = a_i$ for all $s_i \in S$ such that $a_i < a_j$ whenever $i < j$, then~$F_X$ is a non-decreasing \textit{step function}, i.e., for all $a$ such that $a_i \leq a < a_{i + 1}$,
+        \begin{equation*}
+            F_X(a) = \sum_{x \leq a}p_X(x) = \sum_{k = 1}^{i}p_X(a_k).
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+Suppose $X$ is a discrete random variable with range $\left\{x_1, x_2, \cdots, x_m\right\}$ and PMF $p_X$. By repeating an experiment of $X$ for $n$ times, we can approximate the total number of occurrences of~$X = x_i$ by $np_X(x_i)$. Therefore, the average value of $X$ can be approximated by
+\begin{equation*}
+    \frac{\sum_{i = 1}^{m}nx_ip_X(x_i)}{n}.
+\end{equation*}
+For large $n$, we have
+\begin{equation*}
+    \lim_{n \to \infty}\frac{\sum_{i = 1}^{m}nx_ip_X(x_i)x_i}{n} = \lim_{n \to \infty}\sum_{i = 1}^{m}x_ip_X(x_i) = \sum_{i = 1}^{m}x_ip_X(x_i).
+\end{equation*}
+Similarly, if the range of $X$ is countably infinite, replacing from the above $\sum_{i = 1}^{m}nx_ip_X(x_i)x_i$ with $\sum_{i = 1}^{\infty}nx_ip_X(x_i)x_i$ will yield the same limit.
+
+Intuitively, the above limit represents the \textit{expected value} of $X$ when a large number of experiments are conducted, which leads to the following definition:
+\begin{dfnbox}{Expectation of Discrete Random Variables}{DRVExp}
+    Let $X$ be a discrete random variable. The {\color{red} \textbf{expectation}} (or {\color{red} \textbf{mean}}, {\color{red} \textbf{expected value}}) of~$X$ is defined to be
+    \begin{equation*}
+        \mathbb{E}[X] = \sum_{i = 1}^{m}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{m}\left[x_iP(X = x_i)\right]
+    \end{equation*}
+    if $\abs{\mathrm{ran}(X)} = m$, and
+    \begin{equation*}
+        \mathbb{E}[X] = \sum_{i = 1}^{\infty}\left[x_ip_X(x_i)\right] = \sum_{i = 1}^{\infty}\left[x_iP(X = x_i)\right]
+    \end{equation*}
+    if $\mathrm{ran}(X)$ is countably infinite.
+\end{dfnbox}
+By convention, we use $\mu$ to denote expectation, so $X[E]$ can be written as $\mu_X$.
+
+For a discrete random variable $X$, we can define a function $g \colon \mathrm{ran}(X) \to \R$. It is easy to see that $g(X)$ is also a discrete random variable. Therefore, we may have the following result:
+\begin{probox}{Expectation of Functions}{funcExp}
+    Let $X$ be a discrete random variable and define $Y = g(X)$, then
+    \begin{equation*}
+        \mathbb{E}[Y] = \mathbb{E}[g(X)] = \sum_{x}\left[g(x)P(X = x)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that for each $y \in \mathrm{ran}(Y)$, $g(x) = y$ for some $x \in \mathrm{ran}(X)$, and so
+        \begin{equation*}
+            P(Y = y) = \sum_{g(x) = y}P(X = x).
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            \mathbb{E}[Y] & = \sum_{y}\left[yP(Y = y)\right] \\
+            & = \sum_{y}\left[y\!\sum_{g(x) = y}\!P(X = x)\right] \\
+            & = \sum_{y}\left[\sum_{g(x) = y}\!g(x)P(X = x)\right] \\
+            & = \sum_{x}\left[g(x)P(X = x)\right].
+        \end{align*}
+    \end{proof}
+\end{probox}
+Two simple corollaries to the above theorem are:
+\begin{align*}
+    \mathbb{E}[aX + b] & = a\mathbb{E}[X] + b \\
+    \mathbb{E}[X + Y] & = \mathbb{E}[X] + \mathbb{E}[Y].
+\end{align*}
+In later sections, we will prove that the same rule applies to continuous random variables as well. The above theorem gives rise to the following notion of \textit{moments}:
+\begin{dfnbox}{Moment}{moment}
+    Let $X$ be a random variable. $\mathbb{E}[X^n]$ is called the $n$-th {\color{red} \textbf{moment}} of $X$.
+\end{dfnbox}
+Following Proposition \ref{pro:funcExp}, it is easy to see that if $X$ is discrete, then
+\begin{equation*}
+    \mathbb{E}[X^n] = \sum_{i = 1}^{\infty}x_i^np_X(x_i).
+\end{equation*}
+Note that given two different discrete random variables $X$ and $Y$, their probability mass functions can be different but they can still have identical expectations. For example, consider $p_X$ to be identically $0$ and $p_Y$ to be such that $p_Y(0) = 1$ and $p_Y(y) = 0$ for all $y \neq 0$.
+
+This motivates us to find other properties to classify and characterise random variables. One of these properties is the \textbf{spread} of the possible values taken by a random variable with respect to its mean, i.e., consider the random variable $X$ with $\mathbb{E}[X] = \mu$, we wish to determine $\mathbb{E}[\abs{X - \mu}]$ or equivalently $\mathbb{E}[(X - \mu)^2]$. This spread is known as the \textit{variance} of a random variable.
+\begin{dfnbox}{Variance}{var}
+    Let $X$ be a random variable with $\mathbb{E}[X] = \mu$, the {\color{red} \textbf{variance}} of $X$ is defined to be
+    \begin{equation*}
+        \mathrm{Var}(X) = \mathbb{E}[(X - \mu)^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2.
+    \end{equation*}
+\end{dfnbox}
+By convention, we use $\sigma^2$ to denote variance, so $\mathrm{Var}(X)$ can be written as $\sigma_X^2$.
+
+The formula for $\mathrm{Var}(X)$ can be derived via Proposition \ref{pro:funcExp}:
+\begin{align*}
+    \mathrm{Var}(X) & = \mathbb{E}[(X - \mu)^2] \\
+    & = \mathbb{E}[X^2 - 2\mu X + \mu^2] \\
+    & = \mathbb{E}[X^2] - 2\mu \mathbb{E}[X] + \mu^2 \\
+    & = \mathbb{E}[X^2] - 2(\mathbb{E}[X])^2 + (\mathbb{E}[X])^2 \\
+    & = \mathbb{E}[X^2] - (\mathbb{E}[X])^2.
+\end{align*}
+Another term we hear often is \textit{standard deviation}, which is defined as follows:
+\begin{dfnbox}{Standard Deviation}{sd}
+    Let $X$ be a random variable, the {\color{red} \textbf{standard deviation}} of $X$ is defined to be
+    \begin{equation*}
+        \mathrm{SD}(X) = \sqrt{\mathrm{Var}(X)} = \sigma_X.
+    \end{equation*}
+\end{dfnbox}
+Note that we have computed the general formula for any linear combination of discrete random variables. We shall do the same for variance.
+\begin{probox}{Variance of Linear Combinations of Random Variables}{linearCombiVar}
+    Let $X$ be a random variable, then
+    \begin{align*}
+        \mathrm{Var}(aX + b) & = a^2\mathrm{Var}(X) \\
+        \mathrm{SD(aX + b)} & =\abs{a}\mathrm{SD}(X)
+    \end{align*}
+    for all $a, b \in \R$.
+    \tcblower
+    \begin{proof}
+        By using Proposition \ref{pro:funcExp}, we have
+        \begin{align*}
+            \mathrm{Var}(aX + b) & = \mathbb{E}[(aX + b)^2] - (\mathbb{E}[aX + b])^2 \\
+            & = a^2 \mathbb{E}[X^2] + 2ab \mathbb{E}[X] + b^2 - \left[a(\mathbb{E}[X])^2 + 2ab\mathbb{E}[X] + b^2\right] \\
+            & = a^2\left[\mathbb{E}[X^2] - (\mathbb{E}[X])^2\right] \\
+            & = a^2\mathrm{Var}(X).
+        \end{align*}
+        Therefore,
+        \begin{equation*}
+            \mathrm{SD}(aX + b) = \sqrt{\mathrm{Var}(aX + b)} = \abs{a}\mathrm{SD}(X).
+        \end{equation*}
+    \end{proof}
+\end{probox}
+
+\subsection{Bernoulli and Binomial Random Variables}
+Suppose we conduct an experiment. In the most simplistic view, only two outcomes are considered, namely \textbf{success} and \textbf{failure}. We can model such experiments using a discrete random variable whose range has a cardinality of $2$.
+\begin{dfnbox}{Bernoulli Random Variable}{bernoulliRV}
+    A random variable $X$ is a {\color{red} \textbf{Bernoulli random variable}} if
+    \begin{align*}
+        p_X(x) = \begin{cases}
+            p, \quad & \textrm{if } x = 1 \\
+            1 - p, \quad & \textrm{if } x = 0 \\
+            0, \quad & \textrm{otherwise}
+        \end{cases}
+    \end{align*}
+    for some $p \in [0, 1]$.
+\end{dfnbox}
+Now, consider $n$ \textbf{independent} trials of an experiment with a probability for success of $p$. Let $X$ be the number of successes among these $n$ trials, then clearly,
+\begin{equation*}
+    p_X(x) = P(X = x) = \begin{pmatrix}
+        n \\
+        x
+    \end{pmatrix}p^x(1 - p)^{n - x}.
+\end{equation*}
+\begin{dfnbox}{Binomial Random Variable}{binRV}
+    A random variable $X$ is a {\color{red} \textbf{binomial random variable}} if
+    \begin{equation*}
+        p_X(x) = P(X = x) = \begin{pmatrix}
+            n \\
+            x
+        \end{pmatrix}p^x(1 - p)^{n - x}
+    \end{equation*}
+    for some $p \in [0, 1]$. $X$ is said to have a {\color{red} \textbf{binomial distribution}} with parameters $(n, p)$, denoted by $X \sim \mathrm{B}(n, p)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, if $X$ is a Bernoulli random variable, then $X \sim \mathrm{B}(1, p)$.
+    \end{remark}
+\end{notebox}
+Suppose $X \sim \mathrm{B}(n, p)$. Let $N$ be the average number of successes in the $n$ trials, it is expected that $p \approx \frac{N}{n}$. Therefore, we may conjure that $\mathbb{E}\left[X\right] = np$.
+\begin{probox}{Expectation and Variance of Binomial Distribution}{BExpVar}
+    Let $X \sim \mathrm{B}(n, p)$, then $\mathbb{E}[X] = np$ and $\mathrm{Var}(X) = np(1 - p)$.
+    \tcblower
+    \begin{proof}
+        Note that $iC^n_i = nC^{n - 1}_{i - 1}$, so
+        \begin{align*}
+            \mathbb{E}[X] & = \sum_{i = 0}^{n}\left[i \begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] \\
+            & = \sum_{i = 1}^{n}\left[n \begin{pmatrix}
+                n - 1 \\
+                i - 1
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] \\
+            & = n\sum_{j = 0}^{n - 1}\left[\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^{j + 1}(1 - p)^{n - 1 - j}\right] \\
+            & = np\sum_{j = 0}^{n - 1}\left[\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^j(1 - p)^{n - 1 - j}\right] \\
+            & = np, \\
+            \mathrm{Var}(X) & = \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \\
+            & = \sum_{i = 0}^{n}\left[i^2\begin{pmatrix}
+                n \\
+                i
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] - n^2p^2 \\
+            & = n\sum_{i = 1}^{n}\left[i\begin{pmatrix}
+                n - 1 \\
+                i - 1
+            \end{pmatrix}p^i(1 - p)^{n - i}\right] - n^2p^2 \\
+            & = n\sum_{j = 0}^{n - 1}\left[(j + 1)\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^{j + 1}(1 - p)^{n - 1 - j}\right] - n^2p^2 \\
+            & = np\left\{\sum_{j = 0}^{n - 1}\left[j\begin{pmatrix}
+                n - 1 \\
+                j
+            \end{pmatrix}p^j(1 - p)^{n - 1 - j}\right] + 1\right\} - n^2p^2 \\
+            & = np\left[(n - 1)p + 1\right] - n^2p^2 \\
+            & = np - np^2 \\
+            & = np(1 - p).
+        \end{align*}
+    \end{proof}
+\end{probox}
+Let $X \sim \mathrm{B}(n, p)$, consider
+\begin{align*}
+    \frac{p_X(i + 1)}{p_X(i)} & = \frac{\frac{n!}{(i + 1)!(n - i - 1)!}p^{i + 1}(1 - p)^{n - i - 1}}{\frac{n!}{i!(n - i)!}p^i(1 - p)^{n - i}} \\
+    & = \frac{\frac{1}{i + 1}p}{\frac{1}{n - i}(1 - p)} \\
+    & = \frac{(n - i)p}{(i + 1)(1 - p)}.
+\end{align*}
+Suppose $p_X(i + 1) < p_X(i)$, then $(n - i)p < (i + 1)(1 - p)$. This implies that $i > (n + 1)p - 1$, which means that
+\begin{itemize}
+    \item $p_X(i)$ is monotonically increasing on $\left[0, (n + 1)p - 1\right]$.
+    \item $p_X(i)$ maximises when $i = \left\lceil (n + 1)p - 1 \right\rceil = \left\lfloor (n + 1)p \right\rfloor$.
+    \item $p_X(i)$ is monotincally decreasing on $\left((n + 1)p - 1, n\right]$.
+\end{itemize}
+
+\subsection{Poisson Random Variable}
+Suppose that we want to count the number of events in unit intervals such that $X\left(t\right)$ is the number of events up to time $t$. Now, each unit interval can be divided infinitesimally such that we can approximate the distribution using binomial random variables.
+\begin{thmbox}{Law of Rare Events}{rareEvents}
+    Let $X_n \sim \mathrm{B}\left(n, p_n\right)$ be a binomial random variable where $\lim_{n \to \infty}np_n = \lambda$, then we have $\lim_{n \to \infty}P\left(X_n = x\right) \approx \frac{\lambda^x}{x!}\e^{-\lambda}$
+    \tcblower
+    \begin{proof}
+        Consider 
+        \begin{align*}
+            \lim_{n \to \infty}P\left(X_n = x\right) & = \lim_{n \to \infty}\binom{n}{x}p_n^x\left(1 - p_n\right)^{n - x} \\
+            & \approx \lim_{n \to \infty}\frac{\prod_{i = 1}^{x}\left(n - i + 1\right)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1 - \frac{\lambda}{n}\right)^n\lim_{n \to \infty}\left(1 - \frac{\lambda}{n}\right)^{-x} \\
+            & = \lim_{n \to \infty}\frac{\prod_{i = 1}^{x}\left(n - i + 1\right)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1 - \frac{\lambda}{n}\right)^n \\
+            & \approx \lim_{n \to \infty}\frac{n^x\lambda^x}{x!n^x}\left(1 - \frac{\lambda}{n}\right)^n \\
+            & = \frac{\lambda^x}{x!}\e^{-\lambda}.
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+The term \textit{rare events} refers to the situation where the probability of two events occurring at the same time for some small interval $h$ is $o\left(h\right)$, i.e., $\lim_{h \to 0}\frac{p}{h} = 0$.
+
+Note that this means that we can use $e^{-\lambda}\frac{\lambda^i}{i!}$ as a good approximation for $p_X(i)$ when $n$ is large and $p$ is small! In this case, $\lambda$ is the expected frequency of occurrences of the event corresponding to $X = 1$ within a unit interval.
+\begin{dfnbox}{Poisson Random Variable}{poisson}
+    A random variable $X$ is a {\color{red} \textbf{Poisson random variable}} if 
+    \begin{equation*}
+        p_X(x) = P(X = x) = e^{-\lambda}\frac{\lambda^x}{x!}
+    \end{equation*}
+    for some $\lambda > 0$, denoted as $X \sim \mathrm{Po}(\lambda)$.
+\end{dfnbox}
+Note that for $X \sim \mathrm{Po}(\lambda)$, we can find some $Y \sim \mathrm{B}(n, p)$ where $n$ is large and $p$ is small such that $np = \lambda$. Therefore, it is expected that 
+\begin{align*}
+    \mathbb{E}[X] & \approx \mathbb{E}[Y] = \lambda, \\
+    \mathrm{Var}(X) & \approx \mathrm{Var}(Y) = np(1 - p) \approx \lambda.
+\end{align*}
+\begin{probox}{Expectation and Variance of Poisson Random Variables}{poExpVar}
+    If $X \sim \mathrm{Po}(\lambda)$ where $\lambda > 0$, then $\mathbb{E}[X] = \mathrm{Var}(X) = \lambda$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+To further examine the properties of Poisson random variables, we introduce the notion of \textit{weak dependence}.
+\begin{dfnbox}{Weak Dependence}{weakDepend}
+    Let $E$ and $F$ be two events. If $P(E) \approx P(E\mid F)$, we say that $E$ and $F$ are {\color{red} \textbf{weakly dependent}}.
+\end{dfnbox}
+Let $i = 1, 2, 3, \cdots, n$ and $p_i$ be the probability of event $i$ occurring. If the $i$'s are independent or weakly dependent, then we can approximate for large $n$ that the rate of occurrences of these events is $\sum_{i = 1}^{n}p_i$. Let $X$ be the number of events which occur, then 
+\begin{equation*}
+    X \sim \mathrm{Po}\left(\sum_{i = 1}^{n}p_i\right).
+\end{equation*}
+\begin{dfnbox}{Poisson Process}
+    A {\color{red} \textbf{Poisson process}} with {\color{red} \textbf{rate}} or {\color{red} \textbf{intensity}} $\lambda > 0$ is a sequence of discrete random variables $\left\{X\left(t\right) \colon t \in \N\right\}$ such that $X\left(0\right) = 0$ and
+    \begin{itemize}
+        \item for any $t_0, t_1, \cdots, t_n \in \N$ with $t_0 = 0$, $\left\{X\left(t_i\right) - X\left(t_{i - 1}\right) \colon i = 1, 2, \cdots, n\right\}$ are mutually independent;
+        \item for any $s \in \N$ and $t \in \N^+$, we have $X\left(s + t\right) - X\left(s\right) \sim \mathrm{Po}\left(\lambda t\right)$.
+    \end{itemize}
+\end{dfnbox}
+
+\subsection{Geometric Random Variable}
+Suppose we perform some experiment with a probability of success of $p$. Let $X$ be the number of failures before the first success occurs, then clearly,
+\begin{equation*}
+    P(X = x) = (1 - p)^xp.
+\end{equation*}
+Additionally, let $Y$ be the number of trials needed to reach the first success, then
+\begin{equation*}
+    P(Y = y) = (1 - p)^{y - 1}p.
+\end{equation*}
+Note that both $\bigl(P(X = x)\bigr)$ and $\bigl(P(Y = y)\bigr)$ form geometric sequences.
+\begin{dfnbox}{Geometric Random Variable}{geoDRV}
+    A random variable $X$ is called a {\color{red} \textbf{geometric random variable}} with parameter $p \in (0, 1)$, denoted by $X \sim \mathrm{Geo}(p)$, if
+    \begin{equation*}
+        p_X(n) = (1 - p)^{n - 1}p.
+    \end{equation*}
+\end{dfnbox}
+The expectation and variance of geometric random variables are given as follows:
+\begin{probox}{Expectation and Variance of Geometric Random Variables}{expVarGeo}
+    If $X \sim \mathrm{Geo}(p)$, then $\mathbb{E}[X] = \frac{1}{p}$ and $\mathrm{Var}(X) = \frac{1 - p}{p^2}$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+\subsection{Negative Binomial Random Variable}
+Suppose we perform some experiment with a probability of success of $p$. Let~$X$ be the number of trials needed to achieve the $r$-th success, then clearly, for $X = n$, we need $(r - 1)$ successes (i.e., $(n - r)$ failures) in the first $(n - 1)$ trials and the $r$-th trial to be a success. Therefore,
+\begin{equation*}
+    P(X = n) = C^{n - 1}_{r - 1}p^{r - 1}(1 - p)^{n - r}p = C^{n - 1}_{r - 1}p^r(1 - p)^{n - r}.
+\end{equation*}
+\begin{dfnbox}{Negative Binomial Random Variable}{negBinDRV}
+    A random variable $X$ is called a {\color{red} \textbf{negative binomial random variable}} if
+    \begin{equation*}
+        p_X(n) = \begin{pmatrix}
+            n - 1 \\
+            r - 1
+        \end{pmatrix}p^r(1 - p)^{n - r},
+    \end{equation*}
+    where $0 < p < 1$ and $n \geq r$, denoted as $X \sim \mathrm{NB}(r, p)$.
+\end{dfnbox}
+The expectation and variance of negative binomial random variables are given as follows:
+\begin{thmbox}{Expection and Variance of Negative Binomial Variables}{expVarNegBin}
+    Let $X \sim \mathrm{NB}(r, p)$, then
+    \begin{equation*}
+        \mathbb{E}[X] = \frac{r}{p}, \qquad \mathrm{Var}(X) = \frac{r(1 - p)}{p^2}.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+
+\subsection{Hypergeometric Random Variable}
+Suppose a collection contains $N$ objects, $m$ of which are of type A. If $n$ objects are selected randomly without replacement and let $X$ be the number of objects of type A selected, then 
+\begin{equation*}
+    P(X = x) = \frac{\begin{pmatrix}
+        m \\
+        x
+    \end{pmatrix}\begin{pmatrix}
+        N - m\\
+        n - x
+    \end{pmatrix}}{\begin{pmatrix}
+        N \\
+        n
+    \end{pmatrix}}.
+\end{equation*}
+\begin{dfnbox}{Hypergeometric Random Variable}{hGeo}
+    A random variable $X$ is called a {\color{red} \textbf{hypergeometric random variable}} with parameters~$(n, N, m)$ if
+    \begin{equation*}
+        p_X(x) = \frac{\begin{pmatrix}
+            m \\
+            x
+        \end{pmatrix}\begin{pmatrix}
+            N - m\\
+            n - x
+        \end{pmatrix}}{\begin{pmatrix}
+            N \\
+            n
+        \end{pmatrix}},
+    \end{equation*}
+    where $0 \leq m, n \leq N$.
+\end{dfnbox}
+The expectation and variance of hypergeometric random variables are given as follows:
+\begin{thmbox}{\small Expection and Variance of Hypergeometric Random Variables}{expVarHGeo}
+    Let $X$ be a hypergeometric random variable with parameters $(n, N, m)$, then
+    \begin{equation*}
+        \mathbb{E}[X] = np, \qquad \mathrm{Var}(X) = np(1 - p)\left(1 - \frac{n - 1}{N - 1}\right).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+
+\section{Continuous Random Variables}
+In real life, the outcomes of certain events are infinitely many, and so they cannot be enumerated as discrete cases. Thus, we will need to use \textit{continuous random variables} to model these events.
+\begin{dfnbox}{Continuous Random Variable}{CRV}
+    A random variable $X$ is a {\color{red} \textbf{continuous random variable}} if there exists some non-negative function $f_X$ such that for all $B \subseteq \R$,
+    \begin{equation*}
+        P(X \in B) = \int_B\!f_X(x)\,\mathrm{d}x.
+    \end{equation*}
+    The function $f_X$ is known as the {\color{red} \textbf{probability density function}} of $X$. The function $F_X$ with $0 \leq F_X(x) \leq 1$ and $F_X'(x) = f_X(x)$ is known as the {\color{red} \textbf{cumulative distribution function}} of $X$.
+\end{dfnbox}
+An interesting property of a continuous random variable $X$ is that
+\begin{equation*}
+    P(X = x) = \int_{x}^{x}\!f_X(x) \,\mathrm{d}x = 0,
+\end{equation*}
+which means that the probability of any single outcome of an event is $0$, but this does not mean that it is impossible to occur! In particular, it is more meaningful to consider the probability of the occurrence of a range of outcomes. We have
+\begin{align*}
+    P(a \leq X \leq b) & = P(a < X < b) = P(a \leq X < b) = P(a < X \leq b) = \int_{a}^{b}\!f_X(x) \,\mathrm{d}x, \\
+    P(X \leq a) & = P(X < a) = \int_{-\infty}^{a}\!f_X(x) \,\mathrm{d}x.
+\end{align*}
+It is not surprising that a function of a continuous random variable is still a continuous random variable.
+\begin{thmbox}{Function of Continuous Random Variables}{funcCRV}
+    Let $X$ be a continuous random variable and $Y = g(X)$. If $g$ is strictly monotonic and differentiable, then 
+    \begin{equation*}
+        f_Y(y) = f_X\left(g^{-1}(y)\right)\abs{\frac{\d}{\d y}g^{-1}(y)}.
+    \end{equation*}
+\end{thmbox}
+Let $X$ be a continuous random variable with probability density function $f_X$ such that for all $x \in \R - [a, b]$, we have $f_X(x) = 0$. We can divide $[a, b]$ into $n$ intervals $[x_{i - 1}, x_i]$ for each~$i = 1, 2, 3, \cdots, n$ with equal length $\symrm{\Delta} x = \frac{b - a}{n}$. Thus,
+\begin{equation*}
+    P(x_{i - 1} < X < x_i) \approx \symrm{\Delta}xf_X(x_i).
+\end{equation*}
+Let $Y$ be a discrete random variable with $P(Y = x_i) = \symrm{\Delta}xf_X(x_i)$, then 
+\begin{equation*}
+    \mathbb{E}[X] \approx \mathbb{E}[Y] = \sum_{i = 1}^{n}x_i\symrm{\Delta}xf_X(x_i).
+\end{equation*}
+When $n \to \infty$, i.e., $\symrm{\Delta}x \to 0$, we have
+\begin{equation*}
+    \lim_{\symrm{\Delta}x \to 0}\mathbb{E}[Y] = \int_{a}^{b}\!xf_X(x)\,\mathrm{d}x.
+\end{equation*}
+By letting $a \to -\infty$ and $b \to \infty$, we have arrived at the following definition:
+\begin{dfnbox}{Expectation of Continuous Random Variables}{expCRV}
+    Let $X$ be a continuous random variable with probability density function $f_X$, then
+    \begin{equation*}
+        \mathbb{E}[X] = \int_{-\infty}^{\infty}\!xf_X(x)\,\mathrm{d}x.
+    \end{equation*}
+\end{dfnbox}
+Let $Y$ be a continuous random variable with probability density function $f$, consider
+\begin{align*}
+    \int_{0}^{\infty}\!P(Y > y)\,\mathrm{d}y & = \int_{0}^{\infty}\!\int_{y}^{\infty}\!f(x)\,\mathrm{d}x\,\mathrm{d}y \\
+    & = \int_{0}^{\infty}\!\int_{0}^{x}\!f(x)\,\mathrm{d}y\,\mathrm{d}x \\ 
+    & = \int_{0}^{\infty}\!xf(x)\,\mathrm{d}y\,\mathrm{d}x \\ 
+    & = \mathbb{E}[Y].
+\end{align*}
+Therefore, set $Y = g(X)$, then similar to discrete random variables, we have
+\begin{equation*}
+    \mathbb{E}\left[g(X)\right] = \int_{-\infty}^{\infty}\!g(x)f_X(x)\,\mathrm{d}x.
+\end{equation*}
+
+\subsection{Uniform Random Variable}
+Intuitively, we may call a random variable $X$ ``uniformly'' distributed in $(a, b)$ if $P(X = x)$ is a constant for all $x \in (a, b)$.
+\begin{dfnbox}{Uniform Random Variable}{uniCRV}
+    A continuous random variable $X$ is a {\color{red} \textbf{uniform random variable}} if
+    \begin{equation*}
+        f_X(x) = \begin{cases}
+            \frac{1}{b - a}, & \quad\textrm{if } a < x < b \\
+            0, & \quad\textrm{otherwise}
+        \end{cases},
+    \end{equation*}
+    denoted by $X \sim \mathrm{U}(a, b)$.
+\end{dfnbox}
+Let $X \sim \mathrm{U}(a, b)$, then the cumulative density function is
+\begin{equation*}
+    F_X(x) = \begin{cases}
+        0, & \quad\textrm{if } x \leq a \\
+        \frac{x - a}{b - a}, & \quad\textrm{if } a < x < b \\
+        1, & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+\begin{probox}{Expectation and Variance of Uniform Random Variables}{expVarUni}
+    Let $X \sim \mathrm{U}(a, b)$, then $\mathbb{E}[X] = \frac{a + b}{2}$ and $\mathrm{Var}(X) = \frac{(b - a)^2}{12}$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+
+\subsection{Normal Random Variable}
+\begin{dfnbox}{Normal Random Variable}{normal}
+    A continuous random variable $Z$ with probability density function $\phi$ is a {\color{red} \textbf{normal random variable}} if 
+    \begin{equation*}
+        \phi(z) = \frac{1}{\sqrt{2\symrm{\pi}}\sigma}e^{-\frac{(z - \mu)^2}{2\sigma^2}},
+    \end{equation*}
+    denoted as $Z \sim \mathcal{N}\left(\mu, \sigma^2\right)$.
+\end{dfnbox}
+In particular, $Z \sim \mathcal{N}(0, 1)$ is known as the \textit{standard normal random variable}. Let $\Phi$ be the cumulative density function for $Z$, then 
+\begin{equation*}
+    \Phi(z) = P(Z < z) = \frac{1}{\sqrt{2\symrm{\pi}}}\int_{-\infty}^{z}\!\mathrm{e}^{-\frac{t^2}{2}} \,\mathrm{d}t.
+\end{equation*}
+Let $X \sim \mathcal{N}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma}$, so
+\begin{equation*}
+    \Phi_X(x) = P\left(X < x\right) = P\left(\frac{X - \mu}{\sigma} < \frac{x - \mu}{\sigma}\right) = \Phi\left(\frac{x - \mu}{\sigma}\right)
+\end{equation*}
+We shall state without proof the expectation and variance of normal random variables as follows:
+\begin{probox}{Expection and Variance of Normal Random Variables}{expVarNormal}
+    Let $Z \sim \mathcal{N}(\mu, \sigma^2)$, then $\mathbb{E}[Z] = \mu$ and $\mathrm{Var}(Z) = \sigma^2$.
+\end{probox}
+
+\subsection{Exponential Random Variable}
+Let $N(t) \sim \mathrm{Po}(t\lambda)$ be the number of occurrences of an event in an interval of length $t$. Suppose $X$ is the time before the first occurrence of the event, then
+\begin{equation*}
+    P(X > t) = P(N(t) = 0) = \mathrm{e}^{-\lambda t}.
+\end{equation*}
+In other words, if $F_X$ is the cumulative distribution function of $X$, then $F_X(x) = 1 - \mathrm{e}^{-\lambda t}$.
+\begin{dfnbox}{Exponential Random Variable}{expCRV}
+    A continuous random variable $X$ is an {\color{red} \textbf{exponential random variable}} if 
+    \begin{equation*}
+        f_X(x) = \begin{cases}
+            \lambda\mathrm{e}^{-\lambda x} & \quad\textrm{if } x \geq 0 \\
+            0 & \quad\textrm{otherwise}
+        \end{cases},
+    \end{equation*}
+    where $\lambda > 0$, denoted as $X \sim \mathrm{Exp}\left(\lambda\right)$.
+\end{dfnbox}
+The expectation and variance of exponential random variables are as follows:
+\begin{probox}{Expection and Variance of Exponential Random Variables}{expVarExp}
+    Let $X \sim \mathrm{Exp}(\lambda)$, then $\mathbb{E}[X] = \frac{1}{\lambda}$ and $\mathrm{Var}(X) = \frac{1}{\lambda^2}$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Informally, an exponential random variable models the \textbf{waiting time} before the first event occurs or between the occurrences of two consecutive events. Suppose we have already waited for $s$ unit of time for the occurrence, we may wish to know the probability of us having to wait for another $t$ unit of time. To solve such questions, we need to understand the \textit{memoryless} property.
+\begin{dfnbox}{Memoryless Property}{memoryless}
+    Let $X$ be a random variable, we say that $X$ is {\color{red} \textbf{memoryless}} if
+    \begin{equation*}
+        P(X > s + t \mid X > t) = P(X > s). 
+    \end{equation*}
+\end{dfnbox}
+In particular, if $X \sim \mathrm{Exp}(\lambda)$, consider
+\begin{align*}
+    P(X > s + t \mid X > t) & = \frac{\mathrm{e}^{-\lambda(s + t)}}{\mathrm{e}^{-\lambda t}} \\
+    & = \mathrm{e}^{-\lambda s} \\
+    & = P(X > s).
+\end{align*}
+Therefore, exponential random variables are memoryless. One may also prove that geometric random variables are also memoryless.
+
+Now we introduce another random variable which is closely related to the exponential random variable.
+\begin{dfnbox}{Double Exponential Random Variable}{doubleExpCRV}
+    A continuous random variable $X$ is a {\color{red} \textbf{double exponential variable}} if 
+    \begin{equation*}
+        f_X(x) = \frac{1}{2}\lambda x^{-\lambda\abs{x}}
+    \end{equation*}
+    for some $\lambda > 0$.
+\end{dfnbox}
+Consider $Y = \abs{X}$ where $X$ is a double exponential random variable. The double exponential random variable is so named because for any $y \geq 0$,
+\begin{align*}
+    P(Y > y) & = P(X > y) + P(X < -y) \\
+    & = 2P(X > y) \\
+    & = 2\int_{y}^{\infty}\!\frac{1}{2}\lambda \mathrm{e}^{-\lambda x}\,\mathrm{d}x \\
+    & = \mathrm{e}^{-\lambda y}.
+\end{align*}
+Thus, $Y = \abs{X} \sim \mathrm{Exp}(\lambda)$.
+
+A common application of exponential random variables is to determine the \textit{hazard rate}. Suppose $X$ is the survival time of some object and that the object has already survived for a time $t$. Consider $\epsilon$ to be a small interval, then the probability that the object cannot survive past this small interval is approximately
+\begin{align*}
+    P(X < t + \epsilon \mid X > t) & = \frac{P(t < X < t + \epsilon)}{P(X > t)} \\
+    & \approx \frac{\epsilon f_X(t)}{1 - F_X(t)}.
+\end{align*}
+In general, we have the following definition:
+\begin{dfnbox}{Hazard Rate Function}{hazardRatef}
+    Let $X$ be a positive continuous random variable and define $\overline{F_X}(x) = 1 - F_X(x)$, then the function
+    \begin{equation*}
+        \lambda(x) = \frac{f_X(x)}{\overline{F_X}(x)}
+    \end{equation*}
+    is known as the {\color{red} \textbf{hazard rate function}} of $X$.
+\end{dfnbox}
+In particular, if $X \sim \mathrm{Exp}(\lambda)$, then its hazard rate funtion is just $\lambda(x) = \lambda$, which is also known as the \textit{rate} of $X$.
+
+\subsection{Gamma Random Variable}
+We have seen that the exponential random variable can be used to model the waiting time between two consecutive occurrences of an event modelled by a Poisson random variable. We would also like to know the waiting time till the $n$-th occurrence of an event.
+
+Let $N(t)$ be a Poisson process with rate $\lambda$, so $P\bigl(N(t) = n\bigr) = \frac{\e^{-\lambda t\left(\lambda t\right)^n}}{n!}$. Let $T_n$ be the waiting time till the $n$-th event with $f_k$ being the probability density function, then
+\begin{align*}
+    f_k(t) & = \frac{\d}{\d t}\bigl(1 - P(T_n > t)\bigr) \\
+    & = \frac{\d}{\d t}\Bigl(1 - P\bigl(N(t) < k\bigr)\Bigr) \\
+    & = \frac{\d}{\d t}\left(1 - \e^{-\lambda t}\sum_{i = 0}^{k - 1}\frac{(\lambda t)^i}{i!}\right) \\
+    & = \frac{\lambda\e^{-\lambda t}(\lambda t)^{k - 1}}{(k - 1)!}.
+\end{align*}
+\begin{dfnbox}{Gamma Random Variable}{gamma}
+    A continuous random variable $X$ is called a {\color{red} \textbf{gamma}} random variable with parameters~$(n, \lambda)$ where $\lambda > 0$ if 
+    \begin{equation*}
+        f(t) = \frac{\lambda\e^{-\lambda t}(\lambda t)^{n - 1}}{(n - 1)!}
+    \end{equation*}
+    for all $t \geq 0$.
+\end{dfnbox}
+The gamma random variable is closely related to the \textit{gamma function}.
+\begin{dfnbox}{Gamma Function}{gammaFunc}
+    Let $\alpha > 0$, the {\color{red} \textbf{gamma function}} is defined as
+    \begin{align*}
+        \Gamma(\alpha) & = \int_{0}^{\infty}\!\lambda\e^{-\lambda t}(\lambda t)^{\alpha - 1}\,\d t \\
+        & = \int_{0}^{\infty}\!\lambda\e^{-x}x^{\alpha - 1}\,\d x.
+    \end{align*}
+    In particular, if $X$ is a continuous random variable with probability density function
+    \begin{equation*}
+        f(t) = \frac{\lambda\e^{-\lambda t}(\lambda t)^{\alpha - 1}}{\Gamma(\alpha)},
+    \end{equation*}
+    where $\lambda > 0$ and $t \geq 0$, then $X$ is a gamma random variable with parameters $(\alpha, \lambda)$.
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        One can prove that
+        \begin{enumerate}
+            \item $\Gamma(\alpha + 1) = \alpha\Gamma(\alpha)$ for all $\alpha > 0$.
+            \item $\Gamma(n) = (n - 1)!$ for all $n \in \Z^+$.
+        \end{enumerate}
+    \end{remark}
+\end{notebox}
+We shall state the following result without proof:
+\begin{probox}{Expectation and Variance of Gamma Random Variables}{expVarGamma}
+    Let $X$ be a gamma random variable with parameters $(\alpha, \lambda)$, then 
+    \begin{equation*}
+        \mathbb{E}[X] = \frac{\alpha}{\lambda}, \qquad \mathrm{Var}(X) = \frac{\alpha}{\lambda^2}.
+    \end{equation*}
+\end{probox}
+
+\subsection{Beta Random Variable}
+In real life, sometimes we may not know the exact probability distribution of a random variable and wish to deduce its probability distribution based on experiments. In other words, suppose there are $a$ successes and $b$ failures of an experiment, we wish to know what is the \textbf{most likely} probability of success.
+\begin{dfnbox}{Beta Random Variable}{beta}
+    A continuous random variable $X$ is a {\color{red} \textbf{beta}} random variable with parameters $(a, b)$ with $a, b > 0$ if 
+    \begin{equation*}
+        f_X(x) = \frac{1}{B(a, b)}x^{a - 1}(1 - x)^{b - 1},
+    \end{equation*}
+    where 
+    \begin{equation*}
+        B(a, b) = \int_{0}^{1}\!x^{a - 1}(1 - x)^{b - 1}\,\d x = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a + b)}.
+    \end{equation*}
+\end{dfnbox}
+If $a = b = 1$, we see that
+\begin{equation*}
+    f_X(x) = \frac{\Gamma(2)}{\bigl(\Gamma(1)\bigr)^2},
+\end{equation*}
+so $X$ is uniform on $(0, 1)$. In particular, we also see that
+\begin{equation*}
+    \frac{B(a + 1, b)}{B(a, b)} = \frac{a}{a + b}.
+\end{equation*}
+We shall state the following result without proof:
+\begin{probox}{Expectation and Variance of Beta Random Variables}{expVarBeta}
+    Let $X$ be a beta random variable with parameters $(a, b)$, then 
+    \begin{equation*}
+        \mathbb{E}[X] = \frac{a}{a + b}, \qquad \mathrm{Var}(X) = \frac{ab}{(a + b)^2(a + b + 1)}.
+    \end{equation*}
+\end{probox}
+
+\section{Jointly Distributed Random Variables}
+Sometimes, the outcomes of the events we wish to study cannot be expressed with a single random variable. In general, if $X_1, X_2, \cdots, X_n$ are random variables, we may be interested to know
+\begin{equation*}
+    P\bigl((X_1, X_2, \cdots, X_n) \in C\bigr), \qquad C \subseteq \R^n.
+\end{equation*}
+Take $C = \prod_{i = 1}^{n}(-\infty, x_i]$, then $(X_1, X_2, \cdots, X_n) \in C$ if and only if $X_i \leq x_i$ for $i = 1, 2, \cdots, n$. 
+\begin{dfnbox}{Joint Cumulative Distribution Function}{jointCDF}
+    Let $X_1, X_2, \cdots, X_n$ be random variables, then their {\color{red} \textbf{joint cumulative distribution function}} is defined as
+    \begin{equation*}
+        F_{X}(x_1, x_2, \cdots, x_n) = P(X_1 \leq x_1, X_2 \leq x_2, \cdots, X_n \leq x_n).
+    \end{equation*}
+\end{dfnbox}
+One may be tempted to think that $P(X \leq x, Y \leq y) = P(X \leq x)P(Y \leq y)$, but in general this is not true!
+\begin{notebox}
+    \begin{remark}
+        $P(X \leq x, Y \leq y) = P(X \leq x)P(Y \leq y)$ if and only if $X$ and $Y$ are independent random variables (Definition \ref{dfn:indRV}).
+    \end{remark}
+\end{notebox}
+Consider two random variables $X$ and $Y$ jointly distributed, observe that
+\begin{align*}
+    P(x_1 \leq X \leq x_2, Y \leq y) & = P(X \leq x_2, Y \leq y) - P(X \leq x_1, Y \leq y) \\
+    & = F_{X, Y}(x_2, y) - F_{X, Y}(x_1, y).
+\end{align*}
+Similarly,
+\begin{equation*}
+    P(X \leq x, y_1 \leq Y \leq y_2) = F_{X, Y}(x, y_2) - F_{X, Y}(x, y_1).
+\end{equation*}
+Combining the two equations we have
+\begin{align*}
+    P(x_1 \leq X \leq x_2, y_1 \leq Y \leq y_2) & = P(x \leq x_2, y_1 \leq Y \leq y_2) - P(x \leq x_1, y_1 \leq Y \leq y_2) \\
+    & = F_{X, Y}(x_2, y_2) - F_{X, Y}(x_2, y_1) - F_{X, Y}(x_1, y_2) + F_{X, Y}(x_1, y_1).
+\end{align*}
+Note that with this identity we can compute $P\bigl((X, Y) \in C\bigr)$ for all Borel sets $C$. Consider jointly distributed discrete random variables. We first introduce the following intuitive definition:
+\begin{dfnbox}{Joint Probability Mass Function}{jointPMF}
+    Let $X_1, X_2, \cdots, X_n$ be discrete random variables. Their {\color{red} \textbf{joint probability mass function}} is defined to be
+    \begin{equation*}
+        p_{\mathbfit{X}}(x_1, x_2, \cdots, x_n) = P(X_1 = x_1, X_2 = x_2, \cdots, X_n = x_n).
+    \end{equation*}
+\end{dfnbox} 
+In the continuous case, we have a similar definition:
+\begin{dfnbox}{Joint Continuity}{jointPDF}
+    Let $X_1, X_2, \cdots, X_n$ be continuous random variables. They are said to be {\color{red} \textbf{jointly continuous}} if there exists a {\color{red} \textbf{joint probability density function}} $f$ such that
+    \begin{equation*}
+        P\bigl((X_1, X_2, \cdots, X_n) \in C\bigr) = \int\cdots\int_{C}\!f_{\mathbfit{X}}(x_1, x_2, \cdots, x_n)\,\mathrm{d}x_1\cdots\mathrm{d}x_n.
+    \end{equation*}
+\end{dfnbox}
+Let $X, Y$ be discrete random variables. It is easy to see that
+\begin{align*}
+    P(X = x) & = \sum_{i = 1}^{\infty}P(X = x, Y = y_i), \\
+    P(Y = y) & = \sum_{i = 1}^{\infty}P(X = x_i, Y = y).
+\end{align*}
+On the other hand, if $X, Y$ are continuous random variables, we have
+\begin{align*}
+    P(X \in A) & = P(X \in A, Y \in \R) \\
+    & = \int_{A}\int_{-\infty}^{\infty}\!f_{X, Y}(x, y)\,\mathrm{d}y\,\mathrm{d}x.
+\end{align*}
+These are known as \textit{marginal probability density functions}.
+\begin{dfnbox}{Marginal Probability Density Function}{marginalPDF}
+    Let $X, Y$ be discrete random variables. Their {\color{red} \textbf{marginal probability density functions}} are defined as
+    \begin{align*}
+        p_X(x) & = \sum_{i = 1}^{\infty}p_{X, Y}(x, y_i), \\
+        p_Y(y) & = \sum_{i = 1}^{\infty}p_{X, Y}(x_i, y).
+    \end{align*}
+    If $X, Y$ are continuous random variables, then
+    \begin{align*}
+        f_X(x) & = \int_{-\infty}^{\infty}\!f_{X, Y}(x, y)\,\mathrm{d}y, \\
+        f_Y(y) & = \int_{-\infty}^{\infty}\!f_{X, Y}(x, y)\,\mathrm{d}x.
+    \end{align*}
+\end{dfnbox}
+Lastly, we state the notion of \textit{joint distribution of functions}.
+\begin{probox}{Joint Distribution of Functions}{jointDistrFunc}
+    Let $X_1$ and $X_2$ be jointly continuous random variables. Let $Y_1 = g_1(X_1, X_2)$ and $Y_2 = g_2(X_1, X_2)$. If for all $y_1, y_2$, the linear system
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1 \\
+            y_2
+        \end{bmatrix} = \begin{bmatrix}
+            g_1(x_1, x_2) \\
+            g_2(x_1, x_2)
+        \end{bmatrix}
+    \end{equation*}
+    has a unique solution, and the Jacobian
+    \begin{equation*}
+        J(x_1, x_2) = \frac{\partial y_1}{\partial x_1}\cdot\frac{\partial y_2}{\partial x_2} - \frac{\partial y_1}{\partial x_2}\cdot \frac{\partial y_2}{\partial x_1}
+    \end{equation*}
+    is continuous and non-zero, then
+    \begin{equation*}
+        f_{Y_1, Y_2}(y_1, y_2) = f_{X_1, X_2}(x_1, x_2)\abs{J(x_1, x_2)}^{-1}.
+    \end{equation*}
+\end{probox}
+In general, we have:
+\begin{probox}{Expectation of Jointly Distributed Random Variables}{expFuncJoint}
+    Let $X$ and $Y$ be jointly distributed random variables. If $X$ and $Y$ are discrete, then 
+    \begin{equation*}
+        \mathbb{E}[g(X, Y)] = \sum_{x}\sum_{y}g(x, y)p_{X, Y}(x, y).
+    \end{equation*}
+    If $X$ and $Y$ are continuous, then 
+    \begin{equation*}
+        \mathbb{E}[g(X, Y)] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\!g(x, y)f_{X, Y}(x, y)\,\mathrm{d}x\,\mathrm{d}y.
+    \end{equation*}
+\end{probox}
+Recall that we have previously defined the notion of independent events. Observe that an event can be precisely expressed as $X \in A$ for some random variable $X$ and set $A$, which motivates us to define independence of random variables.
+\begin{dfnbox}{Independent Random Variables}{indRV}
+    Two random variables $X$ and $Y$ are {\color{red} \textbf{independent}} if for any sets $A$ and $B$,
+    \begin{equation*}
+        P(X \in A, Y \in B) = P(X \in A)P(Y \in B).
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        Less rigorously, notice that for Borel sets $A$ and $B$, since they can be expressed as countable unions and intersections of intervals, we can say that $X$ and $Y$ are independent if and only if $F_{X, Y}(x, y) = F_X(x)F_Y(y)$.
+    \end{remark}
+\end{notebox}
+Since the cumulative distribution functions are closely related to the probability mass and probability density, we can then check for independence using them instead. We first consider the discrete case.
+\begin{probox}{Independence of Discrete Random Variables}{indDRV}
+    Let $X$ and $Y$ be discrete random variables with probability mass functions $p_X$ and $p_Y$, then~$X$ and $Y$ are independent if and only if $p_{X, Y}(x, y) = p_X(x)p_Y(y)$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Based on Proposition \ref{pro:indDRV}, one may check that if $X$ and $Y$ are independent discrete random variables, then 
+\begin{align*}
+    \mathbb{E}[XY] & = \mathbb{E}[X]\mathbb{E}[Y], \qquad \mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).
+\end{align*}
+In the continuous case, we have a similar conclusion.
+\begin{thmbox}{Independence of Continuous Random Variables}{indCRV}
+    Let $X$ and $Y$ be continuous random variables with probability density functions $f_X$ and~$f_Y$. $X$ and $Y$ are independent if and only if $f_{X, Y}(x, y) = f_X(x)f_Y(y)$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+The above theorems and definitions can be easily extended to a countable number of independent random variables.
+
+Suppose $X$ and $Y$ are independent \textbf{integer-valued} discrete random variables, then clearly
+\begin{align*}
+    p_{X + Y}(n) & = P(X + Y = n) \\
+    & = \sum_{i}P(X = i, Y = n - i) \\
+    & = \sum_{i}p_X(i)p_Y(n - i) \\
+    & = \sum_{i + j = n}p_X(i)p_Y(j).
+\end{align*}
+On the other hand, if $X$ and $Y$ are independent continuous random variables, we have
+\begin{align*}
+    F_{X + Y}(n) & = \iint_{x + y \leq n}\!f_{X + Y}(x + y)\,\mathrm{d}x\,\mathrm{d}y \\
+    & = \int_{-\infty}^{\infty}\int_{-\infty}^{n - y}\!f_X(x)f_Y(y)\,\mathrm{d}x\,\mathrm{d}y \\
+    & = \int_{-\infty}^{\infty}\!F_X(n - y)f_Y(y)\,\mathrm{d}y \\
+    & = \int_{-\infty}^{\infty}\!F_X(n - y)\,\mathrm{d}F_Y(y).
+\end{align*}
+We say that $F_{X + Y}$ is the \textit{convolution} $F_X * F_Y$.
+
+By Proposition \ref{pro:expFuncJoint}, it is easy to see that if $X_1, X_2, \cdots, X_n$ are random variables,
+\begin{equation*}
+    \mathbb{E}\left[\sum_{i = 1}^{n}X_i\right] = \sum_{i = 1}^{n}\mathbb{E}[X_i].
+\end{equation*}
+Using the expectation of the sum of random variables, we can also prove Theorem \ref{thm:boole} but for the finite cases:
+\begin{thmbox}{Boole's Inequality for Finitely Many Events}{boole}
+    Let $A_1, A_2, \cdots, A_n$ be events, then 
+    \begin{equation*}
+        \sum_{i = 1}^{n}P(A_i) \geq P\left(\bigcup_{i = 1}^{n}A_i\right).
+    \end{equation*}
+    \tcblower       
+    \begin{proof}
+        Define
+        \begin{equation*}
+            X_i = \begin{cases}
+                1, & \quad\textrm{if } A_i \textrm{ occurs} \\
+                0, & \quad\textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+        Let $X = \sum_{i = 1}^{n}X_i$ and $Y = \max\{X_1, X_2, \cdots, X_n\}$. Note that $Y = 1$ if and only if at least one of the $A_i$'s occurs, so 
+        \begin{equation*}
+            \mathbb{E}[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
+        \end{equation*}
+        Note that $\mathbb{E}[X] = \sum_{i = 1}^{n}P(A_i)$ and that $X \geq Y$, so
+        \begin{equation*}
+            \sum_{i = 1}^{n}P(A_i) = \mathbb{E}[X] \geq \mathbb{E}[Y] = P\left(\bigcup_{i = 1}^{n}A_i\right).
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Now, we proceed to discussing some special cases.
+
+Let $X$ and $Y$ be independent uniform random variables on $(a, b)$. Note that $f_Y(y) = \frac{1}{b - a}$ for all $y \in (a, b)$, so
+\begin{align*}
+    f_{X + Y}(n) & = \int_{a}^{b}\!f_X(n - y)f_Y(y)\,\mathrm{d}y \\
+    & = \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y.
+\end{align*}
+Note that $f_X(n - y) = \frac{1}{b - a}$ if and only if $a < n - y < b$, i.e., $n - b < y < n - a$. Otherwise, we have $f_X(n - y) = 0$. If $2a < n < a + b$, we have $(a, b) \cap (n - b, n - a) = (a, n - a)$, so
+\begin{align*}
+    \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y & = \frac{1}{b - a}\int_{a}^{n - a}\!\frac{1}{b - a}\,\mathrm{d}y \\
+    & = \frac{n - 2a}{(b - a)^2}.
+\end{align*}
+If $a + b < n < 2b$, then $(a, b) \cap (n - b, n - a) = (n - b, b)$, so
+\begin{align*}
+    \frac{1}{b - a}\int_{a}^{b}\!f_X(n - y)\,\mathrm{d}y & = \frac{1}{b - a}\int_{n - b}^{b}\!\frac{1}{b - a}\,\mathrm{d}y \\
+    & = \frac{2b - n}{(b - a)^2}.
+\end{align*}
+Therefore,
+\begin{equation*}
+    f_{X + Y}(n) = \begin{cases}
+        \frac{n - 2a}{(b - a)^2} & \quad\textrm{if } 2a < n \leq a + b \\
+        \frac{2b - n}{(b - a)^2} & \quad\textrm{if } a + b < n < 2b \\
+        0 & \quad\textrm{otherwise}
+    \end{cases}.
+\end{equation*}
+This is known as a \textit{triangular distribution}.
+
+Let $X$ and $Y$ be independent gamma random variables with parameters $(\alpha, \lambda)$ and $(\beta, \lambda)$. One may check with some computation that
+\begin{align*}
+    f_{X + Y}(n) & = \frac{B(\alpha, \beta)}{\Gamma(\alpha)\Gamma(\beta)}\lambda\e^{-\lambda n}(\lambda n)^{\alpha + \beta - 1} \\
+    & = \frac{1}{\Gamma(\alpha + \beta)}\lambda\e^{-\lambda n}(\lambda n)^{\alpha + \beta - 1}.
+\end{align*}
+Therefore, $X + Y$ is a gamma random variable with parameters $(\alpha + \beta, \lambda)$.
+
+Lastly, we shall state the following result without proof:
+\begin{probox}{Sum of Normal Random Variables Is Normal}{sumOfNormal}
+    Let $X \sim N\left(\mu_X, \sigma_X^2\right)$ and $Y \sim N\left(\mu_Y, \sigma_Y^2\right)$, then 
+    \begin{equation*}
+        X + Y \sim N\left(\mu_X + \mu_Y, \sigma_X^2 + \sigma_Y^2\right).
+    \end{equation*}
+\end{probox}
+
+So far we have been discussing the sum of finitely many random variables. It turns out that in the infinite case, the following applies:
+\begin{thmbox}{Expectation of Infinite Sum of Random Variables}{expInfSum}
+    Let $X_1, X_2, \cdots$ be infinitely many random variables, if 
+    \begin{itemize}
+        \item $X_i \geq 0$ for all $i \in \N^+$, or
+        \item the series $\sum_{i = 1}^{\infty}\mathbb{E}\left[\abs{X_i}\right]$ converges,
+    \end{itemize}
+    then 
+    \begin{equation*}
+        \mathbb{E}\left[\sum_{i = 1}^{\infty}X_i\right] = \sum_{i = 1}^{\infty}\mathbb{E}[X_i].
+    \end{equation*}
+\end{thmbox}
+\section{Conditional Distribution}
+Recall that previously, we have defined the conditional probability
+\begin{equation*}
+    P(E \mid F) = \frac{P(EF)}{P(F)}.
+\end{equation*}
+Let $X$ and $Y$ be discrete random variables, we can similarly see that
+\begin{align*}
+    P(X = x \mid Y = y) & = \frac{P(X = x, Y = y)}{P(Y = y)} \\
+    & = \frac{p_{X, Y}(x, y)}{p_Y(y)}.
+\end{align*}
+\begin{dfnbox}{Conditional Probability Mass Function}{condPMF}
+    Let $X$ and $Y$ be discrete random variables with probability mass functions $p_X$ and $p_Y$ respectively, the {\color{red} \textbf{conditional probability mass function}} of $X$ given $Y = y$ is defined as
+    \begin{equation*}
+        p_{X \mid Y}(x \mid y) = \frac{p_{X, Y}(x, y)}{p_Y(y)}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, we have
+        \begin{equation*}
+            P(X = x \mid X \in A) = \begin{cases}
+                \frac{P(X = x)}{P(X \in A)}, & \quad\textrm{if } x \in A \\
+                0, & \quad\textrm{otherwise}
+            \end{cases}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+We can similar define for the continuous case:
+\begin{dfnbox}{Conditional Probability Density Function}{condPDF}
+    Let $X$ and $Y$ be jointly continuous random variables with probability density functions $f_X$ and $f_Y$ respectively, the {\color{red} \textbf{conditional probability density function}} of $X$ given~$Y = y$ is defined as
+    \begin{equation*}
+        f_{X \mid Y}(x \mid y) = \frac{f_{X, Y}(x, y)}{f_Y(y)}.
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, we have
+        \begin{equation*}
+            f_{X \mid X \in A}(x) = \frac{f_X(x)}{\int_A\!f_X(x)\,\mathrm{d}x}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+Now, we can compute the conditional probability for jointly distributed continuous random variables with
+\begin{equation*}
+    P(X \in A \mid Y = y) = \int_{A}\!f_{X \mid Y}(x \mid y)\,\mathrm{d}x.
+\end{equation*}
+In particular, we could define the \textit{conditional cumulative distribution function} as
+\begin{align*}
+    F_{X \mid Y}(x \mid y) & = P(X \leq x \mid Y = y) \\
+    & = \int_{-\infty}^x\!f_{X \mid Y}(x \mid y)\,\mathrm{d}x
+\end{align*}
+What if $X$ is continuous but $Y$ is discrete? In this case, we have
+\begin{align*}
+    f_{X \mid Y}(x \mid y) = \frac{P(Y = y \mid X = x)}{P(Y = y)}f_X(x).
+\end{align*}
+\section{Generating Functions}
+Capturing the distribution of a random variable could be difficult as the probabilities might be quite irregular. Luckily, a type of tools known as generating functions provide a succinct way to describe such information.
+\begin{dfnbox}{Probability Generating Function}{pgf}
+    Let $X$ be an $\N$-valued discrete random variable, then its {\color{red} \textbf{probability generating function}} is a map $\phi_X \colon T \to \R$ defined as 
+    \begin{equation*}
+        \phi_X\left(t\right) \coloneqq \mathbb{E}\left[t^X\right] = \sum_{k \in \N}P\left(X = k\right)t^k,
+    \end{equation*}
+    where $T \subseteq \R$ is the set of all values of $t$ such that the sum converges.
+\end{dfnbox}
+Notice that
+\begin{equation*}
+    \phi_X^{(n)}\left(t\right) = \sum_{k = n}^{\infty}k!P\left(X = k\right)t^{k - n},
+\end{equation*}
+so it is clear that 
+\begin{equation*}
+    P\left(X = x\right) = \frac{\phi_X^{(x)}\left(0\right)}{x!},
+\end{equation*}
+hence the name ``probability generating function''. Moreover, we have $\phi_X\left(0\right) = P\left(X = 0\right)$ and $\phi\left(1\right) = 1$. Using the properties of expectation, it is easy to prove the following result:
+\begin{probox}{\small Probability Generating Function of Sum of Random Variables}{pgfsum}
+    If $X$ and $Y$ are independent $\N$-valued discrete random variables, then $\phi_{X + Y} = \phi_X\phi_Y$.
+\end{probox}
+Consider $n$ events $A_1, A_2, \cdots, A_n$. Define
+\begin{equation*}
+    X_i = \begin{cases}
+        1, & \quad\textrm{if } A_i \textrm{ occurs} \\
+        0, & \quad\textrm{otherwise}
+    \end{cases},
+\end{equation*}
+then $X = \sum_{i = 1}^{n}X_i$ is the number of events which have occurred. Observe that 
+\begin{equation*}
+    \mathbb{E}[X] = \sum_{i = 1}^{n}P(A_i).
+\end{equation*}
+Define the event
+\begin{equation*}
+    E_{m, k} = \bigcap_{i = 1}^{k}A_{m_i}
+\end{equation*}
+where $1 \leq m_i \leq n$ for any $i = 1, 2, \cdots, k$, then the number of such $E_{m, k}$'s which have occurred is given by $\left(\begin{smallmatrix}
+    X \\
+    k
+\end{smallmatrix}\right)$. Note that the event $\bigcap_{i = 1}^{k}A_{m_i}$ occurs if and only if $\prod_{i = 1}^{k}X_{m_i} = 1$, so
+\begin{equation*}
+    \begin{pmatrix}
+        X \\
+        k
+    \end{pmatrix} = \sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right).
+\end{equation*}
+Therefore, 
+\begin{align*}
+    \mathbb{E}\left[\begin{pmatrix}
+        X \\
+        k
+    \end{pmatrix}\right] & = \mathbb{E}\left[\sum_{m_1 < m_2 < \cdots < m_k}\left(\prod_{i = 1}^{k}X_{m_i}\right)\right] \\
+    & = \sum_{m_1 < m_2 < \cdots < m_k}P\left(E_{m, k}\right).
+\end{align*}
+Notice that $\mathbb{E}\left[\left(\begin{smallmatrix}
+    X \\
+    k
+\end{smallmatrix}\right)\right]$ is a linear combination of the first $k$-th moments of $X$. We would like to find a way to quickly compute the $n$-th moment of a random variable. Let $X$ be a discrete random variable, then 
+\begin{equation*}
+    \mathbb{E}\left[X^n\right] = \sum_{x}x^np_X(x).
+\end{equation*}
+Note that by Maclaurin Series, we have
+\begin{equation*}
+    g(t) = \sum_{n = 0}^{\infty}\frac{g^{(n)(0)}}{n!}t^n
+\end{equation*}
+for any function $g$. A motivation is to construct $g$ such that $g^{(n)}(0) = \mathbb{E}\left[X^n\right]$. Therefore,
+\begin{align*}
+    g(t) & = \sum_{n = 0}^{\infty}\frac{\mathbb{E}\left[X^n\right]}{n!}t^n \\
+    & = \sum_{n = 0}^{\infty}\frac{\sum_{x}x^np_X(x)}{n!}t^n \\
+    & = \sum_{x}\left(p_X(x)\sum_{n = 0}^{\infty}\frac{(tx)^n}{n!}\right) \\
+    & = \sum_{x}\e^{tx}p_X(x) \\
+    & = \mathbb{E}\left[\e^{tX}\right].
+\end{align*}
+\begin{dfnbox}{Moment Generating Function}{mgf}
+    Let $X$ be an $\N$-valued random variable, then its {\color{red} \textbf{moment generating function}} is a map $M_X \colon T \to \R$ defined as 
+    \begin{equation*}
+        M_X\left(t\right) = \mathbb{E}\left[\e^{tX}\right] = \sum_{k \in \N}P\left(X = k\right)\e^{tk},
+    \end{equation*}
+    where $T \subseteq \R$ is the set of all values of $t$ such that the sum converges.
+\end{dfnbox}
+By observation, we see that 
+\begin{equation*}
+    M_X^{(n)}\left(0\right) = \sum_{k \in \N}k^nP\left(X = k\right)
+\end{equation*}
+yields the $n$-th moment of $X$. However, notice that $M_X\left(t\right) = \phi_X\left(e^t\right)$, so actually 
+\begin{equation*}
+    \mathbb{E}\left[X^n\right] = \left.\frac{\d^n\phi\left(\e^t\right)}{\d t^n}\right\rvert_{t = 0}.
+\end{equation*}
+Next, we state a result without proof on the use of generating functions to study the convergence of distributions.
+\begin{probox}{Convergence of Generating Functions}{gfConverge}
+    Let $\left\{X_i\right\}_{i \in \N}$ be a family of $\N$-valued random variables such that $\phi_i$ is the probability generating function for $X_i$ and $X$ be an $\N$-valued random variable with probability generating function $\phi$. If there exists some $a \in \R$ such that $\left\{\phi_i\right\}_{i \in \N}$ converges to $\phi$ point-wisely, then 
+    \begin{equation*}
+        \lim_{n \to \infty}P\left(X_n = k\right) = P\left(X = k\right)
+    \end{equation*}
+    for all $k \in \N$.
+\end{probox}
+It can be proven that for any random variable $X$, $M_X$ is unique. In other words, if two random variables have the same moment generating function, they must be the same random variable.
+\begin{thmbox}{Uniqueness of Moment Generating Function}{uniqueMomentGenFunc}
+    Let $X$ and $Y$ be random variables. If
+    \begin{equation*}
+        \lim_{t \to 0}M_X(t) = \lim_{t \to 0}M_Y(t),
+    \end{equation*}
+    then $X$ and $Y$ have the same distribution.
+\end{thmbox}
+By properties of exponential functions, the following theorem can also be easily proven:
+\begin{probox}{\small Moments of Sum of Independent Random Variables}{momentSumIndRV}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables, then 
+    \begin{equation*}
+        M_{\sum_{i = 1}^{n}X_i}(t) = \prod_{i = 1}^{n}M_{X_i}(t).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+However, note that the converse of Proposition \ref{pro:momentSumIndRV} is not true in general.
+\begin{dfnbox}{Joint Moment Generating Function}{jointMomentGenFunc}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{joint moment generating function}} of $X$ and~$Y$ is defined as
+    \begin{equation*}
+        M_{X, Y}(s, t) = \mathbb{E}\left[\e^{sX + tY}\right].
+    \end{equation*}
+\end{dfnbox}
+Observe that in the joint case, $M_X(s) = M_{X, Y}(s, 0)$ and $M_Y(t) = M_{X, Y}(0, t)$. $X$ and $Y$ are independent if and only if $M_{X, Y}(s, t) = M_X(s)M_Y(t)$.
+Note that in reality, many random variables are not integer-valued. Therefore, we should extend the notion of generating functions to the general case.
+\begin{dfnbox}{Laplace Transform of Random Variables}{laplace}
+    Let $X$ be a non-negative random variable. The {\color{red} \textbf{Laplace transform}} of $X$ is defined as a map $\Lambda \colon \R^+_0 \to \R$ such that $\Lambda\left(\lambda\right) \coloneqq \mathbb{E}\left[\e^{-\lambda X}\right]$.  
+\end{dfnbox}
+One may check that the properties of a Laplace transform is analogous to those of generating functions:
+\begin{enumerate}
+    \item $\Lambda_X\left(\lambda\right) \in \left[0, 1\right]$ for all $\lambda \geq 0$;
+    \item $\Lambda_X\left(0\right) = 1$ and $\Lambda_X$ is decreasing in $\lambda$;
+    \item $\Lambda^{(n)}_X\left(0\right) = \left(-1\right)^n\mathbb{E}\left[X^n\right]$, so $\Lambda_X$ determines the moments;
+    \item if $\left\{\Lambda_n\right\}_{n \in \N}$ is a family of Laplace transforms for random variables $\left\{X_n\right\}_{n \in \N}$ respectively, then $\left\{\Lambda_n\right\}_{n \in \N}$ converging to $\Lambda$, the Laplace transform of a random variable $X$, point-wisely on $\left[0, a\right]$ for some $a \in \R$ implies that $\left\{p_{X_n}\right\}_{n \in \N}$ converges point-wisely to $p_X$ on $\R^+_0$.
+\end{enumerate}
+Note that we choose $\lambda \geq 0$ which will ensure that $\mathbb{E}\left[\e^{-\lambda X}\right]$ is finite if $X$ is non-negative. However, for general random variables which can take negative values, we need to use a different construction.
+\begin{dfnbox}{Fourier Transform of Random Variables}{fourier}
+    Let $X$ be a real-valued random variable. The {\color{red} \textbf{Fourier transform}} of $X$ is defined as a map $\varphi_X \colon \R \to \R$ such that $\varphi_X\left(t\right) \coloneqq \mathbb{E}\left[\e^{\im tX}\right]$.
+\end{dfnbox}
+One may check that the properties of a Fourier transform is analogous to those of Laplace transforms:
+\begin{enumerate}
+    \item $\abs{\varphi_X\left(t\right)} \in \left[0, 1\right]$ for all $t \in \R$;
+    \item $\varphi_X\left(0\right) = 1$;
+    \item $\varphi^{(n)}_X\left(0\right) = \im^n\mathbb{E}\left[X^n\right]$, so $\varphi_X$ determines the moments;
+    \item if $\left\{\varphi_n\right\}_{n \in \N}$ is a family of Laplace transforms for random variables $\left\{X_n\right\}_{n \in \N}$ respectively, then $\left\{\varphi_n\right\}_{n \in \N}$ converging to $\varphi$, the Fourier transform of a random variable $X$, point-wisely on $\left[-a, a\right]$ for some $a > 0$ implies that $\left\{p_{X_n}\right\}_{n \in \N}$ converges point-wisely to $p_X$ on $\R$.
+\end{enumerate}
+
+\chapter{Methodologies for Data Analysis}
+\section{Sampling}
+Note that the expectation and variance are crucial to understand the behaviour of a random variable. However, in the real world, the data based on which we can observe a random variable is always finite. Therefore, it becomes a curious problem as to how we can make some judgement about the behaviour of the random variable based on limited data as accurately as possible.
+
+First, let us define quantitatively what we mean by an ``accurate'' judgement.
+\begin{dfnbox}{Unbiased Estimator}{unbiasedEstimator}
+    Let $x$ be an unknown quantity to be estimated and $X$ be a random variable representing the observed values obtained for $x$. We say that $X$ is an {\color{red} \textbf{unbiased estimator}} of $x$ if $\mathbb{E}\left[X\right] = x$.
+\end{dfnbox}
+When it comes to estimating the mean of a random variable, a common practice is to take a large number of samples and compute the average value over the samples.
+\begin{dfnbox}{Sample Mean}{mean}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables. The {\color{red} \textbf{sample mean}} is defined as
+    \begin{equation*}
+        \overline{X} = \frac{1}{n}\sum_{i = 1}^{n}X_i.
+    \end{equation*}
+\end{dfnbox}
+Clearly, if $X_i = \mu$ for all $i = 1, 2, \cdots, n$,
+\begin{equation*}
+    \mathbb{E}\left[\overline{X}\right] = \frac{1}{n}\sum_{i = 1}^{n}\mathbb{E}[X_i] = \mu.
+\end{equation*}
+This means that given a random sample, its sample mean is an \textit{unbiased estimate} of its expectation, so our conventional data collection method does have a theoretical back-up.
+
+Next, let us try to estimate the variance of a random variable. An immediate idea is to take each data point from our samples and compute its distance away from the sample mean.
+\begin{dfnbox}{Deviation}{deviation}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{deviation}} is defined as
+    \begin{equation*}
+        X_i - \overline{X} = X_i - \frac{1}{n}\sum_{i = 1}^{n}X_i.
+    \end{equation*}
+\end{dfnbox}
+Similar to the sample mean, we would wish the deviation gives an unbiased estimate for the variance. However, 
+\begin{equation*}
+    \mathbb{E}\left[X_i - \overline{X}\right] = \frac{n - 1}{n}\sigma^2.
+\end{equation*}
+Therefore, we need to eliminate the bias from the deviation.
+\begin{dfnbox}{Sample Variance}{sampleVar}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with mean $\mu$ and variance $\sigma^2$. The {\color{red} \textbf{sample variance}} is defined as
+    \begin{equation*}
+        S^2 = \sum_{i = 1}^{n}\frac{X_i - \overline{X}}{n - 1}.
+    \end{equation*}
+\end{dfnbox}
+One may check via some direct computation that the sample variance gives an unbiased estimate for the variance.
+\section{Correlation}
+We our data set involves multiple random variables, we wish to examine the relationship between them. Suppose that $X$ and $Y$ are independent random variables. We know that
+\begin{equation*}
+    \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y].
+\end{equation*}
+This motivates us to consider the quantity $\mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$ in the general case to determine ``how dependent'' two random variables are.
+\begin{dfnbox}{Covariance}{covar}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{covariance}} of $X$ and $Y$ is defined as
+    \begin{equation*}
+        \mathrm{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y].
+    \end{equation*}
+\end{dfnbox}
+\begin{notebox}
+    \begin{remark}
+        We have seen that if $X$ and $Y$ are independent, then $\mathrm{Cov}(X, Y) = 0$. But the converse is not true in general!
+    \end{remark}
+\end{notebox}
+Note that covariance has the following properties:
+\begin{enumerate}
+    \item $\mathrm{Cov}(X, X) = \mathrm{Var}(X)$.
+    \item $\mathrm{Cov}(X, Y) = \mathrm{Cov}(Y, X)$.
+    \item $\mathrm{Cov}(aX, Y) = a\mathrm{Cov}(X, Y)$.
+    \item $\mathrm{Cov}(X_1 + X_2, Y) = \mathrm{Cov}(X_1, Y) + \mathrm{Cov}(X_2, Y)$.
+\end{enumerate}
+\begin{notebox}
+    \begin{remark}
+        Let $V$ be the set of all random variables, then $\mathrm{Cov}(\cdot, \cdot) \colon V \times V \to \R$ is an inner product over $V$.
+    \end{remark}
+\end{notebox}
+Let $X$ and $Y$ be random variables, then by the above properties, we have
+\begin{align*}
+    \mathrm{Var}(X + Y) & = \mathrm{Cov}(X + Y, X + Y) \\
+    & = \mathrm{Cov}(X, X + Y) + \mathrm{Cov}(Y, X + Y) \\
+    & = \mathrm{Cov}(X + Y, X) + \mathrm{Cov}(X + Y, Y) \\
+    & = \mathrm{Cov}(X, X) + \mathrm{Cov}(Y, X) + \mathrm{Cov}(X, Y) + \mathrm{Cov}(Y, Y) \\
+    & = \mathrm{Var}(X) + \mathrm{Var}(Y) + 2\mathrm{Cov}(X, Y).
+\end{align*}
+In general, we have the following formula:
+\begin{probox}{Identity of Variances}{varId}
+    Let $X_1, X_2, \cdots, X_n$ be random variables, then
+    \begin{equation*}
+        \mathrm{Var}\left(\sum_{i = 1}^{n}X_i\right) = \sum_{i = 1}^{n}\mathrm{Var}(X_i) + 2\sum_{i < j}\mathrm{Cov}(X_i, X_j).
+    \end{equation*}
+    In particular, if all of the $X_i$'s are independent, then
+    \begin{equation*}
+        \mathrm{Var}\left(\sum_{i = 1}^{n}X_i\right) = \sum_{i = 1}^{n}\mathrm{Var}(X_i).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Intuitively, we view covariance $\mathrm{Cov}(X, Y)$ as a measure of the degree of spread of the joint distribution of $X$ and $Y$. Naturally, we can make use of it to measure how related are $X$ and~$Y$.
+\begin{dfnbox}{Correlation}{correlation}
+    Let $X$ and $Y$ be random variables with positive variances. The {\color{red} \textbf{correlation}} of $X$ and~$Y$ is defined as
+    \begin{equation*}
+        \rho(X, Y) = \frac{\mathrm{Cov}(X, Y)}{\sqrt{\mathrm{Var}(X)\mathrm{Var}(Y)}}.
+    \end{equation*}
+    In particular, $X$ and $Y$ are said to be {\color{red} \textbf{uncorrelated}} if $\rho(X, Y) = 0$.
+\end{dfnbox}
+It is easy to see that for $c > 0$, $\rho(\pm cX, Y) = \pm\rho(X, Y)$. Suppose $X$ and $Y$ have variances $\sigma_X^2$ and $\sigma_Y^2$ respectively, we have
+\begin{equation*}
+    \rho(X, Y) = \rho\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right) = \mathrm{Cov}\left(\frac{X}{\sigma_X}, \frac{Y}{\sigma_Y}\right).
+\end{equation*}
+The above property leads to the following result:
+\begin{probox}{Boundedness of Correlation}{boundedCorrelation}
+    Let $X$ and $Y$ be random variables, then 
+    \begin{equation*}
+        -1 \leq \rho(X, Y) \leq 1.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{probox}
+Note that $\mathrm{Var}(X) = 0$ if and only if $X$ is a constant, i.e., $P(X = c) = 1$ and $P(X = x) = 0$ for all $x \neq c$. Therefore, $\rho(X, Y) = \pm 1$ if and only if $Y = \pm aX + b$ for some constants $a$, $b$ with~$a > 0$.
+\section{Prediction}
+Often, we wish to predict future behaviour of a random variable. To achieve that, we first study the notions of \textit{condition expectation and variance}. 
+\begin{dfnbox}{Conditional Expectation}{condExp}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{conditional expectation}} of $X$ given $Y = y$ is defined as
+    \begin{equation*}
+        \mathbb{E}\left[X \mid Y = y\right] = \sum_{x}xp_{X \mid Y}(x \mid y)
+    \end{equation*}
+    if $X$ and $Y$ are discrete, and
+    \begin{equation*}
+        \mathbb{E}\left[X \mid Y = y\right] = \int_{-\infty}^{\infty}\!\frac{f_{X, Y}(x, y)}{f_Y(y)}\,\mathrm{d}x
+    \end{equation*}
+    if $X$ and $Y$ are jointly continuous.
+\end{dfnbox}
+All properties of expectation are still satisfied by conditional expectation. In particular, notice that $\mathbb{E}\left[X \mid Y\right]$ is a function in $Y$, so it is a random variable by itself. Let $Z = \mathbb{E}[X \mid Y]$, what is the expectation of $Z$?
+\begin{thmbox}{Law of Total Expectation}{lawExpect}
+    Let $X$ and $Y$ are random variables, then
+    \begin{equation*}
+        \mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr] = \mathbb{E}[X].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        We will only prove the discrete case. Let $f\left(Y\right) = \mathbb{E}\left[X \mid Y\right]$, then by Proposition \ref{pro:funcExp}, we have 
+        \begin{align*}
+            \mathbb{E}\bigl[\mathbb{E}\left[X \mid Y\right]\bigr] & = \mathbb{E}\left[f\left(Y\right)\right] \\
+            & = \sum_{y \in \mathrm{ran}\left(Y\right)}f\left(y\right)P\left(Y = y\right) \\
+            & = \sum_{y \in \mathrm{ran}\left(Y\right)}\mathbb{E}\left[X \mid Y = y\right]P\left(Y = y\right) \\
+            & = \sum_{y \in \mathrm{ran}\left(Y\right)}\sum_{x \in \mathrm{ran}\left(X\right)}xP\left(X = x \mid Y = y\right)P\left(Y = y\right) \\
+            & = \sum_{x \in \mathrm{ran}\left(X\right)}x\sum_{y \in \mathrm{ran}\left(Y\right)}P\left(X = x \mid Y = y\right)P\left(Y = y\right) \\
+            & = \sum_{x \in \mathrm{ran}\left(X\right)}xP\left(X = x\right) \\
+            & = \mathbb{E}\left[X\right].
+        \end{align*}
+        The continuous case is similar.
+    \end{proof}
+\end{thmbox}
+Similarly, we can define \textit{conditional variance}.
+\begin{dfnbox}{Conditional Variance}{condVar}
+    Let $X$ and $Y$ be random variables. The {\color{red} \textbf{condtional variance}} of $X$ given $Y$ is defined as
+    \begin{equation*}
+        \mathrm{Var}(X \mid Y) = \mathbb{E}\bigl[(X - \mathbb{E}[X \mid Y])^2 \mid Y\bigr].
+    \end{equation*}
+\end{dfnbox}
+Notice that $\mathrm{Var}(X \mid Y)$ is also a random variable as it is a function of $Y$. Since 
+\begin{equation*}
+    \mathrm{Var}(X \mid Y) = \mathbb{E}\left[X^2 \mid Y\right] - \bigl(\mathbb{E}[X \mid Y]\bigr)^2,
+\end{equation*}
+we have
+\begin{align*}
+    \mathbb{E}\left[\mathrm{Var}(X \mid Y)\right] & = \mathbb{E}\Bigl[\mathbb{E}\left[X^2 \mid Y\right]\Bigr] - \mathbb{E}\left[\bigl(\mathbb{E}[X \mid Y]\bigr)^2\right] \\
+    & = \mathbb{E}\left[X^2\right] - \mathbb{E}\left[\bigl(\mathbb{E}[X \mid Y]\bigr)^2\right], \\
+    \mathrm{Var}\bigl(\mathrm{Var}(X \mid Y)\bigr) & = \mathbb{E}\left[(\mathbb{E}[X \mid Y])^2\right] - \left(\mathbb{E}\bigl[\mathbb{E}[X \mid Y]\bigr]\right)^2.
+\end{align*}
+With some manipulations we can prove the following proposition:
+\begin{thmbox}{Law of Total Variance}{lawVar}
+    Let $X$ and $Y$ be random variables, then
+    \begin{equation*}
+        \mathrm{Var}(X) = \mathbb{E}[\mathrm{Var}(X \mid Y)] + \mathrm{Var}(\mathbb{E}[X \mid Y]).
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{thmbox}
+In many situations, we seek to \textbf{predict} the outcome of an event. Specifically, given $X = x$, we wish to find a function $g \colon \mathrm{Range}(X) \to \mathrm{Range}(Y)$ such that $g(x) = \yhwidehat{y}$ is the prediction for $Y$. In an ideal case, we would want $g(X)$ to be the \textbf{closest} to $Y$. In other words, we would minimise $g(X) - Y$. To eliminate the inconvenience of a negative difference, we would choose a $g$ such that $\mathbb{E}\left[\bigl(Y - g(X)\bigr)^2\right]$ is minimised.
+
+Let us consider a simpler case. When $g(x) = c$, to minimise $\mathbb{E}\left[(Y - c)^2\right]$, consider
+\begin{align*}
+    \mathbb{E}\left[(Y - c)^2\right] & = c^2 - 2c\mathbb{E}[Y] + \mathbb{E}\left[Y^2\right] \\
+    & = \left(c - \mathbb{E}[Y]\right)^2 + \mathrm{Var}(Y).
+\end{align*}
+Therefore, we need $c = \mathbb{E}[Y]$. Since $c = g(x)$, this implies that $g(x) = \mathbb{E}[Y \mid X = x]$. This is summarised into the following theorem:
+\begin{thmbox}{Best Predictor}{bestPredict}
+    Let $X$ and $Y$ be random variables. Given $X$, the best predictor of $Y$ is the function 
+    \begin{equation*}
+        g(X) = \mathbb{E}[Y \mid X].
+    \end{equation*}
+\end{thmbox}
+Essentially, this implies that for all function $f$ of $X$, 
+\begin{equation*}
+    \mathbb{E}\left[\bigl(Y - f(X)\bigr)^2\right] \geq \mathbb{E}\left[\bigl(Y - \mathbb{E}[Y \mid X]\bigr)^2\right].
+\end{equation*}
+However, in some cases we do not know the exact joint distribution of $X$ and $Y$ and so we cannot find $\mathbb{E}[Y \mid X]$. Therefore, we may attempt to predict $Y$ with a linear function of $X$ which can be easily formulated. Hence, we will need to find constants $a$ and $b$ such that~$\mathbb{E}\left[(Y - a - bX)^2\right]$ is minimised.
+\begin{thmbox}{Best Linear Predictor}{bestLinPredict}
+    Let $X$ and $Y$ be random variables with means $\mu_X$ and $\mu_Y$, and variances $\sigma_X^2$ and $\sigma_Y^2$ respectively. Given $X$, the best linear predictor of $Y$ is
+    \begin{equation*}
+        g(X) = \mathbb{E}\left[\left(Y - \mu_Y - \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X)\right)\right].
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Let $a + bX$ be the best linear predictor for $Y$. Define
+        \begin{equation*}
+            X' = \frac{X - \mu_X}{\sigma_X}, \qquad Y' = \frac{Y - \mu_Y}{\sigma_Y}.
+        \end{equation*}
+        Then, $\mathbb{E}\left[X'\right] = \mathbb{E}\left[Y'\right] = 0$ and $\mathrm{Var}(X') = \mathrm{Var}(Y') = 1$. Note that
+        \begin{equation*}
+            Y - a - bX = \sigma_Y\left(Y' - \frac{a + b\mu_X - \mu_Y}{\sigma_Y} - \frac{b\sigma_X}{\sigma_Y}X'\right).    
+        \end{equation*}
+        Therefore, setting $\frac{a + b\mu_X - \mu_Y}{\sigma_Y} = a'$ and $\frac{b\sigma_X}{\sigma_Y} = b'$, we have 
+        \begin{align*}
+            \mathbb{E}\left[(Y - a - bX)^2\right] & = \sigma_Y^2\mathbb{E}\left[\left(Y' - a' - b'X'\right)^2\right] \\
+            & = \sigma_Y^2\mathbb{E}\left[Y'^2 + a'^2 + b'^2X'^2 - 2a'Y' + 2a'b'X' - 2b'X'Y'\right] \\
+            & = \sigma_Y^2\left(1 + a'^2 + b'^2 - 2b'\rho(X, Y)\right) \\
+            & = \sigma_Y^2\left(a'^2 + \bigl(b' - \rho(X, Y)\bigr)^2 + 1 - \rho(X, Y)^2\right).
+        \end{align*}
+        Therefore, we need $a' = 0$ and $b' = \rho(X, Y)$, i.e.,
+        \begin{align*}
+            a = \mu_Y - b\mu_X, \qquad b = \rho(X, Y)\frac{\sigma_Y}{\sigma_X}.
+        \end{align*}
+        Therefore, 
+        \begin{align*}
+            a + bX & = \mu_Y - b\mu_X + bX \\
+            & = \mu_Y + b(X - \mu_X) \\
+            & = \mu_Y + \rho(X, Y)\frac{\sigma_Y}{\sigma_X}(X - \mu_X).
+        \end{align*}
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        In particular, the minimum of $\mathbb{E}\left[(Y - a - bX)^2\right]$ is $\sigma_Y^2\left(1 - \rho(X, Y)^2\right)$.
+    \end{remark}
+\end{notebox}
+\chapter{Limit Theorems}
+\section{Bounding Probabilities}
+Let $X$ be a non-negative random variable and $a > 0$. Define $I$ to be the indicator of $X$, i.e.,
+\begin{equation*}
+    I = \begin{cases}
+        0 & \textrm{if } X < a \\
+        1 & \textrm{if } X \geq a
+    \end{cases}.
+\end{equation*}
+Observe that if $X \geq a$, $aI = a \leq X$ and if $X < a$, $aI = 0 \leq X$. Therefore, $X \geq aI$ for all $a$ and so $\mathbb{E}[X] \geq a\mathbb{E}[I] = aP(X \geq a)$.
+
+This is generalised to the following result, which gives a way to approximate probabilities by the expectation of a random variable:
+\begin{thmbox}{Markov's Inequality}{MarkovIneq}
+    If $X$ is a non-negative random variable, then $P\left(X \geq a\right) \leq \frac{\mathbb{E}\left[X\right]}{a}$ for all $a > 0$.
+    \tcblower
+    \begin{proof}
+        It suffices to prove for the continuous case. Notice that 
+        \begin{align*}
+            \mathbb{E}\left[X\right] & = \int_{0}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq \int_{a}^{\infty}\!xf_X\left(x\right)\,\d x \\
+            & \geq a\int_{0}^{\infty}\!f_X\left(x\right)\,\d x \\
+            & = P\left(X \geq a\right).
+        \end{align*}
+        Therefore, $P\left(X \geq a\right) \leq \frac{\mathbb{E}\left[X\right]}{a}$.
+    \end{proof}
+\end{thmbox}
+Note that the bound given by Markov's inequality is a rather loose bound and we can generalise this result. Suppose $X$ is a random variable with mean $\mu$ and variance~$\sigma^2$. Recall that $\sigma^2 = \mathbb{E}\bigl[(X - \mu)^2\bigr]$. Set $Y = (X - \mu)^2 \geq 0$. Now we can apply Theorem \ref{thm:MarkovIneq} to~$Y$ and derive the following:
+\begin{thmbox}{Chebyshev's Inequality}{ChebyshevIneq}
+    For any real-valued random variable $X$ with finite variance, 
+    \begin{equation*}
+        P\left(\abs{X - \mathbb{E}\left[X\right]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) \leq \frac{1}{a^2}
+    \end{equation*}
+    for all $a > 0$.
+    \tcblower
+    \begin{proof}
+        Define $g\left(X\right) \coloneqq \left(X - \mathbb{E}\left[X\right]\right)^2$, which is clearly non-negative. By Theorem \ref{thm:MarkovIneq}, we have 
+        \begin{equation*}
+            P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{\mathbb{E}\left[g\left(X\right)\right]}{a^2\mathrm{Var}\left(X\right)}.
+        \end{equation*}
+        Note that $\mathbb{E}\left[g\left(X\right)\right] = \mathrm{Var}\left(X\right)$, so 
+        \begin{equation*}
+            P\left(\abs{X - \mathbb{E}\left[X\right]} > a\sqrt{\mathrm{Var}\left(X\right)}\right) = P\bigl(g\left(X\right) > a^2\mathrm{Var}\left(X\right)\bigr) \leq \frac{1}{a^2}.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+\begin{notebox}
+    \begin{remark}
+        In general, 
+        \begin{equation*}
+            P\left(\abs{X - \mathbb{E}\left[X\right]} > a\right) \leq \frac{\mathrm{Var}\left(X\right)}{a^2}.
+        \end{equation*}
+    \end{remark}
+\end{notebox}
+Using Theorem \ref{thm:ChebyshevIneq}, we can get the following highly intuitive result:
+\begin{corbox}{Zero-Variance Random Variables Are Constant}{zeroVar}
+    If $X$ is a random variable with $\mathrm{Var}(X) = 0$, then $P(X = \mathbb{E}[X]) = 1$.
+    \tcblower
+    \begin{proof}
+        Left as an exercise to the reader.
+    \end{proof}
+\end{corbox}
+\section{Law of Large Numbers}
+Recall that if $X_1, X_2, \cdots, X_n$ are independent random variables with identical distribution, then $\mathbb{E}\left[\overline{X}\right] = \mathbb{E}[X_i]$ and $\mathrm{Var}\left(\overline{X}\right) = \frac{\mathrm{Var}(X_i)}{n}$. Applying the above theorems we will have the following conclusion:
+\begin{thmbox}{Weak Law of Large Numbers}{weakLawLargeNum}
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$. For every $\epsilon > 0$, we have 
+    \begin{equation*}
+        \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
+    \end{equation*}
+    \tcblower
+    \begin{proof}
+        Note that $\mathbb{E}\left[\frac{1}{n}\sum_{i = 1}^nX_i\right] = \mu$ and that 
+        \begin{equation*}
+            \mathrm{Var}\left(\frac{1}{n}\sum_{i = 1}^nX_i\right) = \frac{\sum_{i = 1}^{n}\mathrm{Var}\left(X_i\right)}{n^2} = \frac{\sigma^2}{n}.
+        \end{equation*}
+        By Theorem \ref{thm:ChebyshevIneq}, we have 
+        \begin{equation*}
+            0 \leq \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \frac{\sigma^2}{n\epsilon^2}.
+        \end{equation*}
+        By Squeeze Theorem, this clearly implies that 
+        \begin{equation*}
+            \lim_{n \to \infty}\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) = 0.
+        \end{equation*}
+    \end{proof}
+\end{thmbox}
+Alternatively, we may phrase Theorem \ref{thm:weakLawLargeNum} as ``$\frac{1}{n}\sum_{i = 1}^nX_i$ converges to $\mu$ in probability''. When a sequence $\{S_n\}_{n = 1}^{\infty}$ converges to $b$ in probability, we write $S_n \xrightarrow{\mathrm{p}} b$. 
+\begin{notebox}
+    \begin{remark}
+        Essentially, what Theorem \ref{thm:weakLawLargeNum} says is that when $n$ is large, the sample mean from $n$ measurements of the same data converges to the expectation of the distribution.
+    \end{remark}
+\end{notebox}
+Under some mild conditions, this convergence occurs exponentially fast, i.e., the probability $\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right)$ decreases at least as fast as $\exp\bigl(-ng\left(\epsilon\right)\bigr)$ for some real-valued function $g \colon \R^+ \to \R^+$. In terms of asymptotic analysis, we write this as 
+\begin{equation*}
+    \mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \leq \exp\bigl(-ng\left(\epsilon\right) + o\left(n\right)\bigr).
+\end{equation*}
+Equivalently, this would imply that there exists a function $g \colon \R \to \R$ with $g\left(\epsilon\right) > 0$ for every~$\epsilon > 0$ such that 
+\begin{equation*}
+    \liminf_{n \to \infty}-\frac{1}{n}\log\mathrm{Pr}\left(\abs{\frac{1}{n}\sum_{i = 1}^nX_i - \mu} > \epsilon\right) \geq g\left(\epsilon\right) + o\left(1\right).
+\end{equation*}
+There is a strong version for the law, which shall be stated without proof:
+\begin{thmbox}{Strong Law of Large Numbers}{strongLawLargeNum}
+    Let $X_1, X_2, \cdots, X_n$ be pairwise independent and identically distributed random variables with $\mathbb{E}[X_i] = \mu$ and $\mathrm{Var}\left(X_i\right) = \sigma^2 \in \R$ for every $i \in \N^+$, then 
+    \begin{equation*}
+        \mathrm{Pr}\left(\lim_{n \to \infty}\frac{1}{n}\sum_{i = 1}^{n}X_i = \mu\right) = 1.
+    \end{equation*}
+\end{thmbox}
+Sometimes, Theorem \ref{thm:weakLawLargeNum} is known as simply the ``Law of Large Numbers'' whereas Theorem \ref{thm:strongLawLargeNum} is known as the ``Law of Truly Large Numbers''. By applying Theorem \ref{thm:weakLawLargeNum}, we can prove a classical result known as \textit{Central Limit Theorem}, which will be stated and the interested ones might want to try to prove it on their own.
+\begin{thmbox}{Central Limit Theorem}{CLT}
+    Let $X_1, X_2, \cdots, X_n$ be independent random variables with identical distribution, whose mean is $\mu$ and variance $\sigma^2$, then the distribution of
+    \begin{equation*}
+        \frac{\sum_{i = 0}^{n}X_i - n\mu}{\sigma\sqrt{n}}
+    \end{equation*}
+    converges to the standard normal distribution as $n \to \infty$.
+\end{thmbox}
+\end{document}
