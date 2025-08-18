@@ -1065,4 +1065,45 @@ Intuitively, whether the trigger strategy is worth playing depends on how much v
         i.e., $\delta \geq \frac{1}{4}$.
     \end{proof}
 \end{probox}
+\chapter{Static Bayesian Games}
+\section{Static Games of Incomplete Information}
+Often times, not all players in a game know everything about the game (i.e., some information can be hidden). We first give the formal definition for such games:
+\begin{dfnbox}{Bayesian Game}{bayesianGame}
+    A {\color{red} \textbf{Bayesian game}} or a {\color{red} \textbf{game of incomplete information}} is a game in which at least one player is uncertain about another player's payoff.
+\end{dfnbox}
+We start with the Cournot model under asymmetric information. Suppose that firm $1$'s cost is $c$ but firm $2$'s cost can be $c_H$ with probability $\theta$ and $c_L$ with probability $1 - \theta$, where $c_L < c_H$. In other words, firm $1$ is uncertain about the cost information of firm $2$ but firm $1$'s cost information is public knowledge. Clearly, given $c_L$ and $c_H$, the best strategies of firm $2$ are 
+\begin{align*}
+    q_2^*\left(c_H\right) & = \argmax_{q_2 \geq 0}\left(a - q_1^* - q_2 - c_H\right)q_2, \\
+    q_2^*\left(c_L\right) & = \argmax_{q_2 \geq 0}\left(a - q_1^* - q_2 - c_L\right)q_2,
+\end{align*}
+where $a$ is the reservation price. For firm $1$, the production strategy $q_1^*$ should satisfy
+\begin{equation*}
+    q_1^* = \argmax_{q_1 \geq 0}\theta\bigl(a - q_1 - q_2^*\left(c_H\right) - c_H\bigr)q_1 + \left(1 - \theta\right)\bigl(a - q_1 - q_2^*\left(c_L\right) - c_H\bigr)q_1.
+\end{equation*}
+By direct computation, 
+\begin{equation*}
+    \begin{cases}
+        q_2^*\left(c_H\right) & = \frac{a - q_1^* - c_H}{2} \\
+        q_2^*\left(c_L\right) & = \frac{a - q_1^* - c_L}{2} \\
+        q_1^* & = \frac{\theta\bigl(a - q_1 - q_2^*\left(c_H\right) - c_H\bigr) + \left(1 - \theta\right)\bigl(a - q_1 - q_2^*\left(c_L\right) - c_H\bigr)}{2}
+    \end{cases}.
+\end{equation*}
+Solving this system yields 
+\begin{align*}
+    q_1^* & = \frac{a - 2c + \theta c_H + \left(1 - \theta\right)c_L}{3}, \\
+    q_2^*\left(c_H\right) & = \frac{a - 2 c_H + c}{3} + \frac{1 - \theta}{6}\left(c_H - c_L\right), \\
+    q_2^*\left(c_L\right) & = \frac{a - 2 c_L + c}{3} + \frac{1 - \theta}{6}\left(c_H - c_L\right).
+\end{align*}
+One may check that if the firms have unequal costs $c_1$ and $c_2$, firm $2$ should optimally produce $\frac{a - 2c_2 + c_1}{3}$. It is then easy to check that $q_2^*\left(c_L\right) > q_2^*\left(c_H\right)$ and $\pi_2\bigl(q_1^*, q_2\left(c_L\right)\bigr) > \pi_2\bigl(q_1^*, q_2\left(c_H\right)\bigr)$, i.e., the quantity produced and profit are higher when the cost is lower, which complies with our intuition.
+
+The cost scheme of firm $2$ is formally known as the \textit{type}. In a game of incomplete information, every player knows his own type, but only the conditional probability of the other players' types given his own type.
+\begin{dfnbox}{Normal-Form Static Bayesian Game}{normalBayesian}
+    An $n$-player {\color{red} \textbf{normal-form static Bayesian game}} specifies 
+    \begin{itemize}
+        \item the {\color{red} \textbf{action spaces}} $A_1, A_2, \cdots, A_n$;
+        \item the {\color{red} \textbf{type spaces}} $T_1, T_2, \cdots, T_n$;
+        \item the {\color{red} \textbf{beliefs}} $P_1, P_2, \cdots, P_n$, and 
+        \item the payoff functions $u_1, u_2, \cdots, u_n$ where $u_i \colon \prod_{j = 1}^nA_j \times T_i$.
+    \end{itemize}
+\end{dfnbox}
 \end{document}
