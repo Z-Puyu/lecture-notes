@@ -1,0 +1,160 @@
+\documentclass[8pt]{article}
+\usepackage[a4paper,margin=0.65cm,landscape]{geometry}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+    \begin{multicols*}{2}
+        \begin{itemize}
+            \setlength\itemsep{0.1em}
+            \item $\mathrm{Var}\left(X\right) = E\left[X^2\right] - E\left[X\right]^2$.
+            \item $\mathrm{Cov}\left(X, Y\right) \coloneqq \mu_{XY} - \mu_X\mu_Y = E\bigl[\left(X - \mu_X\right)\left(Y - \mu_Y\right)\bigr]$
+            \item \textbf{Markov}: if $X \geq 0$, then $P\left(X \geq a\right) \leq \frac{E\left[X\right]}{a} \forall a > 0$.
+            \item \textbf{Chebyshev}: if $\sigma^2 < \infty$, $P\bigl(g\left(X\right) > a^2\sigma^2\bigr) \leq \frac{E[g\left(X\right)]}{a^2\sigma^2}$.
+            \item Total probability: if $\left\{B_i \colon i \in I\right\}$ is a partition of the sample space, then
+            \begin{equation*}
+                P\left(A\right) = \sum_{i \in I}P\left(A \mid B_i\right)P\left(B_i\right).
+            \end{equation*}
+            \item Total expectation: $E\left[X\right] = E\bigl[E\left[X \mid Y\right]\bigr]$.
+            \item Total var: $\mathrm{Var}\left(X\right) = E\left[\mathrm{Var}\left(X \mid Y\right)\right] + \mathrm{Var}\left(E\left[X \mid Y\right]\right)$.
+            \item Bayes's Theorem: $P\left(A \mid B\right) = \frac{P\left(B \mid A\right)P\left(A\right)}{P\left(B\right)}$.
+            \item Markov chain: future independent of the past, i.e., $X_{n + 1}$ is at most dependent on $X_n$.
+            \item Transition probability: $p_{ij}^{n, m} = P\left(X_m = j \mid X_n = i\right)$.
+            \item Transition probability matrix: if $\pi_i$ is the distribution of $X_i$, then $\pi_t = \pi_0\prod_{i = 0}^{t - 1}\bm{P}^{i, i + 1}$.
+            \item Stationary Markov chain: TPM is independent of the timestamp $n$.
+            \item \textbf{Stochastic matrix}: non-negative matrix such that row sums are $1$.
+            \item \textbf{Chapman-Kolmogorov}: $\bm{P}^{\left(m\right)} = \bm{P}\bm{P}^{\left(m - 1\right)} = \bm{P}^{\left(m - 1\right)}\bm{P}$. If $X$ is stationary, then for all $m, n \in \mathbb{N}$,
+            \begin{equation*}
+                P^{0, m + n}_{ij} = \sum_{k \in S}P^{0, m}_{ik}P^{0, n}_{kj},
+            \end{equation*}
+            and $P\left(X_n = j \mid X_0 = i\right) = \left(\bm{P}^n\right)_{ij}$.
+            \item if $\mu \coloneqq \begin{bmatrix}
+                f\left(x_1\right) & f\left(x_2\right) & \cdots & f\left(x_s\right)
+            \end{bmatrix}^{\mathrm{T}}$ for some function $f$ on the state space, then 
+            \begin{align*}
+                \left(\bm{P}^n\mu\right)_i & = \sum_{j = 1}^{s}\bm{P}^n_{ij}\mu_j = \sum_{j = 1}^{s}P\left(X_n = x_j \mid X_0 = x_i\right)f\left(x_j\right) = E\left[f\left(X_n\right) \mid X_0 = x_i\right].
+            \end{align*}
+            Suppose $X_0 \sim \lambda$, then clearly 
+            \begin{align*}
+                E\left[f\left(X_n\right)\right] & = \sum_{i = 1}^{s}E\left[f\left(X_n\right) \mid X_0 = x_i\right]\lambda_i = \sum_{i = 1}^{s}\lambda_i\left(\bm{P}^n\mu\right)_i = \lambda\bm{P}^n\mu.
+            \end{align*}
+            \item $\bm{P}\mathbf{1} = \mathbf{1}$ so $1$ is an eigenvalue of $\bm{P}^{\mathrm{T}} \implies \exists$ stationary distr.
+            \item \textbf{Stationary distribution}: $\pi = \pi\bm{P}$.
+            \item If $\lambda$ is an eigenvalue of $\bm{P}$, then $\abs{\lambda} \leq 1$.
+            \item \textbf{Absorbing state}: for all $j \neq i$, we have $P_{ij} = 0$.
+            \item $x \leftrightarrow y \iff \exists m, n \in \mathbb{N}$ such that $P_{xy}^{\left(m\right)}, P_{yx}^{\left(n\right)} > 0$.
+            \item \textbf{Irreducible chain}: only one class.
+            \item \textbf{Return prob.}: $P_{ii}^{\left(n\right)} = P\left(X_n = i \mid X_0 = i\right)$.
+            \item \textbf{1st return prob.}: $f_{ii}^{\left(n\right)} = P\left(X_j \neq i \forall j < n, X_n = i \mid X_0 = i\right)$. $f_{ii}^{\left(0\right)} = 0$, $f_{ii}^{\left(n\right)} \leq P_{ii}^{\left(n\right)}$.
+            \item $P_{ii}^{\left(n\right)} = \sum_{k = 0}^{n}f_{ii}^{\left(k\right)}P_{ii}^{\left(n - k\right)}$.
+            \item $f_{ii} = \sum_{n = 0}^{\infty}f_{ii}^{\left(n\right)}$ is the prob. of returning to $i$ in finite time. $i$ is \textbf{recurrent} if $f_{ii} = 1$ and \textbf{transient} if $f_{ii} < 1$.
+            \item Recurrent: $P\left(\sum_{n = 1}^{\infty}I\left\{X_n = i\right\} = \infty \mid X_0 = i\right) = 1$ so 
+            \begin{equation*}
+                E\left[\sum_{n = 0}^{\infty}I{\left\{X_n = x\right\}} \mid X_0 = x\right] = \sum_{n = 0}^{\infty}\bm{P}^n\left(x, x\right) = \infty,
+            \end{equation*}
+            but $\bm{P}^n\left(x, x\right)$ may converge to $0$.
+            \item Number of revisits to $i$: $N_i \sim \mathrm{Geo}\left(1 - f_{ii}\right)$. $E\left[N_i \mid X_0 = i\right] = \frac{f_{ii}}{1 - f_{ii}}$ and expected number of visits including the initial one is $\frac{1}{1 - f_{ii}}$.
+            \item $i$ is a transient state iff $\sum_{n = 1}^{\infty}P_{ii}^{\left(n\right)}$ is finite.
+            \item If $i$ is transient, then $\lim_{m \to \infty}\sum_{n = m}^{\infty}P_{ii}^{\left(n\right)} = 0$ by monotone convergence theorem.
+            \item Irreducible recurrent: $P\left(\sum_{n = 0}^{\infty}I{\left\{X_n = i\right\}} = \infty\right) = 1$
+            \item Irreducible transient: $P\left(\sum_{n = 0}^{\infty}I{\left\{X_n = i\right\}} < \infty\right) = 1$
+            \item All finite-state irreducible chains are recurrent.
+            \item Reducible chains will enter one of the recurrent classes in the long-run.
+            \item \textbf{Period}: $d\left(i\right) \coloneqq \gcd\left\{n \in \mathbb{N}^+ \colon P_{ii}^{\left(n\right)} > 0\right\}$. $i$ is \textbf{aperiodic} iff $d\left(i\right) = 1$.
+            \item If $i \leftrightarrow j$, then $d\left(i\right) = d\left(j\right)$.
+            \item $\forall i \in S$, $\exists N \in \mathbb{N}$ s.t. $\forall n \geq N$, $P_{ii}^{\left(n \cdot d\left(i\right)\right)} > 0$ and $P_{ji}^{\left(m + n \cdot d\left(i\right)\right)} > 0$ whenever $P_{ji}^{\left(m\right)} > 0$.
+            \item If $\bm{P}$ is the TPM for a finite-state irreducible aperiodic chain, then $\exists N \in \mathbb{N}^+$ such that $\bm{P}^{\left(N\right)}$ has all positive entries (definition for regular chain).
+            \item Irreducible, aperiodic, finite-state $\implies$ regular. Regular $\implies$ irreducible.
+            \item $\bm{P}^{\left(k\right)}$ is regular $\implies \bm{P}^{\left(n\right)}$ is regular $\forall n \geq k$.
+            \item Let $\bm{P}$ be a regular TPM for some regular Markov chain with finite state space, then there is a unique stationary distribution $\pi$ with $\pi_j = \lim_{n \to \infty}P^{\left(n\right)}_{ij}$ for all $i, j$. $\pi_j = P\left(X_n = j\right)$ is the proportion of time where $X_n = j$ in the long-run.
+            \item Local bal.: $\pi_iP_{ij} = \pi_jP_{ji}$ for all $i, j \implies$ global bal..
+            \item \textbf{Stopping time}: $T_A \coloneqq \min\left\{n \in \mathbb{N} \colon X_n \in A\right\}$ is the first time $X$ enters $A$.
+            \item \textbf{Null recurrent}: $\mathbb{E}\left[T_i \mid X_0 = i\right] = \infty$. \textbf{Positive recurrent}: $\mathbb{E}\left[T_i \mid X_0 = i\right] < \infty$.
+            \item \textbf{Ergodic}: irreducible aperiodic positive recurrent.
+            \item Define $m_i \coloneqq \mathbb{E}\left[R_i \mid X_0 = i\right] = \sum_{n = 1}^{\infty}nf^{(n)}_{ii}$ in ergodic chains, then $\lim_{n \to \infty}P_{ij}^{(n)} = \lim_{n \to \infty}P_{jj}^{(n)} = \frac{1}{m_j} = \pi_j$ gives a stationary distribution.
+            \item Null recurrent: $\lim_{n \to \infty}P^{(n)}_{ij} = 0$.
+            \item Irreducible recur.: $\lim_{n \to \infty}\frac{1}{n}\sum_{k = 1}^{n}P^{(k)}_{ij} = \frac{1}{m_j}$. If aperiodic: $\lim_{n \to \infty}P^{(n)}_{ij} = \frac{1}{m_j}$; else $\lim_{n \to \infty}P^{(nd)}_{jj} = \frac{d}{m_j}$.
+            \item If $f\left(x\right) = P\left(T_A < T_B \mid X_0 = x\right)$, then for all $x \notin A \cup B$,
+            \begin{align*}
+                f\left(x\right) & = \sum_{y \in S}P\left(T_A < T_B \mid X_1 = y, X_0 = x\right)P\left(X_1 = y \mid X_0 = x\right) \\
+                & = \sum_{y \in S}P\left(T_A < T_B \mid X_0 = y\right)P\left(X_1 = y \mid X_0 = x\right) \\
+                & = \sum_{y \in S}P_{xy}f\left(y\right).
+            \end{align*}
+            \item \textbf{First-step analysis}:
+            \begin{enumerate}
+                \item Identify quantity of interest $a_i\left(T\right) = h\left(i, X_1, \cdots, X_T \mid X_0 = i\right)$.
+                \item $a_i\left(T\right) = \sum_{k \in S}h\left(\cdot \mid X_1 = k, X_0 = i\right)P\left(X_1 = k \mid X_0 = i\right)$.
+                \item Consider $Y_n = X_{n + 1}$ and establish $h\left(\cdot \mid X_1 = k, X_0 = i\right) = g_i\bigl(a_k\left(T\right)\bigr)$.
+                \item Solve the system.
+            \end{enumerate}
+            \item Gambler's ruin: $X_0 = k$ for $0 < k < N$ with winning probability $p$.
+            \begin{itemize}
+                \item Fair game: $P\left(X_T = 0 \mid X_0 = k\right) = 1 - \frac{k}{N}$ and $E\left[T \mid X_0 = k\right] = k\left(N - k\right)$.
+                \item Otherwise: 
+                \begin{align*}
+                    P\left(X_T = 0 \mid X_0 = k\right) & = 1 - \frac{1 - \left(q / p\right)^k}{1 - \left(q / p\right)^N}, \\
+                    E\left[T \mid X_0 = k\right] & = \frac{1}{p - q}\left[\frac{N\left(1 - \left(q / p\right)^k\right)}{1 - \left(q / p\right)^N} - k\right]
+                \end{align*}
+            \end{itemize}
+            \item Random walk: $\frac{\xi_i + 1}{2} \sim \mathrm{Bernoulli}\left(p\right)$, $\frac{X_n + n}{2} \mid X_0 = 0 \sim \mathrm{Bin}\left(n, p\right)$.
+            \item \textbf{Page rank}: by stationary distr., $\pi_{n + 1} = \lambda\pi_n\bm{P} + (1 - \lambda)\pi_n$ if perturbation is needed.
+            \item Hastings-Metropolis: 
+            \begin{itemize}
+                \item $p$ is target distribution with sample space $S$ and $M$ is the max depth of iterations.
+                \item Fix an irreducible chain with state space $S$ and TPM $\bm{Q}$ which is symmetric. Select some $X_0 \in S$.
+                \item At the $n$-th iteration:
+                \begin{itemize}
+                    \item Generate $Y \sim q$ s.t. $q_j = Q_{X_nj}$ for all $j \in S$ and $U \sim \mathrm{U}\left(0, 1\right)$.
+                    \item Compute $\alpha\left(X_n, Y\right) \coloneqq \min\left\{\frac{p_YQ_{YX_n}}{p_{X_n}Q_{X_nY}}, 1\right\}$.
+                    \item $U < \alpha\left(X_n, Y\right)$ ? $X_{n + 1} = Y$ : $X_{n + 1} = X_n$.
+                \end{itemize}
+                \item Return $Z \coloneqq X_M \sim p$ approximately.
+            \end{itemize}
+            \item $P\left(Z_{n + 1} = j \mid Z_n = i\right) = Q_{ij}\alpha\left(i, j\right) = P_{ij}$
+            \item $P\left(Z_{n + 1} = i \mid Z_n = i\right) = Q_{ii} + \sum_{k \neq i}Q_{ik}\bigl(1 - \alpha_{ik}\bigr) = P_{ii}$
+            \item If $p = c\bm{b}$ where $\bm{b}$ is a kernel function, only need $\frac{b_i}{b_j}$.
+            \item Prob. gen. func. $\phi_X\left(t\right) \coloneqq \mathbb{E}\left[t^X\right] = \sum_{k}P\left(X = k\right)t^k$. $\mathbb{E}\left[X\right] = \phi'\left(1\right)$ and $\mathbb{E}\left[X^2\right] = \phi''\left(1\right) + \phi'(1)$.
+            \item Random sum: $\mathrm{Var}(S) = \mu_N\mathrm{Var}(X) + \sigma^2_N\mathbb{E}[X]$.
+            \item $\phi_X^{(n)}\left(t\right) = \sum_{k = n}^{\infty}k!P\left(X = k\right)t^{k - n}$, so $P\left(X = x\right) = \frac{\phi_X^{(x)}\left(0\right)}{x!}$
+            \item $\phi_{X + Y} = \phi_X\phi_Y$ if independent.
+            \item $\phi_{X_{n + 1} \mid X_n = x}\left(t\right) = \mathbb{E}\left[t^{X_{n + 1}} \,\middle\vert\, X_n = x\right] = \mathbb{E}\left[\prod_{i = 1}^{x}t^{\xi_i}\right] = \prod_{i = 1}^{x}\phi_{\xi_i}\left(t\right)$
+            \item $\phi_{X_n \mid X_0 = k}\left(t\right) = \phi_{X_1 \mid X_0 = k}\bigl(\phi_{\xi}^{n - 1}\left(t\right)\bigr)$, so $\phi_{X_n \mid X_0}\left(t\right) = \phi_{\xi}^{n}\left(t\right)^{X_0}$
+            \item $\mathbb{E}\left[X_n \mid X_0\right] = \mu^nX_0 \quad\textrm{and}\quad \mathrm{Var}\left(X_n \mid X_0\right) = \begin{cases}
+                \frac{1 - \mu^n}{1 - \mu}\left(\mu^{n - 1}\sigma^2\right)X_0 & \quad\textrm{if } \mu \neq 1 \\
+                n\left(\mu^{n - 1}\sigma^2\right)X_0 & \quad\textrm{if } \mu = 1
+            \end{cases}$.
+            \item \textbf{Extinction Prob.}: $u_n^{(k)} \coloneqq P\left(X_n = 0 \mid X_0 = k\right) = u_n^k$
+            \item $u_n = \sum_{i \in S}P\left(X_1 = i \mid X_0 = 1\right)u_{n - 1}^{(i)} = \sum_{i \in S}P\left(\xi = i\right)u_{n - 1}^i$
+            \item $u_n^{(k)} = \phi^{n - 1}_{\xi}\bigl(P\left(\xi = 0\right)\bigr)^k$
+            \begin{itemize}
+                \item if $P\left(\xi = 0\right) = 0$, then $u_{\infty}^{(k)} = 1$;
+                \item if $P\left(\xi = 0\right) > 0$, then if $\mathbb{E}\left[\xi\right] \leq 1$, $u_{\infty}^{(k)} = 1$; else, $u_{\infty} \in \left[0, 1\right)$ is s.t. $u_{\infty} = \phi_{\xi}\left(u_{\infty}\right)$
+            \end{itemize}
+            \item Pois. Proc.: $X(0) = 0$, $X\left(s + t\right) - X\left(s\right) \sim \mathrm{Pois}\left(\lambda t\right)$ and for any $0 = t_0 < t_1 < \cdots < t_n$, $X\left(t_i\right) - X\left(t_{i - 1}\right)$'s are mutually independent
+            \item Pois. Pt. Proc.:
+            \begin{itemize}
+                \item for any $0 = t_0 < t_1 < \cdots < t_n$, $N\bigl(\left(t_i, t_{i + 1}\right]\bigr)$'s are mutually independent;
+                \item $P\Bigl(N\bigl(\left(t, t + h\right]\bigr) \geq 1\Bigr) = \lambda h + o\left(h\right)$ and $P\Bigl(N\bigl(\left(t, t + h\right]\bigr) \geq 2\Bigr) = o\left(h\right)$ as $h \to 0$.
+            \end{itemize}
+            \item Waiting time: $W_n \sim \mathrm{Gamma}\left(n, \lambda\right)$ s.t. $f_{W_n}\left(t\right) = \frac{\lambda^n t^{n - 1}}{\left(n - 1\right)!}\mathrm{e}^{-\lambda t}$.
+            \item Sojourn time: $S_n = W_1 \sim \mathrm{Exp}\left(\lambda\right)$ where $f_{S_n}\left(t\right) = \lambda \mathrm{e}^{-\lambda t}$
+            \item $W_1 \mid X\left(t\right) = 1 \sim \mathrm{U}\left(0, t\right)$. Joint is the sum of independent uniform r.v.
+            \begin{align*}
+                f\bigl(w_1, w_2, \cdots, w_n \mid X\left(t\right) = n\bigr) & = \frac{P\left(S_n > t - w_n\right)\prod_{i = 1}^nf_{S_{i - 1}}\left(w_i - w_{i - 1}\right)}{\frac{\left(\lambda t\right)^n\mathrm{e}^{-\lambda t}}{n!}} \\
+                & = \frac{n!\mathrm{e}^{-\lambda\left(t - w_n\right)}\prod_{i = 1}^n\lambda\mathrm{e}^{-\lambda\left(w_i - w_{i - 1}\right)}}{\left(\lambda t\right)^n\mathrm{e}^{-\lambda t}} = \frac{n!}{t^n}.
+            \end{align*}
+            \item $f_{W_k \mid X(t) = n}\left(x\right) = \frac{n!x^{k - 1}\left(t - x\right)^{n - k}}{\left(n - k\right)!\left(k - 1\right)!t^n}$
+        \end{itemize}
+    \end{multicols*}
+\end{document}
