@@ -18,103 +18,81 @@
 \DeclareMathOperator*{\argmin}{argmin}
 
 \begin{document}
-    \begin{multicols*}{2}
+    \begin{multicols*}{3}
         \begin{itemize}
-            \item \textbf{strictly dominated strategy}: $u_i(s_i, \bm{s}_{-i}) < u_i(s_i', \bm{s}_{-i})$ for all $\bm{s}_{-i} \in S_{-i}$.
-            \item \textbf{best-response correspondence}: $R_i\left(\bm{s}_{-i}\right) \coloneqq \argmax_{s_i \in S_i} u_i\left(s_i, \bm{s}_{-i}\right)$.
-            \item \textbf{Nash equilibrium}: $s_i^* \in R_i\left(\bm{s}^*_{-i}\right) \iff u_i\left(s_i^*, \bm{s}_{-i}^*\right) = \max_{s_i \in S_i}u_i\left(s_i, \bm{s}_{-i}^*\right)$ for all $i$.
-            \item Define $G\left(R_i\right) \coloneqq \left\{\left(s_i, \bm{s}_{-i}\right) \colon s_i \in R_i\left(\bm{s}_{-i}\right), \bm{s}_{-i} \in S_{-i}\right\}$ as the \textbf{graph} of $R_i$, then $\bigcap_{i = 1}^nG\left(R_i\right)$ are exactly all the Nash equilibria.
-            \item $2$-player games: $\left(s_1, s_2\right)$ is a Nash equilibrium iff $s_1 \in R_1\left(s_2\right)$ and $s_2 \in R_2\left(s_1\right)$.
+            \setlength\itemsep{0pt}
+            \item \textbf{strictly dom}: $u_i(s_i, \bm{s}_{-i}) < u_i(s_i', \bm{s}_{-i})\forall\bm{s}_{-i} \in S_{-i}$.
+            \item \textbf{best-response}: $R_i\left(\bm{s}_{-i}\right) \coloneqq \argmax_{s_i \in S_i} u_i\left(s_i, \bm{s}_{-i}\right)$.
+            \item \textbf{Nash}: $s_i^* \in R_i\left(\bm{s}^*_{-i}\right)$ iff $u_i\left(s_i^*, \bm{s}_{-i}^*\right) = \max u_i\left(s_i, \bm{s}_{-i}^*\right)$.
+            \item $G\left(R_i\right) \coloneqq \left\{\left(s_i, \bm{s}_{-i}\right) \colon s_i \in R_i\left(\bm{s}_{-i}\right), \bm{s}_{-i} \in S_{-i}\right\}$: \textbf{graph} of $R_i$, $\bigcap_{i = 1}^nG\left(R_i\right)$ are exactly all the Nash equilibria.
             \item If $\left(s_1^*, s_2^*, \cdots, s_n^*\right)$ are a Nash equilibrium, then no $s_i^*$ can be eliminated by IESDS. \textbf{Proof: suppose $s_j$ is the first to be eliminated.}
             \item If IESDS results in a single set of strategies, they are the unique Nash equilibrium of the game. \textbf{Proof: uniqueness is trivial. For existence, suppose $s_i^* \notin R_i\left(\bm{s}_{-i}^*\right) \neq \varnothing$ for some $i$.}
-            \item \textbf{Mixed strategy}: $p_i \coloneqq \left(p_{ij}\right)_{j = 1}^k$ s.t. $P\left(\textrm{Player } i \textrm{ plays } s_{ij}\right) = p_{ij}$.
-            \item \textbf{Expected payoff for pure strategy}: 
-            \begin{equation*}
-                v_i\left(x, p_j\right) \coloneqq \sum_{n = 1}^{N}p_{jn}u_i\left(x, s_{jn}\right).
-            \end{equation*}
-            \item \textbf{Expected payoff for mixed strategy}: 
-            \begin{equation*}
-                v_i\left(p_i, p_j\right) \coloneqq \sum_{m = 1}^{M}p_{im}\sum_{n = 1}^{N}p_{jn}u_i\left(s_{im}, s_{jn}\right).
-            \end{equation*}
+            \item \textbf{Mixed}: $p_i \coloneqq \left(p_{ij}\right)_{j = 1}^k$ s.t. $P\left(i \textrm{ plays } s_{ij}\right) = p_{ij}$.
+            \item \textbf{$\mathbb{E}$ payoff (pure)}: $v_i\left(x, p_j\right) \coloneqq \sum_{n = 1}^{N}p_{jn}u_i\left(x, s_{jn}\right)$
+            \item \textbf{Expected payoff for mixed strategy}: $v_i\left(p_i, p_j\right) \coloneqq \sum_{m = 1}^{M}p_{im}\sum_{n = 1}^{N}p_{jn}u_i\left(s_{im}, s_{jn}\right)$
             \item If $s_{ik}$ is eliminated by IESDS, then $p_{ik}^* = 0$.
             \item \textbf{Nash's Theorem}: at least one Nash equilibrium exists for any finite game if mixed strategies are allowed.
-            \item \textbf{Market clearing price}: the price at which the demand is equal to the supply.
-            \item \textbf{Demand-side reservation price}: the lowest price at which the demand is $0$.
+            \item \textbf{Market clearing price}: $D\left(P\right) = Q\left(P\right)$.
+            \item \textbf{Reservation price}: $\min\left\{a \colon D\left(a\right) = 0\right\}$
             \item \textbf{Cournot Model of Duopoly}:
             \begin{itemize}
-                \item Demand: $Q\left(P\right) = ka - kP$ where $a$ is the reservation price.
-                \item Price: $P\left(Q\right) = \begin{cases}
-                    0 & \quad\textrm{if } Q \geq ka \\
-                    a - \frac{1}{k}Q & \quad\textrm{otherwise}
-                \end{cases}$.
-                \item Profit: $\pi_i\left(q_i, q_j\right) = \begin{cases}
-                    \left(a - \frac{1}{k}q_i - \frac{1}{k}q_j - c\right)q_i & \quad\textrm{if } Q < ka \\
-                    -cq_i & \quad\textrm{if } Q \geq ka
-                \end{cases}$.
-                \item Best response: $R_i\left(q_j\right) = \begin{cases}
-                    \frac{1}{2}\left(ka - q_j - kc\right) & \quad\textrm{if } q_2 \leq k\left(a - c\right) \\
-                    0 & \quad\textrm{otherwise}
-                \end{cases}$.
+                \setlength\itemsep{0pt}
+                \item Demand: $Q\left(P\right) = ka - kP$
+                \item $P\left(Q\right) = \left\{a - \frac{1}{k}Q\right\}\mathbf{1}\left\{Q < ka\right\}$.
+                \item $\pi_i\left(q_i, q_j\right) = \begin{cases}
+                    \left(a - \frac{1}{k}q_i - \frac{1}{k}q_j - c\right)q_i & \textrm{if } Q < ka \\
+                    -cq_i & \textrm{if } Q \geq ka
+                \end{cases}$
+                \item $R_i\left(q_j\right) = \frac{1}{2}\left(ka - q_j - kc\right)\mathbf{1}\left\{q_j < k\left(a - c\right)\right\}$.
             \end{itemize}
             \item \textbf{Bertrand Model of Duopoly}:
             \begin{itemize}
-                \item Demand: $q_i\left(p_i, p_j\right) = ka - kp_i + bp_j$ where $a$ is the reservation price and $b$ is the substitutability coefficient.
+                \setlength\itemsep{0pt}
+                \item Demand: $q_i\left(p_i, p_j\right) = ka - kp_i + bp_j$
                 \item Profit: $\pi_i\left(p_i, p_j\right) = \left(ka - kp_i + bp_2\right)\left(p_i - c\right)$.
                 \item Best response: $R_i\left(p_j\right) = \frac{1}{2k}\left(ka + bp_j + kc\right)$.
-                \item Nash equilibrium: $p_1^* = p_2^* = \frac{ka + kc}{2k - b}$, i.e., the model makes sense iff $b > 2k$.
-                \item Homogeneous product Nash equilibrium: $p_1^* = p_2^* = c$.
+                \item Nash eq: $p_1^* = p_2^* = \frac{ka + kc}{2k - b}$, i.e., $b > 2k$.
+                \item Homogeneous prod Nash eq: $p_1^* = p_2^* = c$ ($b = 0$)
             \end{itemize}
             \item \textbf{Problem of the commons}:
             \begin{itemize}
-                \item Unit utility given total consumption: $v\left(x\right)$ is \textbf{strictly concave} for $x < X_{\max}$ and $v\left(x\right) = 0$ for $x \geq X_{\max}$.
+                \setlength\itemsep{0pt}
+                \item Unit util $\mid$ total consumption: $v\left(x\right)$ \textbf{strictly concave} for $x < X_{\max}$ and $v\left(x\right) = 0$ for $x \geq X_{\max}$.
                 \item Payoff: $u_i\left(x_i, \bm{x}_{-i}\right) \coloneqq x_iv\left(X\right) - cx_i$.
-                \item Nash equilibrium solves $v\left(X^*\right) + x_i^*\left.\frac{\mathrm{d} v}{\mathrm{d} x_i}\right\rvert_{x_i = x_i^*} - c = 0$.
+                \item Nash eq solves $v\left(X^*\right) + x_i^*\left.\frac{\mathrm{d} v}{\mathrm{d} x_i}\right\rvert_{x_i = x_i^*} - c = 0$.
                 \item If $v\left(x\right) = a - x^2$ for $x < X_{\max}$, then $x_i^* = \sqrt{\frac{a - c}{n^2 + 2n}}$.
                 \item Social welfare: $w\left(X\right) \coloneqq Xv\left(X\right) - Xc$.
                 \item If $x^*$ optimises $w$, then $x^* < X^*$. \textbf{Proof: if $x^* \geq X^*$, then $v\left(X^*\right) \geq v\left(x^*\right)$ and $0 > v'\left(X^*\right) \geq v'\left(x^*\right)$. Use this to show $v\left(X^*\right) + \frac{X^*}{n}v'\left(X^*\right) > v\left(x^*\right) + x^*v'\left(x^*\right)$. Use stationary points to show $w'\left(x^*\right) = 0$ and $u_i'\left(x_i^*\right) = 0$.}
             \end{itemize}
             \item \textbf{Final-offer arbitration}:
             \begin{itemize}
+                \setlength\itemsep{0pt}
                 \item Union offers $w_u$ and firm offers $w_f$.
-                \item Arbitrator expectation $x \sim f$ with $P\left(x < x_m\right) = F\left(x_m\right) = \frac{1}{2}$.
+                \item Arbitrator expectation $x \sim f$ with median $x_m$.
                 \item Expected wage: $\phi\left(w_f, w_u\right) = \mathbb{E}\left[w\right] = w_fF\left(\frac{w_f + w_u}{2}\right) + w_u\biggl(1 - F\left(\frac{w_f + w_u}{2}\right)\biggr)$.
-                \item Best responses: 
-                \begin{equation*}
-                    R_f\left(w_u\right) = \argmin_{0 \leq w_f < w_u^*}\phi\left(w_f, w_u^*\right), \qquad R_u\left(w_f\right) = \argmax_{w_u > w_f^*}\phi\left(w_f^*, w_u\right).
-                \end{equation*} 
-                \item Nash equilibrium: $w_f^* = x_m - \frac{1}{2f\left(x_m\right)}$, $w_u^* = x_m + \frac{1}{2f\left(x_m\right)}$.
+                \item $R_f\left(w_u\right) = \argmin_{0 \leq w_f < w_u^*}\phi\left(w_f, w_u^*\right)$
+                \item $R_u\left(w_f\right) = \argmax_{w_u > w_f^*}\phi\left(w_f^*, w_u\right)$
+                \item Nash eq: $w_f^* = x_m - \frac{1}{2f\left(x_m\right)}$, $w_u^* = x_m + \frac{1}{2f\left(x_m\right)}$.
             \end{itemize}
             \item \textbf{Backward induction}: 
             \begin{itemize}
+                \setlength\itemsep{0pt}
                 \item Define $b_j\left(b_1\right) \coloneqq R_j\left(b_1, \cdots, b_{j - 1}\right)$ as player $j$'s best action given player $1$'s action.
                 \item $a_i^* \coloneqq \argmax_{a_1 \in A_1}u_1\bigl(a_1, b_2\left(a_1\right), \cdots, b_n\left(a_1\right)\bigr)$ and $a_i^* \coloneqq b_i\left(a_1^*\right)$.
             \end{itemize}
-            \item \textbf{Extensive-form game} specifies:
-            \begin{enumerate}
-                \item the players in the game;
-                \item when each player takes a move;
-                \item each player's strategy space;
-                \item each player's knowledge of the game;
-                \item the payoffs for each possible combination of strategies.
-            \end{enumerate}
-            \item \textbf{Information set}: a set of \textbf{decision nodes} joined with \textbf{dotted line in a game tree} for the same player at a turn s.t. the player cannot deduce the predecessor node. \textbf{Perfect information} $\iff$ all information sets are singletons.      
-            \item \textbf{Subgame}: a game based on a subtree of a game tree s.t. its decision nodes can be partitioned by information sets.
-            \item \textbf{Strategy in dynamic games}: a map $s_i \colon \prod_{j = 1}^{i - 1}A_j \to A_i$.
-            \item Action of player $i$ following strategies $\bm{s} \coloneqq \left(s_j\right)_{j = 1}^n$ is $a_i\left(\bm{s}\right) = s_i\bigl(a_1\left(\bm{s}\right), \cdots, a_{i - 1}\left(\bm{s}\right)\bigr)$.
-            \item \textbf{Payoff in dynamic games}: $\tilde{\bm{u}}\left(\bm{s}\right) \coloneqq \bm{u}\bigl(a_1\left(\bm{s}\right), a_2\left(\bm{s}\right), \cdots, a_n\left(\bm{s}\right)\bigr)$.
-            \item $\bigl(a_1^*, R_2\left(a_1^*\right)\bigr)$ is a backward induction outcome $\implies \left(a_1^*, R_2\right)$ is a Nash equilibrium. \textbf{Converse is not true in general}.
+            \item \textbf{Extensive-form game}: players + when a move is taken + strategy spaces + knowledges + payoffs of all action sequences.
+            \item \textbf{Info set}: a set of \textbf{decision nodes} joined with \textbf{dotted line in a game tree} for the same player at a turn s.t. the player cannot deduce the predecessor. \textbf{Perfect information} $\iff$ all info sets are singletons.      
+            \item \textbf{Subgame}: a game based on a subtree of a game tree s.t. its decision nodes can be partitioned by info sets.
+            \item \textbf{Strategy in dynamic games}: $s_i \colon \prod_{j = 1}^{i - 1}A_j \to A_i$.
+            \item Action of $i$ given strategies $\bm{s} \coloneqq \left(s_j\right)_{j = 1}^n$ of all players is $a_i\left(\bm{s}\right) = s_i\bigl(a_1\left(\bm{s}\right), \cdots, a_{i - 1}\left(\bm{s}\right)\bigr)$.
+            \item \textbf{Dyn game payoff}: $\tilde{\bm{u}}\left(\bm{s}\right) \coloneqq \bm{u}\bigl(a_1\left(\bm{s}\right), \cdots, a_n\left(\bm{s}\right)\bigr)$
+            \item $\bigl(a_1^*, R_2\left(a_1^*\right)\bigr)$ is backward induction outcome $\implies \left(a_1^*, R_2\right)$ is Nash eq. \textbf{Converse false in general}.
             \item \textbf{Subgame perfect Nash equilibrium} is a Nash equilibrium in every subgame.
-            \item \textbf{Stackelberg Model of Duopoly}:
+            \item \textbf{Stackelberg Model}: Dominant $1$ and follower $2$.
             \begin{itemize}
-                \item Dominate firm $1$ and follower firm $2$.
-                \item Price: $P\left(Q\right) = \begin{cases}
-                    a - \frac{1}{k}Q & \quad\textrm{if } Q < ka \\
-                    0 & \quad\textrm{if } Q \geq ka
-                \end{cases}$.
-                \item $R_2\left(q_1\right) = \begin{cases}
-                    \frac{1}{2}\left(ka - q_1 - kc\right) & \quad\textrm{if } q_1 < k\left(a - c\right) \\
-                    0 & \quad\textrm{otherwise}
-                \end{cases}$.
+                \setlength\itemsep{0pt}
+                \item Price: $P\left(Q\right) = \left(a - \frac{1}{k}Q\right)\mathbf{1}\left\{Q < ka\right\}$.
+                \item $R_2\left(q_1\right) = \frac{1}{2}\left(ka - q_1 - kc\right)\mathbf{1}\left\{q_1 < k\left(a - c\right)\right\}$.
             \end{itemize}
             \item \begin{tabular}{|c|c|c|}
                 \hline 
@@ -129,28 +107,124 @@
                 $\pi_1^* + \pi_2^*$ & $\frac{2k^2\left(a - c\right)^2}{9}$ & $\frac{3k^2\left(a - c\right)^2}{16}$ \\
                 \hline
             \end{tabular}
-            \item \textbf{Three-period bargaining}: if the players will receive $\left(u_1, u_2\right)$ in period $i + 1$, then player $i$ should offer $\delta u_j$ and player $j$ should accept.
-            \item In a three-period bargaining game, player $1$ will offer $\begin{cases}
-                    s_1\left(1\right) & = 1 - \delta\left(1 - \delta\bar{s}_1\right) \\
-                    s_2\left(1\right) & = \delta\left(1 - \delta\bar{s}_1\right)
-                \end{cases}$
-            and player $2$ will accept the offer.
+            \item \textbf{Three-period bargaining}: if receive $\left(u_1, u_2\right)$ in period $i + 1$, then player $i$ offer $\delta u_j$ and player $j$ accept.
+            \item In $3$-period bargaining, $1$ offer $s_1\left(1\right) = 1 - \delta\left(1 - \delta\bar{s}_1\right)$, $s_2\left(1\right) = \delta\left(1 - \delta\bar{s}_1\right)$ and $2$ accept.
             \item \textbf{Infinite-horizon bargaining}: if $\left(\bar{s}_1, \bar{s}_2\right)$ are final offers received in backward induction, then by collapsing stage $3$ onwards, the game is equivalent to a $3$-period bargaining with $ \begin{cases}
                 \bar{s}_1 & = 1 - \delta\left(1 - \delta\bar{s}_1\right) \\
                 \bar{s}_2 & = \delta\left(1 - \delta\bar{s}_1\right)
-            \end{cases}$ which yields $\bar{s}_1 = \frac{1}{1 + \delta}$.
+            \end{cases}$ which yields $\bar{s}_1 = \frac{1}{1 + \delta}$, $\bar{s}_2 = \frac{\delta}{1 + \delta}$.
             \item \textbf{Multi-stage game}: dynamic games which can be partitioned into static stage games. The game is \textbf{repeated} if every stage is the same.
             \item If the stage game of a repeated game has a unique Nash equilibrium, then the repeated game has a unique subgame perfect Nash equilibrium.
             \item \textbf{Present value}: $\sum_{i = 1}^{\infty}\delta^{i - 1}\pi_i$ where $\pi_i$ is the stage $i$ payoff and $\delta \in \left(0, 1\right)$ is the \textbf{discount factor}.
-            \item If the stage game with left (not cooperate) and right (cooperate) strategies is 
-            \begin{equation*}
-                \begin{bmatrix}
-                    & $L$ & $R$ \\
+            \item If the stage game with left (not cooperate) and right (cooperate) strategies is $\left[\begin{smallmatrix}
+                & $L$ & $R$ \\
                     $L$ & \left(1, 1\right) & \left(5, 0\right) \\
                     $R$ & \left(0, 5\right) & \left(4, 4\right)
-                \end{bmatrix},
-            \end{equation*}
-            then $\left(NC, NC\right)$ is always a Nash equilibrium and $\left(T, T\right)$ is a Nash equilibrium iff $\delta \geq \frac{1}{4}$. \textbf{Proof: show that $T$ is the best response for $T$, i.e., if player $1$ plays $T$, then player $2$ will end up playing $T$.}
+            \end{smallmatrix}\right]$, then $\left(NC, NC\right)$ is always a Nash equilibrium and $\left(T, T\right)$ is a Nash equilibrium iff $\delta \geq \frac{1}{4}$. \textbf{Proof: show that $T$ is the best response for $T$, i.e., if player $1$ plays $T$, then player $2$ will end up playing $T$.}
+            \item \textbf{Asymmetric info Cournot}: $c_1$ is known, $c_2 = c_H$ with prob. $\theta$ and $c_L$ with prob. $\rho = 1 - \theta$.
+            \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item $q_1^* = \frac{a - 2c + \theta c_H + \rho c_L}{3}$, $q_2^* = \frac{a - 2c_X + c}{3} + \frac{p_{Y}}{6}\left(c_H - c_L\right)$.
+                \item $q_2^*\left(c_L\right) > q_2^*\left(c_H\right)$, $\pi_L = {q_2(c_L)}^2 > {q_2(c_H)}^2 = \pi_H$
+            \end{itemize}
+            \item \textbf{Bayesian game}: each player has belief $P_i\left(\bm{t}_{-i} \mid t_i\right)$ on others' types given self type, $P_i\left(\bm{t}_{-i} \mid t_i\right) = \frac{P_i\left(\bm{t}_{-i}, t_i\right)}{\sum P_i\left(\bm{t}_{-i}, t_i\right)}$.
+            \item \textbf{Bayesian game strategy}: $s_i \colon T_i \to A_i$.
+            \item $s^*\left(t_i\right) = \argmax_{a_i \in A_i} \mathbb{E}_{\bm{t}_{-i}}\left[u_i\left(a_i, \bm{s}^*_{-i}\left(\bm{t}_{-i}\right); t_i\right)\right]$
+            \item A Bayesian game can be viewed as a collection $G$ of possible games. A type space $T_i$ is a partition of $G$ with $\sigma_i \colon G \to T_i$ as the quotient map.
+            \item Given player $i$'s type, $P\left(g \mid t_i\right) = \frac{P\left(g\right)}{P\left(t_i\right)} = \frac{P\left(g\right)}{\sum{g_i \in t_i} P\left(g_i\right)}$ if $g \in t_i$ and $0$ otherwise. Given strategy profile $\bm{s}_{-i}$, $u_i\left(a_i, \bm{s}_{-i}; t_i\right) = \frac{1}{P\left(t_i\right)}\sum_{g \in t_i} P\left(g\right)u_i\left(a_i, \bm{s}_{-i}\left(\bm{\sigma}_{-i}\left(g\right)\right)\right)$.
+            \item \textbf{1st-Price Sealed-Bid}: valuation $v_i \sim \mathrm{U}\left(0, 1\right)$ as type, $u_i = v_i - b_i$ if $b_i > b_j$, $\frac{v_i - b_i}{2}$ if $b_i = b_j$ and $0$ otherwise. Nash eq is linear func $b_i\left(v_i\right) = a_i + c_iv_i = \frac{v_i + a_j}{2}$.
+            \item \textbf{2nd-Price Sealed-Bid}: bid at valuation is Nash eq as weakly dominate $u_i\left(v_i, r_i; v_i\right) = \max\left\{v_i - r_i, 0\right\}$.
+            \item \textbf{Signal game}: 
+            \begin{enumerate}
+                \setlength\itemsep{0pt}
+                \item Nature draws $t_i$ s.t. $P\left(\tilde{t} = t_i\right) = P\left(t_i\right)$ for Sender.
+                \item Sender sends $m_i \in M$
+                \item Receiver observes $m_i$ only and chooses $a_i \in A$
+                \item $U_S\left(t_i, m_i, a_i\right)$ and $U_R\left(t_i, m_i, a_i\right)$ are payoffs.
+                \item $a^*\left(m\right) = \argmax_{a \in A}\sum_{t \in T}\mu\left(t \mid m\right)U_R\left(t, m, a\right)$, $m^*\left(t\right) = \argmax_{m \in M}U_S\left(t, m, a^*\left(m\right)\right)$ 
+                \item $\mu\left(t \mid m\right) = \frac{P\left(t\right)}{\sum_{t' \in T_m}P\left(t'\right)}$, where $T_m$ is all types s.t. $m^*\left(t\right) = m$. $T_m = \varnothing \implies \mu$ anything.
+                \item $\mu\left(t \mid m\right) = P\left(\tilde{t} = t \mid m^*\left(\tilde{t}\right) = m\right)$.
+                \item $\left(m, a, \mu\right)$ satisfy 5 and 6 is a perfect Bayesian eq
+                \item strategies --- $\left(x, x\right)$: pooling, $\left(x, y\right)$: separation
+            \end{enumerate}
+            \item Finding PBE: check only Nash eq
+            \item \textbf{Job-Market signal game}:
+            \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item $\eta \in \left\{\eta_H, \eta_L\right\}$: \textbf{ability} of worker (type)
+                \item $e \in \left\{e_c, e_s\right\}$: \textbf{education level} of worker (msg)
+                \item $w \in \left[0, \infty\right)$: \textbf{wage} of worker (action)
+                \item $c\left(\eta, e\right) = c_1\left(\eta\right) + c_2\left(e\right)$: cost to obtain education
+                \item $U_W\left(\eta, e, w\right) = w - c\left(\eta, e\right)$: worker payoff
+                \item $U_F\left(\eta, e, w\right) = -\left(y\left(\eta, e\right) - w\right)^2$: firm payoff ($y$ is worker output)
+                \item $\Delta\left(\eta\right) = U_W\left(\eta, e_c, w^*\left(e_c\right)\right) - U_W\left(\eta, e_s, w^*\left(e_s\right)\right)$ ind. of $\eta$. $\Delta > 0 \implies e_c$ better $\implies$ separation is not optimal
+                \item Pooling: if $P\left(\eta_H\right) = r$, $w^*\left(e_i, r\right) = ry\left(\eta_H, e_i\right) + \left(1 - r\right)y\left(\eta_L, e_i\right) = \mathbb{E}\left[y\right]$ is optimal for firm
+            \end{itemize}
+            \item \textbf{(2-player) Co-operative game}:
+            \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item $H \subseteq \mathbb{R}^2$: \textbf{attainable payoffs}
+                \item $d \in H$: \textbf{threat pt} --- achieved when fail to trade
+                \item $u \in H \iff \exists$ action of both players to attain $u$
+            \end{itemize}
+            \item $\left(u, v\right)$ \textbf{dominates} $\left(u', v'\right) \iff u \geq u', v \geq v'$. \textbf{Pareto optimal} $\iff$ dominated by nothing
+            \item \textbf{2-person bargaining} $\left(H, d\right)$:
+            \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item $H \subseteq \mathbb{R}^2$ is compact and convex, $d \in H$
+                \item $H$ contains some $u$ dominating $d$
+                \item $W$: set of all w-person bargaining games
+            \end{itemize}
+            \item \textbf{Nash bargaining soln}: $f \colon W \to \mathbb{R}^2$ s.t. 
+            \begin{enumerate}
+                \setlength\itemsep{0pt}
+                \item $f\left(H, d\right) \in H$ (feasible)
+                \item $f\left(H, d\right) \geq d$ (individual rational)
+                \item $f\left(H, d\right)$ is Pareto optimal 
+                \item if $H' = \left\{\left(a_xx + b_x, a_yy + b_y\right) \mid \left(x, y\right) \in H\right\}$, then $f_i\left(H', d'\right) = a_if\left(H, d\right) + b_i$ (invariant under linear transformation)
+                \item if $d_1 = d_2$ and $\left(x, y\right) \in H \iff \left(y, x\right) \in H$, then $f_1\left(H, d_1\right) = f_2\left(H, d_2\right)$ (symmetry)
+                \item if $d' = d$ and $H \subseteq H'$, then $f\left(H', d'\right) = f\left(H, d\right)$ (independence of irrelevant alternatives)
+            \end{enumerate}
+            \item Every $\left(H, d\right) \in W$ has a unique Nash bargaining soln $u^*$ s.t. $\left(u_1^* - d_1\right)\left(u_2^* - d_2\right) > \left(u_1 - d_1\right)\left(u_2 - d_2\right)$ for all $u^* \neq u \geq d$, i.e., $u^*$ is global maximum of the product
+            \item \textbf{coalition}: non-empty subset of set of all players
+            \item \textbf{char func}: $v\left(S\right)$ is the amount surely attainable by $S$ s.t. $v\left(\varnothing\right) = 0$ and $v\left(A \cup B\right) \geq v\left(A\right) + v\left(B\right) \forall$ disjoint $A$, $B$ (super-additivity)
+            \item \textbf{imputation}: a payoff vec $\bm{x}$ s.t. $\sum x_i = v\left(N\right)$ (grp rational) and $x_i \geq v\left(\left\{i\right\}\right)$ (individually rational). $I\left(N, v\right)$ set of all imputations of game $\left(N, v\right)$
+            \item $x, y \in I\left(N, v\right)$, $x$ \textbf{dominates} $y$ via $S$ ($x \succ_S y$) if $x_i > y_i \forall i \in S$ and $\sum_{i \in S}x_i \leq v\left(S\right)$. $x$ \textbf{dominates} $y$ if $\exists S$ s.t. $x \succ_S y$.
+            \item \textbf{core} $C\left(N, v\right)$: undominated imputations. $C\left(N, v\right)$ is all payoff vec s.t. $\sum_{i \in S}x_i \geq v\left(S\right) \forall S \neq \varnothing$ and $\sum_{i \in N}x_i = v\left(N\right)$.
+            \item \textbf{Constant-sum}: $v\left(S\right) + v\left(N - S\right) = v\left(N\right)\forall S \subseteq N$
+            \item \textbf{Essential}: $v\left(N\right) > \sum_{i \in N}v\left(\left\{i\right\}\right)$
+            \item Inessential $\implies v\left(S\right) = \sum_{i \in S}v\left(\left\{i\right\}\right) \implies$ const-sum
+            \item Const-sum $\implies C\left(N, v\right) = \varnothing$ or $\left\{\left(v\left(\left\{i\right\}\right)\right)_{i \in N}\right\}$
+            \item Inessential $\implies C\left(N, v\right) = \left\{\left(v\left(\left\{i\right\}\right)\right)_{i \in N}\right\}$
+            \item Essential and const-sum $\implies$ empty core
+            \item Games $v$ and $u$ are \textbf{strategically equivalent} if $\exists a > 0, c_1, \cdots, c_n \in \R$ s.t. $u\left(S\right) = av\left(S\right) + \sum_{i \in S} c_i \forall S \subseteq N$
+            \item if $\left(N, u\right)$ and $\left(N, v\right)$ are strategically equivalent:
+            \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item $u$ essential $\iff v$ essential
+                \item $x \in I\left(N, v\right) \iff ax + \bm{c} \in I\left(N, u\right)$
+                \item $x \succ_S y$ in $v \iff ax + \bm{c} \succ_S ay + \bm{c}$ in $u$
+                \item $x \in C\left(N, v\right) \iff ax + \bm{c} \in C\left(N, u\right)$
+            \end{itemize}
+            \item char func $\left(0, 1\right)$-reduced form: $v\left(\left\{i\right\}\right) = 0$, $v\left(N\right) = 1$
+            \item $\forall$ essential game, $\exists$ reduced form game s-equiv to it. \textbf{Proof:} take $a = \frac{1}{v\left(N\right) - \sum_{i \in N}v\left(\left\{i\right\}\right)}$, $c_i = -av\left(\left\{i\right\}\right)$
+            \item Classify small essential games in reduced form:
+            \begin{enumerate}
+                \setlength\itemsep{0pt}
+                \item 3-person const-sum: $v\left(\left\{i, j\right\}\right) = 1 \forall i \neq j$ and def
+                \item 3-person: $\exists a, b, c \in \left[0, 1\right]$ s.t. $v\left(\left\{1, 2\right\}\right) = a$, $v\left(\left\{1, 3\right\}\right) = b$, $v\left(\left\{2, 3\right\}\right) = c$ and def 
+            \end{enumerate}
+            \item \textbf{Shapley val}: $\phi\left(v\right)$ $n$-vector s.t. 
+            \begin{enumerate}
+                \setlength\itemsep{0pt}
+                \item $\phi_i\left(v\right) \geq v\left(\left\{i\right\}\right)$ (individual rational)
+                \item $\sum_{i \in N}\phi_i\left(v\right) = v\left(N\right)$ (efficiency)
+                \item $\phi_i\left(v\right) = \phi_j\left(v\right)$ if $v\left(S \cup \left\{i\right\}\right) = v\left(S \cup \left\{j\right\}\right)$ for all $S$ not containing $i$ and $j$ (symmetry)
+                \item $\phi\left(v + w\right) = \phi\left(v\right) + \phi\left(w\right)$ (additive)
+                \item $\phi_i\left(v\right) = 0$ if $v\left(S \cup \left\{i\right\}\right) = v\left(S\right)$ for all $S$ (dummy)
+            \end{enumerate}
+            \item $\phi_i\left(v\right) = \sum_{S \subseteq N \setminus \left\{i\right\}}\frac{s!\left(n - s - 1\right)!}{n!}\bigl(v\left(S \cup \left\{i\right\} - v\left(S\right)\right)\bigr) = \frac{1}{n}\sum_{s = 0}^{n - 1}\frac{1}{\mathrm{C}^{n - 1}_s}\sum_{S \subseteq N \setminus \left\{i\right\}, \abs{S} = s}\bigl(v\left(S \cup \left\{i\right\} - v\left(S\right)\right)\bigr)$
+            \item If $v_A\left(S\right) = \alpha\mathbf{1}\left\{A \cup S \neq \varnothing\right\}$ for a fixed $A \subseteq N$, then $\phi_i\left(v_A\right) = \frac{\alpha}{\abs{A}}\mathbf{1}\left\{i \in A\right\}$.
         \end{itemize}
     \end{multicols*}
 \end{document}
