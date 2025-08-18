@@ -1,0 +1,21 @@
+\contentsline {chapter}{\numberline {1}Combinatorics}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Basic Counting Principles}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Permutations}{7}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Combinations}{10}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Binomial and Multinomial Coefficients}{12}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Principle of Inclusion and Exclusion (PIE)}{15}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Distribution Problems}{18}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Pigeonhole Principle}{23}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Tools for Combinatorial Problems}{27}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Ordinary Generating Functions}{27}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Exponential Generating Functions}{30}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Recurrence Relations}{31}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Graph Theory}{35}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Graph Structures}{35}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Graph Isomorphism}{39}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Graph Traversal}{42}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Weighted Graphs}{46}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Graphs and Matrices}{49}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Bipartite Graphs}{50}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Trees}{52}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Spanning Trees}{54}{subsection.3.7.1}%
