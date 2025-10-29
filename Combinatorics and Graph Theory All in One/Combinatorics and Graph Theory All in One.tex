@@ -3649,5 +3649,8 @@ Mantel's Theorem has some interesting application in probability. The following 
         so $a \geq \frac{1}{2}b^2$.
     \end{proof}
 \end{thmbox}
-We can generalise Theorem \ref{thm:Mantel} to work for any graph free of cliques of order $r$. Intuitively, $\ex\left(n, K_r\right)$ should be the size of a complete $\left(r - 1\right)$-partite graph whose partite sets have sizes $a_1, a_2, \cdots, a_{r - 1}$ such that $\prod_{i = 1}^{r - 1}a_i$ is maximised subject to $\sum_{i = 1}^{r - 1}a_i = n$.
+We can generalise Theorem \ref{thm:Mantel} to work for any graph free of cliques of order $r$. Intuitively, $\ex\left(n, K_r\right)$ should be the size of a complete $\left(r - 1\right)$-partite graph whose partite sets have sizes $a_1, a_2, \cdots, a_{r - 1}$ such that $\sum_{i < j}a_ia_j$ is maximised subject to $\sum_{i = 1}^{r - 1}a_i = n$.
+\begin{thmbox}{Tur\'{a}n's Theorem}{Turan}
+    For all integers $n, r \in \N^+$, let $T_{r - 1}\left(n\right)$ be the edge-maximum complete $\left(r - 1\right)$-partite graph of order $n$, whose size is denoted by $t_{r - 1}\left(n\right)$, then every $K_r$-free graph of order $n$ has at most $t_{r - 1}\left(n\right)$ edges and the only graph attaining this bound is $T_{r - 1}\left(n\right)$.
+\end{thmbox}
 \end{document}
