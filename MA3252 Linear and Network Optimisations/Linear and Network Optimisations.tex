@@ -141,11 +141,11 @@ where the $a_i$'s are real coefficients. In matrix notations, this becomes
 \begin{equation*}
     f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} + a_0
 \end{equation*}
-for some $\mathbfit{c} \in \R^n$. Let $f(\mathbfit{x}) = a_0 + b$, then we have $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = b$. Note that this level set equation gives a linear function in $\R^{n - 1}$, because obviously $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = c_nx_n + \mathbfit{\widebar{c}}^{\mathrm{T}}\mathbfit{x'}$, so
+for some $\mathbfit{c} \in \R^n$. Let $f(\mathbfit{x}) = a_0 + b$, then we have $\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = b$. Note that this level set equation gives a linear function in $\R^{n - 1}$, because obviously there exists some $\mathbfit{p} \in \R^{n - 1}$ such that~$\mathbfit{c}^{\mathrm{T}}\mathbfit{x} = c_nx_n + \mathbfit{p}^{\mathrm{T}}\mathbfit{x'}$, where $\mathbfit{x}' = \left(x_1, x_2, \cdots, x_{n - 1}\right)$. Therefore,
 \begin{equation*}
-    x_n = \frac{b}{c_n} - \frac{1}{c_n}\mathbfit{\widebar{c}}^{\mathrm{T}}\mathbfit{x'}.
+    x_n = \frac{b}{c_n} - \frac{1}{c_n}\mathbfit{p}^{\mathrm{T}}\mathbfit{x'}.
 \end{equation*} 
-Apparently, $-\frac{1}{c_n}\mathbfit{\widebar{c}} \in \R^{n - 1}$, so $x_n$ is a linear function of $\mathbfit{x}'$. This means every straight line in $\R^n$ is defined by an equation
+Apparently, $x_n$ is a linear function of $\mathbfit{x}'$. This means every straight line in $\R^n$ is defined by an equation
 \begin{equation*}
     \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b
 \end{equation*}
@@ -153,7 +153,7 @@ for some $\mathbfit{a} \in \R^n$ and $b \in \R$. Take $\mathbfit{x}_0 \in \R^n$ 
 \begin{equation*}
     \mathbfit{x} = \mathbfit{x}_0 + \lambda\mathbfit{d}
 \end{equation*}
-for some $\lambda \in R$. However, this implies that for any such $\mathbfit{x}$, we have
+for some $\lambda \in \R$. However, this implies that for any such $\mathbfit{x}$, we have
 \begin{equation*}
     \mathbfit{a}^{\mathrm{T}}(\mathbfit{x}_0 + \lambda\mathbfit{d}) = \mathbfit{a}^{\mathrm{T}}\mathbfit{x} = b,
 \end{equation*}
@@ -227,14 +227,16 @@ For each inequality constraint in the form of $\mathbfit{a}_i^{\mathrm{T}}\mathb
 \begin{equation*}
     x_j = x_j^+ - x_j^- \quad \textrm{for some } x_j^+, x_j^- \geq 0.
 \end{equation*}
-For instance, we can take $x_i^+ = 0$ and $x_i^- > 0$ whenever $x_i < 0$ and vice versa for $x_i > 0$. Note that this correspondence is not unique.
+For instance, we can take $x_j^+ = 0$ and $x_j^- > 0$ whenever $x_j < 0$ and vice versa for $x_j > 0$. Note that this correspondence is not unique.
 
-After the above transformations, we see that every constraint is equivalent to either an equality constraint $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} + s_i = b_i$ or an inequality constraint in the form of $x_i \geq 0$. Therefore, we define the following as the \textit{standard form} of a linear program:
+After the above transformations, we see that every constraint is equivalent to either an equality constraint $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{x} + s_i = b_i$ or an inequality constraint in the form of $x_j \geq 0$. Therefore, we define the following as the \textit{standard form} of a linear program:
 \begin{align*}
     \min_{\mathbfit{x} \in \R^n} & \mathbfit{c}^{\mathrm{T}}\mathbfit{x} \\
     \textrm{s.t. } & \mathbfit{Ax = b} \\
-    & x_i \geq 0, \quad \textrm{for } i = 1, 2, \cdots, m.
+    & x_j \geq 0, \quad \textrm{for } j = 1, 2, \cdots, n.
 \end{align*}
+Note that here, $\mathbfit{A}$ is an $m \times n$ matrix where the $i$-th row in $\mathbfit{A}$ contains the coefficients of the $i$-th constraint.
+
 One should realise that a linear program in the standard form can be more easily solved by using linear algebra to find the optimal solution. Note that not every optimisation problem is given in the standard form. Fortunately, we can always convert a linear program into the standard form.
 \section{Convex Sets and Functions}
 Intuitively, we describe two types of shapes in natural languages: the shapes which, if you choose any of its edges, lies in the same side of that edge, and the shapes which span across both sides from some chosen edge of its.
@@ -493,7 +495,9 @@ Recall that not all polyhedrons have basic feasible solutions. Informally, we ca
         be the set of gradient vectors of all active constraints at $\mathbfit{x}$. If $I(\mathbfit{x})$ contains $n$ linearly independent vectors, then we are done. Otherwise, $I(\mathbfit{x})$ does not span $\R^n$, so there is some $\mathbfit{d} \in \R^n$ with $\mathbfit{d} \neq 0$ such that it is normal to $\mathrm{span}\bigl(I(\mathbfit{x})\bigr)$. Since $P$ contains no straight lines, there exists some constraints with gradient vector $\mathbfit{a}_j \notin I(\mathbfit{x})$ such that we can find some $\mu \in \R$ such that $\mathbfit{a}_j^{\mathrm{T}}(\mathbfit{x} + \mu\mathbfit{d}) = b_j$. Set $\mathbfit{x}' = \mathbfit{x} + \mu\mathbfit{d}$. Note that for all $\mathbfit{a}_i \in I(\mathbfit{x})$, we have $\mathbfit{a}_i^{\mathrm{T}}\mathbfit{d} = 0$, and so $\mathbfit{a}_i^{\mathrm{T}}(\mathbfit{x} + \mu\mathbfit{d}) = b_i$. Therefore, $\mathbfit{a}_i \in I(\mathbfit{x}')$, and so we have $I(\mathbfit{x}) \cup \{\mathbfit{a}_j\} \subseteq I(\mathbfit{x}')$. We claim that $\mathbfit{a_j}$ linearly independent with $I(\mathbfit{x})$. Otherwise, $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{d} = 0$, which means that the boundary defined by $\mathbfit{a}_j^{\mathrm{T}}\mathbfit{x} = b_j$ is parallel to $\mathbfit{d}$ and so if the constraint is active at $\mathbfit{x}'$, it must also be active at $\mathbfit{x}$, which is a contradiction. Therefore, $I(\mathbfit{x}')$ has more linearly independent vectors than $I(\mathbfit{x})$. Repeat this process and we will eventually obtain a set of $n$ linearly independent gradient vectors, $I(\mathbfit{x}^*)$, where $\mathbfit{x}^*$ is a basic feasible solution.
     \end{proof}
 \end{thmbox}
-Consider the level set defined by $f(\mathbfit{x}) = k$ for some affine function $f$. Suppose the level set has an intersection with some polyhedron $P$, then by translating the level set in the direction of $-\nabla f$, it will eventually intersect $P$ at a basic feasible solution such that any further translation will make the intersection empty. Therefore, a reasonable guess is that an optimal solution for any linear program is closely linked to the basic feasible solutions of the feasible set.
+Consider the level set defined by $f(\mathbfit{x}) = \mathbfit{c}^{\mathrm{T}}\mathbfit{x} = k$ for some affine function $f$. Suppose the level set has an intersection with some polyhedron $P$, then by translating the level set in the direction of $-\nabla f$, it will eventually intersect $P$ at a basic feasible solution such that any further translation will make the intersection empty. Therefore, a reasonable guess is that an optimal solution for any linear program is closely linked to the basic feasible solutions of the feasible set.
+
+We sketch the idea of the proof first. If $P$ is a polyhedron representing the feasible set of a linear program, it is easy to check that the set of optimal solutions, $Q \subseteq P$, is also a polyhedron. We will attempt to pick a basic feasible solution $\mathbfit{x}^*$ from $Q$ first. Then, if $\mathbfit{x}^*$ is not a basic feasible solution of $P$, we strategically choose some direction along which we can translate $\mathbfit{x}^*$ to an interior point $\mathbfit{y} \in P$ while still staying in $Q$. Once we are at $\mathbfit{y}$, we will be able to translate in the direction of $\mathbfit{c}$ by a small distance to find a point where the function evaluates to a better value than the optimal value, arriving at a contradiction.
 \begin{thmbox}{Optimality of Basic Feasible Solutions}{optBFS}
     Consider the linear program 
     \begin{equation*}
@@ -508,7 +512,12 @@ Consider the level set defined by $f(\mathbfit{x}) = k$ for some affine function
         \end{equation*}
         Note that $Q$ is a polyhedron. By Theorem \ref{thm:existBFS}, since $P$ contains a basic feasible solution, it does not contain a straight line. Therefore, $Q \subseteq P$ cannot contain a straight line and so it contains a basic feasible solution.
         \\\\
-        Let $\mathbfit{x}^*$ be any basic feasible solution of $Q$. We claim that $\mathbfit{x}^*$ is a basic feasible solution of $P$. Suppose on contrary that $\mathbfit{x}^*$ is not a basic feasible solution of $P$, then there exists some $\mathbfit{d} \in \R^n$ with $\mathbfit{c}^{\mathrm{T}}\mathbfit{d} = 0$ such that $\mathbfit{x}^* + \lambda\mathbfit{d} \in Q$ is an internal point of $P$ for some $\lambda \in \R$. However, this means that there exists some $\mu > 0$ such that $\mathbfit{x}^* - \mathbfit{c} \in P$. Note that $\mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x}^* - \mathbfit{c}\right) < v*$, which is impossible. Therefore, $\mathbfit{x}^*$ must be a basic feasible solution of $P$.
+        Let $\mathbfit{x}^*$ be any basic feasible solution of $Q$. We claim that $\mathbfit{x}^*$ is a basic feasible solution of $P$. Suppose on contrary that $\mathbfit{x}^*$ is not a basic feasible solution of $P$. Pick some $\mathbfit{d} \in \R$ such that $\mathbfit{c}^{\mathrm{T}}\mathbfit{d} = 0$. Let $P = \left\{\mathbfit{x} \in \R^n 
+        \colon \mathbfit{Ax \leq b}\right\}$. Notice that we can choose $\lambda \in \R$ such that $\mathbfit{A}\left(\mathbfit{x}^* + \lambda\mathbfit{d}\right) < \mathbfit{b}$, and so $\mathbfit{x}^* + \lambda\mathbfit{d} \in Q$ is an internal point of~$P$. However, this means that there exists some $\mu > 0$ such that 
+        \begin{equation*}
+            \mathbfit{x}^* - \mu\mathbfit{c} = \mathbfit{x}^* + \lambda\mathbfit{d} - \left(\mu\mathbfit{c} + \lambda\mathbfit{d}\right) \in P.
+        \end{equation*}
+        However, $\mathbfit{c}^{\mathrm{T}}\left(\mathbfit{x}^* - \mu\mathbfit{c}\right) < v*$, which is impossible. Therefore, $\mathbfit{x}^*$ must be a basic feasible solution of $P$.
     \end{proof}
 \end{thmbox}
 Note that this essentially implies that $Q$ is the convex hull of basic feasible solutions of $P$. Therefore, any optimal solution of the original linear program can be expressed as a convex combination of basic feasible solutions of $P$, and so it suffices to first find all basic feasible solutions if our feasible set contains any.
@@ -625,8 +634,8 @@ Note that $\mathbfit{x}_N \geq \mathbf{0}$ and $\widebar{\theta_j}\mathbfit{d}^j
     \widebar{\theta_j} = \min\left\{-\frac{x_i}{d^j_i} \colon i \in B, d^j_i < 0\right\}.
 \end{equation*}
 Note that here we do not consider those $d^j_i$'s with $d^j_i > 0$ because in such cases $x_i + \widebar{\theta_j}d^j_i \geq 0$ for all $\widebar{\theta_j} > 0$. Now, we would verify that the new point we reach is indeed another basic feasible solution.
-\begin{probox}{$\mathbfit{x} + \bar{\theta_j}\mathbfit{d}^j$ Is A Basic Feasible Solution}{anotherBFS}
-    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$, then $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
+\begin{probox}{Criterion for Adjacent Basic Feasible Solutions}{anotherBFS}
+    If $\left\{i \in B \colon d_i^j < 0\right\} \neq \varnothing$ and $\mathbfit{x}$ is a basic feasible solution, then $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ is a basic feasible solution adjacent to $\mathbfit{x}$.
     \tcblower
     \begin{proof}
         Note that $\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j$ is feasible, so $\mathbfit{A}\left(\mathbfit{x} + \widebar{\theta_j}\mathbfit{d}^j\right) = \mathbfit{b}$. Note that by the definition of $\widebar{\theta_j}$, we have 
