@@ -373,13 +373,13 @@ Suppose we are given a standard linear program, then we can write its feasible s
 \begin{equation*}
     P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\},
 \end{equation*}
-where $\mathbfit{A} \in \R^{m \times n}$. Obviously, $P$ has no basic feasible solution if $m < n$. Suppose $m \geq n$, we will devise a way to compute the basic feasible solutions systematically.
+where $\mathbfit{A} \in \R^{m \times n}$. We will devise a way to compute the basic feasible solutions systematically.
 \begin{thmbox}{Basic Solution Characterisation}{basicSolnChar}
     Let 
     \begin{equation*}
         P \coloneqq \left\{\mathbfit{x} \in \R^n \colon \mathbfit{Ax = b}, \mathbfit{x} \geq \mathbf{0}\right\}
     \end{equation*}
-    be a polyhedron for some $\mathbfit{A} \in \R^{m \times n}$ with $m \geq n$. A vector $\mathbfit{x}^* \in \R^n$ is a basic solution if and only if
+    be a polyhedron for some $\mathbfit{A} \in \R^{m \times n}$. A vector $\mathbfit{x}^* \in \R^n$ is a basic solution if and only if
     \begin{itemize}
         \item $\mathbfit{Ax}^* = \mathbfit{b}$, and
         \item There exists an index set $B \subseteq \left\{1, 2, \cdots, n\right\}$ such that the set
